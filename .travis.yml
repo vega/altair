@@ -19,7 +19,6 @@ before_install:
   - chmod +x miniconda.sh
   - ./miniconda.sh -b
   - export PATH=/home/travis/miniconda3/bin:$PATH
-  - echo $PREFIX
   - conda update --yes conda
   # start Virtual X, so default matplotlib backend works
   #- "export DISPLAY=:99.0"
