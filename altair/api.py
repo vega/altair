@@ -16,6 +16,16 @@ class BaseObject(T.HasTraits):
         value = getattr(self, key)
         return (value is not None) and (not (not isinstance(value, bool) and not value))
 
+    def to_dict(self):
+        result = {}
+        for k in self.traits():
+            if k in self:
+                v = getattr(self, k)
+                if isinstance(BaseObject):
+                    result[k] = v.to_dict()
+                else:
+                    result[k] = v
+
 
 class Data(BaseObject):
 
@@ -107,6 +117,7 @@ class Encoding(BaseObject):
     size = T.Instance(Size, allow_none=True)
     color = T.Instance(Color, allow_none=True)
     shape = T.Instance(Shape, allow_none=True)
+    parent = T.Instance('altair.api.Viz')
 
     def _x_changed(self, name, old, new):
         if isinstance(new, str):
@@ -145,6 +156,9 @@ class Viz(BaseObject):
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
         super(Viz,self).__init__(self, **kwargs)
+
+    def _data_changed(self, name, old, new):
+        self.encoding.infer_types(new)
 
     def encode(self, **kwargs):
         self.encoding = Encoding(**kwargs)
