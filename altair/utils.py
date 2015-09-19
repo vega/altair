@@ -1,7 +1,8 @@
 """
 Utility routines
 """
-import numpy as np
+import warnings
+
 import pandas as pd
 
 TYPECODE_MAP = {'ordinal': 'O',
@@ -65,7 +66,14 @@ def parse_shorthand(sh):
     return result
 
 
-def infer_type(data, name=None):
+def infer_vegalite_type(data, name=None):
+    """
+    From an array-like input, infer the correct vega typecode
+    ('O', 'N', 'Q', or 'T')
+    Most of these are intuitive; the one strange one is this:
+    for integer types, we turn quantitative if there are more than 10
+    values, and ordinal if there are fewer (this could be revisited).
+    """
     # See if we can read the type from the name
     if name is not None:
         parsed = parse_shorthand(name)
@@ -73,13 +81,13 @@ def infer_type(data, name=None):
             return result['type']
 
     # Otherwise, infer based on the dtype of the input
-    data = np.asarray(data)
     typ = pd.lib.infer_dtype(data)
 
     if typ in ['floating', 'mixed-integer-float', 'complex']:
         typecode = 'quantity'
     elif typ in ['integer', 'mixed-integer']:
-        if len(np.unique(data)) > 10:
+        # TODO: think about whether this default makes sense
+        if len(pd.unique(data)) >= 10:
             typecode = 'quantity'
         else:
             typecode = 'ordinal'
@@ -89,7 +97,7 @@ def infer_type(data, name=None):
                  'timedelta64', 'date', 'time', 'period']:
         typecode = 'time'
     else:
-        warnings.warn("I don't know how to infer vega type from {0}.  "
+        warnings.warn("I don't know how to infer vega type from '{0}'.  "
                       "Defaulting to nominal.".format(typ))
         typecode = 'nominal'
 

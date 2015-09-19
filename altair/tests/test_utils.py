@@ -1,7 +1,10 @@
+import pytest
+import warnings
+
 import numpy as np
 import pandas as pd
 
-from altair.utils import parse_shorthand, infer_type
+from ..utils import parse_shorthand, infer_vegalite_type
 
 
 def test_parse_shorthand():
@@ -16,9 +19,9 @@ def test_parse_shorthand():
     check('sum(foobar):Q', type='Q', name='foobar', aggregate='sum')
 
 
-def test_infer_type():
+def test_infer_vegalite_type():
     def _check(arr, typ):
-        assert infer_type(arr) == typ
+        assert infer_vegalite_type(arr) == typ
 
     _check(np.arange(5, dtype=float), 'Q')
     _check(np.arange(25, dtype=int), 'Q')
@@ -31,3 +34,11 @@ def test_infer_type():
     nulled[0] = None
     _check(nulled, 'Q')
     _check(['a', 'b', 'c'], 'N')
+
+    if hasattr(pytest, 'warns'): # added in pytest 2.8
+        with pytest.warns(UserWarning):
+            _check([], 'N')
+    else:
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore")
+            _check([], 'N')
