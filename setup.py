@@ -46,7 +46,7 @@ VERSION = version('altair/__init__.py')
 
 setup(name=NAME,
       version=VERSION,
-      description=DESCRIPION,
+      description=DESCRIPTION,
       long_description=LONG_DESCRIPTION,
       author=AUTHOR,
       author_email=AUTHOR_EMAIL,
