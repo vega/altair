@@ -53,7 +53,7 @@ class Position(T.HasTraits):
 
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'])
-    aggregate = T.Enum(['avg','sum','median','min','max','count'])
+    aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
     timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'])
     bin = T.Union([T.Bool(),T.Int()], default_value=False)
     scale = T.Instance(Scale)
