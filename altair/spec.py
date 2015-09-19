@@ -1,4 +1,6 @@
-SPEC = {
+from .doc import Doc
+
+SPEC = Doc({
     "$schema": "http://json-schema.org/draft-04/schema#",
     "description": "Schema for Vega-lite specification",
     "type": "object",
@@ -1040,4 +1042,4 @@ SPEC = {
             }
         }
     }
-}
+})
