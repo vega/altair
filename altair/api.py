@@ -2,7 +2,7 @@ try:
     import traitlets as T
 except ImportError:
     from IPython.utils import traitlets as T
-    
+
 
 
 def parse_shorthand(sh):
@@ -27,7 +27,7 @@ def parse_shorthand(sh):
 
 
 class Data(T.HasTraits):
-                    
+
     formatType = T.Enum(['json','csv'], default_value='json')
     url = T.Unicode()
     data = T.List([])
@@ -48,9 +48,9 @@ class SortItems(T.HasTraits):
     name = T.Unicode()
     aggregate = T.Enum(['avg','sum','min','max','count'])
     reverse = T.Bool(False)
-    
+
 class Position(T.HasTraits):
-    
+
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'])
     aggregate = T.Enum(['avg','sum','median','min','max','count'])
@@ -62,7 +62,7 @@ class Position(T.HasTraits):
     sort = T.List(T.Instance(SortItems))
 
 class Index(T.HasTraits):
-    
+
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'])
     timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'])
@@ -106,9 +106,9 @@ class Shape(T.HasTraits):
     value = T.Enum(['circle','square','cross','diamond','triangle-up','triangle-down'], default_value='circle')
     filled = T.Bool(False)
     sort = T.List(T.Instance(SortItems))
-    
+
 class Encoding(T.HasTraits):
-    
+
     x = T.Union([T.Instance(Position),T.Unicode()])
     y = T.Union([T.Instance(Position),T.Unicode()])
     row = T.Union([T.Instance(Index),T.Unicode()])
@@ -116,45 +116,45 @@ class Encoding(T.HasTraits):
     size = T.Instance(Size)
     color = T.Instance(Color)
     shape = T.Instance(Shape)
-                
+
     def _x_changed(self, name, old, new):
-        if isinstance(new, unicode):
+        if isinstance(new, str):
             result = parse_shorthand(new)
             self.x = Position(**result)
 
     def _y_changed(self, name, old, new):
-        if isinstance(new, unicode):
+        if isinstance(new, str):
             result = parse_shorthand(new)
             self.y = Position(**result)
 
     def _row_changed(self, name, old, new):
-        if isinstance(new, unicode):
+        if isinstance(new, str):
             result = parse_shorthand(new)
             self.row = Index(**result)
 
     def _col_changed(self, name, old, new):
-        if isinstance(new, unicode):
+        if isinstance(new, str):
             result = parse_shorthand(new)
             self.col = Index(**result)
 
 
 class Viz(T.HasTraits):
-    
+
     marktype = T.Enum(['point','tick','bar','line',
                      'area','circle','square','text'], default_value='point')
     _data = T.Instance(Data, allow_none=True)
     data = T.Any()
     encoding = T.Instance(Encoding)
     # _encoding = T.Union([T.Instance(Encoding),T.Dict])
-    
+
     # def __encoding_changed(self, name, old, new):
     #     if isinstance(new, dict):
     #         self._encoding = Encoding(**new)
-    
+
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
         super(Viz,self).__init__(self, **kwargs)
-    
+
     def encode(self, **kwargs):
         self.encoding = Encoding(**kwargs)
         return self
@@ -172,7 +172,10 @@ class Viz(T.HasTraits):
     def mark_bar(self):
         return self.mark('bar')
 
-    def mark_live(self):
+    def mark_line(self):
+        return self.mark('line')
+
+    def mark_area(self):
         return self.mark('area')
 
     def mark_circle(self):
