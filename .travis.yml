@@ -1,11 +1,28 @@
 language: python
+
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-# command to install dependencies
+  - 2.7
+  - 3.4
+  - 3.5
+
+env:
+  - DEPS="pandas pytest traitlets"
+
 install:
-  - pip install -r requirements.txt
-  - pip install pytest>=2.7.3 --upgrade
-# command to run tests
-script: py.test
+  - conda create -n testenv --yes python=$TRAVIS_PYTHON_VERSION
+  - source activate testenv
+  - conda install --yes $DEPS
+  - python setup.py install
+
+before_install:
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
+  - chmod +x miniconda.sh
+  - ./miniconda.sh -b
+  - export PATH=/home/travis/anaconda/bin:$PATH
+  - conda update --yes conda
+  # start Virtual X, so default matplotlib backend works
+  #- "export DISPLAY=:99.0"
+  #- "sh -e /etc/init.d/xvfb start"
+
+script:
+  - py.test altair
