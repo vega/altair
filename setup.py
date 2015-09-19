@@ -1,9 +1,15 @@
 LONG_DESCRIPTION = """
-Altair: Python Visualization with Vega Lite
-===========================================
-This package provides a Python interface to generate data visualizations
-in Vega Lite, a common cross-platform graphics description. Graphics can
-then be generated with a variety of graphical backends.
+Altair: High-level declarative visualization library for Python
+===============================================================
+
+This package exposes a Python API for building statistical visualizations in a
+declarative manner. This API contains no actual visualization rendering code,
+but instead just emits JSON data that follows the
+`vega-lite <https://github.com/vega/vega-lite>`_ specification.
+
+Actual plotting code is done by renderers that are provided by other plotting
+libraries. For the purpose or prototyping, we are shipping a Matplotlib
+rendered in Altair.
 """
 
 DESCRIPTION         = "Altair: Python Visualization with Vega Lite"
