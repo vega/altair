@@ -10,96 +10,103 @@ except ImportError:
 from .utils import parse_shorthand
 
 
-class Data(T.HasTraits):
+class BaseObject(T.HasTraits):
+    
+    def __contains__(self, key):
+        value = getattr(self, key)
+        return (value is not None) and (not (not isinstance(value, bool) and not value))
+
+
+class Data(BaseObject):
 
     formatType = T.Enum(['json','csv'], default_value='json')
-    url = T.Unicode()
-    data = T.List([])
+    url = T.Unicode('', allow_none=True)
+    data = T.List([], allow_none=True)
 
-class Scale(T.HasTraits):
+class Scale(BaseObject):
     pass
 
-class Axis(T.HasTraits):
+class Axis(BaseObject):
     pass
 
-class Band(T.HasTraits):
+class Band(BaseObject):
     pass
 
-class Legend(T.HasTraits):
+class Legend(BaseObject):
     pass
 
-class SortItems(T.HasTraits):
-    name = T.Unicode()
-    aggregate = T.Enum(['avg','sum','min','max','count'])
+class SortItems(BaseObject):
+    name = T.Unicode(allow_none=True)
+    aggregate = T.Enum(['avg','sum','min','max','count'], allow_none=True)
     reverse = T.Bool(False)
 
-class Position(T.HasTraits):
+class Position(BaseObject):
 
     name = T.Unicode('')
-    type = T.Enum(['N','O','Q','T'])
-    aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'])
+    type = T.Enum(['N','O','Q','T'], allow_none=True)
+    aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None)
+    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], allow_none=True)
     bin = T.Union([T.Bool(),T.Int()], default_value=False)
-    scale = T.Instance(Scale)
-    axis = T.Instance(Axis)
-    band = T.Instance(Band)
-    sort = T.List(T.Instance(SortItems))
+    scale = T.Instance(Scale, allow_none=True)
+    axis = T.Instance(Axis, allow_none=True)
+    band = T.Instance(Band, allow_none=True)
+    sort = T.List(T.Instance(SortItems), allow_none=True)
 
-class Index(T.HasTraits):
+class Index(BaseObject):
 
     name = T.Unicode('')
-    type = T.Enum(['N','O','Q','T'])
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'])
+    type = T.Enum(['N','O','Q','T'], allow_none=True)
+    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], allow_none=True)
     bin = T.Union([T.Bool(),T.Int()], default_value=False)
-    aggregate = T.Enum(['count'])
+    aggregate = T.Enum(['count'], allow_none=True)
     padding = T.CFloat(0.1)
-    sort = T.List(T.Instance(SortItems))
-    axis = T.Instance(Axis)
+    sort = T.List(T.Instance(SortItems), allow_none=True)
+    axis = T.Instance(Axis, allow_none=True)
     height = T.CInt(150)
 
-class Size(T.HasTraits):
+class Size(BaseObject):
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'])
     aggregate = T.Enum(['avg','sum','median','min','max','count'])
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'])
+    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], allow_none=True)
     bin = T.Union([T.Bool(),T.Int()], default_value=False)
-    scale = T.Instance(Scale)
-    legend = T.Instance(Legend)
+    scale = T.Instance(Scale, allow_none=True)
+    legend = T.Instance(Legend, allow_none=True)
     value = T.CInt(30)
-    sort = T.List(T.Instance(SortItems))
+    sort = T.List(T.Instance(SortItems), allow_none=True)
 
-class Color(T.HasTraits):
+class Color(BaseObject):
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'])
     aggregate = T.Enum(['avg','sum','median','min','max','count'])
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'])
+    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], allow_none=True)
     bin = T.Union([T.Bool(),T.Int()], default_value=False)
-    scale = T.Instance(Scale)
-    legend = T.Instance(Legend)
+    scale = T.Instance(Scale, allow_none=True)
+    legend = T.Instance(Legend, allow_none=True)
     value = T.Unicode('#4682b4')
     opacity = T.Float(1.0)
-    sort = T.List(T.Instance(SortItems))
+    sort = T.List(T.Instance(SortItems), allow_none=True)
 
-class Shape(T.HasTraits):
+class Shape(BaseObject):
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'])
-    aggregate = T.Enum(['count'])
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'])
+    aggregate = T.Enum(['count'], allow_none=True)
+    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], allow_none=True)
     bin = T.Union([T.Bool(),T.Int()], default_value=False)
-    legend = T.Instance(Legend)
+    legend = T.Instance(Legend, allow_none=True)
     value = T.Enum(['circle','square','cross','diamond','triangle-up','triangle-down'], default_value='circle')
     filled = T.Bool(False)
-    sort = T.List(T.Instance(SortItems))
+    sort = T.List(T.Instance(SortItems), allow_none=True)
 
-class Encoding(T.HasTraits):
+class Encoding(BaseObject):
 
-    x = T.Union([T.Instance(Position),T.Unicode()])
-    y = T.Union([T.Instance(Position),T.Unicode()])
-    row = T.Union([T.Instance(Index),T.Unicode()])
-    col = T.Union([T.Instance(Index),T.Unicode()])
-    size = T.Instance(Size)
-    color = T.Instance(Color)
-    shape = T.Instance(Shape)
+    x = T.Union([T.Instance(Position),T.Unicode()], allow_none=True)
+    y = T.Union([T.Instance(Position),T.Unicode()], allow_none=True)
+    row = T.Union([T.Instance(Index),T.Unicode()], allow_none=True)
+    col = T.Union([T.Instance(Index),T.Unicode()], allow_none=True)
+    size = T.Instance(Size, allow_none=True)
+    color = T.Instance(Color, allow_none=True)
+    shape = T.Instance(Shape, allow_none=True)
 
     def _x_changed(self, name, old, new):
         if isinstance(new, str):
@@ -122,7 +129,7 @@ class Encoding(T.HasTraits):
             self.col = Index(**result)
 
 
-class Viz(T.HasTraits):
+class Viz(BaseObject):
 
     marktype = T.Enum(['point','tick','bar','line',
                      'area','circle','square','text'], default_value='point')
