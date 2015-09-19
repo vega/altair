@@ -11,11 +11,12 @@ def test_parse_shorthand():
     def check(s, **kwargs):
         assert parse_shorthand(s) == kwargs
 
-    check('', type=None)
-    check('foobar', type=None, name='foobar')
+    check('')
+    check('foobar', name='foobar')
     check('foobar:nominal', type='N', name='foobar')
     check('foobar:O', type='O', name='foobar')
-    check('avg(foobar)', type=None, name='foobar', aggregate='avg')
+    check('avg(foobar)', name='foobar', aggregate='avg')
+    check('min(foobar):time', type='T', name='foobar', aggregate='min')
     check('sum(foobar):Q', type='Q', name='foobar', aggregate='sum')
 
 
