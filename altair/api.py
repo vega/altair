@@ -51,6 +51,9 @@ class SortItems(BaseObject):
     reverse = T.Bool(False)
 
 class Position(BaseObject):
+    def __init__(self, name, **kwargs):
+        kwargs.update(parse_shorthand(name))
+        super(Position, self).__init__(self, **kwargs)
 
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
@@ -63,6 +66,9 @@ class Position(BaseObject):
     sort = T.List(T.Instance(SortItems), defalut_value=None, allow_none=True)
 
 class Index(BaseObject):
+    def __init__(self, name, **kwargs):
+        kwargs.update(parse_shorthand(name))
+        super(Index, self).__init__(self, **kwargs)
 
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
@@ -75,6 +81,10 @@ class Index(BaseObject):
     height = T.CInt(150)
 
 class Size(BaseObject):
+    def __init__(self, name, **kwargs):
+        kwargs.update(parse_shorthand(name))
+        super(Size, self).__init__(self, **kwargs)
+
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
     aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
@@ -86,6 +96,10 @@ class Size(BaseObject):
     sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
 
 class Color(BaseObject):
+    def __init__(self, name, **kwargs):
+        kwargs.update(parse_shorthand(name))
+        super(Color, self).__init__(self, **kwargs)
+
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
     aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
@@ -98,6 +112,10 @@ class Color(BaseObject):
     sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
 
 class Shape(BaseObject):
+    def __init__(self, name, **kwargs):
+        kwargs.update(parse_shorthand(name))
+        super(Shape, self).__init__(self, **kwargs)
+
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
     aggregate = T.Enum(['count'], default_value=None, allow_none=True)
@@ -120,23 +138,20 @@ class Encoding(BaseObject):
 
     def _x_changed(self, name, old, new):
         if isinstance(new, str):
-            result = parse_shorthand(new)
-            self.x = Position(**result)
+            self.x = Position(new)
 
     def _y_changed(self, name, old, new):
         if isinstance(new, str):
-            result = parse_shorthand(new)
-            self.y = Position(**result)
+            self.y = Position(new)
 
     def _row_changed(self, name, old, new):
         if isinstance(new, str):
-            result = parse_shorthand(new)
-            self.row = Index(**result)
+            self.row = Index(new)
 
     def _col_changed(self, name, old, new):
         if isinstance(new, str):
-            result = parse_shorthand(new)
-            self.col = Index(**result)
+            self.col = Index(new)
+
 
 
 class Viz(BaseObject):
