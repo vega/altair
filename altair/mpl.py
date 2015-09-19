@@ -107,7 +107,8 @@ def render(vls, data=None):
 
     plot_func = _MARK_DISPATCHER[vls.marktype]
     fig, ax = plt.subplots()
-
+    ax.set_xlabel(encoding.x.name)
+    ax.set_ylabel(encoding.y.name)
     return plot_func(ax, encoding, data, plot_kwargs)
 
 
