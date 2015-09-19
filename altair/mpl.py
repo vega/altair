@@ -46,7 +46,8 @@ def _do_binning(vls, data, bin_key, plot_kwargs):
         bin_count = 15
     bin_count = int(bin_count)
 
-    bin_edges = np.linspace(d_min, d_max, bin_count, endpoint=True)
+    # add one to bin count as we are generating edges here
+    bin_edges = np.linspace(d_min, d_max, bin_count + 1, endpoint=True)
     centers = (bin_edges[1:] + bin_edges[:-1]) / 2
     dig = np.digitize(data[x_name], bin_edges, right=True) - 1
     valid_mask = (-1 < dig) * (dig < len(centers))
