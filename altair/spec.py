@@ -14,8 +14,8 @@ SPEC = {
                     "type": "array",
                     "description": "Pass array of objects instead of a url to a file.",
                     "items": {"type": "object",
-                              "additionalProperties": true}
-    }
+                              "additionalProperties": True}
+                    }
             }
         },
         "marktype": {
@@ -51,7 +51,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -71,11 +71,11 @@ SPEC = {
                                     "default": "linear",
                                     "supportedTypes": {"Q": 1}
                                 },
-                                "reverse": {"type": "boolean","default": false,"supportedTypes": {"Q": 1,"T": 1}},
+                                "reverse": {"type": "boolean","default": False,"supportedTypes": {"Q": 1,"T": 1}},
                                 "zero": {
                                     "type": "boolean",
                                     "description": "Include zero",
-                                    "default": true,
+                                    "default": True,
                                     "supportedTypes": {"Q": 1,"T": 1}
                                 },
                                 "nice": {
@@ -94,7 +94,7 @@ SPEC = {
                             "properties": {
                                 "grid": {
                                     "type": "boolean",
-                                    "default": true,
+                                    "default": True,
                                     "description": "A flag indicate if gridlines should be created in addition to ticks."
                                 },
                                 "layer": {
@@ -155,20 +155,20 @@ SPEC = {
                                     "aggregate": {"type": "string",
                                                   "enum": ["avg","sum","min","max","count"]},
                                     "reverse": {"type": "boolean",
-                                                "default": false}
+                                                "default": False}
                                 }
                             }
                         }
                     },
-                    "supportedRole": {"measure": true,"dimension": true},
+                    "supportedRole": {"measure": True,"dimension": True},
                     "supportedMarktypes": {
-                        "point": true,
-                        "tick": true,
-                        "bar": true,
-                        "line": true,
-                        "area": true,
-                        "circle": true,
-                        "square": true
+                        "point": True,
+                        "tick": True,
+                        "bar": True,
+                        "line": True,
+                        "area": True,
+                        "circle": True,
+                        "square": True
                     },
                     "required": ["name","type"]
                 },
@@ -196,7 +196,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -216,11 +216,11 @@ SPEC = {
                                     "default": "linear",
                                     "supportedTypes": {"Q": 1}
                                 },
-                                "reverse": {"type": "boolean","default": false,"supportedTypes": {"Q": 1,"T": 1}},
+                                "reverse": {"type": "boolean","default": False,"supportedTypes": {"Q": 1,"T": 1}},
                                 "zero": {
                                     "type": "boolean",
                                     "description": "Include zero",
-                                    "default": true,
+                                    "default": True,
                                     "supportedTypes": {"Q": 1,"T": 1}
                                 },
                                 "nice": {
@@ -239,7 +239,7 @@ SPEC = {
                             "properties": {
                                 "grid": {
                                     "type": "boolean",
-                                    "default": true,
+                                    "default": True,
                                     "description": "A flag indicate if gridlines should be created in addition to ticks."
                                 },
                                 "layer": {
@@ -295,20 +295,20 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         }
                     },
-                    "supportedRole": {"measure": true,"dimension": true},
+                    "supportedRole": {"measure": True,"dimension": True},
                     "supportedMarktypes": {
-                        "point": true,
-                        "tick": true,
-                        "bar": true,
-                        "line": true,
-                        "area": true,
-                        "circle": true,
-                        "square": true
+                        "point": True,
+                        "tick": True,
+                        "bar": True,
+                        "line": True,
+                        "area": True,
+                        "circle": True,
+                        "square": True
                     },
                     "required": ["name","type"]
                 },
@@ -324,7 +324,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -347,7 +347,7 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         },
@@ -356,7 +356,7 @@ SPEC = {
                             "properties": {
                                 "grid": {
                                     "type": "boolean",
-                                    "default": true,
+                                    "default": True,
                                     "description": "A flag indicate if gridlines should be created in addition to ticks."
                                 },
                                 "layer": {
@@ -397,17 +397,17 @@ SPEC = {
                         },
                         "height": {"type": "number","minimum": 0,"default": 150}
                     },
-                    "supportedRole": {"dimension": true},
+                    "supportedRole": {"dimension": True},
                     "required": ["name","type"],
                     "supportedMarktypes": {
-                        "point": true,
-                        "tick": true,
-                        "bar": true,
-                        "line": true,
-                        "area": true,
-                        "circle": true,
-                        "square": true,
-                        "text": true
+                        "point": True,
+                        "tick": True,
+                        "bar": True,
+                        "line": True,
+                        "area": True,
+                        "circle": True,
+                        "square": True,
+                        "text": True
                     }
                 },
                 "col": {
@@ -422,7 +422,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -445,7 +445,7 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         },
@@ -454,7 +454,7 @@ SPEC = {
                             "properties": {
                                 "grid": {
                                     "type": "boolean",
-                                    "default": true,
+                                    "default": True,
                                     "description": "A flag indicate if gridlines should be created in addition to ticks."
                                 },
                                 "layer": {
@@ -495,17 +495,17 @@ SPEC = {
                         },
                         "width": {"type": "number","minimum": 0,"default": 150}
                     },
-                    "supportedRole": {"dimension": true},
+                    "supportedRole": {"dimension": True},
                     "required": ["name","type"],
                     "supportedMarktypes": {
-                        "point": true,
-                        "tick": true,
-                        "bar": true,
-                        "line": true,
-                        "area": true,
-                        "circle": true,
-                        "square": true,
-                        "text": true
+                        "point": True,
+                        "tick": True,
+                        "bar": True,
+                        "line": True,
+                        "area": True,
+                        "circle": True,
+                        "square": True,
+                        "text": True
                     }
                 },
                 "size": {
@@ -532,7 +532,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -552,11 +552,11 @@ SPEC = {
                                     "default": "linear",
                                     "supportedTypes": {"Q": 1}
                                 },
-                                "reverse": {"type": "boolean","default": false,"supportedTypes": {"Q": 1,"T": 1}},
+                                "reverse": {"type": "boolean","default": False,"supportedTypes": {"Q": 1,"T": 1}},
                                 "zero": {
                                     "type": "boolean",
                                     "description": "Include zero",
-                                    "default": true,
+                                    "default": True,
                                     "supportedTypes": {"Q": 1,"T": 1}
                                 },
                                 "nice": {
@@ -570,7 +570,7 @@ SPEC = {
                                 }
                             }
                         },
-                        "legend": {"type": "boolean","default": true},
+                        "legend": {"type": "boolean","default": True},
                         "value": {"type": "integer","default": 30,"minimum": 0},
                         "sort": {
                             "type": "array",
@@ -582,13 +582,13 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         }
                     },
-                    "supportedRole": {"measure": true,"dimension": "ordinal-only"},
-                    "supportedMarktypes": {"point": true,"bar": true,"circle": true,"square": true,"text": true}
+                    "supportedRole": {"measure": True,"dimension": "ordinal-only"},
+                    "supportedMarktypes": {"point": True,"bar": True,"circle": True,"square": True,"text": True}
                 },
                 "color": {
                     "type": "object",
@@ -614,7 +614,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -634,11 +634,11 @@ SPEC = {
                                     "default": "linear",
                                     "supportedTypes": {"Q": 1}
                                 },
-                                "reverse": {"type": "boolean","default": false,"supportedTypes": {"Q": 1,"T": 1}},
+                                "reverse": {"type": "boolean","default": False,"supportedTypes": {"Q": 1,"T": 1}},
                                 "zero": {
                                     "type": "boolean",
                                     "description": "Include zero",
-                                    "default": true,
+                                    "default": True,
                                     "supportedTypes": {"Q": 1,"T": 1}
                                 },
                                 "nice": {
@@ -707,7 +707,7 @@ SPEC = {
                                 }
                             }
                         },
-                        "legend": {"type": "boolean","default": true},
+                        "legend": {"type": "boolean","default": True},
                         "value": {"type": "string","role": "color","default": "steelblue"},
                         "opacity": {"type": "number","minimum": 0,"maximum": 1},
                         "sort": {
@@ -720,21 +720,21 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         }
                     },
-                    "supportedRole": {"measure": true,"dimension": true},
+                    "supportedRole": {"measure": True,"dimension": True},
                     "supportedMarktypes": {
-                        "point": true,
-                        "tick": true,
-                        "bar": true,
-                        "line": true,
-                        "area": true,
-                        "circle": true,
-                        "square": true,
-                        "text": true
+                        "point": True,
+                        "tick": True,
+                        "bar": True,
+                        "line": True,
+                        "area": True,
+                        "circle": True,
+                        "square": True,
+                        "text": True
                     }
                 },
                 "shape": {
@@ -749,7 +749,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -761,7 +761,7 @@ SPEC = {
                             "supportedTypes": {"Q": 1}
                         },
                         "aggregate": {"type": "string","enum": ["count"],"supportedTypes": {"N": 1,"O": 1}},
-                        "legend": {"type": "boolean","default": true},
+                        "legend": {"type": "boolean","default": True},
                         "value": {
                             "type": "string",
                             "enum": ["circle","square","cross","diamond","triangle-up","triangle-down"],
@@ -769,7 +769,7 @@ SPEC = {
                         },
                         "filled": {
                             "type": "boolean",
-                            "default": false,
+                            "default": False,
                             "description": "whether the shape's color should be used as fill color instead of stroke color"
                         },
                         "sort": {
@@ -782,13 +782,13 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         }
                     },
-                    "supportedRole": {"dimension": true},
-                    "supportedMarktypes": {"point": true,"circle": true,"square": true}
+                    "supportedRole": {"dimension": True},
+                    "supportedMarktypes": {"point": True,"circle": True,"square": True}
                 },
                 "text": {
                     "type": "object",
@@ -814,7 +814,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -834,11 +834,11 @@ SPEC = {
                                     "default": "linear",
                                     "supportedTypes": {"Q": 1}
                                 },
-                                "reverse": {"type": "boolean","default": false,"supportedTypes": {"Q": 1,"T": 1}},
+                                "reverse": {"type": "boolean","default": False,"supportedTypes": {"Q": 1,"T": 1}},
                                 "zero": {
                                     "type": "boolean",
                                     "description": "Include zero",
-                                    "default": true,
+                                    "default": True,
                                     "supportedTypes": {"Q": 1,"T": 1}
                                 },
                                 "nice": {
@@ -880,13 +880,13 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         }
                     },
-                    "supportedRole": {"measure": true},
-                    "supportedMarktypes": {"text": true}
+                    "supportedRole": {"measure": True},
+                    "supportedMarktypes": {"text": True}
                 },
                 "detail": {
                     "type": "object",
@@ -900,7 +900,7 @@ SPEC = {
                         },
                         "bin": {
                             "type": ["boolean","object"],
-                            "default": false,
+                            "default": False,
                             "properties": {
                                 "maxbins": {
                                     "type": "integer",
@@ -922,13 +922,13 @@ SPEC = {
                                 "properties": {
                                     "name": {"type": "string"},
                                     "aggregate": {"type": "string","enum": ["avg","sum","min","max","count"]},
-                                    "reverse": {"type": "boolean","default": false}
+                                    "reverse": {"type": "boolean","default": False}
                                 }
                             }
                         }
                     },
-                    "supportedRole": {"dimension": true},
-                    "supportedMarktypes": {"point": true,"tick": true,"line": true,"circle": true,"square": true}
+                    "supportedRole": {"dimension": True},
+                    "supportedMarktypes": {"point": True,"tick": True,"line": True,"circle": True,"square": True}
                 }
             }
         },
@@ -962,9 +962,9 @@ SPEC = {
                 "filterNull": {
                     "type": "object",
                     "properties": {
-                        "O": {"type": "boolean","default": false},
-                        "Q": {"type": "boolean","default": true},
-                        "T": {"type": "boolean","default": true}
+                        "O": {"type": "boolean","default": False},
+                        "Q": {"type": "boolean","default": True},
+                        "T": {"type": "boolean","default": True}
                     }
                 },
                 "toggleSort": {"type": "string","default": "O"},
@@ -1034,7 +1034,7 @@ SPEC = {
                 },
                 "useRawDomain": {
                     "type": "boolean",
-                    "default": false,
+                    "default": False,
                     "description": "Use the raw data range as scale domain instead of aggregated data for aggregate axis. This option does not work with sum or count aggregateas they might have a substantially larger scale range.By default, use value from config.useRawDomain."
                 }
             }
