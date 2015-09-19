@@ -156,6 +156,18 @@ class Encoding(BaseObject):
         if isinstance(new, str):
             self.col = Index(new)
 
+    def _size_changed(self, name, old, new):
+        if isinstance(new, str):
+            self.size = Size(new)
+
+    def _color_changed(self, name, old, new):
+        if isinstance(new, str):
+            self.color = Color(new)
+
+    def _shape_changed(self, name, old, new):
+        if isinstance(new, str):
+            self.shape = Shape(new)
+
 
 
 class Viz(BaseObject):
