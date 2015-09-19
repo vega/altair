@@ -6,12 +6,14 @@ python:
   - 3.5
 
 env:
-  - DEPS="pandas pytest traitlets"
+  - DEPS="pandas pytest traitlets pip"
 
 install:
   - conda create -n testenv --yes python=$TRAVIS_PYTHON_VERSION
   - source activate testenv
   - conda install --yes $DEPS
+  # older pytest breaks on Python 3.5
+  - pip install pytest>=2.7.3 --upgrade
   - python setup.py install
 
 before_install:
