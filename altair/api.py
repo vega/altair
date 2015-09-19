@@ -21,10 +21,14 @@ class BaseObject(T.HasTraits):
         for k in self.traits():
             if k in self:
                 v = getattr(self, k)
-                if isinstance(BaseObject):
+                if isinstance(v, BaseObject):
                     result[k] = v.to_dict()
                 else:
                     result[k] = v
+        return result
+
+    def __repr__(self):
+        return repr(self.to_dict())
 
 
 class Data(BaseObject):
