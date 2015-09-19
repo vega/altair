@@ -18,7 +18,8 @@ before_install:
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
   - chmod +x miniconda.sh
   - ./miniconda.sh -b
-  - export PATH=/home/travis/anaconda/bin:$PATH
+  - export PATH=/home/travis/miniconda3/bin:$PATH
+  - echo $PREFIX
   - conda update --yes conda
   # start Virtual X, so default matplotlib backend works
   #- "export DISPLAY=:99.0"
