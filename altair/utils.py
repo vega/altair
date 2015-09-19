@@ -58,7 +58,9 @@ def parse_shorthand(sh):
                          'Valid values are {1}'.format(agg, valid_aggs))
 
     # encode and return the results
-    result = {'type': typ}
+    result = {}
+    if typ:
+        result['type'] = typ
     if agg:
         result['aggregate']=agg
     if name:
