@@ -7,7 +7,7 @@ try:
 except ImportError:
     from IPython.utils import traitlets as T
 
-from .utils import parse_shorthand
+from .utils import parse_shorthand, infer_vegalite_type
 from ._py3k_compat import string_types
 
 import pandas as pd
@@ -70,6 +70,10 @@ class Position(BaseObject):
         kwargs.update(parse_shorthand(name))
         super(Position, self).__init__(self, **kwargs)
 
+    def _infer_type(self, data):
+        if self.type is None and self.name in data:
+            self.type = infer_vegalite_type(data[self.name])
+
     name = T.Unicode('')
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
     aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
@@ -84,6 +88,10 @@ class Index(BaseObject):
     def __init__(self, name, **kwargs):
         kwargs.update(parse_shorthand(name))
         super(Index, self).__init__(self, **kwargs)
+
+    def _infer_type(self, data):
+        if self.type is None and self.name in data:
+            self.type = infer_vegalite_type(data[self.name])
 
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
@@ -100,6 +108,10 @@ class Size(BaseObject):
         kwargs.update(parse_shorthand(name))
         super(Size, self).__init__(self, **kwargs)
 
+    def _infer_type(self, data):
+        if self.type is None and self.name in data:
+            self.type = infer_vegalite_type(data[self.name])
+
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
     aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
@@ -114,6 +126,10 @@ class Color(BaseObject):
     def __init__(self, name, **kwargs):
         kwargs.update(parse_shorthand(name))
         super(Color, self).__init__(self, **kwargs)
+
+    def _infer_type(self, data):
+        if self.type is None and self.name in data:
+            self.type = infer_vegalite_type(data[self.name])
 
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
@@ -130,6 +146,10 @@ class Shape(BaseObject):
     def __init__(self, name, **kwargs):
         kwargs.update(parse_shorthand(name))
         super(Shape, self).__init__(self, **kwargs)
+
+    def _infer_type(self, data):
+        if self.type is None and self.name in data:
+            self.type = infer_vegalite_type(data[self.name])
 
     name = T.Unicode(default_value=None, allow_none=True)
     type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
@@ -150,34 +170,55 @@ class Encoding(BaseObject):
     size = T.Union([T.Instance(Size),T.Unicode()], default_value=None, allow_none=True)
     color = T.Union([T.Instance(Color),T.Unicode()], default_value=None, allow_none=True)
     shape = T.Union([T.Instance(Shape),T.Unicode()], default_value=None, allow_none=True)
+    parent = T.Instance(BaseObject, default_value=None, allow_none=True)
+
+    def _infer_types(self, data):
+        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape']:
+            val = getattr(self, attr)
+            if val is not None:
+                val._infer_type(data)
 
     def _x_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.x = Position(new)
+        if self.parent is not None:
+            self.x._infer_type(self.parent.data)
 
     def _y_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.y = Position(new)
+        if self.parent is not None:
+            self.y._infer_type(self.parent.data)
 
     def _row_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.row = Index(new)
+        if self.parent is not None:
+            self.row._infer_type(self.parent.data)
 
     def _col_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.col = Index(new)
+        if self.parent is not None:
+            self.col._infer_type(self.parent.data)
 
     def _size_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.size = Size(new)
+        if self.parent is not None:
+            self.size._infer_type(self.parent.data)
 
     def _color_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.color = Color(new)
+        if self.parent is not None:
+            self.color._infer_type(self.parent.data)
 
     def _shape_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.shape = Shape(new)
+        if self.parent is not None:
+            self.shape._infer_type(self.parent.data)
 
 
 
@@ -189,12 +230,20 @@ class Viz(BaseObject):
 
     _data = T.Instance(Data, default_value=None, allow_none=True)
     data = T.Any(default_value=None, allow_none=True)
+
+    def _encoding_changed(self, name, old, new):
+        if isinstance(new, Encoding):
+            self.encoding.parent = self
+            if self.data is not None:
+                self.encoding._infer_types(self.data)
     
     def _data_changed(self, name, old, new):
         if not isinstance(new, pd.DataFrame):
             self.data = pd.DataFrame(new)
             return
         self._data = Data(data=new)
+        if self.encoding is not None:
+            self.encoding._infer_types(self.data)
 
     def __init__(self, data, **kwargs):
         kwargs['data'] = data

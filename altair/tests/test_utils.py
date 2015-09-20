@@ -25,8 +25,7 @@ def test_infer_vegalite_type():
         assert infer_vegalite_type(arr) == typ
 
     _check(np.arange(5, dtype=float), 'Q')
-    _check(np.arange(25, dtype=int), 'Q')
-    _check(np.arange(5, dtype=int), 'O')
+    _check(np.arange(5, dtype=int), 'Q')
     _check(np.zeros(5, dtype=bool), 'N')
     _check(pd.date_range('2012', '2013'), 'T')
     _check(pd.timedelta_range(365, periods=12), 'T')
