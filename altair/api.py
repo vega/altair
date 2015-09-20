@@ -15,6 +15,8 @@ import pandas as pd
 
 class BaseObject(T.HasTraits):
     
+    skip = []
+    
     def __contains__(self, key):
         value = getattr(self, key)
         if isinstance(value, pd.DataFrame):
@@ -24,7 +26,7 @@ class BaseObject(T.HasTraits):
     def to_dict(self):
         result = {}
         for k in self.traits():
-            if k in self:
+            if k in self and k not in self.skip:
                 v = getattr(self, k)
                 if isinstance(v, BaseObject):
                     result[k] = v.to_dict()
@@ -66,6 +68,9 @@ class SortItems(BaseObject):
     reverse = T.Bool(False)
 
 class Shelf(BaseObject):
+    
+    skip = ['shorthand']
+    
     def __init__(self, shorthand, **kwargs):
         kwargs['shorthand'] = shorthand
         super(Shelf, self).__init__(self, **kwargs)
@@ -158,16 +163,7 @@ class Encoding(BaseObject):
                     default_value=None, allow_none=True)
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
-    def to_dict(self):
-        result = {}
-        for k in self.traits():
-            if k in self and k not in ('parent'):
-                v = getattr(self, k)
-                if isinstance(v, BaseObject):
-                    result[k] = v.to_dict()
-                else:
-                    result[k] = v
-        return result
+    skip = ['parent']
 
     def _infer_types(self, data):
         for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape']:
@@ -241,22 +237,16 @@ class Viz(BaseObject):
         if self.encoding is not None:
             self.encoding._infer_types(self.data)
 
+    skip = ['data','_data']
+
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
         super(Viz,self).__init__(self, **kwargs)
 
     def to_dict(self):
-        result = {}
-        for k in self.traits():
-            if k in self and k!='data':
-                v = getattr(self, k)
-                if k=='_data':
-                    k='data'
-                if isinstance(v, BaseObject):
-                    result[k] = v.to_dict()
-                else:
-                    result[k] = v
-        return result
+        D = super(Viz, self).to_dict()
+        D['data'] = self._data.to_dict()
+        return D
 
     def encode(self, **kwargs):
         self.encoding = Encoding(**kwargs)

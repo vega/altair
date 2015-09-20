@@ -30,6 +30,20 @@ def test_dataframe_data():
     assert np.all(spec.data == data)
 
 
+def test_to_dict():
+    data = pd.DataFrame({'x': [1, 2, 3],
+                         'y': [4, 5, 6]})
+    spec = api.Viz(data).encode(x='x', y='y')
+    D = spec.to_dict()
+    assert D == {'data': {'formatType': 'json',
+                          'values': [{'x': 1, 'y': 4},
+                                     {'x': 2, 'y': 5},
+                                     {'x': 3, 'y': 6}]},
+                 'encoding': {'x': {'bin': False, 'name': 'x', 'type': 'Q'},
+                              'y': {'bin': False, 'name': 'y', 'type': 'Q'}},
+                 'marktype': 'point'}
+
+
 def test_markers():
     data = dict(x=[1, 2, 3],
                 y=[4, 5, 6])
@@ -125,4 +139,5 @@ def test_infer_types():
         name, typ = val
         assert getattr(spec.encoding, key).name == name
         assert getattr(spec.encoding, key).type == typ
+    
     
