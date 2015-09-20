@@ -55,12 +55,12 @@ def test_markers():
         spec.mark(marktype)
         assert spec.marktype == marktype
         
-    # call, e.g. spec.mark_point()
+    # call, e.g. spec.point()
     for marktype in VALID_MARKTYPES:
-        method = 'mark_' + marktype
+        method = marktype
         getattr(spec, method)()
         assert spec.marktype == marktype
-    
+
 
 def test_encode():
     data = dict(col1=[1.0, 2.0, 3.0],
