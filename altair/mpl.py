@@ -56,11 +56,11 @@ def _do_shape(shape, data):
 
     cyl = cycler('marker', shapes)
 
-    if not filled:
-        cyl += cycler('facecolor', 'none')
-
     if shape.type == 'Q':
         data, bin_edges = _digitize_col(shape, data)
+
+    fill = 'full' if filled else 'none'
+    cyl *= cycler('fillstyle', (fill, ))
 
     gb = data.groupby(shape.name)
 
@@ -150,10 +150,9 @@ def render(vls, data=None):
     if encoding.x.aggregate:
         data = _do_aggregate(encoding, data, 'x', 'y')
 
-
-
     plot_func = _MARK_DISPATCHER[vls.marktype]
     fig, ax = plt.subplots()
+    ax.set_prop_cycle(cycler('color', 'k'))
     ax.set_xlabel(encoding.x.name)
     ax.set_ylabel(encoding.y.name)
     return plot_func(ax, encoding, data, plot_kwargs)
