@@ -1,9 +1,22 @@
+"""
+Altair HTML renderer. Uses native vega-lite/vega rendering
+"""
+
 import os
-import jinja2
 import json
 import numpy
 
+
 def render(spec, width=None, height=None):
+    """
+    Render spec using native vega-lite parser/Vega renderer.
+
+    Parameters
+    ----------
+    spec: Altair spec
+    width: int
+    height: int
+    """
 
     from jinja2 import Template, escape
 
@@ -16,7 +29,8 @@ def render(spec, width=None, height=None):
     else:
         height = spec.vlconfig.height
 
-    location = os.path.join(os.path.dirname(__file__), 'templates/template.html')
+    location = os.path.join(os.path.dirname(__file__),
+                            'templates/template.html')
     base = open(location).read()
     d = spec.to_dict()
 
