@@ -146,14 +146,14 @@ def test_hist():
     data = dict(x=[1, 2, 3],
                 y=[4, 5, 6])
 
-    viz1 = api.Viz(data).hist(x='x', y='y')
+    viz1 = api.Viz(data).hist(x='x')
     assert viz1.encoding.x.name == "x"
     assert viz1.encoding.x.bin.maxbins == 10
-    assert viz1.encoding.y.name == "y"
+    assert viz1.encoding.y.name == "x"
     assert viz1.encoding.y.type == "Q"
     assert viz1.encoding.y.aggregate == "count"
 
-    viz2 = api.Viz(data).hist(x="x", y="y", bins=30)
+    viz2 = api.Viz(data).hist(x="x", bins=30)
     assert viz2.encoding.x.bin.maxbins == 30
     expected = {'data': {'formatType': 'json',
                 'values': [{'x': 1, 'y': 4}, {'x': 2, 'y': 5},
@@ -161,11 +161,11 @@ def test_hist():
                 'encoding': {'x': {'bin': {'maxbins': 30}, 'name': 'x'},
                 'y': {'aggregate': 'count',
                       'bin': False,
-                      'name': 'y',
+                      'name': 'x',
                       'type': 'Q'}},
                 'marktype': 'bar'}
 
-    viz3 = api.Viz(data).hist(x="x:O", y="y",
+    viz3 = api.Viz(data).hist(x="x:O",
         color=api.Color(shorthand="bar", type="N")
     )
     assert viz3.encoding.x.name == "x"
@@ -178,7 +178,7 @@ def test_hist():
                                    'name': 'x', 'type': 'O'},
                              'y': {'aggregate': 'count',
                                    'bin': False,
-                                   'name': 'y',
+                                   'name': 'x',
                                    'type': 'Q'},
                              'color': {'bin': False,
                                        'name': 'bar',
@@ -190,6 +190,6 @@ def test_hist():
     assert viz3.to_dict() == expected
 
     viz4 = api.Viz(data).hist(
-        x=api.X(shorthand="x", y="y", bin=api.Bin(maxbins=40)))
+        x=api.X(shorthand="x", bin=api.Bin(maxbins=40)))
     assert viz4.encoding.x.name == "x"
     assert viz4.encoding.x.bin.maxbins == 40

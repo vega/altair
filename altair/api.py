@@ -295,9 +295,12 @@ class Viz(BaseObject):
         config.Y.aggregate = "count"
 
         # We're making sure a y-change is triggered
-        self.encoding = Encoding(config=config, **kwargs)
+        self.encoding = Encoding(config=config, y='', **kwargs)
 
         if isinstance(kwargs.get("x"), str):
             self.encoding.x.bin = Bin(maxbins=bins)
+
+        # Hack: y.name should be "*", but version weirdness
+        self.encoding.y.name = self.encoding.x.name
 
         return self
