@@ -167,37 +167,37 @@ class Encoding(BaseObject):
     def _x_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.x = X(new)
-        if self.parent is not None:
+        if getattr(self.parent, 'data', None) is not None:
             self.x._infer_type(self.parent.data)
 
     def _y_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.y = Y(new)
-        if self.parent is not None:
+        if getattr(self.parent, 'data', None) is not None:
             self.y._infer_type(self.parent.data)
 
     def _row_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.row = Row(new)
-        if self.parent is not None:
+        if getattr(self.parent, 'data', None) is not None:
             self.row._infer_type(self.parent.data)
 
     def _col_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.col = Col(new)
-        if self.parent is not None:
+        if getattr(self.parent, 'data', None) is not None:
             self.col._infer_type(self.parent.data)
 
     def _size_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.size = Size(new)
-        if self.parent is not None:
+        if getattr(self.parent, 'data', None) is not None:
             self.size._infer_type(self.parent.data)
 
     def _color_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.color = Color(new)
-        if self.parent is not None:
+        if getattr(self.parent, 'data', None) is not None:
             self.color._infer_type(self.parent.data)
 
     def _shape_changed(self, name, old, new):
