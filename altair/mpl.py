@@ -164,6 +164,8 @@ def render(vls, data=None):
         if 'bin' in shelf and shelf.bin:
             data = _do_binning(vls, data, sh, plot_kwargs)
 
+    data = data.dropna()
+
     plot_func = _MARK_DISPATCHER[vls.marktype]
 
     has_row = 'row' in encoding
@@ -173,52 +175,57 @@ def render(vls, data=None):
     ax_list = None
 
     if has_col and has_row:
+        # sort out the names with respect to binning
         col_name = _determine_col_name(encoding.col, 'col')
-        row_name = _determine_col_name(encoding.col, 'row')
-        # TODO deal with both aggregations
+        row_name = _determine_col_name(encoding.row, 'row')
+
         row_labels = data[row_name].unique()
         col_labels = data[col_name].unique()
         grid_keys = [(_['row'], _['col'])
                      for _ in (cycler('row', row_labels) *
                                cycler('col', col_labels))]
-        fig, ax_list = plt.subplots(len(col_labels), len(row_labels),
-                                    sharex=True, sharey=True)
+        col_num, row_num = len(col_labels), len(row_labels)
         facet_iter = data.groupby([row_name, col_name])
     elif has_col:
         col_name = _determine_col_name(encoding.col, 'col')
         col_labels = data[col_name].unique()
-        fig, ax_list = plt.subplots(len(col_labels), 1, sharex=True)
+        col_num, row_num = len(col_labels), 1
+        fig, ax_list = plt.subplots(col_num, row_num,
+                                    sharex=True, sharey=True)
         grid_keys = list(col_labels)
         facet_iter = data.groupby(col_name)
     elif has_row:
         row_name = _determine_col_name(encoding.row, 'row')
         row_labels = data[row_name].unique()
-        fig, ax_list = plt.subplots(1, len(row_labels), sharey=True)
+        col_num, row_num = 1, len(row_labels)
         grid_keys = list(row_labels)
         facet_iter = data.groupby(row_name)
     else:
         grid_keys = [None, ]
-        fig, ax_list = plt.subplots(squeeze=False)
+        col_num, row_num = 1, 1
 
         def _inner():
             yield None, data
         facet_iter = _inner()
 
+    fig, ax_list = plt.subplots(row_num, col_num,
+                                sharex=True, sharey=True,
+                                squeeze=False)
     for k, ax in zip(grid_keys, ax_list.ravel()):
         ax_map[k] = ax
         ax.set_prop_cycle(cycler('color', 'k'))
+        if 'x' in encoding and ax.rowNum == row_num:
+            ax.set_xlabel(encoding.x.name)
+        if 'y' in encoding and ax.colNum == 0:
+            ax.set_ylabel(encoding.y.name)
 
     rets = {}
     for k, df in facet_iter:
         ax = ax_map[k]
         _r = plot_func(ax, encoding, df, plot_kwargs)
         rets[k] = _r
-        if 'x' in encoding:
-            ax.set_xlabel(encoding.x.name)
-        if 'y' in encoding:
-            ax.set_ylabel(encoding.y.name)
         if k:
-            ax.set_title(str(k))
+            ax.set_title(repr(k))
 
     return rets, ax_map
 
