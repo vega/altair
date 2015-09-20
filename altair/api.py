@@ -256,26 +256,26 @@ class Viz(BaseObject):
         self.marktype = mt
         return self
 
-    def mark_point(self):
+    def point(self):
         return self.mark('point')
 
-    def mark_tick(self):
+    def tick(self):
         return self.mark('tick')
 
-    def mark_bar(self):
+    def bar(self):
         return self.mark('bar')
 
-    def mark_line(self):
+    def line(self):
         return self.mark('line')
 
-    def mark_area(self):
+    def area(self):
         return self.mark('area')
 
-    def mark_circle(self):
+    def circle(self):
         return self.mark('circle')
 
-    def mark_square(self):
+    def square(self):
         return self.mark('square')
 
-    def mark_text(self):
+    def text(self):
         return self.mark('text')
