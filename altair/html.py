@@ -4,6 +4,24 @@ import json
 import numpy
 
 def render(spec, width=None, height=None):
+    """
+    Render a vega specification to html.
+
+    Uses a template to embed the specified visualization
+    into html that can be rendered in the browser. Useful
+    for visualization in notebooks.
+
+    Parameters
+    ----------
+    spec : altair.api.Viz object
+        Represents the visualization to be rendered to html
+
+    width : int, optional, default=None
+        Width in pixels
+
+    height : int, optional, default=None
+        Height in pixels
+    """
 
     from jinja2 import Template, escape
 
