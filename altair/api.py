@@ -8,6 +8,7 @@ except ImportError:
     from IPython.utils import traitlets as T
 
 from .utils import parse_shorthand
+from ._py3k_compat import string_types
 
 
 class BaseObject(T.HasTraits):
@@ -141,31 +142,31 @@ class Encoding(BaseObject):
     shape = T.Union([T.Instance(Shape),T.Unicode()], default_value=None, allow_none=True)
 
     def _x_changed(self, name, old, new):
-        if isinstance(new, str):
+        if isinstance(new, string_types):
             self.x = Position(new)
 
     def _y_changed(self, name, old, new):
-        if isinstance(new, str):
+        if isinstance(new, string_types):
             self.y = Position(new)
 
     def _row_changed(self, name, old, new):
-        if isinstance(new, str):
+        if isinstance(new, string_types):
             self.row = Index(new)
 
     def _col_changed(self, name, old, new):
-        if isinstance(new, str):
+        if isinstance(new, string_types):
             self.col = Index(new)
 
     def _size_changed(self, name, old, new):
-        if isinstance(new, str):
+        if isinstance(new, string_types):
             self.size = Size(new)
 
     def _color_changed(self, name, old, new):
-        if isinstance(new, str):
+        if isinstance(new, string_types):
             self.color = Color(new)
 
     def _shape_changed(self, name, old, new):
-        if isinstance(new, str):
+        if isinstance(new, string_types):
             self.shape = Shape(new)
 
 
