@@ -136,9 +136,9 @@ class Encoding(BaseObject):
     y = T.Union([T.Instance(Position),T.Unicode()], default_value=None, allow_none=True)
     row = T.Union([T.Instance(Index),T.Unicode()], default_value=None, allow_none=True)
     col = T.Union([T.Instance(Index),T.Unicode()], default_value=None, allow_none=True)
-    size = T.Instance(Size, default_value=None, allow_none=True)
-    color = T.Instance(Color, default_value=None, allow_none=True)
-    shape = T.Instance(Shape, default_value=None, allow_none=True)
+    size = T.Union([T.Instance(Size),T.Unicode()], default_value=None, allow_none=True)
+    color = T.Union([T.Instance(Color),T.Unicode()], default_value=None, allow_none=True)
+    shape = T.Union([T.Instance(Shape),T.Unicode()], default_value=None, allow_none=True)
 
     def _x_changed(self, name, old, new):
         if isinstance(new, str):
