@@ -65,111 +65,97 @@ class SortItems(BaseObject):
     aggregate = T.Enum(['avg','sum','min','max','count'], default_value=True)
     reverse = T.Bool(False)
 
-class Position(BaseObject):
-    def __init__(self, name, **kwargs):
-        kwargs.update(parse_shorthand(name))
-        super(Position, self).__init__(self, **kwargs)
+class Shelf(BaseObject):
+    def __init__(self, shorthand, **kwargs):
+        kwargs['shorthand'] = shorthand
+        super(Shelf, self).__init__(self, **kwargs)
 
     def _infer_type(self, data):
         if self.type is None and self.name in data:
             self.type = infer_vegalite_type(data[self.name])
 
+    def _shorthand_changed(self, name, old, new):
+        D = parse_shorthand(self.shorthand)
+        for key, val in D.items():
+            setattr(self, key, val)
+
+    shorthand = T.Unicode('')
     name = T.Unicode('')
-    type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
-    aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], default_value=None, allow_none=True)
-    bin = T.Union([T.Bool(),T.Int()], default_value=False)
+    type = T.Enum(['N', 'O', 'Q', 'T'], default_value=None, allow_none=True)
+    timeUnit = T.Enum(['year', 'month', 'day', 'date',
+                       'hours', 'minutes', 'seconds'],
+                      default_value=None, allow_none=True)
+    bin = T.Union([T.Bool(), T.Int()], default_value=False)
+    sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
+    aggregate = T.Enum(['avg', 'sum', 'median', 'min', 'max', 'count'],
+                       default_value=None, allow_none=True)
+
+
+class DataCoordinate(Shelf):
     scale = T.Instance(Scale, default_value=None, allow_none=True)
     axis = T.Instance(Axis, default_value=None, allow_none=True)
     band = T.Instance(Band, default_value=None, allow_none=True)
-    sort = T.List(T.Instance(SortItems), defalut_value=None, allow_none=True)
 
-class Index(BaseObject):
-    def __init__(self, name, **kwargs):
-        kwargs.update(parse_shorthand(name))
-        super(Index, self).__init__(self, **kwargs)
 
-    def _infer_type(self, data):
-        if self.type is None and self.name in data:
-            self.type = infer_vegalite_type(data[self.name])
+class X(DataCoordinate):
+    pass
 
-    name = T.Unicode(default_value=None, allow_none=True)
-    type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], default_value=None, allow_none=True)
-    bin = T.Union([T.Bool(),T.Int()], default_value=False)
+
+class Y(DataCoordinate):
+    pass
+
+
+class FacetCoordinate(Shelf):
     aggregate = T.Enum(['count'], default_value=None, allow_none=True)
     padding = T.CFloat(0.1)
-    sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
     axis = T.Instance(Axis, default_value=None, allow_none=True)
     height = T.CInt(150)
 
-class Size(BaseObject):
-    def __init__(self, name, **kwargs):
-        kwargs.update(parse_shorthand(name))
-        super(Size, self).__init__(self, **kwargs)
 
-    def _infer_type(self, data):
-        if self.type is None and self.name in data:
-            self.type = infer_vegalite_type(data[self.name])
+class Row(FacetCoordinate):
+    pass
 
-    name = T.Unicode(default_value=None, allow_none=True)
-    type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
-    aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], default_value=None, allow_none=True)
-    bin = T.Union([T.Bool(),T.Int()], default_value=False)
+
+class Col(FacetCoordinate):
+    pass
+
+
+class Size(Shelf):
     scale = T.Instance(Scale, default_value=None, allow_none=True)
     legend = T.Instance(Legend, default_value=None, allow_none=True)
     value = T.CInt(30)
-    sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
 
-class Color(BaseObject):
-    def __init__(self, name, **kwargs):
-        kwargs.update(parse_shorthand(name))
-        super(Color, self).__init__(self, **kwargs)
 
-    def _infer_type(self, data):
-        if self.type is None and self.name in data:
-            self.type = infer_vegalite_type(data[self.name])
-
-    name = T.Unicode(default_value=None, allow_none=True)
-    type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
-    aggregate = T.Enum(['avg','sum','median','min','max','count'], default_value=None, allow_none=True)
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], default_value=None, allow_none=True)
-    bin = T.Union([T.Bool(),T.Int()], default_value=False)
+class Color(Shelf):
+    value = T.Unicode('#4682b4')
     scale = T.Instance(Scale, default_value=None, allow_none=True)
     legend = T.Instance(Legend, default_value=None, allow_none=True)
-    value = T.Unicode('#4682b4')
     opacity = T.Float(1.0)
-    sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
 
-class Shape(BaseObject):
-    def __init__(self, name, **kwargs):
-        kwargs.update(parse_shorthand(name))
-        super(Shape, self).__init__(self, **kwargs)
 
-    def _infer_type(self, data):
-        if self.type is None and self.name in data:
-            self.type = infer_vegalite_type(data[self.name])
-
-    name = T.Unicode(default_value=None, allow_none=True)
-    type = T.Enum(['N','O','Q','T'], default_value=None, allow_none=True)
+class Shape(Shelf):
+    value = T.Enum(['circle', 'square', 'cross', 'diamond', 'triangle-up',
+                    'triangle-down'], default_value='circle')
     aggregate = T.Enum(['count'], default_value=None, allow_none=True)
-    timeUnit = T.Enum(['year','month','day','date','hours','minutes','seconds'], default_value=None, allow_none=True)
-    bin = T.Union([T.Bool(),T.Int()], default_value=False)
     legend = T.Instance(Legend, default_value=None, allow_none=True)
-    value = T.Enum(['circle','square','cross','diamond','triangle-up','triangle-down'], default_value='circle')
     filled = T.Bool(False)
-    sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
+
 
 class Encoding(BaseObject):
-
-    x = T.Union([T.Instance(Position),T.Unicode()], default_value=None, allow_none=True)
-    y = T.Union([T.Instance(Position),T.Unicode()], default_value=None, allow_none=True)
-    row = T.Union([T.Instance(Index),T.Unicode()], default_value=None, allow_none=True)
-    col = T.Union([T.Instance(Index),T.Unicode()], default_value=None, allow_none=True)
-    size = T.Union([T.Instance(Size),T.Unicode()], default_value=None, allow_none=True)
-    color = T.Union([T.Instance(Color),T.Unicode()], default_value=None, allow_none=True)
-    shape = T.Union([T.Instance(Shape),T.Unicode()], default_value=None, allow_none=True)
+    x = T.Union([T.Instance(X), T.Unicode()],
+                default_value=None, allow_none=True)
+    y = T.Union([T.Instance(Y), T.Unicode()],
+                default_value=None, allow_none=True)
+    row = T.Union([T.Instance(Row), T.Unicode()],
+                  default_value=None, allow_none=True)
+    col = T.Union([T.Instance(Col), T.Unicode()],
+                  default_value=None, allow_none=True)
+    size = T.Union([T.Instance(Size), T.Unicode()],
+                   default_value=None, allow_none=True)
+    color = T.Union([T.Instance(Color), T.Unicode()],
+                    default_value=None, allow_none=True)
+    shape = T.Union([T.Instance(Shape), T.Unicode()],
+                    default_value=None, allow_none=True)
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
     def _infer_types(self, data):
@@ -180,25 +166,25 @@ class Encoding(BaseObject):
 
     def _x_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.x = Position(new)
+            self.x = X(new)
         if self.parent is not None:
             self.x._infer_type(self.parent.data)
 
     def _y_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.y = Position(new)
+            self.y = Y(new)
         if self.parent is not None:
             self.y._infer_type(self.parent.data)
 
     def _row_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.row = Index(new)
+            self.row = Row(new)
         if self.parent is not None:
             self.row._infer_type(self.parent.data)
 
     def _col_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.col = Index(new)
+            self.col = Col(new)
         if self.parent is not None:
             self.col._infer_type(self.parent.data)
 
@@ -219,7 +205,6 @@ class Encoding(BaseObject):
             self.shape = Shape(new)
         if self.parent is not None:
             self.shape._infer_type(self.parent.data)
-
 
 
 class Viz(BaseObject):
