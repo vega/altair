@@ -160,7 +160,6 @@ def _do_color(color, data, rc):
 def _do_aggregate(shelf, data, by_keys):
 
     agg_method = shelf.aggregate
-
     binned = data.groupby(by_keys)
     agg_func_name = _AGG_MAP[agg_method]
 
@@ -186,8 +185,7 @@ def _digitize_col(bin_encoding, data):
     bin_count = bin_encoding.bin
     if isinstance(bin_count, bool):
         bin_count = 3
-    bin_count = int(bin_count)
-
+    bin_count = int(bin_count.maxbins)
     # add one to bin count as we are generating edges here
     bin_edges = np.linspace(d_min, d_max, bin_count + 1, endpoint=True)
     centers = (bin_edges[1:] + bin_edges[:-1]) / 2
