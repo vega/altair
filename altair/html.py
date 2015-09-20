@@ -8,13 +8,13 @@ def render(spec, width=None, height=None):
     from jinja2 import Template, escape
 
     if width is not None:
-        spec.config.width = width
+        spec.vlconfig.width = width
     else:
-        width = spec.config.width
+        width = spec.vlconfig.width
     if height is not None:
-        spec.config.height = height
+        spec.vlconfig.height = height
     else:
-        height = spec.config.height
+        height = spec.vlconfig.height
 
     location = os.path.join(os.path.dirname(__file__), 'templates/template.html')
     base = open(location).read()
