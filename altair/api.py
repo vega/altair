@@ -4,6 +4,7 @@ Main API for Vega-lite spec generation
 
 try:
     import traitlets as T
+    from traitlets.config import Configurable, Config
 except ImportError:
     from IPython.utils import traitlets as T
 
@@ -13,10 +14,11 @@ from ._py3k_compat import string_types
 import pandas as pd
 
 
-class BaseObject(T.HasTraits):
-    
+
+class BaseObject(Configurable):
+
     skip = []
-    
+
     def __contains__(self, key):
         value = getattr(self, key)
         if isinstance(value, pd.DataFrame):
@@ -43,13 +45,13 @@ class Data(BaseObject):
     formatType = T.Enum(['json','csv'], default_value='json')
     url = T.Unicode(default_value=None, allow_none=True)
     values = T.List(default_value=None, allow_none=True)
-    
+
     def to_dict(self):
         result = {'formatType':self.formatType,
                   'values':self.data.to_dict('records')
                   }
         return result
-    
+
 class Scale(BaseObject):
     pass
 
@@ -62,18 +64,21 @@ class Band(BaseObject):
 class Legend(BaseObject):
     pass
 
+class Bin(BaseObject):
+    maxbins = T.Int(0, config=True)
+
 class SortItems(BaseObject):
     name = T.Unicode(default_value=None, allow_none=True)
     aggregate = T.Enum(['avg','sum','min','max','count'], default_value=True)
     reverse = T.Bool(False)
 
 class Shelf(BaseObject):
-    
-    skip = ['shorthand']
-    
+
+    skip = ['shorthand', 'config']
+
     def __init__(self, shorthand, **kwargs):
         kwargs['shorthand'] = shorthand
-        super(Shelf, self).__init__(self, **kwargs)
+        super(Shelf, self).__init__(**kwargs)
 
     def _infer_type(self, data):
         if self.type is None and self.name in data:
@@ -85,15 +90,16 @@ class Shelf(BaseObject):
             setattr(self, key, val)
 
     shorthand = T.Unicode('')
-    name = T.Unicode('')
-    type = T.Enum(['N', 'O', 'Q', 'T'], default_value=None, allow_none=True)
+    name = T.Unicode('', config=True)
+    type = T.Enum(['N', 'O', 'Q', 'T'], default_value=None, allow_none=True,
+                  config=True)
     timeUnit = T.Enum(['year', 'month', 'day', 'date',
                        'hours', 'minutes', 'seconds'],
                       default_value=None, allow_none=True)
-    bin = T.Union([T.Bool(), T.Int()], default_value=False)
+    bin = T.Union([T.Bool(), T.Instance(Bin)], default_value=False)
     sort = T.List(T.Instance(SortItems), default_value=None, allow_none=True)
     aggregate = T.Enum(['avg', 'sum', 'median', 'min', 'max', 'count'],
-                       default_value=None, allow_none=True)
+                       default_value=None, allow_none=True, config=True)
 
 
 class DataCoordinate(Shelf):
@@ -123,7 +129,6 @@ class Row(FacetCoordinate):
 
 class Col(FacetCoordinate):
     pass
-
 
 class Size(Shelf):
     scale = T.Instance(Scale, default_value=None, allow_none=True)
@@ -163,7 +168,7 @@ class Encoding(BaseObject):
                     default_value=None, allow_none=True)
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
-    skip = ['parent']
+    skip = ['parent', 'config']
 
     def _infer_types(self, data):
         for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape']:
@@ -173,13 +178,13 @@ class Encoding(BaseObject):
 
     def _x_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.x = X(new)
+            self.x = X(new, config=self.config)
         if getattr(self.parent, 'data', None) is not None:
             self.x._infer_type(self.parent.data)
 
     def _y_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.y = Y(new)
+            self.y = Y(new, config=self.config)
         if getattr(self.parent, 'data', None) is not None:
             self.y._infer_type(self.parent.data)
 
@@ -228,7 +233,7 @@ class Viz(BaseObject):
             self.encoding.parent = self
             if self.data is not None:
                 self.encoding._infer_types(self.data)
-    
+
     def _data_changed(self, name, old, new):
         if not isinstance(new, pd.DataFrame):
             self.data = pd.DataFrame(new)
@@ -241,7 +246,7 @@ class Viz(BaseObject):
 
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
-        super(Viz,self).__init__(self, **kwargs)
+        super(Viz,self).__init__(**kwargs)
 
     def to_dict(self):
         D = super(Viz, self).to_dict()
@@ -279,3 +284,23 @@ class Viz(BaseObject):
 
     def text(self):
         return self.mark('text')
+
+    def hist(self, bins=10, **kwargs):
+
+        self.marktype = "bar"
+
+        config = Config()
+
+        config.Y.type = "Q"
+        config.Y.aggregate = "count"
+
+        # We're making sure a y-change is triggered
+        self.encoding = Encoding(config=config, y='', **kwargs)
+
+        if isinstance(kwargs.get("x"), str):
+            self.encoding.x.bin = Bin(maxbins=bins)
+
+        # Hack: y.name should be "*", but version weirdness
+        self.encoding.y.name = self.encoding.x.name
+
+        return self
