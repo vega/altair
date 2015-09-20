@@ -19,15 +19,15 @@ def test_dict_data():
     data = dict(x=[1, 2, 3],
                 y=[4, 5, 6])
     spec = api.Viz(data)
-    assert spec.data == data
+    assert np.all(spec.data == pd.DataFrame(data))
 
 
-#def test_dataframe_data():
-#    datadict = dict(x=[1, 2, 3],
-#                    y=[4, 5, 6])
-#    data = pd.DataFrame(datadict)
-#    spec = api.Viz(data)
-#    assert spec.data == datadict
+def test_dataframe_data():
+    datadict = dict(x=[1, 2, 3],
+                    y=[4, 5, 6])
+    data = pd.DataFrame(datadict)
+    spec = api.Viz(data)
+    assert np.all(spec.data == data)
 
 
 def test_markers():
@@ -99,6 +99,27 @@ def test_encode_types():
                   shape=('col7', 'O'))
 
     spec = api.Viz(data).encode(**{key:"{0}:{1}".format(*val)
+                                   for key, val in kwargs.items()})
+    for key, val in kwargs.items():
+        name, typ = val
+        assert getattr(spec.encoding, key).name == name
+        assert getattr(spec.encoding, key).type == typ
+
+
+def test_infer_types():
+    data = dict(col1=[1.0, 2.0, 3.0],
+                col2=[0.1, 0.2, 0.3],
+                col3=['A', 'B', 'C'],
+                col4=[True, False, True],
+                col5=[0.1, 0.2, 0.3],
+                col6=pd.date_range('2012', periods=3, freq='A'),
+                col7=np.arange(3))
+    kwargs = dict(x=('col1', 'Q'), y=('col2', 'Q'),
+                  row=('col3', 'N'), col=('col4', 'N'),
+                  size=('col5', 'Q'), color=('col6', 'T'),
+                  shape=('col7', 'Q'))
+
+    spec = api.Viz(data).encode(**{key: val[0]
                                    for key, val in kwargs.items()})
     for key, val in kwargs.items():
         name, typ = val
