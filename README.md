@@ -8,7 +8,7 @@ just emits JSON data that follows the [vega-lite](https://github.com/vega/vega-l
 specification.
 
 Actual plotting code is done by renderers that are provided by other plotting libraries.
-For the purpose or prototyping, we are shipping a Matplotlib rendered in Altair.
+For the purpose or prototyping, we are shipping both a Matplotlib renderer and a simple embeddable HTML renderer in Altair.
 
 ## Testing
 
