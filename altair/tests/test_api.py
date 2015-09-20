@@ -12,7 +12,7 @@ def test_empty_data():
     assert d.formatType=='json'
     assert 'formatType' in d
     assert 'url' not in d
-    assert 'data' not in d
+    assert 'values' not in d
 
 
 def test_dict_data():
