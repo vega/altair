@@ -1,6 +1,10 @@
 from matplotlib import pyplot as plt
+import matplotlib.markers as mmarkers
 import pandas as pd
 import numpy as np
+
+from cycler import cycler
+
 from .spec import SPEC
 
 
@@ -17,13 +21,51 @@ def _vl_area(ax, encoding, data, pl_kw):
 
 
 def _vl_point(ax, encoding, data, pl_kw):
-    ln, = ax.plot(encoding.x.name, encoding.y.name, data=data,
-                  linestyle='none', marker='o', **pl_kw)
-    return ln,
+    pl_kw.setdefault('linestyle', 'none')
+    if 'shape' in encoding:
+        data_itr = _do_shape(encoding.shape, data)
+    else:
+        data_itr = [((None, data), {'marker': 'o'})]
+
+    lns = []
+    for (k, df), sty in data_itr:
+        sty_dict = {}
+        sty_dict.update(pl_kw)
+        sty_dict.update(sty)
+        ln = ax.plot(encoding.x.name, encoding.y.name, data=df, **sty_dict)
+        lns.extend(ln)
+
+    return lns
 
 
 def _vl_bar(ax, encoding, data, pl_kw):
     return ax.bar(encoding.x.name, encoding.y.name, data=data, **pl_kw)
+
+
+def _do_shape(shape, data):
+    """Sort out how to do shape
+
+    Given an encoding + a possibly reduced DataFrame, return
+    an iterator of (gb_key, DataFrame), style kwarg
+    """
+    filled = shape.filled
+    shapes = mmarkers.MarkerStyle.filled_markers
+
+    if not filled:
+        shapes = shapes + ('x',  '4', '3', '+', '2', '1')
+
+    cyl = cycler('marker', shapes)
+
+    if shape.type == 'Q':
+        data, bin_edges = _digitize_col(shape, data)
+
+    fill = 'full' if filled else 'none'
+    cyl *= cycler('fillstyle', (fill, ))
+
+    gb = data.groupby(shape.name)
+
+    for df, sty in zip(gb, cyl):
+        yield df, sty
 
 
 def _do_aggregate(encoding, data, agg_key, by_key):
@@ -39,9 +81,18 @@ def _do_aggregate(encoding, data, agg_key, by_key):
 
 def _do_binning(vls, data, bin_key, plot_kwargs):
     encoding = vls.encoding
-    x_name = getattr(encoding, bin_key).name
+    data, bin_edges = _digitize_col(getattr(encoding, bin_key), data)
+    if vls.marktype == 'bar':
+        plot_kwargs['width'] = np.mean(np.diff(bin_edges)) * .9
+        plot_kwargs['align'] = 'center'
+
+    return data
+
+
+def _digitize_col(bin_encoding, data):
+    x_name = bin_encoding.name
     d_min, d_max = data[x_name].min(), data[x_name].max()
-    bin_count = getattr(encoding, bin_key).bin
+    bin_count = bin_encoding.bin
     if isinstance(bin_count, bool):
         bin_count = 15
     bin_count = int(bin_count)
@@ -54,11 +105,7 @@ def _do_binning(vls, data, bin_key, plot_kwargs):
     data[x_name][valid_mask] = centers[dig[valid_mask]]
     data[x_name][~valid_mask] = np.nan
 
-    if vls.marktype == 'bar':
-        plot_kwargs['width'] = np.mean(np.diff(bin_edges)) * .9
-        plot_kwargs['align'] = 'center'
-
-    return data
+    return data, bin_edges
 
 
 def render(vls, data=None):
@@ -103,11 +150,11 @@ def render(vls, data=None):
     if encoding.x.aggregate:
         data = _do_aggregate(encoding, data, 'x', 'y')
 
-    print(data)
-
     plot_func = _MARK_DISPATCHER[vls.marktype]
     fig, ax = plt.subplots()
-
+    ax.set_prop_cycle(cycler('color', 'k'))
+    ax.set_xlabel(encoding.x.name)
+    ax.set_ylabel(encoding.y.name)
     return plot_func(ax, encoding, data, plot_kwargs)
 
 
