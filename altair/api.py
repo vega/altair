@@ -1,5 +1,7 @@
 """
-Main API for Vega-lite spec generation
+Main API for Vega-lite spec generation.
+
+DSL mapping Vega types to IPython traitlets
 """
 
 try:
@@ -14,7 +16,6 @@ from ._py3k_compat import string_types
 import pandas as pd
 
 
-
 class BaseObject(Configurable):
 
     skip = []
@@ -23,7 +24,8 @@ class BaseObject(Configurable):
         value = getattr(self, key)
         if isinstance(value, pd.DataFrame):
             return True
-        return (value is not None) and (not (not isinstance(value, bool) and not value))
+        return ((value is not None)
+                and (not (not isinstance(value, bool) and not value)))
 
     def to_dict(self):
         result = {}
@@ -42,35 +44,42 @@ class BaseObject(Configurable):
 
 class Data(BaseObject):
 
-    formatType = T.Enum(['json','csv'], default_value='json')
+    formatType = T.Enum(['json', 'csv'], default_value='json')
     url = T.Unicode(default_value=None, allow_none=True)
     values = T.List(default_value=None, allow_none=True)
 
     def to_dict(self):
-        result = {'formatType':self.formatType,
-                  'values':self.data.to_dict('records')
-                  }
+        result = {'formatType': self.formatType,
+                  'values': self.data.to_dict('records')}
         return result
+
 
 class Scale(BaseObject):
     pass
 
+
 class Axis(BaseObject):
     pass
+
 
 class Band(BaseObject):
     pass
 
+
 class Legend(BaseObject):
     pass
+
 
 class Bin(BaseObject):
     maxbins = T.Int(0, config=True)
 
+
 class SortItems(BaseObject):
     name = T.Unicode(default_value=None, allow_none=True)
-    aggregate = T.Enum(['avg','sum','min','max','count'], default_value=True)
+    aggregate = T.Enum(['avg', 'sum', 'min', 'max', 'count'],
+                       default_value=True)
     reverse = T.Bool(False)
+
 
 class Shelf(BaseObject):
 
@@ -129,6 +138,7 @@ class Row(FacetCoordinate):
 
 class Col(FacetCoordinate):
     pass
+
 
 class Size(Shelf):
     scale = T.Instance(Scale, default_value=None, allow_none=True)
@@ -220,8 +230,8 @@ class Encoding(BaseObject):
             self.shape._infer_type(self.parent.data)
 
 
-class Config(BaseObject):
-    
+class VLConfig(BaseObject):
+
     width = T.Int(600)
     height = T.Int(400)
     gridColor = T.Unicode('black')
@@ -230,13 +240,14 @@ class Config(BaseObject):
 
 class Viz(BaseObject):
 
-    marktype = T.Enum(['point','tick','bar','line',
-                     'area','circle','square','text'], default_value='point')
+    marktype = T.Enum(['point', 'tick', 'bar', 'line',
+                      'area', 'circle', 'square', 'text'],
+                      default_value='point')
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
-    config = T.Instance(Config, allow_none=True)
-    
-    def _config_default(self):
-        return Config()
+    vlconfig = T.Instance(VLConfig, allow_none=True)
+
+    def _vlconfig_default(self):
+        return VLConfig()
 
     _data = T.Instance(Data, default_value=None, allow_none=True)
     data = T.Any(default_value=None, allow_none=True)
@@ -255,15 +266,16 @@ class Viz(BaseObject):
         if self.encoding is not None:
             self.encoding._infer_types(self.data)
 
-    skip = ['data','_data']
+    skip = ['data', '_data', 'vlconfig']
 
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
-        super(Viz,self).__init__(**kwargs)
+        super(Viz, self).__init__(**kwargs)
 
     def to_dict(self):
         D = super(Viz, self).to_dict()
         D['data'] = self._data.to_dict()
+        D['config'] = self.vlconfig.to_dict()
         return D
 
     def encode(self, **kwargs):
@@ -271,6 +283,13 @@ class Viz(BaseObject):
         return self
 
     def mark(self, mt):
+        """
+        Set mark to given string value.
+
+        Parameters
+        ----------
+        mt: str
+        """
         self.marktype = mt
         return self
 
@@ -299,6 +318,13 @@ class Viz(BaseObject):
         return self.mark('text')
 
     def hist(self, bins=10, **kwargs):
+        """
+        Render histogram with given `bins`.
+
+        Parameters
+        ----------
+        bins: int, default 10
+        """
 
         self.marktype = "bar"
 

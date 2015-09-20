@@ -13,6 +13,8 @@ TYPECODE_MAP = {'ordinal': 'O',
 
 def parse_shorthand(sh):
     """
+    Altair accepts a shorthand expression for aggregation, name, and type.
+
     Parse strings of the form
 
     - "col_name"
@@ -20,6 +22,9 @@ def parse_shorthand(sh):
     - "avg(col_name)"
     - "avg(col_name):O"
 
+    Parameters
+    ----------
+    sh: str
     """
     # TODO: use an actual parser for this?
 
@@ -62,9 +67,9 @@ def parse_shorthand(sh):
     if typ:
         result['type'] = typ
     if agg:
-        result['aggregate']=agg
+        result['aggregate'] = agg
     if name:
-        result['name']=name
+        result['name'] = name
     return result
 
 
@@ -72,12 +77,17 @@ def infer_vegalite_type(data, name=None):
     """
     From an array-like input, infer the correct vega typecode
     ('O', 'N', 'Q', or 'T')
+
+    Parameters
+    ----------
+    data: Numpy array or Pandas Series
+    name: str
     """
     # See if we can read the type from the name
     if name is not None:
         parsed = parse_shorthand(name)
-        if result.get('type'):
-            return result['type']
+        if parsed.get('type'):
+            return parsed['type']
 
     # Otherwise, infer based on the dtype of the input
     typ = pd.lib.infer_dtype(data)

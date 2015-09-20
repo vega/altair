@@ -38,8 +38,14 @@ def test_to_dict():
     data = pd.DataFrame({'x': [1, 2, 3],
                          'y': [4, 5, 6]})
     spec = api.Viz(data).encode(x='x', y='y')
+
     D = spec.to_dict()
-    assert D == {'data': {'formatType': 'json',
+
+    assert D == {'config': {'gridColor': 'black',
+                            'gridOpacity': 0.08,
+                            'height': 400,
+                            'width': 600},
+                 'data': {'formatType': 'json',
                           'values': [{'x': 1, 'y': 4},
                                      {'x': 2, 'y': 5},
                                      {'x': 3, 'y': 6}]},
@@ -155,15 +161,24 @@ def test_hist():
 
     viz2 = api.Viz(data).hist(x="x", bins=30)
     assert viz2.encoding.x.bin.maxbins == 30
-    expected = {'data': {'formatType': 'json',
-                'values': [{'x': 1, 'y': 4}, {'x': 2, 'y': 5},
-                           {'x': 3, 'y': 6}]},
-                'encoding': {'x': {'bin': {'maxbins': 30}, 'name': 'x'},
-                'y': {'aggregate': 'count',
-                      'bin': False,
-                      'name': 'x',
-                      'type': 'Q'}},
-                'marktype': 'bar'}
+    expected = {'config': {'gridColor': 'black',
+                           'gridOpacity': 0.08,
+                           'height': 400,
+                           'width': 600},
+                'data': {'formatType': 'json',
+                         'values': [{'x': 1, 'y': 4},
+                                    {'x': 2, 'y': 5},
+                                    {'x': 3, 'y': 6}]},
+                'encoding': {'x': {'bin': {'maxbins': 30},
+                                   'name': 'x',
+                                   'type': 'Q'},
+                             'y': {'aggregate': 'count',
+                                   'bin': False,
+                                   'name': 'x',
+                                   'type': 'Q'}},
+                 'marktype': 'bar'}
+
+    assert viz2.to_dict() == expected
 
     viz3 = api.Viz(data).hist(x="x:O",
         color=api.Color(shorthand="bar", type="N")
@@ -171,7 +186,11 @@ def test_hist():
     assert viz3.encoding.x.name == "x"
     assert viz3.encoding.x.type == "O"
 
-    expected = {'data': {'formatType': 'json',
+    expected = {'config': {'gridColor': 'black',
+                           'gridOpacity': 0.08,
+                           'height': 400,
+                           'width': 600},
+                'data': {'formatType': 'json',
                 'values': [{'x': 1, 'y': 4}, {'x': 2, 'y': 5},
                            {'x': 3, 'y': 6}]},
                 'encoding': {'x': {'bin': {'maxbins': 10},
@@ -186,6 +205,7 @@ def test_hist():
                                        'type': 'N',
                                        'value': '#4682b4'}},
                 'marktype': 'bar'}
+
 
     assert viz3.to_dict() == expected
 
