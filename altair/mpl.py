@@ -17,41 +17,67 @@ def _determine_col_name(agg_shelf, shelf):
     return agg_coll
 
 
-def _vl_line(ax, encoding, data, pl_kw):
-    return ax.plot(encoding.x.name, encoding.y.name, data=data,
-                   **pl_kw)
+def _vl_line(ax, encoding, data, pl_kw, agg_cols):
+    x_name = _determine_col_name(encoding.x, 'x')
+    y_name = _determine_col_name(encoding.y, 'y')
+    df = data
+    if 'aggregate' in encoding.x:
+        _agg_cols = [c for c in agg_cols if c != x_name]
+        df = _do_aggregate(encoding.x, df, _agg_cols)
+
+    if 'aggregate' in encoding.y:
+        _agg_cols = [c for c in agg_cols if c != y_name]
+        df = _do_aggregate(encoding.y, df, _agg_cols)
+
+    sty_dict = {}
+    sty_dict.update(pl_kw)
+
+    return ax.plot(x_name, y_name, data=df, **pl_kw)
 
 
-def _vl_area(ax, encoding, data, pl_kw):
-    ln, = ax.plot(encoding.x.name, encoding.y.name, data=data, **pl_kw)
-    area = ax.fill_between(encoding.x.name, encoding.y.name,
-                           data=data, **pl_kw)
+def _vl_area(ax, encoding, data, pl_kw, agg_cols):
+    ln, = _vl_line(ax, encoding, data, pl_kw, agg_cols)
+    x_data = ln.get_xdata()
+    y_data = ln.get_ydata()
+    c = ln.get_color()
+    area = ax.fill_between(x_data, y_data, color=c)
     return ln, area
 
 
-def _vl_point(ax, encoding, data, pl_kw):
+def _vl_point(ax, encoding, data, pl_kw, agg_cols):
     pl_kw.setdefault('linestyle', 'none')
     if 'shape' in encoding:
-        data_itr = _do_shape(encoding.shape, data)
+        data_itr = _do_shape(encoding.shape, data, agg_cols)
     else:
         data_itr = [((None, data), {'marker': 'o'})]
 
     lns = []
     for (k, df), sty in data_itr:
+        x_name = _determine_col_name(encoding.x, 'x')
+        y_name = _determine_col_name(encoding.y, 'y')
+
+        if 'aggregate' in encoding.x:
+            _agg_cols = [c for c in agg_cols if c != x_name]
+            df = _do_aggregate(encoding.x, df, _agg_cols)
+
+        if 'aggregate' in encoding.y:
+            _agg_cols = [c for c in agg_cols if c != y_name]
+            df = _do_aggregate(encoding.y, df, _agg_cols)
+
         sty_dict = {}
         sty_dict.update(pl_kw)
         sty_dict.update(sty)
-        ln = ax.plot(encoding.x.name, encoding.y.name, data=df, **sty_dict)
+        ln = ax.plot(x_name, y_name,  data=df, **sty_dict)
         lns.extend(ln)
 
     return lns
 
 
-def _vl_bar(ax, encoding, data, pl_kw):
+def _vl_bar(ax, encoding, data, pl_kw, agg_cols):
     return ax.bar(encoding.x.name, encoding.y.name, data=data, **pl_kw)
 
 
-def _do_shape(shape, data):
+def _do_shape(shape, data, agg_cols):
     """Sort out how to do shape
 
     Given an encoding + a possibly reduced DataFrame, return
@@ -59,7 +85,7 @@ def _do_shape(shape, data):
     """
     filled = shape.filled
     shapes = mmarkers.MarkerStyle.filled_markers
-
+    shape_col = _determine_col_name(shape, 'shape')
     if not filled:
         shapes = shapes + ('x',  '4', '3', '+', '2', '1')
 
@@ -68,22 +94,25 @@ def _do_shape(shape, data):
     if shape.type == 'Q':
         dig_data, bin_edges = _digitize_col(shape, data)
         data['{}_shape_bin'.format(shape.name)] = dig_data
+
+    if 'aggregate' in shape:
+        _agg_cols = [c for c in agg_cols if c != shape_col]
+        data = _do_aggregate(shape, data, _agg_cols)
+
     fill = 'full' if filled else 'none'
     cyl *= cycler('fillstyle', (fill, ))
 
-    gb = data.groupby(shape.name)
+    gb = data.groupby(shape_col)
 
     for df, sty in zip(gb, cyl):
         yield df, sty
 
 
-def _do_aggregate(encoding, data, agg_key, by_keys):
-    agg_shelf = getattr(encoding, agg_key)
+def _do_aggregate(shelf, data, by_keys):
 
-    agg_coll = _determine_col_name(agg_shelf, agg_key)
+    agg_method = shelf.aggregate
 
-    agg_method = getattr(encoding, agg_key).aggregate
-    binned = data[agg_coll].groupby(by_keys)
+    binned = data.groupby(by_keys)
     agg_func_name = _AGG_MAP[agg_method]
 
     data = getattr(binned, agg_func_name)().reset_index()
@@ -157,12 +186,16 @@ def render(vls, data=None):
     y_binned = 'bin' in encoding.y and encoding.y.bin
     if x_binned and y_binned:
         raise NotImplementedError("Double binning not done yet")
+    agg_cols = []
     for sh in shelves:
         if sh not in encoding:
             continue
         shelf = getattr(encoding, sh)
         if 'bin' in shelf and shelf.bin:
             data = _do_binning(vls, data, sh, plot_kwargs)
+        agg_cols.append(_determine_col_name(shelf, sh))
+
+    agg_cols = list(set(agg_cols))
 
     data = data.dropna()
 
@@ -178,6 +211,13 @@ def render(vls, data=None):
         # sort out the names with respect to binning
         col_name = _determine_col_name(encoding.col, 'col')
         row_name = _determine_col_name(encoding.row, 'row')
+        if 'aggregate' in encoding.row:
+            _agg_cols = [c for c in agg_cols if c != row_name]
+            data = _do_aggregate(encoding.row, data, _agg_cols)
+
+        if 'aggregate' in encoding.col:
+            _agg_cols = [c for c in agg_cols if c != col_name]
+            data = _do_aggregate(encoding.col, data,  _agg_cols)
 
         row_labels = data[row_name].unique()
         col_labels = data[col_name].unique()
@@ -188,14 +228,21 @@ def render(vls, data=None):
         facet_iter = data.groupby([row_name, col_name])
     elif has_col:
         col_name = _determine_col_name(encoding.col, 'col')
+
+        if 'aggregate' in encoding.col:
+            _agg_cols = [c for c in agg_cols if c != col_name]
+            data = _do_aggregate(encoding.col, data, _agg_cols)
+
         col_labels = data[col_name].unique()
         col_num, row_num = len(col_labels), 1
-        fig, ax_list = plt.subplots(col_num, row_num,
-                                    sharex=True, sharey=True)
         grid_keys = list(col_labels)
         facet_iter = data.groupby(col_name)
     elif has_row:
         row_name = _determine_col_name(encoding.row, 'row')
+        if 'aggregate' in encoding.row:
+            _agg_cols = [c for c in agg_cols if c != row_name]
+            data = _do_aggregate(encoding.row, data, _agg_cols)
+
         row_labels = data[row_name].unique()
         col_num, row_num = 1, len(row_labels)
         grid_keys = list(row_labels)
@@ -222,7 +269,7 @@ def render(vls, data=None):
     rets = {}
     for k, df in facet_iter:
         ax = ax_map[k]
-        _r = plot_func(ax, encoding, df, plot_kwargs)
+        _r = plot_func(ax, encoding, df, plot_kwargs, agg_cols)
         rets[k] = _r
         if k:
             ax.set_title(repr(k))
