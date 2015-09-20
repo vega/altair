@@ -85,6 +85,7 @@ def _vl_point(ax, encoding, data, rc):
         sty_dict = {}
         sty_dict.update(pl_kw)
         sty_dict.update(sty)
+
         ln = ax.plot(x_name, y_name,  data=df, **sty_dict)
         lns.extend(ln)
 
@@ -116,13 +117,16 @@ def _do_shape(shape, data, rc):
         _agg_cols = [c for c in rc.agg_cols if c != shape_col]
         data = _do_aggregate(shape, data, _agg_cols)
 
-    fill = 'full' if filled else 'none'
+    fill_sty = {'fillstyle': 'full' if filled else 'none'}
+    if filled:
+        fill_sty['markeredgewidth'] = 0
 
     gb = data.groupby(shape_col)
 
     for df in gb:
         sty = shape_dict[df[0]]
-        sty['fillstyle'] = fill
+        sty.update(fill_sty)
+
         yield df[1], sty
 
 
