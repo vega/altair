@@ -214,7 +214,7 @@ def render(vls, data=None):
     for k, ax in zip(grid_keys, ax_list.ravel()):
         ax_map[k] = ax
         ax.set_prop_cycle(cycler('color', 'k'))
-        if 'x' in encoding and ax.rowNum == row_num:
+        if 'x' in encoding and ax.rowNum == row_num - 1:
             ax.set_xlabel(encoding.x.name)
         if 'y' in encoding and ax.colNum == 0:
             ax.set_ylabel(encoding.y.name)
