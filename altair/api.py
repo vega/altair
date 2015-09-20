@@ -166,6 +166,7 @@ class Encoding(BaseObject):
                     default_value=None, allow_none=True)
     shape = T.Union([T.Instance(Shape), T.Unicode()],
                     default_value=None, allow_none=True)
+
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
     skip = ['parent', 'config']
@@ -219,11 +220,23 @@ class Encoding(BaseObject):
             self.shape._infer_type(self.parent.data)
 
 
+class Config(BaseObject):
+    
+    width = T.Int(600)
+    height = T.Int(400)
+    gridColor = T.Unicode('black')
+    gridOpacity = T.Float(0.08)
+
+
 class Viz(BaseObject):
 
     marktype = T.Enum(['point','tick','bar','line',
                      'area','circle','square','text'], default_value='point')
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
+    config = T.Instance(Config, allow_none=True)
+    
+    def _config_default(self):
+        return Config()
 
     _data = T.Instance(Data, default_value=None, allow_none=True)
     data = T.Any(default_value=None, allow_none=True)
