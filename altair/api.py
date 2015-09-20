@@ -285,18 +285,17 @@ class Viz(BaseObject):
     def text(self):
         return self.mark('text')
 
-    def hist(self, bins=0, **kwargs):
+    def hist(self, bins=10, **kwargs):
 
         self.marktype = "bar"
 
         config = Config()
 
-        config.Y.name = "*"
         config.Y.type = "Q"
         config.Y.aggregate = "count"
 
         # We're making sure a y-change is triggered
-        self.encoding = Encoding(config=config, y='', **kwargs)
+        self.encoding = Encoding(config=config, **kwargs)
 
         if isinstance(kwargs.get("x"), str):
             self.encoding.x.bin = Bin(maxbins=bins)
