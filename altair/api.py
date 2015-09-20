@@ -220,7 +220,7 @@ class Encoding(BaseObject):
             self.shape._infer_type(self.parent.data)
 
 
-class Config(BaseObject):
+class VLConfig(BaseObject):
     
     width = T.Int(600)
     height = T.Int(400)
@@ -233,10 +233,10 @@ class Viz(BaseObject):
     marktype = T.Enum(['point','tick','bar','line',
                      'area','circle','square','text'], default_value='point')
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
-    config = T.Instance(Config, allow_none=True)
+    vlconfig = T.Instance(VLConfig, allow_none=True)
     
-    def _config_default(self):
-        return Config()
+    def _vlconfig_default(self):
+        return VLConfig()
 
     _data = T.Instance(Data, default_value=None, allow_none=True)
     data = T.Any(default_value=None, allow_none=True)
@@ -255,7 +255,7 @@ class Viz(BaseObject):
         if self.encoding is not None:
             self.encoding._infer_types(self.data)
 
-    skip = ['data','_data']
+    skip = ['data','_data','vlconfig']
 
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
@@ -264,6 +264,7 @@ class Viz(BaseObject):
     def to_dict(self):
         D = super(Viz, self).to_dict()
         D['data'] = self._data.to_dict()
+        D['config'] = self.vlconfig.to_dict()
         return D
 
     def encode(self, **kwargs):
