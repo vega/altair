@@ -10,11 +10,15 @@ except ImportError:
 from .utils import parse_shorthand
 from ._py3k_compat import string_types
 
+import pandas as pd
+
 
 class BaseObject(T.HasTraits):
     
     def __contains__(self, key):
         value = getattr(self, key)
+        if isinstance(value, pd.DataFrame):
+            return True
         return (value is not None) and (not (not isinstance(value, bool) and not value))
 
     def to_dict(self):
@@ -36,8 +40,14 @@ class Data(BaseObject):
 
     formatType = T.Enum(['json','csv'], default_value='json')
     url = T.Unicode(default_value=None, allow_none=True)
-    data = T.List(default_value=None, allow_none=True)
-
+    values = T.List(default_value=None, allow_none=True)
+    
+    def to_dict(self):
+        result = {'formatType':self.formatType,
+                  'values':self.data.to_dict('records')
+                  }
+        return result
+    
 class Scale(BaseObject):
     pass
 
@@ -175,18 +185,33 @@ class Viz(BaseObject):
 
     marktype = T.Enum(['point','tick','bar','line',
                      'area','circle','square','text'], default_value='point')
+    encoding = T.Instance(Encoding, default_value=None, allow_none=True)
+
     _data = T.Instance(Data, default_value=None, allow_none=True)
     data = T.Any(default_value=None, allow_none=True)
-    encoding = T.Instance(Encoding, default_value=None, allow_none=True)
-    # _encoding = T.Union([T.Instance(Encoding),T.Dict])
-
-    # def __encoding_changed(self, name, old, new):
-    #     if isinstance(new, dict):
-    #         self._encoding = Encoding(**new)
+    
+    def _data_changed(self, name, old, new):
+        if not isinstance(new, pd.DataFrame):
+            self.data = pd.DataFrame(new)
+            return
+        self._data = Data(data=new)
 
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
         super(Viz,self).__init__(self, **kwargs)
+
+    def to_dict(self):
+        result = {}
+        for k in self.traits():
+            if k in self and k!='data':
+                v = getattr(self, k)
+                if k=='_data':
+                    k='data'
+                if isinstance(v, BaseObject):
+                    result[k] = v.to_dict()
+                else:
+                    result[k] = v
+        return result
 
     def encode(self, **kwargs):
         self.encoding = Encoding(**kwargs)
