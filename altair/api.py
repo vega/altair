@@ -158,6 +158,17 @@ class Encoding(BaseObject):
                     default_value=None, allow_none=True)
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
+    def to_dict(self):
+        result = {}
+        for k in self.traits():
+            if k in self and k not in ('parent'):
+                v = getattr(self, k)
+                if isinstance(v, BaseObject):
+                    result[k] = v.to_dict()
+                else:
+                    result[k] = v
+        return result
+
     def _infer_types(self, data):
         for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape']:
             val = getattr(self, attr)
