@@ -1,0 +1,31 @@
+
+<iframe width='{{ width }}' height='{{ height }}' frameBorder='0' srcdoc='
+<html>
+  <head>
+    <script src="http://vega.github.io/vega-editor/vendor/d3.min.js"></script>
+    <script src="http://vega.github.io/vega-editor/vendor/topojson.js"></script>
+    <script src="http://vega.github.io/vega-editor/vendor/d3.layout.cloud.js"></script>
+    <script src="http://rawgit.com/freeman-lab/vega-playground/master/js/vega.js"></script>
+    <script src="http://rawgit.com/freeman-lab/vega-playground/master/js/vega-lite.js"></script>
+  </head>
+  <body>  
+    <div id="vis"></div>
+  </body>
+    <script type="text/javascript">
+      console.log(vg)
+
+      function parse(spec) {
+        vg.parse.spec(spec, function(chart) { 
+          chart({el:"#vis"}).update(); 
+        });
+      }
+
+      function render(blob) {
+        var spec = vl.compile(blob);
+        parse(spec)
+      }
+      var data = {{ spec }}
+      render(data);
+    </script>
+</html>'
+</iframe>

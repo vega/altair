@@ -27,3 +27,11 @@ specification:
 * There is a good amount of complexity implicit in the vega-lite spec that is difficult
   to infer from the JSON spec itself. A main example is the subtle interplay between
   aggregation and binning.
+
+  - if multiple columns are aggregated what is the order in which the aggregation is computed?
+    - how does aggregated data re-enter the computations?
+  - if any columns are binned, do you always group against the binned versions for the columns?
+  - what to do in cases where the a Q column is used for something that needs to be discrete?
+    - difference between ints and floats?
+  - are colors always low-number discrete or 'continuous'?
+  - is size always low-number discrete or 'continuous'?
