@@ -9,13 +9,25 @@ import numpy
 
 def render(spec, width=None, height=None):
     """
-    Render spec using native vega-lite parser/Vega renderer.
+    Render vega specification to html.
+
+    Uses native vega-lite parser/Vega renderer. Useful for
+    rendering visualizations in notebooks.
 
     Parameters
     ----------
-    spec: Altair spec
-    width: int
-    height: int
+    spec : altair.api.Viz object
+        Represents the visualization spec to be rendered to html
+
+    width : int, optional, default=None
+        Width in pixels.
+
+    height : int, optional, default=None
+        Height in pixels.
+
+    Returns
+    -------
+    html : str
     """
 
     from jinja2 import Template, escape
