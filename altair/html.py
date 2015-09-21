@@ -69,6 +69,9 @@ def save(spec, fname, overwrite=False, width=None, height=None):
         Height in pixels.
     """
 
+    if not os.path.splitext(fname)[-1] == '.html':
+        fname += '.html'
+
     exists = os.path.exists(fname)
 
     if exists is True:
