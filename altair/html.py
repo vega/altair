@@ -9,13 +9,25 @@ import numpy
 
 def render(spec, width=None, height=None):
     """
-    Render spec using native vega-lite parser/Vega renderer.
+    Render vega specification to html.
+
+    Uses native vega-lite parser/Vega renderer. Useful for
+    rendering visualizations in notebooks.
 
     Parameters
     ----------
-    spec: Altair spec
-    width: int
-    height: int
+    spec : altair.api.Viz object
+        Represents the visualization spec to be rendered to html
+
+    width : int, optional, default=None
+        Width in pixels.
+
+    height : int, optional, default=None
+        Height in pixels.
+
+    Returns
+    -------
+    html : str
     """
 
     from jinja2 import Template, escape
@@ -45,3 +57,42 @@ def render(spec, width=None, height=None):
     t = Template(base)
     html = t.render(**fields)
     return html
+
+def save(spec, fname, overwrite=False, width=None, height=None):
+    """
+    Save an html-rendering of a vega specification to a file.
+
+    Parameters
+    ----------
+    spec : altair.api.Viz object
+        Represents the visualization spec to be rendered to html
+
+    fname : str 
+        Name of file to write to
+
+    overwrite : boolean, optional, default=False
+        Whether to overwrite an existing file.
+        If false, will raise an error if file already exists.
+
+    width : int, optional, default=None
+        Width in pixels.
+
+    height : int, optional, default=None
+        Height in pixels.
+    """
+
+    if not os.path.splitext(fname)[-1] == '.html':
+        fname += '.html'
+
+    exists = os.path.exists(fname)
+
+    if exists is True:
+        if overwrite is False:
+            raise ValueError("File '%s' exists and overwrite is False" % fname)
+        else:
+            os.remove(fname)
+
+    blob = render(spec, width, height)
+
+    with open(fname, 'w') as f:
+        f.write(blob)
