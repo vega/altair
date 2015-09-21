@@ -7,7 +7,8 @@ from .. import api, spec, html
 @pytest.fixture
 def spec():
     data = dict(x=[1, 2, 3], y=[4, 5, 6])
-    return api.Viz(data).encode(x='x:Q', y='y:Q').line()
+    result = api.Viz(data).encode(x='x:Q', y='y:Q').line()
+    return result
 
 def test_render(spec):
     r = html.render(spec)
