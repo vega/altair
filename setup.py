@@ -20,6 +20,7 @@ AUTHOR_EMAIL        = "jupyter@googlegroups.org",
 URL                 = 'http://github.com/ellisonbg/altair/'
 DOWNLOAD_URL        = 'http://github.com/ellisonbg/altair/'
 LICENSE             = 'BSD 3-clause'
+INSTALL_REQUIRES    = ['cycler', 'matplotlib', 'numpy', 'pandas', 'pytest']
 
 import io
 import os
@@ -50,6 +51,7 @@ def version(path):
 VERSION = version('altair/__init__.py')
 
 
+
 setup(name=NAME,
       version=VERSION,
       description=DESCRIPTION,
@@ -60,6 +62,7 @@ setup(name=NAME,
       download_url=DOWNLOAD_URL,
       license=LICENSE,
       packages=PACKAGES,
+      install_requires = INSTALL_REQUIRES,
       classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
