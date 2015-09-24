@@ -8,15 +8,15 @@
     <script src="http://rawgit.com/freeman-lab/vega-playground/master/js/vega.js"></script>
     <script src="http://rawgit.com/freeman-lab/vega-playground/master/js/vega-lite.js"></script>
   </head>
-  <body>  
+  <body>
     <div id="vis"></div>
   </body>
     <script type="text/javascript">
 
 
       function parse(spec) {
-        vg.parse.spec(spec, function(chart) { 
-          chart({el:"#vis"}).update(); 
+        vg.parse.spec(spec, function(chart) {
+          chart({el:"#vis"}).update();
         });
       }
 
