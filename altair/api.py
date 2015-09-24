@@ -63,7 +63,7 @@ class Axis(BaseObject):
 
 
 class Band(BaseObject):
-    pass
+    size = T.Int(600)
 
 
 class Legend(BaseObject):
@@ -234,6 +234,8 @@ class VLConfig(BaseObject):
 
     width = T.Int(600)
     height = T.Int(400)
+    singleWidth = T.Int(default_value=None, allow_none=True)
+    singleHeight = T.Int(default_value=None, allow_none=True)
     gridColor = T.Unicode('black')
     gridOpacity = T.Float(0.08)
 
@@ -280,6 +282,32 @@ class Viz(BaseObject):
 
     def encode(self, **kwargs):
         self.encoding = Encoding(**kwargs)
+        return self
+
+    def configure(self, **kwargs):
+        """Set chart configuration"""
+        self.vlconfig = VLConfig(**kwargs)
+        return self
+
+    def set_single_dims(self, width, height):
+        """
+        Helper function for setting single-widths
+
+        Parameters
+        ----------
+        width: int
+        height: int
+        """
+        self.vlconfig.width = width
+        self.vlconfig.height = height
+        self.vlconfig.singleWidth = int(width * 0.75)
+        self.vlconfig.singleHeight = int(height * 0.75)
+
+        if self.encoding.x.type in ('N', 'O'):
+            self.encoding.x.band = Band(size=int(width/10))
+
+        if self.encoding.y.type in ('N', 'O'):
+            self.encoding.y.band = Band(size=int(height/10))
         return self
 
     def mark(self, mt):
