@@ -30,7 +30,9 @@ def render(spec, width=None, height=None):
     html : str
     """
 
-    from jinja2 import Template, escape
+    from jinja2 import Template, Environment, PackageLoader, escape
+
+    env = Environment(loader=PackageLoader('altair', 'templates'))
 
     if width is not None:
         spec.vlconfig.width = width
@@ -41,9 +43,7 @@ def render(spec, width=None, height=None):
     else:
         height = spec.vlconfig.height
 
-    location = os.path.join(os.path.dirname(__file__),
-                            'templates/template.html')
-    base = open(location).read()
+    template = env.get_template('template.html')
     d = spec.to_dict()
 
     class NumpyConvert(json.JSONEncoder):
@@ -54,8 +54,7 @@ def render(spec, width=None, height=None):
 
     spec = escape(json.dumps(d, cls=NumpyConvert))
     fields = {'spec': spec, 'width': width, 'height': height}
-    t = Template(base)
-    html = t.render(**fields)
+    html = template.render(**fields)
     return html
 
 def save(spec, fname, overwrite=False, width=None, height=None):
@@ -67,7 +66,7 @@ def save(spec, fname, overwrite=False, width=None, height=None):
     spec : altair.api.Viz object
         Represents the visualization spec to be rendered to html
 
-    fname : str 
+    fname : str
         Name of file to write to
 
     overwrite : boolean, optional, default=False

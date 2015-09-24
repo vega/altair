@@ -25,7 +25,10 @@ import io
 import os
 import re
 
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 
 def read(path, encoding='utf-8'):
