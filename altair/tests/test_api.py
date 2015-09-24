@@ -10,6 +10,11 @@ from .. import api, spec
 
 VALID_MARKTYPES = spec.SPEC['properties']['marktype']['enum']
 
+def build_simple_spec():
+    data = dict(x=[1, 2, 3],
+                y=[4, 5, 6])
+    return api.Viz(data), data
+
 
 def test_empty_data():
     d = api.Data()
@@ -20,16 +25,13 @@ def test_empty_data():
 
 
 def test_dict_data():
-    data = dict(x=[1, 2, 3],
-                y=[4, 5, 6])
-    spec = api.Viz(data)
+    spec, data = build_simple_spec()
     assert np.all(spec.data == pd.DataFrame(data))
 
 
 def test_dataframe_data():
-    datadict = dict(x=[1, 2, 3],
-                    y=[4, 5, 6])
-    data = pd.DataFrame(datadict)
+    spec, data = build_simple_spec()
+    data = data = pd.DataFrame(data)
     spec = api.Viz(data)
     assert np.all(spec.data == data)
 
@@ -55,10 +57,7 @@ def test_to_dict():
 
 
 def test_markers():
-    data = dict(x=[1, 2, 3],
-                y=[4, 5, 6])
-
-    spec = api.Viz(data)
+    spec, data = build_simple_spec()
 
     # call, e.g. spec.mark('point')
     for marktype in VALID_MARKTYPES:
@@ -147,6 +146,29 @@ def test_infer_types():
         name, typ = val
         assert getattr(spec.encoding, key).name == name
         assert getattr(spec.encoding, key).type == typ
+
+
+def test_configure():
+  spec, data = build_simple_spec()
+  spec.configure(height=100, width=200)
+  res = spec.to_dict()
+  assert res['config']['height'] == 100
+  assert res['config']['width'] == 200
+
+
+def test_single_dim_setting():
+    spec, data = build_simple_spec()
+    spec.encode(x="x:N", y="y:Q").set_single_dims(100, 100)
+    res = spec.to_dict()
+
+    assert res['config']['width'] == 100
+    assert res['config']['height'] == 100
+    assert res['config']['singleWidth'] == 75
+    assert res['config']['singleHeight'] == 75
+
+    assert res['encoding']['x']['band']['size'] == 10
+    assert res['encoding']['y'].get('band') is None
+
 
 def test_hist():
     data = dict(x=[1, 2, 3],
