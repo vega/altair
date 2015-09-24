@@ -44,6 +44,24 @@ This approach enables users to peform exploratory visualizations with a much sim
 
 We realize that a declarative API will necessarily be limited compared to the full programatic APIs of Matplotlib, Bokeh, etc. That is a deliberate design choice we feel is needed to simplify the user experience of exploratory visualization.
 
+## Installation
+
+Altair requires [cycler](http://github.com/matplotlib/cycler), [matplotlib](http://matplotlib.org/), [numpy](http://www.numpy.org/), [pandas](http://pandas.pydata.org/) and [py.test](http://pytest.org/latest).
+
+Once the dependencies have been installed, Altair can be installed to the started Python path using:
+
+```
+python setup.py install
+```
+
+To install to another location use:
+
+```
+python setup.py install --prefix=/path/to/location
+```
+
+Then make sure your PYTHONPATH environment variable points to this location.
+
 ## Testing
 
 We are writing tests using [py.test](http://pytest.org/latest/). The run the Altair test suite, run:
