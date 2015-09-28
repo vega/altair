@@ -46,27 +46,32 @@ We realize that a declarative API will necessarily be limited compared to the fu
 
 ## Installation
 
-Altair requires [cycler](http://github.com/matplotlib/cycler), [matplotlib](http://matplotlib.org/), [numpy](http://www.numpy.org/), [pandas](http://pandas.pydata.org/) and [py.test](http://pytest.org/latest).
+Altair requires 
+* [cycler](http://github.com/matplotlib/cycler)
+* [matplotlib](http://matplotlib.org/) (1.5.0rc1 or better)
+* [numpy](http://www.numpy.org/)
+* [pandas](http://pandas.pydata.org/)
+* [py.test](http://pytest.org/latest)
 
-Once the dependencies have been installed, Altair can be installed to the started Python path using:
+Once the dependencies have been installed, Altair can be installed.
+
+If you have cloned the repository, run the following command from the root of the repository:
 
 ```
 python setup.py install
 ```
 
-To install to another location use:
+If you do not wish to clone the repository, you can install using:
 
 ```
-python setup.py install --prefix=/path/to/location
+pip install git+https://github.com/ellisonbg/altair
 ```
-
-Then make sure your PYTHONPATH environment variable points to this location.
 
 ## Testing
 
 We are writing tests using [py.test](http://pytest.org/latest/). The run the Altair test suite, run:
 
-	py.test altair
+  py.test altair
 
 ## Notes on vega-lite
 
