@@ -46,14 +46,19 @@ We realize that a declarative API will necessarily be limited compared to the fu
 
 ## Installation
 
-Altair requires 
-* [cycler](http://github.com/matplotlib/cycler)
-* [matplotlib](http://matplotlib.org/) (1.5.0rc1 or better)
+Altair requires the following dependencies:
+
 * [numpy](http://www.numpy.org/)
 * [pandas](http://pandas.pydata.org/)
 * [py.test](http://pytest.org/latest)
 
 Once the dependencies have been installed, Altair can be installed.
+
+For particular renderers:
+
+* [cycler](http://github.com/matplotlib/cycler)
+* [matplotlib](http://matplotlib.org/) (1.5.0rc1 or better)
+* [lightning-python](https://github.com/lightning-viz/lightning-python) (master for native Vega/HTML rendering)
 
 If you have cloned the repository, run the following command from the root of the repository:
 
