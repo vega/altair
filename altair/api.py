@@ -10,7 +10,7 @@ try:
 except ImportError:
     from IPython.utils import traitlets as T
 
-from .utils import parse_shorthand, infer_vegalite_type
+from .utils import parse_shorthand, infer_vegalite_type, DataTrait
 from ._py3k_compat import string_types
 
 import pandas as pd
@@ -252,7 +252,7 @@ class Viz(BaseObject):
         return VLConfig()
 
     _data = T.Instance(Data, default_value=None, allow_none=True)
-    data = T.Any(default_value=None, allow_none=True)
+    data = DataTrait(default_value=None, allow_none=True)
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
