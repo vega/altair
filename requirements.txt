@@ -2,4 +2,4 @@ traitlets
 pandas
 jinja2
 git+https://github.com/lightning-viz/lightning-python#egg=lightning-python
-git+https://github.com/ellisonbg/altair.git#egg=altair
+# git+https://github.com/ellisonbg/altair.git#egg=altair

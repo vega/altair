@@ -10,10 +10,13 @@ try:
 except ImportError:
     from IPython.utils import traitlets as T
 
-from .utils import parse_shorthand, infer_vegalite_type, DataTrait
+from .utils import parse_shorthand, infer_vegalite_type, DataFrameTrait
 from ._py3k_compat import string_types
+from .renderer import Renderer
 
 import pandas as pd
+
+
 
 
 class BaseObject(Configurable):
@@ -252,12 +255,12 @@ class Viz(BaseObject):
         return VLConfig()
 
     _data = T.Instance(Data, default_value=None, allow_none=True)
-    data = DataTrait(default_value=None, allow_none=True)
+    data = DataFrameTrait(default_value=None, allow_none=True)
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
             self.encoding.parent = self
-            if self.data is not None:
+            if 'data' in self:
                 self.encoding._infer_types(self.data)
 
     def _data_changed(self, name, old, new):
@@ -371,3 +374,47 @@ class Viz(BaseObject):
         self.encoding.y.name = self.encoding.x.name
 
         return self
+        
+    def render(self, **kwargs):
+        global _renderer
+        return _renderer.render(self, **kwargs)
+
+
+# Renderer logic
+
+def _get_matplotlib_renderer():
+    from .mpl import MatplotlibRenderer
+    return MatplotlibRenderer()
+
+def _get_lightning_renderer():
+    from .lightning import LightningRenderer
+    return LightningRenderer()
+
+_renderers = {
+    'matplotlib': _get_matplotlib_renderer,
+    'lightning': _get_lightning_renderer
+}
+
+
+_renderer = None
+
+def register_renderer(name, rfactory):
+    """Register a renderer factory that creates renderer instances."""
+    global _renderers
+    _renderers[name] = rfactory
+
+def use_renderer(r):
+    """Use a particular renderer, registered by name or an actual Renderer instance."""
+    global _renderer
+    global _renderers
+    if isinstance(r, Renderer):
+        _renderer = r
+    else:
+        if r in _renderers:
+            _renderer = _renderers[r]()
+        else:
+            raise ValueError('renderer could not be found: {0}').format(r)
+
+def list_renderers():
+    global _renderers
+    return list(_renderers.keys())

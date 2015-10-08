@@ -4,7 +4,7 @@ Utility routines
 import warnings
 
 import pandas as pd
-from traitlets import Any
+import traitlets as T
 
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',
@@ -109,15 +109,16 @@ def infer_vegalite_type(data, name=None):
     return TYPECODE_MAP[typecode]
 
 
-class DataTrait(Any):
+class DataFrameTrait(T.Any):
     """A custom TraitType for pandas.DataFrame or other similar labeled data.
     
     This mainly exists for objects where == doesn't make sense for comparison.
     """
     
     default_value = None
+    allow_none = True
     info_text = 'a pandas.DataFrame or similar object'
-    
+
     def set(self, obj, value):
         new_value = self._validate(obj, value)
         try:
@@ -130,6 +131,8 @@ class DataTrait(Any):
             silent = bool(id(old_value) == id(new_value))
         except:
             # if there is an error in comparing, default to notify
+            pass
+        #     raise
             silent = False
         if silent is not True:
             # we explicitly compare silent to True just in case the equality
