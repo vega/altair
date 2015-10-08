@@ -9,6 +9,8 @@ import numpy as np
 
 from cycler import cycler
 
+from .renderer import Renderer
+
 
 def _determine_col_name(agg_shelf, shelf):
     if 'bin' in agg_shelf and agg_shelf.bin:
@@ -370,3 +372,9 @@ _AGG_MAP = {"avg": 'mean',
             "min": 'min',
             "max": 'max',
             "count": 'count'}
+
+class MPLRenderer(Renderer):
+    
+    def render(self, spec, **kwargs):
+        return render(spec)
+
