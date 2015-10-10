@@ -387,7 +387,7 @@ def _get_matplotlib_renderer():
     return MatplotlibRenderer()
 
 def _get_lightning_renderer():
-    from .lightning import LightningRenderer
+    from .lgn import LightningRenderer
     return LightningRenderer()
 
 _renderers = {
