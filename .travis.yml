@@ -14,6 +14,7 @@ install:
   - conda install --yes $DEPS
   # older pytest breaks on Python 3.5
   - pip install pytest>=2.7.3 --upgrade
+  - pip install lightning-python
   - python setup.py install
 
 before_install:
