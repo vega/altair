@@ -6,7 +6,7 @@ python:
   - 3.5
 
 env:
-  - DEPS="pandas pytest traitlets pip jinja2"
+  - DEPS="pandas pytest traitlets pip jinja2 ipython"
 
 install:
   - conda create -n testenv --yes python=$TRAVIS_PYTHON_VERSION

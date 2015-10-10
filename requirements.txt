@@ -1,5 +1,5 @@
 traitlets
 pandas
 jinja2
-lightning-python
+# lightning-python
 # git+https://github.com/ellisonbg/altair.git#egg=altair
