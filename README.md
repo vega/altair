@@ -58,7 +58,7 @@ For particular renderers:
 
 * [cycler](http://github.com/matplotlib/cycler)
 * [matplotlib](http://matplotlib.org/) (1.5.0rc1 or better)
-* [lightning-python](https://github.com/lightning-viz/lightning-python) (master for native Vega/HTML rendering)
+* [lightning-python](https://github.com/lightning-viz/lightning-python) (1.2.1 or better for native Vega/HTML rendering)
 
 If you have cloned the repository, run the following command from the root of the repository:
 
