@@ -81,14 +81,14 @@ class Scale(BaseObject):
     type = T.Enum(['linear', 'log', 'pow', 'sqrt', 'quantile'], default_value='linear')
     reverse = T.Bool(False)
     zero = T.Bool(True)
-    nice = T.Enum(['second', 'minute', 'hour', 'day', 'week', 'month', 'year'], default_value='linear')
-    useRawDomain = T.Bool()
+    nice = T.Enum(['second', 'minute', 'hour', 'day', 'week', 'month', 'year'], allow_none=True)
+    useRawDomain = T.Bool(default_value=None, allow_none=True)
 
 
 class ScaleColor(Scale):
     """Scale object that adds additional properties to the Scale property for Color"""
 
-    range = T.Union([T.Unicode(), T.List(T.Unicode)])
+    range = T.Union([T.Unicode(), T.List(T.Unicode)], default_value=None, allow_none=True)
     c10palette = T.Enum(['category10', 'category10k', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3'],
                         default_value='category10')
     c20palette = T.Enum(['category20', 'category20b', 'category20c'], default_value='category20')
