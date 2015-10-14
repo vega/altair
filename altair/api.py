@@ -1,7 +1,21 @@
 """
 Main API for Vega-lite spec generation.
 
-DSL mapping Vega types to IPython traitlets
+DSL mapping Vega types to IPython traitlets.
+
+The inheritance of classes for Vega-lite spec in this file is as follows,
+where Shelf*, DataCoordinate*, and FacetCoordinate* are not part of the
+Vega-lite spec but are useful to follow DRY.
+
+Shelf*
+|
+|_______________________________________________________________
+|                   |                   |           |           |
+DataCoordinate*     FacetCoordinate*    Shape       Color       Size
+|                   |
+|_______            |_______
+|       |           |       |
+X       Y           Row     Column
 """
 
 try:
@@ -58,26 +72,34 @@ class Data(BaseObject):
 
 
 class Scale(BaseObject):
+    # TODO: Fill out
+
     pass
 
 
 class Axis(BaseObject):
+    # TODO: Fill out
+
     pass
 
 
 class Band(BaseObject):
+    # TODO: Add padding
+    # TODO: Minimum for size
+
     size = T.Int(600)
 
 
-class Legend(BaseObject):
-    pass
-
-
 class Bin(BaseObject):
+    # TODO: Default should be 15 and minimum for maxbins
+
     maxbins = T.Int(0, config=True)
 
 
 class SortItems(BaseObject):
+    # TODO: Supported types for type
+    # TODO: assert name and aggregate are required
+
     name = T.Unicode(default_value=None, allow_none=True)
     aggregate = T.Enum(['avg', 'sum', 'min', 'max', 'count'],
                        default_value=True)
@@ -85,6 +107,12 @@ class SortItems(BaseObject):
 
 
 class Shelf(BaseObject):
+    # TODO: Supported enums & supported types for aggregate
+    # TODO: Supported types for timeunit
+    # TODO: Supported types for bin
+    # TODO: supported role?
+    # TODO: supported mark types?
+    # TODO: assert name and type are required
 
     skip = ['shorthand', 'config']
 
@@ -129,6 +157,10 @@ class Y(DataCoordinate):
 
 
 class FacetCoordinate(Shelf):
+    # TODO: supported types for aggregate
+    # TODO: min and max for padding
+    # TODO: min for height
+
     aggregate = T.Enum(['count'], default_value=None, allow_none=True)
     padding = T.CFloat(0.1)
     axis = T.Instance(Axis, default_value=None, allow_none=True)
@@ -136,6 +168,10 @@ class FacetCoordinate(Shelf):
 
 
 class Row(FacetCoordinate):
+    # TODO: supported role
+    # TODO: required name and type - fulfilled when shelf does it
+    # TODO: supportedMarkTypes
+
     pass
 
 
@@ -144,15 +180,24 @@ class Col(FacetCoordinate):
 
 
 class Size(Shelf):
+    # TODO: min for value
+    # TODO: supported role
+    # TODO: supported mark types
+
     scale = T.Instance(Scale, default_value=None, allow_none=True)
-    legend = T.Instance(Legend, default_value=None, allow_none=True)
+    legend = T.Bool(True)
     value = T.CInt(30)
 
 
 class Color(Shelf):
-    value = T.Unicode('#4682b4')
+    # TODO: default value for value should be 'steelblue'
+    # TODO: min and max for opacity
+    # TODO: supported role
+    # TODO: supported mark types
+
     scale = T.Instance(Scale, default_value=None, allow_none=True)
-    legend = T.Instance(Legend, default_value=None, allow_none=True)
+    legend = T.Bool(True)
+    value = T.Unicode('#4682b4')
     opacity = T.Float(1.0)
 
 
@@ -160,11 +205,26 @@ class Shape(Shelf):
     value = T.Enum(['circle', 'square', 'cross', 'diamond', 'triangle-up',
                     'triangle-down'], default_value='circle')
     aggregate = T.Enum(['count'], default_value=None, allow_none=True)
-    legend = T.Instance(Legend, default_value=None, allow_none=True)
+    legend = T.Bool(True)
     filled = T.Bool(False)
 
 
+class Test():
+    # TODO: fill out
+
+    pass
+
+
+class Detail():
+    # TODO: fill out
+
+    pass
+
+
+
 class Encoding(BaseObject):
+    # TODO: add test and detail
+
     x = T.Union([T.Instance(X), T.Unicode()],
                 default_value=None, allow_none=True)
     y = T.Union([T.Instance(Y), T.Unicode()],
@@ -231,6 +291,18 @@ class Encoding(BaseObject):
             self.shape = Shape(new)
         if self.parent is not None:
             self.shape._infer_type(self.parent.data)
+
+
+class Filter():
+    # TODO: fill out
+
+    pass
+
+
+class Config():
+    # TODO: fill out
+
+    pass
 
 
 class VLConfig(BaseObject):
@@ -374,7 +446,7 @@ class Viz(BaseObject):
         self.encoding.y.name = self.encoding.x.name
 
         return self
-        
+
     def render(self, **kwargs):
         global _renderer
         return _renderer.render(self, **kwargs)
