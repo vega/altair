@@ -225,7 +225,8 @@ def test_hist():
                                        'name': 'bar',
                                        'opacity': 1.0,
                                        'type': 'N',
-                                       'value': '#4682b4'}},
+                                       'value': '#4682b4',
+                                       'legend': True}},
                 'marktype': 'bar'}
 
 

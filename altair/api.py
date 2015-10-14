@@ -299,7 +299,7 @@ class Filter():
     pass
 
 
-class Config():
+class ConfigVegaLite():
     # TODO: fill out
 
     pass
