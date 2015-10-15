@@ -143,7 +143,7 @@ def test_vl_spec_for_band_changes():
 
 
 def test_vl_spec_for_band_edge_values():
-    """Check that changes are possible and sticky"""
+    """Check edge values"""
 
     band = api.Band()
 
