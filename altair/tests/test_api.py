@@ -204,6 +204,7 @@ def test_vl_spec_for_x_y_changes():
         assert x.band.to_dict() == api.Band().to_dict()
         assert x.sort[0].to_dict() == api.SortItems().to_dict()
 
+
 def test_vl_spec_for_size__defaults():
     """Check that defaults are according to spec"""
     size = api.Size('foobar')
@@ -264,6 +265,68 @@ def test_vl_spec_for_size_changes():
     assert size.legend == False
     assert size.value == 0
     assert size.sort[0].to_dict() == api.SortItems().to_dict()
+
+
+def test_vl_spec_for_color__defaults():
+    """Check that defaults are according to spec"""
+    color = api.Color('foobar')
+    assert color.name == 'foobar'
+    assert color.type is None
+    assert color.aggregate is None
+    assert color.timeUnit is None
+    assert color.bin == False
+    assert color.scale is None
+    assert color.legend == True
+    assert color.value == '#4682b4'
+    assert color.opacity == 1.0
+
+    color = api.Color('foobar:O')
+    assert color.name == 'foobar'
+    assert color.type == 'O'
+    assert color.aggregate is None
+    assert color.timeUnit is None
+    assert color.bin == False
+    assert color.scale is None
+    assert color.legend == True
+    assert color.value == '#4682b4'
+    assert color.opacity == 1.0
+
+    color = api.Color('sum(foobar):Q')
+    assert color.name == 'foobar'
+    assert color.type == 'Q'
+    assert color.aggregate == 'sum'
+    assert color.timeUnit is None
+    assert color.bin == False
+    assert color.scale is None
+    assert color.legend == True
+    assert color.value == '#4682b4'
+    assert color.opacity == 1.0
+
+
+def test_vl_spec_for_color_changes():
+    """Check that changes are possible and sticky"""
+    color = api.Color('foobar', type='O', aggregate='avg', timeUnit='minutes', bin=api.Bin(), scale=api.ColorScale(),
+                      legend=False, value='Dark2', opacity=0.5)
+    assert color.name == 'foobar'
+    assert color.type == 'O'
+    assert color.aggregate == 'avg'
+    assert color.timeUnit == 'minutes'
+    assert color.bin.to_dict() == api.Bin().to_dict()
+    assert color.scale.to_dict() == api.ColorScale().to_dict()
+    assert color.legend == False
+    assert color.value == 'Dark2'
+    assert color.opacity == 0.5
+
+    color.shorthand = 'sum(foobar):Q'
+    assert color.name == 'foobar'
+    assert color.type == 'Q'
+    assert color.aggregate == 'sum'
+    assert color.timeUnit == 'minutes'
+    assert color.bin.to_dict() == api.Bin().to_dict()
+    assert color.scale.to_dict() == api.ColorScale().to_dict()
+    assert color.legend == False
+    assert color.value == 'Dark2'
+    assert color.opacity == 0.5
 
 
 def test_encode():
