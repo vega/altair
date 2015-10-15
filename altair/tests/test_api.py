@@ -125,6 +125,32 @@ def test_vl_spec_for_scale_changes():
     assert scale.ordinalPalette == 'Dark2'
 
 
+def test_vl_spec_for_axis_defaults():
+    """Check that defaults are according to spec"""
+
+    axis = api.Axis()
+    assert axis.grid == 'linear'
+    assert axis.layer is False
+    assert axis.orient is True
+    assert axis.ticks is None
+    assert axis.title is None
+    assert axis.titleMaxLength is None
+    assert axis.titleOffset is None
+    assert axis.format is None
+    assert axis.maxLabelLength == 25
+
+
+
+def test_vl_spec_for_axis_changes():
+    """Check that changes are possible and sticky"""
+    pass
+
+
+def test_vl_spec_for_axis_edge_values():
+    """Check edge values"""
+    pass
+
+
 def test_markers():
     spec, data = build_simple_spec()
 
