@@ -106,10 +106,9 @@ class Axis(BaseObject):
 
 
 class Band(BaseObject):
-    # TODO: Add padding
-    # TODO: Minimum for size
 
-    size = T.Int(600)
+    size = T.Int(600, min=0)
+    padding = T.Int(1, min=0)
 
 
 class Bin(BaseObject):
