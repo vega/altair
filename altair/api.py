@@ -123,7 +123,7 @@ class SortItems(BaseObject):
 
     name = T.Unicode(default_value=None, allow_none=True)
     aggregate = T.Enum(['avg', 'sum', 'min', 'max', 'count'],
-                       default_value=True)
+                       default_value=None, allow_none=True)
     reverse = T.Bool(False)
 
 
@@ -146,6 +146,7 @@ class Shelf(BaseObject):
             self.type = infer_vegalite_type(data[self.name])
 
     def _shorthand_changed(self, name, old, new):
+        # TODO: if name of shorthand changed, should it reset all properties of obj?
         D = parse_shorthand(self.shorthand)
         for key, val in D.items():
             setattr(self, key, val)
