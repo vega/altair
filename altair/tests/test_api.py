@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import numpy as np
 import pandas as pd
+from traitlets import TraitError
 
 from altair import api
 
@@ -127,12 +128,11 @@ def test_vl_spec_for_scale_changes():
 
 def test_vl_spec_for_axis_defaults():
     """Check that defaults are according to spec"""
-
     axis = api.Axis()
-    assert axis.grid == 'linear'
-    assert axis.layer is False
-    assert axis.orient is True
-    assert axis.ticks is None
+    assert axis.grid is True
+    assert axis.layer == 'back'
+    assert axis.orient is None
+    assert axis.ticks == 5
     assert axis.title is None
     assert axis.titleMaxLength is None
     assert axis.titleOffset is None
@@ -143,12 +143,27 @@ def test_vl_spec_for_axis_defaults():
 
 def test_vl_spec_for_axis_changes():
     """Check that changes are possible and sticky"""
-    pass
+    axis = api.Axis(grid=False, layer='front', orient='top', ticks=3, title='title', titleMaxLength=256, titleOffset=3,
+                    format='format', maxLabelLength=3)
+    assert axis.grid is False
+    assert axis.layer == 'front'
+    assert axis.orient == 'top'
+    assert axis.ticks == 3
+    assert axis.title == 'title'
+    assert axis.titleMaxLength == 256
+    assert axis.titleOffset == 3
+    assert axis.format == 'format'
+    assert axis.maxLabelLength == 3
 
 
 def test_vl_spec_for_axis_edge_values():
     """Check edge values"""
-    pass
+    axis = api.Axis()
+    try:
+        axis.maxLabelLength = -1
+        raise Exception('Should have thrown for illegal maxLabelLength min value.')
+    except TraitError:
+        pass
 
 
 def test_markers():
