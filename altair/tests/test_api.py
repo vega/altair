@@ -68,7 +68,7 @@ def test_vl_spec_for_scale_defaults():
     assert scale.useRawDomain is None
 
     # Scale object for property in Color
-    scale = api.ScaleColor()
+    scale = api.ColorScale()
     assert scale.type == 'linear'
     assert scale.reverse == False
     assert scale.zero == True
@@ -103,7 +103,7 @@ def test_vl_spec_for_scale_changes():
     assert scale.useRawDomain is None
 
     # Scale object for property in Color
-    scale = api.ScaleColor(type='log', reverse=True, zero=False, nice='second', useRawDomain=True,
+    scale = api.ColorScale(type='log', reverse=True, zero=False, nice='second', useRawDomain=True,
                            range='category10', c10palette='Set1', c20palette='category20c', ordinalPalette='Spectral')
     assert scale.type == 'log'
     assert scale.reverse == True

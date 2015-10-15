@@ -85,7 +85,7 @@ class Scale(BaseObject):
     useRawDomain = T.Bool(default_value=None, allow_none=True)
 
 
-class ScaleColor(Scale):
+class ColorScale(Scale):
     """Scale object that adds additional properties to the Scale property for Color"""
 
     range = T.Union([T.Unicode(), T.List(T.Unicode)], default_value=None, allow_none=True)
@@ -217,7 +217,7 @@ class Color(Shelf):
     # TODO: supported role
     # TODO: supported mark types
 
-    scale = T.Instance(ScaleColor, default_value=None, allow_none=True)
+    scale = T.Instance(ColorScale, default_value=None, allow_none=True)
     legend = T.Bool(True)
     value = T.Unicode('#4682b4')
     opacity = T.Float(1.0)
