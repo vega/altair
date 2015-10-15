@@ -126,6 +126,24 @@ def test_vl_spec_for_scale_changes():
     assert scale.ordinalPalette == 'Dark2'
 
 
+def test_vl_spec_for_font_defaults():
+    """Check that defaults are according to spec"""
+    font = api.Font()
+    assert font.weight == 'normal'
+    assert font.size == 10
+    assert font.family == 'Helvetica Neue'
+    assert font.style == 'normal'
+
+
+def test_vl_spec_for_font_changes():
+    """Check that changes are possible and sticky"""
+    font = api.Font(weight='bold', size=15, family='Serif', style='italic')
+    assert font.weight == 'bold'
+    assert font.size == 15
+    assert font.family == 'Serif'
+    assert font.style == 'italic'
+
+
 def test_vl_spec_for_text_defaults():
     """Check that defaults are according to spec"""
 
