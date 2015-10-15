@@ -135,6 +135,67 @@ def test_vl_spec_for_x_y_changes():
         assert x.band.to_dict() == api.Band().to_dict()
         assert x.sort[0].to_dict() == api.SortItems().to_dict()
 
+def test_vl_spec_for_size__defaults():
+    """Check that defaults are according to spec"""
+    size = api.Size('foobar')
+    assert size.name == 'foobar'
+    assert size.type is None
+    assert size.aggregate is None
+    assert size.timeUnit is None
+    assert size.bin == False
+    assert size.scale is None
+    assert size.legend == True
+    assert size.value == 30
+    assert size.sort == []
+
+    size = api.Size('foobar:O')
+    assert size.name == 'foobar'
+    assert size.type == 'O'
+    assert size.aggregate is None
+    assert size.timeUnit is None
+    assert size.bin == False
+    assert size.scale is None
+    assert size.legend == True
+    assert size.value == 30
+    assert size.sort == []
+
+    size = api.Size('sum(foobar):Q')
+    assert size.name == 'foobar'
+    assert size.type == 'Q'
+    assert size.aggregate == 'sum'
+    assert size.timeUnit is None
+    assert size.bin == False
+    assert size.scale is None
+    assert size.legend == True
+    assert size.value == 30
+    assert size.sort == []
+
+
+def test_vl_spec_for_size_changes():
+    """Check that changes are possible and sticky"""
+    size = api.Size('foobar', type='Q', aggregate='sum', timeUnit='minutes', bin=api.Bin(), scale=api.Scale(),
+                    legend=False, value=0, sort=[api.SortItems()])
+    assert size.name == 'foobar'
+    assert size.type == 'Q'
+    assert size.aggregate == 'sum'
+    assert size.timeUnit == 'minutes'
+    assert size.bin.to_dict() == api.Bin().to_dict()
+    assert size.scale.to_dict() == api.Scale().to_dict()
+    assert size.legend == False
+    assert size.value == 0
+    assert size.sort[0].to_dict() == api.SortItems().to_dict()
+
+    size.shorthand = 'avg(foobar):O'
+    assert size.name == 'foobar'
+    assert size.type == 'O'
+    assert size.aggregate == 'avg'
+    assert size.timeUnit == 'minutes'
+    assert size.bin.to_dict() == api.Bin().to_dict()
+    assert size.scale.to_dict() == api.Scale().to_dict()
+    assert size.legend == False
+    assert size.value == 0
+    assert size.sort[0].to_dict() == api.SortItems().to_dict()
+
 
 def test_encode():
     data = dict(col1=[1.0, 2.0, 3.0],
