@@ -106,10 +106,9 @@ class Axis(BaseObject):
 
 
 class Band(BaseObject):
-    # TODO: Add padding
-    # TODO: Minimum for size
 
-    size = T.Int(600)
+    size = T.Int(600, min=0)
+    padding = T.Int(1, min=0)
 
 
 class Bin(BaseObject):
@@ -147,6 +146,7 @@ class Shelf(BaseObject):
             self.type = infer_vegalite_type(data[self.name])
 
     def _shorthand_changed(self, name, old, new):
+        # TODO: if name of shorthand changed, should it reset all properties of obj?
         D = parse_shorthand(self.shorthand)
         for key, val in D.items():
             setattr(self, key, val)
