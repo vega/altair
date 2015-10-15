@@ -258,13 +258,15 @@ class Encoding(BaseObject):
                     default_value=None, allow_none=True)
     shape = T.Union([T.Instance(Shape), T.Unicode()],
                     default_value=None, allow_none=True)
+    detail = T.Union([T.Instance(Detail), T.Unicode()],
+                     default_value=None, allow_none=True)
 
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
     skip = ['parent', 'config']
 
     def _infer_types(self, data):
-        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape']:
+        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape', 'detail']:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
@@ -310,6 +312,12 @@ class Encoding(BaseObject):
             self.shape = Shape(new)
         if self.parent is not None:
             self.shape._infer_type(self.parent.data)
+
+    def _detail_changed(self, name, old, new):
+        if isinstance(new, string_types):
+            self.detail = Detail(new)
+        if self.parent is not None:
+            self.detail._infer_type(self.parent.data)
 
 
 class Filter():

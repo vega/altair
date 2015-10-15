@@ -212,9 +212,10 @@ def test_encode():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x='col1', y='col2', row='col3', col='col4',
-                  size='col5', color='col6', shape='col7')
+                  size='col5', color='col6', shape='col7', detail='col9')
 
     spec = api.Viz(data).encode(**kwargs)
     for key, name in kwargs.items():
@@ -228,11 +229,12 @@ def test_encode_aggregates():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x=('count', 'col1'), y=('count', 'col2'),
                   row=('count', 'col3'), col=('count', 'col4'),
                   size=('avg', 'col5'), color=('max', 'col6'),
-                  shape=('count', 'col7'))
+                  shape=('count', 'col7'), detail=('count', 'col9'))
 
     spec = api.Viz(data).encode(**{key:"{0}({1})".format(*val)
                                    for key, val in kwargs.items()})
@@ -249,11 +251,12 @@ def test_encode_types():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x=('col1', 'Q'), y=('col2', 'Q'),
                   row=('col3', 'O'), col=('col4', 'N'),
                   size=('col5', 'Q'), color=('col6', 'T'),
-                  shape=('col7', 'O'))
+                  shape=('col7', 'O'), detail=('col9', 'Q'))
 
     spec = api.Viz(data).encode(**{key:"{0}:{1}".format(*val)
                                    for key, val in kwargs.items()})
@@ -269,11 +272,12 @@ def test_infer_types():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x=('col1', 'Q'), y=('col2', 'Q'),
                   row=('col3', 'N'), col=('col4', 'N'),
                   size=('col5', 'Q'), color=('col6', 'T'),
-                  shape=('col7', 'Q'))
+                  shape=('col7', 'Q'), detail=('col9', 'Q'))
 
     spec = api.Viz(data).encode(**{key: val[0]
                                    for key, val in kwargs.items()})
