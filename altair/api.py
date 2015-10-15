@@ -124,7 +124,7 @@ class SortItems(BaseObject):
 
     name = T.Unicode(default_value=None, allow_none=True)
     aggregate = T.Enum(['avg', 'sum', 'min', 'max', 'count'],
-                       default_value=True)
+                       default_value=None, allow_none=True)
     reverse = T.Bool(False)
 
 
@@ -237,11 +237,8 @@ class Test():
     pass
 
 
-class Detail():
-    # TODO: fill out
-
-    pass
-
+class Detail(Shelf):
+    aggregate = T.Enum(['count'], default_value=None, allow_none=True, config=True)
 
 
 class Encoding(BaseObject):

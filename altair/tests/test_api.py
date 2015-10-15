@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import numpy as np
 import pandas as pd
+from traitlets import TraitError
 
 from altair import api
 
@@ -123,6 +124,71 @@ def test_vl_spec_for_scale_changes():
     assert scale.c10palette == 'Set3'
     assert scale.c20palette == 'category20b'
     assert scale.ordinalPalette == 'Dark2'
+
+
+def test_vl_spec_for_detail_defaults():
+    """Check that defaults are according to spec"""
+
+    detail = api.Detail('foobar')
+    assert detail.name == 'foobar'
+    assert detail.type is None
+    assert detail.timeUnit is None
+    assert detail.bin is False
+    assert detail.sort == []
+    assert detail.aggregate is None
+
+    detail = api.Detail('foobar:O')
+    assert detail.name == 'foobar'
+    assert detail.type == 'O'
+    assert detail.timeUnit is None
+    assert detail.bin is False
+    assert detail.sort == []
+    assert detail.aggregate is None
+
+    detail = api.Detail('count(foobar):O')
+    assert detail.name == 'foobar'
+    assert detail.type == 'O'
+    assert detail.timeUnit is None
+    assert detail.bin is False
+    assert detail.sort == []
+    assert detail.aggregate == 'count'
+
+
+def test_vl_spec_for_detail_changes():
+    """Check that changes are possible and sticky"""
+    detail = api.Detail('foobar', type='O', timeUnit='minutes', bin=api.Bin(), sort=[api.SortItems()],
+                        aggregate='count')
+    assert detail.name == 'foobar'
+    assert detail.type == 'O'
+    assert detail.timeUnit == 'minutes'
+    assert detail.bin.to_dict() == api.Bin().to_dict()
+    assert detail.sort[0].to_dict() == api.SortItems().to_dict()
+    assert detail.aggregate == 'count'
+
+    detail.shorthand = 'count(foobar):Q'
+    assert detail.name == 'foobar'
+    assert detail.type == 'Q'
+    assert detail.timeUnit == 'minutes'
+    assert detail.bin.to_dict() == api.Bin().to_dict()
+    assert detail.sort[0].to_dict() == api.SortItems().to_dict()
+    assert detail.aggregate == 'count'
+
+
+def test_vl_spec_for_detail_edge_values():
+    """Check edge values"""
+    detail = api.Detail('foobar')
+
+    try:
+        detail.shorthand = 'sum(foobar):O'
+        raise Exception('Should have thrown for illegal aggregation value.')
+    except TraitError:
+        pass
+
+    try:
+        detail.aggregate = 'avg'
+        raise Exception('Should have thrown for illegal aggregation value.')
+    except TraitError:
+        pass
 
 
 def test_markers():
