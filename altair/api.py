@@ -102,7 +102,7 @@ class SortItems(BaseObject):
 
     name = T.Unicode(default_value=None, allow_none=True)
     aggregate = T.Enum(['avg', 'sum', 'min', 'max', 'count'],
-                       default_value=True)
+                       default_value=None, allow_none=True)
     reverse = T.Bool(False)
 
 
