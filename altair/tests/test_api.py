@@ -71,56 +71,69 @@ def test_markers():
         assert spec.marktype == marktype
 
 
-def test_vl_spec_for_x_defaults():
+def test_vl_spec_for_x_y__defaults():
     """Check that defaults are according to spec"""
 
-    x = api.X('foobar')
-    assert x.name == 'foobar'
-    assert x.type is None       # TODO: None?! Spec says type is required
-    assert x.aggregate is None
-    assert x.timeUnit is None
-    assert x.bin == False
-    assert x.scale is None
-    assert x.axis is None
-    assert x.band is None
-    assert x.sort == []
+    for x in [api.X('foobar'), api.Y('foobar')]:
+        assert x.name == 'foobar'
+        assert x.type is None       # TODO: None?! Spec says type is required
+        assert x.aggregate is None
+        assert x.timeUnit is None
+        assert x.bin == False
+        assert x.scale is None
+        assert x.axis is None
+        assert x.band is None
+        assert x.sort == []
 
-    x = api.X('foobar:O')
-    assert x.name == 'foobar'
-    assert x.type == 'O'
-    assert x.aggregate is None
-    assert x.timeUnit is None
-    assert x.bin == False
-    assert x.scale is None
-    assert x.axis is None
-    assert x.band is None
-    assert x.sort == []
+    for x in [api.X('foobar:O'), api.Y('foobar:O')]:
+        assert x.name == 'foobar'
+        assert x.type == 'O'
+        assert x.aggregate is None
+        assert x.timeUnit is None
+        assert x.bin == False
+        assert x.scale is None
+        assert x.axis is None
+        assert x.band is None
+        assert x.sort == []
 
-    x = api.X('sum(foobar):Q')
-    assert x.name == 'foobar'
-    assert x.type == 'Q'
-    assert x.aggregate == 'sum'
-    assert x.timeUnit is None
-    assert x.bin == False
-    assert x.scale is None
-    assert x.axis is None
-    assert x.band is None
-    assert x.sort == []
+    for x in [api.X('sum(foobar):Q'), api.Y('sum(foobar):Q')]:
+        assert x.name == 'foobar'
+        assert x.type == 'Q'
+        assert x.aggregate == 'sum'
+        assert x.timeUnit is None
+        assert x.bin == False
+        assert x.scale is None
+        assert x.axis is None
+        assert x.band is None
+        assert x.sort == []
 
 
-def test_vl_spec_for_x_changes():
+def test_vl_spec_for_x_y_changes():
     """Check that changes are possible and sticky"""
-    x = api.X('foobar:O', type='N', aggregate='median', timeUnit='seconds', bin=api.Bin(), scale = api.Scale(),
-              axis=api.Axis(), band=api.Band(), sort=[api.SortItems()])
-    assert x.name == 'foobar'
-    assert x.type == 'N'
-    assert x.aggregate == 'median'
-    assert x.timeUnit == 'seconds'
-    assert x.bin.to_dict() == api.Bin().to_dict()
-    assert x.scale.to_dict() == api.Scale().to_dict()
-    assert x.axis.to_dict() == api.Axis().to_dict()
-    assert x.band.to_dict() == api.Band().to_dict()
-    assert x.sort[0].to_dict() == api.SortItems().to_dict()
+    for x in [api.X('foobar:O', type='N', aggregate='median', timeUnit='seconds', bin=api.Bin(), scale = api.Scale(),
+                    axis=api.Axis(), band=api.Band(), sort=[api.SortItems()]),
+              api.Y('foobar:O', type='N', aggregate='median', timeUnit='seconds', bin=api.Bin(), scale = api.Scale(),
+                    axis=api.Axis(), band=api.Band(), sort=[api.SortItems()])]:
+        assert x.name == 'foobar'
+        assert x.type == 'N'
+        assert x.aggregate == 'median'
+        assert x.timeUnit == 'seconds'
+        assert x.bin.to_dict() == api.Bin().to_dict()
+        assert x.scale.to_dict() == api.Scale().to_dict()
+        assert x.axis.to_dict() == api.Axis().to_dict()
+        assert x.band.to_dict() == api.Band().to_dict()
+        assert x.sort[0].to_dict() == api.SortItems().to_dict()
+
+        x.shorthand = 'sum(foobar):Q'
+        assert x.name == 'foobar'
+        assert x.type == 'Q'
+        assert x.aggregate == 'sum'
+        assert x.timeUnit == 'seconds'
+        assert x.bin.to_dict() == api.Bin().to_dict()
+        assert x.scale.to_dict() == api.Scale().to_dict()
+        assert x.axis.to_dict() == api.Axis().to_dict()
+        assert x.band.to_dict() == api.Band().to_dict()
+        assert x.sort[0].to_dict() == api.SortItems().to_dict()
 
 
 def test_encode():
