@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import numpy as np
 import pandas as pd
+from traitlets import TraitError
 
 from altair import api
 
@@ -123,6 +124,105 @@ def test_vl_spec_for_scale_changes():
     assert scale.c10palette == 'Set3'
     assert scale.c20palette == 'category20b'
     assert scale.ordinalPalette == 'Dark2'
+
+
+def test_vl_spec_for_text_defaults():
+    """Check that defaults are according to spec"""
+
+    text = api.Text('foobar')
+    assert text.name == 'foobar'
+    assert text.type is None
+    assert text.timeUnit is None
+    assert text.bin is False
+    assert text.sort == []
+    assert text.aggregate is None
+    assert text.scale is None
+    assert text.align == 'right'
+    assert text.baseline == 'middle'
+    assert text.color == '#000000'
+    assert text.margin == 4
+    assert text.placeholder == 'Abc'
+    assert text.font is None
+    assert text.format is None
+
+    text = api.Text('foobar:O')
+    assert text.name == 'foobar'
+    assert text.type == 'O'
+    assert text.timeUnit is None
+    assert text.bin is False
+    assert text.sort == []
+    assert text.aggregate is None
+    assert text.scale is None
+    assert text.align == 'right'
+    assert text.baseline == 'middle'
+    assert text.color == '#000000'
+    assert text.margin == 4
+    assert text.placeholder == 'Abc'
+    assert text.font is None
+    assert text.format is None
+
+    text = api.Text('sum(foobar):O')
+    assert text.name == 'foobar'
+    assert text.type == 'O'
+    assert text.timeUnit is None
+    assert text.bin is False
+    assert text.sort == []
+    assert text.aggregate == 'sum'
+    assert text.scale is None
+    assert text.align == 'right'
+    assert text.baseline == 'middle'
+    assert text.color == '#000000'
+    assert text.margin == 4
+    assert text.placeholder == 'Abc'
+    assert text.font is None
+    assert text.format is None
+
+
+def test_vl_spec_for_text_changes():
+    """Check that changes are possible and sticky"""
+    text = api.Text('foobar', type='O', timeUnit='minutes', bin=api.Bin(), sort=[api.SortItems()], aggregate='avg',
+                    scale=api.Scale(), align='left', baseline='top', color='#111111', margin=3, placeholder = 'Aaa',
+                    font=api.Font(), format='format')
+    assert text.name == 'foobar'
+    assert text.type == 'O'
+    assert text.timeUnit == 'minutes'
+    assert text.bin.to_dict() == api.Bin().to_dict()
+    assert text.sort[0].to_dict() == api.SortItems().to_dict()
+    assert text.aggregate == 'avg'
+    assert text.scale.to_dict() == api.Scale().to_dict()
+    assert text.align == 'left'
+    assert text.baseline == 'top'
+    assert text.color == '#111111'
+    assert text.margin == 3
+    assert text.placeholder == 'Aaa'
+    assert text.font.to_dict() == api.Font().to_dict()
+    assert text.format == 'format'
+
+    text.shorthand = 'sum(foobar):Q'
+    assert text.name == 'foobar'
+    assert text.type == 'Q'
+    assert text.timeUnit == 'minutes'
+    assert text.bin.to_dict() == api.Bin().to_dict()
+    assert text.sort[0].to_dict() == api.SortItems().to_dict()
+    assert text.aggregate == 'sum'
+    assert text.scale.to_dict() == api.Scale().to_dict()
+    assert text.align == 'left'
+    assert text.baseline == 'top'
+    assert text.color == '#111111'
+    assert text.margin == 3
+    assert text.placeholder == 'Aaa'
+    assert text.font.to_dict() == api.Font().to_dict()
+    assert text.format == 'format'
+
+
+def test_vl_spec_for_text_edge_values():
+    """Check edge values"""
+    text = api.Text('foobar')
+    try:
+        text.margin = -1
+        raise Exception('Should have thrown for illegal margin min value.')
+    except TraitError:
+        pass
 
 
 def test_markers():
