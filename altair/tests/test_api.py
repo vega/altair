@@ -56,6 +56,75 @@ def test_to_dict():
                  'marktype': 'point'}
 
 
+def test_vl_spec_for_scale_defaults():
+    """Check that defaults are according to spec"""
+
+    # This scale object is the property used for X, Y, Size
+    scale = api.Scale()
+    assert scale.type == 'linear'
+    assert scale.reverse == False
+    assert scale.zero == True
+    assert scale.nice is None
+    assert scale.useRawDomain is None
+
+    # Scale object for property in Color
+    scale = api.ColorScale()
+    assert scale.type == 'linear'
+    assert scale.reverse == False
+    assert scale.zero == True
+    assert scale.nice is None
+    assert scale.useRawDomain is None
+    assert scale.range is None
+    assert scale.c10palette == 'category10'
+    assert scale.c20palette == 'category20'
+    assert scale.ordinalPalette == 'BuGn'
+
+
+def test_vl_spec_for_scale_changes():
+    """Check that changes are possible and sticky"""
+
+    # This scale object is the property used for X, Y, Size
+    scale = api.Scale(type='log', reverse=True, zero=False, nice='second', useRawDomain=True)
+    assert scale.type == 'log'
+    assert scale.reverse == True
+    assert scale.zero == False
+    assert scale.nice == 'second'
+    assert scale.useRawDomain == True
+
+    scale.type = 'linear'
+    scale.reverse = False
+    scale.zero = True
+    scale.nice = None
+    scale.useRawDomain = None
+    assert scale.type == 'linear'
+    assert scale.reverse == False
+    assert scale.zero == True
+    assert scale.nice is None
+    assert scale.useRawDomain is None
+
+    # Scale object for property in Color
+    scale = api.ColorScale(type='log', reverse=True, zero=False, nice='second', useRawDomain=True,
+                           range='category10', c10palette='Set1', c20palette='category20c', ordinalPalette='Spectral')
+    assert scale.type == 'log'
+    assert scale.reverse == True
+    assert scale.zero == False
+    assert scale.nice == 'second'
+    assert scale.useRawDomain == True
+    assert scale.range == 'category10'
+    assert scale.c10palette == 'Set1'
+    assert scale.c20palette == 'category20c'
+    assert scale.ordinalPalette == 'Spectral'
+
+    scale.range = ['category10']
+    scale.c10palette = 'Set3'
+    scale.c20palette = 'category20b'
+    scale.ordinalPalette = 'Dark2'
+    assert scale.range == ['category10']
+    assert scale.c10palette == 'Set3'
+    assert scale.c20palette == 'category20b'
+    assert scale.ordinalPalette == 'Dark2'
+
+
 def test_markers():
     spec, data = build_simple_spec()
 

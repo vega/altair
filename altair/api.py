@@ -72,9 +72,31 @@ class Data(BaseObject):
 
 
 class Scale(BaseObject):
-    # TODO: Fill out
+    """Scale object that represents the Scale property common to: X, Y, Size, Color"""
+    # TODO: Supported types for type
+    # TODO: Supported types for reverse
+    # TODO: Supported types for zero
+    # TODO: Supported types for nice
 
-    pass
+    type = T.Enum(['linear', 'log', 'pow', 'sqrt', 'quantile'], default_value='linear')
+    reverse = T.Bool(False)
+    zero = T.Bool(True)
+    nice = T.Enum(['second', 'minute', 'hour', 'day', 'week', 'month', 'year'], allow_none=True)
+    useRawDomain = T.Bool(default_value=None, allow_none=True)
+
+
+class ColorScale(Scale):
+    """Scale object that adds additional properties to the Scale property for Color"""
+
+    range = T.Union([T.Unicode(), T.List(T.Unicode)], default_value=None, allow_none=True)
+    c10palette = T.Enum(['category10', 'category10k', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3'],
+                        default_value='category10')
+    c20palette = T.Enum(['category20', 'category20b', 'category20c'], default_value='category20')
+    ordinalPalette = T.Enum(['YlGn', 'YlGnBu', 'GnBu', 'BuGn', 'PuBuGn', 'PuBu', 'BuPu', 'RdPu', 'PuRd',
+                             'OrRd', 'YlOrRd', 'YlOrBr', 'Purples', 'Blues', 'Greens', 'Oranges', 'Reds',
+                             'Greys', 'PuOr', 'BrBG', 'PRGn', 'PiYG', 'RdBu', 'RdGy', 'RdYlBu', 'Spectral',
+                             'RdYlGn', 'Accent', 'Dark2', 'Paired', 'Pastel1', 'Pastel2', 'Set1', 'Set2', 'Set3'],
+                            default_value='BuGn')
 
 
 class Axis(BaseObject):
@@ -195,7 +217,7 @@ class Color(Shelf):
     # TODO: supported role
     # TODO: supported mark types
 
-    scale = T.Instance(Scale, default_value=None, allow_none=True)
+    scale = T.Instance(ColorScale, default_value=None, allow_none=True)
     legend = T.Bool(True)
     value = T.Unicode('#4682b4')
     opacity = T.Float(1.0)
@@ -224,7 +246,7 @@ class Detail():
 
 class Encoding(BaseObject):
     # TODO: add test and detail
-
+    
     x = T.Union([T.Instance(X), T.Unicode()],
                 default_value=None, allow_none=True)
     y = T.Union([T.Instance(Y), T.Unicode()],
