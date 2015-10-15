@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import numpy as np
 import pandas as pd
+from traitlets import TraitError
 
 from altair import api
 
@@ -123,6 +124,40 @@ def test_vl_spec_for_scale_changes():
     assert scale.c10palette == 'Set3'
     assert scale.c20palette == 'category20b'
     assert scale.ordinalPalette == 'Dark2'
+
+
+def test_vl_spec_for_band_defaults():
+    """Check that defaults are according to spec"""
+
+    band = api.Band()
+    assert band.size == 600
+    assert band.padding == 1
+
+
+def test_vl_spec_for_band_changes():
+    """Check that changes are possible and sticky"""
+
+    band = api.Band(size=300, padding=15)
+    assert band.size == 300
+    assert band.padding == 15
+
+
+def test_vl_spec_for_band_edge_values():
+    """Check that changes are possible and sticky"""
+
+    band = api.Band()
+
+    try:
+        band.size = -1
+        raise Exception('Should have thrown for illegal size min value.')
+    except TraitError:
+        pass
+
+    try:
+        band.padding = -1
+        raise Exception('Should have thrown for illegal padding min value.')
+    except TraitError:
+        pass
 
 
 def test_markers():
