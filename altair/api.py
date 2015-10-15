@@ -281,7 +281,7 @@ class Encoding(BaseObject):
     skip = ['parent', 'config']
 
     def _infer_types(self, data):
-        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape']:
+        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape', 'text']:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
