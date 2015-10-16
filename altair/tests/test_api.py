@@ -243,6 +243,45 @@ def test_vl_spec_for_text_edge_values():
         pass
 
 
+def test_vl_spec_for_axis_defaults():
+    """Check that defaults are according to spec"""
+    axis = api.Axis()
+    assert axis.grid is True
+    assert axis.layer == 'back'
+    assert axis.orient is None
+    assert axis.ticks == 5
+    assert axis.title is None
+    assert axis.titleMaxLength is None
+    assert axis.titleOffset is None
+    assert axis.format is None
+    assert axis.maxLabelLength == 25
+
+
+def test_vl_spec_for_axis_changes():
+    """Check that changes are possible and sticky"""
+    axis = api.Axis(grid=False, layer='front', orient='top', ticks=3, title='title', titleMaxLength=256, titleOffset=3,
+                    format='format', maxLabelLength=3)
+    assert axis.grid is False
+    assert axis.layer == 'front'
+    assert axis.orient == 'top'
+    assert axis.ticks == 3
+    assert axis.title == 'title'
+    assert axis.titleMaxLength == 256
+    assert axis.titleOffset == 3
+    assert axis.format == 'format'
+    assert axis.maxLabelLength == 3
+
+
+def test_vl_spec_for_axis_edge_values():
+    """Check edge values"""
+    axis = api.Axis()
+    try:
+        axis.maxLabelLength = -1
+        raise Exception('Should have thrown for illegal maxLabelLength min value.')
+    except TraitError:
+        pass
+
+
 def test_vl_spec_for_band_defaults():
     """Check that defaults are according to spec"""
 

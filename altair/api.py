@@ -100,9 +100,16 @@ class ColorScale(Scale):
 
 
 class Axis(BaseObject):
-    # TODO: Fill out
 
-    pass
+    grid = T.Bool(True)
+    layer = T.Unicode(u'back')
+    orient = T.Enum(['top', 'right', 'left', 'bottom'], default_value=None, allow_none=True)
+    ticks = T.Int(5)
+    title = T.Unicode(default_value=None, allow_none=True)
+    titleMaxLength = T.Int(default_value=None, allow_none=True)
+    titleOffset = T.Int(default_value=None, allow_none=True)
+    format = T.Unicode(default_value=None, allow_none=True)
+    maxLabelLength = T.Int(25, min=0)
 
 
 class Band(BaseObject):
