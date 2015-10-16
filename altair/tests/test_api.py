@@ -126,6 +126,71 @@ def test_vl_spec_for_scale_changes():
     assert scale.ordinalPalette == 'Dark2'
 
 
+def test_vl_spec_for_detail_defaults():
+    """Check that defaults are according to spec"""
+
+    detail = api.Detail('foobar')
+    assert detail.name == 'foobar'
+    assert detail.type is None
+    assert detail.timeUnit is None
+    assert detail.bin is False
+    assert detail.sort == []
+    assert detail.aggregate is None
+
+    detail = api.Detail('foobar:O')
+    assert detail.name == 'foobar'
+    assert detail.type == 'O'
+    assert detail.timeUnit is None
+    assert detail.bin is False
+    assert detail.sort == []
+    assert detail.aggregate is None
+
+    detail = api.Detail('count(foobar):O')
+    assert detail.name == 'foobar'
+    assert detail.type == 'O'
+    assert detail.timeUnit is None
+    assert detail.bin is False
+    assert detail.sort == []
+    assert detail.aggregate == 'count'
+
+
+def test_vl_spec_for_detail_changes():
+    """Check that changes are possible and sticky"""
+    detail = api.Detail('foobar', type='O', timeUnit='minutes', bin=api.Bin(), sort=[api.SortItems()],
+                        aggregate='count')
+    assert detail.name == 'foobar'
+    assert detail.type == 'O'
+    assert detail.timeUnit == 'minutes'
+    assert detail.bin.to_dict() == api.Bin().to_dict()
+    assert detail.sort[0].to_dict() == api.SortItems().to_dict()
+    assert detail.aggregate == 'count'
+
+    detail.shorthand = 'count(foobar):Q'
+    assert detail.name == 'foobar'
+    assert detail.type == 'Q'
+    assert detail.timeUnit == 'minutes'
+    assert detail.bin.to_dict() == api.Bin().to_dict()
+    assert detail.sort[0].to_dict() == api.SortItems().to_dict()
+    assert detail.aggregate == 'count'
+
+
+def test_vl_spec_for_detail_edge_values():
+    """Check edge values"""
+    detail = api.Detail('foobar')
+
+    try:
+        detail.shorthand = 'sum(foobar):O'
+        raise Exception('Should have thrown for illegal aggregation value.')
+    except TraitError:
+        pass
+
+    try:
+        detail.aggregate = 'avg'
+        raise Exception('Should have thrown for illegal aggregation value.')
+    except TraitError:
+        pass
+
+
 def test_vl_spec_for_font_defaults():
     """Check that defaults are according to spec"""
     font = api.Font()
@@ -528,9 +593,10 @@ def test_encode():
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
                 col7=np.arange(3),
-                col8=np.arange(3))
+                col8=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x='col1', y='col2', row='col3', col='col4',
-                  size='col5', color='col6', shape='col7', text='col8')
+                  size='col5', color='col6', shape='col7', text='col8', detail='col9')
 
     spec = api.Viz(data).encode(**kwargs)
     for key, name in kwargs.items():
@@ -545,11 +611,13 @@ def test_encode_aggregates():
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
                 col7=np.arange(3),
-                col8=np.arange(3))
+                col8=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x=('count', 'col1'), y=('count', 'col2'),
                   row=('count', 'col3'), col=('count', 'col4'),
                   size=('avg', 'col5'), color=('max', 'col6'),
-                  shape=('count', 'col7'), text=('avg', 'col8'))
+                  shape=('count', 'col7'), text=('avg', 'col8'),
+                  detail=('count', 'col9'))
 
     spec = api.Viz(data).encode(**{key:"{0}({1})".format(*val)
                                    for key, val in kwargs.items()})
@@ -567,11 +635,13 @@ def test_encode_types():
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
                 col7=np.arange(3),
-                col8=np.arange(3))
+                col8=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x=('col1', 'Q'), y=('col2', 'Q'),
                   row=('col3', 'O'), col=('col4', 'N'),
                   size=('col5', 'Q'), color=('col6', 'T'),
-                  shape=('col7', 'O'), text=('col8', 'O'))
+                  shape=('col7', 'O'), text=('col8', 'O'),
+                  detail=('col9', 'Q'))
 
     spec = api.Viz(data).encode(**{key:"{0}:{1}".format(*val)
                                    for key, val in kwargs.items()})
@@ -589,11 +659,13 @@ def test_infer_types():
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
                 col7=np.arange(3),
-                col8=np.arange(3))
+                col8=np.arange(3),
+                col9=np.arange(3))
     kwargs = dict(x=('col1', 'Q'), y=('col2', 'Q'),
                   row=('col3', 'N'), col=('col4', 'N'),
                   size=('col5', 'Q'), color=('col6', 'T'),
-                  shape=('col7', 'Q'), text=('col8', 'Q'))
+                  shape=('col7', 'Q'), text=('col8', 'Q'),
+                  detail=('col9', 'Q'))
 
     spec = api.Viz(data).encode(**{key: val[0]
                                    for key, val in kwargs.items()})
