@@ -100,16 +100,22 @@ class ColorScale(Scale):
 
 
 class Axis(BaseObject):
-    # TODO: Fill out
 
-    pass
+    grid = T.Bool(True)
+    layer = T.Unicode(u'back')
+    orient = T.Enum(['top', 'right', 'left', 'bottom'], default_value=None, allow_none=True)
+    ticks = T.Int(5)
+    title = T.Unicode(default_value=None, allow_none=True)
+    titleMaxLength = T.Int(default_value=None, allow_none=True)
+    titleOffset = T.Int(default_value=None, allow_none=True)
+    format = T.Unicode(default_value=None, allow_none=True)
+    maxLabelLength = T.Int(25, min=0)
 
 
 class Band(BaseObject):
-    # TODO: Add padding
-    # TODO: Minimum for size
 
-    size = T.Int(600)
+    size = T.Int(600, min=0)
+    padding = T.Int(1, min=0)
 
 
 class Bin(BaseObject):
@@ -147,6 +153,7 @@ class Shelf(BaseObject):
             self.type = infer_vegalite_type(data[self.name])
 
     def _shorthand_changed(self, name, old, new):
+        # TODO: if name of shorthand changed, should it reset all properties of obj?
         D = parse_shorthand(self.shorthand)
         for key, val in D.items():
             setattr(self, key, val)
@@ -231,10 +238,22 @@ class Shape(Shelf):
     filled = T.Bool(False)
 
 
-class Test():
-    # TODO: fill out
+class Font(BaseObject):
+    weight = T.Enum(['normal', 'bold'], default_value='normal')
+    size = T.Int(10, min=0)
+    family = T.Unicode('Helvetica Neue')
+    style = T.Enum(['normal', 'italic'], default_value='normal')
 
-    pass
+
+class Text(Shelf):
+    scale = T.Instance(Scale, default_value=None, allow_none=True)
+    align = T.Unicode('right')
+    baseline = T.Unicode('middle')
+    color = T.Unicode('#000000')
+    margin = T.Int(4, min=0)
+    placeholder = T.Unicode('Abc')
+    font = T.Instance(Font, default_value=None, allow_none=True)
+    format = T.Unicode(allow_none=True, default_value=None)
 
 
 class Detail(Shelf):
@@ -260,13 +279,15 @@ class Encoding(BaseObject):
                     default_value=None, allow_none=True)
     detail = T.Union([T.Instance(Detail), T.Unicode()],
                      default_value=None, allow_none=True)
+    text = T.Union([T.Instance(Text), T.Unicode()],
+                   default_value=None, allow_none=True)
 
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
     skip = ['parent', 'config']
 
     def _infer_types(self, data):
-        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape', 'detail']:
+        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape', 'detail', 'text']:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
@@ -318,6 +339,12 @@ class Encoding(BaseObject):
             self.detail = Detail(new)
         if self.parent is not None:
             self.detail._infer_type(self.parent.data)
+
+    def _text_changed(self, name, old, new):
+        if isinstance(new, string_types):
+            self.text = Text(new)
+        if self.parent is not None:
+            self.text._infer_type(self.parent.data)
 
 
 class Filter():
