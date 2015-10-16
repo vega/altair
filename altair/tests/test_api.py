@@ -126,6 +126,123 @@ def test_vl_spec_for_scale_changes():
     assert scale.ordinalPalette == 'Dark2'
 
 
+def test_vl_spec_for_font_defaults():
+    """Check that defaults are according to spec"""
+    font = api.Font()
+    assert font.weight == 'normal'
+    assert font.size == 10
+    assert font.family == 'Helvetica Neue'
+    assert font.style == 'normal'
+
+
+def test_vl_spec_for_font_changes():
+    """Check that changes are possible and sticky"""
+    font = api.Font(weight='bold', size=15, family='Serif', style='italic')
+    assert font.weight == 'bold'
+    assert font.size == 15
+    assert font.family == 'Serif'
+    assert font.style == 'italic'
+
+
+def test_vl_spec_for_text_defaults():
+    """Check that defaults are according to spec"""
+
+    text = api.Text('foobar')
+    assert text.name == 'foobar'
+    assert text.type is None
+    assert text.timeUnit is None
+    assert text.bin is False
+    assert text.sort == []
+    assert text.aggregate is None
+    assert text.scale is None
+    assert text.align == 'right'
+    assert text.baseline == 'middle'
+    assert text.color == '#000000'
+    assert text.margin == 4
+    assert text.placeholder == 'Abc'
+    assert text.font is None
+    assert text.format is None
+
+    text = api.Text('foobar:O')
+    assert text.name == 'foobar'
+    assert text.type == 'O'
+    assert text.timeUnit is None
+    assert text.bin is False
+    assert text.sort == []
+    assert text.aggregate is None
+    assert text.scale is None
+    assert text.align == 'right'
+    assert text.baseline == 'middle'
+    assert text.color == '#000000'
+    assert text.margin == 4
+    assert text.placeholder == 'Abc'
+    assert text.font is None
+    assert text.format is None
+
+    text = api.Text('sum(foobar):O')
+    assert text.name == 'foobar'
+    assert text.type == 'O'
+    assert text.timeUnit is None
+    assert text.bin is False
+    assert text.sort == []
+    assert text.aggregate == 'sum'
+    assert text.scale is None
+    assert text.align == 'right'
+    assert text.baseline == 'middle'
+    assert text.color == '#000000'
+    assert text.margin == 4
+    assert text.placeholder == 'Abc'
+    assert text.font is None
+    assert text.format is None
+
+
+def test_vl_spec_for_text_changes():
+    """Check that changes are possible and sticky"""
+    text = api.Text('foobar', type='O', timeUnit='minutes', bin=api.Bin(), sort=[api.SortItems()], aggregate='avg',
+                    scale=api.Scale(), align='left', baseline='top', color='#111111', margin=3, placeholder = 'Aaa',
+                    font=api.Font(), format='format')
+    assert text.name == 'foobar'
+    assert text.type == 'O'
+    assert text.timeUnit == 'minutes'
+    assert text.bin.to_dict() == api.Bin().to_dict()
+    assert text.sort[0].to_dict() == api.SortItems().to_dict()
+    assert text.aggregate == 'avg'
+    assert text.scale.to_dict() == api.Scale().to_dict()
+    assert text.align == 'left'
+    assert text.baseline == 'top'
+    assert text.color == '#111111'
+    assert text.margin == 3
+    assert text.placeholder == 'Aaa'
+    assert text.font.to_dict() == api.Font().to_dict()
+    assert text.format == 'format'
+
+    text.shorthand = 'sum(foobar):Q'
+    assert text.name == 'foobar'
+    assert text.type == 'Q'
+    assert text.timeUnit == 'minutes'
+    assert text.bin.to_dict() == api.Bin().to_dict()
+    assert text.sort[0].to_dict() == api.SortItems().to_dict()
+    assert text.aggregate == 'sum'
+    assert text.scale.to_dict() == api.Scale().to_dict()
+    assert text.align == 'left'
+    assert text.baseline == 'top'
+    assert text.color == '#111111'
+    assert text.margin == 3
+    assert text.placeholder == 'Aaa'
+    assert text.font.to_dict() == api.Font().to_dict()
+    assert text.format == 'format'
+
+
+def test_vl_spec_for_text_edge_values():
+    """Check edge values"""
+    text = api.Text('foobar')
+    try:
+        text.margin = -1
+        raise Exception('Should have thrown for illegal margin min value.')
+    except TraitError:
+        pass
+
+
 def test_vl_spec_for_axis_defaults():
     """Check that defaults are according to spec"""
     axis = api.Axis()
@@ -138,7 +255,6 @@ def test_vl_spec_for_axis_defaults():
     assert axis.titleOffset is None
     assert axis.format is None
     assert axis.maxLabelLength == 25
-
 
 
 def test_vl_spec_for_axis_changes():
@@ -411,9 +527,10 @@ def test_encode():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col8=np.arange(3))
     kwargs = dict(x='col1', y='col2', row='col3', col='col4',
-                  size='col5', color='col6', shape='col7')
+                  size='col5', color='col6', shape='col7', text='col8')
 
     spec = api.Viz(data).encode(**kwargs)
     for key, name in kwargs.items():
@@ -427,11 +544,12 @@ def test_encode_aggregates():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col8=np.arange(3))
     kwargs = dict(x=('count', 'col1'), y=('count', 'col2'),
                   row=('count', 'col3'), col=('count', 'col4'),
                   size=('avg', 'col5'), color=('max', 'col6'),
-                  shape=('count', 'col7'))
+                  shape=('count', 'col7'), text=('avg', 'col8'))
 
     spec = api.Viz(data).encode(**{key:"{0}({1})".format(*val)
                                    for key, val in kwargs.items()})
@@ -448,11 +566,12 @@ def test_encode_types():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col8=np.arange(3))
     kwargs = dict(x=('col1', 'Q'), y=('col2', 'Q'),
                   row=('col3', 'O'), col=('col4', 'N'),
                   size=('col5', 'Q'), color=('col6', 'T'),
-                  shape=('col7', 'O'))
+                  shape=('col7', 'O'), text=('col8', 'O'))
 
     spec = api.Viz(data).encode(**{key:"{0}:{1}".format(*val)
                                    for key, val in kwargs.items()})
@@ -461,6 +580,7 @@ def test_encode_types():
         assert getattr(spec.encoding, key).name == name
         assert getattr(spec.encoding, key).type == typ
 
+
 def test_infer_types():
     data = dict(col1=[1.0, 2.0, 3.0],
                 col2=[0.1, 0.2, 0.3],
@@ -468,11 +588,12 @@ def test_infer_types():
                 col4=[True, False, True],
                 col5=[0.1, 0.2, 0.3],
                 col6=pd.date_range('2012', periods=3, freq='A'),
-                col7=np.arange(3))
+                col7=np.arange(3),
+                col8=np.arange(3))
     kwargs = dict(x=('col1', 'Q'), y=('col2', 'Q'),
                   row=('col3', 'N'), col=('col4', 'N'),
                   size=('col5', 'Q'), color=('col6', 'T'),
-                  shape=('col7', 'Q'))
+                  shape=('col7', 'Q'), text=('col8', 'Q'))
 
     spec = api.Viz(data).encode(**{key: val[0]
                                    for key, val in kwargs.items()})

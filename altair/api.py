@@ -238,10 +238,22 @@ class Shape(Shelf):
     filled = T.Bool(False)
 
 
-class Test():
-    # TODO: fill out
+class Font(BaseObject):
+    weight = T.Enum(['normal', 'bold'], default_value='normal')
+    size = T.Int(10, min=0)
+    family = T.Unicode('Helvetica Neue')
+    style = T.Enum(['normal', 'italic'], default_value='normal')
 
-    pass
+
+class Text(Shelf):
+    scale = T.Instance(Scale, default_value=None, allow_none=True)
+    align = T.Unicode('right')
+    baseline = T.Unicode('middle')
+    color = T.Unicode('#000000')
+    margin = T.Int(4, min=0)
+    placeholder = T.Unicode('Abc')
+    font = T.Instance(Font, default_value=None, allow_none=True)
+    format = T.Unicode(allow_none=True, default_value=None)
 
 
 class Detail():
@@ -268,13 +280,15 @@ class Encoding(BaseObject):
                     default_value=None, allow_none=True)
     shape = T.Union([T.Instance(Shape), T.Unicode()],
                     default_value=None, allow_none=True)
+    text = T.Union([T.Instance(Text), T.Unicode()],
+                   default_value=None, allow_none=True)
 
     parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
     skip = ['parent', 'config']
 
     def _infer_types(self, data):
-        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape']:
+        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape', 'text']:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
@@ -320,6 +334,12 @@ class Encoding(BaseObject):
             self.shape = Shape(new)
         if self.parent is not None:
             self.shape._infer_type(self.parent.data)
+
+    def _text_changed(self, name, old, new):
+        if isinstance(new, string_types):
+            self.text = Text(new)
+        if self.parent is not None:
+            self.text._infer_type(self.parent.data)
 
 
 class Filter():
