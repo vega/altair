@@ -96,7 +96,7 @@ def infer_vegalite_type(data, name=None):
     if typ in ['floating', 'mixed-integer-float', 'integer',
                'mixed-integer', 'complex']:
         typecode = 'quantity'
-    elif typ in ['string', 'bytes', 'categorical', 'boolean', 'mixed']:
+    elif typ in ['string', 'bytes', 'categorical', 'boolean', 'mixed', 'unicode']:
         typecode = 'nominal'
     elif typ in ['datetime', 'datetime64', 'timedelta',
                  'timedelta64', 'date', 'time', 'period']:
