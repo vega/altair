@@ -409,6 +409,70 @@ class Viz(BaseObject):
         D['config'] = self.vlconfig.to_dict()
         return D
 
+    def select_x(self):
+        """
+        Helper function that does a best effort of selecting an automatic x axis.
+
+        Raises AssertionError if it cannot find a x axis to choose.
+        """
+        assert self.data is not None
+        assert len(self.data) >= 1
+
+        d = self._classify_data_by_type()
+
+        # Choose the first column found on the following order: T, O, N, Q
+        chosen_x = None
+        for typ in ['Q', 'N', 'O', 'T']:
+            if len(d[typ]) >= 1:
+                chosen_x = d[typ][0]
+
+        if chosen_x is None:
+            raise AssertionError('Could not select X.')
+
+        if self.encoding is None:
+            self.encoding = Encoding()
+
+        self.encoding.x = chosen_x
+
+    def select_y(self, aggregator=None):
+        """
+        Helper function that does a best effort of selecting an automatic y axis.
+        It won't set the same axis that x is set to again, so X has to be set for the method to be called.
+
+        Raises AssertionError if it cannot find a y axis to choose.
+        """
+        assert self.data is not None
+        assert len(self.data) >= 2
+        assert self.encoding is not None
+        assert self.encoding.x is not None
+
+        x_name = self.encoding.x.name
+        d = self._classify_data_by_type([x_name])
+
+        # Choose the first column found on the following order: Q, O, N, T
+        chosen_y = None
+        for typ in ['T', 'N', 'O', 'Q']:
+            if len(d[typ]) >= 1:
+                chosen_y = d[typ][0]
+
+        if chosen_y is None:
+            raise AssertionError('Could not select Y.')
+
+        # Use aggregator if specified
+        if aggregator is not None:
+            chosen_y = '{}({})'.format(aggregator, chosen_y)
+
+        self.encoding.y = chosen_y
+
+    def _classify_data_by_type(self, skip=[]):
+        """Get O, N, Q, or T vegalite type for all columns in data except if in skip."""
+        d = {'O': [], 'N':[], 'Q':[], 'T':[]}
+        for column_name in self.data:
+            if column_name not in skip:
+                typ = infer_vegalite_type(self.data[column_name])
+                d[typ].append(column_name)
+        return d
+
     def encode(self, **kwargs):
         self.encoding = Encoding(**kwargs)
         return self
