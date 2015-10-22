@@ -409,7 +409,7 @@ class Viz(BaseObject):
         D['config'] = self.vlconfig.to_dict()
         return D
 
-    def select_x(self):
+    def select_x(self, order=None):
         """
         Helper function that does a best effort of selecting an automatic x axis.
 
@@ -418,23 +418,28 @@ class Viz(BaseObject):
         assert self.data is not None
         assert len(self.data) >= 1
 
-        d = self._classify_data_by_type()
+        if order is None:
+            order = ['T', 'O', 'N', 'Q']
+        else:
+            self._validate_custom_order(order)
 
-        # Choose the first column found on the following order: T, O, N, Q
+        d = self._classify_data_by_type(order)
+
         chosen_x = None
-        for typ in ['Q', 'N', 'O', 'T']:
+        for typ in order:
             if len(d[typ]) >= 1:
                 chosen_x = d[typ][0]
+                break
 
         if chosen_x is None:
-            raise AssertionError('Could not select X.')
+            raise ValueError('Could not select X.')
 
         if self.encoding is None:
             self.encoding = Encoding()
 
         self.encoding.x = chosen_x
 
-    def select_y(self, aggregator=None):
+    def select_y(self, order=None, aggregator=None):
         """
         Helper function that does a best effort of selecting an automatic y axis.
         It won't set the same axis that x is set to again, so X has to be set for the method to be called.
@@ -446,17 +451,23 @@ class Viz(BaseObject):
         assert self.encoding is not None
         assert self.encoding.x is not None
 
+        if order is None:
+            order = ['Q', 'O', 'N', 'T']
+        else:
+            self._validate_custom_order(order)
+
         x_name = self.encoding.x.name
-        d = self._classify_data_by_type([x_name])
+        d = self._classify_data_by_type(order, [x_name])
 
         # Choose the first column found on the following order: Q, O, N, T
         chosen_y = None
-        for typ in ['T', 'N', 'O', 'Q']:
+        for typ in order:
             if len(d[typ]) >= 1:
                 chosen_y = d[typ][0]
+                break
 
         if chosen_y is None:
-            raise AssertionError('Could not select Y.')
+            raise ValueError('Could not select Y.')
 
         # Use aggregator if specified
         if aggregator is not None:
@@ -464,13 +475,23 @@ class Viz(BaseObject):
 
         self.encoding.y = chosen_y
 
-    def _classify_data_by_type(self, skip=[]):
+    def _validate_custom_order(self, order):
+        assert len(order) == 4
+        list_to_check = list(order)
+        list_to_check.sort()
+        assert list_to_check == ['N', 'O', 'Q', 'T']
+
+    def _classify_data_by_type(self, order, skip=[]):
         """Get O, N, Q, or T vegalite type for all columns in data except if in skip."""
-        d = {'O': [], 'N':[], 'Q':[], 'T':[]}
+        d = dict()
+        for typ in order:
+            d[typ] = []
+
         for column_name in self.data:
             if column_name not in skip:
                 typ = infer_vegalite_type(self.data[column_name])
                 d[typ].append(column_name)
+
         return d
 
     def encode(self, **kwargs):

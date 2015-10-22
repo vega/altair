@@ -635,6 +635,15 @@ def test_select_x():
         v = api.Viz(dict())
         v.select_x()
 
+    # Custom order
+    data = dict(col1=[1.0, 2.0, 3.0],  # Q
+                col2=['A', 'B', 'C'],  # N
+                col3=pd.date_range('2012', periods=3, freq='A'),  # T
+                col4=pd.date_range('2012', periods=3, freq='A'))  # T
+    v = api.Viz(data)
+    v.select_x(['N', 'T', 'Q', 'O'])
+    assert v.encoding.x.name == 'col2'
+
 
 def test_select_y():
     def _check(data, expected, aggregator=None):
@@ -645,7 +654,7 @@ def test_select_y():
             v.select_y()
             assert v.encoding.y.name == expected
         else:
-            v.select_y(aggregator)
+            v.select_y(None, aggregator)
             assert v.encoding.y.name == expected
             assert v.encoding.y.aggregate == aggregator
 
@@ -691,6 +700,19 @@ def test_select_y():
         v = api.Viz(dict(col1=[1.0,2.0], col2=[1.0,2.0]))
         v.encode()
         v.select_y()
+
+    # Custom order
+    data = dict(col1=[1.0, 2.0, 3.0],  # Chosen X
+                col2=['A', 'B', 'C'],  # N
+                col3=pd.date_range('2012', periods=3, freq='A'),  # T
+                col4=pd.date_range('2012', periods=3, freq='A'),  # T
+                col5=[1.0, 2.0, 3.0],  # Q
+                col6=[1.0, 2.0, 3.0])  # Q
+    v = api.Viz(data)
+    v.encode()
+    v.encoding.x = 'col1'
+    v.select_y(['N', 'T', 'Q', 'O'])
+    assert v.encoding.y.name == 'col2'
 
 
 def test_encode_aggregates():
