@@ -93,6 +93,8 @@ def infer_vegalite_type(data, name=None):
     # Otherwise, infer based on the dtype of the input
     typ = pd.lib.infer_dtype(data)
 
+    # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
+
     if typ in ['floating', 'mixed-integer-float', 'integer',
                'mixed-integer', 'complex']:
         typecode = 'quantity'
