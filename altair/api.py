@@ -49,10 +49,11 @@ class BaseObject(Configurable):
         for k in self.traits():
             if k in self and k not in self.skip:
                 v = getattr(self, k)
-                if isinstance(v, BaseObject):
-                    result[k] = v.to_dict()
-                else:
-                    result[k] = v
+                if v is not None:
+                    if isinstance(v, BaseObject):
+                        result[k] = v.to_dict()
+                    else:
+                        result[k] = v
         return result
 
     def __repr__(self):
@@ -158,6 +159,11 @@ class Shelf(BaseObject):
         for key, val in D.items():
             setattr(self, key, val)
 
+    def to_dict(self):
+        if not self.name:
+            return None
+        return super(Shelf, self).to_dict()
+
     shorthand = T.Unicode('')
     name = T.Unicode('', config=True)
     type = T.Enum(['N', 'O', 'Q', 'T'], default_value=None, allow_none=True,
@@ -178,11 +184,12 @@ class DataCoordinate(Shelf):
 
 
 class X(DataCoordinate):
-    pass
+    shelf_name = 'x'
 
 
 class Y(DataCoordinate):
-    pass
+    shelf_name = 'y'
+
 
 
 class FacetCoordinate(Shelf):
@@ -200,22 +207,23 @@ class Row(FacetCoordinate):
     # TODO: supported role
     # TODO: required name and type - fulfilled when shelf does it
     # TODO: supportedMarkTypes
+    shelf_name = 'row'
 
-    pass
 
 
 class Col(FacetCoordinate):
-    pass
+    shelf_name = 'col'
 
 
 class Size(Shelf):
     # TODO: min for value
     # TODO: supported role
     # TODO: supported mark types
-
+    shelf_name = 'size'
     scale = T.Instance(Scale, default_value=None, allow_none=True)
     legend = T.Bool(True)
     value = T.CInt(30)
+
 
 
 class Color(Shelf):
@@ -223,7 +231,7 @@ class Color(Shelf):
     # TODO: min and max for opacity
     # TODO: supported role
     # TODO: supported mark types
-
+    shelf_name = 'color'
     scale = T.Instance(ColorScale, default_value=None, allow_none=True)
     legend = T.Bool(True)
     value = T.Unicode('#4682b4')
@@ -231,6 +239,7 @@ class Color(Shelf):
 
 
 class Shape(Shelf):
+    shelf_name = 'shape'
     value = T.Enum(['circle', 'square', 'cross', 'diamond', 'triangle-up',
                     'triangle-down'], default_value='circle')
     aggregate = T.Enum(['count'], default_value=None, allow_none=True)
@@ -246,6 +255,7 @@ class Font(BaseObject):
 
 
 class Text(Shelf):
+    shelf_name = 'text'
     scale = T.Instance(Scale, default_value=None, allow_none=True)
     align = T.Unicode('right')
     baseline = T.Unicode('middle')
@@ -257,6 +267,7 @@ class Text(Shelf):
 
 
 class Detail(Shelf):
+    shelf_name = 'detail'
     aggregate = T.Enum(['count'], default_value=None, allow_none=True, config=True)
 
 
