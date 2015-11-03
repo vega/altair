@@ -1,8 +1,5 @@
 import traitlets as T
 import ipywidgets as w
-import qgrid
-import json
-from qgrid.grid import QGridWidget, defaults
 
 from .api import Encoding, X, Y, Row, Col, Shape, Size, Color, Detail, Text
 from .utils import infer_vegalite_type
@@ -58,16 +55,6 @@ class AltairWidget(object):
 
         return self.render()
 
-    def on_render_table(self, *args):
-        self._clear_output()
-
-        data = self.viz.data
-        df = data  # TODO: Make df robust if data is not pd.df and is dict
-        widget = self._get_qgrid_widget(df)
-        self.output.children = [widget]
-
-        return self.render()
-
     def _clear_output(self):
         for c in self.output.children:
             c.visible = False
@@ -115,8 +102,25 @@ class AltairWidget(object):
             self.viz.bar()
             return self.on_render_viz()
 
-        table_button = w.Button(description='Table')
-        table_button.on_click(self.on_render_table)
+        def on_render_point(*args):
+            self.viz.point()
+            return self.on_render_viz()
+
+        def on_render_tick(*args):
+            self.viz.tick()
+            return self.on_render_viz()
+
+        def on_render_circle(*args):
+            self.viz.circle()
+            return self.on_render_viz()
+
+        def on_render_square(*args):
+            self.viz.square()
+            return self.on_render_viz()
+
+        def on_render_text(*args):
+            self.viz.text()
+            return self.on_render_viz()
 
         area_button = w.Button(description='Area')
         area_button.on_click(on_render_area)
@@ -127,7 +131,23 @@ class AltairWidget(object):
         bar_button = w.Button(description='Bar')
         bar_button.on_click(on_render_bar)
 
-        hbox.children = [heading, table_button, area_button, line_button, bar_button]
+        point_button = w.Button(description='Point')
+        point_button.on_click(on_render_point)
+
+        tick_button = w.Button(description='Tick')
+        tick_button.on_click(on_render_tick)
+
+        circle_button = w.Button(description='Circle')
+        circle_button.on_click(on_render_circle)
+
+        square_button = w.Button(description='Square')
+        square_button.on_click(on_render_square)
+
+        text_button = w.Button(description='Text')
+        text_button.on_click(on_render_text)
+
+        hbox.children = [heading, area_button, line_button, bar_button, point_button, tick_button, circle_button,
+                         square_button, text_button]
         return hbox
 
     def _create_encoding_view(self, columns, types):
@@ -160,8 +180,6 @@ class AltairWidget(object):
                 index = columns.index(value)
                 type_view.value = types[index]
 
-            return self.on_render_viz
-
         column_view.on_trait_change(on_column_changed, 'value')
         T.link((model, 'name'), (column_view, 'value'))
         T.link((type_view, 'value'), (model, 'type'))
@@ -184,13 +202,3 @@ class AltairWidget(object):
         dd = w.Dropdown(options=options, value=value)
         T.link((parent, attr), (dd, 'value'))
         return dd
-
-    @staticmethod
-    def _get_qgrid_widget(df):
-        # remote_js = defaults.remote_js
-        precision = defaults.precision
-        grid_options = {'forceFitColumns': False, 'defaultColumnWidth': 100}
-        return QGridWidget(df=df,
-                           precision=precision,
-                           grid_options=json.dumps(grid_options),
-                           remote_js=False)
