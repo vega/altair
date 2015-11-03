@@ -3,8 +3,6 @@ import ipywidgets as w
 import qgrid
 import json
 from qgrid.grid import QGridWidget, defaults
-from IPython.display import display
-import pandas as pd
 
 from .api import Encoding, X, Y, Row, Col, Shape, Size, Color, Detail, Text
 from .utils import infer_vegalite_type
@@ -29,9 +27,6 @@ class AltairWidget(object):
         self.viz = viz
         self.shelves = shelves
 
-        qgrid.nbinstall(overwrite=True)
-        qgrid.set_defaults(remote_js=True, precision=4)
-
         self._shelf_view_factories = {
             'x': self._create_shelf_view,
             'y': self._create_shelf_view,
@@ -45,57 +40,56 @@ class AltairWidget(object):
         }
 
         # Create output area
-        self.output = w.Output()
+        self.output = w.HBox()
         self.output.children = []
 
         # Create widget
-        self.widget = self._create_render_view()
+        self.controls = self._create_left_pane()
+        self.widget = w.HBox()
+        self.widget.children = [self.controls, self.output]
 
     def render(self):
         return self.widget
 
-    def on_render(self, *args):
-        with self.output:
-            # Not exposing this yet because of bugs in the renderers that break this.
-            # Printing instead.
-            # v.render()
-            # print(self.viz)
-            pass
+    def on_render_viz(self, *args):
         self._clear_output()
-        to_render = w.Textarea(value=str(self.viz))
-        self.output.children = [to_render]
+
+        self.output.children = [w.Textarea(value=str(self.viz))]
+
+        return self.render()
+
+    def on_render_table(self, *args):
+        self._clear_output()
+
+        data = self.viz.data
+        df = data  # TODO: Make df robust if data is not pd.df and is dict
+        widget = self._get_qgrid_widget(df)
+        self.output.children = [widget]
+
+        return self.render()
 
     def _clear_output(self):
         for c in self.output.children:
-            # print(c)
             c.visible = False
 
         self.output.children = []
-        self.output.clear_output()
 
-    def _create_render_view(self):
-        # Create render button
-        render_button = w.Button(description='Render', width=20)
-        render_button.on_click(self.on_render)
-
+    def _create_left_pane(self):
         # Create types of viz hbox
         viz_types_hbox = self._create_viz_types_buttons()
 
         # TODO: Append render to types. This should be automatic afterwards.
 
         # Create vbox for shelves
-        shelves_view = self._create_viz_view()
+        shelves_view = self._create_shelves_controls()
 
         # Create left pane with all controls
         left_pane = w.VBox()
-        left_pane.children = [render_button, viz_types_hbox, shelves_view]
+        left_pane.children = [viz_types_hbox, shelves_view]
 
-        final_pane = w.HBox()
-        final_pane.children = [left_pane, self.output]
+        return left_pane
 
-        return final_pane
-
-    def _create_viz_view(self):
+    def _create_shelves_controls(self):
         columns, types = self._find_columns_and_types(self.viz.data)
         vbox = w.VBox()
         if not hasattr(self.viz, 'encoding'):
@@ -109,39 +103,20 @@ class AltairWidget(object):
 
         heading = w.HTML('Mark:', width='50px', height='32px')
 
-        def on_render_table(*args):
-            with self.output:
-                self.output.clear_output()
-
-                data = self.viz.data
-                if isinstance(data, pd.Series):
-                    df = pd.DataFrame(data)
-                else:
-                    df = data
-                display(self._get_qgrid_widget(df))
-
-                # display(data)
-
         def on_render_area(*args):
-            with self.output:
-                self.viz.area()
-                self.output.clear_output()
-                print(self.viz)
+            self.viz.area()
+            return self.on_render_viz()
 
         def on_render_line(*args):
-            with self.output:
-                self.viz.line()
-                self.output.clear_output()
-                print(self.viz)
+            self.viz.line()
+            return self.on_render_viz()
 
         def on_render_bar(*args):
-            with self.output:
-                self.viz.bar()
-                self.output.clear_output()
-                print(self.viz)
+            self.viz.bar()
+            return self.on_render_viz()
 
         table_button = w.Button(description='Table')
-        table_button.on_click(on_render_table)
+        table_button.on_click(self.on_render_table)
 
         area_button = w.Button(description='Area')
         area_button.on_click(on_render_area)
@@ -155,8 +130,24 @@ class AltairWidget(object):
         hbox.children = [heading, table_button, area_button, line_button, bar_button]
         return hbox
 
-    @staticmethod
-    def _create_shelf_view(model, columns, types):
+    def _create_encoding_view(self, columns, types):
+        enc = self.viz.encoding
+
+        vbox = w.VBox()
+        children = list()
+        children.append(w.HTML('Encoding:', width='148px', height='32px'))
+
+        for shelf in self.shelves:
+            if getattr(enc, shelf, None) is None:
+                setattr(enc, shelf, self._shelf_types[shelf](''))
+            factory = self._shelf_view_factories[shelf]
+            view = factory(getattr(enc, shelf), columns, types)
+            children.append(view)
+
+        vbox.children = children
+        return vbox
+
+    def _create_shelf_view(self, model, columns, types):
         opts = list(zip(['-']+columns, ['']+columns))
         column_view = w.Dropdown(options=opts, description=model.shelf_name, value='')
         type_view = w.Dropdown(options={'Q': 'Q', 'T': 'T', 'O': 'O', 'N': 'N'}, value='Q')
@@ -168,6 +159,8 @@ class AltairWidget(object):
             else:
                 index = columns.index(value)
                 type_view.value = types[index]
+
+            return self.on_render_viz
 
         column_view.on_trait_change(on_column_changed, 'value')
         T.link((model, 'name'), (column_view, 'value'))
@@ -191,23 +184,6 @@ class AltairWidget(object):
         dd = w.Dropdown(options=options, value=value)
         T.link((parent, attr), (dd, 'value'))
         return dd
-
-    def _create_encoding_view(self, columns, types):
-        enc = self.viz.encoding
-
-        vbox = w.VBox()
-        children = list()
-        children.append(w.HTML('Encoding:', width='148px', height='32px'))
-
-        for shelf in self.shelves:
-            if getattr(enc, shelf, None) is None:
-                setattr(enc, shelf, self._shelf_types[shelf](''))
-            factory = self._shelf_view_factories[shelf]
-            view = factory(getattr(enc, shelf), columns, types)
-            children.append(view)
-
-        vbox.children = children
-        return vbox
 
     @staticmethod
     def _get_qgrid_widget(df):
