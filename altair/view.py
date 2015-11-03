@@ -67,8 +67,10 @@ class AltairWidget(object):
 
     def _clear_output(self):
         for c in self.output.children:
-            print(c)
+            # print(c)
             c.visible = False
+
+        self.output.children = []
         self.output.clear_output()
 
     def _create_render_view(self):
