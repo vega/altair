@@ -3,7 +3,7 @@ from .renderer import Renderer
 from lightning import Lightning
 
 
-lgn = Lightning(ipython=True, local=True, quiet=True)
+lgn = Lightning(ipython=True, local=True)
 
 
 class LightningRenderer(Renderer):

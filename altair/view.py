@@ -1,7 +1,7 @@
 import traitlets as T
 import ipywidgets as w
 
-from .api import Encoding, X, Y, Row, Col, Shape, Size, Color, Detail, Text
+from .api import Encoding, X, Y, Row, Col, Shape, Size, Color, Detail, Text, use_renderer
 from .utils import infer_vegalite_type
 
 
@@ -20,7 +20,9 @@ class AltairWidget(object):
         'size': Size
     }
 
-    def __init__(self, viz, shelves=_shelves):
+    def __init__(self, viz, shelves=_shelves, renderer='lightning'):
+        use_renderer(renderer)
+
         self.viz = viz
         self.shelves = shelves
 
@@ -53,21 +55,29 @@ class AltairWidget(object):
     def on_render_viz(self, *args):
         self._clear_output()
 
-        self.output.children = [w.Textarea(value=str(self.viz))]
+        to_display = w.Textarea(value=str(self.viz))
+
+        # TODO: how to display properly?
+        # to_display = w.Output()
+        # with to_display:
+        #     self.viz.render()
+
+        self.output.children = [to_display]
 
         return self.render()
 
     def _clear_output(self):
         for c in self.output.children:
             c.visible = False
+            method = getattr(c, 'clear_output', None)
+            if method is not None:
+                method()
 
         self.output.children = []
 
     def _create_left_pane(self):
         # Create types of viz hbox
         viz_types_hbox = self._create_viz_types_buttons()
-
-        # TODO: Append render to types. This should be automatic afterwards.
 
         # Create vbox for shelves
         shelves_view = self._create_shelves_controls()
@@ -92,8 +102,22 @@ class AltairWidget(object):
 
         heading = w.HTML('Mark:', width='50px', height='32px')
 
-        for mark in []:
-            pass
+        # TODO: Could not express this method succinctly as on_press always ends up calling viz.text()
+        # for some reason
+
+        # hbox.children = [heading]
+        #
+        # for mark in ['Area', 'Line', 'Bar', 'Point', 'Tick', 'Circle', 'Square', 'Text']:
+        #     button = w.Button(description=mark)
+        #
+        #     def on_press(*args):
+        #         viz_mark_method = getattr(self.viz, mark.lower())
+        #         viz_mark_method()
+        #         return self.on_render_viz()
+        #
+        #     button.on_click(on_press)
+        #     hbox.children = hbox.children + (button,)
+
         def on_render_area(*args):
             self.viz.area()
             return self.on_render_viz()
@@ -152,6 +176,7 @@ class AltairWidget(object):
 
         hbox.children = [heading, area_button, line_button, bar_button, point_button, tick_button, circle_button,
                          square_button, text_button]
+
         return hbox
 
     def _create_encoding_view(self, columns, types):
