@@ -36,13 +36,15 @@ class AltairWidget(object):
             'size': self._create_shelf_view
         }
 
+        self.widget = w.HBox()
+
         # Create output area
         self.output = w.HBox()
         self.output.children = []
 
         # Create widget
         self.controls = self._create_left_pane()
-        self.widget = w.HBox()
+
         self.widget.children = [self.controls, self.output]
 
     def render(self):
@@ -90,6 +92,8 @@ class AltairWidget(object):
 
         heading = w.HTML('Mark:', width='50px', height='32px')
 
+        for mark in []:
+            pass
         def on_render_area(*args):
             self.viz.area()
             return self.on_render_viz()
@@ -180,9 +184,15 @@ class AltairWidget(object):
                 index = columns.index(value)
                 type_view.value = types[index]
 
-        column_view.on_trait_change(on_column_changed, 'value')
+            return self.on_render_viz()
+
+        def on_type_changed(name, value):
+            return self.on_render_viz()
+
         T.link((model, 'name'), (column_view, 'value'))
         T.link((type_view, 'value'), (model, 'type'))
+        column_view.on_trait_change(on_column_changed, 'value')
+        type_view.on_trait_change(on_type_changed, 'value')
         return shelf_view
 
     @staticmethod
