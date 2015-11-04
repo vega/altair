@@ -5,7 +5,7 @@ from .api import Encoding, X, Y, Row, Col, Shape, Size, Color, Detail, Text, use
 from .utils import infer_vegalite_type
 
 
-class AltairWidget(w.VBox):
+class AltairWidget(w.FlexBox):
     _shelves = ('x', 'y', 'row', 'col', 'shape', 'color', 'size', 'detail', 'text')
 
     _shelf_types = {
@@ -20,7 +20,10 @@ class AltairWidget(w.VBox):
         'size': Size
     }
 
-    def __init__(self, viz, shelves=_shelves, renderer='lightning'):
+    def __init__(self, viz, shelves=_shelves, renderer='lightning', **kwargs):
+        kwargs['orientation'] = 'vertical'
+        super(AltairWidget, self).__init__((), **kwargs)
+
         use_renderer(renderer)
 
         self.viz = viz
@@ -48,6 +51,8 @@ class AltairWidget(w.VBox):
         self.controls = self._create_left_pane()
 
         self.widget.children = [self.controls, self.output]
+
+        self.children = [self.widget]
 
     def render(self):
         return self.widget
