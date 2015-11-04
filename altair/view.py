@@ -54,9 +54,6 @@ class AltairWidget(w.FlexBox):
 
         self.children = [self.widget]
 
-    def render(self):
-        return self.widget
-
     def on_render_viz(self, *args):
         self._clear_output()
 
