@@ -3,3 +3,4 @@ pandas
 jinja2
 # lightning-python
 # git+https://github.com/ellisonbg/altair.git#egg=altair
+ipywidgets
