@@ -5,7 +5,7 @@ from .api import Encoding, X, Y, Row, Col, Shape, Size, Color, Detail, Text, use
 from .utils import infer_vegalite_type
 
 
-class AltairWidget(object):
+class AltairWidget(w.VBox):
     _shelves = ('x', 'y', 'row', 'col', 'shape', 'color', 'size', 'detail', 'text')
 
     _shelf_types = {
