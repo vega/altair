@@ -12,12 +12,12 @@ def test_parse_shorthand():
         assert parse_shorthand(s) == kwargs
 
     check('')
-    check('foobar', name='foobar')
-    check('foobar:nominal', type='N', name='foobar')
-    check('foobar:O', type='O', name='foobar')
-    check('avg(foobar)', name='foobar', aggregate='avg')
-    check('min(foobar):time', type='T', name='foobar', aggregate='min')
-    check('sum(foobar):Q', type='Q', name='foobar', aggregate='sum')
+    check('foobar', field='foobar')
+    check('foobar:nominal', type='N', field='foobar')
+    check('foobar:O', type='O', field='foobar')
+    check('avg(foobar)', field='foobar', aggregate='avg')
+    check('min(foobar):time', type='T', field='foobar', aggregate='min')
+    check('sum(foobar):Q', type='Q', field='foobar', aggregate='sum')
 
 
 def test_infer_vegalite_type():

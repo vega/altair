@@ -14,7 +14,7 @@ TYPECODE_MAP = {'ordinal': 'O',
 
 def parse_shorthand(sh):
     """
-    Altair accepts a shorthand expression for aggregation, name, and type.
+    Altair accepts a shorthand expression for aggregation, field, and type.
 
     Parse strings of the form
 
@@ -42,11 +42,11 @@ def parse_shorthand(sh):
 
     # find aggregate
     if not sh0.endswith(')'):
-        agg, name = None, sh0
+        agg, field = None, sh0
     else:
         L = sh0[:-1].split('(')
         if len(L) == 2:
-            agg, name = L
+            agg, field = L
         else:
             raise ValueError("Unmatched parentheses")
 
@@ -57,24 +57,18 @@ def parse_shorthand(sh):
                          'Valid values are {1}'.format(typ, valid_types))
     typ = TYPECODE_MAP.get(typ, typ)
 
-    # validate & store aggregate
-    valid_aggs = ['avg', 'sum', 'median', 'min', 'max', 'count']
-    if agg is not None and agg not in valid_aggs:
-        raise ValueError('Invalid aggregate: "{0}()".\n'
-                         'Valid values are {1}'.format(agg, valid_aggs))
-
     # encode and return the results
     result = {}
     if typ:
         result['type'] = typ
     if agg:
         result['aggregate'] = agg
-    if name:
-        result['name'] = name
+    if field:
+        result['field'] = field
     return result
 
 
-def infer_vegalite_type(data, name=None):
+def infer_vegalite_type(data, field=None):
     """
     From an array-like input, infer the correct vega typecode
     ('O', 'N', 'Q', or 'T')
@@ -82,11 +76,11 @@ def infer_vegalite_type(data, name=None):
     Parameters
     ----------
     data: Numpy array or Pandas Series
-    name: str
+    field: str column name
     """
     # See if we can read the type from the name
     if name is not None:
-        parsed = parse_shorthand(name)
+        parsed = parse_shorthand(field)
         if parsed.get('type'):
             return parsed['type']
 
