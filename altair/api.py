@@ -244,6 +244,21 @@ class Encoding(schema.Encoding):
 
 
 #*************************************************************************
+# Data
+#*************************************************************************
+
+
+class Data(schema.Data):
+
+    formatType = T.Enum(['json', 'csv', 'tsv'], default_value='json')
+
+    def to_dict(self):
+        result = {'formatType': self.formatType,
+                  'values': self.data.to_dict('records')}
+        return result
+
+
+#*************************************************************************
 # Encoding
 #*************************************************************************
 
