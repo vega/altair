@@ -41,9 +41,10 @@ class StringSchema(SchemaFile):
     string_template = """class {cls}(T.Unicode):
     pass"""
 
-    def __init__(self, name, schema):
+    def __init__(self, name, schema, full_schema):
         self.name = name
         self.schema = schema
+        self.full_schema = full_schema
         self.imports = ['import traitlets as T']
 
     def code(self):
@@ -59,9 +60,10 @@ class ObjectSchema(SchemaFile):
     class_template = """class {name}(BaseObject):\n"""
     attr_template = """    {0} = {1}\n"""
 
-    def __init__(self, name, schema):
+    def __init__(self, name, schema, full_schema):
         self.name = name
         self.schema = schema
+        self.full_schema = full_schema
         self.prop_dict = schema['properties']
         self.imports = ['import traitlets as T',
                         'from ..baseobject import BaseObject']
@@ -118,10 +120,18 @@ class ObjectSchema(SchemaFile):
             kwds['help'] = self.format_help_string(attr_dict['description'],
                                                    summarize=True)
 
+
         pound, cls, name = attr_dict['$ref'].split('/')
         self.imports.append('from .{0} import {1}'
                             ''.format(name.lower(), name))
-        return "T.Instance({0}, {1})".format(name, self.kwds_to_str(kwds))
+
+        reftype = self.full_schema['definitions'][name]['type']
+        if reftype == 'object':
+            return "T.Instance({0}, {1})".format(name, self.kwds_to_str(kwds))
+        elif reftype == 'string':
+            return "{0}({1})".format(name, self.kwds_to_str(kwds))
+        else:
+            raise NotImplementedError("type = '{0}'".format(reftype))
 
     def oneof_attribute(self, attr_dict):
         types = (self.any_attribute(attr) for attr in attr_dict['oneOf'])
@@ -143,9 +153,9 @@ def iterate_schemas():
     schema = read_vegalite_schema()
     for key, val in schema['definitions'].items():
         if val['type'] == 'object':
-            yield key, ObjectSchema(key, val)
+            yield key, ObjectSchema(key, val, schema)
         elif val['type'] == 'string':
-            yield key, StringSchema(key, val)
+            yield key, StringSchema(key, val, schema)
         else:
             raise NotImplementedError(val['type'])
 
