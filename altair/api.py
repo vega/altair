@@ -15,12 +15,15 @@ from .renderer import Renderer
 
 import pandas as pd
 
-import .schema
+from . import schema
 
 
-class ShorthandMixin(object):
+#*************************************************************************
+# Channels
+#*************************************************************************
 
-class PositionChannelDef(schema.PositionChannelDef, ShorthandMixin):
+
+class ChannelMixin(object):
 
     skip = ['shorthand']
 
@@ -35,7 +38,6 @@ class PositionChannelDef(schema.PositionChannelDef, ShorthandMixin):
             self.type = infer_vegalite_type(data[self.field])
 
     def _shorthand_changed(self, name, old, new):
-        # TODO: if name of shorthand changed, should it reset all properties of obj?
         D = parse_shorthand(self.shorthand)
         for key, val in D.items():
             setattr(self, key, val)
@@ -44,6 +46,10 @@ class PositionChannelDef(schema.PositionChannelDef, ShorthandMixin):
         if not self.field:
             return None
         return super(PositionChannelDef, self).to_dict()
+
+
+class PositionChannelDef(schema.PositionChannelDef, ChannelMixin):
+    pass
 
 
 class X(PositionChannelDef):
@@ -62,30 +68,8 @@ class Col(PositionChannelDef):
     channel_name = 'col'
 
 
-class ChannelDefWithLegend(spec.ChannelDefWithLegend):
-
-    skip = ['shorthand']
-
-    shorthand = T.Unicode('')
-
-    def __init__(self, shorthand, **kwargs):
-        kwargs['shorthand'] = shorthand
-        super(PositionChannelDef, self).__init__(**kwargs)
-
-    def _infer_type(self, data):
-        if self.type is None and self.name in data:
-            self.type = infer_vegalite_type(data[self.name])
-
-    def _shorthand_changed(self, name, old, new):
-        # TODO: if name of shorthand changed, should it reset all properties of obj?
-        D = parse_shorthand(self.shorthand)
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    def to_dict(self):
-        if not self.name:
-            return None
-        return super(PositionChannelDef, self).to_dict()
+class ChannelDefWithLegend(spec.ChannelDefWithLegend, ChannelMixin):
+    pass
 
 
 class Color(ChannelDefWithLegend):
@@ -100,31 +84,21 @@ class Shape(ChannelDefWithLegend):
     channel_name = 'shape'
 
 
-class Field(schema.FieldDef):
+class Field(schema.FieldDef, ChannelMixin):
+    channel_nane = 'field'
     
-    skip = ['shorthand']
 
-    shorthand = T.Unicode('')
+class OrderChannelDef(schema.OrderChannelDef, ChannelMixin):
+    pass
 
-    def __init__(self, shorthand, **kwargs):
-        kwargs['shorthand'] = shorthand
-        super(Field, self).__init__(**kwargs)
 
-    def _infer_type(self, data):
-        if self.type is None and self.name in data:
-            self.type = infer_vegalite_type(data[self.name])
+class Order(OrderChannelDef):
+    channel_name = 'order'
 
-    def _shorthand_changed(self, name, old, new):
-        # TODO: if name of shorthand changed, should it reset all properties of obj?
-        D = parse_shorthand(self.shorthand)
-        for key, val in D.items():
-            setattr(self, key, val)
 
-    def to_dict(self):
-        if not self.name:
-            return None
-        return super(Field, self).to_dict()
-    
+#*************************************************************************
+# Aliases
+#*************************************************************************
 
 
 class Axis(schema.AxisProperties):
@@ -146,9 +120,14 @@ class Formula(schema.VgFormula):
         super(Formula, self).__init__(**kwargs)
 
 
+#*************************************************************************
+# Encoding
+#*************************************************************************
+
+
 class Encoding(schema.Encoding):
-    # TODO: add test and detail
     
+    # Position channels
     x = T.Union([T.Instance(X), T.Unicode()],
                 default_value=None, allow_none=True)
     y = T.Union([T.Instance(Y), T.Unicode()],
@@ -157,36 +136,49 @@ class Encoding(schema.Encoding):
                   default_value=None, allow_none=True)
     col = T.Union([T.Instance(Col), T.Unicode()],
                   default_value=None, allow_none=True)
+                  
+    # Channels with legends
     color = T.Union([T.Instance(Color), T.Unicode()],
                     default_value=None, allow_none=True)
     size = T.Union([T.Instance(Size), T.Unicode()],
                    default_value=None, allow_none=True)
     shape = T.Union([T.Instance(Shape), T.Unicode()],
                     default_value=None, allow_none=True)
-    detail = T.Union([T.Instance(Detail), T.Unicode()],
+                    
+    # Field and order channels
+    detail = T.Union([T.Instance(Field), T.List(T.Instance(Field)), T.Unicode()],
                      default_value=None, allow_none=True)
-    text = T.Union([T.Instance(Text), T.Unicode()],
+    text = T.Union([T.Instance(Field), T.Unicode()],
+                   default_value=None, allow_none=True)
+    label = T.Union([T.Instance(Field), T.Unicode()],
+                   default_value=None, allow_none=True)
+    path = T.Union([T.Instance(Order), T.List(T.Instance(Order)), T.Unicode()],
+                   default_value=None, allow_none=True)
+    order = T.Union([T.Instance(Order), T.List(T.Instance(Order)), T.Unicode()],
                    default_value=None, allow_none=True)
 
-    parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
-    skip = ['parent', 'config']
+    parent = T.Instance(schema.BaseObject, default_value=None, allow_none=True)
+
+    skip = ['parent']
 
     def _infer_types(self, data):
-        for attr in ['x', 'y', 'row', 'col', 'size', 'color', 'shape', 'detail', 'text']:
+        for attr in ['x', 'y', 'row', 'col', 'color',
+                     'size', 'shape', 'detail', 'text',
+                     'label', 'path', 'order']:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
 
     def _x_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.x = X(new, config=self.config)
+            self.x = X(new)
         if getattr(self.parent, 'data', None) is not None:
             self.x._infer_type(self.parent.data)
 
     def _y_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.y = Y(new, config=self.config)
+            self.y = Y(new)
         if getattr(self.parent, 'data', None) is not None:
             self.y._infer_type(self.parent.data)
 
@@ -202,17 +194,17 @@ class Encoding(schema.Encoding):
         if getattr(self.parent, 'data', None) is not None:
             self.col._infer_type(self.parent.data)
 
-    def _size_changed(self, name, old, new):
-        if isinstance(new, string_types):
-            self.size = Size(new)
-        if getattr(self.parent, 'data', None) is not None:
-            self.size._infer_type(self.parent.data)
-
     def _color_changed(self, name, old, new):
         if isinstance(new, string_types):
             self.color = Color(new)
         if getattr(self.parent, 'data', None) is not None:
             self.color._infer_type(self.parent.data)
+
+    def _size_changed(self, name, old, new):
+        if isinstance(new, string_types):
+            self.size = Size(new)
+        if getattr(self.parent, 'data', None) is not None:
+            self.size._infer_type(self.parent.data)
 
     def _shape_changed(self, name, old, new):
         if isinstance(new, string_types):
@@ -222,30 +214,52 @@ class Encoding(schema.Encoding):
 
     def _detail_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.detail = Detail(new)
+            self.detail = Field(new)
         if self.parent is not None:
             self.detail._infer_type(self.parent.data)
 
     def _text_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.text = Text(new)
+            self.text = Field(new)
         if self.parent is not None:
             self.text._infer_type(self.parent.data)
 
+    def _label_changed(self, name, old, new):
+        if isinstance(new, string_types):
+            self.label = Field(new)
+        if self.parent is not None:
+            self.label._infer_type(self.parent.data)
 
-class Viz(BaseObject):
+    def _path_changed(self, name, old, new):
+        if isinstance(new, string_types):
+            self.path = Order(new)
+        if self.parent is not None:
+            self.path._infer_type(self.parent.data)
 
-    marktype = T.Enum(['point', 'tick', 'bar', 'line',
-                      'area', 'circle', 'square', 'text'],
-                      default_value='point')
-    encoding = T.Instance(spec.Encoding, default_value=None, allow_none=True)
-    config = T.Instance(spec.Config, allow_none=True)
+    def _order_changed(self, name, old, new):
+        if isinstance(new, string_types):
+            self.order = Order(new)
+        if self.parent is not None:
+            self.order._infer_type(self.parent.data)
 
-    def _config_default(self):
-        return Config()
 
+#*************************************************************************
+# Encoding
+#*************************************************************************
+
+
+class Viz(schema.BaseObject):
+
+    name = T.Unicode()
+    description = T.Unicode()
     _data = T.Instance(Data, default_value=None, allow_none=True)
     data = DataFrameTrait(default_value=None, allow_none=True)
+    transform = T.Instance(schema.Transform, default_value=None, allow_none=True)
+    mark = T.Enum(['area', 'bar', 'line', 'point',
+                   'text', 'tick', 'circle', 'square'],
+                  default_value='point')
+    encoding = T.Instance(Encoding, default_value=None, allow_none=True)
+    config = T.Instance(schema.Config, allow_none=True)
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
@@ -261,7 +275,7 @@ class Viz(BaseObject):
         if self.encoding is not None:
             self.encoding._infer_types(self.data)
 
-    skip = ['data', '_data', 'vlconfig']
+    skip = ['data', '_data']
 
     def __init__(self, data, **kwargs):
         kwargs['data'] = data
@@ -270,7 +284,6 @@ class Viz(BaseObject):
     def to_dict(self):
         D = super(Viz, self).to_dict()
         D['data'] = self._data.to_dict()
-        D['config'] = self.vlconfig.to_dict()
         return D
 
     def encode(self, **kwargs):
@@ -279,90 +292,39 @@ class Viz(BaseObject):
 
     def configure(self, **kwargs):
         """Set chart configuration"""
-        self.config = spec.Config(**kwargs)
+        self.config = schema.Config(**kwargs)
         return self
 
-    def set_single_dims(self, width, height):
-        """
-        Helper function for setting single-widths
-
-        Parameters
-        ----------
-        width: int
-        height: int
-        """
-        self.vlconfig.width = width
-        self.vlconfig.height = height
-        self.vlconfig.singleWidth = int(width * 0.75)
-        self.vlconfig.singleHeight = int(height * 0.75)
-
-        if self.encoding.x.type in ('N', 'O'):
-            self.encoding.x.band = Band(size=int(width/10))
-
-        if self.encoding.y.type in ('N', 'O'):
-            self.encoding.y.band = Band(size=int(height/10))
+    def area(self):
+        self.mark = 'area'
         return self
 
-    def mark(self, mt):
-        """
-        Set mark to given string value.
+    def bar(self):
+        self.mark = 'bar'
+        return self
 
-        Parameters
-        ----------
-        mt: str
-        """
-        self.marktype = mt
+    def line(self):
+        self.mark = 'line'
         return self
 
     def point(self):
-        return self.mark('point')
-
-    def tick(self):
-        return self.mark('tick')
-
-    def bar(self):
-        return self.mark('bar')
-
-    def line(self):
-        return self.mark('line')
-
-    def area(self):
-        return self.mark('area')
-
-    def circle(self):
-        return self.mark('circle')
-
-    def square(self):
-        return self.mark('square')
+        self.mark = 'point'
+        return self
 
     def text(self):
-        return self.mark('text')
+        self.mark = 'text'
+        return self
 
-    def hist(self, bins=10, **kwargs):
-        """
-        Render histogram with given `bins`.
+    def tick(self):
+        self.mark = 'tick'
+        return self
 
-        Parameters
-        ----------
-        bins: int, default 10
-        """
+    def circle(self):
+        self.mark = 'circle'
+        return self
 
-        self.marktype = "bar"
-
-        config = Config()
-
-        config.Y.type = "Q"
-        config.Y.aggregate = "count"
-
-        # We're making sure a y-change is triggered
-        self.encoding = Encoding(config=config, y='', **kwargs)
-
-        if isinstance(kwargs.get("x"), str):
-            self.encoding.x.bin = Bin(maxbins=bins)
-
-        # Hack: y.name should be "*", but version weirdness
-        self.encoding.y.name = self.encoding.x.name
-
+    def square(self):
+        self.mark = 'square'
         return self
 
     def render(self, **kwargs):
