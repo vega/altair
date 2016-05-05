@@ -1,5 +1,7 @@
 # Altair
 
+[![build status](http://img.shields.io/travis/ellisonbg/altair/master.svg?style=flat)](https://travis-ci.org/ellisonbg/altair)
+
 High-level declarative visualization library for Python.
 
 This package exposes a Python API for building statistical visualizations in a
