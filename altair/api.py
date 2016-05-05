@@ -68,7 +68,7 @@ class Col(PositionChannelDef):
     channel_name = 'col'
 
 
-class ChannelDefWithLegend(spec.ChannelDefWithLegend, ChannelMixin):
+class ChannelDefWithLegend(schema.ChannelDefWithLegend, ChannelMixin):
     pass
 
 
@@ -253,6 +253,8 @@ class Data(schema.Data):
     formatType = T.Enum(['json', 'csv', 'tsv'], default_value='json')
 
     def to_dict(self):
+        if self.data is None:
+            return None
         result = {'formatType': self.formatType,
                   'values': self.data.to_dict('records')}
         return result
@@ -292,13 +294,17 @@ class Viz(schema.BaseObject):
 
     skip = ['data', '_data']
 
-    def __init__(self, data, **kwargs):
-        kwargs['data'] = data
+    def __init__(self, *args, **kwargs):
+        if len(args)==1:
+            kwargs['data'] = args[0]
         super(Viz, self).__init__(**kwargs)
 
     def to_dict(self):
         D = super(Viz, self).to_dict()
-        D['data'] = self._data.to_dict()
+        if self._data is not None:
+            r = self._data.to_dict()
+            if r is not None:
+                D['data'] = r
         return D
 
     def encode(self, **kwargs):
