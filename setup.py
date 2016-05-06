@@ -17,6 +17,7 @@ NAME                = "altair"
 PACKAGES            = ['altair',
                        'altair.tests',
                        'altair.examples',
+                       'altair.examples.tests',
                        'altair.schema',
                        'altair.schema._generated',
                        'altair.schema._generated.tests']
