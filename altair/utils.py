@@ -77,7 +77,7 @@ def parse_shorthand(sh):
     return result
 
 
-def infer_vegalite_type(data, field=None):
+def infer_vegalite_type(data, name=None):
     """
     From an array-like input, infer the correct vega typecode
     ('O', 'N', 'Q', or 'T')
@@ -116,10 +116,10 @@ def infer_vegalite_type(data, field=None):
 
 class DataFrameTrait(T.Any):
     """A custom TraitType for pandas.DataFrame or other similar labeled data.
-    
+
     This mainly exists for objects where == doesn't make sense for comparison.
     """
-    
+
     default_value = None
     allow_none = True
     info_text = 'a pandas.DataFrame or similar object'

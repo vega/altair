@@ -1,4 +1,4 @@
-from altair.spec import SPEC
+from altair.schema import SCHEMA
 
-def test_spec():
-    assert SPEC["$schema"]=="http://json-schema.org/draft-04/schema#"
+def test_schema():
+    assert SCHEMA["$schema"]=="http://json-schema.org/draft-04/schema#"
