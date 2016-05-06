@@ -18,5 +18,5 @@ class OrderChannelDef(BaseObject):
     sort = SortOrder(allow_none=True, default_value=None)
     timeUnit = TimeUnit(allow_none=True, default_value=None)
     type = Type(allow_none=True, default_value=None)
-    value = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None)])
+    value = T.Union([T.Bool(allow_none=True, default_value=None), T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None)])
 
