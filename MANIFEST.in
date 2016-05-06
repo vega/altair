@@ -1,0 +1,4 @@
+include *.md
+include LICENSE
+recursive-inclue altair *.py *.json
+recursive-include notebooks *.ipynb

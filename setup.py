@@ -14,7 +14,13 @@ rendered in Altair.
 
 DESCRIPTION         = "Altair: Python Visualization with Vega Lite"
 NAME                = "altair"
-PACKAGES            = ['altair']
+PACKAGES            = ['altair',
+                       'altair.tests',
+                       'altair.examples',
+                       'altair.schema',
+                       'altair.schema._generated',
+                       'altair.schema._generated.tests']
+PACKAGE_DATA        = {'altair': ['schema/*.json']}
 AUTHOR              = "Jupyter Development Team",
 AUTHOR_EMAIL        = "jupyter@googlegroups.org",
 URL                 = 'http://github.com/ellisonbg/altair/'
@@ -63,6 +69,7 @@ setup(name=NAME,
       download_url=DOWNLOAD_URL,
       license=LICENSE,
       packages=PACKAGES,
+      package_data=PACKAGE_DATA,
       classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
