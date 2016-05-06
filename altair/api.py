@@ -17,17 +17,45 @@ import pandas as pd
 
 from . import schema
 
+from .schema import AggregateOp
+from .schema import AxisConfig
+from .schema import AxisOrient
+from .schema import CellConfig
+from .schema import Config
+from .schema import DataFormat
+from .schema import FacetConfig
+from .schema import FacetGridConfig
+from .schema import FacetScaleConfig
+from .schema import FontStyle
+from .schema import FontWeight
+from .schema import HorizontalAlign
+from .schema import LegendConfig
+from .schema import MarkConfig
+from .schema import NiceTime
+from .schema import Scale
+from .schema import ScaleConfig
+from .schema import Shape
+from .schema import SortField
+from .schema import SortOrder
+from .schema import StackOffset
+from .schema import TimeUnit
+from .schema import Transform
+from .schema import VerticalAlign
+
+from .utils import INV_TYPECODE_MAP, TYPE_ABBR
 
 #*************************************************************************
 # Channels
 #*************************************************************************
 
 
-class ChannelMixin(object):
+class PositionChannelDef(schema.PositionChannelDef):
 
     skip = ['shorthand']
 
     shorthand = T.Unicode('')
+    type = T.Union([schema.Type(), T.Unicode()],
+                   allow_none=True, default_value=None)
 
     def __init__(self, shorthand, **kwargs):
         kwargs['shorthand'] = shorthand
@@ -47,29 +75,52 @@ class ChannelMixin(object):
             return None
         return super(PositionChannelDef, self).to_dict()
 
-
-class PositionChannelDef(schema.PositionChannelDef, ChannelMixin):
-    pass
+    def _type_changed(self, name, old, new):
+        if new in TYPE_ABBR:
+            self.type = INV_TYPECODE_MAP[new]
 
 
 class X(PositionChannelDef):
-    channel_name = 'x'
-
+    pass
 
 class Y(PositionChannelDef):
-    channel_name = 'y'
-
+    pass
 
 class Row(PositionChannelDef):
-    channel_name = 'row'
-
+    pass
 
 class Col(PositionChannelDef):
-    channel_name = 'col'
-
-
-class ChannelDefWithLegend(schema.ChannelDefWithLegend, ChannelMixin):
     pass
+
+class ChannelDefWithLegend(schema.ChannelDefWithLegend):
+
+    skip = ['shorthand']
+
+    shorthand = T.Unicode('')
+    type = T.Union([schema.Type(), T.Unicode()],
+                   allow_none=True, default_value=None)
+
+    def __init__(self, shorthand, **kwargs):
+        kwargs['shorthand'] = shorthand
+        super(ChannelDefWithLegend, self).__init__(**kwargs)
+
+    def _infer_type(self, data):
+        if self.type is None and self.field in data:
+            self.type = infer_vegalite_type(data[self.field])
+
+    def _shorthand_changed(self, name, old, new):
+        D = parse_shorthand(self.shorthand)
+        for key, val in D.items():
+            setattr(self, key, val)
+
+    def to_dict(self):
+        if not self.field:
+            return None
+        return super(ChannelDefWithLegend, self).to_dict()
+
+    def _type_changed(self, name, old, new):
+        if new in TYPE_ABBR:
+            self.type = INV_TYPECODE_MAP[new]
 
 
 class Color(ChannelDefWithLegend):
@@ -84,16 +135,65 @@ class Shape(ChannelDefWithLegend):
     channel_name = 'shape'
 
 
-class Field(schema.FieldDef, ChannelMixin):
-    channel_nane = 'field'
-    
+class Field(schema.FieldDef):
 
-class OrderChannelDef(schema.OrderChannelDef, ChannelMixin):
-    pass
+    skip = ['shorthand']
 
+    shorthand = T.Unicode('')
+    type = T.Union([schema.Type(), T.Unicode()],
+                   allow_none=True, default_value=None)
 
-class Order(OrderChannelDef):
-    channel_name = 'order'
+    def __init__(self, shorthand, **kwargs):
+        kwargs['shorthand'] = shorthand
+        super(Field, self).__init__(**kwargs)
+
+    def _infer_type(self, data):
+        if self.type is None and self.field in data:
+            self.type = infer_vegalite_type(data[self.field])
+
+    def _shorthand_changed(self, name, old, new):
+        D = parse_shorthand(self.shorthand)
+        for key, val in D.items():
+            setattr(self, key, val)
+
+    def to_dict(self):
+        if not self.field:
+            return None
+        return super(Field, self).to_dict()
+
+    def _type_changed(self, name, old, new):
+        if new in TYPE_ABBR:
+            self.type = INV_TYPECODE_MAP[new]
+
+class Order(schema.OrderChannelDef):
+
+    skip = ['shorthand']
+
+    shorthand = T.Unicode('')
+    type = T.Union([schema.Type(), T.Unicode()],
+                   allow_none=True, default_value=None)
+
+    def __init__(self, shorthand, **kwargs):
+        kwargs['shorthand'] = shorthand
+        super(OrderChannelDef, self).__init__(**kwargs)
+
+    def _infer_type(self, data):
+        if self.type is None and self.field in data:
+            self.type = infer_vegalite_type(data[self.field])
+
+    def _shorthand_changed(self, name, old, new):
+        D = parse_shorthand(self.shorthand)
+        for key, val in D.items():
+            setattr(self, key, val)
+
+    def to_dict(self):
+        if not self.field:
+            return None
+        return super(OrderChannelDef, self).to_dict()
+
+    def _type_changed(self, name, old, new):
+        if new in TYPE_ABBR:
+            self.type = INV_TYPECODE_MAP[new]
 
 
 #*************************************************************************
@@ -251,13 +351,13 @@ class Encoding(schema.Encoding):
 class Data(schema.Data):
 
     formatType = T.Enum(['json', 'csv', 'tsv'], default_value='json')
-
-    def to_dict(self):
-        if self.data is None:
-            return None
-        result = {'formatType': self.formatType,
-                  'values': self.data.to_dict('records')}
-        return result
+    #
+    # def to_dict(self):
+    #     if self.values is None:
+    #         return None
+    #     result = {'formatType': self.formatType,
+    #               'values': self.values}
+    #     return result
 
 
 #*************************************************************************
@@ -288,7 +388,7 @@ class Viz(schema.BaseObject):
         if not isinstance(new, pd.DataFrame):
             self.data = pd.DataFrame(new)
             return
-        self._data = Data(data=new)
+        self._data = Data()
         if self.encoding is not None:
             self.encoding._infer_types(self.data)
 
@@ -300,11 +400,9 @@ class Viz(schema.BaseObject):
         super(Viz, self).__init__(**kwargs)
 
     def to_dict(self):
+        if self.data is not None:
+            self._data = Data(values=self.data.to_dict('records'))
         D = super(Viz, self).to_dict()
-        if self._data is not None:
-            r = self._data.to_dict()
-            if r is not None:
-                D['data'] = r
         return D
 
     def encode(self, **kwargs):

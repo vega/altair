@@ -11,6 +11,15 @@ TYPECODE_MAP = {'ordinal': 'O',
                 'quantity': 'Q',
                 'time': 'T'}
 
+INV_TYPECODE_MAP = {v:k for k,v in TYPECODE_MAP.items()}
+
+TYPE_ABBR = TYPECODE_MAP.values()
+
+
+def type_from_abbreviation(abbr):
+    """Convert from type abbreviations (O,N,T,Q) to full type names."""
+    return INV_TYPECODE_MAP[abbr]
+
 
 def parse_shorthand(sh):
     """
