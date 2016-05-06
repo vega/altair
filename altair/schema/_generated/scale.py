@@ -8,7 +8,7 @@ from .scaletype import ScaleType
 
 
 class Scale(BaseObject):
-    bandSize = T.CFloat(allow_none=True, min=0, default_value=None)
+    bandSize = T.CFloat(allow_none=True, default_value=None, min=0)
     clamp = T.Bool(allow_none=True, default_value=None, help="""If true, values that exceed the data domain are clamped to either the minimum or maximum range value.""")
     domain = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None), T.List(T.Unicode(allow_none=True, default_value=None), allow_none=True, default_value=None)])
     exponent = T.CFloat(allow_none=True, default_value=None, help="""Sets the exponent of the scale transformation.""")
