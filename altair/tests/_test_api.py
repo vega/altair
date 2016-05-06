@@ -796,7 +796,7 @@ def test_configure():
     assert res['config']['width'] == 200
 
 
-def __name__test_single_dim_setting():
+def test_single_dim_setting():
     spec, data = build_simple_spec()
     spec.encode(x="x:N", y="y:Q").set_single_dims(100, 100)
     res = spec.to_dict()
@@ -810,7 +810,7 @@ def __name__test_single_dim_setting():
     assert res['encoding']['y'].get('band') is None
 
 
-def _test_hist():
+def test_hist():
     data = dict(x=[1, 2, 3],
                 y=[4, 5, 6])
 
