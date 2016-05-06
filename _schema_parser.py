@@ -41,6 +41,18 @@ class SchemaDefinition(object):
             vals += ', help={0}'.format(kwds['help'])
         return vals
 
+    def get_attr_kwds(self, attr_dict):
+        kwds = {'allow_none': 'True',
+                'default_value': 'None'}
+        if 'description' in attr_dict:
+            kwds['help'] = self.format_help_string(attr_dict['description'],
+                                                   summarize=True)
+        if 'minimum' in attr_dict:
+            kwds['min'] = attr_dict['minimum']
+        if 'maximum' in attr_dict:
+            kwds['max'] = attr_dict['maximum']
+        return kwds
+
     def class_definition(self):
         """Create the class definition for the Python wrapper"""
         code = self.code()
@@ -124,12 +136,7 @@ class ObjectDefinition(SchemaDefinition):
 
     def type_attribute(self, attr_dict):
         """Represent a 'type'-attribute as a string"""
-        kwds = {'allow_none': 'True',
-                'default_value': 'None'}
-        if 'description' in attr_dict:
-            kwds['help'] = self.format_help_string(attr_dict['description'],
-                                                   summarize=True)
-
+        kwds = self.get_attr_kwds(attr_dict)
         tp = attr_dict["type"]
 
         if tp == "array":
@@ -138,10 +145,6 @@ class ObjectDefinition(SchemaDefinition):
         elif tp == "boolean":
             return self.instance_str("Bool", **kwds)
         elif tp == "number":
-            if 'minimum' in attr_dict:
-                kwds['min'] = attr_dict['minimum']
-            if 'maximum' in attr_dict:
-                kwds['max'] = attr_dict['maximum']
             return self.instance_str("CFloat", **kwds)
         elif tp == "string":
             return self.instance_str("Unicode", **kwds)
@@ -152,14 +155,9 @@ class ObjectDefinition(SchemaDefinition):
 
     def ref_attribute(self, attr_dict):
         """Represent a '$ref'-attribute as a string"""
-        kwds = {'allow_none': 'True',
-                'default_value': 'None'}
-
-        if 'description' in attr_dict:
-            kwds['help'] = self.format_help_string(attr_dict['description'],
-                                                   summarize=True)
-
+        kwds = self.get_attr_kwds(attr_dict)
         _, _, name = attr_dict['$ref'].split('/')
+
         self.imports.append('from .{0} import {1}'
                             ''.format(name.lower(), name))
 
@@ -172,7 +170,7 @@ class ObjectDefinition(SchemaDefinition):
             raise NotImplementedError("type = '{0}'".format(reftype))
 
     def oneof_attribute(self, attr_dict):
-        """Represent a 'string'-attribute as a string"""
+        """Represent a 'oneOf'-attribute as a string"""
         types = (self.any_attribute(attr) for attr in attr_dict['oneOf'])
         return "T.Union([{0}])".format(', '.join(sorted(types)))
 
