@@ -374,8 +374,13 @@ class Encoding(schema.Encoding):
 class Data(schema.Data):
 
     formatType = T.Enum(['json', 'csv', 'tsv'], default_value='json')
+
     #
     # def to_dict(self):
+    #     if self._json_data is not None:
+    #         return self._json_data
+    #     if self.values is not None:
+    #         return
     #     if self.values is None:
     #         return None
     #     result = {'formatType': self.formatType,
@@ -423,14 +428,22 @@ class Layer(schema.BaseObject):
         super(Layer, self).__init__(**kwargs)
 
     def to_dict(self):
-        if self.data is not None:
-            self._data = Data(values=dataframe_to_json(self.data))
         D = super(Layer, self).to_dict()
         # The self._data attribute should only have data values during
         # serialization as the actual data is stored as self.data as
         # a DataFrame.
-        self._data = Data()
-        return D
+        if self.data is not None:
+            values = sanitize_dataframe(self.data).to_dict(orient='records')
+            self._data = Data(values=values)
+            D['data'] = self._data.to_dict()
+            self._data = Data()
+            return D
+        else:
+            if self._data is None:
+                return D
+            else:
+                D['data'] = self._data.to_dict()
+                return D
 
     def encode(self, *args, **kwargs):
         for item in args:
