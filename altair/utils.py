@@ -6,10 +6,11 @@ import warnings
 import pandas as pd
 import traitlets as T
 
+
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',
-                'quantity': 'Q',
-                'time': 'T'}
+                'quantitative': 'Q',
+                'temporal': 'T'}
 
 INV_TYPECODE_MAP = {v:k for k,v in TYPECODE_MAP.items()}
 
@@ -100,14 +101,14 @@ def infer_vegalite_type(data, name=None):
 
     if typ in ['floating', 'mixed-integer-float', 'integer',
                'mixed-integer', 'complex']:
-        typecode = 'quantity'
+        typecode = 'quantitative'
     elif typ in ['string', 'bytes', 'categorical', 'boolean', 'mixed', 'unicode']:
         typecode = 'nominal'
     elif typ in ['datetime', 'datetime64', 'timedelta',
                  'timedelta64', 'date', 'time', 'period']:
-        typecode = 'time'
+        typecode = 'temporal'
     else:
-        warnings.warn("I don't know how to infer vega type from '{0}'.  "
+        warnings.warn("I don't know how to infer vegalite type from '{0}'.  "
                       "Defaulting to nominal.".format(typ))
         typecode = 'nominal'
 
