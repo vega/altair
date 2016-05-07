@@ -482,13 +482,8 @@ def _get_matplotlib_renderer():
     from .mpl import MatplotlibRenderer
     return MatplotlibRenderer()
 
-def _get_lightning_renderer():
-    from .lgn import LightningRenderer
-    return LightningRenderer()
-
 _renderers = {
     'matplotlib': _get_matplotlib_renderer,
-    'lightning': _get_lightning_renderer
 }
 
 
