@@ -7,11 +7,11 @@ data = pd.DataFrame([
       {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
     ])
 
-v = Viz().encode(
+v = Layer().encode(
     x=X('a:O'),
     y=Y('b:Q')
 ).bar()
 
 expected_output = {'encoding': {'x': {'field': 'a', 'type': 'ordinal'},
-                                'y': {'field': 'b', 'type': 'quantity'}},
+                                'y': {'field': 'b', 'type': 'quantitative'}},
                    'mark': 'bar'}

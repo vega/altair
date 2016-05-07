@@ -523,7 +523,7 @@ def use_renderer(r):
         if r in _renderers:
             _renderer = _renderers[r]()
         else:
-            raise ValueError('renderer could not be found: {0}').format(r)
+            raise ValueError('renderer could not be found: {0}'.format(r))
 
 def list_renderers():
     global _renderers

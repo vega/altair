@@ -16,7 +16,7 @@ def test_parse_shorthand():
     check('foobar:nominal', type='N', field='foobar')
     check('foobar:O', type='O', field='foobar')
     check('avg(foobar)', field='foobar', aggregate='avg')
-    check('min(foobar):time', type='T', field='foobar', aggregate='min')
+    check('min(foobar):temporal', type='T', field='foobar', aggregate='min')
     check('sum(foobar):Q', type='Q', field='foobar', aggregate='sum')
 
 

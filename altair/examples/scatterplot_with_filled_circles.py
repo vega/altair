@@ -3,11 +3,11 @@ import altair.datasets as ds
 
 data = ds.load_dataset('cars')
 
-v = Viz().encode(
+v = Layer().encode(
     x=X('Horsepower:Q'),
     y=Y('Miles_per_Gallon:Q')
 ).circle()
 
-expected_output = {'encoding': {'x': {'field': 'Horsepower', 'type': 'quantity'},
-                                'y': {'field': 'Miles_per_Gallon', 'type': 'quantity'}},
+expected_output = {'encoding': {'x': {'field': 'Horsepower', 'type': 'quantitative'},
+                                'y': {'field': 'Miles_per_Gallon', 'type': 'quantitative'}},
                    'mark': 'circle'}
