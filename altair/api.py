@@ -81,16 +81,16 @@ class PositionChannelDef(schema.PositionChannelDef):
 
 
 class X(PositionChannelDef):
-    pass
+    channel_name = 'x'
 
 class Y(PositionChannelDef):
-    pass
+    channel_name = 'y'
 
 class Row(PositionChannelDef):
-    pass
+    channel_name = 'row'
 
-class Col(PositionChannelDef):
-    pass
+class Column(PositionChannelDef):
+    channel_name = 'column'
 
 class ChannelDefWithLegend(schema.ChannelDefWithLegend):
 
@@ -165,7 +165,20 @@ class Field(schema.FieldDef):
         if new in TYPE_ABBR:
             self.type = INV_TYPECODE_MAP[new]
 
-class Order(schema.OrderChannelDef):
+
+class Text(Field):
+    channel_name = 'text'
+
+
+class Label(Field):
+    channel_name = 'label'
+
+
+class Detail(Field):
+    channel_name = 'detail'
+
+
+class OrderChannel(schema.OrderChannelDef):
 
     skip = ['shorthand']
 
@@ -195,6 +208,14 @@ class Order(schema.OrderChannelDef):
         if new in TYPE_ABBR:
             self.type = INV_TYPECODE_MAP[new]
 
+
+class Order(OrderChannel):
+    channel_name = 'detail'
+
+
+class Path(OrderChannel):
+    channel_name = 'path'
+    
 
 #*************************************************************************
 # Aliases
@@ -234,7 +255,7 @@ class Encoding(schema.Encoding):
                 default_value=None, allow_none=True)
     row = T.Union([T.Instance(Row), T.Unicode()],
                   default_value=None, allow_none=True)
-    col = T.Union([T.Instance(Col), T.Unicode()],
+    column = T.Union([T.Instance(Column), T.Unicode()],
                   default_value=None, allow_none=True)
                   
     # Channels with legends
@@ -246,13 +267,13 @@ class Encoding(schema.Encoding):
                     default_value=None, allow_none=True)
                     
     # Field and order channels
-    detail = T.Union([T.Instance(Field), T.List(T.Instance(Field)), T.Unicode()],
+    detail = T.Union([T.Instance(Detail), T.List(T.Instance(Detail)), T.Unicode()],
                      default_value=None, allow_none=True)
-    text = T.Union([T.Instance(Field), T.Unicode()],
+    text = T.Union([T.Instance(Text), T.Unicode()],
                    default_value=None, allow_none=True)
-    label = T.Union([T.Instance(Field), T.Unicode()],
+    label = T.Union([T.Instance(Label), T.Unicode()],
                    default_value=None, allow_none=True)
-    path = T.Union([T.Instance(Order), T.List(T.Instance(Order)), T.Unicode()],
+    path = T.Union([T.Instance(Path), T.List(T.Instance(Path)), T.Unicode()],
                    default_value=None, allow_none=True)
     order = T.Union([T.Instance(Order), T.List(T.Instance(Order)), T.Unicode()],
                    default_value=None, allow_none=True)
@@ -263,7 +284,7 @@ class Encoding(schema.Encoding):
     skip = ['parent']
 
     def _infer_types(self, data):
-        for attr in ['x', 'y', 'row', 'col', 'color',
+        for attr in ['x', 'y', 'row', 'column', 'color',
                      'size', 'shape', 'detail', 'text',
                      'label', 'path', 'order']:
             val = getattr(self, attr)
@@ -288,11 +309,11 @@ class Encoding(schema.Encoding):
         if getattr(self.parent, 'data', None) is not None:
             self.row._infer_type(self.parent.data)
 
-    def _col_changed(self, name, old, new):
+    def _column_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.col = Col(new)
+            self.column = Column(new)
         if getattr(self.parent, 'data', None) is not None:
-            self.col._infer_type(self.parent.data)
+            self.column._infer_type(self.parent.data)
 
     def _color_changed(self, name, old, new):
         if isinstance(new, string_types):
@@ -314,25 +335,25 @@ class Encoding(schema.Encoding):
 
     def _detail_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.detail = Field(new)
+            self.detail = Detail(new)
         if self.parent is not None:
             self.detail._infer_type(self.parent.data)
 
     def _text_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.text = Field(new)
+            self.text = Text(new)
         if self.parent is not None:
             self.text._infer_type(self.parent.data)
 
     def _label_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.label = Field(new)
+            self.label = Label(new)
         if self.parent is not None:
             self.label._infer_type(self.parent.data)
 
     def _path_changed(self, name, old, new):
         if isinstance(new, string_types):
-            self.path = Order(new)
+            self.path = Path(new)
         if self.parent is not None:
             self.path._infer_type(self.parent.data)
 
@@ -365,7 +386,7 @@ class Data(schema.Data):
 #*************************************************************************
 
 
-class Viz(schema.BaseObject):
+class Layer(schema.BaseObject):
 
     name = T.Unicode()
     description = T.Unicode()
@@ -397,15 +418,19 @@ class Viz(schema.BaseObject):
     def __init__(self, *args, **kwargs):
         if len(args)==1:
             kwargs['data'] = args[0]
-        super(Viz, self).__init__(**kwargs)
+        super(Layer, self).__init__(**kwargs)
 
     def to_dict(self):
         if self.data is not None:
             self._data = Data(values=self.data.to_dict('records'))
-        D = super(Viz, self).to_dict()
+        D = super(Layer, self).to_dict()
         return D
 
-    def encode(self, **kwargs):
+    def encode(self, *args, **kwargs):
+        for item in args:
+            if item.channel_name in kwargs:
+                raise ValueError('Mulitple value for {0} provided'.format(item.channel_name))
+            kwargs[item.channel_name] = item
         self.encoding = Encoding(**kwargs)
         return self
 
