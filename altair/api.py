@@ -9,7 +9,10 @@ try:
 except ImportError:
     from IPython.utils import traitlets as T
 
-from .utils import parse_shorthand, infer_vegalite_type, DataFrameTrait
+from .utils import (
+    parse_shorthand, infer_vegalite_type, DataFrameTrait,
+    sanitize_dataframe, dataframe_to_json
+)
 from ._py3k_compat import string_types
 from .renderer import Renderer
 
@@ -34,7 +37,6 @@ from .schema import MarkConfig
 from .schema import NiceTime
 from .schema import Scale
 from .schema import ScaleConfig
-from .schema import Shape
 from .schema import SortField
 from .schema import SortOrder
 from .schema import StackOffset
@@ -422,8 +424,12 @@ class Layer(schema.BaseObject):
 
     def to_dict(self):
         if self.data is not None:
-            self._data = Data(values=self.data.to_dict('records'))
+            self._data = Data(values=dataframe_to_json(self.data))
         D = super(Layer, self).to_dict()
+        # The self._data attribute should only have data values during
+        # serialization as the actual data is stored as self.data as
+        # a DataFrame.
+        self._data = Data()
         return D
 
     def encode(self, *args, **kwargs):

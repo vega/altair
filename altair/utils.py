@@ -144,3 +144,34 @@ class DataFrameTrait(T.Any):
             # we explicitly compare silent to True just in case the equality
             # comparison above returns something other than True/False
             obj._notify_trait(self.name, old_value, new_value)
+
+
+def sanitize_dataframe(df):
+    """Sanitize a DataFrame to prepare it for serialization.
+    
+    * Make a copy
+    * Raise ValueError is it has a hierarchical index.
+    * Convert categoricals to strings.
+    """
+    import pandas as pd
+    df = df.copy()
+
+    if type(df.index) == pd.core.index.MultiIndex:
+        raise ValueError('Hierarchical indices not supported')
+    if type(df.columns) == pd.core.index.MultiIndex:
+        raise ValueError('Hierarchical indices not supported')
+
+    for col_name, dtype in df.dtypes.iteritems():
+        if str(dtype) == 'category':
+            # XXXX: work around bug in to_json for categorical types
+            # https://github.com/pydata/pandas/issues/10778
+            df[col_name] = df[col_name].astype(str)
+    return df
+
+def dataframe_to_json(df):
+    """Serialize a DataFrame to JSON in a safe manner."""
+    df2 = sanitize_dataframe(df)
+    return df2.to_json(
+        orient='records',
+        date_format='iso',
+    )
