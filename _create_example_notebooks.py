@@ -32,12 +32,20 @@ def create_example_notebook(inputfile, outputfile,
                                 ''.format(title, inputfile))
         for block in blocks:
             if block.startswith('expected_output'):
-                yield new_code_cell('v.to_dict()')
+                pass
+            elif block.startswith('data ='):
+                yield new_markdown_cell('## Load Dataset')
+                yield new_code_cell(block)
+                yield new_code_cell('data.head()')
+            elif block.startswith('v ='):
+                yield new_markdown_cell('## Visualize Data')
+                yield new_code_cell(block)
+                yield new_code_cell('# generate vegalite spec:\nv.to_dict()')
+                yield new_code_cell('from vega import vegalite\n'
+                                    'vegalite.view(data, v.to_dict())')
             else:
                 yield new_code_cell(block)
 
-            if block.startswith('data ='):
-                yield new_code_cell('data.head()')
 
     kernelspec = get_kernelspec(kernel)
     notebook = new_notebook(cells=list(cells()),
