@@ -1,7 +1,6 @@
-from altair.api import *
-import altair.datasets as ds
+from altair import *
 
-data = ds.load_dataset('cars')
+data = load_dataset('cars')
 
 v = Layer().encode(
     x=X('Horsepower:Q'),

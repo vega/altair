@@ -1,5 +1,5 @@
-from altair.api import *
-import altair.datasets as ds
+from altair import *
+import pandas as pd
 
 data = pd.DataFrame([
       {"a": "A","b": 28}, {"a": "B","b": 55}, {"a": "C","b": 43},
