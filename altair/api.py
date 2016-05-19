@@ -278,35 +278,25 @@ MARK_TYPES = [
 class Encoding(schema.Encoding):
     
     # Position channels
-    x = T.Union([T.Instance(X), T.Unicode()],
-                default_value=None, allow_none=True)
-    y = T.Union([T.Instance(Y), T.Unicode()],
-                default_value=None, allow_none=True)
-    row = T.Union([T.Instance(Row), T.Unicode()],
-                  default_value=None, allow_none=True)
-    column = T.Union([T.Instance(Column), T.Unicode()],
-                  default_value=None, allow_none=True)
+    x = T.Instance(X, default_value=None, allow_none=True)
+    y = T.Instance(Y, default_value=None, allow_none=True)
+    row = T.Instance(Row, default_value=None, allow_none=True)
+    column = T.Instance(Column, default_value=None, allow_none=True)
                   
     # Channels with legends
-    color = T.Union([T.Instance(Color), T.Unicode()],
-                    default_value=None, allow_none=True)
-    size = T.Union([T.Instance(Size), T.Unicode()],
-                   default_value=None, allow_none=True)
-    shape = T.Union([T.Instance(Shape), T.Unicode()],
-                    default_value=None, allow_none=True)
+    color = T.Instance(Color, default_value=None, allow_none=True)
+    size = T.Instance(Size, default_value=None, allow_none=True)
+    shape = T.Instance(Shape, default_value=None, allow_none=True)
                     
     # Field and order channels
-    detail = T.Union([T.Instance(Detail), T.List(T.Instance(Detail)), T.Unicode()],
+    detail = T.Union([T.Instance(Detail), T.List(T.Instance(Detail))],
                      default_value=None, allow_none=True)
-    text = T.Union([T.Instance(Text), T.Unicode()],
+    text = T.Instance(Text, default_value=None, allow_none=True)
+    label = T.Instance(Label, default_value=None, allow_none=True)
+    path = T.Union([T.Instance(Path), T.List(T.Instance(Path))],
                    default_value=None, allow_none=True)
-    label = T.Union([T.Instance(Label), T.Unicode()],
+    order = T.Union([T.Instance(Order), T.List(T.Instance(Order))],
                    default_value=None, allow_none=True)
-    path = T.Union([T.Instance(Path), T.List(T.Instance(Path)), T.Unicode()],
-                   default_value=None, allow_none=True)
-    order = T.Union([T.Instance(Order), T.List(T.Instance(Order)), T.Unicode()],
-                   default_value=None, allow_none=True)
-
 
     parent = T.Instance(schema.BaseObject, default_value=None, allow_none=True)
 
@@ -322,15 +312,11 @@ class Encoding(schema.Encoding):
     def _channel_changed(self, change):
         new = change['new']
         name = change['name']
-        klass = CHANNEL_CLASSES[name]
-        if isinstance(new, string_types):
-            setattr(name, klass(new))
-        if isinstance(self.parent, Layer):
-            channel = getattr(self, name, None)
-            if channel is not None:
-                meth = getattr(channel, '_infer_type', None)
-                if meth is not None:
-                    meth(self.parent.data)
+        channel = getattr(self, name, None)
+        if channel is not None and not getattr(channel, 'type', '') and isinstance(self.parent, Layer):
+            meth = getattr(channel, '_infer_type', None)
+            if meth is not None:
+                meth(self.parent.data)
 
 
 #*************************************************************************

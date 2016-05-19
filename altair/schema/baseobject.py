@@ -28,6 +28,3 @@ class BaseObject(T.HasTraits):
                     else:
                         result[k] = v
         return result
-
-    def __repr__(self):
-        return repr(self.to_dict())
