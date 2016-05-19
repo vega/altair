@@ -385,13 +385,14 @@ class Layer(schema.BaseObject):
 
     def encode(self, *args, **kwargs):
         """Define the encoding for the Layer."""
+        for key, val in kwargs.items():
+            if key in CHANNEL_CLASSES:
+                if not isinstance(val, CHANNEL_CLASSES[key]):
+                    kwargs[key] = CHANNEL_CLASSES[key](val)
         for item in args:
             if item.channel_name in kwargs:
                 raise ValueError('Mulitple value for {0} provided'.format(item.channel_name))
             kwargs[item.channel_name] = item
-        for key, val in kwargs.items():
-            if not isinstance(val, CHANNEL_CLASSES[key]):
-                kwargs[key] = CHANNEL_CLASSES[key](val)
         self.encoding = Encoding(**kwargs)
         return self
 
