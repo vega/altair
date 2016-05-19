@@ -360,13 +360,14 @@ class Layer(schema.BaseObject):
         if len(args)==1:
             self.data = args[0]
 
-    def to_dict(self):
+    def to_dict(self, data=True):
         D = super(Layer, self).to_dict()
-        if isinstance(self.data, Data):
-            D['data'] = self.data.to_dict()
-        if isinstance(self.data, pd.DataFrame):
-            values = sanitize_dataframe(self.data).to_dict(orient='records')
-            D['data'] = Data(values=values).to_dict()
+        if data:
+            if isinstance(self.data, Data):
+                D['data'] = self.data.to_dict()
+            if isinstance(self.data, pd.DataFrame):
+                values = sanitize_dataframe(self.data).to_dict(orient='records')
+                D['data'] = Data(values=values).to_dict()
         return D
 
     def encode(self, *args, **kwargs):
