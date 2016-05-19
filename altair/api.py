@@ -63,10 +63,12 @@ class _ChannelMixin(object):
     def to_dict(self):
         if not self.field:
             return None
+        if not self.type:
+            raise ValueError("No vegalite data type defined for {0}".format(self.field))
         return super(_ChannelMixin, self).to_dict()
 
 
-class PositionChannelDef(schema.PositionChannelDef, _ChannelMixin):
+class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
 
     skip = ['shorthand']
 
@@ -107,7 +109,7 @@ class Column(PositionChannelDef):
     channel_name = 'column'
 
 
-class ChannelDefWithLegend(schema.ChannelDefWithLegend, _ChannelMixin):
+class ChannelDefWithLegend(_ChannelMixin, schema.ChannelDefWithLegend):
 
     skip = ['shorthand']
 
@@ -144,7 +146,7 @@ class Shape(ChannelDefWithLegend):
     channel_name = 'shape'
 
 
-class Field(schema.FieldDef, _ChannelMixin):
+class Field(_ChannelMixin, schema.FieldDef):
 
     skip = ['shorthand']
 
@@ -181,7 +183,7 @@ class Detail(Field):
     channel_name = 'detail'
 
 
-class OrderChannel(schema.OrderChannelDef, _ChannelMixin):
+class OrderChannel(_ChannelMixin, schema.OrderChannelDef):
 
     skip = ['shorthand']
 
@@ -428,12 +430,13 @@ class Layer(schema.BaseObject):
         return self
 
     def _ipython_display_(self):
-        self.display()
-
-    def display(self):
         from IPython.display import display
         from vega import VegaLite
         display(VegaLite(self.to_dict()))
+
+    def display(self):
+        from IPython.display import display
+        display(self)
 
 
 
