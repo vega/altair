@@ -14,7 +14,6 @@ from .utils import (
     sanitize_dataframe, dataframe_to_json
 )
 from ._py3k_compat import string_types
-from .renderer import Renderer
 
 import pandas as pd
 
@@ -428,41 +427,13 @@ class Layer(schema.BaseObject):
         self.mark = 'square'
         return self
 
-    def render(self, **kwargs):
-        global _renderer
-        return _renderer.render(self, **kwargs)
+    def _ipython_display_(self):
+        self.display()
+
+    def display(self):
+        from IPython.display import display
+        from vega import VegaLite
+        display(VegaLite(self.to_dict()))
 
 
-# Renderer logic
 
-def _get_matplotlib_renderer():
-    from .mpl import MatplotlibRenderer
-    return MatplotlibRenderer()
-
-_renderers = {
-    'matplotlib': _get_matplotlib_renderer,
-}
-
-
-_renderer = None
-
-def register_renderer(name, rfactory):
-    """Register a renderer factory that creates renderer instances."""
-    global _renderers
-    _renderers[name] = rfactory
-
-def use_renderer(r):
-    """Use a particular renderer, registered by name or an actual Renderer instance."""
-    global _renderer
-    global _renderers
-    if isinstance(r, Renderer):
-        _renderer = r
-    else:
-        if r in _renderers:
-            _renderer = _renderers[r]()
-        else:
-            raise ValueError('renderer could not be found: {0}'.format(r))
-
-def list_renderers():
-    global _renderers
-    return list(_renderers.keys())

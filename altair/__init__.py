@@ -10,7 +10,6 @@ from .api import (
     Shape,
     Axis,
     AggregateOp,
-    list_renderers,
     ScaleConfig,
     NiceTime,
     Transform,
