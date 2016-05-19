@@ -209,12 +209,12 @@ class OrderChannel(_ChannelMixin, schema.OrderChannelDef):
 
 
 class Order(OrderChannel):
-    channel_name = 'detail'
+    channel_name = 'order'
 
 
 class Path(OrderChannel):
     channel_name = 'path'
-    
+
 
 #*************************************************************************
 # Aliases
@@ -389,6 +389,9 @@ class Layer(schema.BaseObject):
             if item.channel_name in kwargs:
                 raise ValueError('Mulitple value for {0} provided'.format(item.channel_name))
             kwargs[item.channel_name] = item
+        for key, val in kwargs.items():
+            if not isinstance(val, CHANNEL_CLASSES[key]):
+                kwargs[key] = CHANNEL_CLASSES[key](val)
         self.encoding = Encoding(**kwargs)
         return self
 
