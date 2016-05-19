@@ -40,9 +40,10 @@ def create_example_notebook(inputfile, outputfile,
             elif block.startswith('v ='):
                 yield new_markdown_cell('## Visualize Data')
                 yield new_code_cell(block)
-                yield new_code_cell('# generate vegalite spec:\nv.to_dict()')
-                yield new_code_cell('from vega import vegalite\n'
-                                    'vegalite.view(data, v.to_dict())')
+                yield new_markdown_cell('Generate Vega-Lite spec:')
+                yield new_code_cell('v.to_dict()')
+                yield new_code_cell('v.data = data')
+                yield new_code_cell('v')
             else:
                 yield new_code_cell(block)
 
@@ -60,8 +61,8 @@ def create_example_notebook(inputfile, outputfile,
 
 
 def write_all_examples():
-    example_directory = os.path.join('altair', 'examples')
-    notebook_directory = os.path.join('notebooks', 'auto_examples')
+    example_directory = os.path.join('..', 'altair', 'examples')
+    notebook_directory = os.path.join('..', 'notebooks', 'auto_examples')
     print("source directory: {0}".format(example_directory))
     print("destination directory: {0}".format(notebook_directory))
     for examplefile in os.listdir(example_directory):

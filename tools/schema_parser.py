@@ -183,6 +183,7 @@ class VegaLiteSchema(object):
     def __init__(self, schema_file=None):
         if schema_file is None:
             schema_file = os.path.join(os.path.dirname(__file__),
+                                       '..',
                                        'altair', 'schema',
                                        'vega-lite-schema.json')
         self.schema_file = schema_file
@@ -201,7 +202,7 @@ class VegaLiteSchema(object):
     def write_python_wrappers(self, codedir=None):
         """Write Python wrappers for the schema"""
         if codedir is None:
-            codedir = os.path.join(os.path.dirname(__file__),
+            codedir = os.path.join(os.path.dirname(__file__),'..',
                                    'altair', 'schema', '_generated')
         testdir = os.path.join(codedir, 'tests')
         print(" > writing Python wrappers to {0}".format(codedir))
