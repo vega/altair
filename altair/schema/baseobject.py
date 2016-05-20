@@ -33,8 +33,15 @@ class BaseObject(T.HasTraits):
             if k in self and k not in self.skip:
                 v = getattr(self, k)
                 if v is not None:
-                    if isinstance(v, BaseObject):
-                        result[k] = v.to_dict()
-                    else:
-                        result[k] = v
+                    result[k] = trait_to_dict(v)
         return result
+
+
+def trait_to_dict(obj):
+    """Recursively convert object to dictionary"""
+    if isinstance(obj, BaseObject):
+        return obj.to_dict()
+    elif isinstance(obj, list):
+        return [trait_to_dict(o) for o in obj]
+    else:
+        return obj
