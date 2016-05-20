@@ -392,7 +392,9 @@ class Layer(schema.BaseObject):
             if item.channel_name in kwargs:
                 raise ValueError('Mulitple value for {0} provided'.format(item.channel_name))
             kwargs[item.channel_name] = item
-        self.encoding = Encoding(**kwargs)
+        if self.encoding is None:
+            self.encoding = Encoding()
+        self.encoding.update_traits(**kwargs)
         return self
 
     def configure(self, *args, **kwargs):
@@ -403,7 +405,7 @@ class Layer(schema.BaseObject):
                          if isinstance(val, T.Instance)}
         trait_to_name = {v:k for k, v in name_to_trait.items()}
 
-        if len(name_to_trait) == len(trait_to_name):
+        if len(name_to_trait) != len(trait_to_name):
             raise ValueError("Two Config() traits have the same class. "
                              "(Possibly caused by a vega-lite schema update?)")
 
@@ -415,14 +417,16 @@ class Layer(schema.BaseObject):
                 kwargs[key] = val
             else:
                 raise ValueError("unrecognized argument: {0}".format(val))
-        self.config = schema.Config(**kwargs)
+        if self.config is None:
+            self.config = schema.Config()
+        self.config.update_traits(**kwargs)
         return self
 
-    def data_transform(self, calculate=None, filter=None,
-                       filterNull=None, **kwargs):
+    def data_transform(self, **kwargs):
         """Set the Data Transform"""
-        self.transform = schema.Transform(calculate=calculate, filter=filter,
-                                          filterNull=filterNull, **kwargs)
+        if self.transform is None:
+            self.transform = schema.Transform()
+        self.transform.update_traits(**kwargs)
         return self
 
     def mark_area(self):
