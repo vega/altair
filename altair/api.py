@@ -368,6 +368,8 @@ class Layer(schema.BaseObject):
             if isinstance(self.data, pd.DataFrame):
                 values = sanitize_dataframe(self.data).to_dict(orient='records')
                 D['data'] = Data(values=values).to_dict()
+        else:
+            D.pop('data', None)
         return D
 
     def encode(self, *args, **kwargs):

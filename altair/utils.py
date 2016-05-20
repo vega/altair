@@ -152,8 +152,10 @@ def sanitize_dataframe(df):
     * Make a copy
     * Raise ValueError is it has a hierarchical index.
     * Convert categoricals to strings.
+    * Convert np.int dtypes to Python int objects
     """
     import pandas as pd
+    import numpy as np
     df = df.copy()
 
     if type(df.index) == pd.core.index.MultiIndex:
@@ -166,6 +168,8 @@ def sanitize_dataframe(df):
             # XXXX: work around bug in to_json for categorical types
             # https://github.com/pydata/pandas/issues/10778
             df[col_name] = df[col_name].astype(str)
+        elif np.issubdtype(dtype, np.integer):
+            df[col_name] = np.array(list(map(int, df[col_name])), dtype=object)
     return df
 
 def dataframe_to_json(df):
