@@ -12,6 +12,10 @@ specification.
 Actual plotting code is done by renderers that are provided by other plotting libraries.
 For the purpose or prototyping, we are shipping both a Matplotlib renderer and a simple embeddable HTML renderer in Altair.
 
+# Examples
+
+For examples of Altair in action, see the [Notebook Examples](notebooks/Index.ipynb)
+
 # Motivation
 
 There are currently many excellent plotting libraries in Python. The main ones are:
