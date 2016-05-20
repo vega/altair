@@ -10,7 +10,7 @@ data = pd.DataFrame([
 v = Layer().encode(
     x=X('a:O'),
     y=Y('b:Q')
-).bar()
+).mark_bar()
 
 expected_output = {'encoding': {'x': {'field': 'a', 'type': 'ordinal'},
                                 'y': {'field': 'b', 'type': 'quantitative'}},

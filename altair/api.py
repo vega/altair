@@ -390,35 +390,35 @@ class Layer(schema.BaseObject):
         self.config = schema.Config(**kwargs)
         return self
 
-    def area(self):
+    def mark_area(self):
         self.mark = 'area'
         return self
 
-    def bar(self):
+    def mark_bar(self):
         self.mark = 'bar'
         return self
 
-    def line(self):
+    def mark_line(self):
         self.mark = 'line'
         return self
 
-    def point(self):
+    def mark_point(self):
         self.mark = 'point'
         return self
 
-    def text(self):
+    def mark_text(self):
         self.mark = 'text'
         return self
 
-    def tick(self):
+    def mark_tick(self):
         self.mark = 'tick'
         return self
 
-    def circle(self):
+    def mark_circle(self):
         self.mark = 'circle'
         return self
 
-    def square(self):
+    def mark_square(self):
         self.mark = 'square'
         return self
 
