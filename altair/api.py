@@ -140,8 +140,8 @@ class Color(ChannelDefWithLegend):
 
 class Size(ChannelDefWithLegend):
     channel_name = 'size'
-    
-    
+
+
 class Shape(ChannelDefWithLegend):
     channel_name = 'shape'
 
@@ -234,7 +234,7 @@ class Legend(schema.LegendProperties):
 
 
 class Formula(schema.VgFormula):
-    
+
     def __init__(self, field, **kwargs):
         kwargs['field'] = field
         super(Formula, self).__init__(**kwargs)
@@ -258,7 +258,7 @@ CHANNEL_CLASSES = {
     'label': Label,
     'path': Path,
     'order': Order
-    
+
 }
 
 CHANNEL_NAMES = list(CHANNEL_CLASSES.keys())
@@ -276,18 +276,18 @@ MARK_TYPES = [
 
 
 class Encoding(schema.Encoding):
-    
+
     # Position channels
     x = T.Instance(X, default_value=None, allow_none=True)
     y = T.Instance(Y, default_value=None, allow_none=True)
     row = T.Instance(Row, default_value=None, allow_none=True)
     column = T.Instance(Column, default_value=None, allow_none=True)
-                  
+
     # Channels with legends
     color = T.Instance(Color, default_value=None, allow_none=True)
     size = T.Instance(Size, default_value=None, allow_none=True)
     shape = T.Instance(Shape, default_value=None, allow_none=True)
-                    
+
     # Field and order channels
     detail = T.Union([T.Instance(Detail), T.List(T.Instance(Detail))],
                      default_value=None, allow_none=True)
@@ -307,7 +307,7 @@ class Encoding(schema.Encoding):
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
-    
+
     @T.observe(*CHANNEL_NAMES)
     def _channel_changed(self, change):
         new = change['new']
@@ -395,9 +395,34 @@ class Layer(schema.BaseObject):
         self.encoding = Encoding(**kwargs)
         return self
 
-    def configure(self, **kwargs):
+    def configure(self, *args, **kwargs):
         """Set chart configuration"""
+        # Map config trait names to their classes
+        name_to_trait = {key: val.klass
+                         for key, val in schema.Config.class_traits().items()
+                         if isinstance(val, T.Instance)}
+        trait_to_name = {v:k for k, v in name_to_trait.items()}
+
+        if len(name_to_trait) == len(trait_to_name):
+            raise ValueError("Two Config() traits have the same class. "
+                             "(Possibly caused by a vega-lite schema update?)")
+
+        for val in args:
+            if val.__class__ in trait_to_name:
+                key = trait_to_name[val.__class__]
+                if key in kwargs:
+                    raise ValueError("{0} specified twice".format(key))
+                kwargs[key] = val
+            else:
+                raise ValueError("unrecognized argument: {0}".format(val))
         self.config = schema.Config(**kwargs)
+        return self
+
+    def data_transform(self, calculate=None, filter=None,
+                       filterNull=None, **kwargs):
+        """Set the Data Transform"""
+        self.transform = schema.Transform(calculate=calculate, filter=filter,
+                                          filterNull=filterNull, **kwargs)
         return self
 
     def mark_area(self):
@@ -440,6 +465,3 @@ class Layer(schema.BaseObject):
     def display(self):
         from IPython.display import display
         display(self)
-
-
-
