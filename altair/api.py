@@ -360,6 +360,16 @@ class Layer(schema.BaseObject):
         if len(args)==1:
             self.data = args[0]
 
+    def __dir__(self):
+        base = super(Layer, self).__dir__()
+        methods = [
+            'encode', 'configure', 'display',
+            'mark_area', 'mark_bar', 'mark_line', 'mark_point',
+            'mark_text', 'mark_tick', 'mark_circle', 'mark_square'
+        ]
+        print(base, methods)
+        return base+methods
+
     def to_dict(self, data=True):
         D = super(Layer, self).to_dict()
         if data:

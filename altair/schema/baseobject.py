@@ -27,6 +27,10 @@ class BaseObject(T.HasTraits):
         else:
             return False
 
+    def __dir__(self):
+        """Customize tab completed attributes."""
+        return list(self.traits())+['to_dict']
+
     def to_dict(self):
         result = {}
         for k in self.traits():
