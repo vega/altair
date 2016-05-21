@@ -6,9 +6,17 @@ except ImportError:
     from IPython.utils import traitlets as T
 
 
+_attr_template = "Attribute not found: {0}. Valid keyword arguments for this class: {1}"
+
 class BaseObject(T.HasTraits):
 
     skip = []
+
+    def __init__(self, **kwargs):
+        all_traits = list(self.traits())
+        for k in kwargs:
+            if k not in all_traits:
+                raise KeyError(_attr_template.format(k, all_traits))
 
     def __contains__(self, key):
         try:
