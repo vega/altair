@@ -3,6 +3,7 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
+from __future__ import print_function
 
 try:
     import traitlets as T
@@ -347,10 +348,8 @@ class Layer(schema.BaseObject):
         try:
             obj = klass()
         except TypeError as err:
-            if 'shorthand' in str(err):
-                obj = klass('')
-            else:
-                raise
+            # TypeError indicates that an argument is missing
+            obj = klass('')
 
         for prop, val in input.items():
             if klass is cls and prop == 'data':
