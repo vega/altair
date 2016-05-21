@@ -49,6 +49,32 @@ class BaseObject(T.HasTraits):
                     result[k] = trait_to_dict(v)
         return result
 
+    @classmethod
+    def from_json(cls, jsn):
+        """Initialize object from a suitable JSON string"""
+        return cls.from_dict(json.loads(jsn))
+
+    @classmethod
+    def from_dict(cls, dct):
+        """Initialize a Layer from a vegalite JSON dictionary"""
+        try:
+            obj = cls()
+        except TypeError as err:
+            # TypeError indicates that an argument is missing
+            obj = cls('')
+
+        for prop, val in dct.items():
+            if not obj.has_trait(prop):
+                raise ValueError("{0} not a valid property in {1}"
+                                 "".format(prop, klass))
+            else:
+                trait = obj.traits()[prop]
+                if isinstance(trait, T.Instance):
+                    obj.set_trait(prop, trait.klass.from_dict(val))
+                else:
+                    obj.set_trait(prop, val)
+        return obj
+
     def update_traits(self, **kwargs):
         for key, val in kwargs.items():
             self.set_trait(key, val)

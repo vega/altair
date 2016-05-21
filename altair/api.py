@@ -337,36 +337,16 @@ class Layer(schema.BaseObject):
     config = T.Instance(schema.Config, allow_none=True)
 
     @classmethod
-    def from_json(cls, input):
-        return cls.from_dict(json.loads(input))
+    def from_dict(cls, dct):
+        data = dct.pop('data', None)
+        obj = super(Layer, cls).from_dict(dct)
 
-    @classmethod
-    def from_dict(cls, input, klass=None):
-        """Initialize a Layer from a vegalite JSON dictionary"""
-        if klass is None:
-            klass = cls
-        try:
-            obj = klass()
-        except TypeError as err:
-            # TypeError indicates that an argument is missing
-            obj = klass('')
-
-        for prop, val in input.items():
-            if klass is cls and prop == 'data':
-                if 'values' in val:
-                    obj.data = pd.DataFrame(val['values'])
-                else:
-                    raise NotImplementedError("only data 'values' supported")
-
-            elif not obj.has_trait(prop):
-                raise ValueError("{0} not a valid property in {1}"
-                                 "".format(prop, klass))
+        # data is not a typical trait; do special handling here.
+        if data is not None:
+            if 'values' in data:
+                obj.data = pd.DataFrame(data['values'])
             else:
-                trait = obj.traits()[prop]
-                if isinstance(trait, T.Instance):
-                    obj.set_trait(prop, cls.from_dict(val, trait.klass))
-                else:
-                    obj.set_trait(prop, val)
+                obj.data = schema.Data(**data)
         return obj
 
     def _encoding_changed(self, name, old, new):
