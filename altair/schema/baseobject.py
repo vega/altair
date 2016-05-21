@@ -49,35 +49,34 @@ class BaseObject(T.HasTraits):
                     result[k] = trait_to_dict(v)
         return result
 
-    def _codegen_frontmatter(self):
-        return []
+    def to_altair(self, tablevel=0, extra_args=None,
+                  extra_kwds=None, ignore=None):
+        """Export string of Python code to recreate object"""
+        signature = '{0}('.format(self.__class__.__name__)
+        if extra_args:
+            signature += ', '.join(extra_args) + ', '
+        if extra_kwds:
+            signature += ', '.join('{0}={1}'.format(k, v)
+                                   for k, v in sorted(extra_kwds.items()))
+            signature += ', '
+        code = [signature.rstrip()]
 
-    def _codegen_call_signature(self):
-        return  "{0}(".format(self.__class__.__name__)
-
-    def to_altair(self, tablevel=0, return_list=False,
-                  include_frontmatter=True):
-        code = []
-        if include_frontmatter:
-            code.extend(self._codegen_frontmatter())
-        code.append(self._codegen_call_signature())
+        if ignore is None:
+            ignore = []
 
         for k in sorted(self.traits()):
-            if k in self and k not in self.skip:
+            if k in self and k not in self.skip and k not in ignore:
                 v = getattr(self, k)
                 if v is None:
                     pass
                 elif isinstance(v, BaseObject):
-                    #print(v, tablevel)
-                    code.append('  {0}={1},'.format(k, v.to_altair(tablevel + 2)))
+                    code.append('  {0}={1},'
+                                ''.format(k, v.to_altair(tablevel + 2)))
                 else:
                     code.append('  {0}={1},'.format(k, repr(v)))
         code.append(')')
 
-        if return_list:
-            return code
-        else:
-            return ('\n' + ' ' * tablevel).join(code)
+        return ('\n' + ' ' * tablevel).join(code)
 
     @classmethod
     def from_json(cls, jsn):

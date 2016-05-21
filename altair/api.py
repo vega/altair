@@ -93,8 +93,10 @@ class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
         if new in TYPE_ABBR:
             self.type = INV_TYPECODE_MAP[new]
 
-    def _codegen_call_signature(self):
-        return  "{0}('',".format(self.__class__.__name__)
+    def to_altair(self, tablevel=0, extra_args=None,
+                  extra_kwds=None, ignore=None):
+        return super(PositionChannelDef, self).to_altair(tablevel=tablevel,
+                                                         extra_args=["''"])
 
 
 class X(PositionChannelDef):
@@ -354,22 +356,14 @@ class Layer(schema.BaseObject):
                 obj.data = schema.Data(**data)
         return obj
 
-    def _codegen_frontmatter(self):
-        frontmatter = ['from altair.api import *']
-
-        if isinstance(self.data, pd.DataFrame):
-            frontmatter.append('import pandas as pd')
-            frontmatter.extend(['',''])
-            frontmatter.append('data = pd.DataFrame({0})'
-                               ''.format(repr(self.data.to_dict())))
-            frontmatter.extend(['', ''])
-        return frontmatter
-
-    def _codegen_call_signature(self):
-        if isinstance(self.data, pd.DataFrame):
-            return "{0}(data,".format(self.__class__.__name__)
-        else:
-            return super(Layer, self)._codegen_call_signature()
+    def to_altair(self, tablevel=0, extra_args=None,
+                  extra_kwds=None, ignore=None, data=None):
+        if data:
+            extra_args = extra_args or []
+            extra_args = extra_args + [data]
+        return super(Layer, self).to_altair(tablevel=tablevel,
+                                            extra_args=extra_args,
+                                            extra_kwds=extra_kwds)
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
