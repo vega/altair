@@ -17,6 +17,7 @@ class BaseObject(T.HasTraits):
         for k in kwargs:
             if k not in all_traits:
                 raise KeyError(_attr_template.format(k, all_traits))
+        super(BaseObject, self).__init__(**kwargs)
 
     def __contains__(self, key):
         try:
