@@ -74,8 +74,7 @@ from IPython.core.getipython import get_ipython
 class TraitletIPCompleter(IPCompleter):
     def _default_arguments(self, obj):
         args = super(TraitletIPCompleter, self)._default_arguments(obj)
-        args.append('asdf')
-        if isinstance(obj, type) and issubclass(obj, T.HasTraits):
+        if isinstance(obj, type) and issubclass(obj, BaseObject):
             args.extend(obj.class_trait_names())
         return list(set(args))
 
