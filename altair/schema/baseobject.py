@@ -49,6 +49,11 @@ class BaseObject(T.HasTraits):
                     result[k] = trait_to_dict(v)
         return result
 
+    def update_traits(self, **kwargs):
+        for key, val in kwargs.items():
+            self.set_trait(key, val)
+        return self
+
 
 def trait_to_dict(obj):
     """Recursively convert object to dictionary"""
