@@ -28,10 +28,10 @@ def test_configure_update():
 def test_transform_update():
     # Test that transform updates rather than overwrites
     formula = Formula(field='gender', expr='datum.sex == 2 ? "Female":"Male"')
-    layer1 = Layer().data_transform(filter='datum.year==2000')\
-                    .data_transform(calculate=[formula])
+    layer1 = Layer().transform_data(filter='datum.year==2000')\
+                    .transform_data(calculate=[formula])
 
-    layer2 = Layer().data_transform(filter='datum.year==2000',
+    layer2 = Layer().transform_data(filter='datum.year==2000',
                                     calculate=[formula])
 
     assert layer1.to_dict() == layer2.to_dict()

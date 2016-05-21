@@ -422,7 +422,7 @@ class Layer(schema.BaseObject):
         self.config.update_traits(**kwargs)
         return self
 
-    def data_transform(self, **kwargs):
+    def transform_data(self, **kwargs):
         """Set the Data Transform"""
         if self.transform is None:
             self.transform = schema.Transform()
