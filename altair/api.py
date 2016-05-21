@@ -93,6 +93,9 @@ class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
         if new in TYPE_ABBR:
             self.type = INV_TYPECODE_MAP[new]
 
+    def _codegen_call_signature(self):
+        return  "{0}('',".format(self.__class__.__name__)
+
 
 class X(PositionChannelDef):
     channel_name = 'x'
@@ -338,6 +341,8 @@ class Layer(schema.BaseObject):
 
     @classmethod
     def from_dict(cls, dct):
+        if 'data' in dct:
+            dct = dct.copy()
         data = dct.pop('data', None)
         obj = super(Layer, cls).from_dict(dct)
 
@@ -348,6 +353,23 @@ class Layer(schema.BaseObject):
             else:
                 obj.data = schema.Data(**data)
         return obj
+
+    def _codegen_frontmatter(self):
+        frontmatter = ['from altair.api import *']
+
+        if isinstance(self.data, pd.DataFrame):
+            frontmatter.append('import pandas as pd')
+            frontmatter.extend(['',''])
+            frontmatter.append('data = pd.DataFrame({0})'
+                               ''.format(repr(self.data.to_dict())))
+            frontmatter.extend(['', ''])
+        return frontmatter
+
+    def _codegen_call_signature(self):
+        if isinstance(self.data, pd.DataFrame):
+            return "{0}(data,".format(self.__class__.__name__)
+        else:
+            return super(Layer, self)._codegen_call_signature()
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):

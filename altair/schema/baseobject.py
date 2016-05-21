@@ -49,6 +49,36 @@ class BaseObject(T.HasTraits):
                     result[k] = trait_to_dict(v)
         return result
 
+    def _codegen_frontmatter(self):
+        return []
+
+    def _codegen_call_signature(self):
+        return  "{0}(".format(self.__class__.__name__)
+
+    def to_altair(self, tablevel=0, return_list=False,
+                  include_frontmatter=True):
+        code = []
+        if include_frontmatter:
+            code.extend(self._codegen_frontmatter())
+        code.append(self._codegen_call_signature())
+
+        for k in sorted(self.traits()):
+            if k in self and k not in self.skip:
+                v = getattr(self, k)
+                if v is None:
+                    pass
+                elif isinstance(v, BaseObject):
+                    #print(v, tablevel)
+                    code.append('  {0}={1},'.format(k, v.to_altair(tablevel + 2)))
+                else:
+                    code.append('  {0}={1},'.format(k, repr(v)))
+        code.append(')')
+
+        if return_list:
+            return code
+        else:
+            return ('\n' + ' ' * tablevel).join(code)
+
     @classmethod
     def from_json(cls, jsn):
         """Initialize object from a suitable JSON string"""
@@ -66,7 +96,7 @@ class BaseObject(T.HasTraits):
         for prop, val in dct.items():
             if not obj.has_trait(prop):
                 raise ValueError("{0} not a valid property in {1}"
-                                 "".format(prop, klass))
+                                 "".format(prop, cls))
             else:
                 trait = obj.traits()[prop]
                 if isinstance(trait, T.Instance):
