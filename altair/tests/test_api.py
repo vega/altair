@@ -35,3 +35,10 @@ def test_transform_update():
                                     calculate=[formula])
 
     assert layer1.to_dict() == layer2.to_dict()
+
+
+def test_from_dict():
+    df = pd.DataFrame({'x':[1,2,3], 'y':[4,5,6]})
+    obj = Layer(df).mark_point().encode(x='x', y='y')
+    obj2 = Layer.from_dict(obj.to_dict())
+    assert obj.to_dict() == obj2.to_dict()

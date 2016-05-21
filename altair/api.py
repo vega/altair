@@ -335,6 +335,41 @@ class Layer(schema.BaseObject):
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
     config = T.Instance(schema.Config, allow_none=True)
 
+    @classmethod
+    def from_json(cls, input):
+        return cls.from_dict(json.loads(input))
+
+    @classmethod
+    def from_dict(cls, input, klass=None):
+        """Initialize a Layer from a vegalite JSON dictionary"""
+        if klass is None:
+            klass = cls
+        try:
+            obj = klass()
+        except TypeError as err:
+            if 'shorthand' in str(err):
+                obj = klass('')
+            else:
+                raise
+
+        for prop, val in input.items():
+            if klass is cls and prop == 'data':
+                if 'values' in val:
+                    obj.data = pd.DataFrame(val['values'])
+                else:
+                    raise NotImplementedError("only data 'values' supported")
+
+            elif not obj.has_trait(prop):
+                raise ValueError("{0} not a valid property in {1}"
+                                 "".format(prop, klass))
+            else:
+                trait = obj.traits()[prop]
+                if isinstance(trait, T.Instance):
+                    obj.set_trait(prop, cls.from_dict(val, trait.klass))
+                else:
+                    obj.set_trait(prop, val)
+        return obj
+
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
             self.encoding.parent = self
