@@ -80,6 +80,7 @@ class TraitletIPCompleter(IPCompleter):
 
 def enable_traitlet_completer():
     ip = get_ipython()
-    ip.Completer.__class__ = TraitletIPCompleter
+    if ip is not None:
+        ip.Completer.__class__ = TraitletIPCompleter
 
 enable_traitlet_completer()
