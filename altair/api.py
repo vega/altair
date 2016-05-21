@@ -429,36 +429,52 @@ class Layer(schema.BaseObject):
         self.transform.update_traits(**kwargs)
         return self
 
-    def mark_area(self):
+    def mark_area(self, **kwargs):
         self.mark = 'area'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
-    def mark_bar(self):
+    def mark_bar(self, **kwargs):
         self.mark = 'bar'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
-    def mark_line(self):
+    def mark_line(self, **kwargs):
         self.mark = 'line'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
-    def mark_point(self):
+    def mark_point(self, **kwargs):
         self.mark = 'point'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
-    def mark_text(self):
+    def mark_text(self, **kwargs):
         self.mark = 'text'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
-    def mark_tick(self):
+    def mark_tick(self, **kwargs):
         self.mark = 'tick'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
-    def mark_circle(self):
+    def mark_circle(self, **kwargs):
         self.mark = 'circle'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
-    def mark_square(self):
+    def mark_square(self, **kwargs):
         self.mark = 'square'
+        if kwargs:
+            self.configure(MarkConfig(**kwargs))
         return self
 
     def _ipython_display_(self):
