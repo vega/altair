@@ -7,6 +7,7 @@ try:
 except ImportError:
     from IPython.utils import traitlets as T
 
+from ..codegen import CodeGen
 
 _attr_template = "Attribute not found: {0}. Valid keyword arguments for this class: {1}"
 
@@ -52,35 +53,27 @@ class BaseObject(T.HasTraits):
                     result[k] = trait_to_dict(v)
         return result
 
-    def to_altair(self, extra_args=None, extra_kwds=None, ignore=None,
-                  tabsize=4, tablevel=0, shorten=False):
-        """Export string of Python code to recreate object"""
-        signature = '{0}('.format(self.__class__.__name__)
-        if extra_args:
-            signature += ', '.join(extra_args) + ','
+    def to_code(self, ignore_kwds=None, extra_args=None,
+                extra_kwds=None, methods=None):
+        def code_repr(v):
+            try:
+                return v.to_code()
+            except AttributeError:
+                return repr(v)
+        kwds = {k: getattr(self, k) for k in self.traits()
+                if k not in self.skip
+                and k not in (ignore_kwds or [])
+                and k in self}  # k in self also checks whether k is defined
+        kwds.update(extra_kwds or {})
+        kwds = {k: code_repr(v) for k, v in kwds.items()}
 
-        kwargs = {k: getattr(self, k) for k in self.traits()
-                  if k not in self.skip
-                  and k not in (ignore or [])
-                  and k in self}  # k in self also checks whether k is defined
-        kwargs.update(extra_kwds or {})
+        return CodeGen(self.__class__.__name__,
+                       args=extra_args or [],
+                       kwargs=kwds,
+                       methods=methods)
 
-        code = [signature]
-        for k, v in sorted(kwargs.items()):
-            v = getattr(self, k)
-            if isinstance(v, BaseObject):
-                vcode = v.to_altair(tablevel=tablevel + tabsize,
-                                    tabsize=tabsize, shorten=shorten)
-                code.append(' ' * tabsize + '{0}={1},'.format(k, vcode))
-            else:
-                code.append(' ' * tabsize + '{0}={1},'.format(k, repr(v)))
-
-        if len(kwargs) == 0:
-            code[-1] = code[-1].rstrip(',') + ')'
-        else:
-            code.append(')')
-
-        return ('\n' + ' ' * tablevel).join(code)
+    def to_altair(self):
+        return str(self.to_code())
 
     @classmethod
     def from_json(cls, jsn):

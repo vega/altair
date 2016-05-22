@@ -18,6 +18,7 @@ from ._py3k_compat import string_types
 
 import pandas as pd
 
+from .codegen import CodeGen
 from . import schema
 
 from .schema import AggregateOp
@@ -71,26 +72,25 @@ class _ChannelMixin(object):
             raise ValueError("No vegalite data type defined for {0}".format(self.field))
         return super(_ChannelMixin, self).to_dict()
 
-    def to_altair(self, extra_args=None, extra_kwds=None, ignore=None,
-                  tabsize=4, tablevel=0, shorten=False):
+    def to_code(self, shorten=True, ignore_kwds=None,
+                extra_args=None, extra_kwds=None, methods=None):
         shorthand = construct_shorthand(field=self.field,
                                         aggregate=self.aggregate,
                                         type=self.type)
-        ignore = ['field', 'aggregate', 'type']
-        if shorten:
-            kwargs = {k: getattr(self, k) for k in self.traits()
-                      if k not in self.skip
-                      and k not in ignore
-                      and k in self}
-            kwargs.update(extra_kwds or {})
-            if len(kwargs) == 0:
-                return repr(shorthand)
-        sup = super(_ChannelMixin, self)
-        return sup.to_altair(extra_args=[repr(shorthand)],
-                             extra_kwds=extra_kwds,
-                             ignore=ignore,
-                             tablevel=tablevel,
-                             tabsize=tabsize)
+        extra_args = [repr(shorthand)] + (extra_args or [])
+
+        ignore_kwds = (ignore_kwds or [])
+        ignore_kwds.extend(['field', 'aggregate', 'type'])
+        code = super(_ChannelMixin, self).to_code(ignore_kwds=ignore_kwds,
+                                                  extra_args=extra_args,
+                                                  extra_kwds=extra_kwds,
+                                                  methods=methods)
+        do_shorten = (shorten and len(code.args) == 1
+                      and not (code.kwargs or code.methods))
+        if do_shorten:
+            return repr(shorthand)
+        else:
+            return code
 
 
 class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
@@ -376,41 +376,42 @@ class Layer(schema.BaseObject):
                 obj.data = schema.Data(**data)
         return obj
 
-    def to_altair(self,  extra_args=None, extra_kwds=None, ignore=None,
-                  tabsize=4, tablevel=0, shorten=False, data=None):
+    def to_code(self, data=False, ignore_kwds=None,
+                extra_args=None, extra_kwds=None, methods=None):
         extra_args = (extra_args or [])
+        ignore_kwds = (ignore_kwds or [])
         if data:
             extra_args.append(data)
         elif isinstance(self.data, schema.Data):
-            extra_args.append(self.data.to_altair())
+            extra_args.append(self.data.to_code())
         elif isinstance(self.data, pd.DataFrame):
             warnings.warn("Skipping dataframe definition in altair code")
 
-        sup = super(Layer, self)
-        code = sup.to_altair(extra_args=extra_args,
-                             extra_kwds=extra_kwds,
-                             ignore=['mark', 'encoding',
-                                     'transform', 'config'],
-                             tabsize=tabsize, tablevel=tablevel)
+        ignore_kwds.extend(['mark', 'encoding', 'transform', 'config'])
+        methods = (methods or [])
+
         if self.mark:
-            code += '.mark_{0}()'.format(self.mark)
-
+            methods.append(CodeGen('mark_{0}'.format(self.mark)))
         if self.encoding:
-            enc = self.encoding.to_altair(tabsize=tabsize, shorten=True)
-            enc = enc.replace('Encoding', 'encode', 1)
-            code += '.{0}'.format(enc)
-
+            encode = self.encoding.to_code()
+            encode.name = 'encode'
+            methods.append(encode)
         if self.transform:
-            trans = self.transform.to_altair(tabsize=tabsize, shorten=True)
-            trans = trans.replace('Transform', 'transform_data', 1)
-            code += '.{0}'.format(trans)
-
+            transform = self.transform.to_code()
+            transform.name = 'transform_data'
+            methods.append(transform)
         if self.config:
-            conf = self.config.to_altair(tabsize=tabsize, shorten=True)
-            conf = conf.replace('Config', 'configure', 1)
-            code += '.{0}'.format(conf)
+            configure = self.config.to_code()
+            configure.name = 'configure'
+            methods.append(configure)
 
-        return code
+        return super(Layer, self).to_code(ignore_kwds=ignore_kwds,
+                                          extra_args=extra_args,
+                                          extra_kwds=extra_kwds,
+                                          methods=methods)
+
+    def to_altair(self, data=None):
+        return str(self.to_code(data=data))
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
