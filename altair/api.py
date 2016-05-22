@@ -11,8 +11,8 @@ except ImportError:
     from IPython.utils import traitlets as T
 
 from .utils import (
-    parse_shorthand, construct_shorthand, infer_vegalite_type,
-    sanitize_dataframe, dataframe_to_json, INV_TYPECODE_MAP
+    parse_shorthand, infer_vegalite_type,
+    sanitize_dataframe, dataframe_to_json, construct_shorthand,
 )
 from ._py3k_compat import string_types
 
@@ -376,7 +376,7 @@ class Layer(schema.BaseObject):
                 obj.data = schema.Data(**data)
         return obj
 
-    def to_code(self, data=False, ignore_kwds=None,
+    def to_code(self, data=None, ignore_kwds=None,
                 extra_args=None, extra_kwds=None, methods=None):
         extra_args = (extra_args or [])
         ignore_kwds = (ignore_kwds or [])
@@ -393,17 +393,11 @@ class Layer(schema.BaseObject):
         if self.mark:
             methods.append(CodeGen('mark_{0}'.format(self.mark)))
         if self.encoding:
-            encode = self.encoding.to_code()
-            encode.name = 'encode'
-            methods.append(encode)
+            methods.append(self.encoding.to_code().rename('encode'))
         if self.transform:
-            transform = self.transform.to_code()
-            transform.name = 'transform_data'
-            methods.append(transform)
+            methods.append(self.transform.to_code().rename('transform_data'))
         if self.config:
-            configure = self.config.to_code()
-            configure.name = 'configure'
-            methods.append(configure)
+            methods.append(self.config.to_code().rename('configure'))
 
         return super(Layer, self).to_code(ignore_kwds=ignore_kwds,
                                           extra_args=extra_args,
