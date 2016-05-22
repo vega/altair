@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 import pandas as pd
 
-from .. import Layer, Formula, MarkConfig, Encoding
+from .. import *
 from ..utils import parse_shorthand, infer_vegalite_type
 
 
@@ -48,8 +48,26 @@ def test_to_altair():
     df = pd.DataFrame({'x':[1,2,3], 'y':[4,5,6]})
     obj = Layer(df).mark_point().encode(x='x', y='y')
 
-    from altair import Encoding, X, Y
     code = obj.to_altair(data='df')
     obj2 = eval(code)
 
     assert obj.to_dict() == obj2.to_dict()
+
+
+def test_to_altair_stocks():
+    """Test a more complicated spec for conversion to altair"""
+    data = load_dataset('stocks')
+
+    layer = Layer(data).mark_line().encode(
+        x='date:T',
+        y='price:Q'
+    ).transform_data(
+        filter="datum.symbol==='GOOG'"
+    ).configure(
+        mark=MarkConfig(color='red')
+    )
+
+    code = layer.to_altair(data='data')
+    layer2 = eval(code)
+
+    assert layer.to_dict() == layer2.to_dict()
