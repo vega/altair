@@ -365,9 +365,24 @@ class Layer(schema.BaseObject):
                   extra_kwds=None, ignore=None, data=None):
         if data:
             extra_args = (extra_args or []) + [data]
+
         sup = super(Layer, self)
-        return sup.to_altair(tablevel=tablevel, extra_args=extra_args,
-                             extra_kwds=extra_kwds, ignore=ignore)
+        code = sup.to_altair(tablevel=tablevel, extra_args=extra_args,
+                             extra_kwds=extra_kwds,
+                             ignore=['mark', 'encoding', 'transform'])
+        if self.mark:
+            code += '.mark_{0}()'.format(self.mark)
+
+        if self.encoding:
+            enc = self.encoding.to_altair().replace('Encoding', 'encode')
+            code += '.{0}'.format(enc)
+
+        if self.transform:
+            trans = self.transform.to_altair().replace('Transform',
+                                                       'transform_data')
+            code += '.{0}'.format(trans)
+
+        return code
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
