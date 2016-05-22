@@ -70,8 +70,8 @@ class BaseObject(T.HasTraits):
                 if v is None:
                     pass
                 elif isinstance(v, BaseObject):
-                    code.append('  {0}={1},'
-                                ''.format(k, v.to_altair(tablevel + 2)))
+                    vcode = v.to_altair(tablevel + 2)
+                    code.append('  {0}={1},'.format(k, vcode))
                 else:
                     code.append('  {0}={1},'.format(k, repr(v)))
         code.append(')')

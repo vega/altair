@@ -3,7 +3,6 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
-from __future__ import print_function
 
 try:
     import traitlets as T
@@ -95,8 +94,9 @@ class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
 
     def to_altair(self, tablevel=0, extra_args=None,
                   extra_kwds=None, ignore=None):
-        return super(PositionChannelDef, self).to_altair(tablevel=tablevel,
-                                                         extra_args=["''"])
+        sup = super(PositionChannelDef, self)
+        return sup.to_altair(tablevel=tablevel, extra_args=["''"],
+                             extra_kwds=extra_kwds, ignore=ignore)
 
 
 class X(PositionChannelDef):
@@ -359,11 +359,10 @@ class Layer(schema.BaseObject):
     def to_altair(self, tablevel=0, extra_args=None,
                   extra_kwds=None, ignore=None, data=None):
         if data:
-            extra_args = extra_args or []
-            extra_args = extra_args + [data]
-        return super(Layer, self).to_altair(tablevel=tablevel,
-                                            extra_args=extra_args,
-                                            extra_kwds=extra_kwds)
+            extra_args = (extra_args or []) + [data]
+        sup = super(Layer, self)
+        return sup.to_altair(tablevel=tablevel, extra_args=extra_args,
+                             extra_kwds=extra_kwds, ignore=ignore)
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
