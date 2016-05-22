@@ -1,0 +1,32 @@
+{
+    "config": {
+        "cell": {
+            "height": 200,
+            "width": 300
+        }
+    },
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/unemployment-across-industries.json"
+    },
+    "encoding": {
+        "x": {
+            "axis": {
+                "axisWidth": 0,
+                "format": "%Y",
+                "labelAngle": 0
+            },
+            "field": "date",
+            "scale": {
+                "nice": "month"
+            },
+            "timeUnit": "yearmonth",
+            "type": "temporal"
+        },
+        "y": {
+            "aggregate": "sum",
+            "field": "count",
+            "type": "quantitative"
+        }
+    },
+    "mark": "area"
+}

@@ -1,0 +1,45 @@
+{
+    "data": {
+        "formatType": "csv",
+        "url": "http://vega.github.io/vega-lite/data/seattle-weather.csv"
+    },
+    "encoding": {
+        "color": {
+            "field": "weather",
+            "legend": {
+                "title": "Weather type"
+            },
+            "scale": {
+                "domain": [
+                    "sun",
+                    "fog",
+                    "drizzle",
+                    "rain",
+                    "snow"
+                ],
+                "range": [
+                    "#e7ba52",
+                    "#c7c7c7",
+                    "#aec7e8",
+                    "#1f77b4",
+                    "#9467bd"
+                ]
+            },
+            "type": "nominal"
+        },
+        "x": {
+            "axis": {
+                "title": "Month of the year"
+            },
+            "field": "date",
+            "timeUnit": "month",
+            "type": "temporal"
+        },
+        "y": {
+            "aggregate": "count",
+            "field": "*",
+            "type": "quantitative"
+        }
+    },
+    "mark": "bar"
+}

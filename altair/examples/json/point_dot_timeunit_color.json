@@ -1,0 +1,19 @@
+{
+    "data": {
+        "formatType": "csv",
+        "url": "http://vega.github.io/vega-lite/data/seattle-temps.csv"
+    },
+    "encoding": {
+        "color": {
+            "field": "date",
+            "timeUnit": "yearmonth",
+            "type": "temporal"
+        },
+        "x": {
+            "aggregate": "mean",
+            "field": "temp",
+            "type": "quantitative"
+        }
+    },
+    "mark": "point"
+}

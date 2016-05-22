@@ -1,0 +1,30 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/population.json"
+    },
+    "description": "A bar chart showing the US population distribution of age groups in 2000.",
+    "encoding": {
+        "size": {
+            "value": 10
+        },
+        "x": {
+            "field": "age",
+            "scale": {
+                "bandSize": 17
+            },
+            "type": "ordinal"
+        },
+        "y": {
+            "aggregate": "sum",
+            "axis": {
+                "title": "population"
+            },
+            "field": "people",
+            "type": "quantitative"
+        }
+    },
+    "mark": "bar",
+    "transform": {
+        "filter": "datum.year == 2000"
+    }
+}

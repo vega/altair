@@ -1,0 +1,22 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "description": "A trellis scatterplot showing Horsepower and Miles per gallons, faceted by binned values of Acceleration.",
+    "encoding": {
+        "row": {
+            "bin": true,
+            "field": "Acceleration",
+            "type": "quantitative"
+        },
+        "x": {
+            "field": "Horsepower",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "Miles_per_Gallon",
+            "type": "quantitative"
+        }
+    },
+    "mark": "point"
+}

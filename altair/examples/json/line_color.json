@@ -1,0 +1,22 @@
+{
+    "data": {
+        "formatType": "csv",
+        "url": "http://vega.github.io/vega-lite/data/stocks.csv"
+    },
+    "description": "Stock prices of 5 Tech Companies Over Time.",
+    "encoding": {
+        "color": {
+            "field": "symbol",
+            "type": "nominal"
+        },
+        "x": {
+            "field": "date",
+            "type": "temporal"
+        },
+        "y": {
+            "field": "price",
+            "type": "quantitative"
+        }
+    },
+    "mark": "line"
+}
