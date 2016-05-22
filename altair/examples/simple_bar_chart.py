@@ -7,7 +7,7 @@ data = pd.DataFrame([
       {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
     ])
 
-v = Layer().encode(
+v = Layer(data).encode(
     x=X('a:O'),
     y=Y('b:Q')
 ).mark_bar()
