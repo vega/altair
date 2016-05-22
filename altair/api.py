@@ -3,6 +3,7 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
+import warnings
 
 try:
     import traitlets as T
@@ -22,6 +23,8 @@ from . import schema
 from .schema import AggregateOp
 from .schema import AxisConfig
 from .schema import AxisOrient
+from .schema import AxisProperties
+from .schema import BinProperties
 from .schema import CellConfig
 from .schema import Config
 from .schema import DataFormat
@@ -32,6 +35,7 @@ from .schema import FontStyle
 from .schema import FontWeight
 from .schema import HorizontalAlign
 from .schema import LegendConfig
+from .schema import LegendProperties
 from .schema import MarkConfig
 from .schema import NiceTime
 from .schema import Scale
@@ -67,6 +71,17 @@ class _ChannelMixin(object):
             raise ValueError("No vegalite data type defined for {0}".format(self.field))
         return super(_ChannelMixin, self).to_dict()
 
+    def to_altair(self, tablevel=0, extra_args=None,
+                  extra_kwds=None, ignore=None):
+        shorthand = construct_shorthand(field=self.field,
+                                        aggregate=self.aggregate,
+                                        type=self.type)
+        sup = super(_ChannelMixin, self)
+        return sup.to_altair(tablevel=tablevel,
+                             extra_args=["'{0}'".format(shorthand)],
+                             extra_kwds=extra_kwds,
+                             ignore=['field', 'aggregate', 'type'])
+
 
 class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
 
@@ -91,17 +106,6 @@ class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
         new = change['new']
         if new in TYPE_ABBR:
             self.type = INV_TYPECODE_MAP[new]
-
-    def to_altair(self, tablevel=0, extra_args=None,
-                  extra_kwds=None, ignore=None):
-        shorthand = construct_shorthand(field=self.field,
-                                        aggregate=self.aggregate,
-                                        type=self.type)
-        sup = super(PositionChannelDef, self)
-        return sup.to_altair(tablevel=tablevel,
-                             extra_args=["'{0}'".format(shorthand)],
-                             extra_kwds=extra_kwds,
-                             ignore=['field', 'aggregate', 'type'])
 
 
 class X(PositionChannelDef):
@@ -348,6 +352,7 @@ class Layer(schema.BaseObject):
 
     @classmethod
     def from_dict(cls, dct):
+        # Remove data first and handle it specially later
         if 'data' in dct:
             dct = dct.copy()
         data = dct.pop('data', None)
@@ -363,8 +368,13 @@ class Layer(schema.BaseObject):
 
     def to_altair(self, tablevel=0, extra_args=None,
                   extra_kwds=None, ignore=None, data=None):
+        extra_args = (extra_args or [])
         if data:
-            extra_args = (extra_args or []) + [data]
+            extra_args.append(data)
+        elif isinstance(self.data, schema.Data):
+            extra_args.append(self.data.to_altair())
+        elif isinstance(self.data, pd.DataFrame):
+            warnings.warn("Skipping dataframe definition in altair code")
 
         sup = super(Layer, self)
         code = sup.to_altair(tablevel=tablevel, extra_args=extra_args,

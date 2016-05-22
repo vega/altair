@@ -42,6 +42,9 @@ from .api import (
     Layer,
     CellConfig,
     Detail,
+    AxisProperties,
+    BinProperties,
+    LegendProperties,
 )
 
 from .datasets import (

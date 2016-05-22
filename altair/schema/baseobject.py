@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 
 try:
@@ -7,6 +9,7 @@ except ImportError:
 
 
 _attr_template = "Attribute not found: {0}. Valid keyword arguments for this class: {1}"
+
 
 class BaseObject(T.HasTraits):
 
@@ -101,12 +104,8 @@ class BaseObject(T.HasTraits):
             if not obj.has_trait(prop):
                 raise ValueError("{0} not a valid property in {1}"
                                  "".format(prop, cls))
-            else:
-                trait = obj.traits()[prop]
-                if isinstance(trait, T.Instance):
-                    obj.set_trait(prop, trait.klass.from_dict(val))
-                else:
-                    obj.set_trait(prop, val)
+            trait = obj.traits()[prop]
+            obj.set_trait(prop, trait_from_dict(trait, val))
         return obj
 
     def update_traits(self, **kwargs):
@@ -123,3 +122,21 @@ def trait_to_dict(obj):
         return [trait_to_dict(o) for o in obj]
     else:
         return obj
+
+
+def trait_from_dict(trait, dct):
+    """
+    Construct a trait from a dictionary.
+    If dct is not a dictionary, pass it through
+    """
+    if not isinstance(dct, dict):
+        return dct
+    elif isinstance(trait, T.Instance):
+        return trait.klass.from_dict(dct)
+    elif isinstance(trait, T.Union):
+        for subtrait in trait.trait_types:
+            try:
+                return trait_from_dict(subtrait, dct)
+            except T.TraitError:
+                pass
+    raise T.TraitError('cannot set {0} to {1}'.format(trait, dct))

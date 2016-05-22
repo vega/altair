@@ -1,11 +1,32 @@
 import pytest
 import warnings
+import json
 
 import numpy as np
 import pandas as pd
 
 from .. import *
 from ..utils import parse_shorthand, infer_vegalite_type
+
+EXAMPLE_JSON = """
+{
+  "data": {"url": "http://vega.github.io/vega-lite/data/unemployment-across-industries.json"},
+  "mark": "area",
+  "encoding": {
+    "x": {
+      "timeUnit": "yearmonth", "field": "date", "type": "temporal",
+      "scale": {"nice": "month"},
+      "axis": {"axisWidth": 0, "format": "%Y", "labelAngle": 0, "tickSize": 0}
+    },
+    "y": {
+      "aggregate": "sum", "field": "count","type": "quantitative",
+      "axis": false
+    },
+    "color": {"field":"series", "type":"nominal", "scale":{"range": "category20b"}}
+  },
+  "config": {"cell": {"width": 300, "height": 200}, "mark": {"stacked": "center"}}
+}
+"""
 
 
 def test_encode_update():
@@ -71,3 +92,10 @@ def test_to_altair_stocks():
     layer2 = eval(code)
 
     assert layer.to_dict() == layer2.to_dict()
+
+
+def test_from_json():
+    layer = Layer.from_json(EXAMPLE_JSON)
+    D1 = json.loads(EXAMPLE_JSON)
+    D2 = layer.to_dict()
+    assert D1 == D2
