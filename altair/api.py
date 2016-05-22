@@ -72,14 +72,23 @@ class _ChannelMixin(object):
         return super(_ChannelMixin, self).to_dict()
 
     def to_altair(self, extra_args=None, extra_kwds=None, ignore=None,
-                  tabsize=4, tablevel=0):
+                  tabsize=4, tablevel=0, shorten=False):
         shorthand = construct_shorthand(field=self.field,
                                         aggregate=self.aggregate,
                                         type=self.type)
+        ignore = ['field', 'aggregate', 'type']
+        if shorten:
+            kwargs = {k: getattr(self, k) for k in self.traits()
+                      if k not in self.skip
+                      and k not in ignore
+                      and k in self}
+            kwargs.update(extra_kwds or {})
+            if len(kwargs) == 0:
+                return repr(shorthand)
         sup = super(_ChannelMixin, self)
-        return sup.to_altair(extra_args=["'{0}'".format(shorthand)],
+        return sup.to_altair(extra_args=[repr(shorthand)],
                              extra_kwds=extra_kwds,
-                             ignore=['field', 'aggregate', 'type'],
+                             ignore=ignore,
                              tablevel=tablevel,
                              tabsize=tabsize)
 
@@ -368,7 +377,7 @@ class Layer(schema.BaseObject):
         return obj
 
     def to_altair(self,  extra_args=None, extra_kwds=None, ignore=None,
-                  tabsize=4, tablevel=0, data=None):
+                  tabsize=4, tablevel=0, shorten=False, data=None):
         extra_args = (extra_args or [])
         if data:
             extra_args.append(data)
@@ -387,17 +396,17 @@ class Layer(schema.BaseObject):
             code += '.mark_{0}()'.format(self.mark)
 
         if self.encoding:
-            enc = self.encoding.to_altair(tabsize=tabsize)
+            enc = self.encoding.to_altair(tabsize=tabsize, shorten=True)
             enc = enc.replace('Encoding', 'encode', 1)
             code += '.{0}'.format(enc)
 
         if self.transform:
-            trans = self.transform.to_altair(tabsize=tabsize)
+            trans = self.transform.to_altair(tabsize=tabsize, shorten=True)
             trans = trans.replace('Transform', 'transform_data', 1)
             code += '.{0}'.format(trans)
 
         if self.config:
-            conf = self.config.to_altair(tabsize=tabsize)
+            conf = self.config.to_altair(tabsize=tabsize, shorten=True)
             conf = conf.replace('Config', 'configure', 1)
             code += '.{0}'.format(conf)
 
@@ -435,7 +444,6 @@ class Layer(schema.BaseObject):
             'mark_area', 'mark_bar', 'mark_line', 'mark_point',
             'mark_text', 'mark_tick', 'mark_circle', 'mark_square'
         ]
-        print(base, methods)
         return base+methods
 
     def to_dict(self, data=True):

@@ -53,7 +53,7 @@ class BaseObject(T.HasTraits):
         return result
 
     def to_altair(self, extra_args=None, extra_kwds=None, ignore=None,
-                  tabsize=4, tablevel=0):
+                  tabsize=4, tablevel=0, shorten=False):
         """Export string of Python code to recreate object"""
         signature = '{0}('.format(self.__class__.__name__)
         if extra_args:
@@ -70,7 +70,7 @@ class BaseObject(T.HasTraits):
             v = getattr(self, k)
             if isinstance(v, BaseObject):
                 vcode = v.to_altair(tablevel=tablevel + tabsize,
-                                    tabsize=tabsize)
+                                    tabsize=tabsize, shorten=shorten)
                 code.append(' ' * tabsize + '{0}={1},'.format(k, vcode))
             else:
                 code.append(' ' * tabsize + '{0}={1},'.format(k, repr(v)))
