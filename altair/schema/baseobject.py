@@ -63,3 +63,24 @@ def trait_to_dict(obj):
         return [trait_to_dict(o) for o in obj]
     else:
         return obj
+
+
+#############################################################################
+# Hack to make traitlet arguments tab-complete in IPython
+
+from IPython.core.completer import IPCompleter
+from IPython.core.getipython import get_ipython
+
+class TraitletIPCompleter(IPCompleter):
+    def _default_arguments(self, obj):
+        args = super(TraitletIPCompleter, self)._default_arguments(obj)
+        if isinstance(obj, type) and issubclass(obj, BaseObject):
+            args.extend(obj.class_trait_names())
+        return list(set(args))
+
+def enable_traitlet_completer():
+    ip = get_ipython()
+    if ip is not None:
+        ip.Completer.__class__ = TraitletIPCompleter
+
+enable_traitlet_completer()
