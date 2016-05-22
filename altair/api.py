@@ -71,16 +71,17 @@ class _ChannelMixin(object):
             raise ValueError("No vegalite data type defined for {0}".format(self.field))
         return super(_ChannelMixin, self).to_dict()
 
-    def to_altair(self, tablevel=0, extra_args=None,
-                  extra_kwds=None, ignore=None):
+    def to_altair(self, extra_args=None, extra_kwds=None, ignore=None,
+                  tabsize=4, tablevel=0):
         shorthand = construct_shorthand(field=self.field,
                                         aggregate=self.aggregate,
                                         type=self.type)
         sup = super(_ChannelMixin, self)
-        return sup.to_altair(tablevel=tablevel,
-                             extra_args=["'{0}'".format(shorthand)],
+        return sup.to_altair(extra_args=["'{0}'".format(shorthand)],
                              extra_kwds=extra_kwds,
-                             ignore=['field', 'aggregate', 'type'])
+                             ignore=['field', 'aggregate', 'type'],
+                             tablevel=tablevel,
+                             tabsize=tabsize)
 
 
 class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
@@ -366,8 +367,8 @@ class Layer(schema.BaseObject):
                 obj.data = schema.Data(**data)
         return obj
 
-    def to_altair(self, tablevel=0, extra_args=None,
-                  extra_kwds=None, ignore=None, data=None):
+    def to_altair(self,  extra_args=None, extra_kwds=None, ignore=None,
+                  tabsize=4, tablevel=0, data=None):
         extra_args = (extra_args or [])
         if data:
             extra_args.append(data)
@@ -377,24 +378,27 @@ class Layer(schema.BaseObject):
             warnings.warn("Skipping dataframe definition in altair code")
 
         sup = super(Layer, self)
-        code = sup.to_altair(tablevel=tablevel, extra_args=extra_args,
+        code = sup.to_altair(extra_args=extra_args,
                              extra_kwds=extra_kwds,
                              ignore=['mark', 'encoding',
-                                     'transform', 'config'])
+                                     'transform', 'config'],
+                             tabsize=tabsize, tablevel=tablevel)
         if self.mark:
             code += '.mark_{0}()'.format(self.mark)
 
         if self.encoding:
-            enc = self.encoding.to_altair().replace('Encoding', 'encode', 1)
+            enc = self.encoding.to_altair(tabsize=tabsize)
+            enc = enc.replace('Encoding', 'encode', 1)
             code += '.{0}'.format(enc)
 
         if self.transform:
-            trans = self.transform.to_altair().replace('Transform',
-                                                       'transform_data', 1)
+            trans = self.transform.to_altair(tabsize=tabsize)
+            trans = trans.replace('Transform', 'transform_data', 1)
             code += '.{0}'.format(trans)
 
         if self.config:
-            conf = self.config.to_altair().replace('Config', 'configure', 1)
+            conf = self.config.to_altair(tabsize=tabsize)
+            conf = conf.replace('Config', 'configure', 1)
             code += '.{0}'.format(conf)
 
         return code

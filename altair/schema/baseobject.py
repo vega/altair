@@ -52,34 +52,30 @@ class BaseObject(T.HasTraits):
                     result[k] = trait_to_dict(v)
         return result
 
-    def to_altair(self, tablevel=0, extra_args=None,
-                  extra_kwds=None, ignore=None):
+    def to_altair(self, extra_args=None, extra_kwds=None, ignore=None,
+                  tabsize=4, tablevel=0):
         """Export string of Python code to recreate object"""
         signature = '{0}('.format(self.__class__.__name__)
         if extra_args:
-            signature += ', '.join(extra_args) + ', '
-        if extra_kwds:
-            signature += ', '.join('{0}={1}'.format(k, v)
-                                   for k, v in sorted(extra_kwds.items()))
-            signature += ', '
-        code = [signature.rstrip()]
+            signature += ', '.join(extra_args) + ','
 
-        if ignore is None:
-            ignore = []
+        kwargs = {k: getattr(self, k) for k in self.traits()
+                  if k not in self.skip
+                  and k not in (ignore or [])
+                  and k in self}  # k in self also checks whether k is defined
+        kwargs.update(extra_kwds or {})
 
-        kwarg_count = 0
-        for k in sorted(self.traits()):
-            if k in self and k not in self.skip and k not in ignore:
-                kwarg_count += 1
-                v = getattr(self, k)
-                if v is None:
-                    pass
-                elif isinstance(v, BaseObject):
-                    vcode = v.to_altair(tablevel + 4)
-                    code.append('    {0}={1},'.format(k, vcode))
-                else:
-                    code.append('    {0}={1},'.format(k, repr(v)))
-        if kwarg_count == 0:
+        code = [signature]
+        for k, v in sorted(kwargs.items()):
+            v = getattr(self, k)
+            if isinstance(v, BaseObject):
+                vcode = v.to_altair(tablevel=tablevel + tabsize,
+                                    tabsize=tabsize)
+                code.append(' ' * tabsize + '{0}={1},'.format(k, vcode))
+            else:
+                code.append(' ' * tabsize + '{0}={1},'.format(k, repr(v)))
+
+        if len(kwargs) == 0:
             code[-1] = code[-1].rstrip(',') + ')'
         else:
             code.append(')')
