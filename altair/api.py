@@ -369,18 +369,23 @@ class Layer(schema.BaseObject):
         sup = super(Layer, self)
         code = sup.to_altair(tablevel=tablevel, extra_args=extra_args,
                              extra_kwds=extra_kwds,
-                             ignore=['mark', 'encoding', 'transform'])
+                             ignore=['mark', 'encoding',
+                                     'transform', 'config'])
         if self.mark:
             code += '.mark_{0}()'.format(self.mark)
 
         if self.encoding:
-            enc = self.encoding.to_altair().replace('Encoding', 'encode')
+            enc = self.encoding.to_altair().replace('Encoding', 'encode', 1)
             code += '.{0}'.format(enc)
 
         if self.transform:
             trans = self.transform.to_altair().replace('Transform',
-                                                       'transform_data')
+                                                       'transform_data', 1)
             code += '.{0}'.format(trans)
+
+        if self.config:
+            conf = self.config.to_altair().replace('Config', 'configure', 1)
+            code += '.{0}'.format(conf)
 
         return code
 

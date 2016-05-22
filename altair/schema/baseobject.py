@@ -72,10 +72,10 @@ class BaseObject(T.HasTraits):
                 if v is None:
                     pass
                 elif isinstance(v, BaseObject):
-                    vcode = v.to_altair(tablevel + 2)
-                    code.append('  {0}={1},'.format(k, vcode))
+                    vcode = v.to_altair(tablevel + 4)
+                    code.append('    {0}={1},'.format(k, vcode))
                 else:
-                    code.append('  {0}={1},'.format(k, repr(v)))
+                    code.append('    {0}={1},'.format(k, repr(v)))
         if kwarg_count == 0:
             code[-1] = code[-1].rstrip(',') + ')'
         else:
