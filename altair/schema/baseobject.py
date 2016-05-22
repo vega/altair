@@ -64,8 +64,10 @@ class BaseObject(T.HasTraits):
         if ignore is None:
             ignore = []
 
+        kwarg_count = 0
         for k in sorted(self.traits()):
             if k in self and k not in self.skip and k not in ignore:
+                kwarg_count += 1
                 v = getattr(self, k)
                 if v is None:
                     pass
@@ -74,7 +76,10 @@ class BaseObject(T.HasTraits):
                     code.append('  {0}={1},'.format(k, vcode))
                 else:
                     code.append('  {0}={1},'.format(k, repr(v)))
-        code.append(')')
+        if kwarg_count == 0:
+            code[-1] = code[-1].rstrip(',') + ')'
+        else:
+            code.append(')')
 
         return ('\n' + ' ' * tablevel).join(code)
 

@@ -10,8 +10,8 @@ except ImportError:
     from IPython.utils import traitlets as T
 
 from .utils import (
-    parse_shorthand, infer_vegalite_type,
-    sanitize_dataframe, dataframe_to_json
+    parse_shorthand, construct_shorthand, infer_vegalite_type,
+    sanitize_dataframe, dataframe_to_json, INV_TYPECODE_MAP
 )
 from ._py3k_compat import string_types
 
@@ -94,9 +94,14 @@ class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
 
     def to_altair(self, tablevel=0, extra_args=None,
                   extra_kwds=None, ignore=None):
+        shorthand = construct_shorthand(field=self.field,
+                                        aggregate=self.aggregate,
+                                        type=self.type)
         sup = super(PositionChannelDef, self)
-        return sup.to_altair(tablevel=tablevel, extra_args=["''"],
-                             extra_kwds=extra_kwds, ignore=ignore)
+        return sup.to_altair(tablevel=tablevel,
+                             extra_args=["'{0}'".format(shorthand)],
+                             extra_kwds=extra_kwds,
+                             ignore=['field', 'aggregate', 'type'])
 
 
 class X(PositionChannelDef):
