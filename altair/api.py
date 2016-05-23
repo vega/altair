@@ -66,13 +66,6 @@ class _ChannelMixin(object):
         if data is None:
             self.type = ''
 
-    def to_dict(self):
-        if not self.field:
-            return None
-        if not self.type:
-            raise ValueError("No vegalite data type defined for {0}".format(self.field))
-        return super(_ChannelMixin, self).to_dict()
-
     def to_code(self, shorten=True, ignore_kwds=None,
                 extra_args=None, extra_kwds=None, methods=None):
         shorthand = construct_shorthand(field=self.field,

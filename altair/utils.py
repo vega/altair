@@ -80,7 +80,7 @@ def parse_shorthand(sh):
 
 def construct_shorthand(field=None, aggregate=None, type=None):
     if field is None:
-        raise ValueError("field must be specified")
+        return ''
 
     sh = field
 
