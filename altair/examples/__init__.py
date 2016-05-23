@@ -1,15 +1,18 @@
 """Code for Example Plots"""
+import os
+import json
+JSON_DIR = os.path.join(os.path.dirname(__file__), 'json')
 
 
-def load_example(name):
-    import os
-    import json
+def load_example(filename):
+    """Load the JSON string corresponding to the given filename"""
+    if filename not in os.listdir(JSON_DIR):
+        raise ValueError("Example='{0}' not valid.".format(filename))
 
-    JSON_DIR = os.path.join(os.path.dirname(__file__), 'json')
-    if name not in os.listdir(JSON_DIR):
-        raise ValueError("Example='{0}' not valid.".format(name))
+    with open(os.path.join(JSON_DIR, filename)) as f:
+        return json.load(f)
 
-    with open(os.path.join(JSON_DIR, name)) as f:
-        schema = json.load(f)
 
-    return schema
+def iter_examples():
+    for filename in os.listdir(JSON_DIR):
+        yield filename, load_example(filename)
