@@ -34,7 +34,8 @@ def write_notebook(cells, outputfile, execute=True, kernel='python3'):
 
     if execute:
         ep = ExecutePreprocessor(timeout=600, kernelname='python3')
-        ep.preprocess(notebook, {'metadata': {'path': notebook_directory}})
+        ep.preprocess(notebook,
+                      {'metadata': {'path': os.path.dirname(outputfile)}})
 
     nbformat.write(notebook, outputfile)
 
