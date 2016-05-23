@@ -1,5 +1,4 @@
 traitlets
+ipython
 pandas
-jinja2
 vega
-

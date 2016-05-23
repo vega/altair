@@ -5,16 +5,12 @@ DSL mapping Vega types to IPython traitlets.
 """
 import warnings
 
-try:
-    import traitlets as T
-except ImportError:
-    from IPython.utils import traitlets as T
+import traitlets as T
 
 from .utils import (
     parse_shorthand, infer_vegalite_type,
-    sanitize_dataframe, dataframe_to_json, construct_shorthand,
+    sanitize_dataframe, construct_shorthand,
 )
-from ._py3k_compat import string_types
 
 import pandas as pd
 

@@ -17,11 +17,6 @@ INV_TYPECODE_MAP = {v:k for k,v in TYPECODE_MAP.items()}
 TYPE_ABBR = TYPECODE_MAP.values()
 
 
-def type_from_abbreviation(abbr):
-    """Convert from type abbreviations (O,N,T,Q) to full type names."""
-    return INV_TYPECODE_MAP[abbr]
-
-
 def parse_shorthand(sh):
     """
     Altair accepts a shorthand expression for aggregation, field, and type.
@@ -133,37 +128,6 @@ def infer_vegalite_type(data, name=None):
     return TYPECODE_MAP[typecode]
 
 
-class DataFrameTrait(T.Any):
-    """A custom TraitType for pandas.DataFrame or other similar labeled data.
-
-    This mainly exists for objects where == doesn't make sense for comparison.
-    """
-
-    default_value = None
-    allow_none = True
-    info_text = 'a pandas.DataFrame or similar object'
-
-    def set(self, obj, value):
-        new_value = self._validate(obj, value)
-        try:
-            old_value = obj._trait_values[self.name]
-        except KeyError:
-            old_value = self.default_value
-
-        obj._trait_values[self.name] = new_value
-        try:
-            silent = bool(id(old_value) == id(new_value))
-        except:
-            # if there is an error in comparing, default to notify
-            pass
-        #     raise
-            silent = False
-        if silent is not True:
-            # we explicitly compare silent to True just in case the equality
-            # comparison above returns something other than True/False
-            obj._notify_trait(self.name, old_value, new_value)
-
-
 def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
 
@@ -194,11 +158,4 @@ def sanitize_dataframe(df):
             to_str = lambda x: x.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
             df[col_name] = df[col_name].apply(to_str)
     return df
-
-def dataframe_to_json(df):
-    """Serialize a DataFrame to JSON in a safe manner."""
-    df2 = sanitize_dataframe(df)
-    return df2.to_json(
-        orient='records',
-        date_format='iso',
-    )
+    
