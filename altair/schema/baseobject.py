@@ -1,11 +1,7 @@
 import json
 
 import pandas as pd
-
-try:
-    import traitlets as T
-except ImportError:
-    from IPython.utils import traitlets as T
+import traitlets as T
 
 from ..codegen import CodeGen
 
