@@ -171,6 +171,7 @@ def sanitize_dataframe(df):
     * Raise ValueError is it has a hierarchical index.
     * Convert categoricals to strings.
     * Convert np.int dtypes to Python int objects
+    * Convert DateTime dtypes into appropriate string representations
     """
     import pandas as pd
     import numpy as np
@@ -188,6 +189,10 @@ def sanitize_dataframe(df):
             df[col_name] = df[col_name].astype(str)
         elif np.issubdtype(dtype, np.integer):
             df[col_name] = np.array(list(map(int, df[col_name])), dtype=object)
+        elif str(dtype) == 'datetime64[ns]':
+            # this is the format used in Vega-Lite example area.json
+            to_str = lambda x: x.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+            df[col_name] = df[col_name].apply(to_str)
     return df
 
 def dataframe_to_json(df):
