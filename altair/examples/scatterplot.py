@@ -2,7 +2,7 @@ from altair import *
 
 data = load_dataset('cars')
 
-v = Layer().encode(
+v = Layer(data).encode(
     x=X('Horsepower:Q'),
     y=Y('Miles_per_Gallon:Q')
 ).mark_point()

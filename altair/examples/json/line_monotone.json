@@ -1,0 +1,25 @@
+{
+    "config": {
+        "mark": {
+            "interpolate": "monotone"
+        }
+    },
+    "data": {
+        "formatType": "csv",
+        "url": "http://vega.github.io/vega-lite/data/stocks.csv"
+    },
+    "encoding": {
+        "x": {
+            "field": "date",
+            "type": "temporal"
+        },
+        "y": {
+            "field": "price",
+            "type": "quantitative"
+        }
+    },
+    "mark": "line",
+    "transform": {
+        "filter": "datum.symbol==='GOOG'"
+    }
+}

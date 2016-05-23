@@ -1,0 +1,24 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "row": {
+            "field": "Origin",
+            "type": "nominal"
+        },
+        "x": {
+            "bin": {
+                "maxbins": 15
+            },
+            "field": "Horsepower",
+            "type": "quantitative"
+        },
+        "y": {
+            "aggregate": "count",
+            "field": "*",
+            "type": "quantitative"
+        }
+    },
+    "mark": "bar"
+}

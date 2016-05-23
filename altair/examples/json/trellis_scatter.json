@@ -1,0 +1,20 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/movies.json"
+    },
+    "encoding": {
+        "column": {
+            "field": "MPAA_Rating",
+            "type": "ordinal"
+        },
+        "x": {
+            "field": "Worldwide_Gross",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "US_DVD_Sales",
+            "type": "quantitative"
+        }
+    },
+    "mark": "point"
+}

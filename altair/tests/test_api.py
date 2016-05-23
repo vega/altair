@@ -1,11 +1,32 @@
 import pytest
 import warnings
+import json
 
 import numpy as np
 import pandas as pd
 
-from .. import Layer, Formula, MarkConfig
+from .. import *
 from ..utils import parse_shorthand, infer_vegalite_type
+
+EXAMPLE_JSON = """
+{
+  "data": {"url": "http://vega.github.io/vega-lite/data/unemployment-across-industries.json"},
+  "mark": "area",
+  "encoding": {
+    "x": {
+      "timeUnit": "yearmonth", "field": "date", "type": "temporal",
+      "scale": {"nice": "month"},
+      "axis": {"axisWidth": 0, "format": "%Y", "labelAngle": 0, "tickSize": 0}
+    },
+    "y": {
+      "aggregate": "sum", "field": "count","type": "quantitative",
+      "axis": false
+    },
+    "color": {"field":"series", "type":"nominal", "scale":{"range": "category20b"}}
+  },
+  "config": {"cell": {"width": 300, "height": 200}, "mark": {"stacked": "center"}}
+}
+"""
 
 
 def test_encode_update():
@@ -35,3 +56,46 @@ def test_transform_update():
                                     calculate=[formula])
 
     assert layer1.to_dict() == layer2.to_dict()
+
+
+def test_from_dict():
+    df = pd.DataFrame({'x':[1,2,3], 'y':[4,5,6]})
+    obj = Layer(df).mark_point().encode(x='x', y='y')
+    obj2 = Layer.from_dict(obj.to_dict())
+    assert obj.to_dict() == obj2.to_dict()
+
+
+def test_to_altair():
+    df = pd.DataFrame({'x':[1,2,3], 'y':[4,5,6]})
+    obj = Layer(df).mark_point().encode(x='x', y='y')
+
+    code = obj.to_altair(data='df')
+    obj2 = eval(code)
+
+    assert obj.to_dict() == obj2.to_dict()
+
+
+def test_to_altair_stocks():
+    """Test a more complicated spec for conversion to altair"""
+    data = load_dataset('stocks')
+
+    layer = Layer(data).mark_line().encode(
+        x='date:T',
+        y='price:Q'
+    ).transform_data(
+        filter="datum.symbol==='GOOG'"
+    ).configure(
+        mark=MarkConfig(color='red')
+    )
+
+    code = layer.to_altair(data='data')
+    layer2 = eval(code)
+
+    assert layer.to_dict() == layer2.to_dict()
+
+
+def test_from_json():
+    layer = Layer.from_json(EXAMPLE_JSON)
+    D1 = json.loads(EXAMPLE_JSON)
+    D2 = layer.to_dict()
+    assert D1 == D2

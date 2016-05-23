@@ -1,0 +1,21 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/barley.json"
+    },
+    "encoding": {
+        "color": {
+            "field": "site",
+            "type": "nominal"
+        },
+        "x": {
+            "aggregate": "sum",
+            "field": "yield",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "variety",
+            "type": "nominal"
+        }
+    },
+    "mark": "bar"
+}

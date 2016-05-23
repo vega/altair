@@ -1,0 +1,21 @@
+{
+    "data": {
+        "formatType": "csv",
+        "url": "http://vega.github.io/vega-lite/data/stocks.csv"
+    },
+    "description": "Google's stock price over time.",
+    "encoding": {
+        "x": {
+            "field": "date",
+            "type": "temporal"
+        },
+        "y": {
+            "field": "price",
+            "type": "quantitative"
+        }
+    },
+    "mark": "line",
+    "transform": {
+        "filter": "datum.symbol==='GOOG'"
+    }
+}

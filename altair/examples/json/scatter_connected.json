@@ -1,0 +1,26 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/driving.json"
+    },
+    "encoding": {
+        "path": {
+            "field": "year",
+            "type": "temporal"
+        },
+        "x": {
+            "field": "miles",
+            "scale": {
+                "zero": false
+            },
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "gas",
+            "scale": {
+                "zero": false
+            },
+            "type": "quantitative"
+        }
+    },
+    "mark": "line"
+}

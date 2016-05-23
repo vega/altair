@@ -21,7 +21,7 @@ PACKAGES            = ['altair',
                        'altair.schema',
                        'altair.schema._generated',
                        'altair.schema._generated.tests']
-PACKAGE_DATA        = {'altair': ['schema/*.json']}
+PACKAGE_DATA        = {'altair': ['schema/*.json', 'examples/json/*.json']}
 AUTHOR              = "Jupyter Development Team",
 AUTHOR_EMAIL        = "jupyter@googlegroups.org",
 URL                 = 'http://github.com/ellisonbg/altair/'

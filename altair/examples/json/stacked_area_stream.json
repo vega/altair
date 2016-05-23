@@ -1,0 +1,44 @@
+{
+    "config": {
+        "cell": {
+            "height": 200,
+            "width": 300
+        },
+        "mark": {
+            "stacked": "center"
+        }
+    },
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/unemployment-across-industries.json"
+    },
+    "encoding": {
+        "color": {
+            "field": "series",
+            "scale": {
+                "range": "category20b"
+            },
+            "type": "nominal"
+        },
+        "x": {
+            "axis": {
+                "axisWidth": 0,
+                "format": "%Y",
+                "labelAngle": 0,
+                "tickSize": 0
+            },
+            "field": "date",
+            "scale": {
+                "nice": "month"
+            },
+            "timeUnit": "yearmonth",
+            "type": "temporal"
+        },
+        "y": {
+            "aggregate": "sum",
+            "axis": false,
+            "field": "count",
+            "type": "quantitative"
+        }
+    },
+    "mark": "area"
+}

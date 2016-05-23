@@ -1,0 +1,19 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/population.json"
+    },
+    "encoding": {
+        "x": {
+            "aggregate": "sum",
+            "axis": {
+                "title": "population"
+            },
+            "field": "people",
+            "type": "quantitative"
+        }
+    },
+    "mark": "bar",
+    "transform": {
+        "filter": "datum.year == 2000"
+    }
+}

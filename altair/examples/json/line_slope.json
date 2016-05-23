@@ -1,0 +1,26 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/barley.json"
+    },
+    "description": "Slope graph showing the change in yield for different barley sites. It shows the error in the year labels for the Morris site.",
+    "encoding": {
+        "color": {
+            "field": "site",
+            "type": "nominal"
+        },
+        "x": {
+            "field": "year",
+            "scale": {
+                "bandSize": 50,
+                "padding": 0.5
+            },
+            "type": "ordinal"
+        },
+        "y": {
+            "aggregate": "median",
+            "field": "yield",
+            "type": "quantitative"
+        }
+    },
+    "mark": "line"
+}

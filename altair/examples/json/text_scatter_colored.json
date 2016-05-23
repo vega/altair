@@ -1,0 +1,32 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "color": {
+            "field": "Origin",
+            "type": "nominal"
+        },
+        "text": {
+            "field": "OriginInitial",
+            "type": "nominal"
+        },
+        "x": {
+            "field": "Horsepower",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "Miles_per_Gallon",
+            "type": "quantitative"
+        }
+    },
+    "mark": "text",
+    "transform": {
+        "calculate": [
+            {
+                "expr": "datum.Origin[0]",
+                "field": "OriginInitial"
+            }
+        ]
+    }
+}

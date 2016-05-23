@@ -3,6 +3,7 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
+import warnings
 
 try:
     import traitlets as T
@@ -11,19 +12,23 @@ except ImportError:
 
 from .utils import (
     parse_shorthand, infer_vegalite_type,
-    sanitize_dataframe, dataframe_to_json
+    sanitize_dataframe, dataframe_to_json, construct_shorthand,
 )
 from ._py3k_compat import string_types
 
 import pandas as pd
 
+from .codegen import CodeGen
 from . import schema
 
 from .schema import AggregateOp
 from .schema import AxisConfig
 from .schema import AxisOrient
+from .schema import AxisProperties
+from .schema import BinProperties
 from .schema import CellConfig
 from .schema import Config
+from .schema import Data
 from .schema import DataFormat
 from .schema import FacetConfig
 from .schema import FacetGridConfig
@@ -32,6 +37,7 @@ from .schema import FontStyle
 from .schema import FontWeight
 from .schema import HorizontalAlign
 from .schema import LegendConfig
+from .schema import LegendProperties
 from .schema import MarkConfig
 from .schema import NiceTime
 from .schema import Scale
@@ -42,7 +48,7 @@ from .schema import StackOffset
 from .schema import TimeUnit
 from .schema import Transform
 from .schema import VerticalAlign
-from .schema import Data
+from .schema import VgFormula
 
 from .utils import INV_TYPECODE_MAP, TYPE_ABBR
 
@@ -60,12 +66,25 @@ class _ChannelMixin(object):
         if data is None:
             self.type = ''
 
-    def to_dict(self):
-        if not self.field:
-            return None
-        if not self.type:
-            raise ValueError("No vegalite data type defined for {0}".format(self.field))
-        return super(_ChannelMixin, self).to_dict()
+    def to_code(self, shorten=True, ignore_kwds=None,
+                extra_args=None, extra_kwds=None, methods=None):
+        shorthand = construct_shorthand(field=self.field,
+                                        aggregate=self.aggregate,
+                                        type=self.type)
+        extra_args = [repr(shorthand)] + (extra_args or [])
+
+        ignore_kwds = (ignore_kwds or [])
+        ignore_kwds.extend(['field', 'aggregate', 'type'])
+        code = super(_ChannelMixin, self).to_code(ignore_kwds=ignore_kwds,
+                                                  extra_args=extra_args,
+                                                  extra_kwds=extra_kwds,
+                                                  methods=methods)
+        do_shorten = (shorten and len(code.args) == 1
+                      and not (code.kwargs or code.methods))
+        if do_shorten:
+            return repr(shorthand)
+        else:
+            return code
 
 
 class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
@@ -335,6 +354,53 @@ class Layer(schema.BaseObject):
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
     config = T.Instance(schema.Config, allow_none=True)
 
+    @classmethod
+    def from_dict(cls, dct):
+        # Remove data first and handle it specially later
+        if 'data' in dct:
+            dct = dct.copy()
+        data = dct.pop('data', None)
+        obj = super(Layer, cls).from_dict(dct)
+
+        # data is not a typical trait; do special handling here.
+        if data is not None:
+            if 'values' in data:
+                obj.data = pd.DataFrame(data['values'])
+            else:
+                obj.data = schema.Data(**data)
+        return obj
+
+    def to_code(self, data=None, ignore_kwds=None,
+                extra_args=None, extra_kwds=None, methods=None):
+        extra_args = (extra_args or [])
+        ignore_kwds = (ignore_kwds or [])
+        if data:
+            extra_args.append(data)
+        elif isinstance(self.data, schema.Data):
+            extra_args.append(self.data.to_code())
+        elif isinstance(self.data, pd.DataFrame):
+            warnings.warn("Skipping dataframe definition in altair code")
+
+        ignore_kwds.extend(['mark', 'encoding', 'transform', 'config'])
+        methods = (methods or [])
+
+        if self.mark:
+            methods.append(CodeGen('mark_{0}'.format(self.mark)))
+        if self.encoding:
+            methods.append(self.encoding.to_code().rename('encode'))
+        if self.transform:
+            methods.append(self.transform.to_code().rename('transform_data'))
+        if self.config:
+            methods.append(self.config.to_code().rename('configure'))
+
+        return super(Layer, self).to_code(ignore_kwds=ignore_kwds,
+                                          extra_args=extra_args,
+                                          extra_kwds=extra_kwds,
+                                          methods=methods)
+
+    def to_altair(self, data=None):
+        return str(self.to_code(data=data))
+
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
             self.encoding.parent = self
@@ -367,7 +433,6 @@ class Layer(schema.BaseObject):
             'mark_area', 'mark_bar', 'mark_line', 'mark_point',
             'mark_text', 'mark_tick', 'mark_circle', 'mark_square'
         ]
-        print(base, methods)
         return base+methods
 
     def to_dict(self, data=True):

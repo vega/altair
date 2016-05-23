@@ -1,0 +1,24 @@
+{
+    "config": {
+        "mark": {
+            "interpolate": "monotone"
+        }
+    },
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "description": "Area chart showing weight of cars over time (vertical).",
+    "encoding": {
+        "x": {
+            "aggregate": "sum",
+            "field": "Weight_in_lbs",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "Year",
+            "timeUnit": "year",
+            "type": "temporal"
+        }
+    },
+    "mark": "area"
+}

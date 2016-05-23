@@ -41,8 +41,7 @@ def create_example_notebook(inputfile, outputfile,
                 yield new_markdown_cell('## Visualize Data')
                 yield new_code_cell(block)
                 yield new_markdown_cell('Generate Vega-Lite spec:')
-                yield new_code_cell('v.to_dict()')
-                yield new_code_cell('v.data = data')
+                yield new_code_cell('v.to_dict(data=False)')
                 yield new_code_cell('v')
             else:
                 yield new_code_cell(block)

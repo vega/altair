@@ -1,0 +1,31 @@
+{
+    "config": {
+        "mark": {
+            "applyColorToBackground": true
+        }
+    },
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "color": {
+            "aggregate": "mean",
+            "field": "Horsepower",
+            "type": "quantitative"
+        },
+        "column": {
+            "field": "Cylinders",
+            "type": "ordinal"
+        },
+        "row": {
+            "field": "Origin",
+            "type": "ordinal"
+        },
+        "text": {
+            "aggregate": "count",
+            "field": "*",
+            "type": "quantitative"
+        }
+    },
+    "mark": "text"
+}

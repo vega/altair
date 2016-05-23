@@ -78,6 +78,24 @@ def parse_shorthand(sh):
     return result
 
 
+def construct_shorthand(field=None, aggregate=None, type=None):
+    if field is None:
+        return ''
+
+    sh = field
+
+    if aggregate is not None:
+        sh = '{0}({1})'.format(aggregate, sh)
+
+    if type is not None:
+        type = TYPECODE_MAP.get(type, type)
+        if type not in TYPE_ABBR:
+            raise ValueError('Unrecognized Type: {0}'.format(typ))
+        sh = '{0}:{1}'.format(sh, type)
+
+    return sh
+
+
 def infer_vegalite_type(data, name=None):
     """
     From an array-like input, infer the correct vega typecode
@@ -148,7 +166,7 @@ class DataFrameTrait(T.Any):
 
 def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
-    
+
     * Make a copy
     * Raise ValueError is it has a hierarchical index.
     * Convert categoricals to strings.
