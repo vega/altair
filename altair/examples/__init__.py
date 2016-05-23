@@ -1,7 +1,8 @@
 """Code for Example Plots"""
 import os
 import json
-JSON_DIR = os.path.join(os.path.dirname(__file__), 'json')
+
+JSON_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'json'))
 
 
 def load_example(filename):
