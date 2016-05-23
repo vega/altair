@@ -3,6 +3,7 @@ __version__ = '0.0.1'
 from .api import (
     Label,
     Formula,
+    VgFormula,
     StackOffset,
     Data,
     FacetScaleConfig,

@@ -14,6 +14,10 @@ class CodeGen(object):
         def get_str(obj, tablevel=tablevel, tabsize=tabsize):
             if isinstance(obj, CodeGen):
                 return obj.to_str(tablevel=tablevel, tabsize=tabsize)
+            elif isinstance(obj, list):
+                return '[{0}]'.format(', '.join(get_str(item,
+                                                        tablevel + tabsize)
+                                                for item in obj))
             else:
                 return str(obj)
 

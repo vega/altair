@@ -28,6 +28,7 @@ from .schema import AxisProperties
 from .schema import BinProperties
 from .schema import CellConfig
 from .schema import Config
+from .schema import Data
 from .schema import DataFormat
 from .schema import FacetConfig
 from .schema import FacetGridConfig
@@ -47,7 +48,7 @@ from .schema import StackOffset
 from .schema import TimeUnit
 from .schema import Transform
 from .schema import VerticalAlign
-from .schema import Data
+from .schema import VgFormula
 
 from .utils import INV_TYPECODE_MAP, TYPE_ABBR
 

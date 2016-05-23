@@ -56,10 +56,13 @@ class BaseObject(T.HasTraits):
     def to_code(self, ignore_kwds=None, extra_args=None,
                 extra_kwds=None, methods=None):
         def code_repr(v):
-            try:
+            if isinstance(v, BaseObject):
                 return v.to_code()
-            except AttributeError:
+            elif isinstance(v, list):
+                return [code_repr(item) for item in v]
+            else:
                 return repr(v)
+
         kwds = {k: getattr(self, k) for k in self.traits()
                 if k not in self.skip
                 and k not in (ignore_kwds or [])
@@ -116,9 +119,11 @@ def trait_to_dict(obj):
 def trait_from_dict(trait, dct):
     """
     Construct a trait from a dictionary.
-    If dct is not a dictionary, pass it through
+    If dct is not a dictionary or list, pass it through
     """
-    if not isinstance(dct, dict):
+    if isinstance(trait, T.List):
+        return [trait_from_dict(trait._trait, item) for item in dct]
+    elif not isinstance(dct, dict):
         return dct
     elif isinstance(trait, T.Instance):
         return trait.klass.from_dict(dct)
@@ -128,4 +133,5 @@ def trait_from_dict(trait, dct):
                 return trait_from_dict(subtrait, dct)
             except T.TraitError:
                 pass
+
     raise T.TraitError('cannot set {0} to {1}'.format(trait, dct))
