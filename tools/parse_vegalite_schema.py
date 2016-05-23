@@ -4,6 +4,7 @@ Python wrappers into the altair source directory.
 """
 import json
 import os
+from itertools import chain
 
 
 class SchemaDefinition(object):
@@ -57,7 +58,9 @@ class SchemaDefinition(object):
         """Create the class definition for the Python wrapper"""
         code = self.code()
         # imports now populated; prepend them to the code
-        imports = '\n'.join(self.imports)
+        # we'll remove duplicates and sort all but the first:
+        imports = '\n'.join(chain(self.imports[:1],
+                                  sorted(set(self.imports[1:]))))
         return "{0}\n\n{1}\n\n\n{2}\n".format(self.file_comment, imports, code)
 
     def test_script(self):
@@ -158,8 +161,7 @@ class ObjectDefinition(SchemaDefinition):
         kwds = self.get_attr_kwds(attr_dict)
         _, _, name = attr_dict['$ref'].split('/')
 
-        self.imports.append('from .{0} import {1}'
-                            ''.format(name.lower(), name))
+        self.imports.append('from .{0} import {1}'.format(name.lower(), name))
 
         reftype = self.schema['definitions'][name]['type']
         if reftype == 'object':

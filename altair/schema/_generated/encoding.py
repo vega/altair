@@ -4,19 +4,8 @@
 import traitlets as T
 from ..baseobject import BaseObject
 from .channeldefwithlegend import ChannelDefWithLegend
-from .positionchanneldef import PositionChannelDef
-from .fielddef import FieldDef
-from .fielddef import FieldDef
 from .fielddef import FieldDef
 from .orderchanneldef import OrderChannelDef
-from .orderchanneldef import OrderChannelDef
-from .orderchanneldef import OrderChannelDef
-from .orderchanneldef import OrderChannelDef
-from .positionchanneldef import PositionChannelDef
-from .channeldefwithlegend import ChannelDefWithLegend
-from .channeldefwithlegend import ChannelDefWithLegend
-from .fielddef import FieldDef
-from .positionchanneldef import PositionChannelDef
 from .positionchanneldef import PositionChannelDef
 
 

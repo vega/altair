@@ -3,12 +3,12 @@
 
 import traitlets as T
 from ..baseobject import BaseObject
-from .horizontalalign import HorizontalAlign
-from .verticalalign import VerticalAlign
 from .fontstyle import FontStyle
 from .fontweight import FontWeight
+from .horizontalalign import HorizontalAlign
 from .shape import Shape
 from .stackoffset import StackOffset
+from .verticalalign import VerticalAlign
 
 
 class MarkConfig(BaseObject):
