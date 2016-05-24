@@ -187,6 +187,7 @@ class FromDict(Visitor):
                 return self.visit(subtrait, dct)
             except T.TraitError:
                 pass
+        self.generic_visit(trait, dct)
 
     def visit_BaseObject(self, trait, dct):
         if not isinstance(dct, dict):
