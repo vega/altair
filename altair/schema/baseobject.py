@@ -3,8 +3,6 @@ import json
 import pandas as pd
 import traitlets as T
 
-from ..codegen import CodeGen
-
 _attr_template = "Attribute not found: {0}. Valid keyword arguments for this class: {1}"
 
 
@@ -39,31 +37,6 @@ class BaseObject(T.HasTraits):
     def __dir__(self):
         """Customize tab completed attributes."""
         return list(self.traits())+['to_dict']
-
-    def to_code(self, ignore_kwds=None, extra_args=None,
-                extra_kwds=None, methods=None):
-        def code_repr(v):
-            if isinstance(v, BaseObject):
-                return v.to_code()
-            elif isinstance(v, list):
-                return [code_repr(item) for item in v]
-            else:
-                return repr(v)
-
-        kwds = {k: getattr(self, k) for k in self.traits()
-                if k not in self.skip
-                and k not in (ignore_kwds or [])
-                and k in self}  # k in self also checks whether k is defined
-        kwds.update(extra_kwds or {})
-        kwds = {k: code_repr(v) for k, v in kwds.items()}
-
-        return CodeGen(self.__class__.__name__,
-                       args=extra_args or [],
-                       kwargs=kwds,
-                       methods=methods)
-
-    def to_altair(self):
-        return str(self.to_code())
 
     @classmethod
     def from_json(cls, jsn):

@@ -11,8 +11,7 @@ from .utils import parse_shorthand, infer_vegalite_type, construct_shorthand
 
 import pandas as pd
 
-from .codegen import CodeGen
-from .visitors import DictOutputVisitor
+from .visitors import DictOutputVisitor, CodeOutputVisitor
 
 from ._py3k_compat import string_types
 from . import schema
@@ -61,26 +60,6 @@ class _ChannelMixin(object):
                 self.type = infer_vegalite_type(data[self.field])
         if data is None:
             self.type = ''
-
-    def to_code(self, shorten=True, ignore_kwds=None,
-                extra_args=None, extra_kwds=None, methods=None):
-        shorthand = construct_shorthand(field=self.field,
-                                        aggregate=self.aggregate,
-                                        type=self.type)
-        extra_args = [repr(shorthand)] + (extra_args or [])
-
-        ignore_kwds = (ignore_kwds or [])
-        ignore_kwds.extend(['field', 'aggregate', 'type'])
-        code = super(_ChannelMixin, self).to_code(ignore_kwds=ignore_kwds,
-                                                  extra_args=extra_args,
-                                                  extra_kwds=extra_kwds,
-                                                  methods=methods)
-        do_shorten = (shorten and len(code.args) == 1
-                      and not (code.kwargs or code.methods))
-        if do_shorten:
-            return repr(shorthand)
-        else:
-            return code
 
 
 class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
@@ -369,39 +348,8 @@ class Layer(schema.BaseObject):
     def to_dict(self, data=True):
         return DictOutputVisitor().visit(self, data)
 
-    def to_code(self, data=None, ignore_kwds=None,
-                extra_args=None, extra_kwds=None, methods=None):
-        extra_args = (extra_args or [])
-        ignore_kwds = (ignore_kwds or [])
-        if data:
-            extra_args.append(data)
-        elif isinstance(self.data, schema.Data):
-            url_only = ('url' in self.data and
-                        'values' not in self.data and
-                        'formatType' not in self.data)
-            if url_only:
-                extra_args.append("'{0}'".format(self.data.url))
-            else:
-                extra_args.append(self.data.to_code())
-        elif isinstance(self.data, pd.DataFrame):
-            warnings.warn("Skipping dataframe definition in altair code")
-
-        ignore_kwds.extend(['mark', 'encoding', 'transform', 'config'])
-        methods = (methods or [])
-
-        if self.mark:
-            methods.append(CodeGen('mark_{0}'.format(self.mark)))
-        if self.encoding:
-            methods.append(self.encoding.to_code().rename('encode'))
-        if self.transform:
-            methods.append(self.transform.to_code().rename('transform_data'))
-        if self.config:
-            methods.append(self.config.to_code().rename('configure'))
-
-        return super(Layer, self).to_code(ignore_kwds=ignore_kwds,
-                                          extra_args=extra_args,
-                                          extra_kwds=extra_kwds,
-                                          methods=methods)
+    def to_code(self, data=None):
+        return CodeOutputVisitor().visit(self, data)
 
     def to_altair(self, data=None):
         return str(self.to_code(data=data))
