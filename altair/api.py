@@ -6,14 +6,13 @@ DSL mapping Vega types to IPython traitlets.
 import warnings
 
 import traitlets as T
-
-from .utils import parse_shorthand, infer_vegalite_type, construct_shorthand
-
 import pandas as pd
 
-from ._py3k_compat import string_types
+from .utils import parse_shorthand, infer_vegalite_type, construct_shorthand
+from .utils import visitors
+from .utils._py3k_compat import string_types
+
 from . import schema
-from . import visitors
 
 from .schema import AggregateOp
 from .schema import AxisConfig

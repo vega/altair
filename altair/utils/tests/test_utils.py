@@ -4,7 +4,7 @@ import warnings
 import numpy as np
 import pandas as pd
 
-from ..utils import parse_shorthand, infer_vegalite_type
+from .. import parse_shorthand, infer_vegalite_type
 
 
 def test_parse_shorthand():
