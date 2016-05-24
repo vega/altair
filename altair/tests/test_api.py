@@ -68,7 +68,11 @@ def test_to_altair():
 
 
 def test_to_altair_with_methods():
-    code_in = """Layer('http://vega.github.io').mark_point(color='red',)"""
+    from ..utils._py3k_compat import PY2
+    if PY2:
+        code_in = "Layer('http://vega.github.io').mark_point(color=u'red',)"
+    else:
+        code_in = "Layer('http://vega.github.io').mark_point(color='red',)"
     code_out = eval(code_in).to_altair()
     assert code_in == code_out.replace(' ', '').replace('\n','')
 
