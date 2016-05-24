@@ -38,6 +38,10 @@ class CodeGen(object):
         self.kwargs = (kwargs or {})
         self.methods = (methods or [])
 
+    @property
+    def num_attributes(self):
+        return len(self.args) + len(self.kwargs) + len(self.methods)
+
     def add_args(self, *args):
         self.args.extend(args)
         return self

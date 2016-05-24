@@ -1,6 +1,7 @@
 import pandas as pd
 import traitlets as T
 
+from ._py3k_compat import integer_types, string_types
 from . import schema
 from .codegen import CodeGen
 from .utils import sanitize_dataframe, construct_shorthand
@@ -97,9 +98,11 @@ class ToCode(Visitor):
         code = self.visit_BaseObject(obj)
 
         # Add data as a top-level argument
-        if data:
+        if data is not None:
+            # data as a user-speficied name
             code.add_args(data)
         elif isinstance(obj.data, schema.Data):
+            # data as a Data trait: return raw URL if possible
             url_only = ('url' in obj.data and
                         'values' not in obj.data and
                         'formatType' not in obj.data)
@@ -108,23 +111,29 @@ class ToCode(Visitor):
             else:
                 code.add_args(self.visit(obj.data))
         elif isinstance(obj.data, pd.DataFrame):
+            # data as a dataframe; this gets too long so we leave it out
             warnings.warn("Skipping dataframe definition in altair code")
 
-        # Replace various options with methods
+        # enable Layer().mark_point(**kwargs)
         mark = code.kwargs.pop('mark', None)
         if mark:
-            code.add_methods('mark_{0}()'.format(obj.mark))
+            config = code.kwargs.get('config', CodeGen(''))
+            markconfig = config.kwargs.pop('mark', CodeGen(''))
+            code.add_methods(markconfig.rename('mark_{0}'.format(obj.mark)))
 
-        encoding = code.kwargs.pop('encoding', None)
-        if encoding:
+        # enable Layer().encode(**kwargs)
+        encoding = code.kwargs.pop('encoding', CodeGen(''))
+        if encoding.num_attributes > 0:
             code.add_methods(encoding.rename('encode'))
 
-        transform = code.kwargs.pop('transform', None)
-        if transform:
+        # enable Layer().transform_data(**kwargs)
+        transform = code.kwargs.pop('transform', CodeGen(''))
+        if transform.num_attributes > 0:
             code.add_methods(transform.rename('transform_data'))
 
-        config = code.kwargs.pop('config', None)
-        if config:
+        # enable Layer().configure(**kwargs)
+        config = code.kwargs.pop('config', CodeGen(''))
+        if config.num_attributes > 0:
             code.add_methods(config.rename('configure'))
 
         return code
@@ -132,21 +141,18 @@ class ToCode(Visitor):
 
 class FromDict(Visitor):
     """Crawl object structure to construct object from a Dictionary"""
-    def clsvisit_BaseObject(self, cls, dct):
+    def clsvisit_BaseObject(self, cls, dct, *args, **kwargs):
         try:
             obj = cls()
         except TypeError as err:  # Argument missing
             obj = cls('')
 
         for prop, val in dct.items():
-            if not obj.has_trait(prop):
-                raise ValueError("{0} not a valid property in {1}"
-                                 "".format(prop, cls))
-            trait = obj.traits()[prop]
-            obj.set_trait(prop, self.visit(trait, val))
+            subtrait = obj.traits()[prop]
+            obj.set_trait(prop, self.visit(subtrait, val))
         return obj
 
-    def clsvisit_Layer(self, cls, dct):
+    def clsvisit_Layer(self, cls, dct, *args, **kwargs):
         # Remove data first and handle it specially later
         if 'data' in dct:
             dct = dct.copy()
@@ -165,30 +171,29 @@ class FromDict(Visitor):
                 obj.data = schema.Data(**data)
         return obj
 
-    def visit_List(self, trait, dct):
+    def visit_List(self, trait, dct, *args, **kwargs):
         return [self.visit(trait._trait, item) for item in dct]
 
-    def visit_Instance(self, trait, dct):
-        if not isinstance(dct, dict):
-            return dct
-        return self.clsvisit(trait.klass, dct)
+    def visit_Instance(self, trait, dct, *args, **kwargs):
+        try:
+            return self.generic_visit(trait, dct)
+        except T.TraitError:
+            return self.clsvisit(trait.klass, dct)
 
-    def visit_Union(self, trait, dct):
-        if not isinstance(dct, dict):
-            return dct
-        for subtrait in trait.trait_types:
-            try:
-                return self.visit(subtrait, dct)
-            except T.TraitError:
-                pass
-        self.generic_visit(trait, dct)
+    def visit_Union(self, trait, dct, *args, **kwargs):
+        try:
+            return self.generic_visit(trait, dct)
+        except T.TraitError:
+            for subtrait in trait.trait_types:
+                try:
+                    return self.visit(subtrait, dct)
+                except T.TraitError:
+                    pass
+            raise  # no valid trait found
 
-    def visit_BaseObject(self, trait, dct):
-        if not isinstance(dct, dict):
+    def generic_visit(self, trait, dct, *args, **kwargs):
+        # pass-through simple types
+        if isinstance(dct, (integer_types, string_types, bool, float)):
             return dct
-        return generic_visit(self, trait, dct)
-
-    def generic_visit(self, trait, dct):
-        if not isinstance(dct, dict):
-            return dct
-        raise T.TraitError('cannot set {0} to {1}'.format(trait, dct))
+        else:
+            raise T.TraitError('cannot set {0} to {1}'.format(trait, dct))

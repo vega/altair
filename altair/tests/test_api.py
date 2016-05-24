@@ -67,6 +67,12 @@ def test_to_altair():
     assert obj.to_dict() == obj2.to_dict()
 
 
+def test_to_altair_with_methods():
+    code_in = """Layer('http://vega.github.io').mark_point(color='red',)"""
+    code_out = eval(code_in).to_altair()
+    assert code_in == code_out.replace(' ', '').replace('\n','')
+
+
 @pytest.mark.skipif(not connection_ok(), reason="No Internet Connection")
 def test_to_altair_stocks():
     """Test a more complicated spec for conversion to altair"""
