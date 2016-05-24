@@ -330,7 +330,7 @@ class Layer(schema.BaseObject):
 
     @classmethod
     def from_dict(cls, dct):
-        return visitors.FromDict().visit(cls, dct)
+        return visitors.FromDict().clsvisit(cls, dct)
 
     def to_dict(self, data=True):
         return visitors.ToDict().visit(self, data)
