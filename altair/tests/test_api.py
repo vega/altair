@@ -8,6 +8,8 @@ import pandas as pd
 from .. import *
 from ..utils import parse_shorthand, infer_vegalite_type
 from ..api import MARK_TYPES
+from ..datasets import connection_ok
+
 
 def test_encode_update():
     # Test that encode updates rather than overwrites
@@ -55,6 +57,7 @@ def test_to_altair():
     assert obj.to_dict() == obj2.to_dict()
 
 
+@pytest.mark.skipif(not connection_ok(), reason="No Internet Connection")
 def test_to_altair_stocks():
     """Test a more complicated spec for conversion to altair"""
     data = load_dataset('stocks')
@@ -72,6 +75,7 @@ def test_to_altair_stocks():
     layer2 = eval(code)
 
     assert layer.to_dict() == layer2.to_dict()
+
 
 @pytest.mark.parametrize('mark', MARK_TYPES)
 def test_mark_config(mark):

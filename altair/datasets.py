@@ -58,6 +58,10 @@ _base_url = 'https://vega.github.io/vega-datasets/data/'
 
 
 def connection_ok():
+    """Check web connection.
+
+    Returns True if web connection is OK, False otherwise.
+    """
     try:
         response = urlopen(_base_url, timeout=1)
         # if an index page is ever added, this will pass through

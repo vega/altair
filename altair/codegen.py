@@ -3,6 +3,35 @@ Object for generating Python code calls
 """
 
 class CodeGen(object):
+    """Class to generate Python function & Class calls
+
+    Parameters
+    ----------
+    name : string
+        The name of the function or object
+    args : list (optional)
+        The arguments passed to the function. Each argument should either be
+        a string or a CodeGen object.
+    kwargs : dict (optional)
+        Keyword arguments passed to the function. Each key should be a string;
+        Each value should be either a string or CodeGen object.
+    methods : list (optional)
+        Object methods. Each should be a string or a CodeGen object
+
+    Examples
+    --------
+    >>> method = CodeGen('bar', ['x', 'y'])
+    >>> Foo = CodeGen('Foo', args=[4, 5], methods=[method])
+    >>> print(str(Foo))
+    Foo(4, 5).bar(x, y)
+
+    >>> code = CodeGen('MyObject', kwargs={'f':Foo, 'flag':True})
+    >>> print(str(code))
+    MyObject(
+        f=Foo(4, 5).bar(x, y),
+        flag=True,
+    )
+    """
     def __init__(self, name, args=None, kwargs=None, methods=None):
         self.name = name
         self.args = (args or [])
@@ -47,5 +76,6 @@ class CodeGen(object):
         return self.to_str()
 
     def rename(self, newname):
+        """Rename function and return self"""
         self.name = newname
         return self
