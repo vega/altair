@@ -40,15 +40,6 @@ class BaseObject(T.HasTraits):
         """Customize tab completed attributes."""
         return list(self.traits())+['to_dict']
 
-    def to_dict(self):
-        result = {}
-        for k in self.traits():
-            if k in self and k not in self.skip:
-                v = getattr(self, k)
-                if v is not None:
-                    result[k] = trait_to_dict(v)
-        return result
-
     def to_code(self, ignore_kwds=None, extra_args=None,
                 extra_kwds=None, methods=None):
         def code_repr(v):
@@ -100,16 +91,6 @@ class BaseObject(T.HasTraits):
         for key, val in kwargs.items():
             self.set_trait(key, val)
         return self
-
-
-def trait_to_dict(obj):
-    """Recursively convert object to dictionary"""
-    if isinstance(obj, BaseObject):
-        return obj.to_dict()
-    elif isinstance(obj, list):
-        return [trait_to_dict(o) for o in obj]
-    else:
-        return obj
 
 
 def trait_from_dict(trait, dct):

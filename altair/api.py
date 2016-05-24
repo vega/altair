@@ -7,14 +7,13 @@ import warnings
 
 import traitlets as T
 
-from .utils import (
-    parse_shorthand, infer_vegalite_type,
-    sanitize_dataframe, construct_shorthand,
-)
+from .utils import parse_shorthand, infer_vegalite_type, construct_shorthand
 
 import pandas as pd
 
 from .codegen import CodeGen
+from .visitors import DictOutputVisitor
+
 from ._py3k_compat import string_types
 from . import schema
 
@@ -367,6 +366,9 @@ class Layer(schema.BaseObject):
                 obj.data = schema.Data(**data)
         return obj
 
+    def to_dict(self, data=True):
+        return DictOutputVisitor().visit(self, data)
+
     def to_code(self, data=None, ignore_kwds=None,
                 extra_args=None, extra_kwds=None, methods=None):
         extra_args = (extra_args or [])
@@ -440,18 +442,6 @@ class Layer(schema.BaseObject):
             'mark_text', 'mark_tick', 'mark_circle', 'mark_square'
         ]
         return base+methods
-
-    def to_dict(self, data=True):
-        D = super(Layer, self).to_dict()
-        if data:
-            if isinstance(self.data, Data):
-                D['data'] = self.data.to_dict()
-            if isinstance(self.data, pd.DataFrame):
-                values = sanitize_dataframe(self.data).to_dict(orient='records')
-                D['data'] = Data(values=values).to_dict()
-        else:
-            D.pop('data', None)
-        return D
 
     def encode(self, *args, **kwargs):
         """Define the encoding for the Layer."""
