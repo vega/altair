@@ -15,6 +15,7 @@ from .utils import (
 import pandas as pd
 
 from .codegen import CodeGen
+from ._py3k_compat import string_types
 from . import schema
 
 from .schema import AggregateOp
@@ -373,7 +374,13 @@ class Layer(schema.BaseObject):
         if data:
             extra_args.append(data)
         elif isinstance(self.data, schema.Data):
-            extra_args.append(self.data.to_code())
+            url_only = ('url' in self.data and
+                        'values' not in self.data and
+                        'formatType' not in self.data)
+            if url_only:
+                extra_args.append("'{0}'".format(self.data.url))
+            else:
+                extra_args.append(self.data.to_code())
         elif isinstance(self.data, pd.DataFrame):
             warnings.warn("Skipping dataframe definition in altair code")
 
@@ -420,7 +427,10 @@ class Layer(schema.BaseObject):
     def __init__(self, *args, **kwargs):
         super(Layer, self).__init__(**kwargs)
         if len(args)==1:
-            self.data = args[0]
+            if isinstance(args[0], string_types):
+                self.data = Data(url=args[0])
+            else:
+                self.data = args[0]
 
     def __dir__(self):
         base = super(Layer, self).__dir__()

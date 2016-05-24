@@ -11,6 +11,16 @@ from ..api import MARK_TYPES
 from ..datasets import connection_ok
 
 
+def test_layer_url_input():
+    url = 'http://vega.github.io/vega-lite/data/'
+    layer1 = Layer(Data(url=url))
+    layer2 = Layer(url)
+
+    assert layer1.to_dict() == layer2.to_dict()
+
+    assert layer1.to_altair() == layer2.to_altair()
+
+
 def test_encode_update():
     # Test that encode updates rather than overwrites
     layer1 = Layer().encode(x='blah:Q').encode(y='blah:Q')
