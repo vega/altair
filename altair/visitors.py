@@ -137,13 +137,11 @@ class ToCode(Visitor):
 
 
 class FromDict(Visitor):
-    """Crawl object structure to construct from a Dictionary"""
+    """Crawl object structure to construct object from a Dictionary"""
     def clsvisit_BaseObject(self, cls, dct):
-        """Initialize a Layer from a vegalite JSON dictionary"""
         try:
             obj = cls()
-        except TypeError as err:
-            # TypeError indicates that an argument is missing
+        except TypeError as err:  # Argument missing
             obj = cls('')
 
         for prop, val in dct.items():
@@ -151,7 +149,7 @@ class FromDict(Visitor):
                 raise ValueError("{0} not a valid property in {1}"
                                  "".format(prop, cls))
             trait = obj.traits()[prop]
-            obj.set_trait(prop, self.trait_from_dict(trait, val))
+            obj.set_trait(prop, self.visit(trait, val))
         return obj
 
     def clsvisit_Layer(self, cls, dct):
@@ -159,32 +157,43 @@ class FromDict(Visitor):
         if 'data' in dct:
             dct = dct.copy()
         data = dct.pop('data', None)
+
         obj = self.clsvisit_BaseObject(cls, dct)
 
         # data is not a typical trait; do special handling here.
         if data is not None:
-            if 'values' in data:
+            values_only = ('values' in data and
+                           'url' not in data and
+                           'dataFormat' not in data)
+            if values_only:
                 obj.data = pd.DataFrame(data['values'])
             else:
                 obj.data = schema.Data(**data)
         return obj
 
-    def trait_from_dict(self, trait, dct):
-        """
-        Construct a trait from a dictionary.
-        If dct is not a dictionary or list, pass it through
-        """
-        if isinstance(trait, T.List):
-            return [self.trait_from_dict(trait._trait, item) for item in dct]
-        elif not isinstance(dct, dict):
-            return dct
-        elif isinstance(trait, T.Instance):
-            return FromDict().clsvisit(trait.klass, dct)
-        elif isinstance(trait, T.Union):
-            for subtrait in trait.trait_types:
-                try:
-                    return self.trait_from_dict(subtrait, dct)
-                except T.TraitError:
-                    pass
+    def visit_List(self, trait, dct):
+        return [self.visit(trait._trait, item) for item in dct]
 
+    def visit_Instance(self, trait, dct):
+        if not isinstance(dct, dict):
+            return dct
+        return self.clsvisit(trait.klass, dct)
+
+    def visit_Union(self, trait, dct):
+        if not isinstance(dct, dict):
+            return dct
+        for subtrait in trait.trait_types:
+            try:
+                return self.visit(subtrait, dct)
+            except T.TraitError:
+                pass
+
+    def visit_BaseObject(self, trait, dct):
+        if not isinstance(dct, dict):
+            return dct
+        return generic_visit(self, trait, dct)
+
+    def generic_visit(self, trait, dct):
+        if not isinstance(dct, dict):
+            return dct
         raise T.TraitError('cannot set {0} to {1}'.format(trait, dct))
