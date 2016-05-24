@@ -65,75 +65,69 @@ class ToCode(Visitor):
     def visit_list(self, obj, *args, **kwargs):
         return [self.visit(o) for o in obj]
 
-    def visit_BaseObject(self, obj, ignore_kwds=None, extra_args=None,
-                         extra_kwds=None, methods=None):
+    def visit_BaseObject(self, obj, *args, **kwargs):
         kwds = {k: getattr(obj, k) for k in obj.traits()
-                if k not in obj.skip
-                and k not in (ignore_kwds or [])
-                and k in obj}  # k in obj also checks whether k is defined
-        kwds.update(extra_kwds or {})
+                if k not in obj.skip and k in obj}
         kwds = {k: self.visit(v) for k, v in kwds.items()}
+        return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
-        return CodeGen(obj.__class__.__name__,
-                       args=extra_args or [],
-                       kwargs=kwds,
-                       methods=methods)
-
-    def visit__ChannelMixin(self, obj, shorten=True, ignore_kwds=None,
-                            extra_args=None, extra_kwds=None, methods=None):
+    def visit__ChannelMixin(self, obj, *args, **kwargs):
         shorthand = construct_shorthand(field=obj.field,
                                         aggregate=obj.aggregate,
                                         type=obj.type)
-        extra_args = [repr(shorthand)] + (extra_args or [])
+        code = self.visit_BaseObject(obj)
+        code.add_args(repr(shorthand))
+        code.remove_kwargs('field', 'aggregate', 'type')
 
-        ignore_kwds = (ignore_kwds or [])
-        ignore_kwds.extend(['field', 'aggregate', 'type'])
-        code = self.visit_BaseObject(obj, ignore_kwds=ignore_kwds,
-                                     extra_args=extra_args,
-                                     extra_kwds=extra_kwds,
-                                     methods=methods)
-
-        do_shorten = (shorten and len(code.args) == 1
+        do_shorten = (kwargs.get('shorten', False)
+                      and len(code.args) == 1
                       and not (code.kwargs or code.methods))
         if do_shorten:
             return repr(shorthand)
         else:
             return code
 
-    def visit_Layer(self, obj, data=None, ignore_kwds=None,
-                    extra_args=None, extra_kwds=None, methods=None):
-        extra_args = (extra_args or [])
-        ignore_kwds = (ignore_kwds or [])
+    def visit_Encoding(self, obj, *args, **kwargs):
+        kwds = {k: getattr(obj, k) for k in obj.traits()
+                if k not in obj.skip and k in obj}
+        kwds = {k: self.visit(v, shorten=True) for k, v in kwds.items()}
+        return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
+    def visit_Layer(self, obj, data=None, *args, **kwargs):
+        code = self.visit_BaseObject(obj)
+
+        # Add data as a top-level argument
         if data:
-            extra_args.append(data)
+            code.add_args(data)
         elif isinstance(obj.data, schema.Data):
             url_only = ('url' in obj.data and
                         'values' not in obj.data and
                         'formatType' not in obj.data)
             if url_only:
-                extra_args.append("'{0}'".format(obj.data.url))
+                code.add_args("'{0}'".format(obj.data.url))
             else:
-                extra_args.append(self.visit(obj.data))
+                code.add_args(self.visit(obj.data))
         elif isinstance(obj.data, pd.DataFrame):
             warnings.warn("Skipping dataframe definition in altair code")
 
-        ignore_kwds.extend(['mark', 'encoding', 'transform', 'config'])
-        methods = (methods or [])
+        # Replace various options with methods
+        mark = code.kwargs.pop('mark', None)
+        if mark:
+            code.add_methods('mark_{0}()'.format(obj.mark))
 
-        if obj.mark:
-            methods.append(CodeGen('mark_{0}'.format(obj.mark)))
-        if obj.encoding:
-            methods.append(self.visit(obj.encoding).rename('encode'))
-        if obj.transform:
-            methods.append(self.visit(obj.transform).rename('transform_data'))
-        if obj.config:
-            methods.append(self.visit(obj.config).rename('configure'))
+        encoding = code.kwargs.pop('encoding', None)
+        if encoding:
+            code.add_methods(encoding.rename('encode'))
 
-        return self.visit_BaseObject(obj, ignore_kwds=ignore_kwds,
-                                     extra_args=extra_args,
-                                     extra_kwds=extra_kwds,
-                                     methods=methods)
+        transform = code.kwargs.pop('transform', None)
+        if transform:
+            code.add_methods(transform.rename('transform_data'))
+
+        config = code.kwargs.pop('config', None)
+        if config:
+            code.add_methods(config.rename('configure'))
+
+        return code
 
 
 class FromDict(Visitor):

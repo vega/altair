@@ -38,6 +38,23 @@ class CodeGen(object):
         self.kwargs = (kwargs or {})
         self.methods = (methods or [])
 
+    def add_args(self, *args):
+        self.args.extend(args)
+        return self
+
+    def add_kwargs(self, **kwargs):
+        self.kwargs.update(kwargs)
+        return self
+
+    def add_methods(self, *methods):
+        self.methods.extend(methods)
+        return self
+
+    def remove_kwargs(self, *kwds):
+        for kwd in kwds:
+            self.kwargs.pop(kwd, None)
+        return self
+
     def to_str(self, tablevel=0, tabsize=4):
         """Return a string representation of the code"""
         def get_str(obj, tablevel=tablevel, tabsize=tabsize):
