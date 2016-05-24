@@ -113,5 +113,16 @@ def write_all_examples(execute=True):
     write_index(notebook_directory, index_dict)
 
 
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Generate Altair example notebooks.')
+    parser.add_argument('-e', '--execute', action='store_true',
+                        help='Automatically execute all notebooks')
+
+    args = parser.parse_args()
+    write_all_examples(execute=args.execute)
+
+
 if __name__ == '__main__':
-    write_all_examples(execute=False)
+    main()
