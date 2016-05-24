@@ -11,10 +11,9 @@ from .utils import parse_shorthand, infer_vegalite_type, construct_shorthand
 
 import pandas as pd
 
-from .visitors import DictOutputVisitor, CodeOutputVisitor
-
 from ._py3k_compat import string_types
 from . import schema
+from . import visitors
 
 from .schema import AggregateOp
 from .schema import AxisConfig
@@ -331,25 +330,13 @@ class Layer(schema.BaseObject):
 
     @classmethod
     def from_dict(cls, dct):
-        # Remove data first and handle it specially later
-        if 'data' in dct:
-            dct = dct.copy()
-        data = dct.pop('data', None)
-        obj = super(Layer, cls).from_dict(dct)
-
-        # data is not a typical trait; do special handling here.
-        if data is not None:
-            if 'values' in data:
-                obj.data = pd.DataFrame(data['values'])
-            else:
-                obj.data = schema.Data(**data)
-        return obj
+        return visitors.FromDict().visit(cls, dct)
 
     def to_dict(self, data=True):
-        return DictOutputVisitor().visit(self, data)
+        return visitors.ToDict().visit(self, data)
 
     def to_code(self, data=None):
-        return CodeOutputVisitor().visit(self, data)
+        return visitors.ToCode().visit(self, data)
 
     def to_altair(self, data=None):
         return str(self.to_code(data=data))

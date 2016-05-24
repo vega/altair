@@ -36,52 +36,9 @@ class BaseObject(T.HasTraits):
 
     def __dir__(self):
         """Customize tab completed attributes."""
-        return list(self.traits())+['to_dict']
-
-    @classmethod
-    def from_json(cls, jsn):
-        """Initialize object from a suitable JSON string"""
-        return cls.from_dict(json.loads(jsn))
-
-    @classmethod
-    def from_dict(cls, dct):
-        """Initialize a Layer from a vegalite JSON dictionary"""
-        try:
-            obj = cls()
-        except TypeError as err:
-            # TypeError indicates that an argument is missing
-            obj = cls('')
-
-        for prop, val in dct.items():
-            if not obj.has_trait(prop):
-                raise ValueError("{0} not a valid property in {1}"
-                                 "".format(prop, cls))
-            trait = obj.traits()[prop]
-            obj.set_trait(prop, trait_from_dict(trait, val))
-        return obj
+        return list(self.traits())
 
     def update_traits(self, **kwargs):
         for key, val in kwargs.items():
             self.set_trait(key, val)
         return self
-
-
-def trait_from_dict(trait, dct):
-    """
-    Construct a trait from a dictionary.
-    If dct is not a dictionary or list, pass it through
-    """
-    if isinstance(trait, T.List):
-        return [trait_from_dict(trait._trait, item) for item in dct]
-    elif not isinstance(dct, dict):
-        return dct
-    elif isinstance(trait, T.Instance):
-        return trait.klass.from_dict(dct)
-    elif isinstance(trait, T.Union):
-        for subtrait in trait.trait_types:
-            try:
-                return trait_from_dict(subtrait, dct)
-            except T.TraitError:
-                pass
-
-    raise T.TraitError('cannot set {0} to {1}'.format(trait, dct))

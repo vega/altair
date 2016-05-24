@@ -1,4 +1,5 @@
 import pandas as pd
+import traitlets as T
 
 from . import schema
 from .codegen import CodeGen
@@ -10,16 +11,26 @@ class Visitor(object):
     def visit(self, obj, *args, **kwargs):
         for cls in obj.__class__.__mro__:
             method = getattr(self, 'visit_' + cls.__name__, None)
-            if method: break
+            if method:
+                break
         else:
             method = self.generic_visit
         return method(obj, *args, **kwargs)
 
-    def generic_visit(self, obj, *args, **kwargs):
-        raise NotImplementedError()
+
+class ClassMethodVisitor(object):
+    """Class implementing the external visitor pattern for classmethods"""
+    def visit(self, obj, *args, **kwargs):
+        for cls in obj.__mro__:
+            method = getattr(self, 'visit_' + cls.__name__, None)
+            if method:
+                break
+        else:
+            method = self.generic_visit
+        return method(obj, *args, **kwargs)
 
 
-class DictOutputVisitor(Visitor):
+class ToDict(Visitor):
     """Crawl object structure to output dictionary"""
     def generic_visit(self, obj, *args, **kwargs):
         return obj
@@ -49,7 +60,7 @@ class DictOutputVisitor(Visitor):
         return D
 
 
-class CodeOutputVisitor(Visitor):
+class ToCode(Visitor):
     """Crawl object structure to output code"""
     def generic_visit(self, obj, *args, **kwargs):
         return repr(obj)
@@ -126,3 +137,58 @@ class CodeOutputVisitor(Visitor):
                                      extra_args=extra_args,
                                      extra_kwds=extra_kwds,
                                      methods=methods)
+
+
+class FromDict(ClassMethodVisitor):
+    """Crawl object structure to construct from a Dictionary"""
+    def visit_BaseObject(self, cls, dct):
+        """Initialize a Layer from a vegalite JSON dictionary"""
+        try:
+            obj = cls()
+        except TypeError as err:
+            # TypeError indicates that an argument is missing
+            obj = cls('')
+
+        for prop, val in dct.items():
+            if not obj.has_trait(prop):
+                raise ValueError("{0} not a valid property in {1}"
+                                 "".format(prop, cls))
+            trait = obj.traits()[prop]
+            obj.set_trait(prop, trait_from_dict(trait, val))
+        return obj
+
+    def visit_Layer(self, cls, dct):
+        # Remove data first and handle it specially later
+        if 'data' in dct:
+            dct = dct.copy()
+        data = dct.pop('data', None)
+        obj = self.visit_BaseObject(cls, dct)
+
+        # data is not a typical trait; do special handling here.
+        if data is not None:
+            if 'values' in data:
+                obj.data = pd.DataFrame(data['values'])
+            else:
+                obj.data = schema.Data(**data)
+        return obj
+
+
+def trait_from_dict(trait, dct):
+    """
+    Construct a trait from a dictionary.
+    If dct is not a dictionary or list, pass it through
+    """
+    if isinstance(trait, T.List):
+        return [trait_from_dict(trait._trait, item) for item in dct]
+    elif not isinstance(dct, dict):
+        return dct
+    elif isinstance(trait, T.Instance):
+        return FromDict().visit(trait.klass, dct)
+    elif isinstance(trait, T.Union):
+        for subtrait in trait.trait_types:
+            try:
+                return trait_from_dict(subtrait, dct)
+            except T.TraitError:
+                pass
+
+    raise T.TraitError('cannot set {0} to {1}'.format(trait, dct))
