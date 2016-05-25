@@ -68,7 +68,7 @@ class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
     type = T.Union([schema.Type(), T.Unicode()],
                    allow_none=True, default_value=None)
 
-    def __init__(self, shorthand, **kwargs):
+    def __init__(self, shorthand='', **kwargs):
         kwargs['shorthand'] = shorthand
         super(PositionChannelDef, self).__init__(**kwargs)
 
@@ -109,7 +109,7 @@ class ChannelDefWithLegend(_ChannelMixin, schema.ChannelDefWithLegend):
     type = T.Union([schema.Type(), T.Unicode()],
                    allow_none=True, default_value=None)
 
-    def __init__(self, shorthand, **kwargs):
+    def __init__(self, shorthand='', **kwargs):
         kwargs['shorthand'] = shorthand
         super(ChannelDefWithLegend, self).__init__(**kwargs)
 
@@ -146,7 +146,7 @@ class Field(_ChannelMixin, schema.FieldDef):
     type = T.Union([schema.Type(), T.Unicode()],
                    allow_none=True, default_value=None)
 
-    def __init__(self, shorthand, **kwargs):
+    def __init__(self, shorthand='', **kwargs):
         kwargs['shorthand'] = shorthand
         super(Field, self).__init__(**kwargs)
 
@@ -183,7 +183,7 @@ class OrderChannel(_ChannelMixin, schema.OrderChannelDef):
     type = T.Union([schema.Type(), T.Unicode()],
                    allow_none=True, default_value=None)
 
-    def __init__(self, shorthand, **kwargs):
+    def __init__(self, shorthand='', **kwargs):
         kwargs['shorthand'] = shorthand
         super(OrderChannel, self).__init__(**kwargs)
 

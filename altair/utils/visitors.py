@@ -77,10 +77,12 @@ class ToCode(Visitor):
                                         aggregate=obj.aggregate,
                                         type=obj.type)
         code = self.visit_BaseObject(obj)
-        code.add_args(repr(shorthand))
+        if shorthand:
+            code.add_args(repr(shorthand))
         code.remove_kwargs('field', 'aggregate', 'type')
 
-        do_shorten = (kwargs.get('shorten', False)
+        do_shorten = (shorthand
+                      and kwargs.get('shorten', False)
                       and len(code.args) == 1
                       and not (code.kwargs or code.methods))
         if do_shorten:

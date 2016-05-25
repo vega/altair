@@ -103,7 +103,8 @@ def write_index(notebook_directory, index_dict, kernel='python3'):
 
 
 def write_all_examples(execute=True):
-    notebook_directory = os.path.join('..', 'notebooks', 'auto_examples')
+    notebook_directory = os.path.join(os.path.dirname(__file__),
+                                      '..', 'notebooks', 'auto_examples')
     index_dict = {}
     for filename, spec in iter_examples():
         create_example_notebook(filename, spec, notebook_directory,
