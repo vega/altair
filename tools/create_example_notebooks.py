@@ -54,7 +54,7 @@ def create_example_notebook(filename, spec, notebook_directory,
         print(" -> {0}".format(outputfile_full))
 
     title = filestem.replace('_', ' ').title()
-    description = spec.get('description', '--')
+    description = spec.pop('description', '--')
     dataset = os.path.splitext(os.path.basename(spec['data']['url']))[0]
 
     index_entry = "[{0}]({1}): *{2}*".format(title, outputfile, description)
