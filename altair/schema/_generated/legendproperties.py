@@ -6,10 +6,32 @@ from ..baseobject import BaseObject
 
 
 class LegendProperties(BaseObject):
+    """
+    
+    Attributes
+    ----------
+    format: Unicode
+        An optional formatting pattern for legend labels.
+    orient: Unicode
+        The orientation of the legend.
+    properties: Any
+        Optional mark property definitions for custom legend styling.
+    shortTimeLabels: Bool
+        Whether month names and weekday names should be abbreviated.
+    title: Unicode
+        A title for the legend.
+    values: List(Any)
+        Explicitly set the visible legend values.
+    """
     format = T.Unicode(allow_none=True, default_value=None, help="""An optional formatting pattern for legend labels.""")
     orient = T.Unicode(allow_none=True, default_value=None, help="""The orientation of the legend.""")
     properties = T.Any(allow_none=True, default_value=None, help="""Optional mark property definitions for custom legend styling.""")
     shortTimeLabels = T.Bool(allow_none=True, default_value=None, help="""Whether month names and weekday names should be abbreviated.""")
     title = T.Unicode(allow_none=True, default_value=None, help="""A title for the legend.""")
     values = T.List(T.Any(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Explicitly set the visible legend values.""")
+    
 
+    def __init__(self, format=None, orient=None, properties=None, shortTimeLabels=None, title=None, values=None, **kwargs):
+        kwds = dict(format=format, orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, title=title, values=values, )
+        kwargs.update({k:v for k, v in kwds.items() if v is not None})
+        super(LegendProperties, self).__init__(**kwargs)

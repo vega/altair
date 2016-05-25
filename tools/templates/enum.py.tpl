@@ -4,8 +4,8 @@
 import traitlets as T
 
 
-class ScaleType(T.Enum):
+class {{ cls.name }}(T.Enum):
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(ScaleType, self).__init__(['linear', 'log', 'pow', 'sqrt', 'quantile', 'quantize', 'ordinal', 'time', 'utc', ],
+        super({{ cls.name }}, self).__init__([{% for option in cls.enum %}'{{ option }}', {% endfor %}],
                                        default_value=default_value,
                                        **metadata)

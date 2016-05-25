@@ -10,11 +10,35 @@ from .type import Type
 
 
 class FieldDef(BaseObject):
+    """
+    
+    Attributes
+    ----------
+    aggregate: AggregateOp
+        
+    bin: Union(Bool, BinProperties)
+        
+    displayName: Unicode
+        
+    field: Unicode
+        
+    timeUnit: TimeUnit
+        
+    type: Type
+        
+    value: Union(CFloat, Unicode, Bool)
+        
+    """
     aggregate = AggregateOp(allow_none=True, default_value=None)
     bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(BinProperties, allow_none=True, default_value=None)])
     displayName = T.Unicode(allow_none=True, default_value=None)
     field = T.Unicode(allow_none=True, default_value=None)
     timeUnit = TimeUnit(allow_none=True, default_value=None)
     type = Type(allow_none=True, default_value=None)
-    value = T.Union([T.Bool(allow_none=True, default_value=None), T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None)])
+    value = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None)])
+    
 
+    def __init__(self, aggregate=None, bin=None, displayName=None, field=None, timeUnit=None, type=None, value=None, **kwargs):
+        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, timeUnit=timeUnit, type=type, value=value, )
+        kwargs.update({k:v for k, v in kwds.items() if v is not None})
+        super(FieldDef, self).__init__(**kwargs)

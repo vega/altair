@@ -6,6 +6,6 @@ import traitlets as T
 
 class Mark(T.Enum):
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(Mark, self).__init__(['area', 'bar', 'line', 'point', 'text', 'tick', 'circle', 'square'],
-                                    default_value=default_value,
-                                    **metadata)
+        super(Mark, self).__init__(['area', 'bar', 'line', 'point', 'text', 'tick', 'circle', 'square', ],
+                                       default_value=default_value,
+                                       **metadata)

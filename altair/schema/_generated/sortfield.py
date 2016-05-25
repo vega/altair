@@ -8,7 +8,23 @@ from .sortorder import SortOrder
 
 
 class SortField(BaseObject):
+    """
+    
+    Attributes
+    ----------
+    field: Unicode
+        The field name to aggregate over.
+    op: AggregateOp
+        The sort aggregation operator.
+    order: SortOrder
+        
+    """
     field = T.Unicode(allow_none=True, default_value=None, help="""The field name to aggregate over.""")
     op = AggregateOp(allow_none=True, default_value=None, help="""The sort aggregation operator.""")
     order = SortOrder(allow_none=True, default_value=None)
+    
 
+    def __init__(self, field=None, op=None, order=None, **kwargs):
+        kwds = dict(field=field, op=op, order=order, )
+        kwargs.update({k:v for k, v in kwds.items() if v is not None})
+        super(SortField, self).__init__(**kwargs)

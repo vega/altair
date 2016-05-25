@@ -7,6 +7,61 @@ from .axisorient import AxisOrient
 
 
 class AxisProperties(BaseObject):
+    """
+    
+    Attributes
+    ----------
+    axisWidth: CFloat
+        Width of the axis line.
+    characterWidth: CFloat
+        Character width for automatically determining title max length.
+    format: Unicode
+        The formatting pattern for axis labels.
+    grid: Bool
+        A flag indicate if gridlines should be created in addition to ticks.
+    labelAlign: Unicode
+        Text alignment for the Label.
+    labelAngle: CFloat
+        The rotation angle of the axis labels.
+    labelBaseline: Unicode
+        Text baseline for the label.
+    labelMaxLength: CFloat
+        Truncate labels that are too long.
+    labels: Bool
+        Enable or disable labels.
+    layer: Unicode
+        A string indicating if the axis (and any gridlines) should be placed above or below the data marks.
+    offset: CFloat
+        The offset, in pixels, by which to displace the axis from the edge of the enclosing group or data rectangle.
+    orient: AxisOrient
+        The orientation of the axis.
+    properties: Any
+        Optional mark property definitions for custom axis styling.
+    shortTimeLabels: Bool
+        Whether month and day names should be abbreviated.
+    subdivide: CFloat
+        If provided, sets the number of minor ticks between major ticks (the value 9 results in decimal subdivision).
+    tickPadding: CFloat
+        The padding, in pixels, between ticks and text labels.
+    tickSize: CFloat
+        The size, in pixels, of major, minor and end ticks.
+    tickSizeEnd: CFloat
+        The size, in pixels, of end ticks.
+    tickSizeMajor: CFloat
+        The size, in pixels, of major ticks.
+    tickSizeMinor: CFloat
+        The size, in pixels, of minor ticks.
+    ticks: CFloat
+        A desired number of ticks, for axes visualizing quantitative scales.
+    title: Unicode
+        A title for the axis.
+    titleMaxLength: CFloat
+        Max length for axis title if the title is automatically generated from the field's description.
+    titleOffset: CFloat
+        A title offset value for the axis.
+    values: List(CFloat)
+        
+    """
     axisWidth = T.CFloat(allow_none=True, default_value=None, help="""Width of the axis line.""")
     characterWidth = T.CFloat(allow_none=True, default_value=None, help="""Character width for automatically determining title max length.""")
     format = T.Unicode(allow_none=True, default_value=None, help="""The formatting pattern for axis labels.""")
@@ -14,7 +69,7 @@ class AxisProperties(BaseObject):
     labelAlign = T.Unicode(allow_none=True, default_value=None, help="""Text alignment for the Label.""")
     labelAngle = T.CFloat(allow_none=True, default_value=None, help="""The rotation angle of the axis labels.""")
     labelBaseline = T.Unicode(allow_none=True, default_value=None, help="""Text baseline for the label.""")
-    labelMaxLength = T.CFloat(allow_none=True, default_value=None, min=1, help="""Truncate labels that are too long.""")
+    labelMaxLength = T.CFloat(allow_none=True, default_value=None, help="""Truncate labels that are too long.""")
     labels = T.Bool(allow_none=True, default_value=None, help="""Enable or disable labels.""")
     layer = T.Unicode(allow_none=True, default_value=None, help="""A string indicating if the axis (and any gridlines) should be placed above or below the data marks.""")
     offset = T.CFloat(allow_none=True, default_value=None, help="""The offset, in pixels, by which to displace the axis from the edge of the enclosing group or data rectangle.""")
@@ -23,13 +78,18 @@ class AxisProperties(BaseObject):
     shortTimeLabels = T.Bool(allow_none=True, default_value=None, help="""Whether month and day names should be abbreviated.""")
     subdivide = T.CFloat(allow_none=True, default_value=None, help="""If provided, sets the number of minor ticks between major ticks (the value 9 results in decimal subdivision).""")
     tickPadding = T.CFloat(allow_none=True, default_value=None, help="""The padding, in pixels, between ticks and text labels.""")
-    tickSize = T.CFloat(allow_none=True, default_value=None, min=0, help="""The size, in pixels, of major, minor and end ticks.""")
-    tickSizeEnd = T.CFloat(allow_none=True, default_value=None, min=0, help="""The size, in pixels, of end ticks.""")
-    tickSizeMajor = T.CFloat(allow_none=True, default_value=None, min=0, help="""The size, in pixels, of major ticks.""")
-    tickSizeMinor = T.CFloat(allow_none=True, default_value=None, min=0, help="""The size, in pixels, of minor ticks.""")
-    ticks = T.CFloat(allow_none=True, default_value=None, min=0, help="""A desired number of ticks, for axes visualizing quantitative scales.""")
+    tickSize = T.CFloat(allow_none=True, default_value=None, help="""The size, in pixels, of major, minor and end ticks.""")
+    tickSizeEnd = T.CFloat(allow_none=True, default_value=None, help="""The size, in pixels, of end ticks.""")
+    tickSizeMajor = T.CFloat(allow_none=True, default_value=None, help="""The size, in pixels, of major ticks.""")
+    tickSizeMinor = T.CFloat(allow_none=True, default_value=None, help="""The size, in pixels, of minor ticks.""")
+    ticks = T.CFloat(allow_none=True, default_value=None, help="""A desired number of ticks, for axes visualizing quantitative scales.""")
     title = T.Unicode(allow_none=True, default_value=None, help="""A title for the axis.""")
-    titleMaxLength = T.CFloat(allow_none=True, default_value=None, min=0, help="""Max length for axis title if the title is automatically generated from the field's description.""")
+    titleMaxLength = T.CFloat(allow_none=True, default_value=None, help="""Max length for axis title if the title is automatically generated from the field's description.""")
     titleOffset = T.CFloat(allow_none=True, default_value=None, help="""A title offset value for the axis.""")
     values = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None)
+    
 
+    def __init__(self, axisWidth=None, characterWidth=None, format=None, grid=None, labelAlign=None, labelAngle=None, labelBaseline=None, labelMaxLength=None, labels=None, layer=None, offset=None, orient=None, properties=None, shortTimeLabels=None, subdivide=None, tickPadding=None, tickSize=None, tickSizeEnd=None, tickSizeMajor=None, tickSizeMinor=None, ticks=None, title=None, titleMaxLength=None, titleOffset=None, values=None, **kwargs):
+        kwds = dict(axisWidth=axisWidth, characterWidth=characterWidth, format=format, grid=grid, labelAlign=labelAlign, labelAngle=labelAngle, labelBaseline=labelBaseline, labelMaxLength=labelMaxLength, labels=labels, layer=layer, offset=offset, orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, subdivide=subdivide, tickPadding=tickPadding, tickSize=tickSize, tickSizeEnd=tickSizeEnd, tickSizeMajor=tickSizeMajor, tickSizeMinor=tickSizeMinor, ticks=ticks, title=title, titleMaxLength=titleMaxLength, titleOffset=titleOffset, values=values, )
+        kwargs.update({k:v for k, v in kwds.items() if v is not None})
+        super(AxisProperties, self).__init__(**kwargs)
