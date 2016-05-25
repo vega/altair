@@ -1,4 +1,5 @@
-from altair.schema import SCHEMA
+from altair.schema import load_schema
 
 def test_schema():
-    assert SCHEMA["$schema"]=="http://json-schema.org/draft-04/schema#"
+    schema = load_schema()
+    assert schema["$schema"]=="http://json-schema.org/draft-04/schema#"
