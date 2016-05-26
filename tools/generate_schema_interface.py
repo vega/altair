@@ -207,7 +207,30 @@ class VegaLiteSchema(SchemaProperty):
         with open(os.path.join(testpath, 'test_instantiations.py'), 'w') as f:
             f.write(template.render(classes=classes))
 
+    def write_derived_wrappers(self, path=None):
+        template = self.templates.get_template('channel_defs.py.tpl')
+        if path is None:
+            path = os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                   '..', 'altair', 'schema', '_wrappers'))
+        if not os.path.exists(path):
+            os.makedirs(path)
+        with open(os.path.join(path, '__init__.py'), 'w') as f:
+            f.write('"""Wrappers for low-level schema objects"""')
+
+        print("Writing definitions for derived objects:")
+
+        for cls, base in [('PositionChannel', 'PositionChannelDef'),
+                          ('ChannelWithLegend', 'ChannelDefWithLegend'),
+                          ('Field', 'FieldDef'),
+                          ('OrderChannel', 'OrderChannelDef')]:
+            filename = os.path.join(path, '{0}.py'.format(cls.lower()))
+            base = self.definitions[base]
+            print("- Writing {0}".format(filename))
+            with open(filename, 'w') as f:
+                f.write(template.render(cls=cls, base=base))
+
 
 if __name__ == '__main__':
     schema = VegaLiteSchema()
     schema.write_wrappers()
+    schema.write_derived_wrappers()

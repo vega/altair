@@ -22,7 +22,6 @@ class {{ cls.name }}(BaseObject):
 
     {%- set comma = joiner(", ") %}
     def __init__(self, {% for attr in cls.attributes %}{{ attr.name }}=None, {% endfor %}**kwargs):
-        {% set comma = joiner(", ") -%}
         kwds = dict({% for attr in cls.attributes %}{{ comma() }}{{ attr.name }}={{ attr.name }}{% endfor %})
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super({{ cls.name }}, self).__init__(**kwargs)
