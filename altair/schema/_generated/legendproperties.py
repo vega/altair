@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class LegendProperties(BaseObject):
-    """
+    """Wrapper for Vega-Lite LegendProperties definition.
     
     Attributes
     ----------
@@ -30,8 +30,7 @@ class LegendProperties(BaseObject):
     title = T.Unicode(allow_none=True, default_value=None, help="""A title for the legend.""")
     values = T.List(T.Any(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Explicitly set the visible legend values.""")
     
-
     def __init__(self, format=None, orient=None, properties=None, shortTimeLabels=None, title=None, values=None, **kwargs):
-        kwds = dict(format=format, orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, title=title, values=values, )
+        kwds = dict(format=format, orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, title=title, values=values)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(LegendProperties, self).__init__(**kwargs)

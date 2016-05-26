@@ -12,7 +12,7 @@ from .verticalalign import VerticalAlign
 
 
 class MarkConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite MarkConfig definition.
     
     Attributes
     ----------
@@ -123,8 +123,7 @@ class MarkConfig(BaseObject):
     tickSize = T.CFloat(allow_none=True, default_value=None, help="""The width of the ticks.""")
     tickThickness = T.CFloat(allow_none=True, default_value=None, help="""Thickness of the tick mark.""")
     
-
     def __init__(self, align=None, angle=None, applyColorToBackground=None, barSize=None, barThinSize=None, baseline=None, color=None, dx=None, dy=None, fill=None, fillOpacity=None, filled=None, font=None, fontSize=None, fontStyle=None, fontWeight=None, format=None, interpolate=None, opacity=None, orient=None, radius=None, shape=None, shortTimeLabels=None, size=None, stacked=None, stroke=None, strokeDash=None, strokeDashOffset=None, strokeOpacity=None, strokeWidth=None, tension=None, text=None, theta=None, tickSize=None, tickThickness=None, **kwargs):
-        kwds = dict(align=align, angle=angle, applyColorToBackground=applyColorToBackground, barSize=barSize, barThinSize=barThinSize, baseline=baseline, color=color, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, format=format, interpolate=interpolate, opacity=opacity, orient=orient, radius=radius, shape=shape, shortTimeLabels=shortTimeLabels, size=size, stacked=stacked, stroke=stroke, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, tension=tension, text=text, theta=theta, tickSize=tickSize, tickThickness=tickThickness, )
+        kwds = dict(align=align, angle=angle, applyColorToBackground=applyColorToBackground, barSize=barSize, barThinSize=barThinSize, baseline=baseline, color=color, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, format=format, interpolate=interpolate, opacity=opacity, orient=orient, radius=radius, shape=shape, shortTimeLabels=shortTimeLabels, size=size, stacked=stacked, stroke=stroke, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, tension=tension, text=text, theta=theta, tickSize=tickSize, tickThickness=tickThickness)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(MarkConfig, self).__init__(**kwargs)

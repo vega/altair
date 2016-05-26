@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class ScaleConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite ScaleConfig definition.
     
     Attributes
     ----------
@@ -49,8 +49,7 @@ and (2) `x` ordinal scale when the mark is not `text`.""")
     shapeRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(allow_none=True, default_value=None), allow_none=True, default_value=None)])
     textBandWidth = T.CFloat(allow_none=True, default_value=None, min=0, help="""Default band width for `x` ordinal scale when is mark is `text`.""")
     
-
     def __init__(self, bandSize=None, barSizeRange=None, fontSizeRange=None, includeRawDomain=None, nominalColorRange=None, padding=None, pointSizeRange=None, round=None, sequentialColorRange=None, shapeRange=None, textBandWidth=None, **kwargs):
-        kwds = dict(bandSize=bandSize, barSizeRange=barSizeRange, fontSizeRange=fontSizeRange, includeRawDomain=includeRawDomain, nominalColorRange=nominalColorRange, padding=padding, pointSizeRange=pointSizeRange, round=round, sequentialColorRange=sequentialColorRange, shapeRange=shapeRange, textBandWidth=textBandWidth, )
+        kwds = dict(bandSize=bandSize, barSizeRange=barSizeRange, fontSizeRange=fontSizeRange, includeRawDomain=includeRawDomain, nominalColorRange=nominalColorRange, padding=padding, pointSizeRange=pointSizeRange, round=round, sequentialColorRange=sequentialColorRange, shapeRange=shapeRange, textBandWidth=textBandWidth)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(ScaleConfig, self).__init__(**kwargs)

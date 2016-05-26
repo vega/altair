@@ -14,7 +14,7 @@ from .type import Type
 
 
 class PositionChannelDef(BaseObject):
-    """
+    """Wrapper for Vega-Lite PositionChannelDef definition.
     
     Attributes
     ----------
@@ -50,8 +50,7 @@ class PositionChannelDef(BaseObject):
     type = Type(allow_none=True, default_value=None)
     value = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None)])
     
-
     def __init__(self, aggregate=None, axis=None, bin=None, displayName=None, field=None, scale=None, sort=None, timeUnit=None, type=None, value=None, **kwargs):
-        kwds = dict(aggregate=aggregate, axis=axis, bin=bin, displayName=displayName, field=field, scale=scale, sort=sort, timeUnit=timeUnit, type=type, value=value, )
+        kwds = dict(aggregate=aggregate, axis=axis, bin=bin, displayName=displayName, field=field, scale=scale, sort=sort, timeUnit=timeUnit, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(PositionChannelDef, self).__init__(**kwargs)

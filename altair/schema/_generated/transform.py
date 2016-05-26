@@ -7,7 +7,7 @@ from .vgformula import VgFormula
 
 
 class Transform(BaseObject):
-    """
+    """Wrapper for Vega-Lite Transform definition.
     
     Attributes
     ----------
@@ -22,8 +22,7 @@ class Transform(BaseObject):
     filter = T.Unicode(allow_none=True, default_value=None, help="""A string containing the filter Vega expression.""")
     filterNull = T.Bool(allow_none=True, default_value=None, help="""Filter null values from the data.""")
     
-
     def __init__(self, calculate=None, filter=None, filterNull=None, **kwargs):
-        kwds = dict(calculate=calculate, filter=filter, filterNull=filterNull, )
+        kwds = dict(calculate=calculate, filter=filter, filterNull=filterNull)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Transform, self).__init__(**kwargs)

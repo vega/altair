@@ -12,7 +12,7 @@ from .scaleconfig import ScaleConfig
 
 
 class Config(BaseObject):
-    """
+    """Wrapper for Vega-Lite Config definition.
     
     Attributes
     ----------
@@ -48,8 +48,7 @@ class Config(BaseObject):
     timeFormat = T.Unicode(allow_none=True, default_value=None, help="""Default datetime format for axis and legend labels.""")
     viewport = T.CFloat(allow_none=True, default_value=None, help="""The width and height of the on-screen viewport, in pixels.""")
     
-
     def __init__(self, axis=None, background=None, cell=None, facet=None, legend=None, mark=None, numberFormat=None, scale=None, timeFormat=None, viewport=None, **kwargs):
-        kwds = dict(axis=axis, background=background, cell=cell, facet=facet, legend=legend, mark=mark, numberFormat=numberFormat, scale=scale, timeFormat=timeFormat, viewport=viewport, )
+        kwds = dict(axis=axis, background=background, cell=cell, facet=facet, legend=legend, mark=mark, numberFormat=numberFormat, scale=scale, timeFormat=timeFormat, viewport=viewport)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Config, self).__init__(**kwargs)

@@ -5,7 +5,8 @@ import traitlets as T
 
 
 class FontWeight(T.Enum):
+    """One of ['normal', 'bold']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(FontWeight, self).__init__(['normal', 'bold', ],
-                                       default_value=default_value,
-                                       **metadata)
+        super(FontWeight, self).__init__(['normal', 'bold'],
+                                    default_value=default_value,
+                                    **metadata)

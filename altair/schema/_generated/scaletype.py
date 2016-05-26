@@ -5,7 +5,8 @@ import traitlets as T
 
 
 class ScaleType(T.Enum):
+    """One of ['linear', 'log', 'pow', 'sqrt', 'quantile', 'quantize', 'ordinal', 'time', 'utc']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(ScaleType, self).__init__(['linear', 'log', 'pow', 'sqrt', 'quantile', 'quantize', 'ordinal', 'time', 'utc', ],
-                                       default_value=default_value,
-                                       **metadata)
+        super(ScaleType, self).__init__(['linear', 'log', 'pow', 'sqrt', 'quantile', 'quantize', 'ordinal', 'time', 'utc'],
+                                    default_value=default_value,
+                                    **metadata)

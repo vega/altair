@@ -8,7 +8,7 @@ from .scaletype import ScaleType
 
 
 class Scale(BaseObject):
-    """
+    """Wrapper for Vega-Lite Scale definition.
     
     Attributes
     ----------
@@ -47,8 +47,7 @@ class Scale(BaseObject):
     type = ScaleType(allow_none=True, default_value=None)
     zero = T.Bool(allow_none=True, default_value=None, help="""If true, ensures that a zero baseline value is included in the scale domain.""")
     
-
     def __init__(self, bandSize=None, clamp=None, domain=None, exponent=None, includeRawDomain=None, nice=None, padding=None, range=None, round=None, type=None, zero=None, **kwargs):
-        kwds = dict(bandSize=bandSize, clamp=clamp, domain=domain, exponent=exponent, includeRawDomain=includeRawDomain, nice=nice, padding=padding, range=range, round=round, type=type, zero=zero, )
+        kwds = dict(bandSize=bandSize, clamp=clamp, domain=domain, exponent=exponent, includeRawDomain=includeRawDomain, nice=nice, padding=padding, range=range, round=round, type=type, zero=zero)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Scale, self).__init__(**kwargs)

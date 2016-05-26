@@ -5,7 +5,8 @@ import traitlets as T
 
 
 class FontStyle(T.Enum):
+    """One of ['normal', 'italic']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(FontStyle, self).__init__(['normal', 'italic', ],
-                                       default_value=default_value,
-                                       **metadata)
+        super(FontStyle, self).__init__(['normal', 'italic'],
+                                    default_value=default_value,
+                                    **metadata)

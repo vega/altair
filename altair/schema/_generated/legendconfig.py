@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class LegendConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite LegendConfig definition.
     
     Attributes
     ----------
@@ -21,8 +21,7 @@ class LegendConfig(BaseObject):
     properties = T.Any(allow_none=True, default_value=None, help="""Optional mark property definitions for custom legend styling.""")
     shortTimeLabels = T.Bool(allow_none=True, default_value=None, help="""Whether month names and weekday names should be abbreviated.""")
     
-
     def __init__(self, orient=None, properties=None, shortTimeLabels=None, **kwargs):
-        kwds = dict(orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, )
+        kwds = dict(orient=orient, properties=properties, shortTimeLabels=shortTimeLabels)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(LegendConfig, self).__init__(**kwargs)

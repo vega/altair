@@ -11,7 +11,7 @@ from .type import Type
 
 
 class OrderChannelDef(BaseObject):
-    """
+    """Wrapper for Vega-Lite OrderChannelDef definition.
     
     Attributes
     ----------
@@ -41,8 +41,7 @@ class OrderChannelDef(BaseObject):
     type = Type(allow_none=True, default_value=None)
     value = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None)])
     
-
     def __init__(self, aggregate=None, bin=None, displayName=None, field=None, sort=None, timeUnit=None, type=None, value=None, **kwargs):
-        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, sort=sort, timeUnit=timeUnit, type=type, value=value, )
+        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, sort=sort, timeUnit=timeUnit, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(OrderChannelDef, self).__init__(**kwargs)

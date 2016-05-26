@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class FacetScaleConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite FacetScaleConfig definition.
     
     Attributes
     ----------
@@ -18,8 +18,7 @@ class FacetScaleConfig(BaseObject):
     padding = T.CFloat(allow_none=True, default_value=None)
     round = T.Bool(allow_none=True, default_value=None)
     
-
     def __init__(self, padding=None, round=None, **kwargs):
-        kwds = dict(padding=padding, round=round, )
+        kwds = dict(padding=padding, round=round)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(FacetScaleConfig, self).__init__(**kwargs)

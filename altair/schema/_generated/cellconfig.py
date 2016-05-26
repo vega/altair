@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class CellConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite CellConfig definition.
     
     Attributes
     ----------
@@ -42,8 +42,7 @@ class CellConfig(BaseObject):
     strokeWidth = T.CFloat(allow_none=True, default_value=None)
     width = T.CFloat(allow_none=True, default_value=None)
     
-
     def __init__(self, clip=None, fill=None, fillOpacity=None, height=None, stroke=None, strokeDash=None, strokeDashOffset=None, strokeOpacity=None, strokeWidth=None, width=None, **kwargs):
-        kwds = dict(clip=clip, fill=fill, fillOpacity=fillOpacity, height=height, stroke=stroke, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, width=width, )
+        kwds = dict(clip=clip, fill=fill, fillOpacity=fillOpacity, height=height, stroke=stroke, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, width=width)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(CellConfig, self).__init__(**kwargs)

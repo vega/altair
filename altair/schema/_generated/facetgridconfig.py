@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class FacetGridConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite FacetGridConfig definition.
     
     Attributes
     ----------
@@ -21,8 +21,7 @@ class FacetGridConfig(BaseObject):
     offset = T.CFloat(allow_none=True, default_value=None)
     opacity = T.CFloat(allow_none=True, default_value=None)
     
-
     def __init__(self, color=None, offset=None, opacity=None, **kwargs):
-        kwds = dict(color=color, offset=offset, opacity=opacity, )
+        kwds = dict(color=color, offset=offset, opacity=opacity)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(FacetGridConfig, self).__init__(**kwargs)

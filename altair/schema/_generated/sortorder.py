@@ -5,7 +5,8 @@ import traitlets as T
 
 
 class SortOrder(T.Enum):
+    """One of ['ascending', 'descending', 'none']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(SortOrder, self).__init__(['ascending', 'descending', 'none', ],
-                                       default_value=default_value,
-                                       **metadata)
+        super(SortOrder, self).__init__(['ascending', 'descending', 'none'],
+                                    default_value=default_value,
+                                    **metadata)

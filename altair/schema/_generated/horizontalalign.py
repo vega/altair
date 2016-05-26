@@ -5,7 +5,8 @@ import traitlets as T
 
 
 class HorizontalAlign(T.Enum):
+    """One of ['left', 'right', 'center']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(HorizontalAlign, self).__init__(['left', 'right', 'center', ],
-                                       default_value=default_value,
-                                       **metadata)
+        super(HorizontalAlign, self).__init__(['left', 'right', 'center'],
+                                    default_value=default_value,
+                                    **metadata)

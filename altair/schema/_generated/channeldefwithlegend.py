@@ -14,7 +14,7 @@ from .type import Type
 
 
 class ChannelDefWithLegend(BaseObject):
-    """
+    """Wrapper for Vega-Lite ChannelDefWithLegend definition.
     
     Attributes
     ----------
@@ -50,8 +50,7 @@ class ChannelDefWithLegend(BaseObject):
     type = Type(allow_none=True, default_value=None)
     value = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None)])
     
-
     def __init__(self, aggregate=None, bin=None, displayName=None, field=None, legend=None, scale=None, sort=None, timeUnit=None, type=None, value=None, **kwargs):
-        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, type=type, value=value, )
+        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(ChannelDefWithLegend, self).__init__(**kwargs)

@@ -7,7 +7,7 @@ from .axisorient import AxisOrient
 
 
 class AxisProperties(BaseObject):
-    """
+    """Wrapper for Vega-Lite AxisProperties definition.
     
     Attributes
     ----------
@@ -88,8 +88,7 @@ class AxisProperties(BaseObject):
     titleOffset = T.CFloat(allow_none=True, default_value=None, help="""A title offset value for the axis.""")
     values = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None)
     
-
     def __init__(self, axisWidth=None, characterWidth=None, format=None, grid=None, labelAlign=None, labelAngle=None, labelBaseline=None, labelMaxLength=None, labels=None, layer=None, offset=None, orient=None, properties=None, shortTimeLabels=None, subdivide=None, tickPadding=None, tickSize=None, tickSizeEnd=None, tickSizeMajor=None, tickSizeMinor=None, ticks=None, title=None, titleMaxLength=None, titleOffset=None, values=None, **kwargs):
-        kwds = dict(axisWidth=axisWidth, characterWidth=characterWidth, format=format, grid=grid, labelAlign=labelAlign, labelAngle=labelAngle, labelBaseline=labelBaseline, labelMaxLength=labelMaxLength, labels=labels, layer=layer, offset=offset, orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, subdivide=subdivide, tickPadding=tickPadding, tickSize=tickSize, tickSizeEnd=tickSizeEnd, tickSizeMajor=tickSizeMajor, tickSizeMinor=tickSizeMinor, ticks=ticks, title=title, titleMaxLength=titleMaxLength, titleOffset=titleOffset, values=values, )
+        kwds = dict(axisWidth=axisWidth, characterWidth=characterWidth, format=format, grid=grid, labelAlign=labelAlign, labelAngle=labelAngle, labelBaseline=labelBaseline, labelMaxLength=labelMaxLength, labels=labels, layer=layer, offset=offset, orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, subdivide=subdivide, tickPadding=tickPadding, tickSize=tickSize, tickSizeEnd=tickSizeEnd, tickSizeMajor=tickSizeMajor, tickSizeMinor=tickSizeMinor, ticks=ticks, title=title, titleMaxLength=titleMaxLength, titleOffset=titleOffset, values=values)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(AxisProperties, self).__init__(**kwargs)

@@ -10,7 +10,7 @@ from .facetscaleconfig import FacetScaleConfig
 
 
 class FacetConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite FacetConfig definition.
     
     Attributes
     ----------
@@ -28,8 +28,7 @@ class FacetConfig(BaseObject):
     grid = T.Instance(FacetGridConfig, allow_none=True, default_value=None)
     scale = T.Instance(FacetScaleConfig, allow_none=True, default_value=None)
     
-
     def __init__(self, axis=None, cell=None, grid=None, scale=None, **kwargs):
-        kwds = dict(axis=axis, cell=cell, grid=grid, scale=scale, )
+        kwds = dict(axis=axis, cell=cell, grid=grid, scale=scale)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(FacetConfig, self).__init__(**kwargs)

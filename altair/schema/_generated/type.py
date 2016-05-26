@@ -5,7 +5,8 @@ import traitlets as T
 
 
 class Type(T.Enum):
+    """One of ['quantitative', 'ordinal', 'temporal', 'nominal']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(Type, self).__init__(['quantitative', 'ordinal', 'temporal', 'nominal', ],
-                                       default_value=default_value,
-                                       **metadata)
+        super(Type, self).__init__(['quantitative', 'ordinal', 'temporal', 'nominal'],
+                                    default_value=default_value,
+                                    **metadata)

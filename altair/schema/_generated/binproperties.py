@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class BinProperties(BaseObject):
-    """
+    """Wrapper for Vega-Lite BinProperties definition.
     
     Attributes
     ----------
@@ -36,8 +36,7 @@ class BinProperties(BaseObject):
     step = T.CFloat(allow_none=True, default_value=None, help="""An exact step size to use between bins.""")
     steps = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""An array of allowable step sizes to choose from.""")
     
-
     def __init__(self, base=None, div=None, max=None, maxbins=None, min=None, minstep=None, step=None, steps=None, **kwargs):
-        kwds = dict(base=base, div=div, max=max, maxbins=maxbins, min=min, minstep=minstep, step=step, steps=steps, )
+        kwds = dict(base=base, div=div, max=max, maxbins=maxbins, min=min, minstep=minstep, step=step, steps=steps)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(BinProperties, self).__init__(**kwargs)

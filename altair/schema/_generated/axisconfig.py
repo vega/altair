@@ -6,7 +6,7 @@ from ..baseobject import BaseObject
 
 
 class AxisConfig(BaseObject):
-    """
+    """Wrapper for Vega-Lite AxisConfig definition.
     
     Attributes
     ----------
@@ -75,8 +75,7 @@ class AxisConfig(BaseObject):
     titleMaxLength = T.CFloat(allow_none=True, default_value=None, min=0, help="""Max length for axis title if the title is automatically generated from the field's description.""")
     titleOffset = T.CFloat(allow_none=True, default_value=None, help="""A title offset value for the axis.""")
     
-
     def __init__(self, axisWidth=None, characterWidth=None, grid=None, labelAlign=None, labelAngle=None, labelBaseline=None, labelMaxLength=None, labels=None, layer=None, offset=None, properties=None, shortTimeLabels=None, subdivide=None, tickPadding=None, tickSize=None, tickSizeEnd=None, tickSizeMajor=None, tickSizeMinor=None, ticks=None, titleMaxLength=None, titleOffset=None, **kwargs):
-        kwds = dict(axisWidth=axisWidth, characterWidth=characterWidth, grid=grid, labelAlign=labelAlign, labelAngle=labelAngle, labelBaseline=labelBaseline, labelMaxLength=labelMaxLength, labels=labels, layer=layer, offset=offset, properties=properties, shortTimeLabels=shortTimeLabels, subdivide=subdivide, tickPadding=tickPadding, tickSize=tickSize, tickSizeEnd=tickSizeEnd, tickSizeMajor=tickSizeMajor, tickSizeMinor=tickSizeMinor, ticks=ticks, titleMaxLength=titleMaxLength, titleOffset=titleOffset, )
+        kwds = dict(axisWidth=axisWidth, characterWidth=characterWidth, grid=grid, labelAlign=labelAlign, labelAngle=labelAngle, labelBaseline=labelBaseline, labelMaxLength=labelMaxLength, labels=labels, layer=layer, offset=offset, properties=properties, shortTimeLabels=shortTimeLabels, subdivide=subdivide, tickPadding=tickPadding, tickSize=tickSize, tickSizeEnd=tickSizeEnd, tickSizeMajor=tickSizeMajor, tickSizeMinor=tickSizeMinor, ticks=ticks, titleMaxLength=titleMaxLength, titleOffset=titleOffset)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(AxisConfig, self).__init__(**kwargs)

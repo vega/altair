@@ -21,7 +21,7 @@ from .positionchanneldef import PositionChannelDef
 
 
 class Encoding(BaseObject):
-    """
+    """Wrapper for Vega-Lite Encoding definition.
     
     Attributes
     ----------
@@ -63,8 +63,7 @@ class Encoding(BaseObject):
     x = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
     y = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
     
-
     def __init__(self, color=None, column=None, detail=None, label=None, order=None, path=None, row=None, shape=None, size=None, text=None, x=None, y=None, **kwargs):
-        kwds = dict(color=color, column=column, detail=detail, label=label, order=order, path=path, row=row, shape=shape, size=size, text=text, x=x, y=y, )
+        kwds = dict(color=color, column=column, detail=detail, label=label, order=order, path=path, row=row, shape=shape, size=size, text=text, x=x, y=y)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Encoding, self).__init__(**kwargs)
