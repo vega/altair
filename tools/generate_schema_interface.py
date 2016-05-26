@@ -75,6 +75,10 @@ class SchemaProperty(object):
     def trait_fulldef(self):
         trait = self.trait_name
         kwds = "allow_none=True, default_value=None"
+        if 'minimum' in self.schema:
+            kwds += ', min={0}'.format(self.schema['minimum'])
+        if 'maximum' in self.schema:
+            kwds += ', max={0}'.format(self.schema['maximum'])
         if self.description:
             kwds += ', help="""{0}"""'.format(self.short_description)
 
