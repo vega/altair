@@ -65,11 +65,8 @@ class SchemaProperty(object):
         if trait == 'Instance':
             return self.refname
         elif self.subtypes:
-            try:
-                return '{0}({1})'.format(trait, ', '.join(t.trait_descr for t in self.subtypes))
-            except TypeError:
-                import IPython; IPython.embed()
-                raise
+            return '{0}({1})'.format(trait, ', '.join(t.trait_descr
+                                                      for t in self.subtypes))
         else:
             return trait
 
