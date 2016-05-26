@@ -6,18 +6,18 @@ working correctly.
 """
 import os
 import json
+from tools import GitRepo
 
 
 DESTINATION = os.path.abspath(os.path.join(os.path.dirname(__file__),
                                            '..', 'altair', 'examples', 'json'))
 DATA_URL = 'http://vega.github.io/vega-lite/'
+DEFAULT_VERSION = 'v1.0.8'
 
 
-
-
-def copy_all_examples(vegalite_repo,
-                      destination=DESTINATION,
-                      data_url=DATA_URL):
+def sync_examples(vegalite_repo,
+                  destination=DESTINATION,
+                  data_url=DATA_URL):
     source_dir = os.path.join(vegalite_repo, 'examples', 'specs')
     print("Reading from {0}".format(source_dir))
     if not os.path.exists(source_dir):
@@ -44,8 +44,22 @@ def copy_all_examples(vegalite_repo,
             json.dump(spec, f, indent=4, sort_keys=True)
 
 
+def clone_and_sync(version=DEFAULT_VERSION):
+    vegalite_repo = GitRepo('vega-lite').clone().update()
+    vegalite_repo.checkout_tag(version)
+    sync_examples(vegalite_repo.repopath)
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Sync Vega-Lite Examples')
+    parser.add_argument('-v', '--version', default=DEFAULT_VERSION,
+                        help='Version tag to use')
+
+    args = parser.parse_args()
+    clone_and_sync(args.version)
+
+
 if __name__ == '__main__':
-    vegalite_repo = os.path.join(os.path.dirname(__file__),
-                                 '..', '..', '..', 'vega', 'vega-lite')
-    vegalite_repo = os.path.abspath(vegalite_repo)
-    copy_all_examples(vegalite_repo)
+    main()
