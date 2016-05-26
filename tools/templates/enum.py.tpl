@@ -4,9 +4,9 @@
 import traitlets as T
 
 
-class HorizontalAlign(T.Enum):
-    """One of ['left', 'right', 'center']"""
+class {{ cls.name }}(T.Enum):
+    """One of [{{ cls.enum|map('repr')|join(', ') }}]"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(HorizontalAlign, self).__init__(['left', 'right', 'center'],
+        super({{ cls.name }}, self).__init__([{{ cls.enum|map('repr')|join(', ') }}],
                                     default_value=default_value,
                                     **metadata)

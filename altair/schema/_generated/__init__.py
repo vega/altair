@@ -1,4 +1,46 @@
-"""Auto-generated Python wrappers for vegalite schema"""
+"""Auto-generated Python wrappers for Vega-Lite Schema"""
+
+
+__all__ = [
+             "AggregateOp",
+             "AxisConfig",
+             "AxisOrient",
+             "AxisProperties",
+             "BinProperties",
+             "CellConfig",
+             "ChannelDefWithLegend",
+             "Config",
+             "Data",
+             "DataFormat",
+             "Encoding",
+             "FacetConfig",
+             "FacetGridConfig",
+             "FacetScaleConfig",
+             "FieldDef",
+             "FontStyle",
+             "FontWeight",
+             "HorizontalAlign",
+             "LegendConfig",
+             "LegendProperties",
+             "Mark",
+             "MarkConfig",
+             "NiceTime",
+             "OrderChannelDef",
+             "PositionChannelDef",
+             "Scale",
+             "ScaleConfig",
+             "ScaleType",
+             "Shape",
+             "SortField",
+             "SortOrder",
+             "StackOffset",
+             "TimeUnit",
+             "Transform",
+             "Type",
+             "VerticalAlign",
+             "VgFormula",
+          ]
+
 
 from .aggregateop import AggregateOp
 from .axisconfig import AxisConfig
