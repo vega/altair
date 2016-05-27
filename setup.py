@@ -23,7 +23,10 @@ PACKAGES            = ['altair',
                        'altair.utils.tests',
                        'altair.schema',
                        'altair.schema._generated',
-                       'altair.schema._generated.tests']
+                       'altair.schema._generated.tests',
+                       'altair.schema._wrappers',
+                       'altair.schema._interface',
+                       'altair.schema._interface.tests']
 PACKAGE_DATA        = {'altair': ['schema/*.json',
                                   'examples/json/*.json',
                                   'datasets/*.json']}
