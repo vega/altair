@@ -16,6 +16,7 @@ DESCRIPTION         = "Altair: Python Visualization with Vega Lite"
 NAME                = "altair"
 PACKAGES            = ['altair',
                        'altair.tests',
+                       'altair.datasets',
                        'altair.examples',
                        'altair.examples.tests',
                        'altair.utils',
@@ -23,7 +24,9 @@ PACKAGES            = ['altair',
                        'altair.schema',
                        'altair.schema._generated',
                        'altair.schema._generated.tests']
-PACKAGE_DATA        = {'altair': ['schema/*.json', 'examples/json/*.json']}
+PACKAGE_DATA        = {'altair': ['schema/*.json',
+                                  'examples/json/*.json',
+                                  'datasets/*.json']}
 AUTHOR              = "Jupyter Development Team",
 AUTHOR_EMAIL        = "jupyter@googlegroups.org",
 URL                 = 'http://github.com/ellisonbg/altair/'
