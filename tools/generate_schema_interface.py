@@ -53,15 +53,14 @@ class SchemaProperty(object):
 
     @property
     def trait_name(self):
-        trait = TYPE_MAP.get(self.type, None)
-        if trait is not None:
-            return trait
-
-        trait = self.top.definitions[self.refname].trait_name
-        if trait == 'Any':
-            return 'Instance'
+        if self.refname:
+            trait = self.top.definitions[self.refname].trait_name
+            if trait == 'Any':
+                return 'Instance'
+            else:
+                return self.refname
         else:
-            return self.refname
+            return TYPE_MAP.get(self.type, "Any")
 
     @property
     def trait_descr(self):
