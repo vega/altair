@@ -15,6 +15,10 @@ TYPE_MAP = {'oneOf': 'Union',
            }
 
 
+def getpath(*args):
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
+
+
 class SchemaProperty(object):
     """Class Wrapper for a property in a VegaLite Schema
 
@@ -142,40 +146,32 @@ class VegaLiteSchema(SchemaProperty):
     """
     def __init__(self, schema_file=None):
         if schema_file is None:
-            schema_file = os.path.join(os.path.dirname(__file__),
-                                       '..',
-                                       'altair', 'schema',
-                                       'vega-lite-schema.json')
+            schema_file = getpath('..', 'altair', 'schema',
+                                  'vega-lite-schema.json')
         with open(schema_file) as f:
             schema = json.load(f)
 
         self.definitions = {k: SchemaProperty(v, k, self)
                             for k, v in schema['definitions'].items()}
 
-        template_path = os.path.join(os.path.dirname(__file__), 'templates')
+        template_path = getpath('templates')
         self.templates = Environment(loader=FileSystemLoader(template_path))
 
         super(VegaLiteSchema, self).__init__(schema, 'VegaLiteSchema', self)
 
-    def write_wrappers(self, path=None, verbose=True):
-        def print_(*args, **kwargs):
-            if verbose:
-                print(*args, **kwargs)
-
+    def write_interface(self, path=None):
         # Make sure the path is valid
         if path is None:
-            path = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                   '..', 'altair', 'schema', '_generated'))
-        testpath = os.path.join(path, 'tests')
-        if not os.path.exists(testpath):
-            os.makedirs(testpath)
+            path = getpath('..', 'altair', 'schema', '_interface')
+        if not os.path.exists(path):
+            os.makedirs(path)
 
-        print_("Writing code to {0}".format(path))
+        print("Writing code to {0}".format(path))
 
         # Write Init File
         template = self.templates.get_template('__init__.py.tpl')
         header="Auto-generated Python wrappers for Vega-Lite Schema"
-        print_(" - Writing __init__.py")
+        print(" - Writing __init__.py")
         with open(os.path.join(path, '__init__.py'), 'w') as f:
             f.write(template.render(objects=sorted(self.definitions),
                                     header=header))
@@ -187,42 +183,58 @@ class VegaLiteSchema(SchemaProperty):
             if prop.type not in templates:
                 raise ValueError("No template for type={0}".format(prop.type))
             outfile = os.path.join(path, '{0}.py'.format(key.lower()))
-            print_(" - Writing {0}".format(os.path.basename(outfile)))
+            print(" - Writing {0}".format(os.path.basename(outfile)))
             with open(outfile, 'w') as f:
                 f.write(templates[prop.type].render(cls=prop))
 
-        print_("Writing tests to {0}".format(testpath))
+    def write_interface_tests(self, path=None):
+        # Make sure the path is valid
+        if path is None:
+            path = getpath('..', 'altair', 'schema', '_interface', 'tests')
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        print("Writing tests to {0}".format(path))
 
         # Write test Init File
         template = self.templates.get_template('__init__.py.tpl')
         header = 'Auto-generated tests for Vega-Lite Schema wrappers'
-        print_(" - Writing __init__.py")
-        with open(os.path.join(testpath, '__init__.py'), 'w') as f:
+        print(" - Writing __init__.py")
+        with open(os.path.join(path, '__init__.py'), 'w') as f:
             f.write(template.render(objects=[], header=header))
 
         # Write test file
         template = self.templates.get_template('test_instantiations.py.tpl')
         classes = [prop for key, prop in sorted(self.definitions.items())]
-        print_(" - Writing test_instantiations.py")
-        with open(os.path.join(testpath, 'test_instantiations.py'), 'w') as f:
+        print(" - Writing test_instantiations.py")
+        with open(os.path.join(path, 'test_instantiations.py'), 'w') as f:
             f.write(template.render(classes=classes))
 
-    def write_derived_wrappers(self, path=None):
-        template = self.templates.get_template('channel_defs.py.tpl')
+    def write_wrappers(self, path=None):
+        # make sure the path is valid
         if path is None:
-            path = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                   '..', 'altair', 'schema', '_wrappers'))
+            path = getpath('..', 'altair', 'schema', '_wrappers')
         if not os.path.exists(path):
             os.makedirs(path)
+
+        print("Writing wrappers to {0}".format(path))
+
+        classes = [('PositionChannel', 'PositionChannelDef'),
+                   ('ChannelWithLegend', 'ChannelDefWithLegend'),
+                   ('Field', 'FieldDef'),
+                   ('OrderChannel', 'OrderChannelDef')]
+
+        # write the init file
+        template = self.templates.get_template('__init__.py.tpl')
+        header = 'Wrappers for low-level schema objects'
+        objects = [cls[0] for cls in classes]
+        print(" - Writing __init__.py")
         with open(os.path.join(path, '__init__.py'), 'w') as f:
-            f.write('"""Wrappers for low-level schema objects"""')
+            f.write(template.render(header=header, objects=objects))
 
-        print("Writing definitions for derived objects:")
-
-        for cls, base in [('PositionChannel', 'PositionChannelDef'),
-                          ('ChannelWithLegend', 'ChannelDefWithLegend'),
-                          ('Field', 'FieldDef'),
-                          ('OrderChannel', 'OrderChannelDef')]:
+        # write the class definition files
+        template = self.templates.get_template('channel_defs.py.tpl')
+        for cls, base in classes:
             filename = os.path.join(path, '{0}.py'.format(cls.lower()))
             base = self.definitions[base]
             print("- Writing {0}".format(filename))
@@ -232,5 +244,6 @@ class VegaLiteSchema(SchemaProperty):
 
 if __name__ == '__main__':
     schema = VegaLiteSchema()
+    schema.write_interface()
+    schema.write_interface_tests()
     schema.write_wrappers()
-    schema.write_derived_wrappers()
