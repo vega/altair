@@ -22,8 +22,6 @@ PACKAGES            = ['altair',
                        'altair.utils',
                        'altair.utils.tests',
                        'altair.schema',
-                       'altair.schema._generated',
-                       'altair.schema._generated.tests',
                        'altair.schema._wrappers',
                        'altair.schema._interface',
                        'altair.schema._interface.tests']
