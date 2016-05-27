@@ -15,6 +15,14 @@ TYPE_MAP = {'oneOf': 'Union',
            }
 
 
+CLASS_ALIASES = {
+    'PositionChannel': {'base': 'PositionChannelDef', 'type': 'channel'},
+    'ChannelWithLegend': {'base': 'ChannelDefWithLegend', 'type': 'channel'},
+    'Field': {'base': 'FieldDef', 'type': 'channel'},
+    'OrderChannel': {'base': 'OrderChannelDef', 'type': 'channel'}
+    }
+
+
 def getpath(*args):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
 
@@ -218,10 +226,10 @@ class VegaLiteSchema(SchemaProperty):
 
         print("Writing wrappers to {0}".format(path))
 
-        classes = [('PositionChannel', 'PositionChannelDef'),
-                   ('ChannelWithLegend', 'ChannelDefWithLegend'),
-                   ('Field', 'FieldDef'),
-                   ('OrderChannel', 'OrderChannelDef')]
+        # get all channel class aliases
+        classes = sorted([(k, v['base'])
+                          for k, v in CLASS_ALIASES.items()
+                          if v['type'] == 'channel'])
 
         # write the init file
         template = self.templates.get_template('__init__.py.tpl')
@@ -233,9 +241,9 @@ class VegaLiteSchema(SchemaProperty):
 
         # write the class definition files
         template = self.templates.get_template('channel_defs.py.tpl')
-        for cls, base in classes:
+        for cls, basename in sorted(classes):
+            base = self.definitions[basename]  
             filename = os.path.join(path, '{0}.py'.format(cls.lower()))
-            base = self.definitions[base]
             print("- Writing {0}".format(filename))
             with open(filename, 'w') as f:
                 f.write(template.render(cls=cls, base=base))

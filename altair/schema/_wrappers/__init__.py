@@ -2,14 +2,14 @@
 
 
 __all__ = [
-             "PositionChannel",
              "ChannelWithLegend",
              "Field",
              "OrderChannel",
+             "PositionChannel",
           ]
 
 
-from .positionchannel import PositionChannel
 from .channelwithlegend import ChannelWithLegend
 from .field import Field
 from .orderchannel import OrderChannel
+from .positionchannel import PositionChannel
