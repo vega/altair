@@ -2,8 +2,11 @@
 # Do not modify this file directly.
 
 import traitlets as T
+import pandas as pd
 
-from .. import _generated as schema
+from .. import _interface as schema
+from ...utils import parse_shorthand, infer_vegalite_type
+from ...utils import INV_TYPECODE_MAP, TYPE_ABBR
 
 
 class ChannelWithLegend(schema.ChannelDefWithLegend):
