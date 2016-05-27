@@ -16,6 +16,7 @@ DESCRIPTION         = "Altair: Python Visualization with Vega Lite"
 NAME                = "altair"
 PACKAGES            = ['altair',
                        'altair.tests',
+                       'altair.datasets',
                        'altair.examples',
                        'altair.examples.tests',
                        'altair.utils',

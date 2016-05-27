@@ -14,23 +14,27 @@ def abspath(*args):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
 
 
-DEFAULT_TAG = 'v1.0.8'
+VEGALITE_TAG = 'v1.0.8'
 VEGALITE_PATH = abspath('repos', 'vega-lite')
+VEGALITE_URL = 'https://github.com/vega/vega-lite.git'
+
+VEGA_DATA_TAG = 'v1.5.0'
+VEGA_DATA_PATH = abspath('repos', 'vega-datasets')
+VEGA_DATA_URL = 'https://github.com/vega/vega-datasets.git'
 
 
 @contextmanager
-def vegalite_tag(tag, vegalite_repo,
-                 url='https://github.com/vega/vega-lite.git'):
-    repo_dir = os.path.abspath(os.path.join(vegalite_repo, '..'))
+def checkout_tag(tag, local_repo, url):
+    repo_dir = os.path.abspath(os.path.join(local_repo, '..'))
     if not os.path.exists(repo_dir):
         os.makedirs(repo_dir)
 
-    if not os.path.exists(vegalite_repo):
+    if not os.path.exists(local_repo):
         print('cloning {0}'.format(url))
-        vegalite = git.Repo.clone_from(url, vegalite_repo)
+        vegalite = git.Repo.clone_from(url, local_repo)
     else:
-        vegalite = git.Repo(vegalite_repo)
-        vegalite.branches.master.checkout()
+        vegalite = git.Repo(local_repo)
+        vegalite.branches[0].checkout()
         vegalite.remotes.origin.pull()
 
     if tag not in vegalite.tags:
@@ -42,7 +46,7 @@ def vegalite_tag(tag, vegalite_repo,
     try:
         yield
     finally:
-        vegalite.branches.master.checkout()
+        vegalite.branches[0].checkout()
 
 
 def sync_schema(vegalite_repo,
@@ -91,15 +95,36 @@ def sync_examples(vegalite_repo,
         with open(destination_file, 'w') as f:
             json.dump(spec, f, indent=4, sort_keys=True)
 
+
+def sync_datasets(datasets_repo,
+                  filename='datasets.json',
+                  destination=abspath('..', 'altair', 'datasets')):
+    sourcedir = os.path.join(datasets_repo, 'data')
+    datasets_dict = {}
+    for dataset in os.listdir(sourcedir):
+        root, ext = os.path.splitext(dataset)
+        ext = ext.lstrip('.')
+        if ext in ['json', 'csv']:
+            datasets_dict[root] = {'filename': dataset, 'format': ext}
+
+    outfile = os.path.join(destination, filename)
+    print("Writing datasets dict to {0}".format(outfile))
+    with open(outfile, 'w') as f:
+        f.write(json.dumps(datasets_dict, indent=2))
+
+
+
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(description='Sync Vega-Lite Schema')
-    parser.add_argument('-t', '--tag', default=DEFAULT_TAG,
+    parser.add_argument('-t', '--tag', default=None,
                         help='Version tag to use')
     parser.add_argument('-e', '--examples', action='store_true',
                         help='Sync the Vega-Lite examples')
     parser.add_argument('-s', '--schema', action='store_true',
+                        help='Sync the Vega-Lite schema')
+    parser.add_argument('-d', '--datasets', action='store_true',
                         help='Sync the Vega-Lite schema')
 
     args = parser.parse_args()
@@ -108,12 +133,19 @@ def main():
         parser.print_help()
 
     if args.schema:
-        with vegalite_tag(args.tag, VEGALITE_PATH):
+        tag = args.tag or VEGALITE_TAG
+        with checkout_tag(tag, VEGALITE_PATH, VEGALITE_URL):
             sync_schema(VEGALITE_PATH)
 
     if args.examples:
-        with vegalite_tag(args.tag, VEGALITE_PATH):
+        tag = args.tag or VEGALITE_TAG
+        with checkout_tag(tag, VEGALITE_PATH, VEGALITE_URL):
             sync_examples(VEGALITE_PATH)
+
+    if args.datasets:
+        tag = args.tag or VEGA_DATA_TAG
+        with checkout_tag(tag, VEGA_DATA_PATH, VEGA_DATA_URL):
+            sync_datasets(VEGA_DATA_PATH)
 
 
 if __name__ == '__main__':
