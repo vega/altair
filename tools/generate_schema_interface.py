@@ -12,7 +12,7 @@ TYPE_MAP = {'oneOf': 'Union',
             "number": "CFloat",
             "string": "Unicode",
             "object": "Any",
-           }
+            }
 
 
 CLASS_ALIASES = {
@@ -38,13 +38,15 @@ class SchemaProperty(object):
         self.top = top
 
         self.properties = {k: SchemaProperty(v, k, self.top)
-                           for k, v in self.schema.get('properties', {}).items()}
+                           for k, v in self.schema.get('properties',
+                                                       {}).items()}
 
     @property
     def subtypes(self):
         trait = self.trait_name
         if trait == 'Union':
-            return [self.__class__(s, '', self.top) for s in self.schema['oneOf']]
+            return [self.__class__(s, '', self.top)
+                    for s in self.schema['oneOf']]
         elif trait == 'List':
             return [self.__class__(self.schema['items'], '', self.top)]
         else:
@@ -94,9 +96,11 @@ class SchemaProperty(object):
 
         if trait == 'Union':
             return ('T.Union([{0}])'
-                    ''.format(', '.join(t.trait_fulldef for t in self.subtypes)))
+                    ''.format(', '.join(t.trait_fulldef
+                                        for t in self.subtypes)))
         elif trait == 'List':
-            return 'T.List({0}, {1})'.format(*(t.trait_fulldef for t in self.subtypes), kwds)
+            return 'T.List({0}, {1})'.format(*(t.trait_fulldef
+                                               for t in self.subtypes), kwds)
         elif trait == 'Instance':
             return 'T.Instance({0}, {1})'.format(self.refname, kwds)
         elif trait == self.refname:
@@ -177,7 +181,7 @@ class VegaLiteSchema(SchemaProperty):
 
         # Write Init File
         template = self.templates.get_template('__init__.py.tpl')
-        header="Auto-generated Python wrappers for Vega-Lite Schema"
+        header = "Auto-generated Python wrappers for Vega-Lite Schema"
         print(" - Writing __init__.py")
         with open(os.path.join(path, '__init__.py'), 'w') as f:
             f.write(template.render(objects=sorted(self.definitions),
@@ -242,7 +246,7 @@ class VegaLiteSchema(SchemaProperty):
         # write the class definition files
         template = self.templates.get_template('channel_defs.py.tpl')
         for cls, basename in sorted(classes):
-            base = self.definitions[basename]  
+            base = self.definitions[basename]
             filename = os.path.join(path, '{0}.py'.format(cls.lower()))
             print("- Writing {0}".format(filename))
             with open(filename, 'w') as f:
