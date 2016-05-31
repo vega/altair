@@ -29,7 +29,7 @@ Layer(cars).encode(
     color='Origin',
 )
 ```
-![Altair Visualization](relative/path/to/img.jpg?raw=true "Title")
+![Altair Visualization](images/cars.png?raw=true)
 
 For examples of Altair's API using the native Vega-Lite renderer, see the [Notebook Examples](notebooks/Index.ipynb).
 
