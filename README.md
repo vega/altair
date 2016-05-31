@@ -9,13 +9,10 @@ declarative manner.
 This API contains no actual visualization rendering code, but instead emits JSON data structures following the [Vega-Lite](https://github.com/vega/vega-lite) specification.
 For convenience, Altair can optionally use [ipyvega](https://github.com/vega/ipyvega) to seamlessly display client-side renderings in the Jupyter notebook.
 
-## Whence Altair?
-
-Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the constellation Aquila, and along with Deneb and Vega forms the northern-hemisphere asterism known as the [Summer Triangle](https://en.wikipedia.org/wiki/Summer_Triangle).
-
 ## Examples
 
-Here is an example of how Altair can be used to quickly visualize a dataset:
+Here is an example of how Altair can be used to quickly visualize a dataset.
+The figure is displayed using the native Vega-Lite renderer:
 
 ```python
 from altair import Layer, load_dataset
@@ -31,7 +28,7 @@ Layer(cars).encode(
 ```
 ![Altair Visualization](images/cars.png?raw=true)
 
-For examples of Altair's API using the native Vega-Lite renderer, see the [Notebook Examples](notebooks/Index.ipynb).
+For more information and examples of Altair's API, see the [Notebook Examples](notebooks/Index.ipynb).
 
 ## Motivation
 
@@ -109,3 +106,7 @@ py.test altair
 We welcome any input, feedback, bug reports, and contributions via [Altair's GitHub Repository](http://github.com/ellisonbg/altair/).
 In particular, we would welcome companion efforts from other graphics libraries to render the Vega-Lite specifications output by Altair.
 We see this portion of the effort as much bigger than Altair itself: the Vega and Vega-Lite specifications are perhaps the best existing candidates for a principled *lingua franca* of data visualization.
+
+## Whence Altair?
+
+Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the constellation Aquila, and along with Deneb and Vega forms the northern-hemisphere asterism known as the [Summer Triangle](https://en.wikipedia.org/wiki/Summer_Triangle).
