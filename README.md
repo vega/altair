@@ -15,6 +15,22 @@ Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the cons
 
 ## Examples
 
+Here is an example of how Altair can be used to quickly visualize a dataset:
+
+```python
+from altair import Layer, load_dataset
+
+# data is loaded as a pandas DataFrame
+cars = load_dataset('cars')
+
+Layer(cars).encode(
+    x='Horsepower',
+    y='Miles_per_Gallon',
+    color='Origin',
+)
+```
+![Altair Visualization](relative/path/to/img.jpg?raw=true "Title")
+
 For examples of Altair's API using the native Vega-Lite renderer, see the [Notebook Examples](notebooks/Index.ipynb).
 
 ## Motivation
