@@ -49,6 +49,7 @@ from .schema import PositionChannel, ChannelWithLegend, Field, OrderChannel
 # Channel Wrappers
 #*************************************************************************
 
+
 class X(PositionChannel):
     channel_name = 'x'
 
