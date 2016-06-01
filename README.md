@@ -20,7 +20,7 @@ from altair import Layer, load_dataset
 # data is loaded as a pandas DataFrame
 cars = load_dataset('cars')
 
-Layer(cars).encode(
+Layer(cars).mark_point().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
     color='Origin',
