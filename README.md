@@ -51,7 +51,7 @@ Another challenge is that all of the current APIs require the user to write code
 This is unfortunate and unnecessary as the type of visualization (histogram, scatterplot, etc.) can often be inferred with basic information such as the columns of interest and the data types of those columns.
 For example, if you are interested in a visualization of two numerical columns, a scatterplot is almost certainly a good starting point.
 If you add a categorical column to that, you probably want facetted scatterplots.
-In cases where the visualization can't be inferred, simple user interfaces can enable the construction of visualizations without any coding. [Tableau](http://www.tableau.com/) and Jeff Heer's
+In cases where the visualization can't be inferred, simple user interfaces can enable the construction of visualizations without any coding. [Tableau](http://www.tableau.com/) and the [Interactive Data Lab's](http://idl.cs.washington.edu/)
 [Polestar](https://github.com/vega/polestar) and [Voyager](https://github.com/vega/voyager) are
 excellent examples of such UIs.
 
