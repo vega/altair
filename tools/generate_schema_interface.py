@@ -139,7 +139,7 @@ class SchemaProperty(object):
                 yield from t.imports
             for v in self.properties.values():
                 yield from v.imports
-        return sorted(gen_imports())
+        return sorted(set(gen_imports()))
 
     @property
     def attributes(self):
