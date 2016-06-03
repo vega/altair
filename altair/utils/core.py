@@ -141,9 +141,9 @@ def sanitize_dataframe(df):
     """
     df = df.copy()
 
-    if type(df.index) == pd.core.index.MultiIndex:
+    if isinstance(df.index, pd.core.index.MultiIndex):
         raise ValueError('Hierarchical indices not supported')
-    if type(df.columns) == pd.core.index.MultiIndex:
+    if isinstance(df.columns, pd.core.index.MultiIndex):
         raise ValueError('Hierarchical indices not supported')
 
     for col_name, dtype in df.dtypes.iteritems():
