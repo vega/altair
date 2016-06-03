@@ -4,6 +4,7 @@ Utility routines
 import warnings
 
 import pandas as pd
+import numpy as np
 import traitlets as T
 
 
@@ -135,10 +136,9 @@ def sanitize_dataframe(df):
     * Raise ValueError is it has a hierarchical index.
     * Convert categoricals to strings.
     * Convert np.int dtypes to Python int objects
+    * Convert floats to objects and replace NaNs by None.
     * Convert DateTime dtypes into appropriate string representations
     """
-    import pandas as pd
-    import numpy as np
     df = df.copy()
 
     if type(df.index) == pd.core.index.MultiIndex:
@@ -152,10 +152,14 @@ def sanitize_dataframe(df):
             # https://github.com/pydata/pandas/issues/10778
             df[col_name] = df[col_name].astype(str)
         elif np.issubdtype(dtype, np.integer):
-            df[col_name] = np.array(list(map(int, df[col_name])), dtype=object)
-        elif str(dtype) == 'datetime64[ns]':
-            # this is the format used in Vega-Lite example area.json
-            to_str = lambda x: x.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
-            df[col_name] = df[col_name].apply(to_str)
+            # convert integers to objects; np.int is not JSON serializable
+            df[col_name] = df[col_name].astype(object)
+        elif np.issubdtype(dtype, np.floating):
+            # For floats, convert nan->None: np.float is not JSON serializable
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
+        elif str(dtype).startswith('datetime'):
+            # Convert datetimes to strings
+            # astype(str) will choose the appropriate resolution
+            df[col_name] = df[col_name].astype(str).replace('NaT', '')
     return df
-    
