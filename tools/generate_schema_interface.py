@@ -109,6 +109,19 @@ class SchemaProperty(object):
             return 'T.{0}({1})'.format(trait, kwds)
 
     @property
+    def trait_or_subtrait(self):
+        if self.refname is not None:
+            return self.refname
+        elif self.trait_name in ['Union', 'List']:
+            for t in self.subtypes:
+                if t.trait_or_subtrait is not None:
+                    return t.trait_or_subtrait
+            else:
+                return None
+        else:
+            return None
+
+    @property
     def description(self):
         return self.schema.get('description', '')
 
@@ -183,8 +196,10 @@ class VegaLiteSchema(SchemaProperty):
         template = self.templates.get_template('__init__.py.tpl')
         header = "Auto-generated Python wrappers for Vega-Lite Schema"
         print(" - Writing __init__.py")
+        objects = [dict(module=obj.lower(), classname=obj)
+                   for obj in sorted(self.definitions)]
         with open(os.path.join(path, '__init__.py'), 'w') as f:
-            f.write(template.render(objects=sorted(self.definitions),
+            f.write(template.render(objects=objects,
                                     header=header))
 
         # Write Class Definition files
@@ -235,14 +250,6 @@ class VegaLiteSchema(SchemaProperty):
                           for k, v in CLASS_ALIASES.items()
                           if v['type'] == 'channel'])
 
-        # write the init file
-        template = self.templates.get_template('__init__.py.tpl')
-        header = 'Wrappers for low-level schema objects'
-        objects = [cls[0] for cls in classes]
-        print(" - Writing __init__.py")
-        with open(os.path.join(path, '__init__.py'), 'w') as f:
-            f.write(template.render(header=header, objects=objects))
-
         # write the class definition files
         template = self.templates.get_template('channel_defs.py.tpl')
         for cls, basename in sorted(classes):
@@ -251,6 +258,33 @@ class VegaLiteSchema(SchemaProperty):
             print("- Writing {0}".format(filename))
             with open(filename, 'w') as f:
                 f.write(template.render(cls=cls, base=base))
+
+        # All Encoding attributes get their own class name:
+        encoding = self.definitions['Encoding']
+        channels = [{'name': attr.name.title(),
+                     'base': attr.trait_or_subtrait.replace('Def', '')}
+                    for attr in encoding.attributes]
+        imports = sorted(set(c['base'] for c in channels))
+
+        # write the encoding channel wrapper files
+        template = self.templates.get_template('encoding_defs.py.tpl')
+        filename = os.path.join(path, 'encoding_defs.py')
+        print("- Writing {0}".format(filename))
+        with open(filename, 'w') as f:
+            f.write(template.render(imports=imports, channels=channels))
+
+        # write the init file
+        template = self.templates.get_template('__init__.py.tpl')
+        header = 'Wrappers for low-level schema objects'
+        objects = [dict(module=cls[0].lower(), classname=cls[0])
+                   for cls in classes]
+        objects.extend([dict(module='encoding_defs', classname=c['name'])
+                        for c in channels])
+        objects.append(dict(module='encoding_defs', classname='CHANNEL_CLASSES'))
+        objects.append(dict(module='encoding_defs', classname='CHANNEL_NAMES'))
+        print(" - Writing __init__.py")
+        with open(os.path.join(path, '__init__.py'), 'w') as f:
+            f.write(template.render(header=header, objects=objects))
 
 
 if __name__ == '__main__':

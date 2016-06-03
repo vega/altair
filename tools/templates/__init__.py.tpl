@@ -1,10 +1,11 @@
 """{{ header }}"""
 
 {% if objects %}
-__all__ = [{% for object in objects %}
-             "{{ object }}",{% endfor %}
+__all__ = [
+          {%- for obj in objects %}
+             "{{ obj.classname }}",{% endfor %}
           ]
 {% endif %}
 
-{% for object in objects %}from .{{ object.lower() }} import {{ object }}
+{% for obj in objects %}from .{{ obj.module }} import {{ obj.classname }}
 {% endfor %}

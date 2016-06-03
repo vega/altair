@@ -42,60 +42,10 @@ from .schema import Transform
 from .schema import VerticalAlign
 from .schema import VgFormula
 
-# channels: 1 level up from basic schema
-from .schema import PositionChannel, ChannelWithLegend, Field, OrderChannel
-
 #*************************************************************************
-# Channel Wrappers
+# Channel Aliases
 #*************************************************************************
-
-
-class X(PositionChannel):
-    channel_name = 'x'
-
-
-class Y(PositionChannel):
-    channel_name = 'y'
-
-
-class Row(PositionChannel):
-    channel_name = 'row'
-
-
-class Column(PositionChannel):
-    channel_name = 'column'
-
-
-class Color(ChannelWithLegend):
-    channel_name = 'color'
-
-
-class Size(ChannelWithLegend):
-    channel_name = 'size'
-
-
-class Shape(ChannelWithLegend):
-    channel_name = 'shape'
-
-
-class Text(Field):
-    channel_name = 'text'
-
-
-class Label(Field):
-    channel_name = 'label'
-
-
-class Detail(Field):
-    channel_name = 'detail'
-
-
-class Order(OrderChannel):
-    channel_name = 'order'
-
-
-class Path(OrderChannel):
-    channel_name = 'path'
+from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Order, Path
 
 
 #*************************************************************************
