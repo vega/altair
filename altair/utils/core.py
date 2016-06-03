@@ -133,7 +133,7 @@ def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
-    * Raise ValueError is it has a hierarchical index.
+    * Raise ValueError if it has a hierarchical index.
     * Convert categoricals to strings.
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs by None.
