@@ -72,7 +72,7 @@ class ToCode(Visitor):
         kwds = {k: self.visit(v) for k, v in kwds.items()}
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
-    def visit__ChannelMixin(self, obj, *args, **kwargs):
+    def _visit_ChannelWrapper(self, obj, *args, **kwargs):
         shorthand = construct_shorthand(field=obj.field,
                                         aggregate=obj.aggregate,
                                         type=obj.type)
@@ -89,6 +89,18 @@ class ToCode(Visitor):
             return repr(shorthand)
         else:
             return code
+
+    def visit_ChannelWithLegend(self, obj, *args, **kwargs):
+        return self._visit_ChannelWrapper(obj, *args, **kwargs)
+
+    def visit_Field(self, obj, *args, **kwargs):
+        return self._visit_ChannelWrapper(obj, *args, **kwargs)
+
+    def visit_OrderChannel(self, obj, *args, **kwargs):
+        return self._visit_ChannelWrapper(obj, *args, **kwargs)
+
+    def visit_PositionChannel(self, obj, *args, **kwargs):
+        return self._visit_ChannelWrapper(obj, *args, **kwargs)
 
     def visit_Encoding(self, obj, *args, **kwargs):
         kwds = {k: getattr(obj, k) for k in obj.traits()
