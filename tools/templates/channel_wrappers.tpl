@@ -4,36 +4,36 @@
 import traitlets as T
 import pandas as pd
 
-from .. import _interface as schema
 from ...utils import parse_shorthand, infer_vegalite_type
 from ...utils import INV_TYPECODE_MAP, TYPE_ABBR
 
+from .._interface import Type
 
-class Field(schema.FieldDef):
-    """Wrapper for Vega-Lite FieldDef definition.
-    
+{%- for object in objects %}{% for import in object.imports %}
+{%- set comma = joiner(", ") %}
+from {{ import.module }} import {% for name in import.names %}{{ comma() }}{{ name }}{% endfor %}
+{%- endfor %}{% endfor %}
+
+{% for object in objects %}
+class {{ object.name }}({{ object.base.name }}):
+    """Wrapper for Vega-Lite {{ object.base.name }} definition.
+    {{ object.base.description }}
     Attributes
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate: AggregateOp
-        
-    bin: Union(Bool, BinProperties)
-        
-    displayName: Unicode
-        
-    field: Unicode
-        
-    timeUnit: TimeUnit
-        
-    type: Union(Type, Unicode)
-        
-    value: Union(CFloat, Unicode, Bool)
-        
+    {% for attr in object.base.attributes -%}
+    {{ attr.name }}: {% if attr.name == 'type' -%}
+                          Union(Type, Unicode)
+                     {%- else -%}
+                          {{ attr.trait_descr}}
+                     {%- endif %}
+        {{ attr.short_description }}
+    {% endfor -%}
     """
     # Traitlets
     shorthand = T.Unicode('')
-    type = T.Union([schema.Type(), T.Unicode()],
+    type = T.Union([Type(), T.Unicode()],
                    allow_none=True, default_value=None)
 
     @T.observe('shorthand')
@@ -52,11 +52,12 @@ class Field(schema.FieldDef):
     skip = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', aggregate=None, bin=None, displayName=None, field=None, timeUnit=None, type=None, value=None, **kwargs):
+    {%- set comma = joiner(", ") %}
+    def __init__(self, shorthand='', {% for attr in object.base.attributes %}{{ attr.name }}=None, {% endfor %}**kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, timeUnit=timeUnit, type=type, value=value)
+        kwds = dict({% for attr in object.base.attributes %}{{ comma() }}{{ attr.name }}={{ attr.name }}{% endfor %})
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
-        super(Field, self).__init__(**kwargs)
+        super({{ object.name }}, self).__init__(**kwargs)
 
     def _infer_type(self, data):
         if isinstance(data, pd.DataFrame):
@@ -64,3 +65,5 @@ class Field(schema.FieldDef):
                 self.type = infer_vegalite_type(data[self.field])
         if data is None:
             self.type = ''
+
+{% endfor %}

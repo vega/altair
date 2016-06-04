@@ -1,6 +1,7 @@
 import os
 import json
-from itertools import chain
+from itertools import chain, groupby
+from operator import itemgetter
 
 from jinja2 import Environment, FileSystemLoader, filters
 
@@ -13,14 +14,6 @@ TYPE_MAP = {'oneOf': 'Union',
             "string": "Unicode",
             "object": "Any",
             }
-
-
-CLASS_ALIASES = {
-    'PositionChannel': {'base': 'PositionChannelDef', 'type': 'channel'},
-    'ChannelWithLegend': {'base': 'ChannelDefWithLegend', 'type': 'channel'},
-    'Field': {'base': 'FieldDef', 'type': 'channel'},
-    'OrderChannel': {'base': 'OrderChannelDef', 'type': 'channel'}
-    }
 
 
 def getpath(*args):
@@ -40,6 +33,9 @@ class SchemaProperty(object):
         self.properties = {k: SchemaProperty(v, k, self.top)
                            for k, v in self.schema.get('properties',
                                                        {}).items()}
+
+    def rename(self, newname):
+        return self.__class__(self.schema, newname, self.top)
 
     @property
     def subtypes(self):
@@ -183,6 +179,32 @@ class VegaLiteSchema(SchemaProperty):
 
         super(VegaLiteSchema, self).__init__(schema, 'VegaLiteSchema', self)
 
+    def wrappers(self):
+        """Iterator over all class aliases to generate.
+
+        These will be passed via jinja to ``templates/{template}.tpl``
+        and saved to ``altair/schema/_wrappers/{template}.py``
+        """
+
+        # Channel wrapper classes
+        for base in ['PositionChannelDef', 'ChannelDefWithLegend',
+                     'FieldDef', 'OrderChannelDef']:
+            wrappername = base.replace('Def', '')
+            yield dict(name=wrappername,
+                       base=self.definitions[base],
+                       imports=[dict(module='.._interface', names=[base])],
+                       root='channel_wrappers')
+
+        # Encoding channel specializations
+        encoding = self.definitions['Encoding']
+        for attr in encoding.attributes:
+            base = attr.trait_or_subtrait
+            wrappername = base.replace('Def', '')
+            yield dict(name=attr.name.title(),
+                       base=self.definitions[base].rename(wrappername),
+                       imports=[dict(module='.channel_wrappers', names=[wrappername])],
+                       root='encoding_channels')
+
     def write_interface(self, path=None):
         # Make sure the path is valid
         if path is None:
@@ -193,7 +215,7 @@ class VegaLiteSchema(SchemaProperty):
         print("Writing code to {0}".format(path))
 
         # Write Init File
-        template = self.templates.get_template('__init__.py.tpl')
+        template = self.templates.get_template('interface_init.tpl')
         header = "Auto-generated Python wrappers for Vega-Lite Schema"
         print(" - Writing __init__.py")
         objects = [dict(module=obj.lower(), classname=obj)
@@ -203,8 +225,8 @@ class VegaLiteSchema(SchemaProperty):
                                     header=header))
 
         # Write Class Definition files
-        templates = {'string': self.templates.get_template('enum.py.tpl'),
-                     'object': self.templates.get_template('object.py.tpl')}
+        templates = {'string': self.templates.get_template('interface_enum.tpl'),
+                     'object': self.templates.get_template('interface_object.tpl')}
         for key, prop in sorted(self.definitions.items()):
             if prop.type not in templates:
                 raise ValueError("No template for type={0}".format(prop.type))
@@ -223,14 +245,14 @@ class VegaLiteSchema(SchemaProperty):
         print("Writing tests to {0}".format(path))
 
         # Write test Init File
-        template = self.templates.get_template('__init__.py.tpl')
+        template = self.templates.get_template('interface_init.tpl')
         header = 'Auto-generated tests for Vega-Lite Schema wrappers'
         print(" - Writing __init__.py")
         with open(os.path.join(path, '__init__.py'), 'w') as f:
             f.write(template.render(objects=[], header=header))
 
         # Write test file
-        template = self.templates.get_template('test_instantiations.py.tpl')
+        template = self.templates.get_template('interface_test.tpl')
         classes = [prop for key, prop in sorted(self.definitions.items())]
         print(" - Writing test_instantiations.py")
         with open(os.path.join(path, 'test_instantiations.py'), 'w') as f:
@@ -245,46 +267,23 @@ class VegaLiteSchema(SchemaProperty):
 
         print("Writing wrappers to {0}".format(path))
 
-        # get all channel class aliases
-        classes = sorted([(k, v['base'])
-                          for k, v in CLASS_ALIASES.items()
-                          if v['type'] == 'channel'])
-
-        # write the class definition files
-        template = self.templates.get_template('channel_defs.py.tpl')
-        for cls, basename in sorted(classes):
-            base = self.definitions[basename]
-            filename = os.path.join(path, '{0}.py'.format(cls.lower()))
-            print("- Writing {0}".format(filename))
+        # Write wrapper definition files
+        groups = groupby(self.wrappers(), itemgetter('root'))
+        for root, wrappers in groups:
+            template = self.templates.get_template('{0}.tpl'.format(root))
+            filename = os.path.join(path, '{0}.py'.format(root))
+            print("- writing {0}".format(filename))
             with open(filename, 'w') as f:
-                f.write(template.render(cls=cls, base=base))
+                f.write(template.render(objects=list(wrappers)))
 
-        # All Encoding attributes get their own class name:
-        encoding = self.definitions['Encoding']
-        channels = [{'name': attr.name.title(),
-                     'base': attr.trait_or_subtrait.replace('Def', '')}
-                    for attr in encoding.attributes]
-        imports = sorted(set(c['base'] for c in channels))
-
-        # write the encoding channel wrapper files
-        template = self.templates.get_template('encoding_defs.py.tpl')
-        filename = os.path.join(path, 'encoding_defs.py')
-        print("- Writing {0}".format(filename))
-        with open(filename, 'w') as f:
-            f.write(template.render(imports=imports, channels=channels))
-
-        # write the init file
-        template = self.templates.get_template('__init__.py.tpl')
+        # Write __init__.py file
+        template = self.templates.get_template('wrapper_init.tpl')
+        filename = os.path.join(path, '__init__.py')
         header = 'Wrappers for low-level schema objects'
-        objects = [dict(module=cls[0].lower(), classname=cls[0])
-                   for cls in classes]
-        objects.extend([dict(module='encoding_defs', classname=c['name'])
-                        for c in channels])
-        objects.append(dict(module='encoding_defs', classname='CHANNEL_CLASSES'))
-        objects.append(dict(module='encoding_defs', classname='CHANNEL_NAMES'))
-        print(" - Writing __init__.py")
-        with open(os.path.join(path, '__init__.py'), 'w') as f:
-            f.write(template.render(header=header, objects=objects))
+        print("- writing {0}".format(filename))
+        with open(filename, 'w') as f:
+            f.write(template.render(objects=list(self.wrappers()),
+                                    header=header))
 
 
 if __name__ == '__main__':
