@@ -2,14 +2,15 @@ LONG_DESCRIPTION = """
 Altair: High-level declarative visualization library for Python
 ===============================================================
 
-This package exposes a Python API for building statistical visualizations in a
-declarative manner. This API contains no actual visualization rendering code,
-but instead just emits JSON data that follows the
-`vega-lite <https://github.com/vega/vega-lite>`_ specification.
+High-level declarative visualization library for Python.
 
-Actual plotting code is done by renderers that are provided by other plotting
-libraries. For the purpose or prototyping, we are shipping a Matplotlib
-rendered in Altair.
+This package provides a Python API for building statistical visualizations
+in a declarative manner. This API contains no actual visualization rendering
+code, but instead emits JSON data structures following the
+[Vega-Lite](https://github.com/vega/vega-lite) specification. For
+convenience, Altair can optionally use
+[ipyvega](https://github.com/vega/ipyvega) to seamlessly display client-side
+renderings in the Jupyter notebook.
 """
 
 DESCRIPTION         = "Altair: Python Visualization with Vega Lite"
@@ -27,8 +28,8 @@ PACKAGES            = ['altair',
 PACKAGE_DATA        = {'altair': ['schema/*.json',
                                   'examples/json/*.json',
                                   'datasets/*.json']}
-AUTHOR              = "Jupyter Development Team",
-AUTHOR_EMAIL        = "jupyter@googlegroups.org",
+AUTHOR              = "Brian E. Granger / Jake VanderPlas",
+AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu",
 URL                 = 'http://github.com/ellisonbg/altair/'
 DOWNLOAD_URL        = 'http://github.com/ellisonbg/altair/'
 LICENSE             = 'BSD 3-clause'
