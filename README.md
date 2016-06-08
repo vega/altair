@@ -9,11 +9,9 @@ declarative manner. By statistical visualization we mean:
 
 * The data source is a data frame that consists of column of different data types
   that include quantitative, ordinal, nominal and date/time.
-* The data frame is in a [tidy format]() where the rows correspond to samples and
-  the colunms correspond the observed variables.
-* The visual encoding (position, color, size, shape, etc.) of the different
-  columns is intimately related to marginal and conditional probability
-  distributions and relational algebra (in particular `GROUPBY`).
+* The data frame is in a [tidy format](http://vita.had.co.nz/papers/tidy-data.pdf) where the rows correspond to samples and the colunms correspond the observed variables.
+* The visual encoding (position, color, size, shape, facetting, etc.) of the different
+  columns is intimately related to the groupby operation of Pandas and SQL.
 
 The Altair API contains no actual visualization rendering code, but instead emits
 JSON data structures following the [Vega-Lite](https://github.com/vega/vega-lite)
@@ -64,17 +62,19 @@ individuals just learning data science, this forces them to focus on learning AP
 rather than exploring data.
 
 Another challenge is that all of the current APIs require the user to write code,
-even for the simplest of visualizations. This is unfortunate and unnecessary as
-the type of visualization (histogram, scatterplot, etc.) can often be inferred
-with basic information such as the columns of interest and the data types of those
-columns. For example, if you are interested in a visualization of two numerical
-columns, a scatterplot is almost certainly a good starting point. If you add a
-categorical column to that, you probably want to encode that column using colors
-or facets. In cases where the visualization can't be inferred, simple user
-interfaces can enable the construction of visualizations without any coding.
-[Tableau](http://www.tableau.com/) and the [Interactive Data
-Lab's](http://idl.cs.washington.edu/) [Polestar](https://github.com/vega/polestar)
-and [Voyager](https://github.com/vega/voyager) are excellent examples of such UIs.
+even for incidental aspects of a visulization. This is unfortunate and
+unnecessary as the type of visualization (histogram, scatterplot, etc.) can often
+be inferred with basic information such as the columns of interest and the data
+types of those columns. For example, if you are interested in a visualization of
+two numerical columns, a scatterplot is almost certainly a good starting point.
+If you add a categorical column to that, you probably want to encode that column
+using colors or facets. In cases where the visualization can't be inferred,
+simple user interfaces can enable the construction of visualizations without any
+coding. [Tableau](http://www.tableau.com/) and the [Interactive Data
+Lab's](http://idl.cs.washington.edu/)
+[Polestar](https://github.com/vega/polestar) and
+[Voyager](https://github.com/vega/voyager) are excellent examples of such UIs.
+
 
 We feel that these challenges can be addressed without creation of yet another
 plotting library. The approach of Altair is to build visualizations using a
