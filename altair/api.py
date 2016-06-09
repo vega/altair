@@ -8,7 +8,6 @@ import warnings
 import traitlets as T
 import pandas as pd
 
-from .utils import parse_shorthand, infer_vegalite_type, construct_shorthand
 from .utils import visitors
 from .utils._py3k_compat import string_types
 
@@ -43,169 +42,10 @@ from .schema import Transform
 from .schema import VerticalAlign
 from .schema import VgFormula
 
-from .utils import INV_TYPECODE_MAP, TYPE_ABBR
-
 #*************************************************************************
-# Channels
+# Channel Aliases
 #*************************************************************************
-
-
-class _ChannelMixin(object):
-
-    def _infer_type(self, data):
-        if isinstance(data, pd.DataFrame):
-            if not self.type and self.field in data:
-                self.type = infer_vegalite_type(data[self.field])
-        if data is None:
-            self.type = ''
-
-
-class PositionChannelDef(_ChannelMixin, schema.PositionChannelDef):
-
-    skip = ['shorthand']
-
-    shorthand = T.Unicode('')
-    type = T.Union([schema.Type(), T.Unicode()],
-                   allow_none=True, default_value=None)
-
-    def __init__(self, shorthand='', **kwargs):
-        kwargs['shorthand'] = shorthand
-        super(PositionChannelDef, self).__init__(**kwargs)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-
-class X(PositionChannelDef):
-    channel_name = 'x'
-
-
-class Y(PositionChannelDef):
-    channel_name = 'y'
-
-
-class Row(PositionChannelDef):
-    channel_name = 'row'
-
-
-class Column(PositionChannelDef):
-    channel_name = 'column'
-
-
-class ChannelDefWithLegend(_ChannelMixin, schema.ChannelDefWithLegend):
-
-    skip = ['shorthand']
-
-    shorthand = T.Unicode('')
-    type = T.Union([schema.Type(), T.Unicode()],
-                   allow_none=True, default_value=None)
-
-    def __init__(self, shorthand='', **kwargs):
-        kwargs['shorthand'] = shorthand
-        super(ChannelDefWithLegend, self).__init__(**kwargs)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-
-class Color(ChannelDefWithLegend):
-    channel_name = 'color'
-
-
-class Size(ChannelDefWithLegend):
-    channel_name = 'size'
-
-
-class Shape(ChannelDefWithLegend):
-    channel_name = 'shape'
-
-
-class Field(_ChannelMixin, schema.FieldDef):
-
-    skip = ['shorthand']
-
-    shorthand = T.Unicode('')
-    type = T.Union([schema.Type(), T.Unicode()],
-                   allow_none=True, default_value=None)
-
-    def __init__(self, shorthand='', **kwargs):
-        kwargs['shorthand'] = shorthand
-        super(Field, self).__init__(**kwargs)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-
-class Text(Field):
-    channel_name = 'text'
-
-
-class Label(Field):
-    channel_name = 'label'
-
-
-class Detail(Field):
-    channel_name = 'detail'
-
-
-class OrderChannel(_ChannelMixin, schema.OrderChannelDef):
-
-    skip = ['shorthand']
-
-    shorthand = T.Unicode('')
-    type = T.Union([schema.Type(), T.Unicode()],
-                   allow_none=True, default_value=None)
-
-    def __init__(self, shorthand='', **kwargs):
-        kwargs['shorthand'] = shorthand
-        super(OrderChannel, self).__init__(**kwargs)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-
-class Order(OrderChannel):
-    channel_name = 'order'
-
-
-class Path(OrderChannel):
-    channel_name = 'path'
+from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Order, Path
 
 
 #*************************************************************************
@@ -226,7 +66,6 @@ class Legend(schema.LegendProperties):
 
 
 class Formula(schema.VgFormula):
-
     def __init__(self, field, **kwargs):
         kwargs['field'] = field
         super(Formula, self).__init__(**kwargs)

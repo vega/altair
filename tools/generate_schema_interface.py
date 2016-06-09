@@ -1,6 +1,7 @@
 import os
 import json
-from itertools import chain
+from itertools import chain, groupby
+from operator import itemgetter
 
 from jinja2 import Environment, FileSystemLoader, filters
 
@@ -12,7 +13,11 @@ TYPE_MAP = {'oneOf': 'Union',
             "number": "CFloat",
             "string": "Unicode",
             "object": "Any",
-           }
+            }
+
+
+def getpath(*args):
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
 
 
 class SchemaProperty(object):
@@ -26,13 +31,18 @@ class SchemaProperty(object):
         self.top = top
 
         self.properties = {k: SchemaProperty(v, k, self.top)
-                           for k, v in self.schema.get('properties', {}).items()}
+                           for k, v in self.schema.get('properties',
+                                                       {}).items()}
+
+    def rename(self, newname):
+        return self.__class__(self.schema, newname, self.top)
 
     @property
     def subtypes(self):
         trait = self.trait_name
         if trait == 'Union':
-            return [self.__class__(s, '', self.top) for s in self.schema['oneOf']]
+            return [self.__class__(s, '', self.top)
+                    for s in self.schema['oneOf']]
         elif trait == 'List':
             return [self.__class__(self.schema['items'], '', self.top)]
         else:
@@ -49,15 +59,14 @@ class SchemaProperty(object):
 
     @property
     def trait_name(self):
-        trait = TYPE_MAP.get(self.type, None)
-        if trait is not None:
-            return trait
-
-        trait = self.top.definitions[self.refname].trait_name
-        if trait == 'Any':
-            return 'Instance'
+        if self.refname:
+            trait = self.top.definitions[self.refname].trait_name
+            if trait == 'Any':
+                return 'Instance'
+            else:
+                return self.refname
         else:
-            return self.refname
+            return TYPE_MAP.get(self.type, "Any")
 
     @property
     def trait_descr(self):
@@ -83,15 +92,30 @@ class SchemaProperty(object):
 
         if trait == 'Union':
             return ('T.Union([{0}])'
-                    ''.format(', '.join(t.trait_fulldef for t in self.subtypes)))
+                    ''.format(', '.join(t.trait_fulldef
+                                        for t in self.subtypes)))
         elif trait == 'List':
-            return 'T.List({0}, {1})'.format(*(t.trait_fulldef for t in self.subtypes), kwds)
+            return 'T.List({0}, {1})'.format(*(t.trait_fulldef
+                                               for t in self.subtypes), kwds)
         elif trait == 'Instance':
             return 'T.Instance({0}, {1})'.format(self.refname, kwds)
         elif trait == self.refname:
             return '{0}({1})'.format(self.refname, kwds)
         else:
             return 'T.{0}({1})'.format(trait, kwds)
+
+    @property
+    def trait_or_subtrait(self):
+        if self.refname is not None:
+            return self.refname
+        elif self.trait_name in ['Union', 'List']:
+            for t in self.subtypes:
+                if t.trait_or_subtrait is not None:
+                    return t.trait_or_subtrait
+            else:
+                return None
+        else:
+            return None
 
     @property
     def description(self):
@@ -124,7 +148,7 @@ class SchemaProperty(object):
                 yield from t.imports
             for v in self.properties.values():
                 yield from v.imports
-        return sorted(gen_imports())
+        return sorted(set(gen_imports()))
 
     @property
     def attributes(self):
@@ -142,72 +166,128 @@ class VegaLiteSchema(SchemaProperty):
     """
     def __init__(self, schema_file=None):
         if schema_file is None:
-            schema_file = os.path.join(os.path.dirname(__file__),
-                                       '..',
-                                       'altair', 'schema',
-                                       'vega-lite-schema.json')
+            schema_file = getpath('..', 'altair', 'schema',
+                                  'vega-lite-schema.json')
         with open(schema_file) as f:
             schema = json.load(f)
 
         self.definitions = {k: SchemaProperty(v, k, self)
                             for k, v in schema['definitions'].items()}
 
-        template_path = os.path.join(os.path.dirname(__file__), 'templates')
+        template_path = getpath('templates')
         self.templates = Environment(loader=FileSystemLoader(template_path))
 
         super(VegaLiteSchema, self).__init__(schema, 'VegaLiteSchema', self)
 
-    def write_wrappers(self, path=None, verbose=True):
-        def print_(*args, **kwargs):
-            if verbose:
-                print(*args, **kwargs)
+    def wrappers(self):
+        """Iterator over all class aliases to generate.
 
+        These will be passed via jinja to ``templates/{template}.tpl``
+        and saved to ``altair/schema/_wrappers/{template}.py``
+        """
+
+        # Channel wrapper classes
+        for base in ['PositionChannelDef', 'ChannelDefWithLegend',
+                     'FieldDef', 'OrderChannelDef']:
+            wrappername = base.replace('Def', '')
+            yield dict(name=wrappername,
+                       base=self.definitions[base],
+                       imports=[dict(module='.._interface', names=[base])],
+                       root='channel_wrappers')
+
+        # Encoding channel specializations
+        encoding = self.definitions['Encoding']
+        for attr in encoding.attributes:
+            base = attr.trait_or_subtrait
+            wrappername = base.replace('Def', '')
+            yield dict(name=attr.name.title(),
+                       base=self.definitions[base].rename(wrappername),
+                       imports=[dict(module='.channel_wrappers', names=[wrappername])],
+                       root='encoding_channels')
+
+    def write_interface(self, path=None):
         # Make sure the path is valid
         if path is None:
-            path = os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                   '..', 'altair', 'schema', '_generated'))
-        testpath = os.path.join(path, 'tests')
-        if not os.path.exists(testpath):
-            os.makedirs(testpath)
+            path = getpath('..', 'altair', 'schema', '_interface')
+        if not os.path.exists(path):
+            os.makedirs(path)
 
-        print_("Writing code to {0}".format(path))
+        print("Writing code to {0}".format(path))
 
         # Write Init File
-        template = self.templates.get_template('__init__.py.tpl')
-        header="Auto-generated Python wrappers for Vega-Lite Schema"
-        print_(" - Writing __init__.py")
+        template = self.templates.get_template('interface_init.tpl')
+        header = "Auto-generated Python wrappers for Vega-Lite Schema"
+        print(" - Writing __init__.py")
+        objects = [dict(module=obj.lower(), classname=obj)
+                   for obj in sorted(self.definitions)]
         with open(os.path.join(path, '__init__.py'), 'w') as f:
-            f.write(template.render(objects=sorted(self.definitions),
+            f.write(template.render(objects=objects,
                                     header=header))
 
         # Write Class Definition files
-        templates = {'string': self.templates.get_template('enum.py.tpl'),
-                     'object': self.templates.get_template('object.py.tpl')}
+        templates = {'string': self.templates.get_template('interface_enum.tpl'),
+                     'object': self.templates.get_template('interface_object.tpl')}
         for key, prop in sorted(self.definitions.items()):
             if prop.type not in templates:
                 raise ValueError("No template for type={0}".format(prop.type))
             outfile = os.path.join(path, '{0}.py'.format(key.lower()))
-            print_(" - Writing {0}".format(os.path.basename(outfile)))
+            print(" - Writing {0}".format(os.path.basename(outfile)))
             with open(outfile, 'w') as f:
                 f.write(templates[prop.type].render(cls=prop))
 
-        print_("Writing tests to {0}".format(testpath))
+    def write_interface_tests(self, path=None):
+        # Make sure the path is valid
+        if path is None:
+            path = getpath('..', 'altair', 'schema', '_interface', 'tests')
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        print("Writing tests to {0}".format(path))
 
         # Write test Init File
-        template = self.templates.get_template('__init__.py.tpl')
+        template = self.templates.get_template('interface_init.tpl')
         header = 'Auto-generated tests for Vega-Lite Schema wrappers'
-        print_(" - Writing __init__.py")
-        with open(os.path.join(testpath, '__init__.py'), 'w') as f:
+        print(" - Writing __init__.py")
+        with open(os.path.join(path, '__init__.py'), 'w') as f:
             f.write(template.render(objects=[], header=header))
 
         # Write test file
-        template = self.templates.get_template('test_instantiations.py.tpl')
+        template = self.templates.get_template('interface_test.tpl')
         classes = [prop for key, prop in sorted(self.definitions.items())]
-        print_(" - Writing test_instantiations.py")
-        with open(os.path.join(testpath, 'test_instantiations.py'), 'w') as f:
+        print(" - Writing test_instantiations.py")
+        with open(os.path.join(path, 'test_instantiations.py'), 'w') as f:
             f.write(template.render(classes=classes))
+
+    def write_wrappers(self, path=None):
+        # make sure the path is valid
+        if path is None:
+            path = getpath('..', 'altair', 'schema', '_wrappers')
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        print("Writing wrappers to {0}".format(path))
+
+        # Write wrapper definition files
+        groups = groupby(self.wrappers(), itemgetter('root'))
+        for root, wrappers in groups:
+            template = self.templates.get_template('{0}.tpl'.format(root))
+            filename = os.path.join(path, '{0}.py'.format(root))
+            print("- writing {0}".format(filename))
+            with open(filename, 'w') as f:
+                f.write(template.render(objects=list(wrappers)))
+
+        # Write __init__.py file
+        template = self.templates.get_template('wrapper_init.tpl')
+        filename = os.path.join(path, '__init__.py')
+        header = 'Wrappers for low-level schema objects'
+        print("- writing {0}".format(filename))
+        with open(filename, 'w') as f:
+            f.write(template.render(objects=list(self.wrappers()),
+                                    header=header))
 
 
 if __name__ == '__main__':
     schema = VegaLiteSchema()
+    schema.write_interface()
+    schema.write_interface_tests()
     schema.write_wrappers()
