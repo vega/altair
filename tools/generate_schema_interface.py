@@ -5,7 +5,6 @@ from collections import defaultdict
 from operator import itemgetter
 
 from jinja2 import Environment, FileSystemLoader, environmentfilter
-from jinja2.nodes import Getattr
 
 
 @environmentfilter
