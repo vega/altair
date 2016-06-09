@@ -1,11 +1,32 @@
 import os
 import json
 from itertools import chain, groupby
+from collections import defaultdict
 from operator import itemgetter
 
-from jinja2 import Environment, FileSystemLoader, filters
+from jinja2 import Environment, FileSystemLoader, environmentfilter
 
-filters.FILTERS['repr'] = repr
+
+@environmentfilter
+def merge_imports(env, objects):
+    """Jinja filter to merge all imports from a list of objects"""
+    imports = chain(*(env.getattr(obj, 'imports') for obj in objects))
+    modules = defaultdict(set)
+    for imp in imports:
+        modules[env.getattr(imp, 'module')] |= set(env.getattr(imp, 'names'))
+    return ["from {0} import {1}".format(module, ', '.join(sorted(names)))
+            for module, names in sorted(modules.items())]
+
+
+def getpath(*args):
+    """Get absolute path of joined directories relative to this file"""
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
+
+
+# Construct the jinja template environment
+JINJA_ENV = Environment(loader=FileSystemLoader(getpath('templates')))
+JINJA_ENV.filters['repr'] = repr
+JINJA_ENV.filters['merge_imports'] = merge_imports
 
 TYPE_MAP = {'oneOf': 'Union',
             "array": "List",
@@ -14,10 +35,6 @@ TYPE_MAP = {'oneOf': 'Union',
             "string": "Unicode",
             "object": "Any",
             }
-
-
-def getpath(*args):
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
 
 
 class SchemaProperty(object):
@@ -174,9 +191,6 @@ class VegaLiteSchema(SchemaProperty):
         self.definitions = {k: SchemaProperty(v, k, self)
                             for k, v in schema['definitions'].items()}
 
-        template_path = getpath('templates')
-        self.templates = Environment(loader=FileSystemLoader(template_path))
-
         super(VegaLiteSchema, self).__init__(schema, 'VegaLiteSchema', self)
 
     def wrappers(self):
@@ -215,7 +229,7 @@ class VegaLiteSchema(SchemaProperty):
         print("Writing code to {0}".format(path))
 
         # Write Init File
-        template = self.templates.get_template('interface_init.tpl')
+        template = JINJA_ENV.get_template('interface_init.tpl')
         header = "Auto-generated Python wrappers for Vega-Lite Schema"
         print(" - Writing __init__.py")
         objects = [dict(module=obj.lower(), classname=obj)
@@ -225,8 +239,8 @@ class VegaLiteSchema(SchemaProperty):
                                     header=header))
 
         # Write Class Definition files
-        templates = {'string': self.templates.get_template('interface_enum.tpl'),
-                     'object': self.templates.get_template('interface_object.tpl')}
+        templates = {'string': JINJA_ENV.get_template('interface_enum.tpl'),
+                     'object': JINJA_ENV.get_template('interface_object.tpl')}
         for key, prop in sorted(self.definitions.items()):
             if prop.type not in templates:
                 raise ValueError("No template for type={0}".format(prop.type))
@@ -245,14 +259,14 @@ class VegaLiteSchema(SchemaProperty):
         print("Writing tests to {0}".format(path))
 
         # Write test Init File
-        template = self.templates.get_template('interface_init.tpl')
+        template = JINJA_ENV.get_template('interface_init.tpl')
         header = 'Auto-generated tests for Vega-Lite Schema wrappers'
         print(" - Writing __init__.py")
         with open(os.path.join(path, '__init__.py'), 'w') as f:
             f.write(template.render(objects=[], header=header))
 
         # Write test file
-        template = self.templates.get_template('interface_test.tpl')
+        template = JINJA_ENV.get_template('interface_test.tpl')
         classes = [prop for key, prop in sorted(self.definitions.items())]
         print(" - Writing test_instantiations.py")
         with open(os.path.join(path, 'test_instantiations.py'), 'w') as f:
@@ -270,14 +284,14 @@ class VegaLiteSchema(SchemaProperty):
         # Write wrapper definition files
         groups = groupby(self.wrappers(), itemgetter('root'))
         for root, wrappers in groups:
-            template = self.templates.get_template('{0}.tpl'.format(root))
+            template = JINJA_ENV.get_template('{0}.tpl'.format(root))
             filename = os.path.join(path, '{0}.py'.format(root))
             print("- writing {0}".format(filename))
             with open(filename, 'w') as f:
                 f.write(template.render(objects=list(wrappers)))
 
         # Write __init__.py file
-        template = self.templates.get_template('wrapper_init.tpl')
+        template = JINJA_ENV.get_template('wrapper_init.tpl')
         filename = os.path.join(path, '__init__.py')
         header = 'Wrappers for low-level schema objects'
         print("- writing {0}".format(filename))

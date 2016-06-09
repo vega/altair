@@ -8,10 +8,7 @@ from ...utils import parse_shorthand, infer_vegalite_type
 from ...utils import INV_TYPECODE_MAP, TYPE_ABBR
 
 from .._interface import Type
-from .._interface import PositionChannelDef
-from .._interface import ChannelDefWithLegend
-from .._interface import FieldDef
-from .._interface import OrderChannelDef
+from .._interface import ChannelDefWithLegend, FieldDef, OrderChannelDef, PositionChannelDef
 
 
 class PositionChannel(PositionChannelDef):
@@ -254,4 +251,5 @@ class OrderChannel(OrderChannelDef):
                 self.type = infer_vegalite_type(data[self.field])
         if data is None:
             self.type = ''
+
 
