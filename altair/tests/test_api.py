@@ -111,5 +111,60 @@ def test_mark_config(mark):
     # layer2.mark_circle(color='red')
     markmethod(layer2)(**kwds)
     layer2.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
+    
+    layer3 = Layer()
+    #layer3.mark_circle().configure_mark(**kwargs)
+    markmethod(layer3)().configure_mark(**kwds)
+    layer3.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
+    
+    assert layer1.to_dict() == layer2.to_dict()
+    assert layer2.to_dict() == layer3.to_dict()
+
+
+_config_method_params = [
+    {'name': 'axis',
+     'class': AxisConfig,
+     'kwds': dict(axisWidth=1.0, grid=False)
+    },
+    {'name': 'cell',
+     'class': CellConfig,
+     'kwds': dict(clip=False, fillOpacity=0.5)
+    },
+    {'name': 'legend',
+     'class': LegendConfig,
+     'kwds': dict(orient=u'foo', shortTimeLabels=True)
+    },
+    {'name': 'scale',
+     'class': ScaleConfig,
+     'kwds': dict(pointSizeRange=[1.0, 2.0], round=False)
+    },
+]
+
+@pytest.mark.parametrize('params', _config_method_params)
+def test_config_methods(params):
+    kwds = params['kwds']
+    klass = params['class']
+    name = params['name']
+    configmethod = lambda layer: getattr(layer, 'configure_'+name)
+
+    layer1 = Layer(config=Config( **{name:klass(**kwds)} ))
+    layer2 = Layer().configure( **{name:klass(**kwds)} )
+    layer3 = configmethod(Layer())(**kwds)
 
     assert layer1.to_dict() == layer2.to_dict()
+    assert layer2.to_dict() == layer3.to_dict()
+
+
+def test_config_facet_grid():
+    
+    kwds = dict(opacity=0.5, color='red')
+    
+    layer1 = Layer(
+        config=Config(
+            facet=FacetConfig(grid=FacetGridConfig(**kwds))
+        )
+    )
+    layer2 = Layer().configure_facet_grid(**kwds)
+
+    assert layer1.to_dict() == layer2.to_dict()
+
