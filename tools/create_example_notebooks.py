@@ -61,7 +61,7 @@ def create_example_notebook(filename, spec, notebook_directory,
     if index_dict is not None:
         index_dict[filename] = index_entry
 
-    layer = Chart.from_dict(spec)
+    chart = Chart.from_dict(spec)
 
     def cells():
         yield new_markdown_cell('<small>*Notebook auto-generated from '
@@ -81,11 +81,11 @@ def create_example_notebook(filename, spec, notebook_directory,
         yield new_code_cell('from altair import *  # Load all API methods\n\n'
                             'chart = {0}\n\n'
                             '# IPython rich display will invoke Vega-Lite:\n'
-                            'layer'.format(layer.to_altair(data='data')))
+                            'chart'.format(chart.to_altair(data='data')))
 
         yield new_markdown_cell('## Output Vega-Lite Specification')
         yield new_code_cell('# Generate JSON dict, leaving data out:\n'
-                            'layer.to_dict(data=False)')
+                            'chart.to_dict(data=False)')
 
     write_notebook(list(cells()), outputfile_full,
                    execute=execute, kernel=kernel)
