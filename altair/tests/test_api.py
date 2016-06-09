@@ -11,43 +11,43 @@ from ..api import MARK_TYPES
 from ..datasets import connection_ok
 
 
-def test_layer_url_input():
+def test_chart_url_input():
     url = 'http://vega.github.io/vega-lite/data/'
-    layer1 = Chart(Data(url=url))
-    layer2 = Chart(url)
+    chart1 = Chart(Data(url=url))
+    chart2 = Chart(url)
 
-    assert layer1.to_dict() == layer2.to_dict()
+    assert chart1.to_dict() == chart2.to_dict()
 
-    assert layer1.to_altair() == layer2.to_altair()
+    assert chart1.to_altair() == chart2.to_altair()
 
 
 def test_encode_update():
     # Test that encode updates rather than overwrites
-    layer1 = Chart().encode(x='blah:Q').encode(y='blah:Q')
-    layer2 = Chart().encode(x='blah:Q', y='blah:Q')
+    chart1 = Chart().encode(x='blah:Q').encode(y='blah:Q')
+    chart2 = Chart().encode(x='blah:Q', y='blah:Q')
 
-    assert layer1.to_dict() == layer2.to_dict()
+    assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_configure_update():
     # Test that configure updates rather than overwrites
-    layer1 = Chart().configure(MarkConfig(color='red'))\
+    chart1 = Chart().configure(MarkConfig(color='red'))\
                     .configure(background='red')
-    layer2 = Chart().configure(MarkConfig(color='red'), background='red')
+    chart2 = Chart().configure(MarkConfig(color='red'), background='red')
 
-    assert layer1.to_dict() == layer2.to_dict()
+    assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_transform_update():
     # Test that transform updates rather than overwrites
     formula = Formula(field='gender', expr='datum.sex == 2 ? "Female":"Male"')
-    layer1 = Chart().transform_data(filter='datum.year==2000')\
+    chart1 = Chart().transform_data(filter='datum.year==2000')\
                     .transform_data(calculate=[formula])
 
-    layer2 = Chart().transform_data(filter='datum.year==2000',
+    chart2 = Chart().transform_data(filter='datum.year==2000',
                                     calculate=[formula])
 
-    assert layer1.to_dict() == layer2.to_dict()
+    assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_from_dict():
@@ -82,7 +82,7 @@ def test_to_altair_stocks():
     """Test a more complicated spec for conversion to altair"""
     data = load_dataset('stocks')
 
-    layer = Chart(data).mark_line().encode(
+    chart = Chart(data).mark_line().encode(
         x='date:T',
         y='price:Q'
     ).transform_data(
@@ -91,34 +91,34 @@ def test_to_altair_stocks():
         mark=MarkConfig(color='red')
     )
 
-    code = layer.to_altair(data='data')
-    layer2 = eval(code)
+    code = chart.to_altair(data='data')
+    chart2 = eval(code)
 
-    assert layer.to_dict() == layer2.to_dict()
+    assert chart.to_dict() == chart2.to_dict()
 
 
 @pytest.mark.parametrize('mark', MARK_TYPES)
 def test_mark_config(mark):
-    markmethod = lambda layer: getattr(layer, 'mark_' + mark)
+    markmethod = lambda chart: getattr(chart, 'mark_' + mark)
     kwds = dict(color='red', opacity=0.5)
 
-    layer1 = Chart(config=Config(mark=MarkConfig(**kwds)))
-    # layer1.mark_circle()
-    markmethod(layer1)()
-    layer1.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
+    chart1 = Chart(config=Config(mark=MarkConfig(**kwds)))
+    # chart1.mark_circle()
+    markmethod(chart1)()
+    chart1.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
 
-    layer2 = Chart()
-    # layer2.mark_circle(color='red')
-    markmethod(layer2)(**kwds)
-    layer2.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
+    chart2 = Chart()
+    # chart2.mark_circle(color='red')
+    markmethod(chart2)(**kwds)
+    chart2.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
     
-    layer3 = Chart()
-    #layer3.mark_circle().configure_mark(**kwargs)
-    markmethod(layer3)().configure_mark(**kwds)
-    layer3.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
+    chart3 = Chart()
+    #chart3.mark_circle().configure_mark(**kwargs)
+    markmethod(chart3)().configure_mark(**kwds)
+    chart3.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
     
-    assert layer1.to_dict() == layer2.to_dict()
-    assert layer2.to_dict() == layer3.to_dict()
+    assert chart1.to_dict() == chart2.to_dict()
+    assert chart2.to_dict() == chart3.to_dict()
 
 
 _config_method_params = [
@@ -145,26 +145,26 @@ def test_config_methods(params):
     kwds = params['kwds']
     klass = params['class']
     name = params['name']
-    configmethod = lambda layer: getattr(layer, 'configure_'+name)
+    configmethod = lambda chart: getattr(chart, 'configure_'+name)
 
-    layer1 = Chart(config=Config( **{name:klass(**kwds)} ))
-    layer2 = Chart().configure( **{name:klass(**kwds)} )
-    layer3 = configmethod(Chart())(**kwds)
+    chart1 = Chart(config=Config( **{name:klass(**kwds)} ))
+    chart2 = Chart().configure( **{name:klass(**kwds)} )
+    chart3 = configmethod(Chart())(**kwds)
 
-    assert layer1.to_dict() == layer2.to_dict()
-    assert layer2.to_dict() == layer3.to_dict()
+    assert chart1.to_dict() == chart2.to_dict()
+    assert chart2.to_dict() == chart3.to_dict()
 
 
 def test_config_facet_grid():
     
     kwds = dict(opacity=0.5, color='red')
     
-    layer1 = Chart(
+    chart1 = Chart(
         config=Config(
             facet=FacetConfig(grid=FacetGridConfig(**kwds))
         )
     )
-    layer2 = Chart().configure_facet_grid(**kwds)
+    chart2 = Chart().configure_facet_grid(**kwds)
 
-    assert layer1.to_dict() == layer2.to_dict()
+    assert chart1.to_dict() == chart2.to_dict()
 
