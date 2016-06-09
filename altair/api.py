@@ -168,15 +168,19 @@ class Chart(schema.BaseObject):
 
     @classmethod
     def from_dict(cls, dct):
+        """Create a Chart from a dict of Vega-Lite JSON."""
         return visitors.FromDict().clsvisit(cls, dct)
 
     def to_dict(self, data=True):
+        """Emit the Vega-Lite JSON for this Chart as as dict."""
         return visitors.ToDict().visit(self, data)
 
     def to_code(self, data=None):
+        """Emit the Python code required to created this Chart."""
         return visitors.ToCode().visit(self, data)
 
     def to_altair(self, data=None):
+        """Emit the Python code as a string required to created this Chart."""
         return str(self.to_code(data=data))
 
     def _encoding_changed(self, name, old, new):
@@ -210,6 +214,7 @@ class Chart(schema.BaseObject):
     def __dir__(self):
         base = super(Chart, self).__dir__()
         methods = [
+            'to_dict', 'from_dict', 'to_altair', 'to_code',
             'mark_area', 'mark_bar', 'mark_line', 'mark_point',
             'mark_text', 'mark_tick', 'mark_circle', 'mark_square',
             'encode', 'transform_data',
