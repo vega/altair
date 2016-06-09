@@ -175,13 +175,13 @@ class Chart(schema.BaseObject):
         """Emit the Vega-Lite JSON for this Chart as as dict."""
         return visitors.ToDict().visit(self, data)
 
-    def to_code(self, data=None):
-        """Emit the Python code required to created this Chart."""
+    def _to_code(self, data=None):
+        """Emit the CodeGen object used to export this chart to Python code."""
         return visitors.ToCode().visit(self, data)
 
     def to_altair(self, data=None):
         """Emit the Python code as a string required to created this Chart."""
-        return str(self.to_code(data=data))
+        return str(self._to_code(data=data))
 
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
@@ -214,7 +214,7 @@ class Chart(schema.BaseObject):
     def __dir__(self):
         base = super(Chart, self).__dir__()
         methods = [
-            'to_dict', 'from_dict', 'to_altair', 'to_code',
+            'to_dict', 'from_dict', 'to_altair',
             'mark_area', 'mark_bar', 'mark_line', 'mark_point',
             'mark_text', 'mark_tick', 'mark_circle', 'mark_square',
             'encode', 'transform_data',
@@ -350,7 +350,7 @@ class Chart(schema.BaseObject):
     def _configure_facet(self, name, klass, **kwargs):
         """Helper method for configure_facet_* methods."""
         if self.config is None:
-            self.config = schema.Config()       
+            self.config = schema.Config()
         facet_config = self.config.facet
         if facet_config is None:
             facet_config = FacetConfig()
@@ -373,7 +373,7 @@ class Chart(schema.BaseObject):
     def configure_facet_scale(self, **kwargs):
         """Configure the facet's scales by keyword args."""
         return self._configure_facet('scale', FacetScaleConfig, **kwargs)
- 
+
     # Display related methods
 
     def _ipython_display_(self):
