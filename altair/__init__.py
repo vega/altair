@@ -40,7 +40,7 @@ from .api import (
     X, Y,
     Color,
     DataFormat,
-    Layer,
+    Chart,
     CellConfig,
     Detail,
     AxisProperties,

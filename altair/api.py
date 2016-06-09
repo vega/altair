@@ -144,7 +144,7 @@ class Encoding(schema.Encoding):
         new = change['new']
         name = change['name']
         channel = getattr(self, name, None)
-        if channel is not None and not getattr(channel, 'type', '') and isinstance(self.parent, Layer):
+        if channel is not None and not getattr(channel, 'type', '') and isinstance(self.parent, Chart):
             meth = getattr(channel, '_infer_type', None)
             if meth is not None:
                 meth(self.parent.data)
@@ -155,7 +155,7 @@ class Encoding(schema.Encoding):
 #*************************************************************************
 
 
-class Layer(schema.BaseObject):
+class Chart(schema.BaseObject):
 
     _data = None
 
@@ -200,7 +200,7 @@ class Layer(schema.BaseObject):
     skip = ['data', '_data']
 
     def __init__(self, *args, **kwargs):
-        super(Layer, self).__init__(**kwargs)
+        super(Chart, self).__init__(**kwargs)
         if len(args)==1:
             if isinstance(args[0], string_types):
                 self.data = Data(url=args[0])
@@ -208,7 +208,7 @@ class Layer(schema.BaseObject):
                 self.data = args[0]
 
     def __dir__(self):
-        base = super(Layer, self).__dir__()
+        base = super(Chart, self).__dir__()
         methods = [
             'mark_area', 'mark_bar', 'mark_line', 'mark_point',
             'mark_text', 'mark_tick', 'mark_circle', 'mark_square',
@@ -274,7 +274,7 @@ class Layer(schema.BaseObject):
     # Encoding and transform methods
 
     def encode(self, *args, **kwargs):
-        """Define the encoding for the Layer."""
+        """Define the encoding for the Chart."""
         for key, val in kwargs.items():
             if key in CHANNEL_CLASSES:
                 if not isinstance(val, CHANNEL_CLASSES[key]):

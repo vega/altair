@@ -25,12 +25,12 @@ Here is an example of how Altair can be used to quickly visualize a dataset.
 The figure is displayed using the native Vega-Lite renderer:
 
 ```python
-from altair import Layer, load_dataset
+from altair import Chart, load_dataset
 
 # data is loaded as a pandas DataFrame
 cars = load_dataset('cars')
 
-Layer(cars).mark_point().encode(
+Chart(cars).mark_point().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
     color='Origin',

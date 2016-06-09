@@ -45,7 +45,7 @@ class ToDict(Visitor):
                     D[k] = self.visit(v)
         return D
 
-    def visit_Layer(self, obj, data):
+    def visit_Chart(self, obj, data):
         D = self.visit_BaseObject(obj)
         if data:
             if isinstance(obj.data, schema.Data):
@@ -108,7 +108,7 @@ class ToCode(Visitor):
         kwds = {k: self.visit(v, shorten=True) for k, v in kwds.items()}
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
-    def visit_Layer(self, obj, data=None, *args, **kwargs):
+    def visit_Chart(self, obj, data=None, *args, **kwargs):
         code = self.visit_BaseObject(obj)
 
         # Add data as a top-level argument
@@ -128,24 +128,24 @@ class ToCode(Visitor):
             # data as a dataframe; this gets too long so we leave it out
             warnings.warn("Skipping dataframe definition in altair code")
 
-        # enable Layer().mark_point(**kwargs)
+        # enable Chart().mark_point(**kwargs)
         mark = code.kwargs.pop('mark', None)
         if mark:
             config = code.kwargs.get('config', CodeGen(''))
             markconfig = config.kwargs.pop('mark', CodeGen(''))
             code.add_methods(markconfig.rename('mark_{0}'.format(obj.mark)))
 
-        # enable Layer().encode(**kwargs)
+        # enable Chart().encode(**kwargs)
         encoding = code.kwargs.pop('encoding', CodeGen(''))
         if encoding.num_attributes > 0:
             code.add_methods(encoding.rename('encode'))
 
-        # enable Layer().transform_data(**kwargs)
+        # enable Chart().transform_data(**kwargs)
         transform = code.kwargs.pop('transform', CodeGen(''))
         if transform.num_attributes > 0:
             code.add_methods(transform.rename('transform_data'))
 
-        # enable Layer().configure(**kwargs)
+        # enable Chart().configure(**kwargs)
         config = code.kwargs.pop('config', CodeGen(''))
         if config.num_attributes > 0:
             code.add_methods(config.rename('configure'))
@@ -166,7 +166,7 @@ class FromDict(Visitor):
             obj.set_trait(prop, self.visit(subtrait, val))
         return obj
 
-    def clsvisit_Layer(self, cls, dct, *args, **kwargs):
+    def clsvisit_Chart(self, cls, dct, *args, **kwargs):
         # Remove data first and handle it specially later
         if 'data' in dct:
             dct = dct.copy()
