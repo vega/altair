@@ -120,3 +120,37 @@ def test_mark_config(mark):
     assert layer1.to_dict() == layer2.to_dict()
     assert layer2.to_dict() == layer3.to_dict()
 
+
+_config_method_params = [
+    {'name': 'axis',
+     'class': AxisConfig,
+     'kwds': dict(axisWidth=1.0, grid=False)
+    },
+    {'name': 'cell',
+     'class': CellConfig,
+     'kwds': dict(clip=False, fillOpacity=0.5)
+    },
+    {'name': 'legend',
+     'class': LegendConfig,
+     'kwds': dict(orient=u'foo', shortTimeLabels=True)
+    },
+    {'name': 'scale',
+     'class': ScaleConfig,
+     'kwds': dict(pointSizeRange=[1.0, 2.0], round=False)
+    },
+]
+
+@pytest.mark.parametrize('params', _config_method_params)
+def test_config_methods(params):
+    kwds = params['kwds']
+    klass = params['class']
+    name = params['name']
+    configmethod = lambda layer: getattr(layer, 'configure_'+name)
+
+    layer1 = Layer(config=Config( **{name:klass(**kwds)} ))
+    layer2 = Layer().configure( **{name:klass(**kwds)} )
+    layer3 = configmethod(Layer())(**kwds)
+
+    assert layer1.to_dict() == layer2.to_dict()
+    assert layer2.to_dict() == layer3.to_dict()
+
