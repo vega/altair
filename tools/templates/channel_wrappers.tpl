@@ -8,13 +8,11 @@ from ...utils import parse_shorthand, infer_vegalite_type
 from ...utils import INV_TYPECODE_MAP, TYPE_ABBR
 
 from .._interface import Type
+{% for import_statement in objects|merge_imports -%}
+  {{ import_statement }}
+{% endfor %}
 
-{%- for object in objects %}{% for import in object.imports %}
-{%- set comma = joiner(", ") %}
-from {{ import.module }} import {% for name in import.names %}{{ comma() }}{{ name }}{% endfor %}
-{%- endfor %}{% endfor %}
-
-{% for object in objects %}
+{% for object in objects -%}
 class {{ object.name }}({{ object.base.name }}):
     """Wrapper for Vega-Lite {{ object.base.name }} definition.
     {{ object.base.description }}
@@ -65,5 +63,6 @@ class {{ object.name }}({{ object.base.name }}):
                 self.type = infer_vegalite_type(data[self.field])
         if data is None:
             self.type = ''
+
 
 {% endfor %}
