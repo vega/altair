@@ -78,14 +78,14 @@ def create_example_notebook(filename, spec, notebook_directory,
                             'data.head()'.format(dataset))
 
         yield new_markdown_cell('## Define Altair Specification')
-        yield new_code_cell('from altair import *  # Load all API methods\n\n'
-                            'chart = {0}\n\n'
-                            '# IPython rich display will invoke Vega-Lite:\n'
-                            'chart'.format(chart.to_altair(data='data')))
+        yield new_code_cell('from altair import *  # Import the altair API\n\n'
+                            'chart = {0}'.format(chart.to_altair(data='data')))
+        yield new_markdown_cell('IPython rich display will invoke Vega-Lite:')
+        yield new_code_cell('chart')
 
         yield new_markdown_cell('## Output Vega-Lite Specification')
-        yield new_code_cell('# Generate JSON dict, leaving data out:\n'
-                            'chart.to_dict(data=False)')
+        yield new_markdown_cell('Generate JSON dict, leaving data out:')        
+        yield new_code_cell('chart.to_dict(data=False)')
 
     write_notebook(list(cells()), outputfile_full,
                    execute=execute, kernel=kernel)
