@@ -154,3 +154,17 @@ def test_config_methods(params):
     assert layer1.to_dict() == layer2.to_dict()
     assert layer2.to_dict() == layer3.to_dict()
 
+
+def test_config_facet_grid():
+    
+    kwds = dict(opacity=0.5, color='red')
+    
+    layer1 = Layer(
+        config=Config(
+            facet=FacetConfig(grid=FacetGridConfig(**kwds))
+        )
+    )
+    layer2 = Layer().configure_facet_grid(**kwds)
+
+    assert layer1.to_dict() == layer2.to_dict()
+

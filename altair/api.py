@@ -342,42 +342,33 @@ class Layer(schema.BaseObject):
         """Configure the chart's scales by keyword args."""
         return self.configure(scale=ScaleConfig(**kwargs))
 
-    def configure_facet_axis(self, **kwargs):
-        """Configure the facet's axes by keyword args."""        
-        facet_config = getattr(self.config, 'facet', None)
+    def _configure_facet(self, name, klass, **kwargs):
+        """Helper method for configure_facet_* methods."""
+        if self.config is None:
+            self.config = schema.Config()       
+        facet_config = self.config.facet
         if facet_config is None:
             facet_config = FacetConfig()
-        facet_config.axis = AxisConfig(**kwargs)
+        setattr(facet_config, name, klass(**kwargs))
         self.config.facet = facet_config
         return self
+
+    def configure_facet_axis(self, **kwargs):
+        """Configure the facet's axes by keyword args."""
+        return self._configure_facet('axis', AxisConfig, **kwargs)
 
     def configure_facet_cell(self, **kwargs):
-        """Configure the facet's cells by keyword args."""        
-        facet_config = getattr(self.config, 'facet', None)
-        if facet_config is None:
-            facet_config = FacetConfig()
-        facet_config.cell = CellConfig(**kwargs)
-        self.config.facet = facet_config
-        return self
+        """Configure the facet's cells by keyword args."""
+        return self._configure_facet('cell', CellConfig, **kwargs)
 
     def configure_facet_grid(self, **kwargs):
-        """Configure the facet's grid by keyword args."""        
-        facet_config = getattr(self.config, 'facet', None)
-        if facet_config is None:
-            facet_config = FacetConfig()
-        facet_config.grid = FacetGridConfig(**kwargs)
-        self.config.facet = facet_config
-        return self
+        """Configure the facet's grid by keyword args."""
+        return self._configure_facet('grid', FacetGridConfig, **kwargs)
 
     def configure_facet_scale(self, **kwargs):
-        """Configure the facet's scales by keyword args."""        
-        facet_config = getattr(self.config, 'facet', None)
-        if facet_config is None:
-            facet_config = FacetConfig()
-        facet_config.scale = FacetScaleConfig(**kwargs)
-        self.config.facet = facet_config
-        return self
-
+        """Configure the facet's scales by keyword args."""
+        return self._configure_facet('scale', FacetScaleConfig, **kwargs)
+ 
     # Display related methods
 
     def _ipython_display_(self):
