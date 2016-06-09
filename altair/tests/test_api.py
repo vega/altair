@@ -111,5 +111,12 @@ def test_mark_config(mark):
     # layer2.mark_circle(color='red')
     markmethod(layer2)(**kwds)
     layer2.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
-
+    
+    layer3 = Layer()
+    #layer3.mark_circle().configure_mark(**kwargs)
+    markmethod(layer3)().configure_mark(**kwds)
+    layer3.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
+    
     assert layer1.to_dict() == layer2.to_dict()
+    assert layer2.to_dict() == layer3.to_dict()
+
