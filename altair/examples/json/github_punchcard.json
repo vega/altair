@@ -1,0 +1,23 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/github.csv"
+    },
+    "encoding": {
+        "size": {
+            "aggregate": "sum",
+            "field": "count",
+            "type": "quantitative"
+        },
+        "x": {
+            "field": "time",
+            "timeUnit": "hours",
+            "type": "temporal"
+        },
+        "y": {
+            "field": "time",
+            "timeUnit": "day",
+            "type": "temporal"
+        }
+    },
+    "mark": "circle"
+}

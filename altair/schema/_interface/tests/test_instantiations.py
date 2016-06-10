@@ -12,6 +12,10 @@ def test_instantiate_AggregateOp():
     obj = AggregateOp()
 
 
+def test_instantiate_Axis():
+    obj = Axis()
+
+
 def test_instantiate_AxisConfig():
     obj = AxisConfig()
 
@@ -20,12 +24,8 @@ def test_instantiate_AxisOrient():
     obj = AxisOrient()
 
 
-def test_instantiate_AxisProperties():
-    obj = AxisProperties()
-
-
-def test_instantiate_BinProperties():
-    obj = BinProperties()
+def test_instantiate_Bin():
+    obj = Bin()
 
 
 def test_instantiate_CellConfig():
@@ -52,6 +52,14 @@ def test_instantiate_Encoding():
     obj = Encoding()
 
 
+def test_instantiate_ExtendedUnitSpec():
+    obj = ExtendedUnitSpec()
+
+
+def test_instantiate_Facet():
+    obj = Facet()
+
+
 def test_instantiate_FacetConfig():
     obj = FacetConfig()
 
@@ -62,6 +70,10 @@ def test_instantiate_FacetGridConfig():
 
 def test_instantiate_FacetScaleConfig():
     obj = FacetScaleConfig()
+
+
+def test_instantiate_FacetSpec():
+    obj = FacetSpec()
 
 
 def test_instantiate_FieldDef():
@@ -76,16 +88,28 @@ def test_instantiate_FontWeight():
     obj = FontWeight()
 
 
+def test_instantiate_Formula():
+    obj = Formula()
+
+
 def test_instantiate_HorizontalAlign():
     obj = HorizontalAlign()
 
 
+def test_instantiate_Interpolate():
+    obj = Interpolate()
+
+
+def test_instantiate_LayerSpec():
+    obj = LayerSpec()
+
+
+def test_instantiate_Legend():
+    obj = Legend()
+
+
 def test_instantiate_LegendConfig():
     obj = LegendConfig()
-
-
-def test_instantiate_LegendProperties():
-    obj = LegendProperties()
 
 
 def test_instantiate_Mark():
@@ -148,10 +172,14 @@ def test_instantiate_Type():
     obj = Type()
 
 
+def test_instantiate_UnitEncoding():
+    obj = UnitEncoding()
+
+
+def test_instantiate_UnitSpec():
+    obj = UnitSpec()
+
+
 def test_instantiate_VerticalAlign():
     obj = VerticalAlign()
-
-
-def test_instantiate_VgFormula():
-    obj = VgFormula()
 

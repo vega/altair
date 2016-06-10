@@ -3,7 +3,6 @@ __version__ = '0.0.1'
 from .api import (
     Label,
     Formula,
-    VgFormula,
     StackOffset,
     Data,
     FacetScaleConfig,
@@ -43,9 +42,6 @@ from .api import (
     Chart,
     CellConfig,
     Detail,
-    AxisProperties,
-    BinProperties,
-    LegendProperties,
 )
 
 from .datasets import (

@@ -10,6 +10,7 @@ __all__ = [
              "Column",
              "Detail",
              "Label",
+             "Opacity",
              "Order",
              "Path",
              "Row",
@@ -29,6 +30,7 @@ from .encoding_channels import Color
 from .encoding_channels import Column
 from .encoding_channels import Detail
 from .encoding_channels import Label
+from .encoding_channels import Opacity
 from .encoding_channels import Order
 from .encoding_channels import Path
 from .encoding_channels import Row

@@ -25,7 +25,13 @@ class Visitor(object):
                 break
         else:
             method = self.generic_clsvisit
-        return method(obj, *args, **kwargs)
+        try:
+            return method(obj, *args, **kwargs)
+        except KeyError:
+            print(obj)
+            print(args)
+            print(kwargs)
+            raise
 
 
 class ToDict(Visitor):

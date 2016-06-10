@@ -20,6 +20,10 @@ class Label(Field):
     channel_name = 'label'
 
 
+class Opacity(ChannelWithLegend):
+    channel_name = 'opacity'
+
+
 class Order(OrderChannel):
     channel_name = 'order'
 
@@ -57,6 +61,7 @@ CHANNEL_CLASSES = {
     'column': Column,
     'detail': Detail,
     'label': Label,
+    'opacity': Opacity,
     'order': Order,
     'path': Path,
     'row': Row,

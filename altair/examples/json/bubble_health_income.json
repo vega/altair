@@ -1,0 +1,37 @@
+{
+    "config": {
+        "cell": {
+            "height": 300,
+            "width": 500
+        }
+    },
+    "data": {
+        "formatType": "csv",
+        "url": "http://vega.github.io/vega-lite/data/gapminder-health-income.csv"
+    },
+    "description": "A bubble plot showing the correlation between health and income for 187 countries in the world (modified from an example in Lisa Charlotte Rost's blog post 'One Chart, Twelve Charting Libraries' --http://lisacharlotterost.github.io/2016/05/17/one-chart-code/).",
+    "encoding": {
+        "color": {
+            "value": "#000"
+        },
+        "size": {
+            "field": "population",
+            "type": "quantitative"
+        },
+        "x": {
+            "field": "income",
+            "scale": {
+                "type": "log"
+            },
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "health",
+            "scale": {
+                "zero": false
+            },
+            "type": "quantitative"
+        }
+    },
+    "mark": "circle"
+}

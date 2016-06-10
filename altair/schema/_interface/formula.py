@@ -5,8 +5,8 @@ import traitlets as T
 from ..baseobject import BaseObject
 
 
-class VgFormula(BaseObject):
-    """Wrapper for Vega-Lite VgFormula definition.
+class Formula(BaseObject):
+    """Wrapper for Vega-Lite Formula definition.
     
     Attributes
     ----------
@@ -21,4 +21,4 @@ class VgFormula(BaseObject):
     def __init__(self, expr=None, field=None, **kwargs):
         kwds = dict(expr=expr, field=field)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
-        super(VgFormula, self).__init__(**kwargs)
+        super(Formula, self).__init__(**kwargs)

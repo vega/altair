@@ -20,11 +20,9 @@ class PositionChannel(PositionChannelDef):
         A shorthand description of the channel
     aggregate: AggregateOp
         
-    axis: Union(Bool, AxisProperties)
+    axis: Union(Bool, Axis)
         
-    bin: Union(Bool, BinProperties)
-        
-    displayName: Unicode
+    bin: Union(Bool, Bin)
         
     field: Unicode
         
@@ -33,6 +31,8 @@ class PositionChannel(PositionChannelDef):
     sort: Union(SortField, SortOrder)
         
     timeUnit: TimeUnit
+        
+    title: Unicode
         
     type: Union(Type, Unicode)
         
@@ -60,9 +60,9 @@ class PositionChannel(PositionChannelDef):
     skip = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', aggregate=None, axis=None, bin=None, displayName=None, field=None, scale=None, sort=None, timeUnit=None, type=None, value=None, **kwargs):
+    def __init__(self, shorthand='', aggregate=None, axis=None, bin=None, field=None, scale=None, sort=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(aggregate=aggregate, axis=axis, bin=bin, displayName=displayName, field=field, scale=scale, sort=sort, timeUnit=timeUnit, type=type, value=value)
+        kwds = dict(aggregate=aggregate, axis=axis, bin=bin, field=field, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(PositionChannel, self).__init__(**kwargs)
 
@@ -83,19 +83,19 @@ class ChannelWithLegend(ChannelDefWithLegend):
         A shorthand description of the channel
     aggregate: AggregateOp
         
-    bin: Union(Bool, BinProperties)
-        
-    displayName: Unicode
+    bin: Union(Bool, Bin)
         
     field: Unicode
         
-    legend: LegendProperties
+    legend: Legend
         
     scale: Scale
         
     sort: Union(SortField, SortOrder)
         
     timeUnit: TimeUnit
+        
+    title: Unicode
         
     type: Union(Type, Unicode)
         
@@ -123,9 +123,9 @@ class ChannelWithLegend(ChannelDefWithLegend):
     skip = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', aggregate=None, bin=None, displayName=None, field=None, legend=None, scale=None, sort=None, timeUnit=None, type=None, value=None, **kwargs):
+    def __init__(self, shorthand='', aggregate=None, bin=None, field=None, legend=None, scale=None, sort=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, type=type, value=value)
+        kwds = dict(aggregate=aggregate, bin=bin, field=field, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(ChannelWithLegend, self).__init__(**kwargs)
 
@@ -146,13 +146,13 @@ class Field(FieldDef):
         A shorthand description of the channel
     aggregate: AggregateOp
         
-    bin: Union(Bool, BinProperties)
-        
-    displayName: Unicode
+    bin: Union(Bool, Bin)
         
     field: Unicode
         
     timeUnit: TimeUnit
+        
+    title: Unicode
         
     type: Union(Type, Unicode)
         
@@ -180,9 +180,9 @@ class Field(FieldDef):
     skip = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', aggregate=None, bin=None, displayName=None, field=None, timeUnit=None, type=None, value=None, **kwargs):
+    def __init__(self, shorthand='', aggregate=None, bin=None, field=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, timeUnit=timeUnit, type=type, value=value)
+        kwds = dict(aggregate=aggregate, bin=bin, field=field, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Field, self).__init__(**kwargs)
 
@@ -203,15 +203,15 @@ class OrderChannel(OrderChannelDef):
         A shorthand description of the channel
     aggregate: AggregateOp
         
-    bin: Union(Bool, BinProperties)
-        
-    displayName: Unicode
+    bin: Union(Bool, Bin)
         
     field: Unicode
         
     sort: SortOrder
         
     timeUnit: TimeUnit
+        
+    title: Unicode
         
     type: Union(Type, Unicode)
         
@@ -239,9 +239,9 @@ class OrderChannel(OrderChannelDef):
     skip = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', aggregate=None, bin=None, displayName=None, field=None, sort=None, timeUnit=None, type=None, value=None, **kwargs):
+    def __init__(self, shorthand='', aggregate=None, bin=None, field=None, sort=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(aggregate=aggregate, bin=bin, displayName=displayName, field=field, sort=sort, timeUnit=timeUnit, type=type, value=value)
+        kwds = dict(aggregate=aggregate, bin=bin, field=field, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(OrderChannel, self).__init__(**kwargs)
 

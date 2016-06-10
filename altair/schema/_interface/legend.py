@@ -5,11 +5,13 @@ import traitlets as T
 from ..baseobject import BaseObject
 
 
-class LegendConfig(BaseObject):
-    """Wrapper for Vega-Lite LegendConfig definition.
+class Legend(BaseObject):
+    """Wrapper for Vega-Lite Legend definition.
     
     Attributes
     ----------
+    format: Unicode
+        An optional formatting pattern for legend labels.
     gradientHeight: CFloat
         The height of the gradient, in pixels.
     gradientStrokeColor: Unicode
@@ -52,6 +54,8 @@ class LegendConfig(BaseObject):
         The size of the lengend symbol, in pixels.
     symbolStrokeWidth: CFloat
         The width of the symbol's stroke.
+    title: Unicode
+        A title for the legend.
     titleColor: Unicode
         Optional mark property definitions for custom legend styling.
     titleFont: Unicode
@@ -60,7 +64,10 @@ class LegendConfig(BaseObject):
         The font size of the legend title.
     titleFontWeight: Unicode
         The font weight of the legend title.
+    values: List(Any)
+        Explicitly set the visible legend values.
     """
+    format = T.Unicode(allow_none=True, default_value=None, help="""An optional formatting pattern for legend labels.""")
     gradientHeight = T.CFloat(allow_none=True, default_value=None, help="""The height of the gradient, in pixels.""")
     gradientStrokeColor = T.Unicode(allow_none=True, default_value=None, help="""The color of the gradient stroke, can be in hex color code or regular color name.""")
     gradientStrokeWidth = T.CFloat(allow_none=True, default_value=None, help="""The width of the gradient stroke, in pixels.""")
@@ -83,12 +90,14 @@ class LegendConfig(BaseObject):
 'triangle-up', 'triangle-down'.""")
     symbolSize = T.CFloat(allow_none=True, default_value=None, help="""The size of the lengend symbol, in pixels.""")
     symbolStrokeWidth = T.CFloat(allow_none=True, default_value=None, help="""The width of the symbol's stroke.""")
+    title = T.Unicode(allow_none=True, default_value=None, help="""A title for the legend.""")
     titleColor = T.Unicode(allow_none=True, default_value=None, help="""Optional mark property definitions for custom legend styling.""")
     titleFont = T.Unicode(allow_none=True, default_value=None, help="""The font of the legend title.""")
     titleFontSize = T.CFloat(allow_none=True, default_value=None, help="""The font size of the legend title.""")
     titleFontWeight = T.Unicode(allow_none=True, default_value=None, help="""The font weight of the legend title.""")
+    values = T.List(T.Any(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Explicitly set the visible legend values.""")
     
-    def __init__(self, gradientHeight=None, gradientStrokeColor=None, gradientStrokeWidth=None, gradientWidth=None, labelAlign=None, labelBaseline=None, labelColor=None, labelFont=None, labelFontSize=None, labelOffset=None, margin=None, offset=None, orient=None, padding=None, properties=None, shortTimeLabels=None, symbolColor=None, symbolShape=None, symbolSize=None, symbolStrokeWidth=None, titleColor=None, titleFont=None, titleFontSize=None, titleFontWeight=None, **kwargs):
-        kwds = dict(gradientHeight=gradientHeight, gradientStrokeColor=gradientStrokeColor, gradientStrokeWidth=gradientStrokeWidth, gradientWidth=gradientWidth, labelAlign=labelAlign, labelBaseline=labelBaseline, labelColor=labelColor, labelFont=labelFont, labelFontSize=labelFontSize, labelOffset=labelOffset, margin=margin, offset=offset, orient=orient, padding=padding, properties=properties, shortTimeLabels=shortTimeLabels, symbolColor=symbolColor, symbolShape=symbolShape, symbolSize=symbolSize, symbolStrokeWidth=symbolStrokeWidth, titleColor=titleColor, titleFont=titleFont, titleFontSize=titleFontSize, titleFontWeight=titleFontWeight)
+    def __init__(self, format=None, gradientHeight=None, gradientStrokeColor=None, gradientStrokeWidth=None, gradientWidth=None, labelAlign=None, labelBaseline=None, labelColor=None, labelFont=None, labelFontSize=None, labelOffset=None, margin=None, offset=None, orient=None, padding=None, properties=None, shortTimeLabels=None, symbolColor=None, symbolShape=None, symbolSize=None, symbolStrokeWidth=None, title=None, titleColor=None, titleFont=None, titleFontSize=None, titleFontWeight=None, values=None, **kwargs):
+        kwds = dict(format=format, gradientHeight=gradientHeight, gradientStrokeColor=gradientStrokeColor, gradientStrokeWidth=gradientStrokeWidth, gradientWidth=gradientWidth, labelAlign=labelAlign, labelBaseline=labelBaseline, labelColor=labelColor, labelFont=labelFont, labelFontSize=labelFontSize, labelOffset=labelOffset, margin=margin, offset=offset, orient=orient, padding=padding, properties=properties, shortTimeLabels=shortTimeLabels, symbolColor=symbolColor, symbolShape=symbolShape, symbolSize=symbolSize, symbolStrokeWidth=symbolStrokeWidth, title=title, titleColor=titleColor, titleFont=titleFont, titleFontSize=titleFontSize, titleFontWeight=titleFontWeight, values=values)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
-        super(LegendConfig, self).__init__(**kwargs)
+        super(Legend, self).__init__(**kwargs)

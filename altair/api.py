@@ -16,8 +16,8 @@ from . import schema
 from .schema import AggregateOp
 from .schema import AxisConfig
 from .schema import AxisOrient
-from .schema import AxisProperties
-from .schema import BinProperties
+from .schema import Axis
+from .schema import Bin
 from .schema import CellConfig
 from .schema import Config
 from .schema import Data
@@ -29,7 +29,7 @@ from .schema import FontStyle
 from .schema import FontWeight
 from .schema import HorizontalAlign
 from .schema import LegendConfig
-from .schema import LegendProperties
+from .schema import Legend
 from .schema import MarkConfig
 from .schema import NiceTime
 from .schema import Scale
@@ -40,32 +40,18 @@ from .schema import StackOffset
 from .schema import TimeUnit
 from .schema import Transform
 from .schema import VerticalAlign
-from .schema import VgFormula
 
 #*************************************************************************
 # Channel Aliases
 #*************************************************************************
-from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Order, Path
-
+from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
+from .schema._wrappers.encoding_channels import CHANNEL_CLASSES, CHANNEL_NAMES
 
 #*************************************************************************
 # Aliases
 #*************************************************************************
 
-
-class Axis(schema.AxisProperties):
-    pass
-
-
-class Bin(schema.BinProperties):
-    pass
-
-
-class Legend(schema.LegendProperties):
-    pass
-
-
-class Formula(schema.VgFormula):
+class Formula(schema.Formula):
     def __init__(self, field, **kwargs):
         kwargs['field'] = field
         super(Formula, self).__init__(**kwargs)
@@ -74,25 +60,6 @@ class Formula(schema.VgFormula):
 #*************************************************************************
 # Encoding
 #*************************************************************************
-
-
-CHANNEL_CLASSES = {
-    'x': X,
-    'y': Y,
-    'row': Row,
-    'column': Column,
-    'color': Color,
-    'size': Size,
-    'shape': Shape,
-    'detail': Detail,
-    'text': Text,
-    'label': Label,
-    'path': Path,
-    'order': Order
-
-}
-
-CHANNEL_NAMES = list(CHANNEL_CLASSES.keys())
 
 MARK_TYPES = [
     "area",
@@ -118,6 +85,7 @@ class Encoding(schema.Encoding):
     color = T.Instance(Color, default_value=None, allow_none=True)
     size = T.Instance(Size, default_value=None, allow_none=True)
     shape = T.Instance(Shape, default_value=None, allow_none=True)
+    opacity = T.Instance(Opacity, default_value=None, allow_none=True)
 
     # Field and order channels
     detail = T.Union([T.Instance(Detail), T.List(T.Instance(Detail))],
@@ -151,11 +119,18 @@ class Encoding(schema.Encoding):
 
 
 #*************************************************************************
-# Encoding
+# Top-level Objects
 #*************************************************************************
+class Layer(schema.LayerSpec):
+    pass
 
+class Facet(schema.FacetSpec):
+    pass
 
-class Chart(schema.BaseObject):
+class Unit(schema.UnitSpec):
+    pass
+
+class Chart(schema.ExtendedUnitSpec):
 
     _data = None
 
@@ -169,6 +144,10 @@ class Chart(schema.BaseObject):
     @classmethod
     def from_dict(cls, dct):
         """Create a Chart from a dict of Vega-Lite JSON."""
+        if 'layers' in dct:
+            raise NotImplementedError("Layered charts")
+        elif 'facet' in dct:
+            raise NotImplementedError("Faceted charts")
         return visitors.FromDict().clsvisit(cls, dct)
 
     def to_dict(self, data=True):

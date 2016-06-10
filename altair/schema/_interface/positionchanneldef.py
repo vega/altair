@@ -4,8 +4,8 @@
 import traitlets as T
 from ..baseobject import BaseObject
 from .aggregateop import AggregateOp
-from .axisproperties import AxisProperties
-from .binproperties import BinProperties
+from .axis import Axis
+from .bin import Bin
 from .scale import Scale
 from .sortfield import SortField
 from .sortorder import SortOrder
@@ -20,11 +20,9 @@ class PositionChannelDef(BaseObject):
     ----------
     aggregate: AggregateOp
         
-    axis: Union(Bool, AxisProperties)
+    axis: Union(Bool, Axis)
         
-    bin: Union(Bool, BinProperties)
-        
-    displayName: Unicode
+    bin: Union(Bool, Bin)
         
     field: Unicode
         
@@ -34,23 +32,25 @@ class PositionChannelDef(BaseObject):
         
     timeUnit: TimeUnit
         
+    title: Unicode
+        
     type: Type
         
     value: Union(CFloat, Unicode, Bool)
         
     """
     aggregate = AggregateOp(allow_none=True, default_value=None)
-    axis = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(AxisProperties, allow_none=True, default_value=None)])
-    bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(BinProperties, allow_none=True, default_value=None)])
-    displayName = T.Unicode(allow_none=True, default_value=None)
+    axis = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Axis, allow_none=True, default_value=None)])
+    bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Bin, allow_none=True, default_value=None, help="""Binning properties or boolean flag for determining whether to bin data or not.""")])
     field = T.Unicode(allow_none=True, default_value=None)
     scale = T.Instance(Scale, allow_none=True, default_value=None)
     sort = T.Union([T.Instance(SortField, allow_none=True, default_value=None), SortOrder(allow_none=True, default_value=None)])
     timeUnit = TimeUnit(allow_none=True, default_value=None)
+    title = T.Unicode(allow_none=True, default_value=None)
     type = Type(allow_none=True, default_value=None)
     value = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None)])
     
-    def __init__(self, aggregate=None, axis=None, bin=None, displayName=None, field=None, scale=None, sort=None, timeUnit=None, type=None, value=None, **kwargs):
-        kwds = dict(aggregate=aggregate, axis=axis, bin=bin, displayName=displayName, field=field, scale=scale, sort=sort, timeUnit=timeUnit, type=type, value=value)
+    def __init__(self, aggregate=None, axis=None, bin=None, field=None, scale=None, sort=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
+        kwds = dict(aggregate=aggregate, axis=axis, bin=bin, field=field, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(PositionChannelDef, self).__init__(**kwargs)
