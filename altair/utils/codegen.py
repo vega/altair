@@ -102,7 +102,26 @@ class CodeGen(object):
         return self
 
     def convert_arg_to_method(self, arg, methodname=None, depth=1):
-        """Convert an argument (and optionally subarguments) to a method"""
+        """Convert an argument (and optionally subarguments) to a method
+
+        Examples
+        --------
+        >>> encoding = CodeGen('Encoding', kwargs=dict(arg1=1, arg2=2))
+        >>> chart = CodeGen('Chart', kwargs=dict(encoding=encoding))
+        >>> print(str(chart))
+        Chart(
+            encoding=Encoding(
+                arg1=1,
+                arg2=2,
+            ),
+        )
+        >>> chart.convert_arg_to_method('encoding', 'encode')
+        >>> print(str(chart))
+        Chart().encode(
+            arg1=1,
+            arg2=2,
+        )
+        """
         if methodname is None:
             methodname = arg
 
