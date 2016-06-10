@@ -110,8 +110,7 @@ def sync_datasets(datasets_repo,
     outfile = os.path.join(destination, filename)
     print("Writing datasets dict to {0}".format(outfile))
     with open(outfile, 'w') as f:
-        f.write(json.dumps(datasets_dict, indent=2))
-
+        f.write(json.dumps(datasets_dict, indent=2, sort_keys=True))
 
 
 def main():
@@ -121,15 +120,15 @@ def main():
     parser.add_argument('-t', '--tag', default=None,
                         help='Version tag to use')
     parser.add_argument('-e', '--examples', action='store_true',
-                        help='Sync the Vega-Lite examples')
+                        help='Sync examples from github.com/vega/vega-lite')
     parser.add_argument('-s', '--schema', action='store_true',
-                        help='Sync the Vega-Lite schema')
+                        help='Sync schema from github.com/vega/vega-lite')
     parser.add_argument('-d', '--datasets', action='store_true',
-                        help='Sync the Vega-Lite schema')
+                        help='Sync datasets from github.com/vega/vega-datasets')
 
     args = parser.parse_args()
 
-    if not (args.examples or args.schema):
+    if not (args.examples or args.schema or args.datasets):
         parser.print_help()
 
     if args.schema:
