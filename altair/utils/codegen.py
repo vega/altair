@@ -100,3 +100,47 @@ class CodeGen(object):
         """Rename function and return self"""
         self.name = newname
         return self
+
+    def convert_arg_to_method(self, arg, methodname=None, depth=1):
+        """Convert an argument (and optionally subarguments) to a method
+
+        Examples
+        --------
+        >>> encoding = CodeGen('Encoding', kwargs=dict(arg1=1, arg2=2))
+        >>> chart = CodeGen('Chart', kwargs=dict(encoding=encoding))
+        >>> print(str(chart))
+        Chart(
+            encoding=Encoding(
+                arg1=1,
+                arg2=2,
+            ),
+        )
+        >>> chart.convert_arg_to_method('encoding', 'encode')
+        >>> print(str(chart))
+        Chart().encode(
+            arg1=1,
+            arg2=2,
+        )
+        """
+        if methodname is None:
+            methodname = arg
+
+        def submethods(obj, name, depth):
+            """Generate methods, and submethods if depth > 1"""
+            if depth > 1:
+                # if we're going deeper than one method, then cycle through all
+                # arguments and recursively call this function if they are a
+                # code object
+                for subname, subobj in list(obj.kwargs.items()):
+                    if isinstance(subobj, CodeGen):
+                        obj.kwargs.pop(subname)
+                        subname = '{0}_{1}'.format(name, subname)
+                        for method in submethods(subobj, subname, depth - 1):
+                            yield method
+            if obj.num_attributes > 0:
+                # if there are still attributes in the object, yield the
+                # top-level method.
+                yield obj.rename(name)
+
+        code_obj = self.kwargs.pop(arg, CodeGen(''))
+        self.add_methods(*submethods(code_obj, methodname, depth))

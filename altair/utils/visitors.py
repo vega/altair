@@ -136,19 +136,15 @@ class ToCode(Visitor):
             code.add_methods(markconfig.rename('mark_{0}'.format(obj.mark)))
 
         # enable Chart().encode(**kwargs)
-        encoding = code.kwargs.pop('encoding', CodeGen(''))
-        if encoding.num_attributes > 0:
-            code.add_methods(encoding.rename('encode'))
+        code.convert_arg_to_method('encoding', 'encode', depth=1)
 
         # enable Chart().transform_data(**kwargs)
-        transform = code.kwargs.pop('transform', CodeGen(''))
-        if transform.num_attributes > 0:
-            code.add_methods(transform.rename('transform_data'))
+        code.convert_arg_to_method('transform', 'transform_data', depth=1)
 
         # enable Chart().configure(**kwargs)
-        config = code.kwargs.pop('config', CodeGen(''))
-        if config.num_attributes > 0:
-            code.add_methods(config.rename('configure'))
+        #                configure_<arg>(**kwargs)
+        #                configure_facet_<arg>(**kwargs)
+        code.convert_arg_to_method('config', 'configure', depth=3)
 
         return code
 
