@@ -47,9 +47,7 @@ class Legend(BaseObject):
     symbolColor: Unicode
         The color of the legend symbol,.
     symbolShape: Unicode
-        The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond',
-
-'triangle-up', 'triangle-down'.
+        The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down'.
     symbolSize: CFloat
         The size of the lengend symbol, in pixels.
     symbolStrokeWidth: CFloat
@@ -85,9 +83,7 @@ class Legend(BaseObject):
     properties = T.Any(allow_none=True, default_value=None, help="""Optional mark property definitions for custom legend styling.""")
     shortTimeLabels = T.Bool(allow_none=True, default_value=None, help="""Whether month names and weekday names should be abbreviated.""")
     symbolColor = T.Unicode(allow_none=True, default_value=None, help="""The color of the legend symbol,.""")
-    symbolShape = T.Unicode(allow_none=True, default_value=None, help="""The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond',
-
-'triangle-up', 'triangle-down'.""")
+    symbolShape = T.Unicode(allow_none=True, default_value=None, help="""The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down'.""")
     symbolSize = T.CFloat(allow_none=True, default_value=None, help="""The size of the lengend symbol, in pixels.""")
     symbolStrokeWidth = T.CFloat(allow_none=True, default_value=None, help="""The width of the symbol's stroke.""")
     title = T.Unicode(allow_none=True, default_value=None, help="""A title for the legend.""")

@@ -1,5 +1,6 @@
 import os
 import json
+import re
 from itertools import chain, groupby
 from collections import defaultdict
 from operator import itemgetter
@@ -141,7 +142,12 @@ class SchemaProperty(object):
     @property
     def short_description(self):
         if self.description:
-            return self.description.split('(e.g.')[0].split('.')[0] + '.'
+            # replace all whitespace with single spaces.
+            desc = re.sub(r"\s+", ' ', self.description)
+            # truncate description in appropriate place
+            for lineend in ['(e.g.', '.', ';']:
+                desc = desc.split(lineend)[0]
+            return desc + '.'
         else:
             return ''
 

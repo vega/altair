@@ -38,15 +38,7 @@ class UnitEncoding(BaseObject):
         
     """
     color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
-    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef;
-
-For simplicity, we do not declare multiple interfaces of FieldDef like
-
-we do for JSON schema."""), T.List(T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef;
-
-For simplicity, we do not declare multiple interfaces of FieldDef like
-
-we do for JSON schema."""), allow_none=True, default_value=None)])
+    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
     label = T.Instance(FieldDef, allow_none=True, default_value=None)
     opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
     order = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef, allow_none=True, default_value=None), allow_none=True, default_value=None)])
