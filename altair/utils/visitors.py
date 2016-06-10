@@ -135,20 +135,34 @@ class ToCode(Visitor):
             markconfig = config.kwargs.pop('mark', CodeGen(''))
             code.add_methods(markconfig.rename('mark_{0}'.format(obj.mark)))
 
+        def add_submethods(code, attrname, methodname, depth=1):
+            """Add all methods (and optionally submethods) for the given name"""
+            def submethods(obj, name, depth):
+                """Generate methods, and submethods if depth > 1"""
+                if depth > 1:
+                    for attr, arg in list(obj.kwargs.items()):
+                        # if code, remove sub-argument and convert to method
+                        if isinstance(arg, CodeGen):
+                            obj.kwargs.pop(attr)
+                            subname = '{0}_{1}'.format(name, attr)
+                            for method in submethods(arg, subname, depth - 1):
+                                yield method
+                if obj.num_attributes > 0:
+                    # return the method
+                    yield obj.rename(name)
+            obj = code.kwargs.pop(attrname, CodeGen(''))
+            code.add_methods(*submethods(obj, methodname, depth))
+
         # enable Chart().encode(**kwargs)
-        encoding = code.kwargs.pop('encoding', CodeGen(''))
-        if encoding.num_attributes > 0:
-            code.add_methods(encoding.rename('encode'))
+        add_submethods(code, 'encoding', 'encode', depth=1)
 
         # enable Chart().transform_data(**kwargs)
-        transform = code.kwargs.pop('transform', CodeGen(''))
-        if transform.num_attributes > 0:
-            code.add_methods(transform.rename('transform_data'))
+        add_submethods(code, 'transform', 'transform_data', depth=1)
 
         # enable Chart().configure(**kwargs)
-        config = code.kwargs.pop('config', CodeGen(''))
-        if config.num_attributes > 0:
-            code.add_methods(config.rename('configure'))
+        #                configure_<arg>(**kwargs)
+        #                configure_facet_<arg>(**kwargs)
+        add_submethods(code, 'config', 'configure', depth=3)
 
         return code
 

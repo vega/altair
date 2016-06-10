@@ -231,49 +231,49 @@ class Chart(schema.BaseObject):
     def mark_area(self, **kwargs):
         self.mark = 'area'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     def mark_bar(self,**kwargs):
         self.mark = 'bar'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     def mark_line(self, **kwargs):
         self.mark = 'line'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     def mark_point(self, **kwargs):
         self.mark = 'point'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     def mark_text(self, **kwargs):
         self.mark = 'text'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     def mark_tick(self, **kwargs):
         self.mark = 'tick'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     def mark_circle(self, **kwargs):
         self.mark = 'circle'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     def mark_square(self, **kwargs):
         self.mark = 'square'
         if kwargs:
-            self.configure(MarkConfig(**kwargs))
+            self.configure_mark(**kwargs)
         return self
 
     # Encoding and transform methods
