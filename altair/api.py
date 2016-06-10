@@ -39,6 +39,8 @@ from .schema import SortOrder
 from .schema import StackOffset
 from .schema import TimeUnit
 from .schema import Transform
+from .schema import UnitSpec
+from .schema import UnitEncoding
 from .schema import VerticalAlign
 
 #*************************************************************************
@@ -46,6 +48,21 @@ from .schema import VerticalAlign
 #*************************************************************************
 from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
 from .schema._wrappers.encoding_channels import CHANNEL_CLASSES, CHANNEL_NAMES
+
+#*************************************************************************
+# Loading the spec
+#*************************************************************************
+def load_vegalite_spec(spec):
+    """Load a Vega-Lite spec and return an Altair object.
+
+    The spec should be in the form of a Python dictionary.
+    """
+    if 'layers' in spec:
+        return Layer.from_dict(spec)
+    elif 'facet' in spec:
+        return Facet.from_dict(spec)
+    else:
+        return Chart.from_dict(spec)
 
 #*************************************************************************
 # Aliases
@@ -121,33 +138,10 @@ class Encoding(schema.Encoding):
 #*************************************************************************
 # Top-level Objects
 #*************************************************************************
-class Layer(schema.LayerSpec):
-    pass
-
-class Facet(schema.FacetSpec):
-    pass
-
-class Unit(schema.UnitSpec):
-    pass
-
-class Chart(schema.ExtendedUnitSpec):
-
-    _data = None
-
-    name = T.Unicode()
-    description = T.Unicode()
-    transform = T.Instance(schema.Transform, default_value=None, allow_none=True)
-    mark = T.Enum(MARK_TYPES, default_value='point')
-    encoding = T.Instance(Encoding, default_value=None, allow_none=True)
-    config = T.Instance(schema.Config, allow_none=True)
-
+class TopLevelMixin(object):
     @classmethod
     def from_dict(cls, dct):
         """Create a Chart from a dict of Vega-Lite JSON."""
-        if 'layers' in dct:
-            raise NotImplementedError("Layered charts")
-        elif 'facet' in dct:
-            raise NotImplementedError("Faceted charts")
         return visitors.FromDict().clsvisit(cls, dct)
 
     def to_dict(self, data=True):
@@ -162,23 +156,43 @@ class Chart(schema.ExtendedUnitSpec):
         """Emit the Python code as a string required to created this Chart."""
         return str(self._to_code(data=data))
 
+
+class Layer(schema.LayerSpec, TopLevelMixin):
+    pass
+
+
+class Facet(schema.FacetSpec, TopLevelMixin):
+    pass
+
+
+class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
+
+    _data = None
+
+    name = T.Unicode()
+    description = T.Unicode()
+    transform = T.Instance(schema.Transform, default_value=None, allow_none=True)
+    mark = T.Enum(MARK_TYPES, default_value='point')
+    encoding = T.Instance(Encoding, default_value=None, allow_none=True)
+    config = T.Instance(schema.Config, allow_none=True)
+
     def _encoding_changed(self, name, old, new):
         if isinstance(new, Encoding):
             self.encoding.parent = self
             if isinstance(self.data, pd.DataFrame):
                 self.encoding._infer_types(self.data)
 
-    def _set_data(self, new):
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, new):
         if not (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
         if self.encoding is not None:
             self.encoding._infer_types(new)
         self._data = new
-
-    def _get_data(self):
-        return self._data
-
-    data = property(_get_data, _set_data)
 
     skip = ['data', '_data']
 

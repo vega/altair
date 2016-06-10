@@ -1,6 +1,7 @@
 __version__ = '0.0.1'
 
 from .api import (
+    load_vegalite_spec,
     Label,
     Formula,
     StackOffset,
@@ -40,6 +41,8 @@ from .api import (
     Color,
     DataFormat,
     Chart,
+    Layer,
+    Facet,
     CellConfig,
     Detail,
 )

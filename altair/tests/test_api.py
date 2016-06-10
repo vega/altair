@@ -50,10 +50,10 @@ def test_transform_update():
     assert chart1.to_dict() == chart2.to_dict()
 
 
-def test_from_dict():
+def test_load_vegalite_spec():
     df = pd.DataFrame({'x':[1,2,3], 'y':[4,5,6]})
     obj = Chart(df).mark_point().encode(x='x', y='y')
-    obj2 = Chart.from_dict(obj.to_dict())
+    obj2 = load_vegalite_spec(obj.to_dict())
     assert obj.to_dict() == obj2.to_dict()
 
 
@@ -111,12 +111,12 @@ def test_mark_config(mark):
     # chart2.mark_circle(color='red')
     markmethod(chart2)(**kwds)
     chart2.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
-    
+
     chart3 = Chart()
     #chart3.mark_circle().configure_mark(**kwargs)
     markmethod(chart3)().configure_mark(**kwds)
     chart3.encode(x='Horsepower:Q', y='Miles_per_gallon:Q')
-    
+
     assert chart1.to_dict() == chart2.to_dict()
     assert chart2.to_dict() == chart3.to_dict()
 
@@ -156,9 +156,9 @@ def test_config_methods(params):
 
 
 def test_config_facet_grid():
-    
+
     kwds = dict(opacity=0.5, color='red')
-    
+
     chart1 = Chart(
         config=Config(
             facet=FacetConfig(grid=FacetGridConfig(**kwds))
@@ -167,4 +167,3 @@ def test_config_facet_grid():
     chart2 = Chart().configure_facet_grid(**kwds)
 
     assert chart1.to_dict() == chart2.to_dict()
-
