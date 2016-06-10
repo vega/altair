@@ -6,7 +6,7 @@ python:
   - 3.5
 
 env:
-  - DEPS="pandas pytest traitlets pip ipython pytest"
+  - DEPS="pandas pytest traitlets ipython pytest"
 
 install:
   - conda create -n testenv --yes python=$TRAVIS_PYTHON_VERSION
@@ -25,4 +25,4 @@ before_install:
   #- "sh -e /etc/init.d/xvfb start"
 
 script:
-  - py.test altair
+  - py.test altair --doctest-modules
