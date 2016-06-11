@@ -51,7 +51,7 @@ class ToDict(Visitor):
                     D[k] = self.visit(v)
         return D
 
-    def visit_Chart(self, obj, data):
+    def _visit_with_data(self, obj, data=True):
         D = self.visit_BaseObject(obj)
         if data:
             if isinstance(obj.data, schema.Data):
@@ -62,6 +62,10 @@ class ToDict(Visitor):
         else:
             D.pop('data', None)
         return D
+
+    visit_Chart = _visit_with_data
+    visit_LayerChart = _visit_with_data
+    visit_FacetChart = _visit_with_data
 
 
 class ToCode(Visitor):
@@ -114,7 +118,7 @@ class ToCode(Visitor):
         kwds = {k: self.visit(v, shorten=True) for k, v in kwds.items()}
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
-    def visit_Chart(self, obj, data=None, *args, **kwargs):
+    def _visit_with_data(self, obj, data=None, *args, **kwargs):
         code = self.visit_BaseObject(obj)
 
         # Add data as a top-level argument
@@ -133,6 +137,11 @@ class ToCode(Visitor):
         elif isinstance(obj.data, pd.DataFrame):
             # data as a dataframe; this gets too long so we leave it out
             warnings.warn("Skipping dataframe definition in altair code")
+
+        return code
+
+    def visit_Chart(self, obj, data=None, *args, **kwargs):
+        code = self._visit_with_data(obj, data, *args, **kwargs)
 
         # enable Chart().mark_point(**kwargs)
         mark = code.kwargs.pop('mark', None)
@@ -154,6 +163,12 @@ class ToCode(Visitor):
 
         return code
 
+    def visit_LayerChart(self, obj, data=None, *args, **kwargs):
+        return self._visit_with_data(obj, data, *args, **kwargs)
+
+    def visit_FacetChart(self, obj, data=None, *args, **kwargs):
+        return self._visit_with_data(obj, data, *args, **kwargs)
+
 
 class FromDict(Visitor):
     """Crawl object structure to construct object from a Dictionary"""
@@ -168,7 +183,7 @@ class FromDict(Visitor):
             obj.set_trait(prop, self.visit(subtrait, val))
         return obj
 
-    def clsvisit_Chart(self, cls, dct, *args, **kwargs):
+    def _clsvisit_with_data(self, cls, dct, *args, **kwargs):
         # Remove data first and handle it specially later
         if 'data' in dct:
             dct = dct.copy()
@@ -186,6 +201,10 @@ class FromDict(Visitor):
             else:
                 obj.data = schema.Data(**data)
         return obj
+
+    clsvisit_Chart = _clsvisit_with_data
+    clsvisit_LayerChart = _clsvisit_with_data
+    clsvisit_FacetChart = _clsvisit_with_data
 
     def visit_List(self, trait, dct, *args, **kwargs):
         return [self.visit(trait._trait, item) for item in dct]

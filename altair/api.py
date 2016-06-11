@@ -27,6 +27,7 @@ from .schema import FacetGridConfig
 from .schema import FacetScaleConfig
 from .schema import FontStyle
 from .schema import FontWeight
+from .schema import Formula
 from .schema import HorizontalAlign
 from .schema import LegendConfig
 from .schema import Legend
@@ -58,38 +59,16 @@ def load_vegalite_spec(spec):
     The spec should be in the form of a Python dictionary.
     """
     if 'layers' in spec:
-        return Layer.from_dict(spec)
+        return LayerChart.from_dict(spec)
     elif 'facet' in spec:
-        return Facet.from_dict(spec)
+        return FacetChart.from_dict(spec)
     else:
         return Chart.from_dict(spec)
-
-#*************************************************************************
-# Aliases
-#*************************************************************************
-
-class Formula(schema.Formula):
-    def __init__(self, field, **kwargs):
-        kwargs['field'] = field
-        super(Formula, self).__init__(**kwargs)
 
 
 #*************************************************************************
 # Encoding
 #*************************************************************************
-
-MARK_TYPES = [
-    "area",
-    "bar",
-    "line",
-    "point",
-    "text",
-    "tick",
-    "circle",
-    "square"
-]
-
-
 class Encoding(schema.Encoding):
 
     # Position channels
@@ -156,13 +135,15 @@ class TopLevelMixin(object):
         """Emit the Python code as a string required to created this Chart."""
         return str(self._to_code(data=data))
 
+    # Display related methods
+    def _ipython_display_(self):
+        from IPython.display import display
+        from vega import VegaLite
+        display(VegaLite(self.to_dict()))
 
-class Layer(schema.LayerSpec, TopLevelMixin):
-    pass
-
-
-class Facet(schema.FacetSpec, TopLevelMixin):
-    pass
+    def display(self):
+        from IPython.display import display
+        display(self)
 
 
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
@@ -172,7 +153,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     name = T.Unicode()
     description = T.Unicode()
     transform = T.Instance(schema.Transform, default_value=None, allow_none=True)
-    mark = T.Enum(MARK_TYPES, default_value='point')
+    mark = T.Enum(schema.Mark().values, default_value='point')
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
     config = T.Instance(schema.Config, allow_none=True)
 
@@ -188,21 +169,18 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
 
     @data.setter
     def data(self, new):
-        if not (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+        if isinstance(new, string_types):
+            self._data = Data(url=new)
+        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+            self._data = new
+        else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
-        if self.encoding is not None:
-            self.encoding._infer_types(new)
-        self._data = new
 
     skip = ['data', '_data']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, data=None, **kwargs):
         super(Chart, self).__init__(**kwargs)
-        if len(args)==1:
-            if isinstance(args[0], string_types):
-                self.data = Data(url=args[0])
-            else:
-                self.data = args[0]
+        self.data = data
 
     def __dir__(self):
         base = super(Chart, self).__dir__()
@@ -241,6 +219,12 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
 
     def mark_point(self, **kwargs):
         self.mark = 'point'
+        if kwargs:
+            self.configure_mark(**kwargs)
+        return self
+
+    def mark_rule(self, **kwargs):
+        self.mark = 'rule'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
@@ -367,13 +351,225 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         """Configure the facet's scales by keyword args."""
         return self._configure_facet('scale', FacetScaleConfig, **kwargs)
 
-    # Display related methods
 
-    def _ipython_display_(self):
-        from IPython.display import display
-        from vega import VegaLite
-        display(VegaLite(self.to_dict()))
+class LayerChart(schema.LayerSpec, TopLevelMixin):
 
-    def display(self):
-        from IPython.display import display
-        display(self)
+    _data = None
+
+    name = T.Unicode()
+    description = T.Unicode()
+    layers = T.List(T.Instance(Chart), allow_none=True, default_value=None)
+    transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
+    config = T.Instance(schema.Config, allow_none=True, default_value=None)
+
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, new):
+        if isinstance(new, string_types):
+            self._data = Data(url=new)
+        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+            self._data = new
+        else:
+            raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
+
+    skip = ['data', '_data']
+
+    def __init__(self, data=None, **kwargs):
+        super(LayerChart, self).__init__(**kwargs)
+        self.data = data
+
+    def transform_data(self, **kwargs):
+        """Set the data transform by keyword args."""
+        if self.transform is None:
+            self.transform = schema.Transform()
+        self.transform.update_traits(**kwargs)
+        return self
+
+    # Configuration methods
+
+    def configure(self, *args, **kwargs):
+        """Set chart configuration"""
+        # Map config trait names to their classes
+        name_to_trait = {key: val.klass
+                         for key, val in schema.Config.class_traits().items()
+                         if isinstance(val, T.Instance)}
+        trait_to_name = {v:k for k, v in name_to_trait.items()}
+
+        if len(name_to_trait) != len(trait_to_name):
+            raise ValueError("Two Config() traits have the same class. "
+                             "(Possibly caused by a vega-lite schema update?)")
+
+        for val in args:
+            if val.__class__ in trait_to_name:
+                key = trait_to_name[val.__class__]
+                if key in kwargs:
+                    raise ValueError("{0} specified twice".format(key))
+                kwargs[key] = val
+            else:
+                raise ValueError("unrecognized argument: {0}".format(val))
+        if self.config is None:
+            self.config = schema.Config()
+        self.config.update_traits(**kwargs)
+        return self
+
+    def configure_axis(self, **kwargs):
+        """Configure the chart's axes by keyword args."""
+        return self.configure(axis=AxisConfig(**kwargs))
+
+    def configure_cell(self, **kwargs):
+        """Configure the chart's cell's by keyword args."""
+        return self.configure(cell=CellConfig(**kwargs))
+
+    def configure_legend(self, **kwargs):
+        """Configure the chart's legend by keyword args."""
+        return self.configure(legend=LegendConfig(**kwargs))
+
+    def configure_mark(self, **kwargs):
+        """Configure the chart's marks by keyword args."""
+        return self.configure(mark=MarkConfig(**kwargs))
+
+    def configure_scale(self, **kwargs):
+        """Configure the chart's scales by keyword args."""
+        return self.configure(scale=ScaleConfig(**kwargs))
+
+    def _configure_facet(self, name, klass, **kwargs):
+        """Helper method for configure_facet_* methods."""
+        if self.config is None:
+            self.config = schema.Config()
+        facet_config = self.config.facet
+        if facet_config is None:
+            facet_config = FacetConfig()
+        setattr(facet_config, name, klass(**kwargs))
+        self.config.facet = facet_config
+        return self
+
+    def configure_facet_axis(self, **kwargs):
+        """Configure the facet's axes by keyword args."""
+        return self._configure_facet('axis', AxisConfig, **kwargs)
+
+    def configure_facet_cell(self, **kwargs):
+        """Configure the facet's cells by keyword args."""
+        return self._configure_facet('cell', CellConfig, **kwargs)
+
+    def configure_facet_grid(self, **kwargs):
+        """Configure the facet's grid by keyword args."""
+        return self._configure_facet('grid', FacetGridConfig, **kwargs)
+
+    def configure_facet_scale(self, **kwargs):
+        """Configure the facet's scales by keyword args."""
+        return self._configure_facet('scale', FacetScaleConfig, **kwargs)
+
+
+class FacetChart(schema.FacetSpec, TopLevelMixin):
+
+    _data = None
+
+    name = T.Unicode()
+    description = T.Unicode()
+    facet = T.Instance(schema.Facet, allow_none=True, default_value=None)
+    spec = T.Union([T.Instance(LayerChart), T.Instance(Chart)], allow_none=True, default_value=None)
+    transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
+    config = T.Instance(schema.Config, allow_none=True, default_value=None)
+
+    @property
+    def data(self):
+        return self._data
+
+    @data.setter
+    def data(self, new):
+        if isinstance(new, string_types):
+            self._data = Data(url=new)
+        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+            self._data = new
+        else:
+            raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
+
+    skip = ['data', '_data']
+
+    def __init__(self, data=None, **kwargs):
+        super(FacetChart, self).__init__(**kwargs)
+        self.data = data
+
+    def transform_data(self, **kwargs):
+        """Set the data transform by keyword args."""
+        if self.transform is None:
+            self.transform = schema.Transform()
+        self.transform.update_traits(**kwargs)
+        return self
+
+    # Configuration methods
+
+    def configure(self, *args, **kwargs):
+        """Set chart configuration"""
+        # Map config trait names to their classes
+        name_to_trait = {key: val.klass
+                         for key, val in schema.Config.class_traits().items()
+                         if isinstance(val, T.Instance)}
+        trait_to_name = {v:k for k, v in name_to_trait.items()}
+
+        if len(name_to_trait) != len(trait_to_name):
+            raise ValueError("Two Config() traits have the same class. "
+                             "(Possibly caused by a vega-lite schema update?)")
+
+        for val in args:
+            if val.__class__ in trait_to_name:
+                key = trait_to_name[val.__class__]
+                if key in kwargs:
+                    raise ValueError("{0} specified twice".format(key))
+                kwargs[key] = val
+            else:
+                raise ValueError("unrecognized argument: {0}".format(val))
+        if self.config is None:
+            self.config = schema.Config()
+        self.config.update_traits(**kwargs)
+        return self
+
+    def configure_axis(self, **kwargs):
+        """Configure the chart's axes by keyword args."""
+        return self.configure(axis=AxisConfig(**kwargs))
+
+    def configure_cell(self, **kwargs):
+        """Configure the chart's cell's by keyword args."""
+        return self.configure(cell=CellConfig(**kwargs))
+
+    def configure_legend(self, **kwargs):
+        """Configure the chart's legend by keyword args."""
+        return self.configure(legend=LegendConfig(**kwargs))
+
+    def configure_mark(self, **kwargs):
+        """Configure the chart's marks by keyword args."""
+        return self.configure(mark=MarkConfig(**kwargs))
+
+    def configure_scale(self, **kwargs):
+        """Configure the chart's scales by keyword args."""
+        return self.configure(scale=ScaleConfig(**kwargs))
+
+    def _configure_facet(self, name, klass, **kwargs):
+        """Helper method for configure_facet_* methods."""
+        if self.config is None:
+            self.config = schema.Config()
+        facet_config = self.config.facet
+        if facet_config is None:
+            facet_config = FacetConfig()
+        setattr(facet_config, name, klass(**kwargs))
+        self.config.facet = facet_config
+        return self
+
+    def configure_facet_axis(self, **kwargs):
+        """Configure the facet's axes by keyword args."""
+        return self._configure_facet('axis', AxisConfig, **kwargs)
+
+    def configure_facet_cell(self, **kwargs):
+        """Configure the facet's cells by keyword args."""
+        return self._configure_facet('cell', CellConfig, **kwargs)
+
+    def configure_facet_grid(self, **kwargs):
+        """Configure the facet's grid by keyword args."""
+        return self._configure_facet('grid', FacetGridConfig, **kwargs)
+
+    def configure_facet_scale(self, **kwargs):
+        """Configure the facet's scales by keyword args."""
+        return self._configure_facet('scale', FacetScaleConfig, **kwargs)

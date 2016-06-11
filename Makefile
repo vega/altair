@@ -3,12 +3,12 @@ test :
 
 
 generate-examples :
-	rm -r notebooks/auto_examples
+	rm -rf notebooks/auto_examples
 	python tools/create_example_notebooks.py
 
 
 generate-schema :
-	rm -r altair/schema/_interface
+	rm -rf altair/schema/_interface
 	python tools/generate_schema_interface.py
 
 

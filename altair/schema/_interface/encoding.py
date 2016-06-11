@@ -2,14 +2,14 @@
 # Do not modify this file directly.
 
 import traitlets as T
-from ..baseobject import BaseObject
+from .unitencoding import UnitEncoding
 from .channeldefwithlegend import ChannelDefWithLegend
 from .fielddef import FieldDef
 from .orderchanneldef import OrderChannelDef
 from .positionchanneldef import PositionChannelDef
 
 
-class Encoding(BaseObject):
+class Encoding(UnitEncoding):
     """Wrapper for Vega-Lite Encoding definition.
     
     Attributes

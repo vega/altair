@@ -41,8 +41,8 @@ from .api import (
     Color,
     DataFormat,
     Chart,
-    Layer,
-    Facet,
+    LayerChart,
+    FacetChart,
     CellConfig,
     Detail,
 )

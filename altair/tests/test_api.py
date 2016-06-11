@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 
 from .. import *
+from .. import schema
 from ..utils import parse_shorthand, infer_vegalite_type
-from ..api import MARK_TYPES
 from ..datasets import connection_ok
 
 
@@ -97,7 +97,7 @@ def test_to_altair_stocks():
     assert chart.to_dict() == chart2.to_dict()
 
 
-@pytest.mark.parametrize('mark', MARK_TYPES)
+@pytest.mark.parametrize('mark', schema.Mark().values)
 def test_mark_config(mark):
     markmethod = lambda chart: getattr(chart, 'mark_' + mark)
     kwds = dict(color='red', opacity=0.5)

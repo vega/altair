@@ -40,6 +40,7 @@ TYPE_MAP = {'oneOf': 'Union',
 # Map class names to their bases
 BASE_MAP = defaultdict(lambda: 'BaseObject')
 BASE_MAP['ExtendedUnitSpec'] = 'UnitSpec'
+BASE_MAP['Encoding'] = 'UnitEncoding'
 
 
 class SchemaProperty(object):
