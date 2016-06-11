@@ -64,8 +64,8 @@ class ToDict(Visitor):
         return D
 
     visit_Chart = _visit_with_data
-    visit_LayerChart = _visit_with_data
-    visit_FacetChart = _visit_with_data
+    visit_LayeredChart = _visit_with_data
+    visit_FacetedChart = _visit_with_data
 
 
 class ToCode(Visitor):
@@ -163,10 +163,10 @@ class ToCode(Visitor):
 
         return code
 
-    def visit_LayerChart(self, obj, data=None, *args, **kwargs):
+    def visit_LayeredChart(self, obj, data=None, *args, **kwargs):
         return self._visit_with_data(obj, data, *args, **kwargs)
 
-    def visit_FacetChart(self, obj, data=None, *args, **kwargs):
+    def visit_FacetedChart(self, obj, data=None, *args, **kwargs):
         return self._visit_with_data(obj, data, *args, **kwargs)
 
 
@@ -203,8 +203,8 @@ class FromDict(Visitor):
         return obj
 
     clsvisit_Chart = _clsvisit_with_data
-    clsvisit_LayerChart = _clsvisit_with_data
-    clsvisit_FacetChart = _clsvisit_with_data
+    clsvisit_LayeredChart = _clsvisit_with_data
+    clsvisit_FacetedChart = _clsvisit_with_data
 
     def visit_List(self, trait, dct, *args, **kwargs):
         return [self.visit(trait._trait, item) for item in dct]

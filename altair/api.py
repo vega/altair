@@ -59,9 +59,9 @@ def load_vegalite_spec(spec):
     The spec should be in the form of a Python dictionary.
     """
     if 'layers' in spec:
-        return LayerChart.from_dict(spec)
+        return LayeredChart.from_dict(spec)
     elif 'facet' in spec:
-        return FacetChart.from_dict(spec)
+        return FacetedChart.from_dict(spec)
     else:
         return Chart.from_dict(spec)
 
@@ -383,7 +383,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         return self
 
 
-class LayerChart(schema.LayerSpec, TopLevelMixin):
+class LayeredChart(schema.LayerSpec, TopLevelMixin):
 
     _data = None
 
@@ -409,18 +409,18 @@ class LayerChart(schema.LayerSpec, TopLevelMixin):
     skip = ['data', '_data']
 
     def __init__(self, data=None, **kwargs):
-        super(LayerChart, self).__init__(**kwargs)
+        super(LayeredChart, self).__init__(**kwargs)
         self.data = data
 
 
-class FacetChart(schema.FacetSpec, TopLevelMixin):
+class FacetedChart(schema.FacetSpec, TopLevelMixin):
 
     _data = None
 
     name = T.Unicode()
     description = T.Unicode()
     facet = T.Instance(Facet, allow_none=True, default_value=None)
-    spec = T.Union([T.Instance(LayerChart), T.Instance(Chart)], allow_none=True, default_value=None)
+    spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)], allow_none=True, default_value=None)
     transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
     config = T.Instance(schema.Config, allow_none=True, default_value=None)
 
@@ -447,5 +447,5 @@ class FacetChart(schema.FacetSpec, TopLevelMixin):
     skip = ['data', '_data']
 
     def __init__(self, data=None, **kwargs):
-        super(FacetChart, self).__init__(**kwargs)
+        super(FacetedChart, self).__init__(**kwargs)
         self.data = data
