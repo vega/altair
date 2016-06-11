@@ -37,6 +37,10 @@ TYPE_MAP = {'oneOf': 'Union',
             "object": "Any",
             }
 
+# Map class names to their bases
+BASE_MAP = defaultdict(lambda: 'BaseObject')
+BASE_MAP['ExtendedUnitSpec'] = 'UnitSpec'
+
 
 class SchemaProperty(object):
     """Class Wrapper for a property in a VegaLite Schema
@@ -164,14 +168,27 @@ class SchemaProperty(object):
 
     @property
     def imports(self):
+        import_ = lambda name: "from .{0} import {1}".format(name.lower(), name)
         def gen_imports():
             if self.refname:
-                yield self.refname
+                yield import_(self.refname)
             for t in self.subtypes:
                 yield from t.imports
             for v in self.properties.values():
                 yield from v.imports
         return sorted(set(gen_imports()))
+
+    @property
+    def base_import(self):
+        if self.basename == 'BaseObject':
+            return 'from ..baseobject import BaseObject'
+        else:
+            return 'from .{0} import {1}'.format(self.basename.lower(),
+                                                 self.basename)
+
+    @property
+    def basename(self):
+        return BASE_MAP[self.name]
 
     @property
     def attributes(self):

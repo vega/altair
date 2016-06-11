@@ -2,7 +2,7 @@
 # Do not modify this file directly.
 
 import traitlets as T
-from ..baseobject import BaseObject
+from .unitspec import UnitSpec
 from .config import Config
 from .data import Data
 from .encoding import Encoding
@@ -10,7 +10,7 @@ from .mark import Mark
 from .transform import Transform
 
 
-class ExtendedUnitSpec(BaseObject):
+class ExtendedUnitSpec(UnitSpec):
     """Wrapper for Vega-Lite ExtendedUnitSpec definition.
     
     Attributes
