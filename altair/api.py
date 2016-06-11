@@ -115,6 +115,34 @@ class Encoding(schema.Encoding):
 
 
 #*************************************************************************
+# Encoding
+#*************************************************************************
+class Facet(schema.Facet):
+    column = T.Instance(Column, allow_none=True, default_value=None)
+    row = T.Instance(Row, allow_none=True, default_value=None)
+
+    parent = T.Instance(schema.BaseObject, default_value=None, allow_none=True)
+
+    skip = ['parent']
+
+    def _infer_types(self, data):
+        for attr in CHANNEL_NAMES:
+            val = getattr(self, attr)
+            if val is not None:
+                val._infer_type(data)
+
+    @T.observe('row', 'column')
+    def _channel_changed(self, change):
+        new = change['new']
+        name = change['name']
+        channel = getattr(self, name, None)
+        if channel is not None and not getattr(channel, 'type', '') and isinstance(self.parent, Chart):
+            meth = getattr(channel, '_infer_type', None)
+            if meth is not None:
+                meth(self.parent.data)
+
+
+#*************************************************************************
 # Top-level Objects
 #*************************************************************************
 class TopLevelMixin(object):
@@ -390,7 +418,7 @@ class FacetChart(schema.FacetSpec, TopLevelMixin):
 
     name = T.Unicode()
     description = T.Unicode()
-    facet = T.Instance(schema.Facet, allow_none=True, default_value=None)
+    facet = T.Instance(Facet, allow_none=True, default_value=None)
     spec = T.Union([T.Instance(LayerChart), T.Instance(Chart)], allow_none=True, default_value=None)
     transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
     config = T.Instance(schema.Config, allow_none=True, default_value=None)
