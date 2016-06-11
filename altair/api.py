@@ -126,7 +126,7 @@ class Facet(schema.Facet):
     skip = ['parent']
 
     def _infer_types(self, data):
-        for attr in CHANNEL_NAMES:
+        for attr in ['row', 'column']:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
@@ -449,3 +449,20 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     def __init__(self, data=None, **kwargs):
         super(FacetedChart, self).__init__(**kwargs)
         self.data = data
+
+    # Facet method
+
+    def set_facet(self, *args, **kwargs):
+        """Define the encoding for the Chart."""
+        for key, val in kwargs.items():
+            if key in CHANNEL_CLASSES:
+                if not isinstance(val, CHANNEL_CLASSES[key]):
+                    kwargs[key] = CHANNEL_CLASSES[key](val)
+        for item in args:
+            if item.channel_name in kwargs:
+                raise ValueError('Mulitple value for {0} provided'.format(item.channel_name))
+            kwargs[item.channel_name] = item
+        if self.facet is None:
+            self.facet = Facet()
+        self.facet.update_traits(**kwargs)
+        return self
