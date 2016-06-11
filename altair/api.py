@@ -268,8 +268,9 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
     config = T.Instance(schema.Config, allow_none=True)
 
-    def _encoding_changed(self, name, old, new):
-        if isinstance(new, Encoding):
+    @T.observe('encoding')
+    def _encoding_changed(self, change):
+        if isinstance(change['new'], Encoding):
             self.encoding.parent = self
             if isinstance(self.data, pd.DataFrame):
                 self.encoding._infer_types(self.data)
@@ -422,6 +423,13 @@ class FacetChart(schema.FacetSpec, TopLevelMixin):
     spec = T.Union([T.Instance(LayerChart), T.Instance(Chart)], allow_none=True, default_value=None)
     transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
     config = T.Instance(schema.Config, allow_none=True, default_value=None)
+
+    @T.observe('facet')
+    def _facet_changed(self, change):
+        if isinstance(change['new'], Facet):
+            self.facet.parent = self
+            if isinstance(self.data, pd.DataFrame):
+                self.facet._infer_types(self.data)
 
     @property
     def data(self):
