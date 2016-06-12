@@ -164,39 +164,19 @@ class TopLevelMixin(object):
         return str(self._to_code(data=data))
 
     # transform method
-
-    def transform_data(self, **kwargs):
+    def transform_data(self, *args, **kwargs):
         """Set the data transform by keyword args."""
         if self.transform is None:
             self.transform = schema.Transform()
-        self.transform.update_traits(**kwargs)
+        self.transform.update_inferred_traits(*args, **kwargs)
         return self
 
     # Configuration methods
-
     def configure(self, *args, **kwargs):
         """Set chart configuration"""
-        # Map config trait names to their classes
-        name_to_trait = {key: val.klass
-                         for key, val in schema.Config.class_traits().items()
-                         if isinstance(val, T.Instance)}
-        trait_to_name = {v:k for k, v in name_to_trait.items()}
-
-        if len(name_to_trait) != len(trait_to_name):
-            raise ValueError("Two Config() traits have the same class. "
-                             "(Possibly caused by a vega-lite schema update?)")
-
-        for val in args:
-            if val.__class__ in trait_to_name:
-                key = trait_to_name[val.__class__]
-                if key in kwargs:
-                    raise ValueError("{0} specified twice".format(key))
-                kwargs[key] = val
-            else:
-                raise ValueError("unrecognized argument: {0}".format(val))
         if self.config is None:
             self.config = schema.Config()
-        self.config.update_traits(**kwargs)
+        self.config.update_inferred_traits(*args, **kwargs)
         return self
 
     def configure_axis(self, **kwargs):
@@ -365,21 +345,11 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
             self.configure_mark(**kwargs)
         return self
 
-    # Encoding method
-
     def encode(self, *args, **kwargs):
         """Define the encoding for the Chart."""
-        for key, val in kwargs.items():
-            if key in CHANNEL_CLASSES:
-                if not isinstance(val, CHANNEL_CLASSES[key]):
-                    kwargs[key] = CHANNEL_CLASSES[key](val)
-        for item in args:
-            if item.channel_name in kwargs:
-                raise ValueError('Mulitple value for {0} provided'.format(item.channel_name))
-            kwargs[item.channel_name] = item
         if self.encoding is None:
             self.encoding = Encoding()
-        self.encoding.update_traits(**kwargs)
+        self.encoding.update_inferred_traits(*args, **kwargs)
         return self
 
 
@@ -411,6 +381,9 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
     def __init__(self, data=None, **kwargs):
         super(LayeredChart, self).__init__(**kwargs)
         self.data = data
+
+    def set_layers(self, *layers):
+        self.layers = list(layers)
 
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
@@ -454,15 +427,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
 
     def set_facet(self, *args, **kwargs):
         """Define the encoding for the Chart."""
-        for key, val in kwargs.items():
-            if key in CHANNEL_CLASSES:
-                if not isinstance(val, CHANNEL_CLASSES[key]):
-                    kwargs[key] = CHANNEL_CLASSES[key](val)
-        for item in args:
-            if item.channel_name in kwargs:
-                raise ValueError('Mulitple value for {0} provided'.format(item.channel_name))
-            kwargs[item.channel_name] = item
         if self.facet is None:
             self.facet = Facet()
-        self.facet.update_traits(**kwargs)
+        self.facet.update_inferred_traits(*args, **kwargs)
         return self
