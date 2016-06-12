@@ -11,11 +11,3 @@ class {{ object.name }}({{ object.base.name }}):
 
 
 {% endfor -%}
-
-CHANNEL_CLASSES = {
-    {%- for object in objects %}
-    '{{ object.name.lower() }}': {{ object.name }},
-    {%- endfor %}
-}
-
-CHANNEL_NAMES = list(CHANNEL_CLASSES.keys())

@@ -48,7 +48,6 @@ from .schema import VerticalAlign
 # Channel Aliases
 #*************************************************************************
 from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
-from .schema._wrappers.named_channels import CHANNEL_CLASSES, CHANNEL_NAMES
 
 #*************************************************************************
 # Loading the spec
@@ -93,17 +92,19 @@ class Encoding(schema.Encoding):
     order = T.Union([T.Instance(Order), T.List(T.Instance(Order))],
                    default_value=None, allow_none=True)
 
+    channel_names = ['x', 'y', 'row', 'column', 'color', 'size', 'shape',
+                     'opacity', 'detail', 'text', 'label', 'path', 'order']
     parent = T.Instance(schema.BaseObject, default_value=None, allow_none=True)
 
-    skip = ['parent']
+    skip = ['channel_names', 'parent']
 
     def _infer_types(self, data):
-        for attr in CHANNEL_NAMES:
+        for attr in self.channel_names:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
 
-    @T.observe(*CHANNEL_NAMES)
+    @T.observe(*channel_names)
     def _channel_changed(self, change):
         new = change['new']
         name = change['name']
@@ -121,17 +122,18 @@ class Facet(schema.Facet):
     column = T.Instance(Column, allow_none=True, default_value=None)
     row = T.Instance(Row, allow_none=True, default_value=None)
 
+    channel_names = ['row', 'column']
     parent = T.Instance(schema.BaseObject, default_value=None, allow_none=True)
 
-    skip = ['parent']
+    skip = ['channel_names', 'parent']
 
     def _infer_types(self, data):
-        for attr in ['row', 'column']:
+        for attr in self.channel_names:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
 
-    @T.observe('row', 'column')
+    @T.observe(*channel_names)
     def _channel_changed(self, change):
         new = change['new']
         name = change['name']

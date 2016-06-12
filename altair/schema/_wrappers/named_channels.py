@@ -56,20 +56,3 @@ class Y(PositionChannel):
     pass
 
 
-CHANNEL_CLASSES = {
-    'color': Color,
-    'column': Column,
-    'detail': Detail,
-    'label': Label,
-    'opacity': Opacity,
-    'order': Order,
-    'path': Path,
-    'row': Row,
-    'shape': Shape,
-    'size': Size,
-    'text': Text,
-    'x': X,
-    'y': Y,
-}
-
-CHANNEL_NAMES = list(CHANNEL_CLASSES.keys())
