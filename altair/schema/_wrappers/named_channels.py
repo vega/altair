@@ -5,55 +5,55 @@ from .channel_wrappers import ChannelWithLegend, Field, OrderChannel, PositionCh
 
 
 class Color(ChannelWithLegend):
-    channel_name = 'color'
+    pass
 
 
 class Column(PositionChannel):
-    channel_name = 'column'
+    pass
 
 
 class Detail(Field):
-    channel_name = 'detail'
+    pass
 
 
 class Label(Field):
-    channel_name = 'label'
+    pass
 
 
 class Opacity(ChannelWithLegend):
-    channel_name = 'opacity'
+    pass
 
 
 class Order(OrderChannel):
-    channel_name = 'order'
+    pass
 
 
 class Path(OrderChannel):
-    channel_name = 'path'
+    pass
 
 
 class Row(PositionChannel):
-    channel_name = 'row'
+    pass
 
 
 class Shape(ChannelWithLegend):
-    channel_name = 'shape'
+    pass
 
 
 class Size(ChannelWithLegend):
-    channel_name = 'size'
+    pass
 
 
 class Text(Field):
-    channel_name = 'text'
+    pass
 
 
 class X(PositionChannel):
-    channel_name = 'x'
+    pass
 
 
 class Y(PositionChannel):
-    channel_name = 'y'
+    pass
 
 
 CHANNEL_CLASSES = {

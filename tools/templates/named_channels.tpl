@@ -7,7 +7,7 @@
 
 {% for object in objects -%}
 class {{ object.name }}({{ object.base.name }}):
-    channel_name = '{{ object.name.lower() }}'
+    pass
 
 
 {% endfor -%}

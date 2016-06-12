@@ -48,7 +48,7 @@ from .schema import VerticalAlign
 # Channel Aliases
 #*************************************************************************
 from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
-from .schema._wrappers.encoding_channels import CHANNEL_CLASSES, CHANNEL_NAMES
+from .schema._wrappers.named_channels import CHANNEL_CLASSES, CHANNEL_NAMES
 
 #*************************************************************************
 # Loading the spec

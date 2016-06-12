@@ -252,7 +252,7 @@ class VegaLiteSchema(SchemaProperty):
             yield dict(name=attr.name.title(),
                        base=self.definitions[base].rename(wrappername),
                        imports=[dict(module='.channel_wrappers', names=[wrappername])],
-                       root='encoding_channels')
+                       root='named_channels')
 
     def write_interface(self, path=None):
         # Make sure the path is valid

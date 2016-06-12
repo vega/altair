@@ -71,7 +71,7 @@ class BaseObject(T.HasTraits):
 
     def update_inferred_traits(self, *args, **kwargs):
         kwargs = self.infer_keywords(*args, **kwargs)
-        self.update_traits(**kwargs)
+        return self.update_traits(**kwargs)
 
     def __contains__(self, key):
         try:
