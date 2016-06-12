@@ -1,0 +1,28 @@
+{
+    "config": {
+        "mark": {
+            "opacity": 0.5
+        }
+    },
+    "data": {
+        "formatType": "csv",
+        "url": "http://vega.github.io/vega-lite/data/seattle-weather.csv"
+    },
+    "encoding": {
+        "size": {
+            "field": "weather",
+            "type": "nominal"
+        },
+        "x": {
+            "field": "date",
+            "timeUnit": "month",
+            "type": "temporal"
+        },
+        "y": {
+            "aggregate": "count",
+            "field": "*",
+            "type": "quantitative"
+        }
+    },
+    "mark": "bar"
+}

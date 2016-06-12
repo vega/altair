@@ -17,6 +17,62 @@ class BaseObject(T.HasTraits):
                 raise KeyError(_attr_template.format(k, all_traits))
         super(BaseObject, self).__init__(**kwargs)
 
+    @classmethod
+    def infer_keywords(cls, *args, **kwargs):
+        """Utility to initialize object from args and kwargs
+
+        Arguments are converted to keyword arguments by inferring the keyword
+        from their type.
+        Keyword arguments are converted to the correct Instance class
+        if required.
+        """
+        def get_class(trait):
+            # TODO: what do do with lists?
+            if isinstance(trait, T.Union):
+                for klass in map(get_class, trait.trait_types):
+                    if klass:
+                        return klass
+            elif isinstance(trait, T.Instance):
+                return trait.klass
+
+        traits = cls.class_traits()
+        classes = {n: get_class(t) for n, t in traits.items()}
+
+        # Turn all keyword arguments to the appropriate class
+        for name, arg in kwargs.items():
+            Trait = classes.get(name, None)
+            if Trait is not None and not isinstance(arg, Trait):
+                try:
+                    kwargs[name] = Trait(arg)
+                except (TypeError, T.TraitError):
+                    pass  # errors will handled by traitlets below
+
+        # find forward/backward mapping among unique classes
+        name_to_trait = {}
+        while classes:
+            name, trait = classes.popitem()
+            if trait is None:
+                continue
+            if trait not in set.union(set(classes.values()),
+                                      set(name_to_trait.values())):
+                name_to_trait[name] = trait
+        trait_to_name = {t:n for n, t in name_to_trait.items()}
+
+        # Update all arguments
+        for arg in args:
+            name = trait_to_name.get(type(arg), None)
+            if name is None:
+                raise ValueError("{0}: Unable to infer argument name for {1}".format(cls, arg))
+            elif name in kwargs:
+                raise ValueError("{0}: {1} specified both by arg and kwarg".format(cls, name))
+            else:
+                kwargs[name] = arg
+        return kwargs
+
+    def update_inferred_traits(self, *args, **kwargs):
+        kwargs = self.infer_keywords(*args, **kwargs)
+        self.update_traits(**kwargs)
+
     def __contains__(self, key):
         try:
             value = getattr(self, key)

@@ -1,9 +1,9 @@
-__version__ = '0.0.1'
+__version__ = '1.0.dev0'
 
 from .api import (
+    load_vegalite_spec,
     Label,
     Formula,
-    VgFormula,
     StackOffset,
     Data,
     FacetScaleConfig,
@@ -32,6 +32,7 @@ from .api import (
     Path,
     Scale,
     Encoding,
+    Facet,
     Size,
     FacetGridConfig,
     Row,
@@ -39,13 +40,13 @@ from .api import (
     AxisOrient,
     X, Y,
     Color,
+    Opacity,
     DataFormat,
     Chart,
+    LayeredChart,
+    FacetedChart,
     CellConfig,
     Detail,
-    AxisProperties,
-    BinProperties,
-    LegendProperties,
 )
 
 from .datasets import (

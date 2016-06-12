@@ -18,7 +18,7 @@ def test_json_examples_round_trip(example):
     """
     filename, json_dict = example
 
-    v = Chart.from_dict(json_dict)
+    v = load_vegalite_spec(json_dict)
     v_dict = v.to_dict()
     assert v_dict == json_dict
 

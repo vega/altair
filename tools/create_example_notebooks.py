@@ -61,7 +61,7 @@ def create_example_notebook(filename, spec, notebook_directory,
     if index_dict is not None:
         index_dict[filename] = index_entry
 
-    chart = Chart.from_dict(spec)
+    chart = load_vegalite_spec(spec)
 
     def cells():
         yield new_markdown_cell('<small>*Notebook auto-generated from '
@@ -84,7 +84,7 @@ def create_example_notebook(filename, spec, notebook_directory,
         yield new_code_cell('chart')
 
         yield new_markdown_cell('## Output Vega-Lite Specification')
-        yield new_markdown_cell('Generate JSON dict, leaving data out:')        
+        yield new_markdown_cell('Generate JSON dict, leaving data out:')
         yield new_code_cell('chart.to_dict(data=False)')
 
     write_notebook(list(cells()), outputfile_full,
@@ -105,6 +105,9 @@ def write_index(notebook_directory, index_dict, kernel='python3'):
 def write_all_examples(execute=True):
     notebook_directory = os.path.join(os.path.dirname(__file__),
                                       '..', 'notebooks', 'auto_examples')
+    if not os.path.exists(notebook_directory):
+        os.makedirs(notebook_directory)
+
     index_dict = {}
     for filename, spec in iter_examples():
         create_example_notebook(filename, spec, notebook_directory,

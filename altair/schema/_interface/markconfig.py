@@ -6,6 +6,7 @@ from ..baseobject import BaseObject
 from .fontstyle import FontStyle
 from .fontweight import FontWeight
 from .horizontalalign import HorizontalAlign
+from .interpolate import Interpolate
 from .shape import Shape
 from .stackoffset import StackOffset
 from .verticalalign import VerticalAlign
@@ -50,14 +51,18 @@ class MarkConfig(BaseObject):
         The font weight .
     format: Unicode
         The formatting pattern for text value.
-    interpolate: Unicode
+    interpolate: Interpolate
         The line interpolation method to use.
+    lineSize: CFloat
+        Size of line mark.
     opacity: CFloat
         
     orient: Unicode
         The orientation of a non-stacked bar, tick, area, and line charts.
     radius: CFloat
         Polar coordinate radial offset, in pixels, of the text label from the origin determined by the x and y properties.
+    ruleSize: CFloat
+        Size of rule mark.
     shape: Shape
         The symbol shape to use.
     shortTimeLabels: Bool
@@ -104,10 +109,12 @@ class MarkConfig(BaseObject):
     fontStyle = FontStyle(allow_none=True, default_value=None, help="""The font style .""")
     fontWeight = FontWeight(allow_none=True, default_value=None, help="""The font weight .""")
     format = T.Unicode(allow_none=True, default_value=None, help="""The formatting pattern for text value.""")
-    interpolate = T.Unicode(allow_none=True, default_value=None, help="""The line interpolation method to use.""")
+    interpolate = Interpolate(allow_none=True, default_value=None, help="""The line interpolation method to use.""")
+    lineSize = T.CFloat(allow_none=True, default_value=None, help="""Size of line mark.""")
     opacity = T.CFloat(allow_none=True, default_value=None, min=0, max=1)
     orient = T.Unicode(allow_none=True, default_value=None, help="""The orientation of a non-stacked bar, tick, area, and line charts.""")
     radius = T.CFloat(allow_none=True, default_value=None, help="""Polar coordinate radial offset, in pixels, of the text label from the origin determined by the x and y properties.""")
+    ruleSize = T.CFloat(allow_none=True, default_value=None, help="""Size of rule mark.""")
     shape = Shape(allow_none=True, default_value=None, help="""The symbol shape to use.""")
     shortTimeLabels = T.Bool(allow_none=True, default_value=None, help="""Whether month names and weekday names should be abbreviated.""")
     size = T.CFloat(allow_none=True, default_value=None, help="""The pixel area each the point.""")
@@ -123,7 +130,7 @@ class MarkConfig(BaseObject):
     tickSize = T.CFloat(allow_none=True, default_value=None, help="""The width of the ticks.""")
     tickThickness = T.CFloat(allow_none=True, default_value=None, help="""Thickness of the tick mark.""")
     
-    def __init__(self, align=None, angle=None, applyColorToBackground=None, barSize=None, barThinSize=None, baseline=None, color=None, dx=None, dy=None, fill=None, fillOpacity=None, filled=None, font=None, fontSize=None, fontStyle=None, fontWeight=None, format=None, interpolate=None, opacity=None, orient=None, radius=None, shape=None, shortTimeLabels=None, size=None, stacked=None, stroke=None, strokeDash=None, strokeDashOffset=None, strokeOpacity=None, strokeWidth=None, tension=None, text=None, theta=None, tickSize=None, tickThickness=None, **kwargs):
-        kwds = dict(align=align, angle=angle, applyColorToBackground=applyColorToBackground, barSize=barSize, barThinSize=barThinSize, baseline=baseline, color=color, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, format=format, interpolate=interpolate, opacity=opacity, orient=orient, radius=radius, shape=shape, shortTimeLabels=shortTimeLabels, size=size, stacked=stacked, stroke=stroke, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, tension=tension, text=text, theta=theta, tickSize=tickSize, tickThickness=tickThickness)
+    def __init__(self, align=None, angle=None, applyColorToBackground=None, barSize=None, barThinSize=None, baseline=None, color=None, dx=None, dy=None, fill=None, fillOpacity=None, filled=None, font=None, fontSize=None, fontStyle=None, fontWeight=None, format=None, interpolate=None, lineSize=None, opacity=None, orient=None, radius=None, ruleSize=None, shape=None, shortTimeLabels=None, size=None, stacked=None, stroke=None, strokeDash=None, strokeDashOffset=None, strokeOpacity=None, strokeWidth=None, tension=None, text=None, theta=None, tickSize=None, tickThickness=None, **kwargs):
+        kwds = dict(align=align, angle=angle, applyColorToBackground=applyColorToBackground, barSize=barSize, barThinSize=barThinSize, baseline=baseline, color=color, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, format=format, interpolate=interpolate, lineSize=lineSize, opacity=opacity, orient=orient, radius=radius, ruleSize=ruleSize, shape=shape, shortTimeLabels=shortTimeLabels, size=size, stacked=stacked, stroke=stroke, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, tension=tension, text=text, theta=theta, tickSize=tickSize, tickThickness=tickThickness)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(MarkConfig, self).__init__(**kwargs)

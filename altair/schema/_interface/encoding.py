@@ -2,14 +2,14 @@
 # Do not modify this file directly.
 
 import traitlets as T
-from ..baseobject import BaseObject
+from .unitencoding import UnitEncoding
 from .channeldefwithlegend import ChannelDefWithLegend
 from .fielddef import FieldDef
 from .orderchanneldef import OrderChannelDef
 from .positionchanneldef import PositionChannelDef
 
 
-class Encoding(BaseObject):
+class Encoding(UnitEncoding):
     """Wrapper for Vega-Lite Encoding definition.
     
     Attributes
@@ -21,6 +21,8 @@ class Encoding(BaseObject):
     detail: Union(FieldDef, List(FieldDef))
         
     label: FieldDef
+        
+    opacity: ChannelDefWithLegend
         
     order: Union(OrderChannelDef, List(OrderChannelDef))
         
@@ -41,8 +43,9 @@ class Encoding(BaseObject):
     """
     color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
     column = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
-    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None), T.List(T.Instance(FieldDef, allow_none=True, default_value=None), allow_none=True, default_value=None)])
+    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
     label = T.Instance(FieldDef, allow_none=True, default_value=None)
+    opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
     order = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef, allow_none=True, default_value=None), allow_none=True, default_value=None)])
     path = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef, allow_none=True, default_value=None), allow_none=True, default_value=None)])
     row = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
@@ -52,7 +55,7 @@ class Encoding(BaseObject):
     x = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
     y = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
     
-    def __init__(self, color=None, column=None, detail=None, label=None, order=None, path=None, row=None, shape=None, size=None, text=None, x=None, y=None, **kwargs):
-        kwds = dict(color=color, column=column, detail=detail, label=label, order=order, path=path, row=row, shape=shape, size=size, text=text, x=x, y=y)
+    def __init__(self, color=None, column=None, detail=None, label=None, opacity=None, order=None, path=None, row=None, shape=None, size=None, text=None, x=None, y=None, **kwargs):
+        kwds = dict(color=color, column=column, detail=detail, label=label, opacity=opacity, order=order, path=path, row=row, shape=shape, size=size, text=text, x=x, y=y)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Encoding, self).__init__(**kwargs)

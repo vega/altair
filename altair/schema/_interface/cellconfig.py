@@ -20,8 +20,8 @@ class CellConfig(BaseObject):
         
     stroke: Unicode
         
-    strokeDash: CFloat
-        
+    strokeDash: List(CFloat)
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset: CFloat
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeOpacity: CFloat
@@ -36,7 +36,7 @@ class CellConfig(BaseObject):
     fillOpacity = T.CFloat(allow_none=True, default_value=None)
     height = T.CFloat(allow_none=True, default_value=None)
     stroke = T.Unicode(allow_none=True, default_value=None)
-    strokeDash = T.CFloat(allow_none=True, default_value=None)
+    strokeDash = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""An array of alternating stroke, space lengths for creating dashed or dotted lines.""")
     strokeDashOffset = T.CFloat(allow_none=True, default_value=None, help="""The offset (in pixels) into which to begin drawing with the stroke dash array.""")
     strokeOpacity = T.CFloat(allow_none=True, default_value=None)
     strokeWidth = T.CFloat(allow_none=True, default_value=None)

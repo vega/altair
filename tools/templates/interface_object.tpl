@@ -2,11 +2,13 @@
 # Do not modify this file directly.
 
 import traitlets as T
-from ..baseobject import BaseObject
-{% for import in cls.imports %}from .{{ import.lower() }} import {{ import }}
-{% endfor %}
+{{ cls.base_import }}
+{%- if cls.imports %}
+{{ cls.imports|join('\n') }}
+{%- endif %}
 
-class {{ cls.name }}(BaseObject):
+
+class {{ cls.name }}({{ cls.basename }}):
     """Wrapper for Vega-Lite {{ cls.name }} definition.
     {{ cls.long_description }}
     Attributes

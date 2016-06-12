@@ -5,8 +5,8 @@ import traitlets as T
 from ..baseobject import BaseObject
 
 
-class BinProperties(BaseObject):
-    """Wrapper for Vega-Lite BinProperties definition.
+class Bin(BaseObject):
+    """Wrapper for Vega-Lite Bin definition.
     
     Attributes
     ----------
@@ -39,4 +39,4 @@ class BinProperties(BaseObject):
     def __init__(self, base=None, div=None, max=None, maxbins=None, min=None, minstep=None, step=None, steps=None, **kwargs):
         kwds = dict(base=base, div=div, max=max, maxbins=maxbins, min=min, minstep=minstep, step=step, steps=steps)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
-        super(BinProperties, self).__init__(**kwargs)
+        super(Bin, self).__init__(**kwargs)
