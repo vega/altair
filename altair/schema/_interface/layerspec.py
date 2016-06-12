@@ -30,7 +30,7 @@ class LayerSpec(BaseObject):
     config = T.Instance(Config, allow_none=True, default_value=None)
     data = T.Instance(Data, allow_none=True, default_value=None)
     description = T.Unicode(allow_none=True, default_value=None)
-    layers = T.List(T.Instance(UnitSpec, allow_none=True, default_value=None), allow_none=True, default_value=None)
+    layers = T.List(T.Instance(UnitSpec), allow_none=True, default_value=None)
     name = T.Unicode(allow_none=True, default_value=None)
     transform = T.Instance(Transform, allow_none=True, default_value=None)
     

@@ -40,18 +40,18 @@ class ScaleConfig(BaseObject):
         Uses the source data range as scale domain instead of aggregated data for aggregate axis.
     """
     bandSize = T.CFloat(allow_none=True, default_value=None, min=0, help="""Default band size for (1) `y` ordinal scale, and (2) `x` ordinal scale when the mark is not `text`.""")
-    barSizeRange = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Default range for bar size scale.""")
-    fontSizeRange = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Default range for font size scale.""")
-    nominalColorRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(allow_none=True, default_value=None), allow_none=True, default_value=None)])
-    opacity = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Default range for opacity.""")
+    barSizeRange = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for bar size scale.""")
+    fontSizeRange = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for font size scale.""")
+    nominalColorRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(), allow_none=True, default_value=None)])
+    opacity = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for opacity.""")
     padding = T.CFloat(allow_none=True, default_value=None, help="""Default padding for `x` and `y` ordinal scales.""")
-    pointSizeRange = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Default range for bar size scale.""")
+    pointSizeRange = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for bar size scale.""")
     round = T.Bool(allow_none=True, default_value=None, help="""If true, rounds numeric output values to integers.""")
-    ruleSizeRange = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Default range for rule stroke widths.""")
-    sequentialColorRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(allow_none=True, default_value=None), allow_none=True, default_value=None)])
-    shapeRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(allow_none=True, default_value=None), allow_none=True, default_value=None)])
+    ruleSizeRange = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for rule stroke widths.""")
+    sequentialColorRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(), allow_none=True, default_value=None)])
+    shapeRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(), allow_none=True, default_value=None)])
     textBandWidth = T.CFloat(allow_none=True, default_value=None, min=0, help="""Default band width for `x` ordinal scale when is mark is `text`.""")
-    tickSizeRange = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Default range for tick spans.""")
+    tickSizeRange = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for tick spans.""")
     useRawDomain = T.Bool(allow_none=True, default_value=None, help="""Uses the source data range as scale domain instead of aggregated data for aggregate axis.""")
     
     def __init__(self, bandSize=None, barSizeRange=None, fontSizeRange=None, nominalColorRange=None, opacity=None, padding=None, pointSizeRange=None, round=None, ruleSizeRange=None, sequentialColorRange=None, shapeRange=None, textBandWidth=None, tickSizeRange=None, useRawDomain=None, **kwargs):

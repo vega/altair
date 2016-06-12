@@ -120,7 +120,7 @@ class MarkConfig(BaseObject):
     size = T.CFloat(allow_none=True, default_value=None, help="""The pixel area each the point.""")
     stacked = StackOffset(allow_none=True, default_value=None)
     stroke = T.Unicode(allow_none=True, default_value=None, help="""Default Stroke Color.""")
-    strokeDash = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""An array of alternating stroke, space lengths for creating dashed or dotted lines.""")
+    strokeDash = T.List(T.CFloat(), allow_none=True, default_value=None, help="""An array of alternating stroke, space lengths for creating dashed or dotted lines.""")
     strokeDashOffset = T.CFloat(allow_none=True, default_value=None, help="""The offset (in pixels) into which to begin drawing with the stroke dash array.""")
     strokeOpacity = T.CFloat(allow_none=True, default_value=None, min=0, max=1)
     strokeWidth = T.CFloat(allow_none=True, default_value=None, min=0)

@@ -102,30 +102,41 @@ class SchemaProperty(object):
         else:
             return trait
 
-    @property
-    def trait_fulldef(self):
+    def _trait_fulldef(self, kwds=('allow_none=True', 'default_value=None')):
+        """This returns the full trait definition; e.g.
+
+        T.List(T.CFloat(), allow_none=True, default_value=None,
+               help="The offset (in pixels)"
+        """
+        kwds = list(kwds)
         trait = self.trait_name
-        kwds = "allow_none=True, default_value=None"
         if 'minimum' in self.schema:
-            kwds += ', min={0}'.format(self.schema['minimum'])
+            kwds.append('min={0}'.format(self.schema['minimum']))
         if 'maximum' in self.schema:
-            kwds += ', max={0}'.format(self.schema['maximum'])
+            kwds.append('max={0}'.format(self.schema['maximum']))
         if self.description:
-            kwds += ', help="""{0}"""'.format(self.short_description)
+            kwds.append('help="""{0}"""'.format(self.short_description))
+
+        def _join(kwds, precomma=False):
+            if precomma and kwds:
+                kwds = [''] + kwds
+            return ', '.join(kwds)
 
         if trait == 'Union':
             return ('T.Union([{0}])'
-                    ''.format(', '.join(t.trait_fulldef
-                                        for t in self.subtypes)))
+                    ''.format(_join(t._trait_fulldef()
+                                    for t in self.subtypes)))
         elif trait == 'List':
-            return 'T.List({0}, {1})'.format(*(t.trait_fulldef
-                                               for t in self.subtypes), kwds)
+            subtrait = list(self.subtypes)[0]._trait_fulldef(kwds=[])
+            return 'T.List({0}{1})'.format(subtrait, _join(kwds, True))
         elif trait == 'Instance':
-            return 'T.Instance({0}, {1})'.format(self.refname, kwds)
+            return 'T.Instance({0}{1})'.format(self.refname, _join(kwds, True))
         elif trait == self.refname:
-            return '{0}({1})'.format(self.refname, kwds)
+            return '{0}({1})'.format(self.refname, _join(kwds))
         else:
-            return 'T.{0}({1})'.format(trait, kwds)
+            return 'T.{0}({1})'.format(trait, _join(kwds))
+
+    trait_fulldef = property(_trait_fulldef)
 
     @property
     def trait_or_subtrait(self):

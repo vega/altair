@@ -86,7 +86,7 @@ class AxisConfig(BaseObject):
     characterWidth = T.CFloat(allow_none=True, default_value=None, help="""Character width for automatically determining title max length.""")
     grid = T.Bool(allow_none=True, default_value=None, help="""A flag indicate if gridlines should be created in addition to ticks.""")
     gridColor = T.Unicode(allow_none=True, default_value=None, help="""Color of gridlines.""")
-    gridDash = T.List(T.CFloat(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""The offset (in pixels) into which to begin drawing with the grid dash array.""")
+    gridDash = T.List(T.CFloat(), allow_none=True, default_value=None, help="""The offset (in pixels) into which to begin drawing with the grid dash array.""")
     gridOpacity = T.CFloat(allow_none=True, default_value=None, help="""The stroke opacity of grid (value between [0,1]).""")
     gridWidth = T.CFloat(allow_none=True, default_value=None, help="""The grid width, in pixels.""")
     labelAlign = T.Unicode(allow_none=True, default_value=None, help="""Text alignment for the Label.""")

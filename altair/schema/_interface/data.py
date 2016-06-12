@@ -20,7 +20,7 @@ class Data(BaseObject):
     """
     formatType = DataFormat(allow_none=True, default_value=None)
     url = T.Unicode(allow_none=True, default_value=None)
-    values = T.List(T.Any(allow_none=True, default_value=None), allow_none=True, default_value=None, help="""Pass array of objects instead of a url to a file.""")
+    values = T.List(T.Any(), allow_none=True, default_value=None, help="""Pass array of objects instead of a url to a file.""")
     
     def __init__(self, formatType=None, url=None, values=None, **kwargs):
         kwds = dict(formatType=formatType, url=url, values=values)

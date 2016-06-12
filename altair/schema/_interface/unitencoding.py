@@ -38,11 +38,11 @@ class UnitEncoding(BaseObject):
         
     """
     color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
-    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
+    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(FieldDef, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
     label = T.Instance(FieldDef, allow_none=True, default_value=None)
     opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
-    order = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef, allow_none=True, default_value=None), allow_none=True, default_value=None)])
-    path = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef, allow_none=True, default_value=None), allow_none=True, default_value=None)])
+    order = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef), allow_none=True, default_value=None)])
+    path = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef), allow_none=True, default_value=None)])
     shape = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
     size = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
     text = T.Instance(FieldDef, allow_none=True, default_value=None)
