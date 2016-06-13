@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import copy
 from itertools import chain, groupby
 from collections import defaultdict
 from operator import itemgetter
@@ -60,11 +61,10 @@ class SchemaProperty(object):
                            for k, v in self.schema.get('properties',
                                                        {}).items()}
 
-    def rename(self, newname):
-        return self.__class__(self.schema, newname, self.top)
-
     @property
     def subtypes(self):
+        if hasattr(self, '_subtypes'):
+            return self._subtypes
         trait = self.trait_name
         if trait == 'Union':
             return [self.__class__(s, '', self.top)
@@ -73,6 +73,29 @@ class SchemaProperty(object):
             return [self.__class__(self.schema['items'], '', self.top)]
         else:
             return []
+
+    @subtypes.setter
+    def subtypes(self, arg):
+        self._subtypes = arg
+
+    def rename(self, newname):
+        return self.__class__(self.schema, newname, self.top)
+
+    def copy(self):
+        return self.__class__(copy.deepcopy(self.schema), self.name, self.top)
+
+    def replace_refs(self, dct, module=None):
+        """Return a new object with all references replaced according to dct"""
+        refname = self.refname
+        if refname in dct:
+            newname = dct[refname]
+            self.top.definitions[newname] = self.top.definitions[refname]
+            self.refname = newname
+            if module is not None:
+                self.module = module
+        self.subtypes = [subtype.replace_refs(dct, module=module)
+                        for subtype in self.subtypes]
+        return self
 
     @property
     def type(self):
@@ -181,6 +204,26 @@ class SchemaProperty(object):
         else:
             return None
 
+    @refname.setter
+    def refname(self, refname):
+        if not self.refname:
+            raise AttributeError("cannot set refname")
+        self.schema['$ref'] = 'definitions/{0}'.format(refname)
+
+    @property
+    def module(self):
+        mod = getattr(self, '_module', '')
+        if mod:
+            return mod
+        elif self.refname:
+            return '.' + self.refname.lower()
+        else:
+            return ''
+
+    @module.setter
+    def module(self, mod):
+        self._module = mod
+
     @property
     def channelclassname(self):
         refname = self.refname
@@ -196,10 +239,9 @@ class SchemaProperty(object):
 
     @property
     def imports(self):
-        import_ = lambda name: "from .{0} import {1}".format(name.lower(), name)
         def gen_imports():
             if self.refname:
-                yield import_(self.refname)
+                yield "from {0} import {1}".format(self.module, self.refname)
             for t in self.subtypes:
                 yield from t.imports
             for v in self.properties.values():
@@ -216,7 +258,11 @@ class SchemaProperty(object):
 
     @property
     def basename(self):
-        return BASE_MAP[self.name]
+        return getattr(self, '_basename', None) or BASE_MAP[self.name]
+
+    @basename.setter
+    def basename(self, name):
+        self._basename = name
 
     @property
     def attributes(self):
@@ -225,40 +271,6 @@ class SchemaProperty(object):
     @property
     def enum(self):
         return self.schema.get('enum', [])
-
-
-class ChannelCollection(object):
-    root = 'channel_collections'
-    def __init__(self, name, schema):
-        self.schema = schema
-        self.name = name
-
-    @property
-    def base(self):
-        return self.schema.definitions[self.name]
-
-    @property
-    def attributes(self):
-        return self.schema.definitions[self.name].attributes
-
-    @property
-    def properties(self):
-        return self.schema.definitions[self.name].properties
-
-    @property
-    def imports(self):
-        yield {'module': '.named_channels',
-               'names': (prop.title() for prop in self.properties)}
-
-    def attr_trait_descr(self, attr):
-        name = attr.channelclassname
-        return attr.trait_descr.replace(attr.channelclassname,
-                                        attr.name.title())
-
-    def attr_trait_fulldef(self, attr):
-        name = attr.channelclassname
-        return attr.trait_fulldef.replace(attr.channelclassname,
-                                          attr.name.title())
 
 
 class VegaLiteSchema(SchemaProperty):
@@ -303,6 +315,19 @@ class VegaLiteSchema(SchemaProperty):
                        base=self.definitions[base].rename(wrappername),
                        imports=[dict(module='.channel_wrappers', names=[wrappername])],
                        root='named_channels')
+
+    def channel_collections(self):
+        def construct_dct(name):
+            return {key: name for key in ['PositionChannelDef', 'FieldDef',
+                                          'OrderChannelDef', 'ChannelDefWithLegend']}
+        for name in CHANNEL_COLLECTIONS:
+            obj = self.top.definitions[name].copy()
+            obj.basename = name
+            obj.root = 'channel_collections'
+            for prop, val in obj.properties.items():
+                obj.properties[prop] = val.replace_refs(construct_dct(prop.title()),
+                                                        module='.named_channels')
+            yield obj
 
     def write_interface(self, path=None):
         # Make sure the path is valid
@@ -375,15 +400,13 @@ class VegaLiteSchema(SchemaProperty):
             with open(filename, 'w') as f:
                 f.write(template.render(objects=list(wrappers)))
 
-        # Write channel_collections.py file
-        objects = [ChannelCollection(name, self)
-                   for name in CHANNEL_COLLECTIONS]
-
+        # Write channel collection wrappers
+        collections = list(self.channel_collections())
         template = JINJA_ENV.get_template('channel_collections.tpl')
         filename = os.path.join(path, 'channel_collections.py')
         print("- writing {0}".format(filename))
         with open(filename, 'w') as f:
-            f.write(template.render(objects=objects))
+            f.write(template.render(objects=collections))
 
         # Write __init__.py file
         template = JINJA_ENV.get_template('wrapper_init.tpl')
@@ -391,7 +414,7 @@ class VegaLiteSchema(SchemaProperty):
         header = 'Wrappers for low-level schema objects'
         print("- writing {0}".format(filename))
         with open(filename, 'w') as f:
-            f.write(template.render(objects=list(self.wrappers()) + objects,
+            f.write(template.render(objects=list(self.wrappers()) + collections,
                                     header=header))
 
 

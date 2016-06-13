@@ -5,23 +5,23 @@ import traitlets as T
 from .. import _interface as schema
 from ..baseobject import BaseObject
 
-{% for import_statement in objects|merge_imports -%}
-  {{ import_statement }}
+{% for object in objects -%}
+  {{ object.imports | join('\n') }}
 {% endfor %}
 
 {% for cls in objects -%}
-class {{ cls.name }}(schema.{{ cls.base.name }}):
+class {{ cls.name }}(schema.{{ cls.basename }}):
     """Object for storing channel encodings
 
     Attributes
     ----------
     {% for attr in cls.attributes -%}
-    {{ attr.name }}: {{ cls.attr_trait_descr(attr) }}
+    {{ attr.name }}: {{ attr.trait_descr }}
         {{ attr.short_description }}
     {% endfor -%}
     """
     {% for attr in cls.attributes -%}
-    {{ attr.name }} = {{ cls.attr_trait_fulldef(attr) }}
+    {{ attr.name }} = {{ attr.trait_fulldef }}
     {% endfor %}
 
     {%- set comma = joiner(", ") %}

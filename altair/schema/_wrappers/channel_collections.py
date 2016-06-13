@@ -5,7 +5,21 @@ import traitlets as T
 from .. import _interface as schema
 from ..baseobject import BaseObject
 
-from .named_channels import Color, Column, Detail, Label, Opacity, Order, Path, Row, Shape, Size, Text, X, Y
+from .named_channels import Color
+from .named_channels import Column
+from .named_channels import Detail
+from .named_channels import Label
+from .named_channels import Opacity
+from .named_channels import Order
+from .named_channels import Path
+from .named_channels import Row
+from .named_channels import Shape
+from .named_channels import Size
+from .named_channels import Text
+from .named_channels import X
+from .named_channels import Y
+from .named_channels import Column
+from .named_channels import Row
 
 
 class Encoding(schema.Encoding):
@@ -42,7 +56,7 @@ class Encoding(schema.Encoding):
     """
     color = T.Instance(Color, allow_none=True, default_value=None)
     column = T.Instance(Column, allow_none=True, default_value=None)
-    detail = T.Union([T.Instance(Detail, allow_none=True, default_value=None, help="""Interface for any kind of Detail."""), T.List(T.Instance(Detail, help="""Interface for any kind of Detail."""), allow_none=True, default_value=None)])
+    detail = T.Union([T.Instance(Detail, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(Detail, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
     label = T.Instance(Label, allow_none=True, default_value=None)
     opacity = T.Instance(Opacity, allow_none=True, default_value=None)
     order = T.Union([T.Instance(Order, allow_none=True, default_value=None), T.List(T.Instance(Order), allow_none=True, default_value=None)])
