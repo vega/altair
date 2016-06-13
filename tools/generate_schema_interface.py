@@ -43,6 +43,9 @@ BASE_MAP['ExtendedUnitSpec'] = 'UnitSpec'
 BASE_MAP['Encoding'] = 'UnitEncoding'
 
 
+CHANNEL_COLLECTIONS = ['Encoding', 'Facet']
+
+
 class SchemaProperty(object):
     """Class Wrapper for a property in a VegaLite Schema
 
@@ -179,6 +182,19 @@ class SchemaProperty(object):
             return None
 
     @property
+    def channelclassname(self):
+        refname = self.refname
+        if refname:
+            return refname
+
+        for subtype in self.subtypes:
+            name = subtype.channelclassname
+            if name:
+                return name
+
+        return None
+
+    @property
     def imports(self):
         import_ = lambda name: "from .{0} import {1}".format(name.lower(), name)
         def gen_imports():
@@ -209,6 +225,40 @@ class SchemaProperty(object):
     @property
     def enum(self):
         return self.schema.get('enum', [])
+
+
+class ChannelCollection(object):
+    root = 'channel_collections'
+    def __init__(self, name, schema):
+        self.schema = schema
+        self.name = name
+
+    @property
+    def base(self):
+        return self.schema.definitions[self.name]
+
+    @property
+    def attributes(self):
+        return self.schema.definitions[self.name].attributes
+
+    @property
+    def properties(self):
+        return self.schema.definitions[self.name].properties
+
+    @property
+    def imports(self):
+        yield {'module': '.named_channels',
+               'names': (prop.title() for prop in self.properties)}
+
+    def attr_trait_descr(self, attr):
+        name = attr.channelclassname
+        return attr.trait_descr.replace(attr.channelclassname,
+                                        attr.name.title())
+
+    def attr_trait_fulldef(self, attr):
+        name = attr.channelclassname
+        return attr.trait_fulldef.replace(attr.channelclassname,
+                                          attr.name.title())
 
 
 class VegaLiteSchema(SchemaProperty):
@@ -325,13 +375,23 @@ class VegaLiteSchema(SchemaProperty):
             with open(filename, 'w') as f:
                 f.write(template.render(objects=list(wrappers)))
 
+        # Write channel_collections.py file
+        objects = [ChannelCollection(name, self)
+                   for name in CHANNEL_COLLECTIONS]
+
+        template = JINJA_ENV.get_template('channel_collections.tpl')
+        filename = os.path.join(path, 'channel_collections.py')
+        print("- writing {0}".format(filename))
+        with open(filename, 'w') as f:
+            f.write(template.render(objects=objects))
+
         # Write __init__.py file
         template = JINJA_ENV.get_template('wrapper_init.tpl')
         filename = os.path.join(path, '__init__.py')
         header = 'Wrappers for low-level schema objects'
         print("- writing {0}".format(filename))
         with open(filename, 'w') as f:
-            f.write(template.render(objects=list(self.wrappers()),
+            f.write(template.render(objects=list(self.wrappers()) + objects,
                                     header=header))
 
 

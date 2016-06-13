@@ -48,6 +48,7 @@ from .schema import VerticalAlign
 # Channel Aliases
 #*************************************************************************
 from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
+from .schema import Encoding, Facet
 
 #*************************************************************************
 # Loading the spec
@@ -63,85 +64,6 @@ def load_vegalite_spec(spec):
         return FacetedChart.from_dict(spec)
     else:
         return Chart.from_dict(spec)
-
-
-#*************************************************************************
-# Encoding
-#*************************************************************************
-class Encoding(schema.Encoding):
-
-    # Position channels
-    x = T.Instance(X, default_value=None, allow_none=True)
-    y = T.Instance(Y, default_value=None, allow_none=True)
-    row = T.Instance(Row, default_value=None, allow_none=True)
-    column = T.Instance(Column, default_value=None, allow_none=True)
-
-    # Channels with legends
-    color = T.Instance(Color, default_value=None, allow_none=True)
-    size = T.Instance(Size, default_value=None, allow_none=True)
-    shape = T.Instance(Shape, default_value=None, allow_none=True)
-    opacity = T.Instance(Opacity, default_value=None, allow_none=True)
-
-    # Field and order channels
-    detail = T.Union([T.Instance(Detail), T.List(T.Instance(Detail))],
-                     default_value=None, allow_none=True)
-    text = T.Instance(Text, default_value=None, allow_none=True)
-    label = T.Instance(Label, default_value=None, allow_none=True)
-    path = T.Union([T.Instance(Path), T.List(T.Instance(Path))],
-                   default_value=None, allow_none=True)
-    order = T.Union([T.Instance(Order), T.List(T.Instance(Order))],
-                   default_value=None, allow_none=True)
-
-    channel_names = ['x', 'y', 'row', 'column', 'color', 'size', 'shape',
-                     'opacity', 'detail', 'text', 'label', 'path', 'order']
-    parent = T.Instance(schema.BaseObject, default_value=None, allow_none=True)
-
-    skip = ['channel_names', 'parent']
-
-    def _infer_types(self, data):
-        for attr in self.channel_names:
-            val = getattr(self, attr)
-            if val is not None:
-                val._infer_type(data)
-
-    @T.observe(*channel_names)
-    def _channel_changed(self, change):
-        new = change['new']
-        name = change['name']
-        channel = getattr(self, name, None)
-        if channel is not None and not getattr(channel, 'type', '') and isinstance(self.parent, Chart):
-            meth = getattr(channel, '_infer_type', None)
-            if meth is not None:
-                meth(self.parent.data)
-
-
-#*************************************************************************
-# Encoding
-#*************************************************************************
-class Facet(schema.Facet):
-    column = T.Instance(Column, allow_none=True, default_value=None)
-    row = T.Instance(Row, allow_none=True, default_value=None)
-
-    channel_names = ['row', 'column']
-    parent = T.Instance(schema.BaseObject, default_value=None, allow_none=True)
-
-    skip = ['channel_names', 'parent']
-
-    def _infer_types(self, data):
-        for attr in self.channel_names:
-            val = getattr(self, attr)
-            if val is not None:
-                val._infer_type(data)
-
-    @T.observe(*channel_names)
-    def _channel_changed(self, change):
-        new = change['new']
-        name = change['name']
-        channel = getattr(self, name, None)
-        if channel is not None and not getattr(channel, 'type', '') and isinstance(self.parent, Chart):
-            meth = getattr(channel, '_infer_type', None)
-            if meth is not None:
-                meth(self.parent.data)
 
 
 #*************************************************************************
