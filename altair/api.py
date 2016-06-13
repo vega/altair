@@ -162,7 +162,6 @@ class TopLevelMixin(object):
 
 
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
-
     _data = None
 
     name = T.Unicode()
@@ -201,19 +200,17 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     def __dir__(self):
         base = super(Chart, self).__dir__()
         methods = [
-            'to_dict', 'from_dict', 'to_altair',
-            'mark_area', 'mark_bar', 'mark_line', 'mark_point',
-            'mark_text', 'mark_tick', 'mark_circle', 'mark_square',
-            'encode', 'transform_data',
+            'to_dict', 'from_dict', 'to_altair', 'display',
             'configure', 'configure_axis', 'configure_cell',
             'configure_legend', 'configure_mark', 'configure_scale',
             'configure_facet_axis', 'configure_facet_cell',
             'configure_facet_grid', 'configure_facet_scale',
-            'display',
+            'transform_data',
+            'mark_area', 'mark_bar', 'mark_line', 'mark_point', 'mark_rule',
+            'mark_text', 'mark_tick', 'mark_circle', 'mark_square',
+            'encode',
         ]
         return base+methods
-
-    # Mark methods
 
     def mark_area(self, **kwargs):
         self.mark = 'area'
@@ -278,7 +275,6 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
 
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
-
     _data = None
 
     name = T.Unicode()
@@ -306,12 +302,24 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         super(LayeredChart, self).__init__(**kwargs)
         self.data = data
 
+    def __dir__(self):
+        base = super(Chart, self).__dir__()
+        methods = [
+            'to_dict', 'from_dict', 'to_altair', 'display',
+            'configure', 'configure_axis', 'configure_cell',
+            'configure_legend', 'configure_mark', 'configure_scale',
+            'configure_facet_axis', 'configure_facet_cell',
+            'configure_facet_grid', 'configure_facet_scale',
+            'transform_data',
+            'set_layers',
+        ]
+        return base+methods
+
     def set_layers(self, *layers):
         self.layers = list(layers)
 
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
-
     _data = None
 
     name = T.Unicode()
@@ -347,7 +355,18 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         super(FacetedChart, self).__init__(**kwargs)
         self.data = data
 
-    # Facet method
+    def __dir__(self):
+        base = super(Chart, self).__dir__()
+        methods = [
+            'to_dict', 'from_dict', 'to_altair', 'display',
+            'configure', 'configure_axis', 'configure_cell',
+            'configure_legend', 'configure_mark', 'configure_scale',
+            'configure_facet_axis', 'configure_facet_cell',
+            'configure_facet_grid', 'configure_facet_scale',
+            'transform_data',
+            'set_facet',
+        ]
+        return base + methods
 
     def set_facet(self, *args, **kwargs):
         """Define the encoding for the Chart."""
