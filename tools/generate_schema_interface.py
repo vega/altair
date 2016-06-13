@@ -316,7 +316,7 @@ class VegaLiteSchema(SchemaProperty):
                        imports=[dict(module='.channel_wrappers', names=[wrappername])],
                        root='named_channels')
 
-    def channel_collections(self):
+        # Channel collections
         def construct_dct(name):
             return {key: name for key in ['PositionChannelDef', 'FieldDef',
                                           'OrderChannelDef', 'ChannelDefWithLegend']}
@@ -392,7 +392,7 @@ class VegaLiteSchema(SchemaProperty):
         print("Writing wrappers to {0}".format(path))
 
         # Write wrapper definition files
-        groups = groupby(self.wrappers(), itemgetter('root'))
+        groups = groupby(self.wrappers(), lambda w: JINJA_ENV.getattr(w, 'root'))
         for root, wrappers in groups:
             template = JINJA_ENV.get_template('{0}.tpl'.format(root))
             filename = os.path.join(path, '{0}.py'.format(root))
@@ -400,21 +400,13 @@ class VegaLiteSchema(SchemaProperty):
             with open(filename, 'w') as f:
                 f.write(template.render(objects=list(wrappers)))
 
-        # Write channel collection wrappers
-        collections = list(self.channel_collections())
-        template = JINJA_ENV.get_template('channel_collections.tpl')
-        filename = os.path.join(path, 'channel_collections.py')
-        print("- writing {0}".format(filename))
-        with open(filename, 'w') as f:
-            f.write(template.render(objects=collections))
-
-        # Write __init__.py file
+        # Write wrapper __init__.py file
         template = JINJA_ENV.get_template('wrapper_init.tpl')
         filename = os.path.join(path, '__init__.py')
         header = 'Wrappers for low-level schema objects'
         print("- writing {0}".format(filename))
         with open(filename, 'w') as f:
-            f.write(template.render(objects=list(self.wrappers()) + collections,
+            f.write(template.render(objects=list(self.wrappers()),
                                     header=header))
 
 
