@@ -239,14 +239,12 @@ class SchemaProperty(object):
 
     @property
     def imports(self):
-        def gen_imports():
-            if self.refname:
-                yield "from {0} import {1}".format(self.module, self.refname)
-            for t in self.subtypes:
-                yield from t.imports
-            for v in self.properties.values():
-                yield from v.imports
-        return sorted(set(gen_imports()))
+        if self.refname:
+            yield dict(module=self.module, names=[self.refname])
+        for t in self.subtypes:
+            yield from t.imports
+        for v in self.properties.values():
+            yield from v.imports
 
     @property
     def base_import(self):

@@ -3,10 +3,9 @@
 
 import traitlets as T
 {{ cls.base_import }}
-{%- if cls.imports %}
-{{ cls.imports|join('\n') }}
-{%- endif %}
-
+{% for import_statement in [cls]|merge_imports -%}
+  {{ import_statement }}
+{% endfor %}
 
 class {{ cls.name }}({{ cls.basename }}):
     """Wrapper for Vega-Lite {{ cls.name }} definition.

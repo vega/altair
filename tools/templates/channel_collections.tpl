@@ -5,8 +5,8 @@ import traitlets as T
 from .. import _interface as schema
 from ..baseobject import BaseObject
 
-{% for object in objects -%}
-  {{ object.imports | join('\n') }}
+{% for import_statement in objects|merge_imports -%}
+  {{ import_statement }}
 {% endfor %}
 
 {% for cls in objects -%}
