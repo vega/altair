@@ -317,6 +317,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
 
     def set_layers(self, *layers):
         self.layers = list(layers)
+        return self
 
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
