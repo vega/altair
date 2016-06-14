@@ -70,6 +70,29 @@ def load_vegalite_spec(spec):
 # Top-level Objects
 #*************************************************************************
 class TopLevelMixin(object):
+    def to_html(self, template=None, title=None, **kwargs):
+        """Emit a stand-alone HTML document containing this chart.
+
+        Parameters
+        ----------
+        template : string
+            The HTML template to use. This should have a format method, which
+            accepts a "spec" and "title" argument. Note that a standard Python
+            format string meets these requirements.
+            By default, uses DEFAULT_TEMPLATE.
+        title : string
+            The title to use in the document. Default is "Vega-Lite Chart"
+        kwargs :
+            additional keywords to be passed to the template
+
+        Returns
+        -------
+        html : string
+            A string of HTML representing the chart
+        """
+        from .utils.html import to_html
+        return to_html(self.to_dict(), template=template, title=title)
+
     def _to_code(self, data=None):
         """Emit the CodeGen object used to export this chart to Python code."""
         return visitors.ToCode().visit(self, data)
