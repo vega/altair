@@ -15,7 +15,7 @@ class Encoding(UnitEncoding):
     Attributes
     ----------
     color: ChannelDefWithLegend
-        Color of the marks – either fill or stroke color based on mark type.
+        Color of the marks - either fill or stroke color based on mark type.
     column: PositionChannelDef
         Horizontal facets for trellis plots.
     detail: Union(FieldDef, List(FieldDef))
@@ -23,7 +23,7 @@ class Encoding(UnitEncoding):
     label: FieldDef
         
     opacity: ChannelDefWithLegend
-        Opacity of the marks – either can be a value or in a range.
+        Opacity of the marks - either can be a value or in a range.
     order: Union(OrderChannelDef, List(OrderChannelDef))
         Layer order for non-stacked marks, or stack order for stacked marks.
     path: Union(OrderChannelDef, List(OrderChannelDef))
@@ -41,11 +41,11 @@ class Encoding(UnitEncoding):
     y: PositionChannelDef
         Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
     """
-    color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Color of the marks – either fill or stroke color based on mark type.""")
+    color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Color of the marks - either fill or stroke color based on mark type.""")
     column = T.Instance(PositionChannelDef, allow_none=True, default_value=None, help="""Horizontal facets for trellis plots.""")
     detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(FieldDef, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
     label = T.Instance(FieldDef, allow_none=True, default_value=None)
-    opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Opacity of the marks – either can be a value or in a range.""")
+    opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Opacity of the marks - either can be a value or in a range.""")
     order = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef), allow_none=True, default_value=None)])
     path = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef), allow_none=True, default_value=None)])
     row = T.Instance(PositionChannelDef, allow_none=True, default_value=None, help="""Vertical facets for trellis plots.""")

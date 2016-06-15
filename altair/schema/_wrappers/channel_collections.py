@@ -14,7 +14,7 @@ class Encoding(schema.Encoding):
     Attributes
     ----------
     color: Color
-        Color of the marks – either fill or stroke color based on mark type.
+        Color of the marks - either fill or stroke color based on mark type.
     column: Column
         Horizontal facets for trellis plots.
     detail: Union(Detail, List(Detail))
@@ -22,7 +22,7 @@ class Encoding(schema.Encoding):
     label: Label
         
     opacity: Opacity
-        Opacity of the marks – either can be a value or in a range.
+        Opacity of the marks - either can be a value or in a range.
     order: Union(Order, List(Order))
         Layer order for non-stacked marks, or stack order for stacked marks.
     path: Union(Path, List(Path))
@@ -40,11 +40,11 @@ class Encoding(schema.Encoding):
     y: Y
         Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
     """
-    color = T.Instance(Color, allow_none=True, default_value=None, help="""Color of the marks – either fill or stroke color based on mark type.""")
+    color = T.Instance(Color, allow_none=True, default_value=None, help="""Color of the marks - either fill or stroke color based on mark type.""")
     column = T.Instance(Column, allow_none=True, default_value=None, help="""Horizontal facets for trellis plots.""")
     detail = T.Union([T.Instance(Detail, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(Detail, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
     label = T.Instance(Label, allow_none=True, default_value=None)
-    opacity = T.Instance(Opacity, allow_none=True, default_value=None, help="""Opacity of the marks – either can be a value or in a range.""")
+    opacity = T.Instance(Opacity, allow_none=True, default_value=None, help="""Opacity of the marks - either can be a value or in a range.""")
     order = T.Union([T.Instance(Order, allow_none=True, default_value=None), T.List(T.Instance(Order), allow_none=True, default_value=None)])
     path = T.Union([T.Instance(Path, allow_none=True, default_value=None), T.List(T.Instance(Path), allow_none=True, default_value=None)])
     row = T.Instance(Row, allow_none=True, default_value=None, help="""Vertical facets for trellis plots.""")

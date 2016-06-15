@@ -9,6 +9,16 @@ from operator import itemgetter
 from jinja2 import Environment, FileSystemLoader, environmentfilter
 
 
+def ensure_ascii_compatible(s):
+    """Ensure a string is ascii-compatible.
+    This is not an issue for Python 3, but if used in code will break Python 2
+    """
+    # Replace common non-ascii characters with suitable equivalents
+    s = s.replace('\u2013', '-')
+    s.encode('ascii')  # if this errors, then add more replacements above
+    return s
+
+
 @environmentfilter
 def merge_imports(env, objects):
     """Jinja filter to merge all imports from a list of objects"""
@@ -179,7 +189,7 @@ class SchemaProperty(object):
 
     @property
     def description(self):
-        return self.schema.get('description', '')
+        return ensure_ascii_compatible(self.schema.get('description', ''))
 
     @property
     def short_description(self):
