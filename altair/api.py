@@ -70,15 +70,6 @@ def load_vegalite_spec(spec):
 # Top-level Objects
 #*************************************************************************
 class TopLevelMixin(object):
-    @classmethod
-    def from_dict(cls, dct):
-        """Create a Chart from a dict of Vega-Lite JSON."""
-        return visitors.FromDict().clsvisit(cls, dct)
-
-    def to_dict(self, data=True):
-        """Emit the Vega-Lite JSON for this Chart as as dict."""
-        return visitors.ToDict().visit(self, data)
-
     def _to_code(self, data=None):
         """Emit the CodeGen object used to export this chart to Python code."""
         return visitors.ToCode().visit(self, data)
@@ -200,7 +191,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     def __dir__(self):
         base = super(Chart, self).__dir__()
         methods = [
-            'to_dict', 'from_dict', 'to_altair', 'display',
+            'to_altair', 'display',
             'configure', 'configure_axis', 'configure_cell',
             'configure_legend', 'configure_mark', 'configure_scale',
             'configure_facet_axis', 'configure_facet_cell',
