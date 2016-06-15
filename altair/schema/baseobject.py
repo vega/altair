@@ -3,8 +3,6 @@ import json
 import pandas as pd
 import traitlets as T
 
-from ..utils import visitors
-
 _attr_template = "Attribute not found: {0}. Valid keyword arguments for this class: {1}"
 
 
@@ -104,8 +102,10 @@ class BaseObject(T.HasTraits):
     @classmethod
     def from_dict(cls, dct):
         """Instantiate the object from a valid JSON dictionary"""
-        return visitors.FromDict().clsvisit(cls, dct)
+        from ..utils.visitors import FromDict
+        return FromDict().clsvisit(cls, dct)
 
     def to_dict(self, data=True):
         """Emit the JSON representation for this object as as dict."""
-        return visitors.ToDict().visit(self, data)
+        from ..utils.visitors import ToDict
+        return ToDict().visit(self, data)
