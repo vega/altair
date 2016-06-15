@@ -15,24 +15,24 @@ class LayerSpec(BaseObject):
     Attributes
     ----------
     config: Config
-        
+        Configuration object.
     data: Data
-        
+        An object describing the data source.
     description: Unicode
-        
+        An optional description of this mark for commenting purpose.
     layers: List(UnitSpec)
-        
+        Unit specs that will be layered.
     name: Unicode
-        
+        Name of the visualization for later reference.
     transform: Transform
-        
+        An object describing filter and new field calculation.
     """
-    config = T.Instance(Config, allow_none=True, default_value=None)
-    data = T.Instance(Data, allow_none=True, default_value=None)
-    description = T.Unicode(allow_none=True, default_value=None)
-    layers = T.List(T.Instance(UnitSpec), allow_none=True, default_value=None)
-    name = T.Unicode(allow_none=True, default_value=None)
-    transform = T.Instance(Transform, allow_none=True, default_value=None)
+    config = T.Instance(Config, allow_none=True, default_value=None, help="""Configuration object.""")
+    data = T.Instance(Data, allow_none=True, default_value=None, help="""An object describing the data source.""")
+    description = T.Unicode(allow_none=True, default_value=None, help="""An optional description of this mark for commenting purpose.""")
+    layers = T.List(T.Instance(UnitSpec), allow_none=True, default_value=None, help="""Unit specs that will be layered.""")
+    name = T.Unicode(allow_none=True, default_value=None, help="""Name of the visualization for later reference.""")
+    transform = T.Instance(Transform, allow_none=True, default_value=None, help="""An object describing filter and new field calculation.""")
     
     def __init__(self, config=None, data=None, description=None, layers=None, name=None, transform=None, **kwargs):
         kwds = dict(config=config, data=data, description=description, layers=layers, name=name, transform=transform)

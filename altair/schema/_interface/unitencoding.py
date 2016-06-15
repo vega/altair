@@ -15,39 +15,39 @@ class UnitEncoding(BaseObject):
     Attributes
     ----------
     color: ChannelDefWithLegend
-        
+        Color of the marks – either fill or stroke color based on mark type.
     detail: Union(FieldDef, List(FieldDef))
-        
+        Additional levels of detail for grouping data in aggregate views and in line and area marks without mapping data to a specific visual channel.
     label: FieldDef
         
     opacity: ChannelDefWithLegend
-        
+        Opacity of the marks – either can be a value or in a range.
     order: Union(OrderChannelDef, List(OrderChannelDef))
-        
+        Layer order for non-stacked marks, or stack order for stacked marks.
     path: Union(OrderChannelDef, List(OrderChannelDef))
-        
+        Order of data points in line marks.
     shape: ChannelDefWithLegend
-        
+        The symbol's shape (only for `point` marks).
     size: ChannelDefWithLegend
-        
+        Size of the mark.
     text: FieldDef
-        
+        Text of the `text` mark.
     x: PositionChannelDef
-        
+        X coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
     y: PositionChannelDef
-        
+        Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
     """
-    color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
+    color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Color of the marks – either fill or stroke color based on mark type.""")
     detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(FieldDef, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
     label = T.Instance(FieldDef, allow_none=True, default_value=None)
-    opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
+    opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Opacity of the marks – either can be a value or in a range.""")
     order = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef), allow_none=True, default_value=None)])
     path = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef), allow_none=True, default_value=None)])
-    shape = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
-    size = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None)
-    text = T.Instance(FieldDef, allow_none=True, default_value=None)
-    x = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
-    y = T.Instance(PositionChannelDef, allow_none=True, default_value=None)
+    shape = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""The symbol's shape (only for `point` marks).""")
+    size = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Size of the mark.""")
+    text = T.Instance(FieldDef, allow_none=True, default_value=None, help="""Text of the `text` mark.""")
+    x = T.Instance(PositionChannelDef, allow_none=True, default_value=None, help="""X coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
+    y = T.Instance(PositionChannelDef, allow_none=True, default_value=None, help="""Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
     
     def __init__(self, color=None, detail=None, label=None, opacity=None, order=None, path=None, shape=None, size=None, text=None, x=None, y=None, **kwargs):
         kwds = dict(color=color, detail=detail, label=label, opacity=opacity, order=order, path=path, shape=shape, size=size, text=text, x=x, y=y)

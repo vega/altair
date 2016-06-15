@@ -18,7 +18,7 @@ class Transform(BaseObject):
     filterNull: Bool
         Filter null values from the data.
     """
-    calculate = T.List(T.Instance(Formula), allow_none=True, default_value=None, help="""Calculate new field(s) using the provided expresssion(s).""")
+    calculate = T.List(T.Instance(Formula, help="""Formula object for calculate."""), allow_none=True, default_value=None, help="""Calculate new field(s) using the provided expresssion(s).""")
     filter = T.Unicode(allow_none=True, default_value=None, help="""A string containing the filter Vega expression.""")
     filterNull = T.Bool(allow_none=True, default_value=None, help="""Filter null values from the data.""")
     

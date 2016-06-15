@@ -14,7 +14,7 @@ def abspath(*args):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
 
 
-VEGALITE_TAG = 'v1.0.8'
+VEGALITE_TAG = 'v1.0.12'
 VEGALITE_PATH = abspath('repos', 'vega-lite')
 VEGALITE_URL = 'https://github.com/vega/vega-lite.git'
 

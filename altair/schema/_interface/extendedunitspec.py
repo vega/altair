@@ -16,27 +16,27 @@ class ExtendedUnitSpec(UnitSpec):
     Attributes
     ----------
     config: Config
-        
+        Configuration object.
     data: Data
-        
+        An object describing the data source.
     description: Unicode
-        
+        An optional description of this mark for commenting purpose.
     encoding: Encoding
-        
+        A key-value mapping between encoding channels and definition of fields.
     mark: Mark
-        A name for the specification.
+        The mark type.
     name: Unicode
-        
+        Name of the visualization for later reference.
     transform: Transform
-        
+        An object describing filter and new field calculation.
     """
-    config = T.Instance(Config, allow_none=True, default_value=None)
-    data = T.Instance(Data, allow_none=True, default_value=None)
-    description = T.Unicode(allow_none=True, default_value=None)
-    encoding = T.Instance(Encoding, allow_none=True, default_value=None)
-    mark = Mark(allow_none=True, default_value=None, help="""A name for the specification.""")
-    name = T.Unicode(allow_none=True, default_value=None)
-    transform = T.Instance(Transform, allow_none=True, default_value=None)
+    config = T.Instance(Config, allow_none=True, default_value=None, help="""Configuration object.""")
+    data = T.Instance(Data, allow_none=True, default_value=None, help="""An object describing the data source.""")
+    description = T.Unicode(allow_none=True, default_value=None, help="""An optional description of this mark for commenting purpose.""")
+    encoding = T.Instance(Encoding, allow_none=True, default_value=None, help="""A key-value mapping between encoding channels and definition of fields.""")
+    mark = Mark(allow_none=True, default_value=None, help="""The mark type.""")
+    name = T.Unicode(allow_none=True, default_value=None, help="""Name of the visualization for later reference.""")
+    transform = T.Instance(Transform, allow_none=True, default_value=None, help="""An object describing filter and new field calculation.""")
     
     def __init__(self, config=None, data=None, description=None, encoding=None, mark=None, name=None, transform=None, **kwargs):
         kwds = dict(config=config, data=data, description=description, encoding=encoding, mark=mark, name=name, transform=transform)

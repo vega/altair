@@ -19,25 +19,25 @@ class PositionChannel(PositionChannelDef):
     shorthand: Unicode
         A shorthand description of the channel
     aggregate: AggregateOp
-        
+        Aggregation function for the field .
     axis: Union(Bool, Axis)
         
     bin: Union(Bool, Bin)
-        
+        Flag for binning a `quantitative` field, or a bin property object for binning parameters.
     field: Unicode
-        
+        Name of the field from which to pull a data value.
     scale: Scale
         
     sort: Union(SortField, SortOrder)
         
     timeUnit: TimeUnit
-        
+        Time unit for a `temporal` field .
     title: Unicode
-        
+        Title for axis or legend.
     type: Union(Type, Unicode)
-        
+        The encoded field's type of measurement.
     value: Union(CFloat, Unicode, Bool)
-        
+        A constant value in visual domain.
     """
     # Traitlets
     shorthand = T.Unicode('')
@@ -82,11 +82,11 @@ class ChannelWithLegend(ChannelDefWithLegend):
     shorthand: Unicode
         A shorthand description of the channel
     aggregate: AggregateOp
-        
+        Aggregation function for the field .
     bin: Union(Bool, Bin)
-        
+        Flag for binning a `quantitative` field, or a bin property object for binning parameters.
     field: Unicode
-        
+        Name of the field from which to pull a data value.
     legend: Legend
         
     scale: Scale
@@ -94,13 +94,13 @@ class ChannelWithLegend(ChannelDefWithLegend):
     sort: Union(SortField, SortOrder)
         
     timeUnit: TimeUnit
-        
+        Time unit for a `temporal` field .
     title: Unicode
-        
+        Title for axis or legend.
     type: Union(Type, Unicode)
-        
+        The encoded field's type of measurement.
     value: Union(CFloat, Unicode, Bool)
-        
+        A constant value in visual domain.
     """
     # Traitlets
     shorthand = T.Unicode('')
@@ -145,19 +145,19 @@ class Field(FieldDef):
     shorthand: Unicode
         A shorthand description of the channel
     aggregate: AggregateOp
-        
+        Aggregation function for the field .
     bin: Union(Bool, Bin)
-        
+        Flag for binning a `quantitative` field, or a bin property object for binning parameters.
     field: Unicode
-        
+        Name of the field from which to pull a data value.
     timeUnit: TimeUnit
-        
+        Time unit for a `temporal` field .
     title: Unicode
-        
+        Title for axis or legend.
     type: Union(Type, Unicode)
-        
+        The encoded field's type of measurement.
     value: Union(CFloat, Unicode, Bool)
-        
+        A constant value in visual domain.
     """
     # Traitlets
     shorthand = T.Unicode('')
@@ -202,21 +202,21 @@ class OrderChannel(OrderChannelDef):
     shorthand: Unicode
         A shorthand description of the channel
     aggregate: AggregateOp
-        
+        Aggregation function for the field .
     bin: Union(Bool, Bin)
-        
+        Flag for binning a `quantitative` field, or a bin property object for binning parameters.
     field: Unicode
-        
+        Name of the field from which to pull a data value.
     sort: SortOrder
         
     timeUnit: TimeUnit
-        
+        Time unit for a `temporal` field .
     title: Unicode
-        
+        Title for axis or legend.
     type: Union(Type, Unicode)
-        
+        The encoded field's type of measurement.
     value: Union(CFloat, Unicode, Bool)
-        
+        A constant value in visual domain.
     """
     # Traitlets
     shorthand = T.Unicode('')

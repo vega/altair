@@ -15,26 +15,26 @@ class FieldDef(BaseObject):
     Attributes
     ----------
     aggregate: AggregateOp
-        
+        Aggregation function for the field .
     bin: Union(Bool, Bin)
-        
+        Flag for binning a `quantitative` field, or a bin property object for binning parameters.
     field: Unicode
-        
+        Name of the field from which to pull a data value.
     timeUnit: TimeUnit
-        
+        Time unit for a `temporal` field .
     title: Unicode
-        
+        Title for axis or legend.
     type: Type
-        
+        The encoded field's type of measurement.
     value: Union(CFloat, Unicode, Bool)
-        
+        A constant value in visual domain.
     """
-    aggregate = AggregateOp(allow_none=True, default_value=None)
+    aggregate = AggregateOp(allow_none=True, default_value=None, help="""Aggregation function for the field .""")
     bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Bin, allow_none=True, default_value=None, help="""Binning properties or boolean flag for determining whether to bin data or not.""")])
-    field = T.Unicode(allow_none=True, default_value=None)
-    timeUnit = TimeUnit(allow_none=True, default_value=None)
-    title = T.Unicode(allow_none=True, default_value=None)
-    type = Type(allow_none=True, default_value=None)
+    field = T.Unicode(allow_none=True, default_value=None, help="""Name of the field from which to pull a data value.""")
+    timeUnit = TimeUnit(allow_none=True, default_value=None, help="""Time unit for a `temporal` field .""")
+    title = T.Unicode(allow_none=True, default_value=None, help="""Title for axis or legend.""")
+    type = Type(allow_none=True, default_value=None, help="""The encoded field's type of measurement.""")
     value = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None)])
     
     def __init__(self, aggregate=None, bin=None, field=None, timeUnit=None, title=None, type=None, value=None, **kwargs):

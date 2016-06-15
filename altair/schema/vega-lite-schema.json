@@ -17,25 +17,31 @@
             "properties": {
                 "mark": {
                     "$ref": "#/definitions/Mark",
-                    "description": "A name for the specification. The name is used to annotate marks, scale names, and more."
+                    "description": "The mark type.\n\nOne of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n\n`\"area\"`, `\"point\"`, `\"rule\"`, and `\"text\"`."
                 },
                 "encoding": {
-                    "$ref": "#/definitions/Encoding"
+                    "$ref": "#/definitions/Encoding",
+                    "description": "A key-value mapping between encoding channels and definition of fields."
                 },
                 "name": {
+                    "description": "Name of the visualization for later reference.",
                     "type": "string"
                 },
                 "description": {
+                    "description": "An optional description of this mark for commenting purpose.\n\nThis property has no effect on the output visualization.",
                     "type": "string"
                 },
                 "data": {
-                    "$ref": "#/definitions/Data"
+                    "$ref": "#/definitions/Data",
+                    "description": "An object describing the data source"
                 },
                 "transform": {
-                    "$ref": "#/definitions/Transform"
+                    "$ref": "#/definitions/Transform",
+                    "description": "An object describing filter and new field calculation."
                 },
                 "config": {
-                    "$ref": "#/definitions/Config"
+                    "$ref": "#/definitions/Config",
+                    "description": "Configuration object"
                 }
             },
             "required": [
@@ -60,30 +66,39 @@
             "type": "object",
             "properties": {
                 "row": {
-                    "$ref": "#/definitions/PositionChannelDef"
+                    "$ref": "#/definitions/PositionChannelDef",
+                    "description": "Vertical facets for trellis plots."
                 },
                 "column": {
-                    "$ref": "#/definitions/PositionChannelDef"
+                    "$ref": "#/definitions/PositionChannelDef",
+                    "description": "Horizontal facets for trellis plots."
                 },
                 "x": {
-                    "$ref": "#/definitions/PositionChannelDef"
+                    "$ref": "#/definitions/PositionChannelDef",
+                    "description": "X coordinates for `point`, `circle`, `square`,\n\n`line`, `rule`, `text`, and `tick`\n\n(or to width and height for `bar` and `area` marks)."
                 },
                 "y": {
-                    "$ref": "#/definitions/PositionChannelDef"
+                    "$ref": "#/definitions/PositionChannelDef",
+                    "description": "Y coordinates for `point`, `circle`, `square`,\n\n`line`, `rule`, `text`, and `tick`\n\n(or to width and height for `bar` and `area` marks)."
                 },
                 "color": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "Color of the marks – either fill or stroke color based on mark type.\n\n(By default, fill color for `area`, `bar`, `tick`, `text`, `circle`, and `square` /\n\nstroke color for `line` and `point`.)"
                 },
                 "opacity": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "Opacity of the marks – either can be a value or in a range."
                 },
                 "size": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "Size of the mark.\n\n- For `point`, `square` and `circle`\n\n– the symbol size, or pixel area of the mark.\n\n- For `bar` and `tick` – the bar and tick's size.\n\n- For `text` – the text's font size.\n\n- Size is currently unsupported for `line` and `area`."
                 },
                 "shape": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "The symbol's shape (only for `point` marks). The supported values are\n\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\n\nor `\"triangle-down\"`."
                 },
                 "detail": {
+                    "description": "Additional levels of detail for grouping data in aggregate views and\n\nin line and area marks without mapping data to a specific visual channel.",
                     "oneOf": [
                         {
                             "$ref": "#/definitions/FieldDef",
@@ -99,12 +114,14 @@
                     ]
                 },
                 "text": {
-                    "$ref": "#/definitions/FieldDef"
+                    "$ref": "#/definitions/FieldDef",
+                    "description": "Text of the `text` mark."
                 },
                 "label": {
                     "$ref": "#/definitions/FieldDef"
                 },
                 "path": {
+                    "description": "Order of data points in line marks.",
                     "oneOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"
@@ -118,6 +135,7 @@
                     ]
                 },
                 "order": {
+                    "description": "Layer order for non-stacked marks, or stack order for stacked marks.",
                     "oneOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"
@@ -159,12 +177,15 @@
                     ]
                 },
                 "field": {
+                    "description": "Name of the field from which to pull a data value.",
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "$ref": "#/definitions/Type",
+                    "description": "The encoded field's type of measurement. This can be either a full type\n\nname (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`,  and `\"nominal\"`)\n\nor an initial character of the type name (`\"Q\"`, `\"T\"`, `\"O\"`, `\"N\"`).\n\nThis property is case insensitive."
                 },
                 "value": {
+                    "description": "A constant value in visual domain.",
                     "oneOf": [
                         {
                             "type": "number"
@@ -178,9 +199,11 @@
                     ]
                 },
                 "timeUnit": {
-                    "$ref": "#/definitions/TimeUnit"
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`)."
                 },
                 "bin": {
+                    "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
                     "oneOf": [
                         {
                             "type": "boolean"
@@ -192,9 +215,11 @@
                     ]
                 },
                 "aggregate": {
-                    "$ref": "#/definitions/AggregateOp"
+                    "$ref": "#/definitions/AggregateOp",
+                    "description": "Aggregation function for the field\n\n(e.g., `mean`, `sum`, `median`, `min`, `max`, `count`)."
                 },
                 "title": {
+                    "description": "Title for axis or legend.",
                     "type": "string"
                 }
             }
@@ -644,12 +669,15 @@
                     ]
                 },
                 "field": {
+                    "description": "Name of the field from which to pull a data value.",
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "$ref": "#/definitions/Type",
+                    "description": "The encoded field's type of measurement. This can be either a full type\n\nname (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`,  and `\"nominal\"`)\n\nor an initial character of the type name (`\"Q\"`, `\"T\"`, `\"O\"`, `\"N\"`).\n\nThis property is case insensitive."
                 },
                 "value": {
+                    "description": "A constant value in visual domain.",
                     "oneOf": [
                         {
                             "type": "number"
@@ -663,9 +691,11 @@
                     ]
                 },
                 "timeUnit": {
-                    "$ref": "#/definitions/TimeUnit"
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`)."
                 },
                 "bin": {
+                    "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
                     "oneOf": [
                         {
                             "type": "boolean"
@@ -677,9 +707,11 @@
                     ]
                 },
                 "aggregate": {
-                    "$ref": "#/definitions/AggregateOp"
+                    "$ref": "#/definitions/AggregateOp",
+                    "description": "Aggregation function for the field\n\n(e.g., `mean`, `sum`, `median`, `min`, `max`, `count`)."
                 },
                 "title": {
+                    "description": "Title for axis or legend.",
                     "type": "string"
                 }
             }
@@ -801,12 +833,15 @@
             "type": "object",
             "properties": {
                 "field": {
+                    "description": "Name of the field from which to pull a data value.",
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "$ref": "#/definitions/Type",
+                    "description": "The encoded field's type of measurement. This can be either a full type\n\nname (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`,  and `\"nominal\"`)\n\nor an initial character of the type name (`\"Q\"`, `\"T\"`, `\"O\"`, `\"N\"`).\n\nThis property is case insensitive."
                 },
                 "value": {
+                    "description": "A constant value in visual domain.",
                     "oneOf": [
                         {
                             "type": "number"
@@ -820,9 +855,11 @@
                     ]
                 },
                 "timeUnit": {
-                    "$ref": "#/definitions/TimeUnit"
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`)."
                 },
                 "bin": {
+                    "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
                     "oneOf": [
                         {
                             "type": "boolean"
@@ -834,9 +871,11 @@
                     ]
                 },
                 "aggregate": {
-                    "$ref": "#/definitions/AggregateOp"
+                    "$ref": "#/definitions/AggregateOp",
+                    "description": "Aggregation function for the field\n\n(e.g., `mean`, `sum`, `median`, `min`, `max`, `count`)."
                 },
                 "title": {
+                    "description": "Title for axis or legend.",
                     "type": "string"
                 }
             }
@@ -848,12 +887,15 @@
                     "$ref": "#/definitions/SortOrder"
                 },
                 "field": {
+                    "description": "Name of the field from which to pull a data value.",
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "$ref": "#/definitions/Type",
+                    "description": "The encoded field's type of measurement. This can be either a full type\n\nname (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`,  and `\"nominal\"`)\n\nor an initial character of the type name (`\"Q\"`, `\"T\"`, `\"O\"`, `\"N\"`).\n\nThis property is case insensitive."
                 },
                 "value": {
+                    "description": "A constant value in visual domain.",
                     "oneOf": [
                         {
                             "type": "number"
@@ -867,9 +909,11 @@
                     ]
                 },
                 "timeUnit": {
-                    "$ref": "#/definitions/TimeUnit"
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`)."
                 },
                 "bin": {
+                    "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
                     "oneOf": [
                         {
                             "type": "boolean"
@@ -881,9 +925,11 @@
                     ]
                 },
                 "aggregate": {
-                    "$ref": "#/definitions/AggregateOp"
+                    "$ref": "#/definitions/AggregateOp",
+                    "description": "Aggregation function for the field\n\n(e.g., `mean`, `sum`, `median`, `min`, `max`, `count`)."
                 },
                 "title": {
+                    "description": "Title for axis or legend.",
                     "type": "string"
                 }
             }
@@ -895,6 +941,7 @@
                     "$ref": "#/definitions/DataFormat"
                 },
                 "url": {
+                    "description": "A URL from which to load the data set. Use the formatType property\n\nto ensure the loaded data is correctly parsed.",
                     "type": "string"
                 },
                 "values": {
@@ -927,7 +974,8 @@
                     "description": "Calculate new field(s) using the provided expresssion(s). Calculation are applied before filter.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Formula"
+                        "$ref": "#/definitions/Formula",
+                        "description": "Formula object for calculate."
                     }
                 }
             }
@@ -969,22 +1017,28 @@
                     "type": "string"
                 },
                 "cell": {
-                    "$ref": "#/definitions/CellConfig"
+                    "$ref": "#/definitions/CellConfig",
+                    "description": "Cell Config"
                 },
                 "mark": {
-                    "$ref": "#/definitions/MarkConfig"
+                    "$ref": "#/definitions/MarkConfig",
+                    "description": "Mark Config"
                 },
                 "scale": {
-                    "$ref": "#/definitions/ScaleConfig"
+                    "$ref": "#/definitions/ScaleConfig",
+                    "description": "Scale Config"
                 },
                 "axis": {
-                    "$ref": "#/definitions/AxisConfig"
+                    "$ref": "#/definitions/AxisConfig",
+                    "description": "Axis Config"
                 },
                 "legend": {
-                    "$ref": "#/definitions/LegendConfig"
+                    "$ref": "#/definitions/LegendConfig",
+                    "description": "Legend Config"
                 },
                 "facet": {
-                    "$ref": "#/definitions/FacetConfig"
+                    "$ref": "#/definitions/FacetConfig",
+                    "description": "Facet Config"
                 }
             }
         },
@@ -1001,19 +1055,24 @@
                     "type": "boolean"
                 },
                 "fill": {
+                    "description": "The fill color.",
                     "format": "color",
                     "type": "string"
                 },
                 "fillOpacity": {
+                    "description": "The fill opacity (value between [0,1]).",
                     "type": "number"
                 },
                 "stroke": {
+                    "description": "The stroke color.",
                     "type": "string"
                 },
-                "strokeWidth": {
+                "strokeOpacity": {
+                    "description": "The stroke opacity (value between [0,1]).",
                     "type": "number"
                 },
-                "strokeOpacity": {
+                "strokeWidth": {
+                    "description": "The stroke width, in pixels.",
                     "type": "number"
                 },
                 "strokeDash": {
@@ -1627,16 +1686,20 @@
             "type": "object",
             "properties": {
                 "scale": {
-                    "$ref": "#/definitions/FacetScaleConfig"
+                    "$ref": "#/definitions/FacetScaleConfig",
+                    "description": "Facet Scale Config"
                 },
                 "axis": {
-                    "$ref": "#/definitions/AxisConfig"
+                    "$ref": "#/definitions/AxisConfig",
+                    "description": "Facet Axis Config"
                 },
                 "grid": {
-                    "$ref": "#/definitions/FacetGridConfig"
+                    "$ref": "#/definitions/FacetGridConfig",
+                    "description": "Facet Grid Config"
                 },
                 "cell": {
-                    "$ref": "#/definitions/CellConfig"
+                    "$ref": "#/definitions/CellConfig",
+                    "description": "Facet Cell Config"
                 }
             }
         },
@@ -1683,19 +1746,24 @@
                     ]
                 },
                 "name": {
+                    "description": "Name of the visualization for later reference.",
                     "type": "string"
                 },
                 "description": {
+                    "description": "An optional description of this mark for commenting purpose.\n\nThis property has no effect on the output visualization.",
                     "type": "string"
                 },
                 "data": {
-                    "$ref": "#/definitions/Data"
+                    "$ref": "#/definitions/Data",
+                    "description": "An object describing the data source"
                 },
                 "transform": {
-                    "$ref": "#/definitions/Transform"
+                    "$ref": "#/definitions/Transform",
+                    "description": "An object describing filter and new field calculation."
                 },
                 "config": {
-                    "$ref": "#/definitions/Config"
+                    "$ref": "#/definitions/Config",
+                    "description": "Configuration object"
                 }
             },
             "required": [
@@ -1718,25 +1786,31 @@
             "type": "object",
             "properties": {
                 "layers": {
+                    "description": "Unit specs that will be layered.",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/UnitSpec"
                     }
                 },
                 "name": {
+                    "description": "Name of the visualization for later reference.",
                     "type": "string"
                 },
                 "description": {
+                    "description": "An optional description of this mark for commenting purpose.\n\nThis property has no effect on the output visualization.",
                     "type": "string"
                 },
                 "data": {
-                    "$ref": "#/definitions/Data"
+                    "$ref": "#/definitions/Data",
+                    "description": "An object describing the data source"
                 },
                 "transform": {
-                    "$ref": "#/definitions/Transform"
+                    "$ref": "#/definitions/Transform",
+                    "description": "An object describing filter and new field calculation."
                 },
                 "config": {
-                    "$ref": "#/definitions/Config"
+                    "$ref": "#/definitions/Config",
+                    "description": "Configuration object"
                 }
             },
             "required": [
@@ -1747,25 +1821,32 @@
             "type": "object",
             "properties": {
                 "mark": {
-                    "$ref": "#/definitions/Mark"
+                    "$ref": "#/definitions/Mark",
+                    "description": "The mark type.\n\nOne of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n\n`\"area\"`, `\"point\"`, `\"rule\"`, and `\"text\"`."
                 },
                 "encoding": {
-                    "$ref": "#/definitions/UnitEncoding"
+                    "$ref": "#/definitions/UnitEncoding",
+                    "description": "A key-value mapping between encoding channels and definition of fields."
                 },
                 "name": {
+                    "description": "Name of the visualization for later reference.",
                     "type": "string"
                 },
                 "description": {
+                    "description": "An optional description of this mark for commenting purpose.\n\nThis property has no effect on the output visualization.",
                     "type": "string"
                 },
                 "data": {
-                    "$ref": "#/definitions/Data"
+                    "$ref": "#/definitions/Data",
+                    "description": "An object describing the data source"
                 },
                 "transform": {
-                    "$ref": "#/definitions/Transform"
+                    "$ref": "#/definitions/Transform",
+                    "description": "An object describing filter and new field calculation."
                 },
                 "config": {
-                    "$ref": "#/definitions/Config"
+                    "$ref": "#/definitions/Config",
+                    "description": "Configuration object"
                 }
             },
             "required": [
@@ -1776,24 +1857,31 @@
             "type": "object",
             "properties": {
                 "x": {
-                    "$ref": "#/definitions/PositionChannelDef"
+                    "$ref": "#/definitions/PositionChannelDef",
+                    "description": "X coordinates for `point`, `circle`, `square`,\n\n`line`, `rule`, `text`, and `tick`\n\n(or to width and height for `bar` and `area` marks)."
                 },
                 "y": {
-                    "$ref": "#/definitions/PositionChannelDef"
+                    "$ref": "#/definitions/PositionChannelDef",
+                    "description": "Y coordinates for `point`, `circle`, `square`,\n\n`line`, `rule`, `text`, and `tick`\n\n(or to width and height for `bar` and `area` marks)."
                 },
                 "color": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "Color of the marks – either fill or stroke color based on mark type.\n\n(By default, fill color for `area`, `bar`, `tick`, `text`, `circle`, and `square` /\n\nstroke color for `line` and `point`.)"
                 },
                 "opacity": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "Opacity of the marks – either can be a value or in a range."
                 },
                 "size": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "Size of the mark.\n\n- For `point`, `square` and `circle`\n\n– the symbol size, or pixel area of the mark.\n\n- For `bar` and `tick` – the bar and tick's size.\n\n- For `text` – the text's font size.\n\n- Size is currently unsupported for `line` and `area`."
                 },
                 "shape": {
-                    "$ref": "#/definitions/ChannelDefWithLegend"
+                    "$ref": "#/definitions/ChannelDefWithLegend",
+                    "description": "The symbol's shape (only for `point` marks). The supported values are\n\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\n\nor `\"triangle-down\"`."
                 },
                 "detail": {
+                    "description": "Additional levels of detail for grouping data in aggregate views and\n\nin line and area marks without mapping data to a specific visual channel.",
                     "oneOf": [
                         {
                             "$ref": "#/definitions/FieldDef",
@@ -1809,12 +1897,14 @@
                     ]
                 },
                 "text": {
-                    "$ref": "#/definitions/FieldDef"
+                    "$ref": "#/definitions/FieldDef",
+                    "description": "Text of the `text` mark."
                 },
                 "label": {
                     "$ref": "#/definitions/FieldDef"
                 },
                 "path": {
+                    "description": "Order of data points in line marks.",
                     "oneOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"
@@ -1828,6 +1918,7 @@
                     ]
                 },
                 "order": {
+                    "description": "Layer order for non-stacked marks, or stack order for stacked marks.",
                     "oneOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"

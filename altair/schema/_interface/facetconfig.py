@@ -15,18 +15,18 @@ class FacetConfig(BaseObject):
     Attributes
     ----------
     axis: AxisConfig
-        
+        Facet Axis Config.
     cell: CellConfig
-        
+        Facet Cell Config.
     grid: FacetGridConfig
-        
+        Facet Grid Config.
     scale: FacetScaleConfig
-        
+        Facet Scale Config.
     """
-    axis = T.Instance(AxisConfig, allow_none=True, default_value=None)
-    cell = T.Instance(CellConfig, allow_none=True, default_value=None)
-    grid = T.Instance(FacetGridConfig, allow_none=True, default_value=None)
-    scale = T.Instance(FacetScaleConfig, allow_none=True, default_value=None)
+    axis = T.Instance(AxisConfig, allow_none=True, default_value=None, help="""Facet Axis Config.""")
+    cell = T.Instance(CellConfig, allow_none=True, default_value=None, help="""Facet Cell Config.""")
+    grid = T.Instance(FacetGridConfig, allow_none=True, default_value=None, help="""Facet Grid Config.""")
+    scale = T.Instance(FacetScaleConfig, allow_none=True, default_value=None, help="""Facet Scale Config.""")
     
     def __init__(self, axis=None, cell=None, grid=None, scale=None, **kwargs):
         kwds = dict(axis=axis, cell=cell, grid=grid, scale=scale)

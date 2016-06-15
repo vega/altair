@@ -17,27 +17,27 @@ class FacetSpec(BaseObject):
     Attributes
     ----------
     config: Config
-        
+        Configuration object.
     data: Data
-        
+        An object describing the data source.
     description: Unicode
-        
+        An optional description of this mark for commenting purpose.
     facet: Facet
         
     name: Unicode
-        
+        Name of the visualization for later reference.
     spec: Union(LayerSpec, UnitSpec)
         
     transform: Transform
-        
+        An object describing filter and new field calculation.
     """
-    config = T.Instance(Config, allow_none=True, default_value=None)
-    data = T.Instance(Data, allow_none=True, default_value=None)
-    description = T.Unicode(allow_none=True, default_value=None)
+    config = T.Instance(Config, allow_none=True, default_value=None, help="""Configuration object.""")
+    data = T.Instance(Data, allow_none=True, default_value=None, help="""An object describing the data source.""")
+    description = T.Unicode(allow_none=True, default_value=None, help="""An optional description of this mark for commenting purpose.""")
     facet = T.Instance(Facet, allow_none=True, default_value=None)
-    name = T.Unicode(allow_none=True, default_value=None)
+    name = T.Unicode(allow_none=True, default_value=None, help="""Name of the visualization for later reference.""")
     spec = T.Union([T.Instance(LayerSpec, allow_none=True, default_value=None), T.Instance(UnitSpec, allow_none=True, default_value=None)])
-    transform = T.Instance(Transform, allow_none=True, default_value=None)
+    transform = T.Instance(Transform, allow_none=True, default_value=None, help="""An object describing filter and new field calculation.""")
     
     def __init__(self, config=None, data=None, description=None, facet=None, name=None, spec=None, transform=None, **kwargs):
         kwds = dict(config=config, data=data, description=description, facet=facet, name=name, spec=spec, transform=transform)

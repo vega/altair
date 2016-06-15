@@ -14,12 +14,12 @@ class Data(BaseObject):
     formatType: DataFormat
         
     url: Unicode
-        
+        A URL from which to load the data set.
     values: List(Any)
         Pass array of objects instead of a url to a file.
     """
     formatType = DataFormat(allow_none=True, default_value=None)
-    url = T.Unicode(allow_none=True, default_value=None)
+    url = T.Unicode(allow_none=True, default_value=None, help="""A URL from which to load the data set.""")
     values = T.List(T.Any(), allow_none=True, default_value=None, help="""Pass array of objects instead of a url to a file.""")
     
     def __init__(self, formatType=None, url=None, values=None, **kwargs):
