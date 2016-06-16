@@ -79,7 +79,7 @@ class TopLevelMixin(object):
             The HTML template to use. This should have a format method, which
             accepts a "spec" and "title" argument. Note that a standard Python
             format string meets these requirements.
-            By default, uses DEFAULT_TEMPLATE.
+            By default, uses altair.utils.html.DEFAULT_TEMPLATE.
         title : string
             The title to use in the document. Default is "Vega-Lite Chart"
         kwargs :
