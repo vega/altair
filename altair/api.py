@@ -66,6 +66,19 @@ def load_vegalite_spec(spec):
         return Chart.from_dict(spec)
 
 
+def use_signature(Obj):
+    """Apply call signature and documentation of Obj to the decorated method"""
+    def decorate(f):
+        # call-signature of f is exposed via __wrapped__.
+        # we want it to mimic Obj.__init__
+        f.__wrapped__ = Obj.__init__
+
+        # Supplement the docstring of f with information from Obj
+        f.__doc__ += Obj.__doc__[Obj.__doc__.index('\n'):]
+        return f
+    return decorate
+
+
 #*************************************************************************
 # Top-level Objects
 #*************************************************************************
@@ -102,6 +115,7 @@ class TopLevelMixin(object):
         return str(self._to_code(data=data))
 
     # transform method
+    @use_signature(schema.Transform)
     def transform_data(self, *args, **kwargs):
         """Set the data transform by keyword args."""
         if self.transform is None:
@@ -110,6 +124,7 @@ class TopLevelMixin(object):
         return self
 
     # Configuration methods
+    @use_signature(schema.Config)
     def configure(self, *args, **kwargs):
         """Set chart configuration"""
         if self.config is None:
@@ -117,22 +132,27 @@ class TopLevelMixin(object):
         self.config.update_inferred_traits(*args, **kwargs)
         return self
 
+    @use_signature(AxisConfig)
     def configure_axis(self, **kwargs):
         """Configure the chart's axes by keyword args."""
         return self.configure(axis=AxisConfig(**kwargs))
 
+    @use_signature(CellConfig)
     def configure_cell(self, **kwargs):
         """Configure the chart's cell's by keyword args."""
         return self.configure(cell=CellConfig(**kwargs))
 
+    @use_signature(LegendConfig)
     def configure_legend(self, **kwargs):
         """Configure the chart's legend by keyword args."""
         return self.configure(legend=LegendConfig(**kwargs))
 
+    @use_signature(MarkConfig)
     def configure_mark(self, **kwargs):
         """Configure the chart's marks by keyword args."""
         return self.configure(mark=MarkConfig(**kwargs))
 
+    @use_signature(ScaleConfig)
     def configure_scale(self, **kwargs):
         """Configure the chart's scales by keyword args."""
         return self.configure(scale=ScaleConfig(**kwargs))
@@ -148,18 +168,22 @@ class TopLevelMixin(object):
         self.config.facet = facet_config
         return self
 
+    @use_signature(AxisConfig)
     def configure_facet_axis(self, **kwargs):
         """Configure the facet's axes by keyword args."""
         return self._configure_facet('axis', AxisConfig, **kwargs)
 
+    @use_signature(CellConfig)
     def configure_facet_cell(self, **kwargs):
         """Configure the facet's cells by keyword args."""
         return self._configure_facet('cell', CellConfig, **kwargs)
 
+    @use_signature(FacetGridConfig)
     def configure_facet_grid(self, **kwargs):
         """Configure the facet's grid by keyword args."""
         return self._configure_facet('grid', FacetGridConfig, **kwargs)
 
+    @use_signature(FacetScaleConfig)
     def configure_facet_scale(self, **kwargs):
         """Configure the facet's scales by keyword args."""
         return self._configure_facet('scale', FacetScaleConfig, **kwargs)
@@ -226,60 +250,79 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         ]
         return base+methods
 
+    @use_signature(MarkConfig)
     def mark_area(self, **kwargs):
+        """Set the mark to 'area' and optionally specify mark properties"""
         self.mark = 'area'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
-    def mark_bar(self,**kwargs):
+    @use_signature(MarkConfig)
+    def mark_bar(self, **kwargs):
+        """Set the mark to 'bar' and optionally specify mark properties"""
         self.mark = 'bar'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(MarkConfig)
     def mark_line(self, **kwargs):
+        """Set the mark to 'line' and optionally specify mark properties"""
         self.mark = 'line'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(MarkConfig)
     def mark_point(self, **kwargs):
+        """Set the mark to 'point' and optionally specify mark properties"""
         self.mark = 'point'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(MarkConfig)
     def mark_rule(self, **kwargs):
+        """Set the mark to 'rule' and optionally specify mark properties"""
         self.mark = 'rule'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(MarkConfig)
     def mark_text(self, **kwargs):
+        """Set the mark to 'text' and optionally specify mark properties"""
         self.mark = 'text'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(MarkConfig)
     def mark_tick(self, **kwargs):
+        """Set the mark to 'tick' and optionally specify mark properties"""
         self.mark = 'tick'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(MarkConfig)
     def mark_circle(self, **kwargs):
+        """Set the mark to 'circle' and optionally specify mark properties"""
         self.mark = 'circle'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(MarkConfig)
     def mark_square(self, **kwargs):
+        """Set the mark to 'square' and optionally specify mark properties"""
         self.mark = 'square'
         if kwargs:
             self.configure_mark(**kwargs)
         return self
 
+    @use_signature(Encoding)
     def encode(self, *args, **kwargs):
         """Define the encoding for the Chart."""
         if self.encoding is None:
@@ -383,8 +426,9 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         ]
         return base + methods
 
+    @use_signature(Facet)
     def set_facet(self, *args, **kwargs):
-        """Define the encoding for the Chart."""
+        """Define the facet encoding for the Chart."""
         if self.facet is None:
             self.facet = Facet()
         self.facet.update_inferred_traits(*args, **kwargs)
