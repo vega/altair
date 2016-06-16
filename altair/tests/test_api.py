@@ -20,6 +20,16 @@ def test_chart_url_input():
 
     assert chart1.to_altair() == chart2.to_altair()
 
+def test_chart_to_html():
+    chart = Chart().encode(x='blah:Q')
+    html = chart.to_html(title='My Chart')
+    assert "<title>My Chart</title>" in html
+
+    html = chart.to_html(template="{title}<@>{spec}")
+    title, spec = html.split('<@>')
+    assert json.loads(spec) == chart.to_dict()
+    assert title == "Vega-Lite Chart"
+
 
 def test_encode_update():
     # Test that encode updates rather than overwrites
