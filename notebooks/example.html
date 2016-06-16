@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<head>
+  <title>Vega-Lite Chart</title>
+  <meta charset="utf-8">
+
+  <script src="//d3js.org/d3.v3.min.js"></script>
+  <script src="//vega.github.io/vega/vega.js"></script>
+  <script src="//vega.github.io/vega-lite/vega-lite.js"></script>
+  <script src="//vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+
+  <style media="screen">
+    /* Add space between vega-embed links  */
+    .vega-actions a {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Container for the visualization -->
+  <div id="vis"></div>
+
+  <script>
+  var vlSpec = {
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "aggregate": "average",
+            "field": "b",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "a",
+            "type": "nominal"
+        }
+    },
+    "data": {
+        "values": [
+            {
+                "a": "C",
+                "b": 2
+            },
+            {
+                "a": "C",
+                "b": 7
+            },
+            {
+                "a": "C",
+                "b": 4
+            },
+            {
+                "a": "D",
+                "b": 1
+            },
+            {
+                "a": "D",
+                "b": 2
+            },
+            {
+                "a": "D",
+                "b": 6
+            },
+            {
+                "a": "E",
+                "b": 8
+            },
+            {
+                "a": "E",
+                "b": 4
+            },
+            {
+                "a": "E",
+                "b": 7
+            }
+        ]
+    }
+}
+
+  var embedSpec = {
+    mode: "vega-lite",  // Instruct Vega-Embed to use the Vega-Lite compiler
+    spec: vlSpec
+  };
+
+  // Embed the visualization in the container with id `vis`
+  vg.embed("#vis", embedSpec, function(error, result) {
+    // Callback receiving the View instance and parsed Vega spec
+    // result.view is the View, which resides under the '#vis' element
+  });
+  </script>
+</body>
+</html>
