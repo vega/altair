@@ -50,6 +50,7 @@ from .schema import VerticalAlign
 from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
 from .schema import Encoding, Facet
 
+
 #*************************************************************************
 # Loading the spec
 #*************************************************************************
@@ -118,75 +119,67 @@ class TopLevelMixin(object):
     @use_signature(schema.Transform)
     def transform_data(self, *args, **kwargs):
         """Set the data transform by keyword args."""
-        if self.transform is None:
-            self.transform = schema.Transform()
-        self.transform.update_inferred_traits(*args, **kwargs)
-        return self
+        return self.update_subtraits('transform', *args, **kwargs)
 
     # Configuration methods
     @use_signature(schema.Config)
     def configure(self, *args, **kwargs):
         """Set chart configuration"""
-        if self.config is None:
-            self.config = schema.Config()
-        self.config.update_inferred_traits(*args, **kwargs)
-        return self
+        return self.update_subtraits('config', *args, **kwargs)
 
     @use_signature(AxisConfig)
-    def configure_axis(self, **kwargs):
+    def configure_axis(self, *args, **kwargs):
         """Configure the chart's axes by keyword args."""
-        return self.configure(axis=AxisConfig(**kwargs))
+        return self.update_subtraits(('config', 'axis'), *args, **kwargs)
 
     @use_signature(CellConfig)
-    def configure_cell(self, **kwargs):
+    def configure_cell(self, *args, **kwargs):
         """Configure the chart's cell's by keyword args."""
-        return self.configure(cell=CellConfig(**kwargs))
+        return self.update_subtraits(('config', 'cell'), *args, **kwargs)
 
     @use_signature(LegendConfig)
-    def configure_legend(self, **kwargs):
+    def configure_legend(self, *args, **kwargs):
         """Configure the chart's legend by keyword args."""
-        return self.configure(legend=LegendConfig(**kwargs))
+        return self.update_subtraits(('config', 'legend'), *args, **kwargs)
 
     @use_signature(MarkConfig)
-    def configure_mark(self, **kwargs):
+    def configure_mark(self, *args, **kwargs):
         """Configure the chart's marks by keyword args."""
-        return self.configure(mark=MarkConfig(**kwargs))
+        return self.update_subtraits(('config', 'mark'), *args, **kwargs)
 
     @use_signature(ScaleConfig)
-    def configure_scale(self, **kwargs):
+    def configure_scale(self, *args, **kwargs):
         """Configure the chart's scales by keyword args."""
-        return self.configure(scale=ScaleConfig(**kwargs))
+        return self.update_subtraits(('config', 'scale'), *args, **kwargs)
 
-    def _configure_facet(self, name, klass, **kwargs):
-        """Helper method for configure_facet_* methods."""
-        if self.config is None:
-            self.config = schema.Config()
-        facet_config = self.config.facet
-        if facet_config is None:
-            facet_config = FacetConfig()
-        setattr(facet_config, name, klass(**kwargs))
-        self.config.facet = facet_config
-        return self
+    @use_signature(FacetConfig)
+    def configure_facet(self, *args, **kwargs):
+        """Configure the chart's scales by keyword args."""
+        return self.update_subtraits(('config', 'facet'), *args, **kwargs)
 
     @use_signature(AxisConfig)
-    def configure_facet_axis(self, **kwargs):
+    def configure_facet_axis(self, *args, **kwargs):
         """Configure the facet's axes by keyword args."""
-        return self._configure_facet('axis', AxisConfig, **kwargs)
+        return self.update_subtraits(('config', 'facet', 'axis'),
+                                     *args, **kwargs)
 
     @use_signature(CellConfig)
-    def configure_facet_cell(self, **kwargs):
+    def configure_facet_cell(self, *args, **kwargs):
         """Configure the facet's cells by keyword args."""
-        return self._configure_facet('cell', CellConfig, **kwargs)
+        return self.update_subtraits(('config', 'facet', 'cell'),
+                                     *args, **kwargs)
 
     @use_signature(FacetGridConfig)
-    def configure_facet_grid(self, **kwargs):
+    def configure_facet_grid(self, *args, **kwargs):
         """Configure the facet's grid by keyword args."""
-        return self._configure_facet('grid', FacetGridConfig, **kwargs)
+        return self.update_subtraits(('config', 'facet', 'grid'),
+                                     *args, **kwargs)
 
     @use_signature(FacetScaleConfig)
-    def configure_facet_scale(self, **kwargs):
+    def configure_facet_scale(self, *args, **kwargs):
         """Configure the facet's scales by keyword args."""
-        return self._configure_facet('scale', FacetScaleConfig, **kwargs)
+        return self.update_subtraits(('config', 'facet', 'scale'),
+                                     *args, **kwargs)
 
     # Display related methods
     def _ipython_display_(self):
@@ -251,84 +244,63 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         return base+methods
 
     @use_signature(MarkConfig)
-    def mark_area(self, **kwargs):
+    def mark_area(self, *args, **kwargs):
         """Set the mark to 'area' and optionally specify mark properties"""
         self.mark = 'area'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_bar(self, **kwargs):
+    def mark_bar(self, *args, **kwargs):
         """Set the mark to 'bar' and optionally specify mark properties"""
         self.mark = 'bar'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_line(self, **kwargs):
+    def mark_line(self, *args, **kwargs):
         """Set the mark to 'line' and optionally specify mark properties"""
         self.mark = 'line'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_point(self, **kwargs):
+    def mark_point(self, *args, **kwargs):
         """Set the mark to 'point' and optionally specify mark properties"""
         self.mark = 'point'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_rule(self, **kwargs):
+    def mark_rule(self, *args, **kwargs):
         """Set the mark to 'rule' and optionally specify mark properties"""
         self.mark = 'rule'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_text(self, **kwargs):
+    def mark_text(self, *args, **kwargs):
         """Set the mark to 'text' and optionally specify mark properties"""
         self.mark = 'text'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_tick(self, **kwargs):
+    def mark_tick(self, *args, **kwargs):
         """Set the mark to 'tick' and optionally specify mark properties"""
         self.mark = 'tick'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_circle(self, **kwargs):
+    def mark_circle(self, *args, **kwargs):
         """Set the mark to 'circle' and optionally specify mark properties"""
         self.mark = 'circle'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)
-    def mark_square(self, **kwargs):
+    def mark_square(self, *args, **kwargs):
         """Set the mark to 'square' and optionally specify mark properties"""
         self.mark = 'square'
-        if kwargs:
-            self.configure_mark(**kwargs)
-        return self
+        return self.configure_mark(*args, **kwargs)
 
     @use_signature(Encoding)
     def encode(self, *args, **kwargs):
         """Define the encoding for the Chart."""
-        if self.encoding is None:
-            self.encoding = Encoding()
-        self.encoding.update_inferred_traits(*args, **kwargs)
-        return self
+        return self.update_subtraits('encoding', *args, **kwargs)
 
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
@@ -429,7 +401,4 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     @use_signature(Facet)
     def set_facet(self, *args, **kwargs):
         """Define the facet encoding for the Chart."""
-        if self.facet is None:
-            self.facet = Facet()
-        self.facet.update_inferred_traits(*args, **kwargs)
-        return self
+        return self.update_subtraits('facet', *args, **kwargs)
