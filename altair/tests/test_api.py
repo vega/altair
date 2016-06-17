@@ -250,3 +250,46 @@ def test_config_facet_grid():
     chart2 = Chart().configure_facet_grid(**kwds)
 
     assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_data_finalization():
+    data = pd.DataFrame({'x': np.arange(5),
+                         'y': pd.date_range('2016-01-01', freq='D', periods=5),
+                         'row': list('ABABA')})
+    # Facet containing data and a chart
+    chart1 = Chart().mark_point().encode(x='x', y='y')
+    facet = FacetedChart(data, spec=chart1).set_facet(row='row')
+    D = facet.to_dict()
+    assert D['facet']['row']['type'] == 'nominal'
+    assert D['spec']['encoding']['x']['type'] == 'quantitative'
+    assert D['spec']['encoding']['y']['type'] == 'temporal'
+
+    # Facet containing a chart and no data
+    chart1 = Chart().mark_point().encode(x='x', y='y')
+    facet = FacetedChart(spec=chart1).set_facet(row='row')
+    D = facet.to_dict()
+    assert 'type' not in D['facet']['row']
+    assert 'type' not in D['spec']['encoding']['x']
+    assert 'type' not in D['spec']['encoding']['y']
+
+    # Facet containing data and a layer
+    chart1 = Chart().mark_point().encode(x='x', y='y')
+    chart2 = Chart().mark_rule().encode(x='average(x)', y='average(y)')
+    layer = LayeredChart(layers=[chart1, chart2])
+    facet = FacetedChart(data, spec=layer).set_facet(row='row')
+    D = facet.to_dict()
+    assert D['facet']['row']['type'] == 'nominal'
+    for layer in D['spec']['layers']:
+        assert layer['encoding']['x']['type'] == 'quantitative'
+        assert layer['encoding']['y']['type'] == 'temporal'
+
+    # Facet containing a layer and no data
+    chart1 = Chart().mark_point().encode(x='x', y='y')
+    chart2 = Chart().mark_rule().encode(x='average(x)', y='average(y)')
+    layer = LayeredChart(layers=[chart1, chart2])
+    facet = FacetedChart(spec=layer).set_facet(row='row')
+    D = facet.to_dict()
+    assert 'type' not in D['facet']['row']
+    for layer in D['spec']['layers']:
+        assert 'type' not in layer['encoding']['x']
+        assert 'type' not in layer['encoding']['y']

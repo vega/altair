@@ -26,25 +26,14 @@ class {{ cls.name }}(schema.{{ cls.basename }}):
 
     {%- set comma = joiner(", ") %}
     channel_names = [{% for attr in cls.attributes %}{{ comma() }}'{{ attr.name }}'{% endfor %}]
-    parent = T.Instance(BaseObject, default_value=None, allow_none=True)
 
-    skip = ['channel_names', 'parent']
+    skip = ['channel_names']
 
     def _infer_types(self, data):
         for attr in self.channel_names:
             val = getattr(self, attr)
             if val is not None:
                 val._infer_type(data)
-
-    @T.observe(*channel_names)
-    def _channel_changed(self, change):
-        new = change['new']
-        name = change['name']
-        channel = getattr(self, name, None)
-        if channel is not None and self.parent is not None and not getattr(channel, 'type', ''):
-            meth = getattr(channel, '_infer_type', None)
-            if meth is not None:
-                meth(self.parent.data)
 
 
 {% endfor -%}

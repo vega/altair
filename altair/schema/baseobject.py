@@ -128,4 +128,9 @@ class BaseObject(T.HasTraits):
     def to_dict(self, data=True):
         """Emit the JSON representation for this object as as dict."""
         from ..utils.visitors import ToDict
+        self._finalize()
         return ToDict().visit(self, data)
+
+    def _finalize(self, **kwargs):
+        """Finalize the object for export"""
+        return self
