@@ -57,16 +57,7 @@ class Encoding(schema.Encoding):
     y = T.Instance(Y, allow_none=True, default_value=None, help="""Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
     
     channel_names = ['color', 'column', 'detail', 'label', 'opacity', 'order', 'path', 'row', 'shape', 'size', 'text', 'x', 'y']
-
     skip = ['channel_names']
-
-    def _finalize(self, data=None):
-        """Finalize collection by inferring all types of contained channels"""
-        if isinstance(data, pd.DataFrame):
-            for attr in self.channel_names:
-                val = getattr(self, attr)
-                if val is not None:
-                    val._finalize(data)
 
 
 class Facet(schema.Facet):
@@ -83,15 +74,6 @@ class Facet(schema.Facet):
     row = T.Instance(Row, allow_none=True, default_value=None)
     
     channel_names = ['column', 'row']
-
     skip = ['channel_names']
-
-    def _finalize(self, data=None):
-        """Finalize collection by inferring all types of contained channels"""
-        if isinstance(data, pd.DataFrame):
-            for attr in self.channel_names:
-                val = getattr(self, attr)
-                if val is not None:
-                    val._finalize(data)
 
 

@@ -296,12 +296,11 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         """Define the encoding for the Chart."""
         return self.update_subtraits('encoding', *args, **kwargs)
 
-    def _finalize(self, data=None):
+    def _finalize(self, **kwargs):
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
-            data = self.data
-        if isinstance(data, pd.DataFrame) and self.encoding is not None:
-            self.encoding._finalize(data=data)
+            kwargs['data'] = self.data
+        super(Chart, self)._finalize(**kwargs)
 
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
@@ -349,13 +348,11 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         self.layers = list(layers)
         return self
 
-    def _finalize(self, data=None):
+    def _finalize(self, **kwargs):
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
-            data = self.data
-        if self.layers and isinstance(data, pd.DataFrame):
-            for layer in self.layers:
-                layer._finalize(data=data)
+            kwargs['data'] = self.data
+        super(LayeredChart, self)._finalize(**kwargs)
 
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
@@ -405,11 +402,8 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         """Define the facet encoding for the Chart."""
         return self.update_subtraits('facet', *args, **kwargs)
 
-    def _finalize(self, data=None):
+    def _finalize(self, **kwargs):
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
-            data = self.data
-        if isinstance(data, pd.DataFrame):
-            self.spec._finalize(data=data)
-            if self.facet is not None:
-                self.facet._finalize(data=data)
+            kwargs['data'] = self.data
+        super(FacetedChart, self)._finalize(**kwargs)

@@ -132,5 +132,14 @@ class BaseObject(T.HasTraits):
         return ToDict().visit(self, data)
 
     def _finalize(self, **kwargs):
-        """Finalize the object for export"""
-        return self
+        """Finalize the object, and all contained objects, for export."""
+        def finalize_obj(obj):
+            if isinstance(obj, BaseObject):
+                obj._finalize(**kwargs)
+            elif isinstance(obj, list):
+                for item in obj:
+                    finalize_obj(item)
+
+        for name in self.traits():
+            value = getattr(self, name)
+            finalize_obj(value)

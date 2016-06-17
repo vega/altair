@@ -28,16 +28,7 @@ class {{ cls.name }}(schema.{{ cls.basename }}):
 
     {%- set comma = joiner(", ") %}
     channel_names = [{% for attr in cls.attributes %}{{ comma() }}'{{ attr.name }}'{% endfor %}]
-
     skip = ['channel_names']
-
-    def _finalize(self, data=None):
-        """Finalize collection by inferring all types of contained channels"""
-        if isinstance(data, pd.DataFrame):
-            for attr in self.channel_names:
-                val = getattr(self, attr)
-                if val is not None:
-                    val._finalize(data)
 
 
 {% endfor -%}

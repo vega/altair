@@ -57,10 +57,11 @@ class {{ object.name }}({{ object.base.name }}):
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super({{ object.name }}, self).__init__(**kwargs)
 
-    def _finalize(self, data=None):
+    def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        if isinstance(data, pd.DataFrame):
-            if not self.type and self.field in data:
+        if not self.type:
+            data = kwargs.get('data', None)
+            if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
 
