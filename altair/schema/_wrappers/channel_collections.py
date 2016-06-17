@@ -61,6 +61,7 @@ class Encoding(schema.Encoding):
     skip = ['channel_names']
 
     def _finalize(self, data=None):
+        """Finalize collection by inferring all types of contained channels"""
         if isinstance(data, pd.DataFrame):
             for attr in self.channel_names:
                 val = getattr(self, attr)
@@ -86,6 +87,7 @@ class Facet(schema.Facet):
     skip = ['channel_names']
 
     def _finalize(self, data=None):
+        """Finalize collection by inferring all types of contained channels"""
         if isinstance(data, pd.DataFrame):
             for attr in self.channel_names:
                 val = getattr(self, attr)
