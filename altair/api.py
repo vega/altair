@@ -301,7 +301,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         if self.data is not None:
             data = self.data
         if isinstance(data, pd.DataFrame) and self.encoding is not None:
-            self.encoding._infer_types(data)
+            self.encoding._finalize(data=data)
 
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
@@ -355,7 +355,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
             data = self.data
         if self.layers and isinstance(data, pd.DataFrame):
             for layer in self.layers:
-                layer._finalize(data)
+                layer._finalize(data=data)
 
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
@@ -410,6 +410,6 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         if self.data is not None:
             data = self.data
         if isinstance(data, pd.DataFrame):
-            self.spec._finalize(data)
+            self.spec._finalize(data=data)
             if self.facet is not None:
-                self.facet._infer_types(data)
+                self.facet._finalize(data=data)

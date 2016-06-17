@@ -2,6 +2,8 @@
 # Do not modify this file directly.
 
 import traitlets as T
+import pandas as pd
+
 from .. import _interface as schema
 from ..baseobject import BaseObject
 
@@ -58,11 +60,12 @@ class Encoding(schema.Encoding):
 
     skip = ['channel_names']
 
-    def _infer_types(self, data):
-        for attr in self.channel_names:
-            val = getattr(self, attr)
-            if val is not None:
-                val._infer_type(data)
+    def _finalize(self, data=None):
+        if isinstance(data, pd.DataFrame):
+            for attr in self.channel_names:
+                val = getattr(self, attr)
+                if val is not None:
+                    val._finalize(data)
 
 
 class Facet(schema.Facet):
@@ -82,10 +85,11 @@ class Facet(schema.Facet):
 
     skip = ['channel_names']
 
-    def _infer_types(self, data):
-        for attr in self.channel_names:
-            val = getattr(self, attr)
-            if val is not None:
-                val._infer_type(data)
+    def _finalize(self, data=None):
+        if isinstance(data, pd.DataFrame):
+            for attr in self.channel_names:
+                val = getattr(self, attr)
+                if val is not None:
+                    val._finalize(data)
 
 
