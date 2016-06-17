@@ -31,7 +31,10 @@ class {{ object.name }}({{ object.base.name }}):
     """
     # Traitlets
     shorthand = T.Unicode('')
-    type = T.Union([Type(), T.Unicode()],
+
+    # add type abbreviations to the valid values &
+    # use an observer below to expand abbreviations if they come up
+    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
                    allow_none=True, default_value=None)
 
     @T.observe('shorthand')
