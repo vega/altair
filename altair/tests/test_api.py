@@ -20,6 +20,7 @@ def test_chart_url_input():
 
     assert chart1.to_altair() == chart2.to_altair()
 
+
 def test_chart_to_html():
     chart = Chart().encode(x='blah:Q')
     html = chart.to_html(title='My Chart')
@@ -45,6 +46,78 @@ def test_configure_update():
                     .configure(background='red')
     chart2 = Chart().configure(MarkConfig(color='red'), background='red')
 
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_axis_update():
+    chart1 = Chart().configure_axis(axisColor='red')\
+                    .configure_axis(axisWidth=100)
+    chart2 = Chart().configure_axis(axisColor='red',
+                                    axisWidth=100)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_cell_update():
+    chart1 = Chart().configure_cell(stroke='red')\
+                    .configure_cell(height=100)
+    chart2 = Chart().configure_cell(stroke='red',
+                                    height=100)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_legend_update():
+    chart1 = Chart().configure_legend(gradientStrokeColor='red')\
+                    .configure_legend(gradientHeight=100)
+    chart2 = Chart().configure_legend(gradientStrokeColor='red',
+                                      gradientHeight=100)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_mark_update():
+    chart1 = Chart().configure_mark(color='red')\
+                    .configure_mark(angle=90)
+    chart2 = Chart().configure_mark(color='red',
+                                    angle=90)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_scale_update():
+    chart1 = Chart().configure_scale(bandSize=50)\
+                    .configure_scale(round=True)
+    chart2 = Chart().configure_scale(bandSize=50,
+                                     round=True)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_facet_axis_update():
+    chart1 = Chart().configure_facet_axis(axisColor='red')\
+                    .configure_facet_axis(axisWidth=100)
+    chart2 = Chart().configure_facet_axis(axisColor='red',
+                                          axisWidth=100)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_facet_cell_update():
+    chart1 = Chart().configure_facet_cell(stroke='red')\
+                    .configure_facet_cell(height=100)
+    chart2 = Chart().configure_facet_cell(stroke='red',
+                                          height=100)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_facet_grid_update():
+    chart1 = Chart().configure_facet_grid(color='red')\
+                    .configure_facet_grid(offset=100)
+    chart2 = Chart().configure_facet_grid(color='red',
+                                          offset=100)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_configure_facet_scale_update():
+    chart1 = Chart().configure_facet_scale(padding=50)\
+                    .configure_facet_scale(round=True)
+    chart2 = Chart().configure_facet_scale(padding=50,
+                                           round=True)
     assert chart1.to_dict() == chart2.to_dict()
 
 
