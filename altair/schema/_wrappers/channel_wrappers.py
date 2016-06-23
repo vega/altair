@@ -71,7 +71,7 @@ class PositionChannel(PositionChannelDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        if not self.type:
+        if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
@@ -137,7 +137,7 @@ class ChannelWithLegend(ChannelDefWithLegend):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        if not self.type:
+        if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
@@ -197,7 +197,7 @@ class Field(FieldDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        if not self.type:
+        if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
@@ -259,7 +259,7 @@ class OrderChannel(OrderChannelDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        if not self.type:
+        if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])

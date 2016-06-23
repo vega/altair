@@ -293,3 +293,28 @@ def test_data_finalization():
     for layer in D['spec']['layers']:
         assert 'type' not in layer['encoding']['x']
         assert 'type' not in layer['encoding']['y']
+
+
+SAMPLE_CODE = """
+Chart(cars).mark_tick().encode(
+    x='Miles_per_Gallon',
+    y='Origin',
+)
+"""
+
+def test_finalize():
+    cars = load_dataset('cars')
+    code = SAMPLE_CODE.strip()
+
+    # Test that finalize is not called for ``to_altair()`` method
+    obj = eval(code)
+    assert obj.to_altair(data='cars') == code
+
+    # Confirm that _finalize() changes the state
+    obj._finalize()
+    assert obj.to_altair(data='cars') != code
+
+    # Confirm that finalized object contains correct type information
+    D = obj.to_dict(data=False)
+    assert D['encoding']['x']['type'] == 'quantitative'
+    assert D['encoding']['y']['type'] == 'nominal'

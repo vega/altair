@@ -109,8 +109,9 @@ class TopLevelMixin(object):
 
     def _to_code(self, data=None):
         """Emit the CodeGen object used to export this chart to Python code."""
-        self._finalize()
-        return visitors.ToCode().visit(self, data)
+        # do not call _finalize(), as we want the output code
+        # to reflect the exact input
+        return visitors.ToCode().visit(self, data=data)
 
     def to_altair(self, data=None):
         """Emit the Python code as a string required to created this Chart."""

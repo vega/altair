@@ -62,7 +62,7 @@ class {{ object.name }}({{ object.base.name }}):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        if not self.type:
+        if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
