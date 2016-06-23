@@ -90,7 +90,7 @@ class ToCode(Visitor):
                                         type=obj.type)
         code = self.visit_BaseObject(obj)
         if shorthand:
-            code.add_args(repr(shorthand))
+            code.add_args("'{0}'".format(shorthand))
         code.remove_kwargs('field', 'aggregate', 'type')
 
         do_shorten = (shorthand
@@ -98,7 +98,7 @@ class ToCode(Visitor):
                       and len(code.args) == 1
                       and not (code.kwargs or code.methods))
         if do_shorten:
-            return repr(shorthand)
+            return "'{0}'".format(shorthand)
         else:
             return code
 
