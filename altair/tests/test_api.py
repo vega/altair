@@ -9,6 +9,7 @@ from .. import *
 from .. import schema
 from ..utils import parse_shorthand, infer_vegalite_type
 from ..datasets import connection_ok
+from ..utils._py3k_compat import PY2
 
 
 def test_chart_url_input():
@@ -302,19 +303,26 @@ Chart(cars).mark_tick().encode(
 )
 """
 
+@pytest.fixture
+def sample_code():
+    # In Py2, output strings will be unicode
+    if PY2:
+        return SAMPLE_CODE.replace("='", "=u'").strip()
+    else:
+        return SAMPLE_CODE.strip()
+
 
 @pytest.mark.skipif(not connection_ok(), reason="No Internet Connection")
-def test_finalize():
+def test_finalize(sample_code):
     cars = load_dataset('cars')
-    code = SAMPLE_CODE.strip()
 
     # Test that finalize is not called for ``to_altair()`` method
-    obj = eval(code)
-    assert obj.to_altair(data='cars') == code
+    obj = eval(sample_code)
+    assert obj.to_altair(data='cars') == sample_code
 
     # Confirm that _finalize() changes the state
     obj._finalize()
-    assert obj.to_altair(data='cars') != code
+    assert obj.to_altair(data='cars') != sample_code
 
     # Confirm that finalized object contains correct type information
     D = obj.to_dict(data=False)
