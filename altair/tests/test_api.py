@@ -302,6 +302,8 @@ Chart(cars).mark_tick().encode(
 )
 """
 
+
+@pytest.mark.skipif(not connection_ok(), reason="No Internet Connection")
 def test_finalize():
     cars = load_dataset('cars')
     code = SAMPLE_CODE.strip()

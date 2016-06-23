@@ -5,12 +5,10 @@ import json
 import pytest
 
 from .. import iter_examples
-from ...datasets import connection_ok, URLError
 from ... import examples
 from ... import *
 
 
-@pytest.mark.skipif(not connection_ok(), reason='No Internet Connection')
 @pytest.mark.parametrize('example', iter_examples())
 def test_json_examples_round_trip(example):
     """
