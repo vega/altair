@@ -3,8 +3,6 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
-import warnings
-
 import traitlets as T
 import pandas as pd
 

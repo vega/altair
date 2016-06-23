@@ -2,10 +2,8 @@
 # Do not modify this file directly.
 
 import traitlets as T
-import pandas as pd
 
 from .. import _interface as schema
-from ..baseobject import BaseObject
 
 from .named_channels import Color, Column, Detail, Label, Opacity, Order, Path, Row, Shape, Size, Text, X, Y
 

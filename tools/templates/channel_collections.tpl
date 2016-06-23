@@ -2,10 +2,8 @@
 # Do not modify this file directly.
 
 import traitlets as T
-import pandas as pd
 
 from .. import _interface as schema
-from ..baseobject import BaseObject
 
 {% for import_statement in objects|merge_imports -%}
   {{ import_statement }}
