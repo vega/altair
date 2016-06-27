@@ -41,7 +41,10 @@ class PositionChannel(PositionChannelDef):
     """
     # Traitlets
     shorthand = T.Unicode('')
-    type = T.Union([Type(), T.Unicode()],
+
+    # add type abbreviations to the valid values &
+    # use an observer below to expand abbreviations if they come up
+    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
                    allow_none=True, default_value=None)
 
     @T.observe('shorthand')
@@ -66,12 +69,12 @@ class PositionChannel(PositionChannelDef):
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(PositionChannel, self).__init__(**kwargs)
 
-    def _infer_type(self, data):
-        if isinstance(data, pd.DataFrame):
-            if not self.type and self.field in data:
+    def _finalize(self, **kwargs):
+        """Finalize object: this involves inferring types if necessary"""
+        if self.type is None:
+            data = kwargs.get('data', None)
+            if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
-        if data is None:
-            self.type = ''
 
 
 class ChannelWithLegend(ChannelDefWithLegend):
@@ -104,7 +107,10 @@ class ChannelWithLegend(ChannelDefWithLegend):
     """
     # Traitlets
     shorthand = T.Unicode('')
-    type = T.Union([Type(), T.Unicode()],
+
+    # add type abbreviations to the valid values &
+    # use an observer below to expand abbreviations if they come up
+    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
                    allow_none=True, default_value=None)
 
     @T.observe('shorthand')
@@ -129,12 +135,12 @@ class ChannelWithLegend(ChannelDefWithLegend):
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(ChannelWithLegend, self).__init__(**kwargs)
 
-    def _infer_type(self, data):
-        if isinstance(data, pd.DataFrame):
-            if not self.type and self.field in data:
+    def _finalize(self, **kwargs):
+        """Finalize object: this involves inferring types if necessary"""
+        if self.type is None:
+            data = kwargs.get('data', None)
+            if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
-        if data is None:
-            self.type = ''
 
 
 class Field(FieldDef):
@@ -161,7 +167,10 @@ class Field(FieldDef):
     """
     # Traitlets
     shorthand = T.Unicode('')
-    type = T.Union([Type(), T.Unicode()],
+
+    # add type abbreviations to the valid values &
+    # use an observer below to expand abbreviations if they come up
+    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
                    allow_none=True, default_value=None)
 
     @T.observe('shorthand')
@@ -186,12 +195,12 @@ class Field(FieldDef):
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Field, self).__init__(**kwargs)
 
-    def _infer_type(self, data):
-        if isinstance(data, pd.DataFrame):
-            if not self.type and self.field in data:
+    def _finalize(self, **kwargs):
+        """Finalize object: this involves inferring types if necessary"""
+        if self.type is None:
+            data = kwargs.get('data', None)
+            if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
-        if data is None:
-            self.type = ''
 
 
 class OrderChannel(OrderChannelDef):
@@ -220,7 +229,10 @@ class OrderChannel(OrderChannelDef):
     """
     # Traitlets
     shorthand = T.Unicode('')
-    type = T.Union([Type(), T.Unicode()],
+
+    # add type abbreviations to the valid values &
+    # use an observer below to expand abbreviations if they come up
+    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
                    allow_none=True, default_value=None)
 
     @T.observe('shorthand')
@@ -245,11 +257,11 @@ class OrderChannel(OrderChannelDef):
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(OrderChannel, self).__init__(**kwargs)
 
-    def _infer_type(self, data):
-        if isinstance(data, pd.DataFrame):
-            if not self.type and self.field in data:
+    def _finalize(self, **kwargs):
+        """Finalize object: this involves inferring types if necessary"""
+        if self.type is None:
+            data = kwargs.get('data', None)
+            if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
-        if data is None:
-            self.type = ''
 
 

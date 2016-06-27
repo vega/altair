@@ -1,5 +1,3 @@
-import json
-
 import pandas as pd
 import traitlets as T
 
@@ -128,4 +126,18 @@ class BaseObject(T.HasTraits):
     def to_dict(self, data=True):
         """Emit the JSON representation for this object as as dict."""
         from ..utils.visitors import ToDict
+        self._finalize()
         return ToDict().visit(self, data)
+
+    def _finalize(self, **kwargs):
+        """Finalize the object, and all contained objects, for export."""
+        def finalize_obj(obj):
+            if isinstance(obj, BaseObject):
+                obj._finalize(**kwargs)
+            elif isinstance(obj, list):
+                for item in obj:
+                    finalize_obj(item)
+
+        for name in self.traits():
+            value = getattr(self, name)
+            finalize_obj(value)

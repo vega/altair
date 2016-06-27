@@ -2,8 +2,8 @@
 # Do not modify this file directly.
 
 import traitlets as T
+
 from .. import _interface as schema
-from ..baseobject import BaseObject
 
 from .named_channels import Color, Column, Detail, Label, Opacity, Order, Path, Row, Shape, Size, Text, X, Y
 
@@ -55,25 +55,7 @@ class Encoding(schema.Encoding):
     y = T.Instance(Y, allow_none=True, default_value=None, help="""Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
     
     channel_names = ['color', 'column', 'detail', 'label', 'opacity', 'order', 'path', 'row', 'shape', 'size', 'text', 'x', 'y']
-    parent = T.Instance(BaseObject, default_value=None, allow_none=True)
-
-    skip = ['channel_names', 'parent']
-
-    def _infer_types(self, data):
-        for attr in self.channel_names:
-            val = getattr(self, attr)
-            if val is not None:
-                val._infer_type(data)
-
-    @T.observe(*channel_names)
-    def _channel_changed(self, change):
-        new = change['new']
-        name = change['name']
-        channel = getattr(self, name, None)
-        if channel is not None and self.parent is not None and not getattr(channel, 'type', ''):
-            meth = getattr(channel, '_infer_type', None)
-            if meth is not None:
-                meth(self.parent.data)
+    skip = ['channel_names']
 
 
 class Facet(schema.Facet):
@@ -90,24 +72,6 @@ class Facet(schema.Facet):
     row = T.Instance(Row, allow_none=True, default_value=None)
     
     channel_names = ['column', 'row']
-    parent = T.Instance(BaseObject, default_value=None, allow_none=True)
-
-    skip = ['channel_names', 'parent']
-
-    def _infer_types(self, data):
-        for attr in self.channel_names:
-            val = getattr(self, attr)
-            if val is not None:
-                val._infer_type(data)
-
-    @T.observe(*channel_names)
-    def _channel_changed(self, change):
-        new = change['new']
-        name = change['name']
-        channel = getattr(self, name, None)
-        if channel is not None and self.parent is not None and not getattr(channel, 'type', ''):
-            meth = getattr(channel, '_infer_type', None)
-            if meth is not None:
-                meth(self.parent.data)
+    skip = ['channel_names']
 
 

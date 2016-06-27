@@ -86,7 +86,7 @@ def construct_shorthand(field=None, aggregate=None, type=None):
     if type is not None:
         type = TYPECODE_MAP.get(type, type)
         if type not in TYPE_ABBR:
-            raise ValueError('Unrecognized Type: {0}'.format(typ))
+            raise ValueError('Unrecognized Type: {0}'.format(type))
         sh = '{0}:{1}'.format(sh, type)
 
     return sh

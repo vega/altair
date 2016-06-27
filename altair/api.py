@@ -3,8 +3,6 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
-import warnings
-
 import traitlets as T
 import pandas as pd
 
@@ -109,7 +107,9 @@ class TopLevelMixin(object):
 
     def _to_code(self, data=None):
         """Emit the CodeGen object used to export this chart to Python code."""
-        return visitors.ToCode().visit(self, data)
+        # do not call _finalize(), as we want the output code
+        # to reflect the exact input
+        return visitors.ToCode().visit(self, data=data)
 
     def to_altair(self, data=None):
         """Emit the Python code as a string required to created this Chart."""
@@ -201,13 +201,6 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     mark = T.Enum(schema.Mark().values, default_value='point')
     encoding = T.Instance(Encoding, default_value=None, allow_none=True)
     config = T.Instance(schema.Config, allow_none=True)
-
-    @T.observe('encoding')
-    def _encoding_changed(self, change):
-        if isinstance(change['new'], Encoding):
-            self.encoding.parent = self
-            if isinstance(self.data, pd.DataFrame):
-                self.encoding._infer_types(self.data)
 
     @property
     def data(self):
@@ -302,6 +295,12 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         """Define the encoding for the Chart."""
         return self.update_subtraits('encoding', *args, **kwargs)
 
+    def _finalize(self, **kwargs):
+        # data comes from wrappers, but self.data overrides this if defined
+        if self.data is not None:
+            kwargs['data'] = self.data
+        super(Chart, self)._finalize(**kwargs)
+
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
@@ -348,6 +347,12 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         self.layers = list(layers)
         return self
 
+    def _finalize(self, **kwargs):
+        # data comes from wrappers, but self.data overrides this if defined
+        if self.data is not None:
+            kwargs['data'] = self.data
+        super(LayeredChart, self)._finalize(**kwargs)
+
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
     _data = None
@@ -358,13 +363,6 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)], allow_none=True, default_value=None)
     transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
     config = T.Instance(schema.Config, allow_none=True, default_value=None)
-
-    @T.observe('facet')
-    def _facet_changed(self, change):
-        if isinstance(change['new'], Facet):
-            self.facet.parent = self
-            if isinstance(self.data, pd.DataFrame):
-                self.facet._infer_types(self.data)
 
     @property
     def data(self):
@@ -402,3 +400,9 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     def set_facet(self, *args, **kwargs):
         """Define the facet encoding for the Chart."""
         return self.update_subtraits('facet', *args, **kwargs)
+
+    def _finalize(self, **kwargs):
+        # data comes from wrappers, but self.data overrides this if defined
+        if self.data is not None:
+            kwargs['data'] = self.data
+        super(FacetedChart, self)._finalize(**kwargs)
