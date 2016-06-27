@@ -3,6 +3,8 @@ import json
 import pandas as pd
 import traitlets as T
 
+from ..utils._py3k_compat import string_types
+
 _attr_template = "Attribute not found: {0}. Valid keyword arguments for this class: {1}"
 
 
@@ -56,7 +58,7 @@ class BaseObject(T.HasTraits):
             if trait not in set.union(set(classes.values()),
                                       set(name_to_trait.values())):
                 name_to_trait[name] = trait
-        trait_to_name = {t:n for n, t in name_to_trait.items()}
+        trait_to_name = {t: n for n, t in name_to_trait.items()}
 
         # Update all arguments
         for arg in args:
@@ -69,9 +71,32 @@ class BaseObject(T.HasTraits):
                 kwargs[name] = arg
         return kwargs
 
+    def update_traits(self, **kwargs):
+        for key, val in kwargs.items():
+            self.set_trait(key, val)
+        return self
+
     def update_inferred_traits(self, *args, **kwargs):
         kwargs = self.infer_keywords(*args, **kwargs)
         return self.update_traits(**kwargs)
+
+    def update_subtraits(self, attrs, *args, **kwargs):
+        """Update sub-traits without overwriting other traits"""
+        if not (args or kwargs):
+            return self
+        if isinstance(attrs, string_types):
+            attrs = (attrs,)
+        if len(attrs) == 0:
+            self.update_inferred_traits(*args, **kwargs)
+        else:
+            attr = attrs[0]
+            if attr not in self.traits():
+                raise ValueError('{0} has no trait {1}'.format(self, attr))
+            trait = getattr(self, attr)
+            if trait is None:
+                trait = self.traits()[attr].klass()
+            setattr(self, attr, trait.update_subtraits(attrs[1:], *args, **kwargs))
+        return self
 
     def __contains__(self, key):
         try:
@@ -93,11 +118,6 @@ class BaseObject(T.HasTraits):
     def __dir__(self):
         """Customize tab completed attributes."""
         return list(self.traits())
-
-    def update_traits(self, **kwargs):
-        for key, val in kwargs.items():
-            self.set_trait(key, val)
-        return self
 
     @classmethod
     def from_dict(cls, dct):
