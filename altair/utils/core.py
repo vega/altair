@@ -13,7 +13,7 @@ TYPECODE_MAP = {'ordinal': 'O',
                 'quantitative': 'Q',
                 'temporal': 'T'}
 
-INV_TYPECODE_MAP = {v:k for k,v in TYPECODE_MAP.items()}
+INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
 TYPE_ABBR = TYPECODE_MAP.values()
 
@@ -44,6 +44,7 @@ def parse_shorthand(shorthand, valid_fields=None):
     if not shorthand:
         return {}
 
+    # Must import this here to avoid circular imports
     from ..schema import AggregateOp
     valid_aggregates = AggregateOp().values
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
@@ -59,6 +60,7 @@ def parse_shorthand(shorthand, valid_fields=None):
     regexps = [re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
                for p in patterns]
 
+    # find matches depending on valid fields passed
     matches = [exp.match(shorthand).groupdict() for exp in regexps
                if exp.match(shorthand)]
     if valid_fields is None:
@@ -70,7 +72,7 @@ def parse_shorthand(shorthand, valid_fields=None):
             if match['field'] in valid_fields:
                 match_to_return = match
                 break
-        else: # nobreak
+        else:  # nobreak
             raise ValueError('No matching field for shorthand: '
                              '{0}'.format(matches[0]))
 
@@ -82,6 +84,9 @@ def parse_shorthand(shorthand, valid_fields=None):
 
 
 def construct_shorthand(field=None, aggregate=None, type=None):
+    """Construct a shorthand representation.
+
+    See also: parse_shorthand"""
     if field is None:
         return ''
 
@@ -99,7 +104,7 @@ def construct_shorthand(field=None, aggregate=None, type=None):
     return sh
 
 
-def infer_vegalite_type(data, name=None):
+def infer_vegalite_type(data, field=None):
     """
     From an array-like input, infer the correct vega typecode
     ('O', 'N', 'Q', or 'T')
@@ -109,8 +114,8 @@ def infer_vegalite_type(data, name=None):
     data: Numpy array or Pandas Series
     field: str column name
     """
-    # See if we can read the type from the name
-    if name is not None:
+    # See if we can read the type from the field
+    if field is not None:
         parsed = parse_shorthand(field)
         if parsed.get('type'):
             return parsed['type']

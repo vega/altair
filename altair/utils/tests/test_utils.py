@@ -5,7 +5,8 @@ import json
 import numpy as np
 import pandas as pd
 
-from .. import parse_shorthand, infer_vegalite_type, sanitize_dataframe
+from .. import (parse_shorthand, construct_shorthand,
+                infer_vegalite_type, sanitize_dataframe)
 
 
 def test_parse_shorthand():
@@ -70,6 +71,16 @@ def test_parse_shorthand_invalid_fields():
     check_raises('average(foo):Q', ['bar', 'baz'])
 
 
+def test_shorthand_roundtrip():
+    def check(**kwargs):
+        assert parse_shorthand(construct_shorthand(**kwargs)) == kwargs
+
+    check(field='foo')
+    check(field='foo', aggregate='average')
+    check(field='foo', type='Q')
+    check(field='foo', aggregate='average', type='Q')
+
+
 def test_infer_vegalite_type():
     def _check(arr, typ):
         assert infer_vegalite_type(arr) == typ
@@ -85,7 +96,7 @@ def test_infer_vegalite_type():
     _check(nulled, 'Q')
     _check(['a', 'b', 'c'], 'N')
 
-    if hasattr(pytest, 'warns'): # added in pytest 2.8
+    if hasattr(pytest, 'warns'):  # added in pytest 2.8
         with pytest.warns(UserWarning):
             _check([], 'N')
     else:
