@@ -44,6 +44,32 @@ def test_parse_shorthand():
           field='a b:(c\nd', type='Q')
 
 
+def test_parse_shorthand_valid_fields():
+    def check(shorthand, valid_fields, **kwargs):
+        assert parse_shorthand(shorthand, valid_fields) == kwargs
+
+    check('foo', ['foo', 'bar'], field='foo')
+    check('average(foo)', ['average(foo)'], field='average(foo)')
+    check('average(foo)', ['foo', 'average(foo)'], field='average(foo)')
+    check('average(foo):Q', ['foo', 'average(foo)'],
+          field='average(foo)', type='Q')
+    check('average(foo):Q', ['foo', 'average(foo)', 'average(foo):Q'],
+          field='average(foo):Q')
+    check('average(average(foo):Q):Q', ['average(foo):Q'],
+          field='average(foo):Q', aggregate='average', type='Q')
+
+
+def test_parse_shorthand_invalid_fields():
+    def check_raises(shorthand, valid_fields):
+        with pytest.raises(ValueError) as err:
+            parse_shorthand(shorthand, valid_fields)
+        assert str(err.value).startswith('No matching field for shorthand:')
+
+    check_raises('foo', ['bar', 'baz'])
+    check_raises('average(foo)', ['bar', 'baz'])
+    check_raises('average(foo):Q', ['bar', 'baz'])
+
+
 def test_infer_vegalite_type():
     def _check(arr, typ):
         assert infer_vegalite_type(arr) == typ
