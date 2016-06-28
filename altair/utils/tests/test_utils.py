@@ -13,12 +13,35 @@ def test_parse_shorthand():
         assert parse_shorthand(s) == kwargs
 
     check('')
+
+    # Fields alone
     check('foobar', field='foobar')
+    check('blah:(fd ', field='blah:(fd ')
+
+    # Fields with type
+    check('foobar:quantitative', type='Q', field='foobar')
     check('foobar:nominal', type='N', field='foobar')
+    check('foobar:ordinal', type='O', field='foobar')
+    check('foobar:temporal', type='T', field='foobar')
+
+    check('foobar:Q', type='Q', field='foobar')
+    check('foobar:N', type='N', field='foobar')
     check('foobar:O', type='O', field='foobar')
-    check('avg(foobar)', field='foobar', aggregate='avg')
+    check('foobar:T', type='T', field='foobar')
+
+    # Fields with aggregate and/or type
+    check('average(foobar)', field='foobar', aggregate='average')
     check('min(foobar):temporal', type='T', field='foobar', aggregate='min')
     check('sum(foobar):Q', type='Q', field='foobar', aggregate='sum')
+
+    # check that invalid arguments are not split-out
+    check('invalid(blah)', field='invalid(blah)')
+    check('blah:invalid', field='blah:invalid')
+    check('invalid(blah):invalid', field='invalid(blah):invalid')
+
+    # check parsing in presence of strange characters
+    check('average(a b:(c\nd):Q', aggregate='average',
+          field='a b:(c\nd', type='Q')
 
 
 def test_infer_vegalite_type():
