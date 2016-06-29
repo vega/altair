@@ -62,6 +62,8 @@ class PositionChannel(PositionChannelDef):
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
+        super(PositionChannel, self)._finalize(**kwargs)
+
 
 class ChannelWithLegend(ChannelDefWithLegend):
     """Wrapper for Vega-Lite ChannelDefWithLegend definition.
@@ -115,6 +117,8 @@ class ChannelWithLegend(ChannelDefWithLegend):
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
+        super(ChannelWithLegend, self)._finalize(**kwargs)
+
 
 class Field(FieldDef):
     """Wrapper for Vega-Lite FieldDef definition.
@@ -161,6 +165,8 @@ class Field(FieldDef):
         if not self.type:
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
+
+        super(Field, self)._finalize(**kwargs)
 
 
 class OrderChannel(OrderChannelDef):
@@ -210,5 +216,7 @@ class OrderChannel(OrderChannelDef):
         if not self.type:
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
+
+        super(OrderChannel, self)._finalize(**kwargs)
 
 

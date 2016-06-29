@@ -53,5 +53,7 @@ class {{ object.name }}({{ object.base.name }}):
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
+        super({{ object.name }}, self)._finalize(**kwargs)
+
 
 {% endfor %}
