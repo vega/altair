@@ -18,7 +18,7 @@ INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 TYPE_ABBR = TYPECODE_MAP.values()
 
 
-def parse_shorthand(shorthand, valid_fields=None):
+def parse_shorthand(shorthand):
     """
     Parse the shorthand expression for aggregation, field, and type.
 
@@ -33,8 +33,6 @@ def parse_shorthand(shorthand, valid_fields=None):
     ----------
     shorthand: str
         Shorthand string
-    valid_names : list (optional)
-        An optional list of valid field names
 
     Returns
     -------
@@ -57,30 +55,18 @@ def parse_shorthand(shorthand, valid_fields=None):
                 r'{field}:{type}',
                 r'{aggregate}\({field}\)',
                 r'{aggregate}\({field}\):{type}']
-    regexps = [re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
-               for p in patterns]
+    regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
+               for p in patterns[::-1])
 
     # find matches depending on valid fields passed
-    matches = [exp.match(shorthand).groupdict() for exp in regexps
-               if exp.match(shorthand)]
-    if valid_fields is None:
-        # Return last (i.e. most complex) valid match
-        match_to_return = matches[-1]
-    else:
-        # return the simplest match which is a valid column name
-        for match in matches:
-            if match['field'] in valid_fields:
-                match_to_return = match
-                break
-        else:  # nobreak
-            raise ValueError('No matching field for shorthand: '
-                             '{0}'.format(matches[0]))
+    match = next(exp.match(shorthand).groupdict() for exp in regexps
+                 if exp.match(shorthand))
 
     # Use short form of the type expression
-    typ = match_to_return.get('type', None)
+    typ = match.get('type', None)
     if typ:
-        match_to_return['type'] = INV_TYPECODE_MAP.get(typ, typ)
-    return match_to_return
+        match['type'] = INV_TYPECODE_MAP.get(typ, typ)
+    return match
 
 
 def construct_shorthand(field=None, aggregate=None, type=None):
