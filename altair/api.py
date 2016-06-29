@@ -299,8 +299,6 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data
-        if self.transform and self.transform.calculate:
-            kwargs['calculated_fields'] = [f.field for f in self.transform.calculate]
         super(Chart, self)._finalize(**kwargs)
 
 
@@ -353,8 +351,6 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data
-        if self.transform and self.transform.calculate:
-            kwargs['calculated_fields'] = [f.field for f in self.transform.calculate]
         super(LayeredChart, self)._finalize(**kwargs)
 
 
@@ -409,6 +405,4 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data
-        if self.transform and self.transform.calculate:
-            kwargs['calculated_fields'] = [f.field for f in self.transform.calculate]
         super(FacetedChart, self)._finalize(**kwargs)

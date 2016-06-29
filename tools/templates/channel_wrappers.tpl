@@ -44,16 +44,9 @@ class {{ object.name }}({{ object.base.name }}):
         """Finalize object: this involves inferring types if necessary"""
         data = kwargs.get('data', None)
 
-        # parse the shorthand, including validation of fields if available
-        if self.shorthand:
-            if isinstance(data, pd.DataFrame):
-                valid_fields = (list(data.columns)
-                                + kwargs.get('calculated_fields', []))
-            else:
-                valid_fields = None
-            dct = parse_shorthand(self.shorthand, valid_fields=valid_fields)
-            for key, val in dct.items():
-                setattr(self, key, val)
+        # parse the shorthand to extract the field, type, and aggregate
+        for key, val in parse_shorthand(self.shorthand).items():
+            setattr(self, key, val)
 
         # infer the type if not already specified
         if not self.type:
