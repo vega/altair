@@ -6,7 +6,6 @@ import pandas as pd
 
 from ...utils import parse_shorthand, infer_vegalite_type
 
-from .._interface import Type
 {% for import_statement in objects|merge_imports -%}
   {{ import_statement }}
 {% endfor %}
