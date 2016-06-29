@@ -85,9 +85,12 @@ class ToCode(Visitor):
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
     def _visit_ChannelWrapper(self, obj, *args, **kwargs):
-        shorthand = construct_shorthand(field=obj.field,
-                                        aggregate=obj.aggregate,
-                                        type=obj.type)
+        if obj.shorthand:
+            shorthand = obj.shorthand
+        else:
+            shorthand = construct_shorthand(field=obj.field,
+                                            aggregate=obj.aggregate,
+                                            type=obj.type)
         code = self.visit_BaseObject(obj)
         if shorthand:
             code.add_args(repr(shorthand))

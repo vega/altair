@@ -20,20 +20,20 @@ def test_parse_shorthand():
     check('blah:(fd ', field='blah:(fd ')
 
     # Fields with type
-    check('foobar:quantitative', type='Q', field='foobar')
-    check('foobar:nominal', type='N', field='foobar')
-    check('foobar:ordinal', type='O', field='foobar')
-    check('foobar:temporal', type='T', field='foobar')
+    check('foobar:quantitative', type='quantitative', field='foobar')
+    check('foobar:nominal', type='nominal', field='foobar')
+    check('foobar:ordinal', type='ordinal', field='foobar')
+    check('foobar:temporal', type='temporal', field='foobar')
 
-    check('foobar:Q', type='Q', field='foobar')
-    check('foobar:N', type='N', field='foobar')
-    check('foobar:O', type='O', field='foobar')
-    check('foobar:T', type='T', field='foobar')
+    check('foobar:Q', type='quantitative', field='foobar')
+    check('foobar:N', type='nominal', field='foobar')
+    check('foobar:O', type='ordinal', field='foobar')
+    check('foobar:T', type='temporal', field='foobar')
 
     # Fields with aggregate and/or type
     check('average(foobar)', field='foobar', aggregate='average')
-    check('min(foobar):temporal', type='T', field='foobar', aggregate='min')
-    check('sum(foobar):Q', type='Q', field='foobar', aggregate='sum')
+    check('min(foobar):temporal', type='temporal', field='foobar', aggregate='min')
+    check('sum(foobar):Q', type='quantitative', field='foobar', aggregate='sum')
 
     # check that invalid arguments are not split-out
     check('invalid(blah)', field='invalid(blah)')
@@ -42,7 +42,7 @@ def test_parse_shorthand():
 
     # check parsing in presence of strange characters
     check('average(a b:(c\nd):Q', aggregate='average',
-          field='a b:(c\nd', type='Q')
+          field='a b:(c\nd', type='quantitative')
 
 
 def test_parse_shorthand_valid_fields():
@@ -53,11 +53,11 @@ def test_parse_shorthand_valid_fields():
     check('average(foo)', ['average(foo)'], field='average(foo)')
     check('average(foo)', ['foo', 'average(foo)'], field='average(foo)')
     check('average(foo):Q', ['foo', 'average(foo)'],
-          field='average(foo)', type='Q')
+          field='average(foo)', type='quantitative')
     check('average(foo):Q', ['foo', 'average(foo)', 'average(foo):Q'],
           field='average(foo):Q')
     check('average(average(foo):Q):Q', ['average(foo):Q'],
-          field='average(foo):Q', aggregate='average', type='Q')
+          field='average(foo):Q', aggregate='average', type='quantitative')
 
 
 def test_parse_shorthand_invalid_fields():
@@ -77,32 +77,32 @@ def test_shorthand_roundtrip():
 
     check(field='foo')
     check(field='foo', aggregate='average')
-    check(field='foo', type='Q')
-    check(field='foo', aggregate='average', type='Q')
+    check(field='foo', type='quantitative')
+    check(field='foo', aggregate='average', type='quantitative')
 
 
 def test_infer_vegalite_type():
     def _check(arr, typ):
         assert infer_vegalite_type(arr) == typ
 
-    _check(np.arange(5, dtype=float), 'Q')
-    _check(np.arange(5, dtype=int), 'Q')
-    _check(np.zeros(5, dtype=bool), 'N')
-    _check(pd.date_range('2012', '2013'), 'T')
-    _check(pd.timedelta_range(365, periods=12), 'T')
+    _check(np.arange(5, dtype=float), 'quantitative')
+    _check(np.arange(5, dtype=int), 'quantitative')
+    _check(np.zeros(5, dtype=bool), 'nominal')
+    _check(pd.date_range('2012', '2013'), 'temporal')
+    _check(pd.timedelta_range(365, periods=12), 'temporal')
 
     nulled = pd.Series(np.random.randint(10, size=10))
     nulled[0] = None
-    _check(nulled, 'Q')
-    _check(['a', 'b', 'c'], 'N')
+    _check(nulled, 'quantitative')
+    _check(['a', 'b', 'c'], 'nominal')
 
     if hasattr(pytest, 'warns'):  # added in pytest 2.8
         with pytest.warns(UserWarning):
-            _check([], 'N')
+            _check([], 'nominal')
     else:
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore")
-            _check([], 'N')
+            _check([], 'nominal')
 
 
 def test_sanitize_dataframe():

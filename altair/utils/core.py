@@ -79,7 +79,7 @@ def parse_shorthand(shorthand, valid_fields=None):
     # Use short form of the type expression
     typ = match_to_return.get('type', None)
     if typ:
-        match_to_return['type'] = TYPECODE_MAP.get(typ, typ)
+        match_to_return['type'] = INV_TYPECODE_MAP.get(typ, typ)
     return match_to_return
 
 
@@ -107,7 +107,7 @@ def construct_shorthand(field=None, aggregate=None, type=None):
 def infer_vegalite_type(data, field=None):
     """
     From an array-like input, infer the correct vega typecode
-    ('O', 'N', 'Q', or 'T')
+    ('ordinal', 'nominal', 'quantitative', or 'temporal')
 
     Parameters
     ----------
@@ -127,18 +127,16 @@ def infer_vegalite_type(data, field=None):
 
     if typ in ['floating', 'mixed-integer-float', 'integer',
                'mixed-integer', 'complex']:
-        typecode = 'quantitative'
+        return 'quantitative'
     elif typ in ['string', 'bytes', 'categorical', 'boolean', 'mixed', 'unicode']:
-        typecode = 'nominal'
+        return 'nominal'
     elif typ in ['datetime', 'datetime64', 'timedelta',
                  'timedelta64', 'date', 'time', 'period']:
-        typecode = 'temporal'
+        return 'temporal'
     else:
         warnings.warn("I don't know how to infer vegalite type from '{0}'.  "
                       "Defaulting to nominal.".format(typ))
-        typecode = 'nominal'
-
-    return TYPECODE_MAP[typecode]
+        return 'nominal'
 
 
 def sanitize_dataframe(df):
