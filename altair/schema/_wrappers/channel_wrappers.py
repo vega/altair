@@ -50,14 +50,13 @@ class PositionChannel(PositionChannelDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        data = kwargs.get('data', None)
-
         # parse the shorthand to extract the field, type, and aggregate
         for key, val in parse_shorthand(self.shorthand).items():
             setattr(self, key, val)
 
         # infer the type if not already specified
-        if not self.type:
+        if self.type is None:
+            data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
@@ -105,14 +104,13 @@ class ChannelWithLegend(ChannelDefWithLegend):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        data = kwargs.get('data', None)
-
         # parse the shorthand to extract the field, type, and aggregate
         for key, val in parse_shorthand(self.shorthand).items():
             setattr(self, key, val)
 
         # infer the type if not already specified
-        if not self.type:
+        if self.type is None:
+            data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
@@ -154,14 +152,13 @@ class Field(FieldDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        data = kwargs.get('data', None)
-
         # parse the shorthand to extract the field, type, and aggregate
         for key, val in parse_shorthand(self.shorthand).items():
             setattr(self, key, val)
 
         # infer the type if not already specified
-        if not self.type:
+        if self.type is None:
+            data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
@@ -205,14 +202,13 @@ class OrderChannel(OrderChannelDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
-        data = kwargs.get('data', None)
-
         # parse the shorthand to extract the field, type, and aggregate
         for key, val in parse_shorthand(self.shorthand).items():
             setattr(self, key, val)
 
         # infer the type if not already specified
-        if not self.type:
+        if self.type is None:
+            data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
