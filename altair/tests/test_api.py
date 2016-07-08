@@ -321,8 +321,9 @@ def test_finalize(sample_code):
     assert obj.to_altair(data='cars') == sample_code
 
     # Confirm that _finalize() changes the state
+    assert obj.encoding.x.type is None
     obj._finalize()
-    assert obj.to_altair(data='cars') != sample_code
+    assert obj.encoding.x.type is not None
 
     # Confirm that finalized object contains correct type information
     D = obj.to_dict(data=False)

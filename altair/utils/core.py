@@ -1,11 +1,11 @@
 """
 Utility routines
 """
+import re
 import warnings
 
 import pandas as pd
 import numpy as np
-import traitlets as T
 
 
 TYPECODE_MAP = {'ordinal': 'O',
@@ -13,68 +13,66 @@ TYPECODE_MAP = {'ordinal': 'O',
                 'quantitative': 'Q',
                 'temporal': 'T'}
 
-INV_TYPECODE_MAP = {v:k for k,v in TYPECODE_MAP.items()}
+INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
 TYPE_ABBR = TYPECODE_MAP.values()
 
 
-def parse_shorthand(sh):
+def parse_shorthand(shorthand):
     """
-    Altair accepts a shorthand expression for aggregation, field, and type.
+    Parse the shorthand expression for aggregation, field, and type.
 
-    Parse strings of the form
+    These are of the form:
 
     - "col_name"
     - "col_name:O"
-    - "avg(col_name)"
-    - "avg(col_name):O"
+    - "average(col_name)"
+    - "average(col_name):O"
 
     Parameters
     ----------
-    sh: str
+    shorthand: str
+        Shorthand string
+
+    Returns
+    -------
+    D : dict
+        Dictionary containing the field, aggregate, and typecode
     """
-    # TODO: use an actual parser for this?
+    if not shorthand:
+        return {}
 
-    # extract type code
-    L = sh.split(':')
-    sh0 = L[0].strip()
-    if len(L) == 1:
-        typ = None
-    elif len(L) == 2:
-        typ = L[1].strip()
-    else:
-        raise ValueError('Multiple colons not valid in data specification:'
-                         '{0}'.format(sh))
+    # Must import this here to avoid circular imports
+    from ..schema import AggregateOp
+    valid_aggregates = AggregateOp().values
+    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
-    # find aggregate
-    if not sh0.endswith(')'):
-        agg, field = None, sh0
-    else:
-        L = sh0[:-1].split('(')
-        if len(L) == 2:
-            agg, field = L
-        else:
-            raise ValueError("Unmatched parentheses")
+    # build regular expressions
+    units = dict(field='(?P<field>.*)',
+                 type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
+                 aggregate='(?P<aggregate>{0})'.format('|'.join(valid_aggregates)))
+    patterns = [r'{field}',
+                r'{field}:{type}',
+                r'{aggregate}\({field}\)',
+                r'{aggregate}\({field}\):{type}']
+    regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
+               for p in patterns[::-1])
 
-    # validate & store type code
-    valid_types = list(TYPECODE_MAP.keys()) + list(TYPECODE_MAP.values())
-    if typ is not None and typ not in valid_types:
-        raise ValueError('Invalid type code: "{0}".\n'
-                         'Valid values are {1}'.format(typ, valid_types))
-    typ = TYPECODE_MAP.get(typ, typ)
+    # find matches depending on valid fields passed
+    match = next(exp.match(shorthand).groupdict() for exp in regexps
+                 if exp.match(shorthand))
 
-    # encode and return the results
-    result = {}
+    # Use short form of the type expression
+    typ = match.get('type', None)
     if typ:
-        result['type'] = typ
-    if agg:
-        result['aggregate'] = agg
-    if field:
-        result['field'] = field
-    return result
+        match['type'] = INV_TYPECODE_MAP.get(typ, typ)
+    return match
 
 
 def construct_shorthand(field=None, aggregate=None, type=None):
+    """Construct a shorthand representation.
+
+    See also: parse_shorthand"""
     if field is None:
         return ''
 
@@ -92,18 +90,18 @@ def construct_shorthand(field=None, aggregate=None, type=None):
     return sh
 
 
-def infer_vegalite_type(data, name=None):
+def infer_vegalite_type(data, field=None):
     """
     From an array-like input, infer the correct vega typecode
-    ('O', 'N', 'Q', or 'T')
+    ('ordinal', 'nominal', 'quantitative', or 'temporal')
 
     Parameters
     ----------
     data: Numpy array or Pandas Series
     field: str column name
     """
-    # See if we can read the type from the name
-    if name is not None:
+    # See if we can read the type from the field
+    if field is not None:
         parsed = parse_shorthand(field)
         if parsed.get('type'):
             return parsed['type']
@@ -115,18 +113,16 @@ def infer_vegalite_type(data, name=None):
 
     if typ in ['floating', 'mixed-integer-float', 'integer',
                'mixed-integer', 'complex']:
-        typecode = 'quantitative'
+        return 'quantitative'
     elif typ in ['string', 'bytes', 'categorical', 'boolean', 'mixed', 'unicode']:
-        typecode = 'nominal'
+        return 'nominal'
     elif typ in ['datetime', 'datetime64', 'timedelta',
                  'timedelta64', 'date', 'time', 'period']:
-        typecode = 'temporal'
+        return 'temporal'
     else:
         warnings.warn("I don't know how to infer vegalite type from '{0}'.  "
                       "Defaulting to nominal.".format(typ))
-        typecode = 'nominal'
-
-    return TYPECODE_MAP[typecode]
+        return 'nominal'
 
 
 def sanitize_dataframe(df):

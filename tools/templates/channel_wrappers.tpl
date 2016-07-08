@@ -5,9 +5,7 @@ import traitlets as T
 import pandas as pd
 
 from ...utils import parse_shorthand, infer_vegalite_type
-from ...utils import INV_TYPECODE_MAP, TYPE_ABBR
 
-from .._interface import Type
 {% for import_statement in objects|merge_imports -%}
   {{ import_statement }}
 {% endfor %}
@@ -31,25 +29,6 @@ class {{ object.name }}({{ object.base.name }}):
     """
     # Traitlets
     shorthand = T.Unicode('')
-
-    # add type abbreviations to the valid values &
-    # use an observer below to expand abbreviations if they come up
-    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
-                   allow_none=True, default_value=None)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-    # Class Attributes
     skip = ['shorthand']
 
     # Class Methods
@@ -62,10 +41,17 @@ class {{ object.name }}({{ object.base.name }}):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
+        # parse the shorthand to extract the field, type, and aggregate
+        for key, val in parse_shorthand(self.shorthand).items():
+            setattr(self, key, val)
+
+        # infer the type if not already specified
         if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
+
+        super({{ object.name }}, self)._finalize(**kwargs)
 
 
 {% endfor %}

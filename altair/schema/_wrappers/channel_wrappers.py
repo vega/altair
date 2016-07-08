@@ -5,9 +5,7 @@ import traitlets as T
 import pandas as pd
 
 from ...utils import parse_shorthand, infer_vegalite_type
-from ...utils import INV_TYPECODE_MAP, TYPE_ABBR
 
-from .._interface import Type
 from .._interface import ChannelDefWithLegend, FieldDef, OrderChannelDef, PositionChannelDef
 
 
@@ -41,25 +39,6 @@ class PositionChannel(PositionChannelDef):
     """
     # Traitlets
     shorthand = T.Unicode('')
-
-    # add type abbreviations to the valid values &
-    # use an observer below to expand abbreviations if they come up
-    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
-                   allow_none=True, default_value=None)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-    # Class Attributes
     skip = ['shorthand']
 
     # Class Methods
@@ -71,10 +50,17 @@ class PositionChannel(PositionChannelDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
+        # parse the shorthand to extract the field, type, and aggregate
+        for key, val in parse_shorthand(self.shorthand).items():
+            setattr(self, key, val)
+
+        # infer the type if not already specified
         if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
+
+        super(PositionChannel, self)._finalize(**kwargs)
 
 
 class ChannelWithLegend(ChannelDefWithLegend):
@@ -107,25 +93,6 @@ class ChannelWithLegend(ChannelDefWithLegend):
     """
     # Traitlets
     shorthand = T.Unicode('')
-
-    # add type abbreviations to the valid values &
-    # use an observer below to expand abbreviations if they come up
-    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
-                   allow_none=True, default_value=None)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-    # Class Attributes
     skip = ['shorthand']
 
     # Class Methods
@@ -137,10 +104,17 @@ class ChannelWithLegend(ChannelDefWithLegend):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
+        # parse the shorthand to extract the field, type, and aggregate
+        for key, val in parse_shorthand(self.shorthand).items():
+            setattr(self, key, val)
+
+        # infer the type if not already specified
         if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
+
+        super(ChannelWithLegend, self)._finalize(**kwargs)
 
 
 class Field(FieldDef):
@@ -167,25 +141,6 @@ class Field(FieldDef):
     """
     # Traitlets
     shorthand = T.Unicode('')
-
-    # add type abbreviations to the valid values &
-    # use an observer below to expand abbreviations if they come up
-    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
-                   allow_none=True, default_value=None)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-    # Class Attributes
     skip = ['shorthand']
 
     # Class Methods
@@ -197,10 +152,17 @@ class Field(FieldDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
+        # parse the shorthand to extract the field, type, and aggregate
+        for key, val in parse_shorthand(self.shorthand).items():
+            setattr(self, key, val)
+
+        # infer the type if not already specified
         if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
+
+        super(Field, self)._finalize(**kwargs)
 
 
 class OrderChannel(OrderChannelDef):
@@ -229,25 +191,6 @@ class OrderChannel(OrderChannelDef):
     """
     # Traitlets
     shorthand = T.Unicode('')
-
-    # add type abbreviations to the valid values &
-    # use an observer below to expand abbreviations if they come up
-    type = T.Union([Type(), T.Enum(['Q', 'N', 'O', 'T'])],
-                   allow_none=True, default_value=None)
-
-    @T.observe('shorthand')
-    def _shorthand_changed(self, change):
-        D = parse_shorthand(change['new'])
-        for key, val in D.items():
-            setattr(self, key, val)
-
-    @T.observe('type')
-    def _type_changed(self, change):
-        new = change['new']
-        if new in TYPE_ABBR:
-            self.type = INV_TYPECODE_MAP[new]
-
-    # Class Attributes
     skip = ['shorthand']
 
     # Class Methods
@@ -259,9 +202,16 @@ class OrderChannel(OrderChannelDef):
 
     def _finalize(self, **kwargs):
         """Finalize object: this involves inferring types if necessary"""
+        # parse the shorthand to extract the field, type, and aggregate
+        for key, val in parse_shorthand(self.shorthand).items():
+            setattr(self, key, val)
+
+        # infer the type if not already specified
         if self.type is None:
             data = kwargs.get('data', None)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
+
+        super(OrderChannel, self)._finalize(**kwargs)
 
 
