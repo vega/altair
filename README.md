@@ -25,11 +25,12 @@ Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake V
 
 * Carefully-designed, declarative Python API based on
   [traitlets](https://github.com/ipython/traitlets).
-* Auto-generated Python API that guarantees visualizations are type-checked and in full
-  conformance with the [Vega-Lite](https://github.com/vega/vega-lite) specification.
+* Auto-generated internal Python API that guarantees visualizations are type-checked and
+  in full conformance with the [Vega-Lite](https://github.com/vega/vega-lite)
+  specification.
 * Auto-generate Altair Python code from a Vega-Lite JSON spec.
 * Display visualizations in the live Jupyter Notebook, on GitHub and
-  [nviewer](http://nbviewer.jupyter.org/).
+  [nbviewer](http://nbviewer.jupyter.org/).
 * Export visualizations to PNG images, stand-alone HTML pages and the online [Vega-Lite
   Editor](https://vega.github.io/vega-editor/?mode=vega-lite).
 * Serialize visualizations as JSON files.
@@ -115,14 +116,14 @@ Altair requires the following dependencies:
 
 For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
 
-* [Jupyter notebook](https://jupyter.readthedocs.io/en/latest/install.html)
+* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
 * [ipyvega](https://github.com/vega/ipyvega)
 
 Assuming you have NumPy, Pandas and the Jupyter Notebook installed, ipyvega and Altair can be installed with the following commands:
 
 ```
 pip install vega
-jupyter nbextension install --py --sys-prefix vega
+jupyter nbextension install --sys-prefix --py vega
 ```
 
 ```
