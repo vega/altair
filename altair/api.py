@@ -301,6 +301,30 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
             kwargs['data'] = self.data
         super(Chart, self)._finalize(**kwargs)
 
+    def __add__(self, other):
+        if isinstance(other, Chart):
+            lc = LayeredChart()
+            lc += self
+            lc += other
+            return lc
+        elif isinstance(other, LayeredChart):
+            other += self
+            return other
+        else:
+            raise TypeError('Can only add Charts/LayeredChart to Chart')
+    
+    def __radd__(self, other):
+        if isinstance(other, Chart):
+            lc = LayeredChart()
+            lc += other
+            lc += self
+            return lc
+        elif isinstance(other, LayeredChart):
+            other += self
+            return other
+        else:
+            raise TypeError('Can only add Chart/LayeredChart to Chart.')
+
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
@@ -353,6 +377,13 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
             kwargs['data'] = self.data
         super(LayeredChart, self)._finalize(**kwargs)
 
+    def __iadd__(self, layer):
+        if self.layers is None:
+            self.layers = [layer]
+        else:
+            self.layers = self.layers + [layer]
+        return self
+    
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
     _data = None
