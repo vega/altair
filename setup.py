@@ -5,6 +5,9 @@ instead emits JSON data structures following the `Vega-Lite`_ specification. For
 convenience, Altair can optionally use `ipyvega`_ to seamlessly display client-side
 renderings in the Jupyter notebook.
 
+Visit our GitHub repository (https://github.com/ellisonbg/altair) for
+installation instructions, examples and documentation.
+
 .. image:: https://raw.githubusercontent.com/ellisonbg/altair/master/images/cars.png
 
 .. _Vega-Lite: https://github.com/vega/vega-lite
@@ -32,6 +35,8 @@ AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu",
 URL                 = 'http://github.com/ellisonbg/altair/'
 DOWNLOAD_URL        = 'http://github.com/ellisonbg/altair/'
 LICENSE             = 'BSD 3-clause'
+INSTALL_REQUIRES    = ['traitlets','ipython','pandas','vega>=0.4.1']
+
 
 import io
 import os
@@ -76,6 +81,7 @@ setup(name=NAME,
       license=LICENSE,
       packages=PACKAGES,
       package_data=PACKAGE_DATA,
+      install_requires=INSTALL_REQUIRES,
       classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
