@@ -19,7 +19,7 @@ specification. For convenience, Altair can optionally use
 [ipyvega](https://github.com/vega/ipyvega) to seamlessly display client-side renderings
 in the Jupyter notebook.
 
-Altair is developed by [Brian Granger](https://github.com/ellisonbg) (ellisonbg@gmail.com) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [Interactive Data Lab](http://idl.cs.washington.edu/) at the University of Washington.
+Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [Interactive Data Lab](http://idl.cs.washington.edu/) at the University of Washington.
 
 ## Features
 
