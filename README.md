@@ -7,8 +7,7 @@ A High-level declarative visualization library for Python.
 Altair provides a Python API for building statistical visualizations in a declarative
 manner. By statistical visualization we mean:
 
-* The data source is a data frame that consists of column of different data types that
-  include quantitative, ordinal, nominal and date/time.
+* The data source is a data frame that consists of column of different data types (quantitative, ordinal, nominal and date/time).
 * The data frame is in a [tidy format](http://vita.had.co.nz/papers/tidy-data.pdf)
   where the rows correspond to samples and the colunms correspond the observed variables.
 * The visual encoding (position, color, size, shape, facetting, etc.) of the different
@@ -20,7 +19,7 @@ specification. For convenience, Altair can optionally use
 [ipyvega](https://github.com/vega/ipyvega) to seamlessly display client-side renderings
 in the Jupyter notebook.
 
-Altair is developed by Brian Granger (@ellisonbg) and Jake Vanderplas (@jakevdp) in close collaboration wiht the [Interactive Data Lab](http://idl.cs.washington.edu/) at the University of Washington.
+Altair is developed by [Brian Granger](https://github.com/ellisonbg) (ellisonbg@gmail.com) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [Interactive Data Lab](http://idl.cs.washington.edu/) at the University of Washington.
 
 ## Features
 
