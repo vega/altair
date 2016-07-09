@@ -307,24 +307,9 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
             lc += self
             lc += other
             return lc
-        elif isinstance(other, LayeredChart):
-            other += self
-            return other
         else:
             raise TypeError('Can only add Charts/LayeredChart to Chart')
     
-    def __radd__(self, other):
-        if isinstance(other, Chart):
-            lc = LayeredChart()
-            lc += other
-            lc += self
-            return lc
-        elif isinstance(other, LayeredChart):
-            other += self
-            return other
-        else:
-            raise TypeError('Can only add Chart/LayeredChart to Chart.')
-
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None

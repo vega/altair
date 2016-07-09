@@ -329,3 +329,27 @@ def test_finalize(sample_code):
     D = obj.to_dict(data=False)
     assert D['encoding']['x']['type'] == 'quantitative'
     assert D['encoding']['y']['type'] == 'nominal'
+
+
+def test_layered_chart_iadd():
+    data = pd.DataFrame({'x':np.random.rand(10), 'y':np.random.rand(10)})
+    l1 = Chart().mark_line().encode(x='x', y='y')
+    l2 = Chart().mark_point().encode(x='x', y='y')
+
+    chart = LayeredChart(data)
+    chart += l1
+    chart += l2
+    chart2 = LayeredChart(data)
+    chart2.set_layers(l1, l2)
+    assert chart.to_dict()==chart2.to_dict()
+
+
+def test_chart_add():
+    data = pd.DataFrame({'x':np.random.rand(10), 'y':np.random.rand(10)})
+    l1 = Chart(data).mark_line().encode(x='x', y='y')
+    l2 = Chart(data).mark_point().encode(x='x', y='y')
+    
+    chart = l1+l2
+    chart2 = LayeredChart()
+    chart2.set_layers(l1, l2)
+    assert chart.to_dict()==chart2.to_dict()
