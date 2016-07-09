@@ -56,7 +56,7 @@ Chart(cars).mark_point().encode(
 ![Altair Visualization](images/cars.png?raw=true)
 
 For more information and examples of Altair's API, see the [Altair
-Documentation](notebooks/Index.ipynb).
+Documentation](notebooks/01-Index.ipynb).
 
 ## Philosophy
 
