@@ -122,12 +122,8 @@ For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, 
 Assuming you have NumPy, Pandas and the Jupyter Notebook installed, ipyvega and Altair can be installed with the following commands:
 
 ```
-pip install vega
-jupyter nbextension install --sys-prefix --py vega
-```
-
-```
 pip install altair
+jupyter nbextension install --sys-prefix --py vega
 ```
 
 *Coming soon: streamlined installation with [conda](http://conda.pydata.org/).*
