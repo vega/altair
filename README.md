@@ -25,16 +25,15 @@ Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake V
 
 * Carefully-designed, declarative Python API based on
   [traitlets](https://github.com/ipython/traitlets).
-* The Altair Python API is auto-generated from the Vega-Lite JSON spec.
-* The generated [Vega-Lite](https://github.com/vega/vega-lite) JSON visualizations are
-  fully validated and type-checked.
-* Auto-generate Altair Python code from a Vega-Lite spec.
-* Visualizations display in the live Jupyter Notebook, on GitHub and
+* Auto-generated Python API that guarantees visualizations are type-checked and in full
+  conformance with the [Vega-Lite](https://github.com/vega/vega-lite) specification.
+* Auto-generate Altair Python code from a Vega-Lite JSON spec.
+* Display visualizations in the live Jupyter Notebook, on GitHub and
   [nviewer](http://nbviewer.jupyter.org/).
 * Export visualizations to PNG images, stand-alone HTML pages and the online [Vega-Lite
   Editor](https://vega.github.io/vega-editor/?mode=vega-lite).
-* Other Python visualization libraries can add support for rendering the Vega-Lite JSON.
-* 40 example datasets included.
+* Serialize visualizations as JSON files.
+* Explore Altair with 40 example datasets.
 
 ## Examples
 
