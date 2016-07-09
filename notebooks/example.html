@@ -22,18 +22,6 @@
 
   <script>
   var vlSpec = {
-    "mark": "bar",
-    "encoding": {
-        "x": {
-            "aggregate": "average",
-            "field": "b",
-            "type": "quantitative"
-        },
-        "y": {
-            "field": "a",
-            "type": "nominal"
-        }
-    },
     "data": {
         "values": [
             {
@@ -73,7 +61,19 @@
                 "b": 7
             }
         ]
-    }
+    },
+    "encoding": {
+        "y": {
+            "field": "a",
+            "type": "nominal"
+        },
+        "x": {
+            "field": "b",
+            "type": "quantitative",
+            "aggregate": "average"
+        }
+    },
+    "mark": "bar"
 }
 
   var embedSpec = {
