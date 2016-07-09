@@ -30,8 +30,8 @@ PACKAGES            = ['altair',
 PACKAGE_DATA        = {'altair': ['schema/*.json',
                                   'examples/json/*.json',
                                   'datasets/*.json']}
-AUTHOR              = "Brian E. Granger / Jake VanderPlas",
-AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu",
+AUTHOR              = "Brian E. Granger / Jake VanderPlas"
+AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu"
 URL                 = 'http://github.com/ellisonbg/altair/'
 DOWNLOAD_URL        = 'http://github.com/ellisonbg/altair/'
 LICENSE             = 'BSD 3-clause'
