@@ -69,6 +69,16 @@ def parse_shorthand(shorthand):
     return match
 
 
+def preparse_shorthand(shorthand):
+    """Allow a Pandas Series to be passed as a field shorthand name."""
+    if isinstance(shorthand, pd.Series):
+        if not shorthand.name:
+            raise ValueError('Series object does not have a name.')
+        return shorthand.name
+    else:
+        return shorthand
+
+
 def construct_shorthand(field=None, aggregate=None, type=None):
     """Construct a shorthand representation.
 
