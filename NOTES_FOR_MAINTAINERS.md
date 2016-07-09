@@ -1,4 +1,5 @@
 # Notes for Maintainers
+
 Here are a few notes on maintaining & updating altair. Mainly, this is a
 collection of notes on the scripts found in the ``tools`` directory, which
 help automate the dependency between Altair and Vega-Lite.
