@@ -1,19 +1,17 @@
 LONG_DESCRIPTION = """
-Altair: High-level declarative visualization library for Python
-===============================================================
-
-High-level declarative visualization library for Python.
-
-This package provides a Python API for building statistical visualizations
-in a declarative manner. This API contains no actual visualization rendering
-code, but instead emits JSON data structures following the
-[Vega-Lite](https://github.com/vega/vega-lite) specification. For
-convenience, Altair can optionally use
-[ipyvega](https://github.com/vega/ipyvega) to seamlessly display client-side
+This package provides a Python API for building statistical visualizations in a
+declarative manner. This API contains no actual visualization rendering code, but
+instead emits JSON data structures following the `Vega-Lite`_ specification. For
+convenience, Altair can optionally use `ipyvega`_ to seamlessly display client-side
 renderings in the Jupyter notebook.
+
+.. image:: https://raw.githubusercontent.com/ellisonbg/altair/master/images/cars.png
+
+.. _Vega-Lite: https://github.com/vega/vega-lite
+.. _ipyvega: https://github.com/vega/ipyvega
 """
 
-DESCRIPTION         = "Altair: Python Visualization with Vega Lite"
+DESCRIPTION         = "Altair: A high-level declarative visualization library for Python."
 NAME                = "altair"
 PACKAGES            = ['altair',
                        'altair.tests',
