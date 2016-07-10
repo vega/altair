@@ -145,10 +145,11 @@ pip install git+https://github.com/ellisonbg/altair
 ## Testing
 
 Altair's test suite uses [py.test](http://pytest.org/latest/).
-To run tests, in the source directory use (you may need to first clone the repository or download the source):
+To run tests, use
 ```
-py.test altair
+py.test --pyargs altair
 ```
+(you can omit the `--pyargs` flag if you are running the tests from a source checkout).
 
 ## Feedback and Contribution
 
