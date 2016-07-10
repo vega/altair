@@ -67,6 +67,42 @@ from altair import tutorial
 tutorial()
 ```
 
+## Installation
+
+Altair requires the following dependencies:
+
+* [pandas](http://pandas.pydata.org/)
+* [traitlets](https://github.com/ipython/traitlets)
+* [IPython](https://github.com/ipython/ipython)
+
+For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
+
+* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
+* [ipyvega](https://github.com/vega/ipyvega)
+
+Assuming you have Pandas and IPython/Jupyter installed, ipyvega and Altair can be installed with the following commands:
+
+```
+pip install altair
+jupyter nbextension install --sys-prefix --py vega
+```
+
+*Coming soon: streamlined installation with [conda](http://conda.pydata.org/).*
+
+## Development install
+
+If you have cloned the repository, run the following command from the root of the repository:
+
+```
+pip install -e .
+```
+
+If you do not wish to clone the repository, you can install using:
+
+```
+pip install git+https://github.com/ellisonbg/altair
+```
+
 ## Philosophy
 
 There are currently many excellent plotting libraries in Python. The main ones are:
@@ -115,46 +151,11 @@ This approach enables users to perform exploratory visualizations with a much si
 
 We realize that a declarative API will necessarily be limited compared to the full programatic APIs of Matplotlib, Bokeh, etc. That is a deliberate design choice we feel is needed to simplify the user experience of exploratory visualization.
 
-## Installation
-
-Altair requires the following dependencies:
-
-* [numpy](http://www.numpy.org/)
-* [pandas](http://pandas.pydata.org/)
-* [py.test](http://pytest.org/latest)
-
-For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
-
-* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
-* [ipyvega](https://github.com/vega/ipyvega)
-
-Assuming you have NumPy, Pandas and the Jupyter Notebook installed, ipyvega and Altair can be installed with the following commands:
-
-```
-pip install altair
-jupyter nbextension install --sys-prefix --py vega
-```
-
-*Coming soon: streamlined installation with [conda](http://conda.pydata.org/).*
-
-## Development install
-
-If you have cloned the repository, run the following command from the root of the repository:
-
-```
-pip install -e .
-```
-
-If you do not wish to clone the repository, you can install using:
-
-```
-pip install git+https://github.com/ellisonbg/altair
-```
-
 ## Testing
 
-Altair's test suite uses [py.test](http://pytest.org/latest/).
-To run tests, use
+To run the test suite you must have [py.test](http://pytest.org/latest/) installed.
+To run the tests, use
+
 ```
 py.test --pyargs altair
 ```
