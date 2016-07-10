@@ -58,6 +58,14 @@ Chart(cars).mark_point().encode(
 For more information and examples of Altair's API, see the [Altair
 Documentation](notebooks/01-Index.ipynb).
 
+Or you can run the documentation yourself as Jupyter Notebook. To immediately download
+notebooks with the Altair Documentation, run the following code from a Jupyter Notebook:
+
+```python
+from altair import tutorial
+tutorial()
+```
+
 ## Philosophy
 
 There are currently many excellent plotting libraries in Python. The main ones are:
