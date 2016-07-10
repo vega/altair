@@ -61,18 +61,7 @@ display client-side renderings seamlessly in the Jupyter notebook.
 
 ## Installation
 
-Altair requires the following dependencies:
-
-* [pandas](http://pandas.pydata.org/)
-* [traitlets](https://github.com/ipython/traitlets)
-* [IPython](https://github.com/ipython/ipython)
-
-For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
-
-* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
-* [ipyvega](https://github.com/vega/ipyvega)
-
-Assuming you have Pandas and IPython/Jupyter installed, ipyvega and Altair can be installed with the following commands:
+Altair can be installed with the following commands:
 
 ```
 pip install altair
@@ -158,6 +147,17 @@ visualization.
 ----
 
 ## Development install
+
+Altair requires the following dependencies:
+
+* [pandas](http://pandas.pydata.org/)
+* [traitlets](https://github.com/ipython/traitlets)
+* [IPython](https://github.com/ipython/ipython)
+
+For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
+
+* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
+* [ipyvega](https://github.com/vega/ipyvega)
 
 If you have cloned the repository, run the following command from the root of the repository:
 
