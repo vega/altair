@@ -7,14 +7,12 @@
 Altair is a high-level declarative visualization library for Python.
 
 With Altair, you can spend more time understanding your data and its meaning.
-Altair brings you a simpler, friendly, and consistent API to use the excellent
-Python plotting libraries and their renderers. Altair's elegant simplicity
-lets you perform exploratory data visualizations using a declarative API
-initially, pick an appropriate renderer for each usage case, and still
-leverage the renderer's full capabilities for more advanced plot
-customization.
+Altair brings you a simpler, friendly, and consistent API to use the native
+Vega-Lite renderer. Altair's elegant simplicity lets you perform exploratory
+data visualizations using a declarative API initially and later leverage the
+renderer's full capabilities for more advanced plot customization.
 
-The usefulness of Altair to quickly visualize and display a dataset with the native Vega-Lite renderer:
+Here's an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer:
 
 ```python
 from altair import Chart, load_dataset
@@ -61,13 +59,35 @@ display client-side renderings seamlessly in the Jupyter notebook.
 * Serialize visualizations as JSON files.
 * Explore Altair with 40 example datasets.
 
+## Installation
+
+Altair requires the following dependencies:
+
+* [pandas](http://pandas.pydata.org/)
+* [traitlets](https://github.com/ipython/traitlets)
+* [IPython](https://github.com/ipython/ipython)
+
+For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
+
+* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
+* [ipyvega](https://github.com/vega/ipyvega)
+
+Assuming you have Pandas and IPython/Jupyter installed, ipyvega and Altair can be installed with the following commands:
+
+```
+pip install altair
+jupyter nbextension install --sys-prefix --py vega
+```
+
+*Coming soon: streamlined installation with [conda](http://conda.pydata.org/).*
+
 ## Examples and tutorial
+
 For more information and examples of Altair's API, see the [Altair
 Documentation](notebooks/01-Index.ipynb).
 
-Alternatively, you can explore the documentation yourself as runnable Jupyter Notebooks.
-To immediately download the Altair Documentation as notebooks, run the following code
-from a Jupyter Notebook:
+To immediately download the Altair Documentation as runnable Jupyter
+notebooks, run the following code from a Jupyter Notebook:
 
 ```python
 from altair import tutorial
@@ -137,39 +157,6 @@ visualization.
 
 ----
 
-## Installation
-
-Altair requires the following dependencies:
-
-* [pandas](http://pandas.pydata.org/)
-* [traitlets](https://github.com/ipython/traitlets)
-* [IPython](https://github.com/ipython/ipython)
-
-For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
-
-* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
-* [ipyvega](https://github.com/vega/ipyvega)
-
-Assuming you have Pandas and IPython/Jupyter installed, ipyvega and Altair can be installed with the following commands:
-
-```
-pip install altair
-jupyter nbextension install --sys-prefix --py vega
-```
-
-*Coming soon: streamlined installation with [conda](http://conda.pydata.org/).*
-
-## Feedback and Contribution
-
-We welcome any input, feedback, bug reports, and contributions via [Altair's
-GitHub Repository](http://github.com/ellisonbg/altair/). In particular, we
-welcome companion efforts from other visualization libraries to render the Vega-Lite
-specifications output by Altair. We see this portion of the effort as much bigger
-than Altair itself: the Vega and Vega-Lite specifications are perhaps the best
-existing candidates for a principled *lingua franca* of data visualization.
-
-----
-
 ## Development install
 
 If you have cloned the repository, run the following command from the root of the repository:
@@ -194,7 +181,14 @@ py.test --pyargs altair
 ```
 (you can omit the `--pyargs` flag if you are running the tests from a source checkout).
 
-----
+## Feedback and Contribution
+
+We welcome any input, feedback, bug reports, and contributions via [Altair's
+GitHub Repository](http://github.com/ellisonbg/altair/). In particular, we
+welcome companion efforts from other visualization libraries to render the Vega-Lite
+specifications output by Altair. We see this portion of the effort as much bigger
+than Altair itself: the Vega and Vega-Lite specifications are perhaps the best
+existing candidates for a principled *lingua franca* of data visualization.
 
 ## Whence Altair?
 
