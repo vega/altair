@@ -53,3 +53,6 @@ from .datasets import (
     list_datasets,
     load_dataset
 )
+
+from .tutorial import tutorial
+
