@@ -115,7 +115,7 @@ class BaseObject(T.HasTraits):
 
     def __dir__(self):
         """Customize tab completed attributes."""
-        return list(self.traits())
+        return list(self.traits())+['to_dict', 'from_dict']
 
     @classmethod
     def from_dict(cls, dct):
