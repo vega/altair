@@ -58,8 +58,9 @@ Chart(cars).mark_point().encode(
 For more information and examples of Altair's API, see the [Altair
 Documentation](notebooks/01-Index.ipynb).
 
-Or you can run the documentation yourself as Jupyter Notebook. To immediately download
-notebooks with the Altair Documentation, run the following code from a Jupyter Notebook:
+Alternatively, you can explore the documentation yourself as runnable Jupyter Notebooks.
+To immediately download the Altair Documentation as notebooks, run the following code
+from a Jupyter Notebook:
 
 ```python
 from altair import tutorial
