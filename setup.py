@@ -27,9 +27,9 @@ PACKAGES            = ['altair',
                        'altair.schema._wrappers',
                        'altair.schema._interface',
                        'altair.schema._interface.tests']
-PACKAGE_DATA        = {'altair': ['notebooks/*.json',
+PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
                                   'notebooks/*.html',
-                                  'notebooks/auto_examples/*.json',
+                                  'notebooks/auto_examples/*.ipynb',
                                   'schema/*.json',
                                   'examples/json/*.json',
                                   'datasets/*.json']}

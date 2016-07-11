@@ -1,4 +1,3 @@
 include *.md
 include LICENSE
 recursive-include altair *.py *.json *.ipynb *.html
-
