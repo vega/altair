@@ -27,7 +27,10 @@ PACKAGES            = ['altair',
                        'altair.schema._wrappers',
                        'altair.schema._interface',
                        'altair.schema._interface.tests']
-PACKAGE_DATA        = {'altair': ['schema/*.json',
+PACKAGE_DATA        = {'altair': ['notebooks/*.json',
+                                  'notebooks/*.html',
+                                  'notebooks/auto_examples/*.json',
+                                  'schema/*.json',
                                   'examples/json/*.json',
                                   'datasets/*.json']}
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
