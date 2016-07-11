@@ -2,17 +2,16 @@
 
 [![build status](http://img.shields.io/travis/ellisonbg/altair/master.svg?style=flat)](https://travis-ci.org/ellisonbg/altair)
 
-*Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [Interactive Data Lab](http://idl.cs.washington.edu/) at the University of Washington.*
+*Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [UW Interactive Data Lab](http://idl.cs.washington.edu/).*
 
-Altair is a high-level declarative visualization library for Python.
+Altair is a declarative statistical visualization library for Python.
 
-With Altair, you can spend more time understanding your data and its meaning.
-Altair brings you a simpler, friendly, and consistent API to use the native
-Vega-Lite renderer. Altair's elegant simplicity lets you perform exploratory
-data visualizations using a declarative API initially and later leverage the
-renderer's full capabilities for more advanced plot customization.
+With Altair, you can spend more time understanding your data and its meaning. Altair's
+API is simple, friendly and consistent and built on top of the powerful
+[Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
+simplicity produces beautiful and effective visualizations with a minimal amount of code.
 
-Here's an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer:
+Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the Jupyter Notebook:
 
 ```python
 from altair import Chart, load_dataset
@@ -29,14 +28,15 @@ Chart(cars).mark_point().encode(
 ![Altair Visualization](images/cars.png?raw=true)
 
 ## A Python API for statistical visualizations
+
 Altair provides a Python API for building statistical visualizations in a declarative
 manner. By statistical visualization we mean:
 
-* The **data source** is a data frame that consists of a column of different data types (quantitative, ordinal, nominal and date/time).
-* The **data frame** is in a [tidy format](http://vita.had.co.nz/papers/tidy-data.pdf)
+* The **data source** is a `DataFrame` that consists of columns of different data types (quantitative, ordinal, nominal and date/time).
+* The `DataFrame` is in a [tidy format](http://vita.had.co.nz/papers/tidy-data.pdf)
   where the rows correspond to samples and the columns correspond the observed variables.
-* The **visual encoding** (position, color, size, shape, faceting, etc.) of the different
-  columns is intimately related to the 'groupby' operation of Pandas and SQL.
+* The data is mapped to the **visual properties** (position, color, size, shape,
+  faceting, etc.) using the group-by operation of Pandas and SQL.
 
 The Altair API contains no actual visualization rendering code but instead
 emits JSON data structures following the
@@ -54,10 +54,10 @@ display client-side renderings seamlessly in the Jupyter notebook.
 * Auto-generate Altair Python code from a Vega-Lite JSON spec.
 * Display visualizations in the live Jupyter Notebook, on GitHub and
   [nbviewer](http://nbviewer.jupyter.org/).
-* Export visualizations to PNG images, stand-alone HTML pages and the online [Vega-Lite
+* Export visualizations to PNG images, stand-alone HTML pages and the [Online Vega-Lite
   Editor](https://vega.github.io/vega-editor/?mode=vega-lite).
 * Serialize visualizations as JSON files.
-* Explore Altair with 40 example datasets.
+* Explore Altair with 40 example datasets and over 70 examples.
 
 ## Installation
 
@@ -68,7 +68,11 @@ pip install altair
 jupyter nbextension install --sys-prefix --py vega
 ```
 
-*Coming soon: streamlined installation with [conda](http://conda.pydata.org/).*
+Or using conda:
+
+```
+conda install altair
+```
 
 ## Examples and tutorial
 
@@ -99,13 +103,13 @@ Many excellent plotting libraries exist in Python, including the main ones:
 Each library does a particular set of things well.
 
 ### User challenges
-However, such a
-proliferation of options creates great difficulty for users as they have to
-wade through all of these APIs to find which of them is the best for the task
-at hand. None of these libraries are optimized for high-level statistical
-visualization, so users have to assemble their own using a mishmash of APIs.
-For individuals just learning data science, this forces them to focus on
-learning APIs rather than exploring their data.
+
+However, such a proliferation of options creates great difficulty for users
+as they have to wade through all of these APIs to find which of them is the
+best for the task at hand. None of these libraries are optimized for
+high-level statistical visualization, so users have to assemble their own
+using a mishmash of APIs. For individuals just learning data science, this
+forces them to focus on learning APIs rather than exploring their data.
 
 Another challenge is current plotting APIs require the user to write code,
 even for incidental details of a visualization. This results in unfortunate
@@ -113,18 +117,18 @@ and unnecessary cognitive burden as the visualization type (histogram,
 scatterplot, etc.) can often be inferred using basic information such as the
 columns of interest and the data types of those columns.
 
-For example, if you
-are interested in a visualization of two numerical columns, a scatterplot is
-almost certainly a good starting point. If you add a categorical column to
-that, you probably want to encode that column using colors or facets. If
-inferring the visualization proves difficult at times, a simple user interface
-can construct a visualization without any coding.
+For example, if you are interested in a visualization of two numerical
+columns, a scatterplot is almost certainly a good starting point. If you add
+a categorical column to that, you probably want to encode that column using
+colors or facets. If inferring the visualization proves difficult at times, a
+simple user interface can construct a visualization without any coding.
 [Tableau](http://www.tableau.com/) and the [Interactive Data
 Lab's](http://idl.cs.washington.edu/)
 [Polestar](https://github.com/vega/polestar) and
 [Voyager](https://github.com/vega/voyager) are excellent examples of such UIs.
 
 ### Design approach and solution
+
 We believe that these challenges can be addressed without the creation of yet
 another visualization library that has a programmatic API and built-in
 rendering. Altair's approach to building visualizations uses a layered design
@@ -143,8 +147,6 @@ We realize that a declarative API will necessarily be limited compared to the
 full programmatic APIs of Matplotlib, Bokeh, etc. That is a deliberate design
 choice we feel is needed to simplify the user experience of exploratory
 visualization.
-
-----
 
 ## Development install
 
@@ -185,10 +187,11 @@ py.test --pyargs altair
 
 We welcome any input, feedback, bug reports, and contributions via [Altair's
 GitHub Repository](http://github.com/ellisonbg/altair/). In particular, we
-welcome companion efforts from other visualization libraries to render the Vega-Lite
-specifications output by Altair. We see this portion of the effort as much bigger
-than Altair itself: the Vega and Vega-Lite specifications are perhaps the best
-existing candidates for a principled *lingua franca* of data visualization.
+welcome companion efforts from other visualization libraries to render the
+Vega-Lite specifications output by Altair. We see this portion of the effort
+as much bigger than Altair itself: the Vega and Vega-Lite specifications are
+perhaps the best existing candidates for a principled *lingua franca* of data
+visualization.
 
 ## Whence Altair?
 

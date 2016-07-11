@@ -14,7 +14,7 @@ installation instructions, examples and documentation.
 .. _ipyvega: https://github.com/vega/ipyvega
 """
 
-DESCRIPTION         = "Altair: A high-level declarative visualization library for Python."
+DESCRIPTION         = "Altair: A declarative statistical visualization library for Python."
 NAME                = "altair"
 PACKAGES            = ['altair',
                        'altair.tests',
