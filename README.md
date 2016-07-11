@@ -77,7 +77,7 @@ conda install altair
 ## Examples and tutorial
 
 For more information and examples of Altair's API, see the [Altair
-Documentation](notebooks/01-Index.ipynb).
+Documentation](altair/notebooks/01-Index.ipynb).
 
 To immediately download the Altair Documentation as runnable Jupyter
 notebooks, run the following code from a Jupyter Notebook:
