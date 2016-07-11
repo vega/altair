@@ -104,7 +104,7 @@ def write_index(notebook_directory, index_dict, kernel='python3'):
 
 def write_all_examples(execute=True):
     notebook_directory = os.path.join(os.path.dirname(__file__),
-                                      '..', 'notebooks', 'auto_examples')
+                                      '..', 'altair', 'notebooks', 'auto_examples')
     if not os.path.exists(notebook_directory):
         os.makedirs(notebook_directory)
 
