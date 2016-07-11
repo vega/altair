@@ -62,17 +62,18 @@ display client-side renderings seamlessly in the Jupyter notebook.
 
 ## Installation
 
-Altair can be installed with the following commands:
+Assuming you have the Jupyter Notebook installed, Altair can be installed with the
+following commands:
 
 ```
 pip install altair
 jupyter nbextension install --sys-prefix --py vega
 ```
 
-Or using conda:
+Or using conda (conda builds may take a few hours to go live after a release):
 
 ```
-conda install altair
+conda install altair --channel conda-forge
 ```
 
 ## Examples and tutorial
