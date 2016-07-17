@@ -1,4 +1,7 @@
-all: sync-schema sync-datasets sync-examples generate-schema generate-examples test
+all: install
+
+install:
+	python setup.py install
 
 test :
 	py.test altair --doctest-modules
