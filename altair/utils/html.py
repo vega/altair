@@ -1,8 +1,8 @@
 import json
 
 
-def to_html(json_dict, template=None, title=None, **kwargs):
-    """Embed a Vega-Lite JSON into an HTML document
+def to_html(json_dict, template=None, title=None, local_file=True, **kwargs):
+    """Embed a Vega-Lite JSON into an HTML document.
 
     Parameters
     ----------
@@ -15,6 +15,10 @@ def to_html(json_dict, template=None, title=None, **kwargs):
         By default, uses DEFAULT_TEMPLATE.
     title: string
         The title to use in the document. Default is "Vega-Lite Chart"
+    local_file: bool
+        A boolean indicating if a local HTML document is being viewed (and
+        no web server being run). If True (default), the required CDNs are
+        loaded over HTTP.
 
     Returns
     -------
@@ -25,8 +29,9 @@ def to_html(json_dict, template=None, title=None, **kwargs):
         template = DEFAULT_TEMPLATE
     if title is None:
         title = "Vega-Lite Chart"
+    cdn_load = "http://" if local_file else "//"
     spec = json.dumps(json_dict, indent=4)
-    return template.format(spec=spec, title=title, **kwargs)
+    return template.format(spec=spec, title=title, cdn_load=cdn_load, **kwargs)
 
 
 DEFAULT_TEMPLATE = """
@@ -35,10 +40,10 @@ DEFAULT_TEMPLATE = """
   <title>{title}</title>
   <meta charset="utf-8">
 
-  <script src="//d3js.org/d3.v3.min.js"></script>
-  <script src="//vega.github.io/vega/vega.js"></script>
-  <script src="//vega.github.io/vega-lite/vega-lite.js"></script>
-  <script src="//vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+  <script src="{cdn_load}d3js.org/d3.v3.min.js"></script>
+  <script src="{cdn_load}vega.github.io/vega/vega.js"></script>
+  <script src="{cdn_load}vega.github.io/vega-lite/vega-lite.js"></script>
+  <script src="{cdn_load}vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
 
   <style media="screen">
     /* Add space between vega-embed links  */
