@@ -2,7 +2,7 @@ import json
 
 
 def to_html(json_dict, template=None, title=None, **kwargs):
-    """Embed a Vega-Lite JSON into an HTML document
+    """Embed a Vega-Lite JSON into an HTML document.
 
     Parameters
     ----------
@@ -35,10 +35,10 @@ DEFAULT_TEMPLATE = """
   <title>{title}</title>
   <meta charset="utf-8">
 
-  <script src="//d3js.org/d3.v3.min.js"></script>
-  <script src="//vega.github.io/vega/vega.js"></script>
-  <script src="//vega.github.io/vega-lite/vega-lite.js"></script>
-  <script src="//vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://vega.github.io/vega/vega.js"></script>
+  <script src="https://vega.github.io/vega-lite/vega-lite.js"></script>
+  <script src="https://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
 
   <style media="screen">
     /* Add space between vega-embed links  */
