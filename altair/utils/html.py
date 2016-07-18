@@ -26,7 +26,7 @@ def to_html(json_dict, template=None, title=None, **kwargs):
     if title is None:
         title = "Vega-Lite Chart"
     spec = json.dumps(json_dict, indent=4)
-    return template.format(spec=spec, title=title, cdn_load=cdn_load, **kwargs)
+    return template.format(spec=spec, title=title, **kwargs)
 
 
 DEFAULT_TEMPLATE = """
