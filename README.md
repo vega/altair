@@ -2,8 +2,9 @@
 
 [![build status](http://img.shields.io/travis/ellisonbg/altair/master.svg?style=flat)](https://travis-ci.org/ellisonbg/altair)
 
-Altair is a declarative statistical visualization library for Python. [Altair
-Documentation](altair/notebooks/01-Index.ipynb)
+Altair is a declarative statistical visualization library for Python.
+
+**[Documentation](altair/notebooks/01-Index.ipynb)**
 
 *Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [UW Interactive Data Lab](http://idl.cs.washington.edu/).*
 
