@@ -82,8 +82,6 @@ def use_signature(Obj):
 # Top-level Objects
 #*************************************************************************
 class TopLevelMixin(object):
-    def __dir__(self):
-        return public_funcs(self)
     def to_html(self, template=None, title=None, **kwargs):
         """Emit a stand-alone HTML document containing this chart.
 
@@ -224,7 +222,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         self.data = data
 
     def __dir__(self):
-        return public_funcs(self)
+        return all_funcs(self, ignore_class=T.HasTraits())
 
     @use_signature(MarkConfig)
     def mark_area(self, *args, **kwargs):
@@ -330,7 +328,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         self.data = data
 
     def __dir__(self):
-        return public_funcs(self)
+        return all_funcs(self, ignore_class=T.HasTraits())
 
     def set_layers(self, *layers):
         self.layers = list(layers)
@@ -380,7 +378,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         self.data = data
 
     def __dir__(self):
-        return public_funcs(self)
+        return all_funcs(self, ignore_class=T.HasTraits())
 
     @use_signature(Facet)
     def set_facet(self, *args, **kwargs):
@@ -394,6 +392,6 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         super(FacetedChart, self)._finalize(**kwargs)
 
 
-def public_funcs(self):
+def all_funcs(self, ignore_class=None):
     # avoid recursion when calling from within class with type(self)
-    return [f for f in dir(type(self)) if f[0] != '_']
+    return [f for f in dir(type(self)) if f not in dir(type(ignore_class))]
