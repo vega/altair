@@ -103,7 +103,7 @@ class TopLevelMixin(object):
             A string of HTML representing the chart
         """
         from .utils.html import to_html
-        return to_html(self.to_dict(), template=template, title=title)
+        return to_html(self.to_dict(), template=template, title=title, **kwargs)
 
     def _to_code(self, data=None):
         """Emit the CodeGen object used to export this chart to Python code."""
