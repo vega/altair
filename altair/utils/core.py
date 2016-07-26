@@ -142,6 +142,12 @@ def sanitize_dataframe(df):
     if isinstance(df.columns, pd.core.index.MultiIndex):
         raise ValueError('Hierarchical indices not supported')
 
+    def to_list_if_array(val):
+        if isinstance(val, np.ndarray):
+            return val.tolist()
+        else:
+            return val
+
     for col_name, dtype in df.dtypes.iteritems():
         if str(dtype) == 'category':
             # XXXX: work around bug in to_json for categorical types
@@ -158,4 +164,9 @@ def sanitize_dataframe(df):
             # Convert datetimes to strings
             # astype(str) will choose the appropriate resolution
             df[col_name] = df[col_name].astype(str).replace('NaT', '')
+        elif dtype == object:
+            # Convert numpy arrays saved as objects to lists
+            # Arrays are not JSON serializable
+            col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+            df[col_name] = col.where(col.notnull(), None)
     return df

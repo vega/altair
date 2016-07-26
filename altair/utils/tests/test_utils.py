@@ -85,12 +85,14 @@ def test_sanitize_dataframe():
                        'f': np.arange(5, dtype=float),
                        'i': np.arange(5, dtype=int),
                        'd': pd.date_range('2012-01-01', periods=5, freq='H'),
-                       'c': pd.Series(list('ababc'), dtype='category')})
+                       'c': pd.Series(list('ababc'), dtype='category'),
+                       'o': pd.Series([np.array(i) for i in range(5)])})
 
     # add some nulls
     df.ix[0, 's'] = None
     df.ix[0, 'f'] = np.nan
     df.ix[0, 'd'] = pd.NaT
+    df.ix[0, 'o'] = np.array(np.nan)
 
     # JSON serialize. This will fail on non-sanitized dataframes
     df_clean = sanitize_dataframe(df)
@@ -108,4 +110,6 @@ def test_sanitize_dataframe():
         else:
             df2[col] = df2[col].astype(df[col].dtype)
 
+    # pandas doesn't properly recognize np.array(np.nan), so change it here
+    df.ix[0, 'o'] = np.nan
     assert df.equals(df2)
