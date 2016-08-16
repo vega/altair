@@ -48,6 +48,13 @@ TYPE_MAP = {'oneOf': 'Union',
             "object": "Any",
             }
 
+# some traits have attributes: this mapping translates them from
+# vega-lite schema language to tratlets language
+ATTR_MAP = {'minimum': 'min',
+            'maximum': 'max',
+            'minItems': 'minlen',
+            'maxItems': 'maxlen'}
+
 # Map class names to their bases
 BASE_MAP = defaultdict(lambda: 'BaseObject')
 BASE_MAP['ExtendedUnitSpec'] = 'UnitSpec'
@@ -146,10 +153,10 @@ class SchemaProperty(object):
         """
         kwds = list(kwds)
         trait = self.trait_name
-        if 'minimum' in self.schema:
-            kwds.append('min={0}'.format(self.schema['minimum']))
-        if 'maximum' in self.schema:
-            kwds.append('max={0}'.format(self.schema['maximum']))
+
+        kwds += ['{0}={1}'.format(ATTR_MAP[key], self.schema[key])
+                 for key in sorted(ATTR_MAP.keys() & self.schema.keys())]
+
         if self.description:
             kwds.append('help="""{0}"""'.format(self.short_description))
 
