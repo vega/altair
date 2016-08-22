@@ -66,7 +66,7 @@ Altair can be installed with the following commands:
 
 ```
 pip install altair
-pip install --upgrade notebook  # need jupyter_core >= 4.2 for sys-prefix below
+pip install --upgrade notebook  # need jupyter_client >= 4.2 for sys-prefix below
 jupyter nbextension install --sys-prefix --py vega
 ```
 
