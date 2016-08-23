@@ -196,6 +196,10 @@ as much bigger than Altair itself: the Vega and Vega-Lite specifications are
 perhaps the best existing candidates for a principled *lingua franca* of data
 visualization.
 
+To contribute additional examples to the documentation please add or
+update notebooks in `altair/notebooks/*.ipynb` and open a pull request.
+Be sure to add links to `01-Index.ipynb` if needed. Thanks!
+
 ## Whence Altair?
 
 Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the constellation Aquila, and along with Deneb and Vega forms the northern-hemisphere asterism known as the [Summer Triangle](https://en.wikipedia.org/wiki/Summer_Triangle).
