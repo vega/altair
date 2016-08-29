@@ -222,19 +222,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         self.data = data
 
     def __dir__(self):
-        base = super(Chart, self).__dir__()
-        methods = [
-            'to_altair', 'display',
-            'configure', 'configure_axis', 'configure_cell',
-            'configure_legend', 'configure_mark', 'configure_scale',
-            'configure_facet_axis', 'configure_facet_cell',
-            'configure_facet_grid', 'configure_facet_scale',
-            'transform_data',
-            'mark_area', 'mark_bar', 'mark_line', 'mark_point', 'mark_rule',
-            'mark_text', 'mark_tick', 'mark_circle', 'mark_square',
-            'encode',
-        ]
-        return base+methods
+        return all_funcs(self, ignore_class=T.HasTraits())
 
     @use_signature(MarkConfig)
     def mark_area(self, *args, **kwargs):
@@ -340,17 +328,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         self.data = data
 
     def __dir__(self):
-        base = super(Chart, self).__dir__()
-        methods = [
-            'to_dict', 'from_dict', 'to_altair', 'display',
-            'configure', 'configure_axis', 'configure_cell',
-            'configure_legend', 'configure_mark', 'configure_scale',
-            'configure_facet_axis', 'configure_facet_cell',
-            'configure_facet_grid', 'configure_facet_scale',
-            'transform_data',
-            'set_layers',
-        ]
-        return base+methods
+        return all_funcs(self, ignore_class=T.HasTraits())
 
     def set_layers(self, *layers):
         self.layers = list(layers)
@@ -400,17 +378,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         self.data = data
 
     def __dir__(self):
-        base = super(Chart, self).__dir__()
-        methods = [
-            'to_dict', 'from_dict', 'to_altair', 'display',
-            'configure', 'configure_axis', 'configure_cell',
-            'configure_legend', 'configure_mark', 'configure_scale',
-            'configure_facet_axis', 'configure_facet_cell',
-            'configure_facet_grid', 'configure_facet_scale',
-            'transform_data',
-            'set_facet',
-        ]
-        return base + methods
+        return all_funcs(self, ignore_class=T.HasTraits())
 
     @use_signature(Facet)
     def set_facet(self, *args, **kwargs):
@@ -422,3 +390,8 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         if self.data is not None:
             kwargs['data'] = self.data
         super(FacetedChart, self)._finalize(**kwargs)
+
+
+def all_funcs(self, ignore_class=None):
+    # avoid recursion when calling from within class with type(self)
+    return [f for f in dir(type(self)) if f not in dir(type(ignore_class))]
