@@ -3,6 +3,8 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
+from itertools import chain
+
 import traitlets as T
 import pandas as pd
 
@@ -114,6 +116,35 @@ class TopLevelMixin(object):
     def to_altair(self, data=None):
         """Emit the Python code as a string required to created this Chart."""
         return str(self._to_code(data=data))
+
+    def _cleanup_data(self):
+        """Remove unused data columns in-place.
+
+        This method must be called *after* self._finalize()
+        """
+        # first we clean-up data for all subcharts
+        colnames = list(chain(*(subchart._cleanup_data()
+                                for subchart in self._subcharts())))
+
+        # add column names from this object
+        colnames.extend(self._used_columns())
+
+        # if *this* chart has data, only keep columns that are needed
+        if self._data is not None:
+            to_keep = [col for col in self._data.columns if col in colnames]
+            self._data = self._data[to_keep]
+
+        # pass all colnames upstream
+        # TODO: does this have to be done if _data is defined here?
+        return colnames
+
+    def _used_columns(self):
+        """return list of used column names for this chart"""
+        return []
+
+    def _subcharts(self):
+        """return references to sub-charts in this chart"""
+        return []
 
     # transform method
     @use_signature(schema.Transform)
@@ -301,6 +332,13 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
             kwargs['data'] = self.data
         super(Chart, self)._finalize(**kwargs)
 
+    def _used_columns(self):
+        if self.encoding is None:
+            return []
+        fields = (getattr(getattr(self.encoding, channel), 'field', '')
+                  for channel in self.encoding.channel_names)
+        return [field for field in fields if field]
+
     def __add__(self, other):
         if isinstance(other, Chart):
             lc = LayeredChart()
@@ -309,7 +347,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
             return lc
         else:
             raise TypeError('Can only add Charts/LayeredChart to Chart')
-    
+
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
@@ -362,13 +400,16 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
             kwargs['data'] = self.data
         super(LayeredChart, self)._finalize(**kwargs)
 
+    def _subcharts(self):
+        return self.layers
+
     def __iadd__(self, layer):
         if self.layers is None:
             self.layers = [layer]
         else:
             self.layers = self.layers + [layer]
         return self
-    
+
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
     _data = None
@@ -422,3 +463,13 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         if self.data is not None:
             kwargs['data'] = self.data
         super(FacetedChart, self)._finalize(**kwargs)
+
+    def _subcharts(self):
+        return [self.facet]
+
+    def _used_columns(self):
+        if self.channel_names is None:
+            return []
+        fields = (getattr(getattr(self.facet, channel), 'field', '')
+                  for channel in self.facet.channel_names)
+        return [field for field in fields if field]
