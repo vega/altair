@@ -18,7 +18,7 @@ VEGALITE_TAG = 'v1.2.0'
 VEGALITE_PATH = abspath('repos', 'vega-lite')
 VEGALITE_URL = 'https://github.com/vega/vega-lite.git'
 
-VEGA_DATA_TAG = 'v1.5.0'
+VEGA_DATA_TAG = 'v1.8.0'
 VEGA_DATA_PATH = abspath('repos', 'vega-datasets')
 VEGA_DATA_URL = 'https://github.com/vega/vega-datasets.git'
 
