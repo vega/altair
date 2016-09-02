@@ -18,7 +18,9 @@ __all__ = [
              "Size",
              "Text",
              "X",
+             "X2",
              "Y",
+             "Y2",
              "Encoding",
              "Facet",
           ]
@@ -40,6 +42,8 @@ from .named_channels import Shape
 from .named_channels import Size
 from .named_channels import Text
 from .named_channels import X
+from .named_channels import X2
 from .named_channels import Y
+from .named_channels import Y2
 from .channel_collections import Encoding
 from .channel_collections import Facet

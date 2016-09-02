@@ -4,9 +4,9 @@
 import traitlets as T
 
 
-class Mark(T.Enum):
-    """One of ['area', 'bar', 'line', 'point', 'text', 'tick', 'rule', 'circle', 'square', 'errorBar']"""
+class Orient(T.Enum):
+    """One of ['horizontal', 'vertical']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(Mark, self).__init__(['area', 'bar', 'line', 'point', 'text', 'tick', 'rule', 'circle', 'square', 'errorBar'],
+        super(Orient, self).__init__(['horizontal', 'vertical'],
                                     default_value=default_value,
                                     **metadata)

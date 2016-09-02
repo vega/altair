@@ -47,6 +47,9 @@ from .api import (
     FacetedChart,
     CellConfig,
     Detail,
+    EqualFilter,
+    RangeFilter,
+    OneOfFilter,
 )
 
 from .datasets import (

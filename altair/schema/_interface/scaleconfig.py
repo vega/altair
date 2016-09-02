@@ -3,6 +3,7 @@
 
 import traitlets as T
 from ..baseobject import BaseObject
+from .bandsize import BandSize
 
 
 class ScaleConfig(BaseObject):
@@ -10,7 +11,7 @@ class ScaleConfig(BaseObject):
     
     Attributes
     ----------
-    bandSize: CFloat
+    bandSize: Union(CFloat, BandSize)
         Default band size for (1) `y` ordinal scale, and (2) `x` ordinal scale when the mark is not `text`.
     barSizeRange: List(CFloat)
         Default range for bar size scale.
@@ -39,7 +40,7 @@ class ScaleConfig(BaseObject):
     useRawDomain: Bool
         Uses the source data range as scale domain instead of aggregated data for aggregate axis.
     """
-    bandSize = T.CFloat(allow_none=True, default_value=None, min=0, help="""Default band size for (1) `y` ordinal scale, and (2) `x` ordinal scale when the mark is not `text`.""")
+    bandSize = T.Union([T.CFloat(allow_none=True, default_value=None), BandSize(allow_none=True, default_value=None)])
     barSizeRange = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for bar size scale.""")
     fontSizeRange = T.List(T.CFloat(), allow_none=True, default_value=None, help="""Default range for font size scale.""")
     nominalColorRange = T.Union([T.Unicode(allow_none=True, default_value=None), T.List(T.Unicode(), allow_none=True, default_value=None)])

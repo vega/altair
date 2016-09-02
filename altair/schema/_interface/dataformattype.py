@@ -4,9 +4,9 @@
 import traitlets as T
 
 
-class Mark(T.Enum):
-    """One of ['area', 'bar', 'line', 'point', 'text', 'tick', 'rule', 'circle', 'square', 'errorBar']"""
+class DataFormatType(T.Enum):
+    """One of ['json', 'csv', 'tsv', 'topojson']"""
     def __init__(self, default_value=T.Undefined, **metadata):
-        super(Mark, self).__init__(['area', 'bar', 'line', 'point', 'text', 'tick', 'rule', 'circle', 'square', 'errorBar'],
+        super(DataFormatType, self).__init__(['json', 'csv', 'tsv', 'topojson'],
                                     default_value=default_value,
                                     **metadata)

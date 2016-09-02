@@ -15,6 +15,12 @@
         "ExtendedUnitSpec": {
             "type": "object",
             "properties": {
+                "width": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                },
                 "mark": {
                     "$ref": "#/definitions/Mark",
                     "description": "The mark type.\n\nOne of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n\n`\"area\"`, `\"point\"`, `\"rule\"`, and `\"text\"`."
@@ -59,7 +65,8 @@
                 "tick",
                 "rule",
                 "circle",
-                "square"
+                "square",
+                "errorBar"
             ]
         },
         "Encoding": {
@@ -81,6 +88,14 @@
                     "$ref": "#/definitions/PositionChannelDef",
                     "description": "Y coordinates for `point`, `circle`, `square`,\n\n`line`, `rule`, `text`, and `tick`\n\n(or to width and height for `bar` and `area` marks)."
                 },
+                "x2": {
+                    "$ref": "#/definitions/FieldDef",
+                    "description": "X2 coordinates for ranged `bar`, `rule`, `area`"
+                },
+                "y2": {
+                    "$ref": "#/definitions/FieldDef",
+                    "description": "Y2 coordinates for ranged `bar`, `rule`, `area`"
+                },
                 "color": {
                     "$ref": "#/definitions/ChannelDefWithLegend",
                     "description": "Color of the marks – either fill or stroke color based on mark type.\n\n(By default, fill color for `area`, `bar`, `tick`, `text`, `circle`, and `square` /\n\nstroke color for `line` and `point`.)"
@@ -95,7 +110,7 @@
                 },
                 "shape": {
                     "$ref": "#/definitions/ChannelDefWithLegend",
-                    "description": "The symbol's shape (only for `point` marks). The supported values are\n\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\n\nor `\"triangle-down\"`."
+                    "description": "The symbol's shape (only for `point` marks). The supported values are\n\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\n\nor `\"triangle-down\"`, or else a custom SVG path string."
                 },
                 "detail": {
                     "description": "Additional levels of detail for grouping data in aggregate views and\n\nin line and area marks without mapping data to a specific visual channel.",
@@ -412,11 +427,8 @@
                     "$ref": "#/definitions/ScaleType"
                 },
                 "domain": {
-                    "description": "The domain of the scale, representing the set of data values. For quantitative data, this can take the form of a two-element array with minimum and maximum values. For ordinal/categorical data, this may be an array of valid input values. The domain may also be specified by a reference to a data source.",
+                    "description": "The domain of the scale, representing the set of data values. For quantitative data, this can take the form of a two-element array with minimum and maximum values. For ordinal/categorical data, this may be an array of valid input values.",
                     "oneOf": [
-                        {
-                            "type": "string"
-                        },
                         {
                             "type": "array",
                             "items": {
@@ -457,7 +469,14 @@
                 },
                 "bandSize": {
                     "minimum": 0,
-                    "type": "number"
+                    "oneOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "$ref": "#/definitions/BandSize"
+                        }
+                    ]
                 },
                 "padding": {
                     "description": "Applies spacing among ordinal elements in the scale range. The actual effect depends on how the scale is configured. If the __points__ parameter is `true`, the padding value is interpreted as a multiple of the spacing between points. A reasonable value is 1.0, such that the first and last point will be offset from the minimum and maximum value by half the distance between points. Otherwise, padding is typically in the range [0, 1] and corresponds to the fraction of space in the range interval to allocate to padding. A value of 0.5 means that the range band width will be equal to the padding width. For more, see the [D3 ordinal scale documentation](https://github.com/mbostock/d3/wiki/Ordinal-Scales).",
@@ -483,7 +502,7 @@
                     "type": "number"
                 },
                 "zero": {
-                    "description": "If true, ensures that a zero baseline value is included in the scale domain. This option is ignored for non-quantitative scales.",
+                    "description": "If `true`, ensures that a zero baseline value is included in the scale domain.\n\nDefault value: `true` for `x` and `y` channel if the quantitative field is not binned\n\nand no custom `domain` is provided; `false` otherwise.",
                     "type": "boolean"
                 },
                 "useRawDomain": {
@@ -504,6 +523,12 @@
                 "ordinal",
                 "time",
                 "utc"
+            ]
+        },
+        "BandSize": {
+            "type": "string",
+            "enum": [
+                "fit"
             ]
         },
         "NiceTime": {
@@ -592,17 +617,18 @@
                 "seconds",
                 "milliseconds",
                 "yearmonth",
-                "yearmonthday",
                 "yearmonthdate",
-                "yearday",
-                "yeardate",
-                "yearmonthdayhours",
-                "yearmonthdayhoursminutes",
-                "yearmonthdayhoursminutesseconds",
+                "yearmonthdatehours",
+                "yearmonthdatehoursminutes",
+                "yearmonthdatehoursminutesseconds",
                 "hoursminutes",
                 "hoursminutesseconds",
                 "minutesseconds",
-                "secondsmilliseconds"
+                "secondsmilliseconds",
+                "quarter",
+                "yearquarter",
+                "quartermonth",
+                "yearquartermonth"
             ]
         },
         "Bin": {
@@ -646,6 +672,57 @@
                     "description": "Maximum number of bins.",
                     "minimum": 2,
                     "type": "number"
+                }
+            }
+        },
+        "FieldDef": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "description": "Name of the field from which to pull a data value.",
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/Type",
+                    "description": "The encoded field's type of measurement. This can be either a full type\n\nname (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`,  and `\"nominal\"`)\n\nor an initial character of the type name (`\"Q\"`, `\"T\"`, `\"O\"`, `\"N\"`).\n\nThis property is case insensitive."
+                },
+                "value": {
+                    "description": "A constant value in visual domain.",
+                    "oneOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "boolean"
+                        }
+                    ]
+                },
+                "timeUnit": {
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`)."
+                },
+                "bin": {
+                    "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
+                    "oneOf": [
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "$ref": "#/definitions/Bin",
+                            "description": "Binning properties or boolean flag for determining whether to bin data or not."
+                        }
+                    ]
+                },
+                "aggregate": {
+                    "$ref": "#/definitions/AggregateOp",
+                    "description": "Aggregation function for the field\n\n(e.g., `mean`, `sum`, `median`, `min`, `max`, `count`)."
+                },
+                "title": {
+                    "description": "Title for axis or legend.",
+                    "type": "string"
                 }
             }
         },
@@ -797,7 +874,7 @@
                     "type": "string"
                 },
                 "symbolShape": {
-                    "description": "The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond',\n\n'triangle-up', 'triangle-down'.",
+                    "description": "The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond',\n\n'triangle-up', 'triangle-down', or else a custom SVG path string.",
                     "type": "string"
                 },
                 "symbolSize": {
@@ -826,57 +903,6 @@
                 },
                 "properties": {
                     "description": "Optional mark property definitions for custom legend styling."
-                }
-            }
-        },
-        "FieldDef": {
-            "type": "object",
-            "properties": {
-                "field": {
-                    "description": "Name of the field from which to pull a data value.",
-                    "type": "string"
-                },
-                "type": {
-                    "$ref": "#/definitions/Type",
-                    "description": "The encoded field's type of measurement. This can be either a full type\n\nname (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`,  and `\"nominal\"`)\n\nor an initial character of the type name (`\"Q\"`, `\"T\"`, `\"O\"`, `\"N\"`).\n\nThis property is case insensitive."
-                },
-                "value": {
-                    "description": "A constant value in visual domain.",
-                    "oneOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "boolean"
-                        }
-                    ]
-                },
-                "timeUnit": {
-                    "$ref": "#/definitions/TimeUnit",
-                    "description": "Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`)."
-                },
-                "bin": {
-                    "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
-                    "oneOf": [
-                        {
-                            "type": "boolean"
-                        },
-                        {
-                            "$ref": "#/definitions/Bin",
-                            "description": "Binning properties or boolean flag for determining whether to bin data or not."
-                        }
-                    ]
-                },
-                "aggregate": {
-                    "$ref": "#/definitions/AggregateOp",
-                    "description": "Aggregation function for the field\n\n(e.g., `mean`, `sum`, `median`, `min`, `max`, `count`)."
-                },
-                "title": {
-                    "description": "Title for axis or legend.",
-                    "type": "string"
                 }
             }
         },
@@ -937,11 +963,12 @@
         "Data": {
             "type": "object",
             "properties": {
-                "formatType": {
-                    "$ref": "#/definitions/DataFormat"
+                "format": {
+                    "$ref": "#/definitions/DataFormat",
+                    "description": "An object that specifies the format for the data file or values."
                 },
                 "url": {
-                    "description": "A URL from which to load the data set. Use the formatType property\n\nto ensure the loaded data is correctly parsed.",
+                    "description": "A URL from which to load the data set. Use the format.type property\n\nto ensure the loaded data is correctly parsed.",
                     "type": "string"
                 },
                 "values": {
@@ -952,11 +979,33 @@
             }
         },
         "DataFormat": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "$ref": "#/definitions/DataFormatType",
+                    "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`.\n\nThe default format type is determined by the extension of the file url.\n\nIf no extension is detected, `\"json\"` will be used by default."
+                },
+                "property": {
+                    "description": "JSON only) The JSON property containing the desired data.\n\nThis parameter can be used when the loaded JSON file may have surrounding structure or meta-data.\n\nFor example `\"property\": \"values.features\"` is equivalent to retrieving `json.values.features`\n\nfrom the loaded JSON object.",
+                    "type": "string"
+                },
+                "feature": {
+                    "description": "The name of the TopoJSON object set to convert to a GeoJSON feature collection.\n\nFor example, in a map of the world, there may be an object set named `\"countries\"`.\n\nUsing the feature property, we can extract this set and generate a GeoJSON feature object for each country.",
+                    "type": "string"
+                },
+                "mesh": {
+                    "description": "The name of the TopoJSON object set to convert to a mesh.\n\nSimilar to the `feature` option, `mesh` extracts a named TopoJSON object set.\n\nUnlike the `feature` option, the corresponding geo data is returned as a single, unified mesh instance, not as inidividual GeoJSON features.\n\nExtracting a mesh is useful for more efficiently drawing borders or other geographic elements that you do not need to associate with specific regions such as individual countries, states or counties.",
+                    "type": "string"
+                }
+            }
+        },
+        "DataFormatType": {
             "type": "string",
             "enum": [
                 "json",
                 "csv",
-                "tsv"
+                "tsv",
+                "topojson"
             ]
         },
         "Transform": {
@@ -964,10 +1013,42 @@
             "properties": {
                 "filter": {
                     "description": "A string containing the filter Vega expression. Use `datum` to refer to the current data object.",
-                    "type": "string"
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "$ref": "#/definitions/EqualFilter"
+                        },
+                        {
+                            "$ref": "#/definitions/RangeFilter"
+                        },
+                        {
+                            "$ref": "#/definitions/OneOfFilter"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "$ref": "#/definitions/EqualFilter"
+                                    },
+                                    {
+                                        "$ref": "#/definitions/RangeFilter"
+                                    },
+                                    {
+                                        "$ref": "#/definitions/OneOfFilter"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
                 },
-                "filterNull": {
-                    "description": "Filter null values from the data. If set to true, all rows with null values are filtered. If false, no rows are filtered. Set the property to undefined to filter only quantitative and temporal fields.",
+                "filterInvalid": {
+                    "description": "Whether to filter invalid values (`null` and `NaN`) from the data. By default (`undefined`), only quantitative and temporal fields are filtered. If set to `true`, all data items with null values are filtered. If `false`, all data items are included.",
                     "type": "boolean"
                 },
                 "calculate": {
@@ -979,6 +1060,168 @@
                     }
                 }
             }
+        },
+        "EqualFilter": {
+            "type": "object",
+            "properties": {
+                "timeUnit": {
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "Time unit for the field to be filtered."
+                },
+                "field": {
+                    "description": "Field to be filtered.",
+                    "type": "string"
+                },
+                "equal": {
+                    "description": "Value that the field should be equal to.",
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "boolean"
+                        },
+                        {
+                            "$ref": "#/definitions/DateTime",
+                            "description": "Object for defining datetime in Vega-Lite Filter.\n\nIf both month and quarter are provided, month has higher precedence.\n\n`day` cannot be combined with other date.\n\nWe accept string for month and day names."
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "field",
+                "equal"
+            ]
+        },
+        "DateTime": {
+            "type": "object",
+            "properties": {
+                "year": {
+                    "description": "Integer value representing the year.",
+                    "type": "number"
+                },
+                "quarter": {
+                    "description": "Integer value representing the quarter of the year (from 1-4).",
+                    "type": "number"
+                },
+                "month": {
+                    "description": "One of: (1) integer value representing the month from `1`-`12`. `1` represents January;  (2) case-insensitive month name (e.g., `\"January\"`);  (3) case-insensitive, 3-character short month name (e.g., `\"Jan\"`).",
+                    "oneOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "date": {
+                    "description": "Integer value representing the date from 1-31.",
+                    "type": "number"
+                },
+                "day": {
+                    "description": "Value representing the day of week.  This can be one of: (1) integer value -- `1` represents Monday; (2) case-insensitive day name (e.g., `\"Monday\"`);  (3) case-insensitive, 3-character short day name (e.g., `\"Mon\"`).   <br/> **Warning:** A DateTime definition object with `day`** should not be combined with `year`, `quarter`, `month`, or `date`.",
+                    "oneOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "hours": {
+                    "description": "Integer value representing the hour of day from 0-23.",
+                    "type": "number"
+                },
+                "minutes": {
+                    "description": "Integer value representing minute segment of a time from 0-59.",
+                    "type": "number"
+                },
+                "seconds": {
+                    "description": "Integer value representing second segment of a time from 0-59.",
+                    "type": "number"
+                },
+                "milliseconds": {
+                    "description": "Integer value representing millisecond segment of a time.",
+                    "type": "number"
+                }
+            }
+        },
+        "RangeFilter": {
+            "type": "object",
+            "properties": {
+                "timeUnit": {
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "time unit for the field to be filtered."
+                },
+                "field": {
+                    "description": "Field to be filtered",
+                    "type": "string"
+                },
+                "range": {
+                    "description": "Array of inclusive minimum and maximum values\n\nfor a field value of a data item to be included in the filtered data.",
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "$ref": "#/definitions/DateTime",
+                                "description": "Object for defining datetime in Vega-Lite Filter.\n\nIf both month and quarter are provided, month has higher precedence.\n\n`day` cannot be combined with other date.\n\nWe accept string for month and day names."
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "field",
+                "range"
+            ]
+        },
+        "OneOfFilter": {
+            "type": "object",
+            "properties": {
+                "timeUnit": {
+                    "$ref": "#/definitions/TimeUnit",
+                    "description": "time unit for the field to be filtered."
+                },
+                "field": {
+                    "description": "Field to be filtered",
+                    "type": "string"
+                },
+                "oneOf": {
+                    "description": "A set of values that the `field`'s value should be a member of,\n\nfor a data item included in the filtered data.",
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "$ref": "#/definitions/DateTime",
+                                "description": "Object for defining datetime in Vega-Lite Filter.\n\nIf both month and quarter are provided, month has higher precedence.\n\n`day` cannot be combined with other date.\n\nWe accept string for month and day names."
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "field",
+                "oneOf"
+            ]
         },
         "Formula": {
             "type": "object",
@@ -1016,6 +1259,10 @@
                     "description": "Default datetime format for axis and legend labels. The format can be set directly on each axis and legend.",
                     "type": "string"
                 },
+                "countTitle": {
+                    "description": "Default axis and legend title for count fields.",
+                    "type": "string"
+                },
                 "cell": {
                     "$ref": "#/definitions/CellConfig",
                     "description": "Cell Config"
@@ -1023,6 +1270,10 @@
                 "mark": {
                     "$ref": "#/definitions/MarkConfig",
                     "description": "Mark Config"
+                },
+                "overlay": {
+                    "$ref": "#/definitions/OverlayConfig",
+                    "description": "Mark Overlay Config"
                 },
                 "scale": {
                     "$ref": "#/definitions/ScaleConfig",
@@ -1144,8 +1395,8 @@
                     "$ref": "#/definitions/StackOffset"
                 },
                 "orient": {
-                    "description": "The orientation of a non-stacked bar, tick, area, and line charts.\n\nThe value is either horizontal (default) or vertical.\n\n- For bar, rule and tick, this determines whether the size of the bar and tick\n\nshould be applied to x or y dimension.\n\n- For area, this property determines the orient property of the Vega output.\n\n- For line, this property determines the sort order of the points in the line\n\nif `config.sortLineBy` is not specified.\n\nFor stacked charts, this is always determined by the orientation of the stack;\n\ntherefore explicitly specified value will be ignored.",
-                    "type": "string"
+                    "$ref": "#/definitions/Orient",
+                    "description": "The orientation of a non-stacked bar, tick, area, and line charts.\n\nThe value is either horizontal (default) or vertical.\n\n- For bar, rule and tick, this determines whether the size of the bar and tick\n\nshould be applied to x or y dimension.\n\n- For area, this property determines the orient property of the Vega output.\n\n- For line, this property determines the sort order of the points in the line\n\nif `config.sortLineBy` is not specified.\n\nFor stacked charts, this is always determined by the orientation of the stack;\n\ntherefore explicitly specified value will be ignored."
                 },
                 "interpolate": {
                     "$ref": "#/definitions/Interpolate",
@@ -1172,8 +1423,15 @@
                     "type": "number"
                 },
                 "shape": {
-                    "$ref": "#/definitions/Shape",
-                    "description": "The symbol shape to use. One of circle (default), square, cross, diamond, triangle-up, or triangle-down."
+                    "description": "The symbol shape to use. One of circle (default), square, cross, diamond, triangle-up, or triangle-down, or a custom SVG path.",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/Shape"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
                 },
                 "size": {
                     "description": "The pixel area each the point. For example: in the case of circles, the radius is determined in part by the square root of the size value.",
@@ -1258,6 +1516,13 @@
                 "none"
             ]
         },
+        "Orient": {
+            "type": "string",
+            "enum": [
+                "horizontal",
+                "vertical"
+            ]
+        },
         "Interpolate": {
             "type": "string",
             "enum": [
@@ -1317,6 +1582,35 @@
                 "bold"
             ]
         },
+        "OverlayConfig": {
+            "type": "object",
+            "properties": {
+                "line": {
+                    "description": "Whether to overlay line with point.",
+                    "type": "boolean"
+                },
+                "area": {
+                    "$ref": "#/definitions/AreaOverlay",
+                    "description": "Type of overlay for area mark (line or linepoint)"
+                },
+                "pointStyle": {
+                    "$ref": "#/definitions/MarkConfig",
+                    "description": "Default style for the overlayed point."
+                },
+                "lineStyle": {
+                    "$ref": "#/definitions/MarkConfig",
+                    "description": "Default style for the overlayed point."
+                }
+            }
+        },
+        "AreaOverlay": {
+            "type": "string",
+            "enum": [
+                "line",
+                "linepoint",
+                "none"
+            ]
+        },
         "ScaleConfig": {
             "type": "object",
             "properties": {
@@ -1332,7 +1626,14 @@
                 "bandSize": {
                     "description": "Default band size for (1) `y` ordinal scale,\n\nand (2) `x` ordinal scale when the mark is not `text`.",
                     "minimum": 0,
-                    "type": "number"
+                    "oneOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "$ref": "#/definitions/BandSize"
+                        }
+                    ]
                 },
                 "opacity": {
                     "description": "Default range for opacity.",
@@ -1650,7 +1951,7 @@
                     "type": "string"
                 },
                 "symbolShape": {
-                    "description": "The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond',\n\n'triangle-up', 'triangle-down'.",
+                    "description": "The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond',\n\n'triangle-up', 'triangle-down', or else a custom SVG path string.",
                     "type": "string"
                 },
                 "symbolSize": {
@@ -1785,6 +2086,12 @@
         "LayerSpec": {
             "type": "object",
             "properties": {
+                "width": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                },
                 "layers": {
                     "description": "Unit specs that will be layered.",
                     "type": "array",
@@ -1820,6 +2127,12 @@
         "UnitSpec": {
             "type": "object",
             "properties": {
+                "width": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                },
                 "mark": {
                     "$ref": "#/definitions/Mark",
                     "description": "The mark type.\n\nOne of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n\n`\"area\"`, `\"point\"`, `\"rule\"`, and `\"text\"`."
@@ -1864,6 +2177,14 @@
                     "$ref": "#/definitions/PositionChannelDef",
                     "description": "Y coordinates for `point`, `circle`, `square`,\n\n`line`, `rule`, `text`, and `tick`\n\n(or to width and height for `bar` and `area` marks)."
                 },
+                "x2": {
+                    "$ref": "#/definitions/FieldDef",
+                    "description": "X2 coordinates for ranged `bar`, `rule`, `area`"
+                },
+                "y2": {
+                    "$ref": "#/definitions/FieldDef",
+                    "description": "Y2 coordinates for ranged `bar`, `rule`, `area`"
+                },
                 "color": {
                     "$ref": "#/definitions/ChannelDefWithLegend",
                     "description": "Color of the marks – either fill or stroke color based on mark type.\n\n(By default, fill color for `area`, `bar`, `tick`, `text`, `circle`, and `square` /\n\nstroke color for `line` and `point`.)"
@@ -1878,7 +2199,7 @@
                 },
                 "shape": {
                     "$ref": "#/definitions/ChannelDefWithLegend",
-                    "description": "The symbol's shape (only for `point` marks). The supported values are\n\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\n\nor `\"triangle-down\"`."
+                    "description": "The symbol's shape (only for `point` marks). The supported values are\n\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\n\nor `\"triangle-down\"`, or else a custom SVG path string."
                 },
                 "detail": {
                     "description": "Additional levels of detail for grouping data in aggregate views and\n\nin line and area marks without mapping data to a specific visual channel.",
