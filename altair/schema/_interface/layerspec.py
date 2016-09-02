@@ -20,21 +20,27 @@ class LayerSpec(BaseObject):
         An object describing the data source.
     description: Unicode
         An optional description of this mark for commenting purpose.
+    height: CFloat
+        
     layers: List(UnitSpec)
         Unit specs that will be layered.
     name: Unicode
         Name of the visualization for later reference.
     transform: Transform
         An object describing filter and new field calculation.
+    width: CFloat
+        
     """
     config = T.Instance(Config, allow_none=True, default_value=None, help="""Configuration object.""")
     data = T.Instance(Data, allow_none=True, default_value=None, help="""An object describing the data source.""")
     description = T.Unicode(allow_none=True, default_value=None, help="""An optional description of this mark for commenting purpose.""")
+    height = T.CFloat(allow_none=True, default_value=None)
     layers = T.List(T.Instance(UnitSpec), allow_none=True, default_value=None, help="""Unit specs that will be layered.""")
     name = T.Unicode(allow_none=True, default_value=None, help="""Name of the visualization for later reference.""")
     transform = T.Instance(Transform, allow_none=True, default_value=None, help="""An object describing filter and new field calculation.""")
+    width = T.CFloat(allow_none=True, default_value=None)
     
-    def __init__(self, config=None, data=None, description=None, layers=None, name=None, transform=None, **kwargs):
-        kwds = dict(config=config, data=data, description=description, layers=layers, name=name, transform=transform)
+    def __init__(self, config=None, data=None, description=None, height=None, layers=None, name=None, transform=None, width=None, **kwargs):
+        kwds = dict(config=config, data=data, description=description, height=height, layers=layers, name=name, transform=transform, width=width)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(LayerSpec, self).__init__(**kwargs)

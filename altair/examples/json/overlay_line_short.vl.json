@@ -1,15 +1,21 @@
 {
     "config": {
-        "mark": {
-            "interpolate": "step-after"
+        "overlay": {
+            "line": true
         }
     },
     "data": {
-        "formatType": "csv",
+        "format": {
+            "type": "csv"
+        },
         "url": "http://vega.github.io/vega-lite/data/stocks.csv"
     },
     "description": "Google's stock price over time.",
     "encoding": {
+        "color": {
+            "field": "symbol",
+            "type": "nominal"
+        },
         "x": {
             "field": "date",
             "type": "temporal"

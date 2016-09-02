@@ -5,7 +5,7 @@ import traitlets as T
 
 from .. import _interface as schema
 
-from .named_channels import Color, Column, Detail, Label, Opacity, Order, Path, Row, Shape, Size, Text, X, Y
+from .named_channels import Color, Column, Detail, Label, Opacity, Order, Path, Row, Shape, Size, Text, X, X2, Y, Y2
 
 
 class Encoding(schema.Encoding):
@@ -37,8 +37,12 @@ class Encoding(schema.Encoding):
         Text of the `text` mark.
     x: X
         X coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
+    x2: X2
+        X2 coordinates for ranged `bar`, `rule`, `area`.
     y: Y
         Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
+    y2: Y2
+        Y2 coordinates for ranged `bar`, `rule`, `area`.
     """
     color = T.Instance(Color, allow_none=True, default_value=None, help="""Color of the marks - either fill or stroke color based on mark type.""")
     column = T.Instance(Column, allow_none=True, default_value=None, help="""Horizontal facets for trellis plots.""")
@@ -52,9 +56,11 @@ class Encoding(schema.Encoding):
     size = T.Instance(Size, allow_none=True, default_value=None, help="""Size of the mark.""")
     text = T.Instance(Text, allow_none=True, default_value=None, help="""Text of the `text` mark.""")
     x = T.Instance(X, allow_none=True, default_value=None, help="""X coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
+    x2 = T.Instance(X2, allow_none=True, default_value=None, help="""X2 coordinates for ranged `bar`, `rule`, `area`.""")
     y = T.Instance(Y, allow_none=True, default_value=None, help="""Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
+    y2 = T.Instance(Y2, allow_none=True, default_value=None, help="""Y2 coordinates for ranged `bar`, `rule`, `area`.""")
     
-    channel_names = ['color', 'column', 'detail', 'label', 'opacity', 'order', 'path', 'row', 'shape', 'size', 'text', 'x', 'y']
+    channel_names = ['color', 'column', 'detail', 'label', 'opacity', 'order', 'path', 'row', 'shape', 'size', 'text', 'x', 'x2', 'y', 'y2']
     skip = ['channel_names']
 
 

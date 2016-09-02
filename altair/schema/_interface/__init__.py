@@ -3,16 +3,21 @@
 
 __all__ = [
              "AggregateOp",
+             "AreaOverlay",
              "Axis",
              "AxisConfig",
              "AxisOrient",
+             "BandSize",
              "Bin",
              "CellConfig",
              "ChannelDefWithLegend",
              "Config",
              "Data",
              "DataFormat",
+             "DataFormatType",
+             "DateTime",
              "Encoding",
+             "EqualFilter",
              "ExtendedUnitSpec",
              "Facet",
              "FacetConfig",
@@ -31,8 +36,12 @@ __all__ = [
              "Mark",
              "MarkConfig",
              "NiceTime",
+             "OneOfFilter",
              "OrderChannelDef",
+             "Orient",
+             "OverlayConfig",
              "PositionChannelDef",
+             "RangeFilter",
              "Scale",
              "ScaleConfig",
              "ScaleType",
@@ -50,16 +59,21 @@ __all__ = [
 
 
 from .aggregateop import AggregateOp
+from .areaoverlay import AreaOverlay
 from .axis import Axis
 from .axisconfig import AxisConfig
 from .axisorient import AxisOrient
+from .bandsize import BandSize
 from .bin import Bin
 from .cellconfig import CellConfig
 from .channeldefwithlegend import ChannelDefWithLegend
 from .config import Config
 from .data import Data
 from .dataformat import DataFormat
+from .dataformattype import DataFormatType
+from .datetime import DateTime
 from .encoding import Encoding
+from .equalfilter import EqualFilter
 from .extendedunitspec import ExtendedUnitSpec
 from .facet import Facet
 from .facetconfig import FacetConfig
@@ -78,8 +92,12 @@ from .legendconfig import LegendConfig
 from .mark import Mark
 from .markconfig import MarkConfig
 from .nicetime import NiceTime
+from .oneoffilter import OneOfFilter
 from .orderchanneldef import OrderChannelDef
+from .orient import Orient
+from .overlayconfig import OverlayConfig
 from .positionchanneldef import PositionChannelDef
+from .rangefilter import RangeFilter
 from .scale import Scale
 from .scaleconfig import ScaleConfig
 from .scaletype import ScaleType

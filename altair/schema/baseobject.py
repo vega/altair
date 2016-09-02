@@ -28,14 +28,22 @@ class BaseObject(T.HasTraits):
         Keyword arguments are converted to the correct Instance class
         if required.
         """
+        # TODO: can we make this more efficient & less fragile?
+        def is_simple_union(trait):
+            """Return True if trait is, e.g. Union(Class, List(Class))"""
+            return (isinstance(trait, T.Union) and
+                    len(trait.trait_types) == 2 and
+                    isinstance(trait.trait_types[0], T.Instance) and
+                    isinstance(trait.trait_types[1], T.List) and
+                    trait.trait_types[0].klass == trait.trait_types[1]._trait.klass)
+
         def get_class(trait):
-            # TODO: what do do with lists?
-            if isinstance(trait, T.Union):
-                for klass in map(get_class, trait.trait_types):
-                    if klass:
-                        return klass
-            elif isinstance(trait, T.Instance):
+            if isinstance(trait, T.Instance):
                 return trait.klass
+            elif is_simple_union(trait):
+                return trait.trait_types[0].klass
+            else:
+                return None
 
         traits = cls.class_traits()
         classes = {n: get_class(t) for n, t in traits.items()}

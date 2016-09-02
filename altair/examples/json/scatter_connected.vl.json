@@ -1,4 +1,9 @@
 {
+    "config": {
+        "overlay": {
+            "line": true
+        }
+    },
     "data": {
         "url": "http://vega.github.io/vega-lite/data/driving.json"
     },

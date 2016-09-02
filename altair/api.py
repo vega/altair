@@ -26,6 +26,7 @@ from .schema import CellConfig
 from .schema import Config
 from .schema import Data
 from .schema import DataFormat
+from .schema import EqualFilter
 from .schema import FacetConfig
 from .schema import FacetGridConfig
 from .schema import FacetScaleConfig
@@ -36,6 +37,9 @@ from .schema import LegendConfig
 from .schema import Legend
 from .schema import MarkConfig
 from .schema import NiceTime
+from .schema import OneOfFilter
+from .schema import OverlayConfig
+from .schema import RangeFilter
 from .schema import Scale
 from .schema import ScaleConfig
 from .schema import SortField
@@ -227,6 +231,11 @@ class TopLevelMixin(object):
         """Configure the chart's legend by keyword args."""
         return self._update_subtraits(('config', 'legend'), *args, **kwargs)
 
+    @use_signature(OverlayConfig)
+    def configure_overlay(self, *args, **kwargs):
+        """Configure the chart's overlay by keyword args."""
+        return self.update_subtraits(('config', 'overlay'), *args, **kwargs)
+
     @use_signature(MarkConfig)
     def configure_mark(self, *args, **kwargs):
         """Configure the chart's marks by keyword args."""
@@ -385,6 +394,12 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     def mark_bar(self, *args, **kwargs):
         """Set the mark to 'bar' and optionally specify mark properties"""
         self.mark = 'bar'
+        return self.configure_mark(*args, **kwargs)
+
+    @use_signature(MarkConfig)
+    def mark_errorBar(self, *args, **kwargs):
+        """Set the mark to 'errorBar' and optionally specify mark properties"""
+        self.mark = 'errorBar'
         return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)

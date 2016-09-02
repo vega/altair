@@ -52,7 +52,15 @@ class X(PositionChannel):
     pass
 
 
+class X2(Field):
+    pass
+
+
 class Y(PositionChannel):
+    pass
+
+
+class Y2(Field):
     pass
 
 
