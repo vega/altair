@@ -49,14 +49,16 @@ def list_datasets():
 
 
 @lru_cache()
-def load_dataset(name):
+def load_dataset(name, url_only=False):
     """Load a dataset by name as a pandas.DataFrame."""
     item = _datasets_json().get(name, None)
     if item is None:
         raise ValueError('No such dataset {0} exists, '
                          'use list_datasets to get a list'.format(name))
     url = BASE_URL + item['filename']
-    if item['format'] == 'json':
+    if url_only:
+        return url
+    elif item['format'] == 'json':
         return pd.read_json(url)
     elif item['format'] == 'csv':
         return pd.read_csv(url)
