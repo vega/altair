@@ -60,5 +60,11 @@ def load_dataset(name, url_only=False):
         return url
     elif item['format'] == 'json':
         return pd.read_json(url)
+    elif item['format'] == 'tsv':
+        return pd.read_csv(url, sep='\t')
     elif item['format'] == 'csv':
         return pd.read_csv(url)
+    else:
+        raise ValueError("Unrecognized file format: {0}. "
+                         "Valid options are ['json', 'csv', 'tsv']."
+                         "".format(item['format']))
