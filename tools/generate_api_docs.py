@@ -25,7 +25,7 @@ import altair
 
 TEMPLATE = jinja2.Template("""### {{ obj.name }}
 
-{# *{{ obj.description }}* #}
+{% if obj.description %}*{{ obj.description }}*{% endif %}
 
 | Trait | type | description |
 |-------|------|-------------|
@@ -38,6 +38,30 @@ HEADER = """# Altair API Documentation
 *(This is auto-generated from tools/generate_api_docs.py;
 do not modify directly)*
 """
+
+VEGALITE_DOC_URL = 'http://vega.github.io/vega-lite/docs/'
+VEGALITE_DOC_PAGES = {'data': 'data.html',
+                      'transform': 'transform.html',
+                      'mark': 'mark.html',
+                      'encoding': 'encoding.html',
+                      'aggregate': 'aggregate.html',
+                      'bin': 'bin.html',
+                      'sort': 'sort.html',
+                      'timeunit': 'timeunit.html',
+                      'scale': 'scale.html',
+                      'axis': 'axis.html',
+                      'legend': 'legend.html',
+                      'config': 'config.html#top-level-config',
+                      'cellconfig': 'config.html#cell-config',
+                      'markconfig': 'config.html#mark-config',
+                      'scaleconfig': 'config.html#scale-config',
+                      'axisconfig': 'config.html#axis-config',
+                      'legendconfig': 'config.html#legend-config',
+                      'facetconfig': 'config.html#facet-config'}
+
+for channel in ['color', 'column', 'detail', 'opacity', 'order', 'path',
+                'row', 'shape', 'size', 'text', 'x', 'y']:
+    VEGALITE_DOC_PAGES[channel] = 'encoding.html#def'
 
 
 def _get_trait_info(name, trait):
@@ -57,7 +81,7 @@ def _get_trait_info(name, trait):
         type_ = ' or '.join(info['type'] for info in trait_info)
         help_ += '/'.join([info['help'] for info in trait_info
                            if info['help'] != '--'])
-            
+
     type_ = type_.replace('a ', '')
     type_ = type_.replace('unicode string', 'string')
     return {'name': name, 'help': help_ or '--', 'type': type_ or '--'}
@@ -66,15 +90,22 @@ def _get_trait_info(name, trait):
 def _get_object_info(obj):
     """Get a dictionary of info for an object, suitable for the template"""
     D = {}
-    D['name'] = obj.__name__
-    if obj.__doc__:
-        D['description'] = obj.__doc__.splitlines()[0]
-    else:
-        D['description'] = 'no description available'
-        
+    name = obj.__name__
+    D['name'] = name
+
+    if name.lower() in VEGALITE_DOC_PAGES:
+        D['description'] = ('Relevant Vega-Lite Documentation: '
+                            '{0}'.format(VEGALITE_DOC_URL +
+                                         VEGALITE_DOC_PAGES[name.lower()]))
+
+    #if obj.__doc__:
+    #    D['description'] = obj.__doc__.splitlines()[0]
+    #else:
+    #    D['description'] = 'no description available'
+
     D['traits'] = [_get_trait_info(name, trait)
                    for name, trait in sorted(obj.class_traits().items())]
-    
+
     return D
 
 
