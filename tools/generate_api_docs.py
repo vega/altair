@@ -68,9 +68,10 @@ def _get_trait_info(name, trait):
     """Get a dictionary of info for an object trait"""
     type_ = trait.info()
     help_ = trait.help
-    if isinstance(trait, traitlets.Instance):
-        if issubclass(trait.klass, traitlets.HasTraits):
-            type_ = '[{0}](#{0})'.format(trait.klass.__name__)
+
+    if isinstance(trait, traitlets.List):
+        trait_info = _get_trait_info('', trait._trait)
+        type_ = 'list of {0}s'.format(trait_info['type'])
     elif isinstance(trait, traitlets.Enum):
         values = trait.values
         if all(isinstance(val, str) for val in values):
@@ -81,6 +82,9 @@ def _get_trait_info(name, trait):
         type_ = ' or '.join(info['type'] for info in trait_info)
         help_ += '/'.join([info['help'] for info in trait_info
                            if info['help'] != '--'])
+    elif isinstance(trait, traitlets.Instance):
+        if issubclass(trait.klass, traitlets.HasTraits):
+            type_ = '[{0}](#{0})'.format(trait.klass.__name__)
 
     type_ = type_.replace('a ', '')
     type_ = type_.replace('unicode string', 'string')
