@@ -36,11 +36,7 @@ def generate_handler(html, files=None):
                 self.send_response(200)
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
-                self.wfile.write("<html><head>"
-                                 "<title>mpld3 plot</title>"
-                                 "</head><body>\n".encode())
                 self.wfile.write(html.encode())
-                self.wfile.write("</body></html>".encode())
             elif self.path in files:
                 content_type, content = files[self.path]
                 self.send_response(200)
