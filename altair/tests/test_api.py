@@ -353,3 +353,11 @@ def test_chart_add():
     chart2 = LayeredChart()
     chart2.set_layers(l1, l2)
     assert chart.to_dict()==chart2.to_dict()
+
+
+def test_chart_to_json():
+    data = pd.DataFrame({'x':np.random.rand(10), 'y':np.random.rand(10)})
+    chart = Chart(data).mark_line().encode(x='x', y='y')
+
+    import json
+    assert chart.to_dict() == json.loads(chart.to_json())
