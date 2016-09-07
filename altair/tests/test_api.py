@@ -361,3 +361,30 @@ def test_chart_to_json():
 
     import json
     assert chart.to_dict() == json.loads(chart.to_json())
+
+
+def test_chart_serve():
+    try:
+        # Python 2
+        from StringIO import StringIO as IO
+    except:
+        # Python 3
+        from io import BytesIO as IO
+    class MockRequest(object):
+        def makefile(self, *args, **kwargs):
+            return IO(b"GET /")
+
+    class MockServer(object):
+        def __init__(self, ip_port, Handler):
+            handler = Handler(MockRequest(), ip_port[0], self)
+
+        def serve_forever(self):
+            pass
+
+        def server_close(self):
+            pass
+
+    data = pd.DataFrame({'x':np.random.rand(10), 'y':np.random.rand(10)})
+    chart = Chart(data).mark_line().encode(x='x', y='y')
+
+    chart.serve(open_browser=False, http_server=MockServer)
