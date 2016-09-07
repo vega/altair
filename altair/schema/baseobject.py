@@ -129,6 +129,12 @@ class BaseObject(T.HasTraits):
         self._finalize()
         return ToDict().visit(self, data)
 
+    def to_json(self, data=True, **kwargs):
+        """Emit the JSON representation for this object as a string.
+        Additional keywords are passed to json.dumps()"""
+        import json
+        return json.dumps(self.to_dict(data=data), **kwargs)
+
     def _finalize(self, **kwargs):
         """Finalize the object, and all contained objects, for export."""
         def finalize_obj(obj):
