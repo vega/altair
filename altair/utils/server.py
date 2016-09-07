@@ -10,6 +10,7 @@ import webbrowser
 import socket
 import itertools
 import random
+from ._py3k_compat import server, IO
 
 JUPYTER_WARNING = """
 Note: if you're in the Jupyter notebook, Chart.serve() is not the best
@@ -17,12 +18,23 @@ Note: if you're in the Jupyter notebook, Chart.serve() is not the best
 You must interrupt the kernel to cancel this command.
 """
 
-try:
-    # Python 2.x
-    import BaseHTTPServer as server
-except ImportError:
-    # Python 3.x
-    from http import server
+
+
+# Mock server used for testing
+
+class MockRequest(object):
+    def makefile(self, *args, **kwargs):
+        return IO(b"GET /")
+
+class MockServer(object):
+    def __init__(self, ip_port, Handler):
+        handler = Handler(MockRequest(), ip_port[0], self)
+
+    def serve_forever(self):
+        pass
+
+    def server_close(self):
+        pass
 
 
 def generate_handler(html, files=None):
