@@ -21,7 +21,8 @@ except ImportError:
 
 
 VGL_TEMPLATE = jinja2.Template("""
-<div id="vis{{ uid }}"></div>
+<div id="{{ div_id }}"></div>
+<div id="{{ script_id }}">
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://vega.github.io/vega/vega.js"></script>
 <script src="https://vega.github.io/vega-lite/vega-lite.js"></script>
@@ -34,11 +35,12 @@ var embedSpec = {
   spec: vlSpec
 }
 
-vg.embed("#vis{{ uid }}", embedSpec, function(error, result) {
+vg.embed("#{{ div_id }}", embedSpec, function(error, result) {
   // Callback receiving the View instance and parsed Vega spec
   // result.view is the View, which resides under the '#vis' element
 });
 </script>
+</div>
 """)
 
 
@@ -63,54 +65,73 @@ class AltairPlotDirective(Directive):
 
     option_spec = {'show-json': flag,
                    'hide-code': flag,
+                   'code-below': flag,
                    'alt': unchanged}
 
     def run(self):
         env = self.state.document.settings.env
         app = env.app
 
+        show_code = 'hide-code' not in self.options
+        show_json = 'show-json' in self.options
+        code_below = 'code-below' in self.options
+
         code = '\n'.join(self.content)
-        source_literal = nodes.literal_block(code, code)
-        source_literal['language'] = 'python'
+        chart = exec_then_eval(code)
+
+        if show_code:
+            source_literal = nodes.literal_block(code, code)
+            source_literal['language'] = 'python'
+
+        if show_json:
+            json = chart.to_json(indent=2)
+            json_literal = nodes.literal_block(json, json)
+            json_literal['language'] = 'json'
 
         #get the name of the source file we are currently processing
         rst_source = self.state_machine.document['source']
         rst_dir = os.path.dirname(rst_source)
         rst_filename = os.path.basename(rst_source)
+        rst_base = os.path.splitext(rst_filename)[0]
 
         # use the source file name to construct a friendly target_id
-        target_id = "%s.bokeh-plot-%d" % (rst_filename, env.new_serialno('bokeh-plot'))
+        serialno = env.new_serialno('altair-plot')
+        target_id = "{0}-altair-source-{1}".format(rst_base, serialno)
+        div_id = "{0}-altair-plot-{1}".format(rst_base, serialno)
+        script_id = "{0}-altair-script-{1}".format(rst_base, serialno)
         target_node = nodes.target('', '', ids=[target_id])
+
+        # this is the node in which the plot will appear
+        plot_node = altair_plot()
+        plot_node['target_id'] = target_id
+        plot_node['div_id'] = div_id
+        plot_node['script_id'] = script_id
+        plot_node['source'] = source_literal
+        plot_node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
+        plot_node['rst_source'] = rst_source
+        plot_node['rst_lineno'] = self.lineno
+        plot_node['spec'] = chart.to_json()
+        if 'alt' in self.options:
+            plot_node['alt'] = self.options['alt']
+
         result = [target_node]
 
-        if 'hide-code' not in self.options:
-            result.append(source_literal)
-
-        chart = exec_then_eval(code)
-
-        if 'show-json' in self.options:
-            json = chart.to_json(indent=2)
-            json_literal = nodes.literal_block(json, json)
-            json_literal['language'] = 'json'
-            result.append(json_literal)
-
-        node = altair_plot()
-        node['target_id'] = target_id
-        node['source'] = source_literal
-        node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
-        node['rst_source'] = rst_source
-        node['rst_lineno'] = self.lineno
-        node['spec'] = chart.to_json()
-        node['uid'] = env.new_serialno('altair-plot')
-        if 'alt' in self.options:
-            node['alt'] = self.options['alt']
-        result += [node]
+        if code_below:
+            result += [plot_node]
+        if show_code:
+            result += [source_literal]
+        if show_json:
+            result += [json_literal]
+        if not code_below:
+            result += [plot_node]
 
         return result
 
 
 def html_visit_altair_plot(self, node):
-    html = VGL_TEMPLATE.render(uid=node['uid'], spec=node['spec'])
+    html = VGL_TEMPLATE.render(script_id=node['script_id'],
+                               div_id=node['div_id'],
+                               spec=node['spec'])
     self.body.append(html)
     raise nodes.SkipNode
 
