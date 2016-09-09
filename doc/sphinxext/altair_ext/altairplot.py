@@ -2,6 +2,7 @@
 
 import ast
 import os
+import json
 
 import jinja2
 
@@ -21,24 +22,13 @@ except ImportError:
 
 
 VGL_TEMPLATE = jinja2.Template("""
-<div id="{{ div_id }}"></div>
-<div id="{{ script_id }}">
+<div id="{{ div_id }}">
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://vega.github.io/vega/vega.js"></script>
 <script src="https://vega.github.io/vega-lite/vega-lite.js"></script>
 <script src="https://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
 <script>
-var vlSpec = {{ spec }}
-
-var embedSpec = {
-  mode: "vega-lite",
-  spec: vlSpec
-}
-
-vg.embed("#{{ div_id }}", embedSpec, function(error, result) {
-  // Callback receiving the View instance and parsed Vega spec
-  // result.view is the View, which resides under the '#vis' element
-});
+  vg.embed("#{{ div_id }}", "{{ filename }}", function(error, result) {});
 </script>
 </div>
 """)
@@ -78,39 +68,39 @@ class AltairPlotDirective(Directive):
 
         code = '\n'.join(self.content)
         chart = exec_then_eval(code)
+        spec = chart.to_dict()
 
         if show_code:
             source_literal = nodes.literal_block(code, code)
             source_literal['language'] = 'python'
 
         if show_json:
-            json = chart.to_json(indent=2)
-            json_literal = nodes.literal_block(json, json)
+            spec_json = json.dumps(spec, indent=2)
+            json_literal = nodes.literal_block(specjson, specjson)
             json_literal['language'] = 'json'
 
         #get the name of the source file we are currently processing
         rst_source = self.state_machine.document['source']
         rst_dir = os.path.dirname(rst_source)
         rst_filename = os.path.basename(rst_source)
-        rst_base = os.path.splitext(rst_filename)[0]
+        rst_base = rst_filename.replace('.', '-')
 
         # use the source file name to construct a friendly target_id
         serialno = env.new_serialno('altair-plot')
         target_id = "{0}-altair-source-{1}".format(rst_base, serialno)
         div_id = "{0}-altair-plot-{1}".format(rst_base, serialno)
-        script_id = "{0}-altair-script-{1}".format(rst_base, serialno)
         target_node = nodes.target('', '', ids=[target_id])
 
         # this is the node in which the plot will appear
         plot_node = altair_plot()
         plot_node['target_id'] = target_id
         plot_node['div_id'] = div_id
-        plot_node['script_id'] = script_id
         plot_node['source'] = source_literal
         plot_node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
         plot_node['rst_source'] = rst_source
         plot_node['rst_lineno'] = self.lineno
-        plot_node['spec'] = chart.to_json()
+        plot_node['spec'] = spec
+
         if 'alt' in self.options:
             plot_node['alt'] = self.options['alt']
 
@@ -129,9 +119,22 @@ class AltairPlotDirective(Directive):
 
 
 def html_visit_altair_plot(self, node):
-    html = VGL_TEMPLATE.render(script_id=node['script_id'],
-                               div_id=node['div_id'],
-                               spec=node['spec'])
+    # Create the vega-lite spec to embed
+    embed_spec = json.dumps({'mode': 'vega-lite',
+                             'spec': node['spec']})
+
+    # Write embed_spec to a *.vl.json file
+    dest_dir = os.path.join(self.builder.outdir, node['relpath'])
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
+    filename = "{0}.vl.json".format(node['div_id'])
+    dest_path = os.path.join(dest_dir, filename)
+    with open(dest_path, 'w') as f:
+        f.write(embed_spec)
+
+    # Create a template that will render this file
+    html = VGL_TEMPLATE.render(div_id=node['div_id'],
+                               filename=filename)
     self.body.append(html)
     raise nodes.SkipNode
 
