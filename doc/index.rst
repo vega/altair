@@ -34,7 +34,7 @@ Documentation
 .. toctree::
    :maxdepth: 2
 
-   quickstart
+   basic-tutorial
    installation
    displaying
    tutorials

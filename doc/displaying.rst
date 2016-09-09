@@ -17,26 +17,26 @@ visualizations. For example, consider the following plot specification
 The ``chart`` object defined here is an Altair chart, which contains functionality
 to generate a JSON encoding that conforms to the `Vega-Lite Schema`_:
 
->>> print(chart.to_json(indent=2))
+>>> print(chart.to_json(indent=2, sort_keys=True))
 {
+  "data": {
+    "url": "https://vega.github.io/vega-datasets/data/cars.json"
+  },
   "encoding": {
     "color": {
       "field": "Origin",
       "type": "nominal"
     },
-    "y": {
-      "field": "Miles_per_Gallon",
-      "type": "quantitative"
-    },
     "x": {
       "field": "Horsepower",
       "type": "quantitative"
+    },
+    "y": {
+      "field": "Miles_per_Gallon",
+      "type": "quantitative"
     }
   },
-  "mark": "point",
-  "data": {
-    "url": "https://vega.github.io/vega-datasets/data/cars.json"
-  }
+  "mark": "point"
 }
 
 This specification is a full definition of a Vega-Lite visualization, and
@@ -47,11 +47,11 @@ can be rendered in one of several ways.
 Displaying Plots in Jupyter Notebook
 ------------------------------------
 
-Perhaps the most straightforward way to render Altair visualizations is in
-the `Jupyter Notebook`_.
-If you have correctly configured the optional `ipyvega`_ dependency
-(See :ref:`Installation`), then the chart object will automatically
-be represented within the notebook as a rendered plot:
+Perhaps the most straightforward way to interactively create and render
+Altair visualizations is in the `Jupyter Notebook`_.
+If you have installed correctly configured the `ipyvega`_ package
+(See :ref:`Installation`), then a chart on the last line of a code cell
+will automatically be represented within the notebook as a rendered plot:
 
 .. altair-plot::
 
@@ -64,6 +64,10 @@ be represented within the notebook as a rendered plot:
         color='Origin:N',
     )
 
+Alternatively, you can use ``chart.display()`` to more explicitly display
+any chart object
+
+.. _displaying-plots-html:
 
 Outputting Plots as HTML
 ------------------------
@@ -73,12 +77,14 @@ with the javascript commands to render it:
 
 >>> html = chart.to_html()
 >>> with open('chart.html', 'w') as f:
-...     f.write(html)
+...     f.write(html)  # doctest: +SKIP
 
 If you then point your browser at ``chart.html``, you will see the rendered result.
 For more information on embedding Vega-Lite plots within HTML pages, see
 Vega-Lite's documentation, in particular
 `Embedding Vega-Lite <http://vega.github.io/vega-lite/usage/embed.html>`_.
+
+.. _displaying-plots-server:
 
 Displaying Plots via a Local HTTP Server
 ----------------------------------------
@@ -92,6 +98,7 @@ Given a chart object, you can do this with
 Serving to http://127.0.0.1:8888/    [Ctrl-C to exit]
 127.0.0.1 - - [15/Sep/2016 14:40:39] "GET / HTTP/1.1" 200 -
 
+.. _displaying-plots-vega-editor:
 
 Online Vega-Lite Editor
 -----------------------
