@@ -21,6 +21,8 @@ except ImportError:
     altair = None
 
 
+# TODO: can we put these script tags in the document header?
+
 VGL_TEMPLATE = jinja2.Template("""
 <div id="{{ div_id }}">
 <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -36,13 +38,14 @@ VGL_TEMPLATE = jinja2.Template("""
 
 def exec_then_eval(code):
     """Exec a code block & return evaluation of the last line"""
+    # TODO: make this less brittle.
+
     block = ast.parse(code, mode='exec')
     last = ast.Expression(block.body.pop().value)
 
-    globals = {}
-    locals = {}
-    exec(compile(block, '<string>', mode='exec'), globals, locals)
-    return eval(compile(last, '<string>', mode='eval'), globals, locals)
+    _globals, _locals = {}, {}
+    exec(compile(block, '<string>', mode='exec'), _globals, _locals)
+    return eval(compile(last, '<string>', mode='eval'), _globals, _locals)
 
 
 class altair_plot(nodes.General, nodes.Element):
@@ -53,8 +56,7 @@ class AltairPlotDirective(Directive):
 
     has_content = True
 
-    option_spec = {'show-json': flag,
-                   'hide-code': flag,
+    option_spec = {'hide-code': flag,
                    'code-below': flag,
                    'alt': unchanged}
 
@@ -63,43 +65,35 @@ class AltairPlotDirective(Directive):
         app = env.app
 
         show_code = 'hide-code' not in self.options
-        show_json = 'show-json' in self.options
         code_below = 'code-below' in self.options
 
         code = '\n'.join(self.content)
-        chart = exec_then_eval(code)
-        spec = chart.to_dict()
 
         if show_code:
             source_literal = nodes.literal_block(code, code)
             source_literal['language'] = 'python'
 
-        if show_json:
-            spec_json = json.dumps(spec, indent=2)
-            json_literal = nodes.literal_block(specjson, specjson)
-            json_literal['language'] = 'json'
-
         #get the name of the source file we are currently processing
         rst_source = self.state_machine.document['source']
         rst_dir = os.path.dirname(rst_source)
         rst_filename = os.path.basename(rst_source)
-        rst_base = rst_filename.replace('.', '-')
 
         # use the source file name to construct a friendly target_id
         serialno = env.new_serialno('altair-plot')
-        target_id = "{0}-altair-source-{1}".format(rst_base, serialno)
+        rst_base = rst_filename.replace('.', '-')
         div_id = "{0}-altair-plot-{1}".format(rst_base, serialno)
+        target_id = "{0}-altair-source-{1}".format(rst_base, serialno)
         target_node = nodes.target('', '', ids=[target_id])
 
-        # this is the node in which the plot will appear
+        # create the node in which the plot will appear;
+        # this will be processed by html_visit_altair_plot
         plot_node = altair_plot()
         plot_node['target_id'] = target_id
         plot_node['div_id'] = div_id
-        plot_node['source'] = source_literal
+        plot_node['code'] = code
         plot_node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
         plot_node['rst_source'] = rst_source
         plot_node['rst_lineno'] = self.lineno
-        plot_node['spec'] = spec
 
         if 'alt' in self.options:
             plot_node['alt'] = self.options['alt']
@@ -110,8 +104,6 @@ class AltairPlotDirective(Directive):
             result += [plot_node]
         if show_code:
             result += [source_literal]
-        if show_json:
-            result += [json_literal]
         if not code_below:
             result += [plot_node]
 
@@ -119,9 +111,14 @@ class AltairPlotDirective(Directive):
 
 
 def html_visit_altair_plot(self, node):
+    # Execute the code, evaluating and returning the last line
+    chart = exec_then_eval(node['code'])
+    # Last line should be a chart; convert to spec dict
+    spec = chart.to_dict()
+
     # Create the vega-lite spec to embed
     embed_spec = json.dumps({'mode': 'vega-lite',
-                             'spec': node['spec']})
+                             'spec': spec})
 
     # Write embed_spec to a *.vl.json file
     dest_dir = os.path.join(self.builder.outdir, node['relpath'])
@@ -132,7 +129,7 @@ def html_visit_altair_plot(self, node):
     with open(dest_path, 'w') as f:
         f.write(embed_spec)
 
-    # Create a template that will render this file
+    # Pass relevant info into the template and append to the output
     html = VGL_TEMPLATE.render(div_id=node['div_id'],
                                filename=filename)
     self.body.append(html)
