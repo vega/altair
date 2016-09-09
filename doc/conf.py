@@ -34,7 +34,8 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
-    'altair_ext.altairplot'
+    'altair_ext.altairplot',
+    'altair_ext.altairgallery',
 ]
 
 autodoc_default_flags = ['members']

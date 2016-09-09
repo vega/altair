@@ -14,6 +14,8 @@ from sphinx.locale import _
 from sphinx import addnodes, directives
 from sphinx.util.nodes import set_source_info
 
+from .utils import exec_then_eval
+
 try:
     import altair
     from altair.api import TopLevelMixin
@@ -34,18 +36,6 @@ VGL_TEMPLATE = jinja2.Template("""
 </script>
 </div>
 """)
-
-
-def exec_then_eval(code):
-    """Exec a code block & return evaluation of the last line"""
-    # TODO: make this less brittle.
-
-    block = ast.parse(code, mode='exec')
-    last = ast.Expression(block.body.pop().value)
-
-    _globals, _locals = {}, {}
-    exec(compile(block, '<string>', mode='exec'), _globals, _locals)
-    return eval(compile(last, '<string>', mode='eval'), _globals, _locals)
 
 
 class altair_plot(nodes.General, nodes.Element):
@@ -118,6 +108,9 @@ def html_visit_altair_plot(self, node):
 
     # Create the vega-lite spec to embed
     embed_spec = json.dumps({'mode': 'vega-lite',
+                             'actions': {'editor': True,
+                                         'source': False,
+                                         'export': True},
                              'spec': spec})
 
     # Write embed_spec to a *.vl.json file
