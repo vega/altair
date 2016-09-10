@@ -1,7 +1,7 @@
 .. _basic-tutorial:
 
-Basic Altair Tutorial
-=====================
+Getting Started with Altair
+===========================
 
 .. currentmodule:: altair
 

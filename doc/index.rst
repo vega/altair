@@ -25,8 +25,7 @@ Here is an example of using the Altair API to quickly visualize a dataset:
         color='Origin',
     )
 
-
-
+For more information on how to use Altair for your data, see the documentation below:
 
 Documentation
 -------------
@@ -34,12 +33,11 @@ Documentation
 .. toctree::
    :maxdepth: 2
 
-   basic-tutorial
    installation
+   tutorials/index
    displaying
-   tutorials
    documentation
-   examples
+   gallery
    API
 
 
