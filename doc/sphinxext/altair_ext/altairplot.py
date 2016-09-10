@@ -42,6 +42,36 @@ class altair_plot(nodes.General, nodes.Element):
     pass
 
 
+class AltairPlotSetupDirective(Directive):
+    has_content = True
+
+    def run(self):
+        env = self.state.document.settings.env
+
+        targetid = "altair-plot-{0}".format(env.new_serialno('altair-plot'))
+        targetnode = nodes.target('', '', ids=[targetid])
+
+        code = '\n'.join(self.content)
+
+        if not hasattr(env, 'altair_plot_setup'):
+            env.altair_plot_setup = []
+        env.altair_plot_setup.append({
+            'docname': env.docname,
+            'lineno': self.lineno,
+            'code': code,
+            'target': targetnode,
+        })
+
+        return [targetnode]
+
+
+def purge_altair_plot_setup(app, env, docname):
+    if not hasattr(env, 'altair_plot_setup'):
+        return
+    env.altair_plot_setup = [item for item in env.altair_plot_setup
+                             if item['docname'] != docname]
+
+
 class AltairPlotDirective(Directive):
 
     has_content = True
@@ -57,6 +87,9 @@ class AltairPlotDirective(Directive):
         show_code = 'hide-code' not in self.options
         code_below = 'code-below' in self.options
 
+        setupcode = '\n'.join(item['code']
+                              for item in getattr(env, 'altair_plot_setup', [])
+                              if item['docname'] == env.docname)
         code = '\n'.join(self.content)
 
         if show_code:
@@ -81,6 +114,7 @@ class AltairPlotDirective(Directive):
         plot_node['target_id'] = target_id
         plot_node['div_id'] = div_id
         plot_node['code'] = code
+        plot_node['setupcode'] = setupcode
         plot_node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
         plot_node['rst_source'] = rst_source
         plot_node['rst_lineno'] = self.lineno
@@ -101,8 +135,14 @@ class AltairPlotDirective(Directive):
 
 
 def html_visit_altair_plot(self, node):
-    # Execute the code, evaluating and returning the last line
-    chart = exec_then_eval(node['code'])
+    # Execute the setup code, saving the global & local state
+    _globals, _locals = {}, {}
+    if node['setupcode']:
+        exec(node['setupcode'], _globals, _locals)
+
+    # Execute the plot code in this context, evaluating the last line
+    chart = exec_then_eval(node['code'], _globals, _locals)
+
     # Last line should be a chart; convert to spec dict
     spec = chart.to_dict()
 
@@ -130,17 +170,12 @@ def html_visit_altair_plot(self, node):
 
 
 def generic_visit_altair_plot(self, node):
+    # TODO: figure out PNGs and insert them here
     if 'alt' in node.attributes:
         self.body.append(_('[ graph: %s ]') % node['alt'])
     else:
         self.body.append(_('[ graph ]'))
     raise nodes.SkipNode
-
-
-latex_visit_altair_plot = generic_visit_altair_plot
-texinfo_visit_altair_plot = generic_visit_altair_plot
-text_visit_altair_plot = generic_visit_altair_plot
-man_visit_altair_plot = generic_visit_altair_plot
 
 
 def setup(app):
@@ -150,11 +185,13 @@ def setup(app):
 
     app.add_node(altair_plot,
                  html=(html_visit_altair_plot, None),
-                 latex=(latex_visit_altair_plot, None),
-                 texinfo=(texinfo_visit_altair_plot, None),
-                 text=(text_visit_altair_plot, None),
-                 man=(man_visit_altair_plot, None))
+                 latex=(generic_visit_altair_plot, None),
+                 texinfo=(generic_visit_altair_plot, None),
+                 text=(generic_visit_altair_plot, None),
+                 man=(generic_visit_altair_plot, None))
 
     app.add_directive('altair-plot', AltairPlotDirective)
+    app.add_directive('altair-plot-setup', AltairPlotSetupDirective)
+    app.connect('env-purge-doc', purge_altair_plot_setup)
 
     return {'version': '0.1'}
