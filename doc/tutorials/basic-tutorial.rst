@@ -53,6 +53,14 @@ numerical variable in column b:
     data = pd.DataFrame({'a': list('CCCDDDEEE'),
                          'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
 
+.. altair-plot-setup::
+
+    from altair import *
+    import pandas as pd
+    data = pd.DataFrame({'a': list('CCCDDDEEE'),
+                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
+
+
 
 When using Altair, datasets are most commonly provided as a Dataframe.
 As we will see, the labeled columns of the dataframe are an essential
@@ -82,17 +90,9 @@ data to be visualized. This is done via the ``mark`` attribute of the chart
 object, which is most conveniently accessed via the ``Chart.mark_*`` methods.
 For example, we can show the data as a point using :meth:`~Chart.mark_point`:
 
-.. testcode::
-
-    Chart(data).mark_point()
 
 .. altair-plot::
-    :hide-code:
 
-    from altair import Chart
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
     Chart(data).mark_point()
 
 Here the rendering consists of one point per row in the dataset, all plotted
@@ -104,22 +104,12 @@ For example, we could *encode* the variable ``a`` of the data with the
 ``x`` channel, which represents the x-axis position of the points.
 This can be done straightforwardly via the :meth:`Chart.encode` method:
 
-.. testcode::
-
-    Chart(data).mark_point().encode(
-        x='a',
-    )
-
 .. altair-plot::
-    :hide-code:
 
-    from altair import Chart
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
     Chart(data).mark_point().encode(
         x='a',
     )
+
 
 The ``encode()`` method builds a key-value mapping between encoding channels
 (such as ``x``, ``y``, ``color``, ``shape``, ``size``, etc.) to columns in
@@ -132,23 +122,11 @@ Though we've now separated the data by one attribute, we still have multiple
 points overlapping within each category. Let's further separate these by
 adding a ``y`` encoding channel, mapped to the ``"b"`` column:
 
-.. testcode::
+.. altair-plot::
 
     Chart(data).mark_point().encode(
         x='a',
         y='b'
-    )
-
-.. altair-plot::
-    :hide-code:
-
-    from altair import Chart
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
-    Chart(data).mark_point().encode(
-        x='a',
-        y='b',
     )
 
 The type of the data in the ``"b"`` column is again automatically-inferred
@@ -169,23 +147,11 @@ syntax for *aggregation* of data.
 For example, we can compute the average of all values by specifying this
 aggregate within the column identifier:
 
-.. testcode::
+.. altair-plot::
 
     Chart(data).mark_point().encode(
         x='a',
         y='average(b)'
-    )
-
-.. altair-plot::
-    :hide-code:
-
-    from altair import Chart
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
-    Chart(data).mark_point().encode(
-        x='a',
-        y='average(b)',
     )
 
 Now within each x-axis category, we see a single point reflecting the
@@ -195,46 +161,22 @@ Typically, aggregated values are not represented by point markings,
 but by bar markings. We can do this by replacing :meth:`~Chart.mark_point`
 with :meth:`~Chart.mark_bar`:
 
-.. testcode::
+.. altair-plot::
 
     Chart(data).mark_bar().encode(
         x='a',
         y='average(b)'
     )
 
-.. altair-plot::
-    :hide-code:
-
-    from altair import Chart
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
-    Chart(data).mark_bar().encode(
-        x='a',
-        y='average(b)',
-    )
-
 Because the categorical feature is mapped to the ``x``-axis, the result is
 a vertical bar chart. To get a horizontal bar chart, all we need is to
 swap the ``x`` and ``y`` keywords:
 
-.. testcode::
+.. altair-plot::
 
     Chart(data).mark_bar().encode(
         y='a',
         x='average(b)'
-    )
-
-.. altair-plot::
-    :hide-code:
-
-    from altair import Chart
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
-    Chart(data).mark_bar().encode(
-        y='a',
-        x='average(b)',
     )
 
 Aside: Examining the JSON Output
@@ -304,22 +246,10 @@ This more verbose means of specifying channels can be used directly in
 Altair chart specifications, a fact that becomes useful when using some
 of the more advanced field configurations:
 
-.. testcode::
+.. altair-plot::
 
     from altair import X, Y
 
-    Chart(data).mark_bar().encode(
-        X('a', type='nominal'),
-        Y('b', type='quantitative', aggregate='average')
-    )
-
-.. altair-plot::
-    :hide-code:
-
-    from altair import Chart, X, Y
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
     Chart(data).mark_bar().encode(
         X('a', type='nominal'),
         Y('b', type='quantitative', aggregate='average')
@@ -338,7 +268,7 @@ of channel classes, and we can specify the color of the marking by setting
 the ``color`` keyword of the ``Chart.mark_*`` methods to any valid HTML
 color string:
 
-.. testcode::
+.. altair-plot::
 
     from altair import X, Y, Axis
 
@@ -347,18 +277,6 @@ color string:
         Y('average(b)', axis=Axis(title='avg(b) by category'))
     )
 
-.. altair-plot::
-    :hide-code:
-
-    from altair import Chart, X, Y, Axis
-    import pandas as pd
-    data = pd.DataFrame({'a': list('CCCDDDEEE'),
-                         'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
-
-    Chart(data).mark_bar(color='lightgreen').encode(
-        X('a', axis=Axis(title='category')),
-        Y('average(b)', axis=Axis(title='average of b within category'))
-    )
 
 .. _basic-tutorial-publishing:
 
@@ -370,7 +288,7 @@ Vega-Embed_ javascript package.
 A simple example of a stand-alone HTML document can be generated for any
 chart using the :meth:`Chart.to_html` method:
 
-.. testcode::
+.. test-code::
 
     chart = Chart(data).mark_bar().encode(
         x='a',
