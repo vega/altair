@@ -3,4 +3,5 @@ Altair Tutorials
 
 .. toctree::
 
-   basic-tutorial
+   getting-started
+   exploring-weather

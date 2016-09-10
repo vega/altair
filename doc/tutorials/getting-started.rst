@@ -1,7 +1,10 @@
-.. _basic-tutorial:
+.. _tutorial-getting-started:
 
 Getting Started with Altair
 ===========================
+
+(this tutorial is adapted from `Vega-Lite's documentation
+<http://vega.github.io/vega-lite/tutorials/getting_started.html>`_)
 
 .. currentmodule:: altair
 
@@ -53,7 +56,7 @@ numerical variable in column b:
     data = pd.DataFrame({'a': list('CCCDDDEEE'),
                          'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
 
-.. altair-plot-setup::
+.. altair-setup::
 
     from altair import *
     import pandas as pd

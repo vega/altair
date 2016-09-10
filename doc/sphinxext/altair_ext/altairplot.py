@@ -42,8 +42,10 @@ class altair_plot(nodes.General, nodes.Element):
     pass
 
 
-class AltairPlotSetupDirective(Directive):
+class AltairSetupDirective(Directive):
     has_content = True
+
+    option_spec = {'show': flag}
 
     def run(self):
         env = self.state.document.settings.env
@@ -53,6 +55,7 @@ class AltairPlotSetupDirective(Directive):
 
         code = '\n'.join(self.content)
 
+        # Here we cache the code for use in later setup
         if not hasattr(env, 'altair_plot_setup'):
             env.altair_plot_setup = []
         env.altair_plot_setup.append({
@@ -62,7 +65,14 @@ class AltairPlotSetupDirective(Directive):
             'target': targetnode,
         })
 
-        return [targetnode]
+        result = [targetnode]
+
+        if 'show' in self.options:
+            source_literal = nodes.literal_block(code, code)
+            source_literal['language'] = 'python'
+            result.append(source_literal)
+
+        return result
 
 
 def purge_altair_plot_setup(app, env, docname):
@@ -90,6 +100,9 @@ class AltairPlotDirective(Directive):
         setupcode = '\n'.join(item['code']
                               for item in getattr(env, 'altair_plot_setup', [])
                               if item['docname'] == env.docname)
+        if setupcode:
+            print(setupcode)
+            
         code = '\n'.join(self.content)
 
         if show_code:
@@ -191,7 +204,7 @@ def setup(app):
                  man=(generic_visit_altair_plot, None))
 
     app.add_directive('altair-plot', AltairPlotDirective)
-    app.add_directive('altair-plot-setup', AltairPlotSetupDirective)
+    app.add_directive('altair-setup', AltairSetupDirective)
     app.connect('env-purge-doc', purge_altair_plot_setup)
 
     return {'version': '0.1'}
