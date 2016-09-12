@@ -361,3 +361,12 @@ def test_chart_to_json():
 
     import json
     assert chart.to_dict() == json.loads(chart.to_json())
+
+
+def test_chart_serve():
+    from altair.utils.server import MockServer
+
+    data = pd.DataFrame({'x':np.random.rand(10), 'y':np.random.rand(10)})
+    chart = Chart(data).mark_line().encode(x='x', y='y')
+
+    chart.serve(open_browser=False, http_server=MockServer)
