@@ -195,12 +195,9 @@ class TopLevelMixin(object):
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     _data = None
 
-    name = T.Unicode()
-    description = T.Unicode()
-    transform = T.Instance(schema.Transform, default_value=None, allow_none=True)
-    mark = T.Enum(schema.Mark().values, default_value='point')
-    encoding = T.Instance(Encoding, default_value=None, allow_none=True)
-    config = T.Instance(schema.Config, allow_none=True)
+    # use specialized version of Encoding
+    encoding = T.Instance(Encoding, allow_none=True, default_value=None,
+                          help=schema.ExtendedUnitSpec.encoding.help)
 
     @property
     def data(self):
@@ -309,16 +306,14 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
             return lc
         else:
             raise TypeError('Can only add Charts/LayeredChart to Chart')
-    
+
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
 
-    name = T.Unicode()
-    description = T.Unicode()
-    layers = T.List(T.Instance(Chart), allow_none=True, default_value=None)
-    transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
-    config = T.Instance(schema.Config, allow_none=True, default_value=None)
+    # Use specialized version of Chart
+    layers = T.List(T.Instance(Chart), allow_none=True, default_value=None,
+                    help=schema.LayerSpec.layers.help)
 
     @property
     def data(self):
@@ -368,17 +363,16 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         else:
             self.layers = self.layers + [layer]
         return self
-    
+
 
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
     _data = None
 
-    name = T.Unicode()
-    description = T.Unicode()
-    facet = T.Instance(Facet, allow_none=True, default_value=None)
-    spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)], allow_none=True, default_value=None)
-    transform = T.Instance(schema.Transform, allow_none=True, default_value=None)
-    config = T.Instance(schema.Config, allow_none=True, default_value=None)
+    facet = T.Instance(Facet, allow_none=True, default_value=None,
+                       help=schema.FacetSpec.facet.help)
+    spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)],
+                   allow_none=True, default_value=None,
+                   help=schema.FacetSpec.spec.help)
 
     @property
     def data(self):
