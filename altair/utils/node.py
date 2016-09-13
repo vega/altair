@@ -47,6 +47,9 @@ class _NodeExecutor(object):
             f.write(out)
 
     def _chain(self, executable1, executable2, inputfile, outputfile):
+        # stdin/stdout piping is not yet supported
+        # see https://github.com/vega/vega/issues/612
+        # We'll use temporary files instead.
         with tempfile.NamedTemporaryFile(suffix='.json') as f:
             self._exec(executable1, inputfile, f.name)
             self._exec(executable2, f.name, outputfile)
@@ -95,6 +98,7 @@ class _NodeExecutor(object):
 
 
 def savechart_available(node_bin_dir=None):
+    """Check if savechart() command is available on your system"""
     node = _NodeExecutor(node_bin_dir=node_bin_dir)
     return node.savechart_available()
         
@@ -102,17 +106,24 @@ def savechart_available(node_bin_dir=None):
 
 def savechart(chart, filename, filetype=None,
               node_bin_dir=None, verbose=False):
-    """EXPERIMENTAL means of saving a chart to png or svg
+    """**EXPERIMENTAL** function to save a chart to png or svg
 
     Note that this requires several nodejs packages to be installed and
-    correctly configured. Before running this, you must use the node
-    package manager and install:
+    correctly configured. Before running this, you must have nodejs on
+    your system and use the node package manager and install the ``canvas``
+    and ``vega-lite`` packages.
 
+    If you are using anaconda, you can set it up this way:
+
+        $ conda create -n node-env -c conda-forge python=2.7 nodejs altair
+        $ source activate node-env
         $ npm install canvas vega-lite
 
-    The binaries used here (``vl2vg``, ``vg2png``, ``vg2svg``) will be
-    installed in the node binary directory, which should be passed supplied
-    via the ``node_bin_dir`` argument.
+    The node binaries used here (``vl2vg``, ``vg2png``, ``vg2svg``) will be
+    installed in the node root directory, which should be automatically
+    detected by this function. If you have these nodejs packages installed
+    and this function doesn't work, try explicitly passing their path using
+    the ``node_bin_dir`` argument.
 
     Parameters
     ----------
@@ -143,6 +154,10 @@ def savechart(chart, filename, filetype=None,
         raise ValueError("Must install and configure nodejs tools "
                          "to use savechart")
         
+    
+    # stdin/stdout piping is not yet supported
+    # see https://github.com/vega/vega/issues/612
+    # We'll use temporary files instead.
     with tempfile.NamedTemporaryFile(suffix='.json') as f:
         with open(f.name, 'w') as ff:
             ff.write(chart.to_json())
