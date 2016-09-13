@@ -12,6 +12,10 @@ def test_instantiate_AggregateOp():
     obj = AggregateOp()
 
 
+def test_instantiate_AreaOverlay():
+    obj = AreaOverlay()
+
+
 def test_instantiate_Axis():
     obj = Axis()
 
@@ -22,6 +26,10 @@ def test_instantiate_AxisConfig():
 
 def test_instantiate_AxisOrient():
     obj = AxisOrient()
+
+
+def test_instantiate_BandSize():
+    obj = BandSize()
 
 
 def test_instantiate_Bin():
@@ -48,8 +56,20 @@ def test_instantiate_DataFormat():
     obj = DataFormat()
 
 
+def test_instantiate_DataFormatType():
+    obj = DataFormatType()
+
+
+def test_instantiate_DateTime():
+    obj = DateTime()
+
+
 def test_instantiate_Encoding():
     obj = Encoding()
+
+
+def test_instantiate_EqualFilter():
+    obj = EqualFilter()
 
 
 def test_instantiate_ExtendedUnitSpec():
@@ -124,12 +144,28 @@ def test_instantiate_NiceTime():
     obj = NiceTime()
 
 
+def test_instantiate_OneOfFilter():
+    obj = OneOfFilter()
+
+
 def test_instantiate_OrderChannelDef():
     obj = OrderChannelDef()
 
 
+def test_instantiate_Orient():
+    obj = Orient()
+
+
+def test_instantiate_OverlayConfig():
+    obj = OverlayConfig()
+
+
 def test_instantiate_PositionChannelDef():
     obj = PositionChannelDef()
+
+
+def test_instantiate_RangeFilter():
+    obj = RangeFilter()
 
 
 def test_instantiate_Scale():

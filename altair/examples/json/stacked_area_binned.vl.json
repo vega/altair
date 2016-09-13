@@ -1,0 +1,23 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "color": {
+            "field": "Cylinders",
+            "type": "nominal"
+        },
+        "x": {
+            "bin": {},
+            "field": "Acceleration",
+            "type": "quantitative"
+        },
+        "y": {
+            "aggregate": "mean",
+            "bin": false,
+            "field": "Horsepower",
+            "type": "quantitative"
+        }
+    },
+    "mark": "area"
+}

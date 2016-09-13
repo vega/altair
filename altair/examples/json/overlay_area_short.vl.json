@@ -1,14 +1,17 @@
 {
+    "config": {
+        "overlay": {
+            "area": "linepoint"
+        }
+    },
     "data": {
-        "formatType": "csv",
+        "format": {
+            "type": "csv"
+        },
         "url": "http://vega.github.io/vega-lite/data/stocks.csv"
     },
-    "description": "Stock prices of 5 Tech Companies Over Time.",
+    "description": "Google's stock price over time.",
     "encoding": {
-        "color": {
-            "field": "symbol",
-            "type": "nominal"
-        },
         "x": {
             "field": "date",
             "type": "temporal"
@@ -18,5 +21,8 @@
             "type": "quantitative"
         }
     },
-    "mark": "line"
+    "mark": "area",
+    "transform": {
+        "filter": "datum.symbol==='GOOG'"
+    }
 }

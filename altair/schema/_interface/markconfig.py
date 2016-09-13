@@ -7,6 +7,7 @@ from .fontstyle import FontStyle
 from .fontweight import FontWeight
 from .horizontalalign import HorizontalAlign
 from .interpolate import Interpolate
+from .orient import Orient
 from .shape import Shape
 from .stackoffset import StackOffset
 from .verticalalign import VerticalAlign
@@ -57,13 +58,13 @@ class MarkConfig(BaseObject):
         Size of line mark.
     opacity: CFloat
         
-    orient: Unicode
+    orient: Orient
         The orientation of a non-stacked bar, tick, area, and line charts.
     radius: CFloat
         Polar coordinate radial offset, in pixels, of the text label from the origin determined by the x and y properties.
     ruleSize: CFloat
         Size of rule mark.
-    shape: Shape
+    shape: Union(Shape, Unicode)
         The symbol shape to use.
     shortTimeLabels: Bool
         Whether month names and weekday names should be abbreviated.
@@ -112,10 +113,10 @@ class MarkConfig(BaseObject):
     interpolate = Interpolate(allow_none=True, default_value=None, help="""The line interpolation method to use.""")
     lineSize = T.CFloat(allow_none=True, default_value=None, help="""Size of line mark.""")
     opacity = T.CFloat(allow_none=True, default_value=None, max=1, min=0)
-    orient = T.Unicode(allow_none=True, default_value=None, help="""The orientation of a non-stacked bar, tick, area, and line charts.""")
+    orient = Orient(allow_none=True, default_value=None, help="""The orientation of a non-stacked bar, tick, area, and line charts.""")
     radius = T.CFloat(allow_none=True, default_value=None, help="""Polar coordinate radial offset, in pixels, of the text label from the origin determined by the x and y properties.""")
     ruleSize = T.CFloat(allow_none=True, default_value=None, help="""Size of rule mark.""")
-    shape = Shape(allow_none=True, default_value=None, help="""The symbol shape to use.""")
+    shape = T.Union([Shape(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None)])
     shortTimeLabels = T.Bool(allow_none=True, default_value=None, help="""Whether month names and weekday names should be abbreviated.""")
     size = T.CFloat(allow_none=True, default_value=None, help="""The pixel area each the point.""")
     stacked = StackOffset(allow_none=True, default_value=None)

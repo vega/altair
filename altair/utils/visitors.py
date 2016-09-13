@@ -134,7 +134,7 @@ class ToCode(Visitor):
             # data as a Data trait: return raw URL if possible
             url_only = ('url' in obj.data and
                         'values' not in obj.data and
-                        'formatType' not in obj.data)
+                        'format' not in obj.data)
             if url_only:
                 code.add_args("'{0}'".format(obj.data.url))
             else:
@@ -192,19 +192,15 @@ class FromDict(Visitor):
         # Remove data first and handle it specially later
         if 'data' in dct:
             dct = dct.copy()
-        data = dct.pop('data', None)
-
-        obj = self.clsvisit_BaseObject(cls, dct)
-
-        # data is not a typical trait; do special handling here.
-        if data is not None:
-            values_only = ('values' in data and
-                           'url' not in data and
-                           'dataFormat' not in data)
-            if values_only:
-                obj.data = pd.DataFrame(data['values'])
+            data = dct.pop('data')
+            if set(data.keys()) == {'values'}:
+                data = pd.DataFrame(data['values'])
             else:
-                obj.data = schema.Data(**data)
+                data = self.clsvisit_BaseObject(schema.Data, data)
+            obj = self.clsvisit_BaseObject(cls, dct)
+            obj.data = data
+        else:
+            obj = self.clsvisit_BaseObject(cls, dct)
         return obj
 
     clsvisit_Chart = _clsvisit_with_data

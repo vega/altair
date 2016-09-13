@@ -1,6 +1,8 @@
 {
     "data": {
-        "formatType": "csv",
+        "format": {
+            "type": "csv"
+        },
         "url": "http://vega.github.io/vega-lite/data/seattle-temps.csv"
     },
     "description": "Temperature in Seattle as a bar chart with yearmonth time unit.",
