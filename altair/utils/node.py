@@ -36,12 +36,6 @@ class _NodeExecutor(object):
         full_executable = os.path.join(self.node_bin_dir, executable)
         if not os.path.exists(full_executable):
             raise ValueError('{0} not found'.format(full_executable))
-        #command = '{0} {1} > {2}'.format(full_executable,
-        #                                 inputfile,
-        #                                 outputfile)
-        #if self.verbose:
-        #    print('>', command)
-        #os.system(command)
         sp = subprocess.Popen([full_executable, inputfile],
                               stdout=subprocess.PIPE,
                               stderr=subprocess.PIPE)
@@ -84,8 +78,6 @@ class _NodeExecutor(object):
         if hasattr(rootdir, 'decode'):
             # decode bytes in Pytho 3
             rootdir = rootdir.strip().decode('utf-8')
-        if not os.path.exists(rootdir):
-            raise ValueError('npm root did not return a valid directory')
         return os.path.join(rootdir, '.bin')
 
     def savechart_available(self):
