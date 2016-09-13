@@ -123,10 +123,12 @@ class BaseObject(T.HasTraits):
         from ..utils.visitors import FromDict
         return FromDict().clsvisit(cls, dct)
 
-    def to_dict(self, data=True):
+    def to_dict(self, data=True, cleanup_data=False):
         """Emit the JSON representation for this object as as dict."""
         from ..utils.visitors import ToDict
         self._finalize()
+        if cleanup_data and hasattr(self, '_cleanup_data'):
+            self._cleanup_data()
         return ToDict().visit(self, data)
 
     def to_json(self, data=True, **kwargs):

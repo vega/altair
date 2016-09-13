@@ -41,6 +41,17 @@ def test_encode_update():
     assert chart1.to_dict() == chart2.to_dict()
 
 
+def test_cleanup_data():
+    data = pd.DataFrame({'x': [1, 2, 3],
+                         'y': [4, 5, 6],
+                         'z': [7, 8, 9]})
+    chart = Chart(data).encode(x='x', y='y')
+    D = chart.to_dict(cleanup_data=True)
+    assert ('x' in chart.data.columns and
+            'y' in chart.data.columns and
+            'z' not in chart.data.columns)
+
+
 def test_configure_update():
     # Test that configure updates rather than overwrites
     chart1 = Chart().configure(MarkConfig(color='red'))\
@@ -348,7 +359,7 @@ def test_chart_add():
     data = pd.DataFrame({'x':np.random.rand(10), 'y':np.random.rand(10)})
     l1 = Chart(data).mark_line().encode(x='x', y='y')
     l2 = Chart(data).mark_point().encode(x='x', y='y')
-    
+
     chart = l1+l2
     chart2 = LayeredChart()
     chart2.set_layers(l1, l2)
