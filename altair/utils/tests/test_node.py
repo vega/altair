@@ -4,7 +4,7 @@ from xml.etree import ElementTree
 import pytest
 import pandas as pd
 
-from altair.utils.node import savechart, savechart_available
+from altair.utils.node import savechart, savechart_available, NodeExecError
 from altair import Chart
 
 
@@ -34,9 +34,15 @@ def test_savechart():
     chart = Chart(data).mark_point().encode(x='x', y='y')
     
     with tempfile.NamedTemporaryFile(suffix='.png') as f:
-        savechart(chart, f.name)
+        try:
+            savechart(chart, f.name)
+        except NodeExecError:
+            pytest.skip('png failed due to improper nodejs setup')
         assert consistent_with_png(f.name)
 
     with tempfile.NamedTemporaryFile(suffix='.svg') as f:
-        savechart(chart, f.name)
+        try:
+            savechart(chart, f.name)
+        except NodeExecError:
+            pytest.skip('svg failed due to improper nodejs setup')
         assert consistent_with_svg(f.name)

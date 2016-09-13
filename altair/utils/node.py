@@ -5,11 +5,16 @@ from __future__ import print_function
 
 import os
 import tempfile
+import subprocess
 
 
-__all__ = ['savechart', 'savechart_available']
+__all__ = ['savechart', 'savechart_available', 'NodeExecError']
 
 SUPPORTED_FILETYPES = ['png', 'svg']
+
+
+class NodeExecError(ValueError):
+    pass
 
 
 class _NodeExecutor(object):
@@ -31,12 +36,21 @@ class _NodeExecutor(object):
         full_executable = os.path.join(self.node_bin_dir, executable)
         if not os.path.exists(full_executable):
             raise ValueError('{0} not found'.format(full_executable))
-        command = '{0} {1} > {2}'.format(full_executable,
-                                         inputfile,
-                                         outputfile)
-        if self.verbose:
-            print('>', command)
-        os.system(command)
+        #command = '{0} {1} > {2}'.format(full_executable,
+        #                                 inputfile,
+        #                                 outputfile)
+        #if self.verbose:
+        #    print('>', command)
+        #os.system(command)
+        sp = subprocess.Popen([full_executable, inputfile],
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE)
+        out, err = sp.communicate()
+        if sp.returncode:
+            raise NodeExecError('``{0}`` failed: {1}'
+                                ''.format(executable, err))
+        with open(outputfile, 'wb') as f:
+            f.write(out)
 
     def _chain(self, executable1, executable2, inputfile, outputfile):
         with tempfile.NamedTemporaryFile(suffix='.json') as f:
@@ -60,9 +74,18 @@ class _NodeExecutor(object):
 
     @property
     def npm_root(self):
-        rootdir = os.popen('npm root').read().strip()
+        sp = subprocess.Popen(['npm', 'root'],
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE)
+        rootdir, err = sp.communicate()
+        if sp.returncode:
+            raise NodeExecError("``npm root`` failed: {0}".format(err))
+
+        if hasattr(rootdir, 'decode'):
+            # decode bytes in Pytho 3
+            rootdir = rootdir.strip().decode('utf-8')
         if not os.path.exists(rootdir):
-            raise ValueError('npm root did not return a valid filename')
+            raise ValueError('npm root did not return a valid directory')
         return os.path.join(rootdir, '.bin')
 
     def savechart_available(self):
