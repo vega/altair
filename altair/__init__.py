@@ -1,7 +1,6 @@
 __version__ = '1.1.0-dev0'
 
 from .api import (
-    load_vegalite_spec,
     Label,
     Formula,
     StackOffset,

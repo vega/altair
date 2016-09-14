@@ -49,22 +49,6 @@ from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, 
 from .schema import Encoding, Facet
 
 
-#*************************************************************************
-# Loading the spec
-#*************************************************************************
-def load_vegalite_spec(spec):
-    """Load a Vega-Lite spec and return an Altair object.
-
-    The spec should be in the form of a Python dictionary.
-    """
-    if 'layers' in spec:
-        return LayeredChart.from_dict(spec)
-    elif 'facet' in spec:
-        return FacetedChart.from_dict(spec)
-    else:
-        return Chart.from_dict(spec)
-
-
 def use_signature(Obj):
     """Apply call signature and documentation of Obj to the decorated method"""
     def decorate(f):
@@ -339,6 +323,15 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
             return lc
         else:
             raise TypeError('Can only add Charts/LayeredChart to Chart')
+
+    @classmethod
+    def from_dict(cls, spec):
+        if 'layers' in spec:
+            return LayeredChart.from_dict(spec)
+        elif 'facet' in spec:
+            return FacetedChart.from_dict(spec)
+        else:
+            return super(Chart, cls).from_dict(spec)
 
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
