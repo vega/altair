@@ -291,7 +291,7 @@ Vega-Embed_ javascript package.
 A simple example of a stand-alone HTML document can be generated for any
 chart using the :meth:`Chart.to_html` method:
 
-.. test-code::
+.. testcode::
 
     chart = Chart(data).mark_bar().encode(
         x='a',

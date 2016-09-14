@@ -1,6 +1,21 @@
 .. _api-documentation:
 
-API Documentation
-=================
+Altair Documentation
+====================
 
 *Coming Soon*
+
+.. _data-types:
+
+Data Types
+----------
+
+.. _encoding-reference:
+
+Encodings
+---------
+
+.. _mark-reference:
+
+Marks
+-----

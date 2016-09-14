@@ -95,7 +95,7 @@ year *and* month (``yearmonth``) rather than just month.
 This allows us to see seasonal trends, with daily variation smoothed out.
 We might also wish to see the maximum and minimum temperature in each month:
 
-.. altair_plot::
+.. altair-plot::
 
     Chart(df).mark_line().encode(
         X('date:T', timeUnit='yearmonth'),

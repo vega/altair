@@ -36,8 +36,8 @@ Documentation
    installation
    tutorials/index
    displaying
+   gallery/index
    documentation
-   gallery
    API
 
 

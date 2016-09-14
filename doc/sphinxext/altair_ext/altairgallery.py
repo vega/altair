@@ -1,42 +1,50 @@
-""" Generate a gallery of Altair plots from an iterable Vega-Lite JSON"""
-
-import warnings
 import os
-
-from docutils import nodes
-from docutils.parsers.rst.directives import flag, unchanged
-from docutils.statemachine import ViewList
+import warnings
 
 import jinja2
 
-from sphinx.util.compat import Directive
-
+from .utils import strip_vl_extension
 from altair import Chart
-
-from .utils import exec_then_eval, strip_vl_extension
+from altair.examples import iter_examples
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""
-{% for name in names %}
-* |{{ name }}| {{ name }}
+.. _{{ index_ref }}:
+
+Altair Example Gallery
+----------------------
+
+The following examples are automatically generated from
+`Vega-Lite's Examples <http://vega.github.io/vega-lite/examples>`_
+
+{% for example in examples %}
+* |{{ example.name }}| {{ example.name }}
 {% endfor %}
 
-{% for name in names %}
-.. |{{ name }}| image:: /_static/gray-square.png {# /_images/gallery/{{ name }}.png #}
-    :target: gallery/{{ name }}.html
+{% for example in examples %}
+.. |{{ example.name }}| image:: /_static/gray-square.png {# /_images/gallery/{{ name }}.png #}
+    :target: {{ example.name }}.html
     :class: gallery
+{% endfor %}
+
+.. toctree::
+   :hidden:
+{% for example in examples %}
+   {{ example.name }}
 {% endfor %}
 """)
 
-DETAIL_TEMPLATE = jinja2.Template(u"""
+
+EXAMPLE_TEMPLATE = jinja2.Template(u"""
 .. _gallery_{{ name }}:
 
+{# Title with underline: #}
 {{ name }}
-{{ underline }}
+{% for char in name %}-{% endfor %}
 
-{% if prev_ref -%} < :ref:`{{ prev_ref }}` | {% endif %}
-:ref:`{{ up_ref }}`
-{%- if next_ref %} | :ref:`{{ next_ref }}` >{% endif %}
+{% if prev_ref -%} < :ref:`{{ prev_ref }}` {% endif %}
+| :ref:`{{ index_ref }}` |
+{%- if next_ref %} :ref:`{{ next_ref }}` >{% endif %}
 
 .. altair-plot::
     {% if code_below %}:code-below:{% endif %}
@@ -47,86 +55,57 @@ DETAIL_TEMPLATE = jinja2.Template(u"""
 """)
 
 
-class AltairGalleryDirective(Directive):
+def populate_examples(**kwargs):
+    """Iterate through Altair examples and extract code"""
+    examples = [{'json': json, 'name': strip_vl_extension(filename)}
+                 for i, (filename, json) in enumerate(iter_examples())]
 
-    has_content = True
+    for i, example in enumerate(examples):
+        try:
+            example['code'] = Chart.from_dict(example['json']).to_altair()
+        except Exception as e:
+            warnings.warn('altair-gallery: example {0} did not compile.: '
+                          '{1} {2}'.format(example['name'], type(e), str(e)))
+            example['code'] = '# (Altair JSON conversion failed).\nChart()'
 
-    option_spec = {
-        'code-below' : flag,
-        'index-ref' : unchanged,
-    }
+        if i > 0:
+            example['prev_ref'] = "gallery_" + examples[i - 1]['name']
+        else:
+            example['prev_ref'] = None
 
-    def run(self):
-        env = self.state.document.settings.env
-        app = env.app
+        if i < len(examples) - 1:
+            example['next_ref'] = "gallery_" + examples[i + 1]['name']
+        else:
+            example['next_ref'] = None
 
-        env.note_reread()
+        example['filename'] = '{0}.rst'.format(example['name'])
+        example.update(kwargs)
 
-        dest_dir = os.path.join(os.path.dirname(self.state_machine.node.source),
-                                "gallery")
+    return examples
 
-        target_id = "altair-plot-{0}".format(env.new_serialno('altair-plot'))
-        target_node = nodes.target('', '', ids=[target_id])
-        result = [target_node]
 
-        code_below = 'code-below' in self.options
-        index_ref = self.options.get('index-ref', 'examples-gallery')
+def main(app):
+    gallery_dir = app.builder.config.altair_gallery_dir
+    target_dir = os.path.join(app.builder.srcdir, gallery_dir)
 
-        examples = exec_then_eval('\n'.join(self.content))
-        examples = [{'name': strip_vl_extension(filename),
-                     'json': json} for filename, json in examples]
+    index_ref = 'example-gallery'
+    examples = populate_examples(index_ref=index_ref,
+                                 code_below=True)
 
-        for i, example in enumerate(examples):
-            name = example['name']
-            try:
-                code = Chart.from_dict(example['json']).to_altair()
-            except Exception as e:
-                warnings.warn('altair-gallery: example {0} did not compile.: '
-                              '{1} {2}'.format(name, type(e), str(e)))
-                code = '# (Altair JSON conversion failed).\nChart()'
-            prev_ref, next_ref = None, None
-            if i > 0:
-                prev_ref = "gallery_" + examples[i-1]['name']
-            if i < len(examples)-1:
-                next_ref = "gallery_" + examples[i+1]['name']
-            rst = DETAIL_TEMPLATE.render(
-                name=name,
-                underline="-"*len(name),
-                code=code,
-                prev_ref=prev_ref,
-                up_ref=index_ref,
-                next_ref=next_ref,
-                code_below=code_below,
-            )
-            with open(os.path.join(dest_dir, "%s.rst" % name), "w") as f:
-                f.write(rst)
-            env.clear_doc(os.path.join("gallery", name))
-            env.read_doc(os.path.join("gallery", name), app=app)
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
 
-        result = ViewList()
-        names = [example['name'] for example in examples]
+    # Write the gallery index file
+    with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
+        f.write(GALLERY_TEMPLATE.render(examples=examples,
+                                        index_ref=index_ref))
 
-        env.gallery_names = [os.path.join("gallery", n) for n in names]
-        text = GALLERY_TEMPLATE.render(names=names)
-        for line in text.split("\n"):
-            result.append(line, "<altair-gallery>")
-        node = nodes.paragraph()
-        node.document = self.state.document
-        self.state.nested_parse(result, 0, node)
+    # Write the individual example files
+    for example in examples:
+        with open(os.path.join(target_dir, example['filename']), 'w') as f:
+            f.write(EXAMPLE_TEMPLATE.render(example))
 
-        return node.children
-
-def env_updated_handler(app, env):
-    return getattr(env, 'gallery_names', [])
 
 def setup(app):
-
-    # Clear gallery before generating a new one
-    dirname = 'gallery'
-    if not os.path.exists(dirname):
-        os.makedirs(dirname)
-    for fname in os.listdir(dirname):
-        os.remove(os.path.join(dirname, fname))
-
-    app.connect('env-updated', env_updated_handler)
-    app.add_directive('altair-gallery', AltairGalleryDirective)
+    app.connect('builder-inited', main)
+    app.add_config_value('altair_gallery_dir', 'gallery', 'env')
