@@ -6,7 +6,7 @@ import jinja2
 
 from .utils import strip_vl_extension
 from altair import Chart
-from altair.examples import iter_examples
+from altair.examples import iter_examples_with_metadata
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""
@@ -19,7 +19,7 @@ The following examples are automatically generated from
 `Vega-Lite's Examples <http://vega.github.io/vega-lite/examples>`_
 
 {% for example in examples %}
-* |{{ example.name }}| {{ example.name }}
+* |{{ example.name }}| :ref:`gallery_{{ example.name }}`
 {% endfor %}
 
 {% for example in examples %}
@@ -32,15 +32,15 @@ The following examples are automatically generated from
    :hidden:
 {% for example in examples %}
    {{ example.name }}
-{% endfor %}
+{%- endfor %}
 """)
 
 
 EXAMPLE_TEMPLATE = jinja2.Template(u"""
 .. _gallery_{{ name }}:
 
-{{ name }}
-{% for char in name %}-{% endfor %}
+{{ title }}
+{% for char in title %}-{% endfor %}
 
 {% if prev_ref -%} < :ref:`{{ prev_ref }}` {% endif %}
 | :ref:`{{ gallery_ref }}` |
@@ -58,18 +58,18 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 def prev_this_next(it):
     """Utility to return (prev, this, next) tuples from an iterator"""
     i1, i2, i3 = tee(it, 3)
-    next(i3)
+    next(i3, None)
     return zip(chain([None], i1), i2, chain(i3, [None]))
 
 
 def populate_examples(**kwargs):
     """Iterate through Altair examples and extract code"""
-    examples = [{'json': json, 'name': strip_vl_extension(filename)}
-                for filename, json in iter_examples()]
+
+    examples = list(iter_examples_with_metadata())
 
     for prev_ex, example, next_ex in prev_this_next(examples):
         try:
-            code = Chart.from_dict(example['json']).to_altair()
+            code = Chart.from_dict(example['spec']).to_altair()
         except Exception as e:
             warnings.warn('altair-gallery: example {0} produced an error:\n'
                           '{1}\n{2}'.format(example['name'], type(e), str(e)))
