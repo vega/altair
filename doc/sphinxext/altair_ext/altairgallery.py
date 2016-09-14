@@ -18,8 +18,20 @@ GALLERY_TEMPLATE = jinja2.Template(u"""
 The following examples are automatically generated from
 `Vega-Lite's Examples <http://vega.github.io/vega-lite/examples>`_
 
-{% for example in examples %}
+{% for group in examples|groupby('category') %}
+* :ref:`gallery-category-{{ group.grouper }}`
+{% endfor %}
+
+{% for group in examples|groupby('category') %}
+.. _gallery-category-{{ group.grouper }}:
+
+{{ group.grouper }}
+{% for char in group.grouper %}~{% endfor %}
+
+{% for example in group.list %}
 * |{{ example.name }}| :ref:`gallery_{{ example.name }}`
+{% endfor %}
+
 {% endfor %}
 
 {% for example in examples %}
