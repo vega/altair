@@ -134,10 +134,10 @@ def test_transform_update():
     assert chart1.to_dict() == chart2.to_dict()
 
 
-def test_load_vegalite_spec():
+def test_Chart_from_dict():
     df = pd.DataFrame({'x':[1,2,3], 'y':[4,5,6]})
     obj = Chart(df).mark_point().encode(x='x', y='y')
-    obj2 = load_vegalite_spec(obj.to_dict())
+    obj2 = Chart.from_dict(obj.to_dict())
     assert obj.to_dict() == obj2.to_dict()
 
 

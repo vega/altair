@@ -61,7 +61,7 @@ def create_example_notebook(filename, spec, notebook_directory,
     if index_dict is not None:
         index_dict[filename] = index_entry
 
-    chart = load_vegalite_spec(spec)
+    chart = Chart.from_dict(spec)
 
     def cells():
         yield new_markdown_cell('<small>*Notebook auto-generated from '
