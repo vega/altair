@@ -64,6 +64,7 @@ def sync_examples(vegalite_repo,
                   destination=abspath('..', 'altair', 'examples', 'json'),
                   data_url='http://vega.github.io/vega-lite/'):
     source_dir = os.path.join(vegalite_repo, 'examples', 'specs')
+    index_source = os.path.join(vegalite_repo, 'examples', 'vl-examples.json')
     print("Reading from {0}".format(source_dir))
     if not os.path.exists(source_dir):
         raise ValueError("{0} does not exist".format(source_dir))
@@ -74,6 +75,12 @@ def sync_examples(vegalite_repo,
     for example in os.listdir(destination):
         if os.path.splitext(example)[1] == '.json':
             os.remove(os.path.join(destination, example))
+
+    # sync the index
+    listingfile = abspath(destination, '..', 'example-listing.json')
+    with open(index_source) as f:
+        with open(listingfile, 'w') as of:
+            of.write(f.read())
 
     for filename in os.listdir(source_dir):
         source_file = os.path.join(source_dir, filename)

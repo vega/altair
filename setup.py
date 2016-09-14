@@ -31,6 +31,7 @@ PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
                                   'notebooks/*.html',
                                   'notebooks/auto_examples/*.ipynb',
                                   'schema/*.json',
+                                  'examples/*.json',
                                   'examples/json/*.json',
                                   'datasets/*.json']}
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
