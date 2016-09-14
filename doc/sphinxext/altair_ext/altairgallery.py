@@ -1,5 +1,6 @@
 import os
 import warnings
+from itertools import tee, chain, islice
 
 import jinja2
 
@@ -9,10 +10,10 @@ from altair.examples import iter_examples
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""
-.. _{{ index_ref }}:
+.. _{{ gallery_ref }}:
 
-Altair Example Gallery
-----------------------
+{{ title }}
+{% for char in title %}-{% endfor %}
 
 The following examples are automatically generated from
 `Vega-Lite's Examples <http://vega.github.io/vega-lite/examples>`_
@@ -38,12 +39,11 @@ The following examples are automatically generated from
 EXAMPLE_TEMPLATE = jinja2.Template(u"""
 .. _gallery_{{ name }}:
 
-{# Title with underline: #}
 {{ name }}
 {% for char in name %}-{% endfor %}
 
 {% if prev_ref -%} < :ref:`{{ prev_ref }}` {% endif %}
-| :ref:`{{ index_ref }}` |
+| :ref:`{{ gallery_ref }}` |
 {%- if next_ref %} :ref:`{{ next_ref }}` >{% endif %}
 
 .. altair-plot::
@@ -55,28 +55,33 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 """)
 
 
+def prev_this_next(it):
+    """Utility to return (prev, this, next) tuples from an iterator"""
+    i1, i2, i3 = tee(it, 3)
+    next(i3)
+    return zip(chain([None], i1), i2, chain(i3, [None]))
+
+
 def populate_examples(**kwargs):
     """Iterate through Altair examples and extract code"""
     examples = [{'json': json, 'name': strip_vl_extension(filename)}
-                 for i, (filename, json) in enumerate(iter_examples())]
+                for filename, json in iter_examples()]
 
-    for i, example in enumerate(examples):
+    for prev_ex, example, next_ex in prev_this_next(examples):
         try:
-            example['code'] = Chart.from_dict(example['json']).to_altair()
+            code = Chart.from_dict(example['json']).to_altair()
         except Exception as e:
-            warnings.warn('altair-gallery: example {0} did not compile.: '
-                          '{1} {2}'.format(example['name'], type(e), str(e)))
-            example['code'] = '# (Altair JSON conversion failed).\nChart()'
+            warnings.warn('altair-gallery: example {0} produced an error:\n'
+                          '{1}\n{2}'.format(example['name'], type(e), str(e)))
+            code = '# (Altair JSON conversion failed).\nChart()'
 
-        if i > 0:
-            example['prev_ref'] = "gallery_" + examples[i - 1]['name']
-        else:
-            example['prev_ref'] = None
+        example['code'] = code
 
-        if i < len(examples) - 1:
-            example['next_ref'] = "gallery_" + examples[i + 1]['name']
-        else:
-            example['next_ref'] = None
+        if prev_ex:
+            example['prev_ref'] = "gallery_{name}".format(**prev_ex)
+
+        if next_ex:
+            example['next_ref'] = "gallery_{name}".format(**next_ex)
 
         example['filename'] = '{0}.rst'.format(example['name'])
         example.update(kwargs)
@@ -88,8 +93,9 @@ def main(app):
     gallery_dir = app.builder.config.altair_gallery_dir
     target_dir = os.path.join(app.builder.srcdir, gallery_dir)
 
-    index_ref = 'example-gallery'
-    examples = populate_examples(index_ref=index_ref,
+    gallery_ref = app.builder.config.altair_gallery_ref
+    gallery_title = app.builder.config.altair_gallery_title
+    examples = populate_examples(gallery_ref=gallery_ref,
                                  code_below=True)
 
     if not os.path.exists(target_dir):
@@ -97,8 +103,9 @@ def main(app):
 
     # Write the gallery index file
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
-        f.write(GALLERY_TEMPLATE.render(examples=examples,
-                                        index_ref=index_ref))
+        f.write(GALLERY_TEMPLATE.render(title=gallery_title,
+                                        examples=examples,
+                                        gallery_ref=gallery_ref))
 
     # Write the individual example files
     for example in examples:
@@ -109,3 +116,5 @@ def main(app):
 def setup(app):
     app.connect('builder-inited', main)
     app.add_config_value('altair_gallery_dir', 'gallery', 'env')
+    app.add_config_value('altair_gallery_ref', 'example-gallery', 'env')
+    app.add_config_value('altair_gallery_title', 'Example Gallery', 'env')
