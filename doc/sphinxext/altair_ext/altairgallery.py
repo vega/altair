@@ -1,15 +1,58 @@
 import os
+import shutil
 import warnings
+import json
 from itertools import tee, chain, islice
 
 import jinja2
 
-from .utils import strip_vl_extension
+from .utils import strip_vl_extension, create_thumbnail
 from altair import Chart
 from altair.examples import iter_examples_with_metadata
+from altair.utils.node import savechart, savechart_available, NodeExecError
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""
+.. raw:: html
+
+    <style type="text/css">
+    .figure {
+        float: left;
+        margin: 10px;
+        width: auto;
+        height: 200px;
+        width: 200px;
+    }
+
+    .figure img {
+        display: inline;
+        padding:1px;
+        border:1px solid #DDDDDD;
+        opacity:1.0;
+        filter:alpha(opacity=100); /* For IE8 and earlier */
+    }
+
+    .figure img:hover {
+        border:1px solid #EEEEEE;
+        opacity: 0.8;
+        filter:alpha(opacity=80); /* For IE8 and earlier */
+    }
+
+    .figure .caption {
+        width: 200px;
+        text-align: center !important;
+    }
+
+    .figure p {
+        margin-top: 0;
+    }
+
+    div.section h2 {
+       padding-top: 30px;
+       clear: left;
+    }
+    </style>
+
 .. _{{ gallery_ref }}:
 
 {{ title }}
@@ -23,21 +66,23 @@ The following examples are automatically generated from
 {% endfor %}
 
 {% for group in examples|groupby('category') %}
+
 .. _gallery-category-{{ group.grouper }}:
 
 {{ group.grouper }}
 {% for char in group.grouper %}~{% endfor %}
 
 {% for example in group.list %}
-* |{{ example.name }}| :ref:`gallery_{{ example.name }}`
+.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
+    :target: {{ example.name }}.html
+    :align: center
+
+    :ref:`gallery_{{ example.name }}`
 {% endfor %}
 
 {% endfor %}
 
 {% for example in examples %}
-.. |{{ example.name }}| image:: /_static/gray-square.png {# /_images/gallery/{{ name }}.png #}
-    :target: {{ example.name }}.html
-    :class: gallery
 {% endfor %}
 
 .. toctree::
@@ -67,11 +112,11 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 """)
 
 
-def prev_this_next(it):
+def prev_this_next(it, sentinel=None):
     """Utility to return (prev, this, next) tuples from an iterator"""
     i1, i2, i3 = tee(it, 3)
     next(i3, None)
-    return zip(chain([None], i1), i2, chain(i3, [None]))
+    return zip(chain([sentinel], i1), i2, chain(i3, [sentinel]))
 
 
 def populate_examples(**kwargs):
@@ -101,9 +146,64 @@ def populate_examples(**kwargs):
     return examples
 
 
+def make_images(image_dir, default_image, make_thumbnails=True):
+    """Use nodejs to make images and (optionally) thumbnails"""
+
+    can_save = savechart_available()
+    if not can_save:
+        warnings.warn('Node is not correctly configured: cannot save images.')
+
+    if not os.path.exists(image_dir):
+        os.makedirs(image_dir)
+
+    # store hashes so that we know whether images need to be generated
+    hash_file = os.path.join(image_dir, '_image_hashes.json')
+
+    if os.path.exists(hash_file):
+        with open(hash_file) as f:
+            hashes = json.load(f)
+    else:
+        hashes = {}
+
+    for example in iter_examples_with_metadata():
+        filename = example['name'] + '.png'
+        image_file = os.path.join(image_dir, filename)
+
+        # check whether image already exists
+        spec = example['spec']
+        spec_hash = hash(json.dumps(spec, sort_keys=True))
+        if hashes.get(filename, '') == spec_hash:
+            continue
+
+        if can_save:
+            chart = Chart.from_dict(spec)
+            try:
+                print('-> saving {0}'.format(image_file))
+                savechart(chart, image_file)
+            except NodeExecError:
+                warnings.warn('Node is not correctly configured: cannot save images.')
+                can_save = False
+                if not os.path.exists(image_file):
+                    shutil.copyfile(default_image, image_file)
+            else:
+                hashes[filename] = spec_hash
+        elif not os.path.exists(image_file):
+            shutil.copyfile(default_image, image_file)
+
+        if make_thumbnails:
+            thumb_file = os.path.join(image_dir, example['name'] + '-thumb.png')
+            create_thumbnail(image_file, thumb_file)
+
+    # Save hashes so we know whether we need to re-generate plots
+    if hashes:
+        with open(hash_file, 'w') as f:
+            json.dump(hashes, f)
+
+
 def main(app):
     gallery_dir = app.builder.config.altair_gallery_dir
     target_dir = os.path.join(app.builder.srcdir, gallery_dir)
+    image_dir = os.path.join(app.builder.srcdir, '_images')
 
     gallery_ref = app.builder.config.altair_gallery_ref
     gallery_title = app.builder.config.altair_gallery_title
@@ -113,10 +213,16 @@ def main(app):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
+    # Make the images
+    default_image = os.path.join(app.builder.srcdir,
+                                 '_static', 'gray-square.png')
+    make_images(image_dir, default_image)
+
     # Write the gallery index file
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
         f.write(GALLERY_TEMPLATE.render(title=gallery_title,
                                         examples=examples,
+                                        image_dir='/_images',
                                         gallery_ref=gallery_ref))
 
     # Write the individual example files

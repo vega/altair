@@ -206,8 +206,8 @@ and is also configured to use a larger canvas:
                   range=['#e7ba52', '#c7c7c7', '#aec7e8', '#1f77b4', '#9467bd'])
 
     Chart(df).mark_point().encode(
-        X('temp_max', axis=Axis(title='Maximum Daily Temperature (°C)')),
-        Y('temp_range', axis=Axis(title='Daily Temperature Range (°C)')),
+        X('temp_max', axis=Axis(title='Maximum Daily Temperature (C)')),
+        Y('temp_range', axis=Axis(title='Daily Temperature Range (C)')),
         Color('weather', scale=scale),
         size='precipitation',
     ).transform_data(
@@ -223,3 +223,5 @@ and aggregate data, derive new fields, and customize your charts.
 You can find more visualizations in the :ref:`example-gallery`.
 If you want to further customize your charts, you can refer to Altair's
 :ref:`api-documentation`.
+
+.. _Pandas: http://pandas.pydata.org/
