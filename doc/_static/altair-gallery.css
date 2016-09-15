@@ -1,0 +1,35 @@
+.figure {
+    float: left;
+    margin: 10px;
+    width: auto;
+    height: 200px;
+    width: 200px;
+}
+
+.figure img {
+    display: inline;
+    padding:1px;
+    border:1px solid #DDDDDD;
+    opacity:1.0;
+    filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+
+.figure img:hover {
+    border:1px solid #EEEEEE;
+    opacity: 0.8;
+    filter:alpha(opacity=80); /* For IE8 and earlier */
+}
+
+.figure .caption {
+    width: 200px;
+    text-align: center !important;
+}
+
+.figure p {
+    margin-top: 0;
+}
+
+div.section h2 {
+   padding-top: 30px;
+   clear: left;
+}

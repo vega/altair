@@ -27,10 +27,6 @@ except ImportError:
 
 VGL_TEMPLATE = jinja2.Template("""
 <div id="{{ div_id }}">
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://vega.github.io/vega/vega.js"></script>
-<script src="https://vega.github.io/vega-lite/vega-lite.js"></script>
-<script src="https://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
 <script>
   vg.embed("#{{ div_id }}", "{{ filename }}", function(error, result) {});
 </script>
@@ -102,7 +98,7 @@ class AltairPlotDirective(Directive):
                               if item['docname'] == env.docname)
         if setupcode:
             print(setupcode)
-            
+
         code = '\n'.join(self.content)
 
         if show_code:
@@ -195,6 +191,12 @@ def setup(app):
     setup.app = app
     setup.config = app.config
     setup.confdir = app.confdir
+
+    app.add_stylesheet('altair-plot.css')
+    app.add_javascript("https://d3js.org/d3.v3.min.js")
+    app.add_javascript("https://vega.github.io/vega/vega.js")
+    app.add_javascript("https://vega.github.io/vega-lite/vega-lite.js")
+    app.add_javascript("https://vega.github.io/vega-editor/vendor/vega-embed.js")
 
     app.add_node(altair_plot,
                  html=(html_visit_altair_plot, None),

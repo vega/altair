@@ -12,46 +12,6 @@ from altair.utils.node import savechart, savechart_available, NodeExecError
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""
-.. raw:: html
-
-    <style type="text/css">
-    .figure {
-        float: left;
-        margin: 10px;
-        width: auto;
-        height: 200px;
-        width: 200px;
-    }
-
-    .figure img {
-        display: inline;
-        padding:1px;
-        border:1px solid #DDDDDD;
-        opacity:1.0;
-        filter:alpha(opacity=100); /* For IE8 and earlier */
-    }
-
-    .figure img:hover {
-        border:1px solid #EEEEEE;
-        opacity: 0.8;
-        filter:alpha(opacity=80); /* For IE8 and earlier */
-    }
-
-    .figure .caption {
-        width: 200px;
-        text-align: center !important;
-    }
-
-    .figure p {
-        margin-top: 0;
-    }
-
-    div.section h2 {
-       padding-top: 30px;
-       clear: left;
-    }
-    </style>
-
 .. _{{ gallery_ref }}:
 
 {{ title }}
@@ -108,6 +68,9 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
     from altair import *
 
     {{ code | indent(4) }}
+
+.. toctree::
+   :hidden:
 """)
 
 
@@ -236,6 +199,7 @@ def main(app):
 
 def setup(app):
     app.connect('builder-inited', main)
+    app.add_stylesheet('altair-gallery.css')
     app.add_config_value('altair_gallery_dir', 'gallery', 'env')
     app.add_config_value('altair_gallery_ref', 'example-gallery', 'env')
     app.add_config_value('altair_gallery_title', 'Example Gallery', 'env')
