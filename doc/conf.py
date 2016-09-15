@@ -36,6 +36,7 @@ extensions = [
     'sphinx.ext.coverage',
     'altair_ext.altairplot',
     'altair_ext.altairgallery',
+    'altair_ext.altair_apidoc',
 ]
 
 autodoc_default_flags = ['members']
