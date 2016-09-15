@@ -38,7 +38,7 @@ Documentation
    displaying
    gallery/index
    documentation
-   API
+   API-reference
 
 
 Indices and tables

@@ -96,8 +96,6 @@ class AltairPlotDirective(Directive):
         setupcode = '\n'.join(item['code']
                               for item in getattr(env, 'altair_plot_setup', [])
                               if item['docname'] == env.docname)
-        if setupcode:
-            print(setupcode)
 
         code = '\n'.join(self.content)
 
