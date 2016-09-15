@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from .. import iter_examples
+from .. import iter_examples, load_example
 from ... import examples
 from ... import *
 
@@ -22,3 +22,11 @@ def test_json_examples_round_trip(example):
 
     v2 = eval(v.to_altair())
     assert v_dict == v2.to_dict()
+
+
+def test_load_example():
+    filename, spec = next(iter_examples())
+    root, _ = os.path.splitext(filename)
+
+    assert load_example(filename) == spec
+    assert load_example(root) == spec

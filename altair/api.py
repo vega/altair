@@ -333,6 +333,26 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         else:
             return super(Chart, cls).from_dict(spec)
 
+    @classmethod
+    def load_example(cls, name):
+        """Load an example chart
+
+        Initialize a chart object from one of the built-in examples
+
+        Parameters
+        ----------
+        example : string
+            The example ID or filename, e.g. ``"line"`` or ``"line.json"``
+
+        Returns
+        -------
+        chart : Chart, LayeredChart, or FacetedChart
+            The Chart object containing the example
+        """
+        from .examples import load_example
+        spec = load_example(name)
+        return cls.from_dict(spec)
+
 
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
