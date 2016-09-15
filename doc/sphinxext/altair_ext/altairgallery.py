@@ -2,11 +2,10 @@ import os
 import shutil
 import warnings
 import json
-from itertools import tee, chain, islice
 
 import jinja2
 
-from .utils import strip_vl_extension, create_thumbnail
+from .utils import strip_vl_extension, create_thumbnail, prev_this_next
 from altair import Chart
 from altair.examples import iter_examples_with_metadata
 from altair.utils.node import savechart, savechart_available, NodeExecError
@@ -112,13 +111,6 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 """)
 
 
-def prev_this_next(it, sentinel=None):
-    """Utility to return (prev, this, next) tuples from an iterator"""
-    i1, i2, i3 = tee(it, 3)
-    next(i3, None)
-    return zip(chain([sentinel], i1), i2, chain(i3, [sentinel]))
-
-
 def populate_examples(**kwargs):
     """Iterate through Altair examples and extract code"""
 
@@ -191,8 +183,19 @@ def make_images(image_dir, default_image, make_thumbnails=True):
             shutil.copyfile(default_image, image_file)
 
         if make_thumbnails:
+            convert_pct = lambda x: 0.01 * int(x.strip('%'))
+            params = example.get('galleryParameters', {})
+
+            zoom = params.get('backgroundSize', '100%')
+            if zoom == 'contains': zoom = '100%'
+            zoom = convert_pct(zoom)
+
+            #position = params.get('backgroundPosition', '0% 0%')
+            #if position == 'left': position = '0% 0%'
+            #xoffset, yoffset = map(convert_pct, position.split())
+
             thumb_file = os.path.join(image_dir, example['name'] + '-thumb.png')
-            create_thumbnail(image_file, thumb_file)
+            create_thumbnail(image_file, thumb_file, zoom=zoom)
 
     # Save hashes so we know whether we need to re-generate plots
     if hashes:

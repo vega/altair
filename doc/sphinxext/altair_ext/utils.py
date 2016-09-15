@@ -2,6 +2,8 @@ import ast
 import os
 import json
 
+from itertools import tee, chain, islice
+
 import numpy as np
 
 try:
@@ -34,7 +36,13 @@ def strip_vl_extension(filename):
         return filename
 
 
-def padded_thumbnail(im, size=(200, 200), offset=(0, 0)):
+def padded_thumbnail(im, size=(200, 200), offset=(0, 0), zoom=1):
+    offset = list(offset)
+    for i in range(len(offset)):
+        if 0 <= offset[i] < 1:
+            offset[i] = int(offset[i] * im.shape[i])
+    size = [int(zoom * s) for s in size]
+
     thumb = im[offset[0]: offset[0] + size[0],
                offset[1]: offset[1] + size[1]]
 
@@ -47,14 +55,14 @@ def padded_thumbnail(im, size=(200, 200), offset=(0, 0)):
 
 def create_thumbnail(infile, thumbfile,
                      width=180, height=180,
-                     xoffset=0, yoffset=0,
+                     xoffset=0, yoffset=0, zoom=1,
                      cx=0.5, cy=0.6, dpi=100):
     from matplotlib import image
     from matplotlib.pyplot import Figure
 
     baseout, extout = os.path.splitext(thumbfile)
     im = image.imread(infile)
-    thumb = padded_thumbnail(im, (height, width), (yoffset, xoffset))
+    thumb = padded_thumbnail(im, (height, width), (yoffset, xoffset), zoom)
 
     extension = extout.lower()
 
@@ -80,3 +88,10 @@ def create_thumbnail(infile, thumbfile,
               interpolation='bilinear')
     fig.savefig(thumbfile, dpi=dpi)
     return fig
+
+
+def prev_this_next(it, sentinel=None):
+    """Utility to return (prev, this, next) tuples from an iterator"""
+    i1, i2, i3 = tee(it, 3)
+    next(i3, None)
+    return zip(chain([sentinel], i1), i2, chain(i3, [sentinel]))
