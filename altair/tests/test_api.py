@@ -7,6 +7,7 @@ import pandas as pd
 
 from .. import *
 from .. import schema
+from ..examples import iter_examples
 from ..utils import parse_shorthand, infer_vegalite_type
 from ..datasets import connection_ok
 from ..utils._py3k_compat import PY2
@@ -139,6 +140,14 @@ def test_Chart_from_dict():
     obj = Chart(df).mark_point().encode(x='x', y='y')
     obj2 = Chart.from_dict(obj.to_dict())
     assert obj.to_dict() == obj2.to_dict()
+
+
+def test_Chart_load_example():
+    filename, spec = next(iter_examples())
+    chart1 = Chart.from_dict(spec)
+    chart2 = Chart.load_example(filename)
+
+    assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_to_altair():
@@ -348,7 +357,7 @@ def test_chart_add():
     data = pd.DataFrame({'x':np.random.rand(10), 'y':np.random.rand(10)})
     l1 = Chart(data).mark_line().encode(x='x', y='y')
     l2 = Chart(data).mark_point().encode(x='x', y='y')
-    
+
     chart = l1+l2
     chart2 = LayeredChart()
     chart2.set_layers(l1, l2)
