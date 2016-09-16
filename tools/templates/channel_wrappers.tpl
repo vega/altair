@@ -28,7 +28,7 @@ class {{ object.name }}({{ object.base.name }}):
     {% endfor -%}
     """
     # Traitlets
-    shorthand = T.Unicode('', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`")
+    shorthand = T.Unicode('', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`)")
     skip = ['shorthand']
 
     # Class Methods

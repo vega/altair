@@ -15,6 +15,11 @@ Data Types
 Encodings
 ---------
 
+.. _shorthand-description:
+
+Encoding Shorthands
+~~~~~~~~~~~~~~~~~~~
+
 .. _mark-reference:
 
 Marks
