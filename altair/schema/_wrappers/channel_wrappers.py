@@ -38,7 +38,7 @@ class PositionChannel(PositionChannelDef):
         A constant value in visual domain.
     """
     # Traitlets
-    shorthand = T.Unicode('')
+    shorthand = T.Unicode('', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`")
     skip = ['shorthand']
 
     # Class Methods
@@ -92,7 +92,7 @@ class ChannelWithLegend(ChannelDefWithLegend):
         A constant value in visual domain.
     """
     # Traitlets
-    shorthand = T.Unicode('')
+    shorthand = T.Unicode('', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`")
     skip = ['shorthand']
 
     # Class Methods
@@ -140,7 +140,7 @@ class Field(FieldDef):
         A constant value in visual domain.
     """
     # Traitlets
-    shorthand = T.Unicode('')
+    shorthand = T.Unicode('', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`")
     skip = ['shorthand']
 
     # Class Methods
@@ -190,7 +190,7 @@ class OrderChannel(OrderChannelDef):
         A constant value in visual domain.
     """
     # Traitlets
-    shorthand = T.Unicode('')
+    shorthand = T.Unicode('', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`")
     skip = ['shorthand']
 
     # Class Methods
