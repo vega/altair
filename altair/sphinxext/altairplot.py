@@ -1,4 +1,58 @@
-"""Altair Directive for sphinx"""
+"""
+Altair Plot Sphinx Extension
+============================
+
+This extension provides a means of inserting live-rendered Altair plots within
+sphinx documentation. There are two directives defined: ``altair-setup`` and
+``altiar-plot``. ``altair-setup`` code is used to set-up various options
+prior to running the plot code. For example::
+
+    .. altair-setup::
+
+        from altair import *
+        import pandas as pd
+        data = pd.DataFrame({'a': list('CCCDDDEEE'),
+                             'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
+
+    .. altair-plot::
+
+        Chart(data).mark_point().encode(
+            x='a',
+            y='b'
+        )
+
+In the case of the ``altair-plot`` code, the *last statement* of the code-block
+should contain the chart object you wish to be rendered.
+
+Options
+-------
+The directives have the following options::
+
+    .. altair-setup::
+        :show: # if set, then show the setup code as a code block
+
+        pass
+
+    .. altair-plot::
+        :hide-code:  # if set, then hide the code and only show the plot
+        :code-below:  # if set, then code is below rather than above the figure
+        :alt: text  # Alternate text when plot cannot be rendered
+        :links: editor source export  # specify one or more of these options
+
+        Chart()
+
+Additionally, this extension introduces a global configuration
+``altair_plot_links``, set in your ``conf.py`` which is a dictionary
+of links that will appear below plots, unless the ``:links:`` option
+again overrides it. It should look something like this::
+
+    # conf.py
+    # ...
+    altair_plot_links = {'editor': True, 'source': True, 'export': True}
+    # ...
+
+If this configuration is not specified, all are set to True.
+"""
 
 import os
 import json
