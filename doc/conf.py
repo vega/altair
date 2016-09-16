@@ -39,7 +39,7 @@ extensions = [
     'altair_ext.altair_apidoc',
 ]
 
-altair_plot_links = {'editor': True, 'source': False, 'export': True}
+altair_plot_links = {'editor': True, 'source': False, 'export': False}
 
 autodoc_default_flags = ['members']
 
