@@ -1,6 +1,5 @@
 """Altair Directive for sphinx"""
 
-import ast
 import os
 import json
 
@@ -15,15 +14,8 @@ from sphinx import addnodes, directives
 from sphinx.util.nodes import set_source_info
 
 from .utils import exec_then_eval
+from ..api import TopLevelMixin
 
-try:
-    import altair
-    from altair.api import TopLevelMixin
-except ImportError:
-    altair = None
-
-
-# TODO: can we put these script tags in the document header?
 
 VGL_TEMPLATE = jinja2.Template("""
 <div id="{{ div_id }}">
@@ -78,13 +70,28 @@ def purge_altair_plot_setup(app, env, docname):
                              if item['docname'] != docname]
 
 
+DEFAULT_LINKS = {'editor': True, 'source': True, 'export': True}
+
+
+def validate_links(links):
+    if links.strip().lower() == 'none':
+        return {}
+
+    links = links.strip().split()
+    diff = set(links) - set(DEFAULT_LINKS.keys())
+    if diff:
+        raise ValueError("Following links are invalid: {0}".format(list(diff)))
+    return dict((link, link in links) for link in DEFAULT_LINKS)
+
+
 class AltairPlotDirective(Directive):
 
     has_content = True
 
     option_spec = {'hide-code': flag,
                    'code-below': flag,
-                   'alt': unchanged}
+                   'alt': unchanged,
+                   'links': validate_links}
 
     def run(self):
         env = self.state.document.settings.env
@@ -125,6 +132,8 @@ class AltairPlotDirective(Directive):
         plot_node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
         plot_node['rst_source'] = rst_source
         plot_node['rst_lineno'] = self.lineno
+        default_links = app.builder.config.altair_plot_links
+        plot_node['links'] = self.options.get('links', default_links)
 
         if 'alt' in self.options:
             plot_node['alt'] = self.options['alt']
@@ -155,9 +164,7 @@ def html_visit_altair_plot(self, node):
 
     # Create the vega-lite spec to embed
     embed_spec = json.dumps({'mode': 'vega-lite',
-                             'actions': {'editor': True,
-                                         'source': False,
-                                         'export': True},
+                             'actions': node['links'],
                              'spec': spec})
 
     # Write embed_spec to a *.vl.json file
@@ -177,7 +184,7 @@ def html_visit_altair_plot(self, node):
 
 
 def generic_visit_altair_plot(self, node):
-    # TODO: figure out PNGs and insert them here
+    # TODO: generate PNGs and insert them here
     if 'alt' in node.attributes:
         self.body.append(_('[ graph: %s ]') % node['alt'])
     else:
@@ -190,11 +197,11 @@ def setup(app):
     setup.config = app.config
     setup.confdir = app.confdir
 
-    app.add_stylesheet('altair-plot.css')
     app.add_javascript("https://d3js.org/d3.v3.min.js")
     app.add_javascript("https://vega.github.io/vega/vega.js")
     app.add_javascript("https://vega.github.io/vega-lite/vega-lite.js")
     app.add_javascript("https://vega.github.io/vega-editor/vendor/vega-embed.js")
+    app.add_config_value('altair_plot_links', DEFAULT_LINKS, 'env')
 
     app.add_node(altair_plot,
                  html=(html_visit_altair_plot, None),
