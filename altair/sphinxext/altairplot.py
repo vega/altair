@@ -56,6 +56,7 @@ If this configuration is not specified, all are set to True.
 
 import os
 import json
+import warnings
 
 import jinja2
 
@@ -211,29 +212,40 @@ def html_visit_altair_plot(self, node):
         exec(node['setupcode'], _globals, _locals)
 
     # Execute the plot code in this context, evaluating the last line
-    chart = exec_then_eval(node['code'], _globals, _locals)
+    try:
+        chart = exec_then_eval(node['code'], _globals, _locals)
+    except Exception as e:
+        warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
+                      "{2}: {3}".format(node['rst_source'], node['rst_lineno'],
+                                        e.__class__.__name__, str(e)))
+        raise nodes.SkipNode
 
-    # Last line should be a chart; convert to spec dict
-    spec = chart.to_dict()
+    if isinstance(chart, TopLevelMixin):
+        # Last line should be a chart; convert to spec dict
+        spec = chart.to_dict()
 
-    # Create the vega-lite spec to embed
-    embed_spec = json.dumps({'mode': 'vega-lite',
-                             'actions': node['links'],
-                             'spec': spec})
+        # Create the vega-lite spec to embed
+        embed_spec = json.dumps({'mode': 'vega-lite',
+                                 'actions': node['links'],
+                                 'spec': spec})
 
-    # Write embed_spec to a *.vl.json file
-    dest_dir = os.path.join(self.builder.outdir, node['relpath'])
-    if not os.path.exists(dest_dir):
-        os.makedirs(dest_dir)
-    filename = "{0}.vl.json".format(node['div_id'])
-    dest_path = os.path.join(dest_dir, filename)
-    with open(dest_path, 'w') as f:
-        f.write(embed_spec)
+        # Write embed_spec to a *.vl.json file
+        dest_dir = os.path.join(self.builder.outdir, node['relpath'])
+        if not os.path.exists(dest_dir):
+            os.makedirs(dest_dir)
+        filename = "{0}.vl.json".format(node['div_id'])
+        dest_path = os.path.join(dest_dir, filename)
+        with open(dest_path, 'w') as f:
+            f.write(embed_spec)
 
-    # Pass relevant info into the template and append to the output
-    html = VGL_TEMPLATE.render(div_id=node['div_id'],
-                               filename=filename)
-    self.body.append(html)
+        # Pass relevant info into the template and append to the output
+        html = VGL_TEMPLATE.render(div_id=node['div_id'],
+                                   filename=filename)
+        self.body.append(html)
+    else:
+        warnings.warn('altair-plot: {0}:{1} Malformed block. Last line of '
+                      'code block should define a valid altair Chart object.'
+                      ''.format(node['rst_source'], node['rst_lineno']))
     raise nodes.SkipNode
 
 
