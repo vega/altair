@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import traitlets as T
 
@@ -119,21 +121,73 @@ class BaseObject(T.HasTraits):
 
     @classmethod
     def from_dict(cls, dct):
-        """Instantiate the object from a valid JSON dictionary"""
+        """Instantiate the object from a valid JSON dictionary
+
+        Parameters
+        ----------
+        dct : dict
+            The dictionary containing a valid JSON chart specification.
+
+        Returns
+        -------
+        chart : Chart object
+            The altair Chart object built from the specification.
+        """
+        # Import here to prevent circular imports
         from ..utils.visitors import FromDict
         return FromDict().clsvisit(cls, dct)
 
+    @classmethod
+    def from_json(cls, spec):
+        """Instantiate the object from a valid JSON string
+
+        Parameters
+        ----------
+        spec : string
+            The string containing a valid JSON chart specification.
+
+        Returns
+        -------
+        chart : Chart object
+            The altair Chart object built from the specification.
+        """
+        return cls.from_dict(json.loads(spec))
+
     def to_dict(self, data=True):
-        """Emit the JSON representation for this object as as dict."""
+        """Emit the JSON representation for this object as as dict.
+
+        Parameters
+        ----------
+        data : bool
+            If True (default) then include data in the representation.
+
+        Returns
+        -------
+        spec : dict
+            The JSON specification of the chart object.
+        """
         from ..utils.visitors import ToDict
         self._finalize()
         return ToDict().visit(self, data)
 
-    def to_json(self, data=True, **kwargs):
+    def to_json(self, data=True, sort_keys=True, **kwargs):
         """Emit the JSON representation for this object as a string.
-        Additional keywords are passed to json.dumps()"""
-        import json
-        return json.dumps(self.to_dict(data=data), **kwargs)
+
+        Parameters
+        ----------
+        data : bool
+            If True (default) then include data in the representation.
+        sort_keys : bool
+            If True (default) then sort the keys in the output
+        **kwargs
+            Additional keyword arguments are passed to ``json.dumps()``
+
+        Returns
+        -------
+        spec : string
+            The JSON specification of the chart object.
+        """
+        return json.dumps(self.to_dict(data=data), sort_keys=True, **kwargs)
 
     def _finalize(self, **kwargs):
         """Finalize the object, and all contained objects, for export."""
