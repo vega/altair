@@ -91,8 +91,8 @@ class AltairClassDirective(Directive):
     def run(self):
         # figure out what attributes to exclude:
         obj = _import_obj(self.arguments)
-        exclude = getattr(obj, 'skip', [])
-        exclude.append('skip')
+        exclude = ['skip']
+        exclude.extend(getattr(obj, 'skip', []))
         exclude.extend([attr for attr in obj.class_traits()])
         exclude.extend([attr for attr in dir(traitlets.HasTraits)
                         if not attr.startswith('_')])
