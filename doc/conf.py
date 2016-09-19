@@ -34,7 +34,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
-    'altair.sphinxext.altairplot',
+    'altair_ext.altairplot',
     'altair_ext.altairgallery',
     'altair_ext.altair_autodoc',
 ]

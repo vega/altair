@@ -27,7 +27,7 @@ PACKAGES            = ['altair',
                        'altair.schema._wrappers',
                        'altair.schema._interface',
                        'altair.schema._interface.tests',
-                       'altair.sphinxext']
+                       ]
 PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
                                   'notebooks/*.html',
                                   'notebooks/auto_examples/*.ipynb',

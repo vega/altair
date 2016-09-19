@@ -68,8 +68,8 @@ from sphinx.locale import _
 from sphinx import addnodes, directives
 from sphinx.util.nodes import set_source_info
 
+from altair.api import TopLevelMixin
 from .utils import exec_then_eval
-from ..api import TopLevelMixin
 
 
 VGL_TEMPLATE = jinja2.Template("""
