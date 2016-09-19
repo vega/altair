@@ -18,7 +18,7 @@ class BaseObject(T.HasTraits):
         super(BaseObject, self).__init__(**kwargs)
 
     @classmethod
-    def infer_keywords(cls, *args, **kwargs):
+    def _infer_keywords(cls, *args, **kwargs):
         """Utility to initialize object from args and kwargs
 
         Arguments are converted to keyword arguments by inferring the keyword
@@ -69,23 +69,23 @@ class BaseObject(T.HasTraits):
                 kwargs[name] = arg
         return kwargs
 
-    def update_traits(self, **kwargs):
+    def _update_traits(self, **kwargs):
         for key, val in kwargs.items():
             self.set_trait(key, val)
         return self
 
-    def update_inferred_traits(self, *args, **kwargs):
-        kwargs = self.infer_keywords(*args, **kwargs)
-        return self.update_traits(**kwargs)
+    def _update_inferred_traits(self, *args, **kwargs):
+        kwargs = self._infer_keywords(*args, **kwargs)
+        return self._update_traits(**kwargs)
 
-    def update_subtraits(self, attrs, *args, **kwargs):
+    def _update_subtraits(self, attrs, *args, **kwargs):
         """Update sub-traits without overwriting other traits"""
         if not (args or kwargs):
             return self
         if isinstance(attrs, string_types):
             attrs = (attrs,)
         if len(attrs) == 0:
-            self.update_inferred_traits(*args, **kwargs)
+            self._update_inferred_traits(*args, **kwargs)
         else:
             attr = attrs[0]
             if attr not in self.traits():
@@ -93,7 +93,7 @@ class BaseObject(T.HasTraits):
             trait = getattr(self, attr)
             if trait is None:
                 trait = self.traits()[attr].klass()
-            setattr(self, attr, trait.update_subtraits(attrs[1:], *args, **kwargs))
+            setattr(self, attr, trait._update_subtraits(attrs[1:], *args, **kwargs))
         return self
 
     def __contains__(self, key):
