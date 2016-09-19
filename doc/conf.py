@@ -36,12 +36,13 @@ extensions = [
     'sphinx.ext.coverage',
     'altair.sphinxext.altairplot',
     'altair_ext.altairgallery',
-    'altair_ext.altair_apidoc',
+    'altair_ext.altair_autodoc',
 ]
 
 altair_plot_links = {'editor': True, 'source': False, 'export': False}
 
 autodoc_default_flags = ['members']
+autodoc_member_order = 'groupwise'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

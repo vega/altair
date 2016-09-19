@@ -16,12 +16,12 @@ from jinja2.filters import environmentfilter, make_attrgetter
 
 
 @environmentfilter
-def sphinx_table(env, iterable, columns, title_map=None):
+def sphinx_table(env, rows, columns, title_map=None):
     """Filter to generate a sphinx table"""
     title_map = title_map or {}
 
-    rows = [[str(make_attrgetter(env, column)(row)) for column in columns]
-            for row in iterable]
+    getters = [make_attrgetter(env, column) for column in columns]
+    rows = [[str(get(row)) for get in getters] for row in rows]
     titles = [title_map.get(col, col) for col in columns]
     lengths = [[len(item) for item in row] for row in rows]
     maxlengths = [max(col) for col in zip(*lengths)]
@@ -30,8 +30,8 @@ def sphinx_table(env, iterable, columns, title_map=None):
         return '  '.join(item.ljust(length, fill)
                          for item, length in zip(row, maxlengths))
 
-    div = pad(['=', '=', '='], '=')
-
+    div = pad(['', '', ''], fill='=')
+    
     return '\n'.join([div, pad(titles), div] + list(map(pad, rows)) + [div])
 
 

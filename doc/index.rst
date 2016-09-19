@@ -25,7 +25,9 @@ Here is an example of using the Altair API to quickly visualize a dataset:
         color='Origin',
     )
 
-For more information on how to use Altair for your data, see the documentation below:
+The key idea is that you are declaring links between *data columns* to *encoding channels*, such as the x-axis, y-axis, color, etc. and the rest of the plot details are handled automatically.
+Building on this declarative plotting idea, a surprising number of useful plots and visualizations can be created.
+For more details, see the documentation below:
 
 Documentation
 -------------
@@ -38,7 +40,7 @@ Documentation
    displaying
    gallery/index
    documentation
-   API-reference
+   API
 
 
 Indices and tables
