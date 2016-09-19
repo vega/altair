@@ -4,12 +4,13 @@
 from __future__ import absolute_import, print_function
 
 import types
+import importlib
 
 import jinja2
 import traitlets
 
 from six import class_types
-from sphinx.ext.autodoc import ClassDocumenter, AttributeDocumenter
+from sphinx.ext.autodoc import ClassDocumenter
 from sphinx.util.compat import Directive
 from sphinx.util.nodes import nested_parse_with_titles
 
@@ -32,9 +33,8 @@ def process_docstring(app, what, name, obj, options, lines):
         lines.extend(altair_rst_table(obj))
 
     elif isinstance(obj, types.MethodType) and hasattr(obj, '_uses_signature'):
-        if lines:
-            for i in range(len(lines) - 1):
-                lines.pop()
+        for i in range(len(lines) - 1):
+           lines.pop()
         lines.extend(['', ('Arguments are passed to :class:`~altair.{0}`.'
                            ''.format(obj._uses_signature.__name__))])
 
@@ -61,7 +61,7 @@ class AltairClassDocumenter(ClassDocumenter):
 
 ALTAIR_CLASS_TEMPLATE = jinja2.Template(
 u"""
-.. autoclass::  {{ classname }}
+.. autoclass:: {{ classname }}
    :members:
    :inherited-members:
    :undoc-members:
@@ -70,19 +70,40 @@ u"""
 """)
 
 
-class AltairClassDirective(Directive):
+def _import_obj(args):
+    """Utility to import the object given arguments to directive"""
+    if len(args) == 1:
+        mod, clsname = args[0].rsplit('.', 1)
+    elif len(args) == 3 and args[1] == ':module:':
+        mod = args[2]
+        clsname = args[0].split('(')[0]
+    else:
+        raise ValueError("Args do not look as expected: {0}".format(args))
+    mod = importlib.import_module(mod)
+    return getattr(mod, clsname)
 
+
+class AltairClassDirective(Directive):
     has_content = True
     required_arguments = 1
-    final_argument_whitespace = True
+    optional_arguments = 2
 
     def run(self):
+        # figure out what attributes to exclude:
+        obj = _import_obj(self.arguments)
+        exclude = getattr(obj, 'skip', [])
+        exclude.append('skip')
+        exclude.extend([attr for attr in obj.class_traits()])
+        exclude.extend([attr for attr in dir(traitlets.HasTraits)
+                        if not attr.startswith('_')])
+
+        # generate the documentation string
         rst_text = ALTAIR_CLASS_TEMPLATE.render(
             classname=self.arguments[0],
-            exclude_members=','.join(attr for attr in dir(traitlets.HasTraits)
-                                     if not attr.startswith('_'))
+            exclude_members=','.join(exclude)
         )
 
+        # parse and return documentation
         result = ViewList()
         for line in rst_text.split("\n"):
             result.append(line, "<altair-class>")

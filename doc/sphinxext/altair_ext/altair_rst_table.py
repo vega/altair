@@ -112,7 +112,7 @@ def altair_rst_table(obj, columns=None, title_map=None):
 
     div = pad(['', '', ''], fill='=')
 
-    lines = [obj_info['name'], '']
+    lines = ['']
     if 'description' in obj_info:
         lines.extend([obj_info['description'], ''])
     lines.extend(['', div, pad(titles), div])
