@@ -55,6 +55,7 @@ def use_signature(Obj):
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
         f.__wrapped__ = Obj.__init__
+        f._uses_signature = Obj
 
         # Supplement the docstring of f with information from Obj
         f.__doc__ += Obj.__doc__[Obj.__doc__.index('\n'):]

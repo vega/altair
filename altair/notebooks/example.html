@@ -4,10 +4,10 @@
   <title>Vega-Lite Chart</title>
   <meta charset="utf-8">
 
-  <script src="//d3js.org/d3.v3.min.js"></script>
-  <script src="//vega.github.io/vega/vega.js"></script>
-  <script src="//vega.github.io/vega-lite/vega-lite.js"></script>
-  <script src="//vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://vega.github.io/vega/vega.js"></script>
+  <script src="https://vega.github.io/vega-lite/vega-lite.js"></script>
+  <script src="https://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
 
   <style media="screen">
     /* Add space between vega-embed links  */
@@ -22,58 +22,58 @@
 
   <script>
   var vlSpec = {
-    "mark": "bar",
-    "encoding": {
-        "y": {
-            "field": "a",
-            "type": "nominal"
-        },
-        "x": {
-            "field": "b",
-            "aggregate": "average",
-            "type": "quantitative"
-        }
-    },
     "data": {
         "values": [
             {
-                "b": 2,
-                "a": "C"
+                "a": "C",
+                "b": 2
             },
             {
-                "b": 7,
-                "a": "C"
+                "a": "C",
+                "b": 7
             },
             {
-                "b": 4,
-                "a": "C"
+                "a": "C",
+                "b": 4
             },
             {
-                "b": 1,
-                "a": "D"
+                "a": "D",
+                "b": 1
             },
             {
-                "b": 2,
-                "a": "D"
+                "a": "D",
+                "b": 2
             },
             {
-                "b": 6,
-                "a": "D"
+                "a": "D",
+                "b": 6
             },
             {
-                "b": 8,
-                "a": "E"
+                "a": "E",
+                "b": 8
             },
             {
-                "b": 4,
-                "a": "E"
+                "a": "E",
+                "b": 4
             },
             {
-                "b": 7,
-                "a": "E"
+                "a": "E",
+                "b": 7
             }
         ]
-    }
+    },
+    "encoding": {
+        "y": {
+            "type": "nominal",
+            "field": "a"
+        },
+        "x": {
+            "aggregate": "average",
+            "type": "quantitative",
+            "field": "b"
+        }
+    },
+    "mark": "bar"
 }
 
   var embedSpec = {

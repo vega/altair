@@ -5,7 +5,9 @@ import traitlets as T
 
 
 class StackOffset(T.Enum):
-    """One of ['zero', 'center', 'normalize', 'none']"""
+    """
+    One of ['zero', 'center', 'normalize', 'none']
+    """
     def __init__(self, default_value=T.Undefined, **metadata):
         super(StackOffset, self).__init__(['zero', 'center', 'normalize', 'none'],
                                     default_value=default_value,
