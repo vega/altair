@@ -21,7 +21,6 @@ from altair.schema.baseobject import BaseObject
 from .altair_rst_table import altair_rst_table
 
 
-
 def process_docstring(app, what, name, obj, options, lines):
     """Event hook for 'autodoc-process-docstring'
 
@@ -37,7 +36,7 @@ def process_docstring(app, what, name, obj, options, lines):
             for i in range(len(lines) - 1):
                 lines.pop()
         lines.extend(['', ('Arguments are passed to :class:`~altair.{0}`.'
-                           ''.format(obj._uses_signature.__name__)]))
+                           ''.format(obj._uses_signature.__name__))])
 
 
 def process_signature(app, what, name, obj, options, signature, return_annotation):
@@ -80,7 +79,8 @@ class AltairClassDirective(Directive):
     def run(self):
         rst_text = ALTAIR_CLASS_TEMPLATE.render(
             classname=self.arguments[0],
-            exclude_members=','.join(dir(traitlets.HasTraits))
+            exclude_members=','.join(attr for attr in dir(traitlets.HasTraits)
+                                     if not attr.startswith('_'))
         )
 
         result = ViewList()
@@ -94,7 +94,7 @@ class AltairClassDirective(Directive):
 
 
 def setup(app):
+    app.add_autodocumenter(AltairClassDocumenter)
+    app.add_directive_to_domain('py', 'altair-class', AltairClassDirective)
     app.connect('autodoc-process-docstring', process_docstring)
     app.connect('autodoc-process-signature', process_signature)
-    app.add_autodocumenter(AltairClassDocumenter)
-    app.add_directive_to_domain('py', 'altair-class', AltairClassDirective)    #app.add_directive_to_domain('py', 'altair-trait', AltairTraitDirective)
