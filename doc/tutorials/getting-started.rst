@@ -197,7 +197,7 @@ For clarity, we'll leave out the data and make a nicely-formatted output:
         x='a',
         y='average(b)',
     )
-    print(chart.to_json(data=False, indent=2, sort_keys=True))
+    print(chart.to_json(data=False, indent=2))
 
 .. testoutput::
 
@@ -228,7 +228,7 @@ column as well:
 
     from altair import Y
     y = Y('average(b):Q')
-    print(y.to_json(sort_keys=True))
+    print(y.to_json())
 
 .. testoutput::
 
@@ -239,7 +239,7 @@ This short-hand is equivalent to spelling-out the attributes by name:
 .. testcode::
 
     y = Y(field='b', type='quantitative', aggregate='average')
-    print(y.to_json(sort_keys=True))
+    print(y.to_json())
 
 .. testoutput::
 

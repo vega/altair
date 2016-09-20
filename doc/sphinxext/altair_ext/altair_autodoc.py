@@ -91,6 +91,9 @@ class AltairClassDirective(Directive):
     def run(self):
         # figure out what attributes to exclude:
         obj = _import_obj(self.arguments)
+        if not issubclass(obj, traitlets.HasTraits):
+            raise ValueError('altair-class directive should only be used '
+                             'on altair classes; not {0}'.format(obj))
         exclude = ['skip']
         exclude.extend(getattr(obj, 'skip', []))
         exclude.extend([attr for attr in obj.class_traits()])

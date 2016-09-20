@@ -17,7 +17,7 @@ visualizations. For example, consider the following plot specification
 The ``chart`` object defined here is an Altair chart, which contains functionality
 to generate a JSON encoding that conforms to the `Vega-Lite Schema`_:
 
->>> print(chart.to_json(indent=2, sort_keys=True))
+>>> print(chart.to_json(indent=2))
 {
   "data": {
     "url": "https://vega.github.io/vega-datasets/data/cars.json"
