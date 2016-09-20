@@ -55,6 +55,7 @@ def use_signature(Obj):
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
         f.__wrapped__ = Obj.__init__
+        f._uses_signature = Obj
 
         # Supplement the docstring of f with information from Obj
         f.__doc__ += Obj.__doc__[Obj.__doc__.index('\n'):]
@@ -103,66 +104,66 @@ class TopLevelMixin(object):
     @use_signature(schema.Transform)
     def transform_data(self, *args, **kwargs):
         """Set the data transform by keyword args."""
-        return self.update_subtraits('transform', *args, **kwargs)
+        return self._update_subtraits('transform', *args, **kwargs)
 
     # Configuration methods
     @use_signature(schema.Config)
     def configure(self, *args, **kwargs):
         """Set chart configuration"""
-        return self.update_subtraits('config', *args, **kwargs)
+        return self._update_subtraits('config', *args, **kwargs)
 
     @use_signature(AxisConfig)
     def configure_axis(self, *args, **kwargs):
         """Configure the chart's axes by keyword args."""
-        return self.update_subtraits(('config', 'axis'), *args, **kwargs)
+        return self._update_subtraits(('config', 'axis'), *args, **kwargs)
 
     @use_signature(CellConfig)
     def configure_cell(self, *args, **kwargs):
         """Configure the chart's cell's by keyword args."""
-        return self.update_subtraits(('config', 'cell'), *args, **kwargs)
+        return self._update_subtraits(('config', 'cell'), *args, **kwargs)
 
     @use_signature(LegendConfig)
     def configure_legend(self, *args, **kwargs):
         """Configure the chart's legend by keyword args."""
-        return self.update_subtraits(('config', 'legend'), *args, **kwargs)
+        return self._update_subtraits(('config', 'legend'), *args, **kwargs)
 
     @use_signature(MarkConfig)
     def configure_mark(self, *args, **kwargs):
         """Configure the chart's marks by keyword args."""
-        return self.update_subtraits(('config', 'mark'), *args, **kwargs)
+        return self._update_subtraits(('config', 'mark'), *args, **kwargs)
 
     @use_signature(ScaleConfig)
     def configure_scale(self, *args, **kwargs):
         """Configure the chart's scales by keyword args."""
-        return self.update_subtraits(('config', 'scale'), *args, **kwargs)
+        return self._update_subtraits(('config', 'scale'), *args, **kwargs)
 
     @use_signature(FacetConfig)
     def configure_facet(self, *args, **kwargs):
         """Configure the chart's scales by keyword args."""
-        return self.update_subtraits(('config', 'facet'), *args, **kwargs)
+        return self._update_subtraits(('config', 'facet'), *args, **kwargs)
 
     @use_signature(AxisConfig)
     def configure_facet_axis(self, *args, **kwargs):
         """Configure the facet's axes by keyword args."""
-        return self.update_subtraits(('config', 'facet', 'axis'),
+        return self._update_subtraits(('config', 'facet', 'axis'),
                                      *args, **kwargs)
 
     @use_signature(CellConfig)
     def configure_facet_cell(self, *args, **kwargs):
         """Configure the facet's cells by keyword args."""
-        return self.update_subtraits(('config', 'facet', 'cell'),
+        return self._update_subtraits(('config', 'facet', 'cell'),
                                      *args, **kwargs)
 
     @use_signature(FacetGridConfig)
     def configure_facet_grid(self, *args, **kwargs):
         """Configure the facet's grid by keyword args."""
-        return self.update_subtraits(('config', 'facet', 'grid'),
+        return self._update_subtraits(('config', 'facet', 'grid'),
                                      *args, **kwargs)
 
     @use_signature(FacetScaleConfig)
     def configure_facet_scale(self, *args, **kwargs):
         """Configure the facet's scales by keyword args."""
-        return self.update_subtraits(('config', 'facet', 'scale'),
+        return self._update_subtraits(('config', 'facet', 'scale'),
                                      *args, **kwargs)
 
     # Display related methods
@@ -307,7 +308,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     @use_signature(Encoding)
     def encode(self, *args, **kwargs):
         """Define the encoding for the Chart."""
-        return self.update_subtraits('encoding', *args, **kwargs)
+        return self._update_subtraits('encoding', *args, **kwargs)
 
     def _finalize(self, **kwargs):
         # data comes from wrappers, but self.data overrides this if defined
@@ -455,7 +456,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     @use_signature(Facet)
     def set_facet(self, *args, **kwargs):
         """Define the facet encoding for the Chart."""
-        return self.update_subtraits('facet', *args, **kwargs)
+        return self._update_subtraits('facet', *args, **kwargs)
 
     def _finalize(self, **kwargs):
         # data comes from wrappers, but self.data overrides this if defined

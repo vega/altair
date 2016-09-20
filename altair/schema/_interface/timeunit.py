@@ -5,7 +5,9 @@ import traitlets as T
 
 
 class TimeUnit(T.Enum):
-    """One of ['year', 'month', 'day', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'yearmonth', 'yearmonthday', 'yearmonthdate', 'yearday', 'yeardate', 'yearmonthdayhours', 'yearmonthdayhoursminutes', 'yearmonthdayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']"""
+    """
+    One of ['year', 'month', 'day', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'yearmonth', 'yearmonthday', 'yearmonthdate', 'yearday', 'yeardate', 'yearmonthdayhours', 'yearmonthdayhoursminutes', 'yearmonthdayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds']
+    """
     def __init__(self, default_value=T.Undefined, **metadata):
         super(TimeUnit, self).__init__(['year', 'month', 'day', 'date', 'hours', 'minutes', 'seconds', 'milliseconds', 'yearmonth', 'yearmonthday', 'yearmonthdate', 'yearday', 'yeardate', 'yearmonthdayhours', 'yearmonthdayhoursminutes', 'yearmonthdayhoursminutesseconds', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds'],
                                     default_value=default_value,

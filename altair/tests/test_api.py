@@ -34,6 +34,12 @@ def test_chart_to_html():
     assert title == "Vega-Lite Chart"
 
 
+def test_chart_to_json_round_trip():
+    chart1 = Chart('data/data.json').mark_point().encode(x='blah:Q')
+    chart2 = Chart.from_json(chart1.to_json())
+    assert chart1.to_dict() == chart2.to_dict()
+
+
 def test_encode_update():
     # Test that encode updates rather than overwrites
     chart1 = Chart().encode(x='blah:Q').encode(y='blah:Q')

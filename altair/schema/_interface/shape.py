@@ -5,7 +5,9 @@ import traitlets as T
 
 
 class Shape(T.Enum):
-    """One of ['circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down']"""
+    """
+    One of ['circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down']
+    """
     def __init__(self, default_value=T.Undefined, **metadata):
         super(Shape, self).__init__(['circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down'],
                                     default_value=default_value,
