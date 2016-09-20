@@ -2,8 +2,7 @@
 
 [![build status](http://img.shields.io/travis/ellisonbg/altair/master.svg?style=flat)](https://travis-ci.org/ellisonbg/altair)
 
-Altair is a declarative statistical visualization library for Python. [Altair
-Documentation](altair/notebooks/01-Index.ipynb)
+Altair is a declarative statistical visualization library for Python.
 
 *Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [UW Interactive Data Lab](http://idl.cs.washington.edu/).*
 
@@ -11,6 +10,15 @@ With Altair, you can spend more time understanding your data and its meaning. Al
 API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
 simplicity produces beautiful and effective visualizations with a minimal amount of code.
+
+## Altair Documentation
+
+**Note: Altair's documentation is currently in a very incomplete form; we are
+in the process of creating more comprehensive docs solution. Stay tuned!**
+
+See the [Altair Notebook Documentation](altair/notebooks/01-Index.ipynb).
+
+## Example
 
 Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the Jupyter Notebook:
 
