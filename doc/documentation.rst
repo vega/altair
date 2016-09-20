@@ -239,12 +239,73 @@ or continuous legend is used.
 
 .. _encoding-aggregates:
 
-Binning and Aggregates
-~~~~~~~~~~~~~~~~~~~~~~
+Binning and Aggregation
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Beyond simple channel encodings, Altair's visualizations are built on the
-concept of the group-by; that is, the split-apply-combine abstraction that
-underpins many data analyses.
+concept of the database-style grouping and aggregation; that is, the
+`split-apply-combine <https://www.jstatsoft.org/article/view/v040i01>`_
+abstraction that underpins many data analyses.
+
+For example, building a histogram from a one-dimensional dataset involves
+splitting data based on the bin it falls in, aggregating the results within
+each bin using a *count* of the data, and then combining the results into
+a final figure.
+
+In altair, such an operation looks like this:
+
+.. altair-plot::
+
+   from altair import load_dataset, Chart, X
+
+   cars = load_dataset('cars')
+
+   Chart(cars).mark_bar().encode(
+       X('Horsepower', bin=True),
+       y='count(*):Q'
+       # could also use Y('*', aggregate='count', type='quantitative')
+   )
+
+Notice here we use the shorthand version of expressing an encoding channel
+(see :ref:`shorthand-description`) along with the ``count`` aggregation,
+the special ``*`` wild-card identifier often used with counts,
+and ``Q`` for quantitative type.
+
+Similarly, we can create a two-dimensional histogram using, for example, the
+size of points to indicate counts within the grid (sometimes called
+a "Bubble Plot"):
+
+.. altair-plot::
+
+   from altair import load_dataset, Chart, X, Y
+
+   cars = load_dataset('cars')
+
+   Chart(cars).mark_point().encode(
+       X('Horsepower', bin=True),
+       Y('Miles_per_Gallon', bin=True),
+       size='count(*):Q',
+   )
+
+There is no need, however, to limit aggregations to counts alone. For example,
+we could similarly create a labeled heat-map where the color of each cell
+represents the mean of a third quantity, such as acceleration:
+
+.. altair-plot::
+
+   from altair import load_dataset, Chart, X, Y
+
+   cars = load_dataset('cars')
+
+   Chart(cars).mark_circle().encode(
+       X('Horsepower', bin=True),
+       Y('Miles_per_Gallon', bin=True),
+       size='count(*):Q',
+       color='average(Acceleration):Q'
+   )
+
+In addition to ``count`` and ``average``, there are a large number of available
+aggregation functions built into Altair; they are listed in the following table:
 
 *TODO: fill-in examples*
 
@@ -273,7 +334,6 @@ valid      ??
 missing    ??
 =========  ========================================  ============
 
-*TODO*
 
 .. _shorthand-description:
 
@@ -305,9 +365,11 @@ The chart encoding maps data columns to visual plot attributes; the ``mark``
 property specifies how those attributes should be represented.
 Altair provides a number of mark properties:
 
-==========  ==========================  ===================================================
-Mark Name   Method                      Description
-==========  ==========================  ===================================================
+*TODO: fill-in examples*
+
+==========  ==========================  ===================================================  =================
+Mark Name   Method                      Description                                          Example
+==========  ==========================  ===================================================  =================
 area        :meth:`~Chart.mark_area`    A filled area plot.
 bar         :meth:`~Chart.mark_bar`     A bar plot.
 circle      :meth:`~Chart.mark_circle`  A scatter plot with filled circles.
@@ -317,7 +379,7 @@ rule        :meth:`~Chart.mark_rule`    A vertical or horizontal line spanning t
 square      :meth:`~Chart.mark_square`  A scatter plot with filled squares.
 text        :meth:`~Chart.mark_text`    A scatter plot with points represented by text
 tick        :meth:`~Chart.mark_tick`    A vertical or horizontal tick mark.
-==========  ==========================  ===================================================
+==========  ==========================  ===================================================  =================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
 of the Chart object, which take optional keyword arguments that are passed
