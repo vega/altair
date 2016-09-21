@@ -94,7 +94,8 @@ def _get_object_info(obj):
 
     return D
 
-def altair_rst_table(obj, columns=None, title_map=None):
+def altair_rst_table(obj, columns=None, title_map=None,
+                     include_description=False):
     obj_info = _get_object_info(obj)
     columns = columns or ['name', 'type', 'help']
     title_map = title_map or {'name':'Trait', 'type':'Type',
@@ -113,7 +114,7 @@ def altair_rst_table(obj, columns=None, title_map=None):
     div = pad(['', '', ''], fill='=')
 
     lines = ['']
-    if 'description' in obj_info:
+    if include_description and 'description' in obj_info:
         lines.extend([obj_info['description'], ''])
     lines.extend(['', div, pad(titles), div])
     lines.extend(map(pad, rows))

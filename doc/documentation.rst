@@ -407,4 +407,6 @@ points as red semi-transparent filled circles:
 Data Transformations
 --------------------
 
+.. altair-trait-table:: Transform
+
 *TODO*

@@ -38,6 +38,7 @@ extensions = [
     'altair_ext.altairplot',
     'altair_ext.altairgallery',
     'altair_ext.altair_autodoc',
+    'altair_ext.altair_trait_table'
 ]
 
 altair_plot_links = {'editor': True, 'source': False, 'export': False}

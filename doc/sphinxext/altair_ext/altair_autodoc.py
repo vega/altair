@@ -19,7 +19,7 @@ from docutils.statemachine import ViewList
 
 from altair.schema.baseobject import BaseObject
 
-from .altair_rst_table import altair_rst_table
+from .utils import import_obj
 
 
 def process_docstring(app, what, name, obj, options, lines):
@@ -28,15 +28,16 @@ def process_docstring(app, what, name, obj, options, lines):
     This captures the extracted docstring, and modifies it in-place
     """
     if isinstance(obj, class_types) and issubclass(obj, BaseObject):
-        for i in range(len(lines)):
-            lines.pop()
-        lines.extend(altair_rst_table(obj))
+        del lines[3:]
+        table_rst = '.. altair-trait-table:: {0}'.format(obj.__name__)
+        table_opt = '   :include-vegalite-link:'
+        lines.extend(['', table_rst, table_opt, ''])
 
     elif isinstance(obj, types.MethodType) and hasattr(obj, '_uses_signature'):
-        for i in range(len(lines) - 1):
-           lines.pop()
-        lines.extend(['', ('Arguments are passed to :class:`~altair.{0}`.'
-                           ''.format(obj._uses_signature.__name__))])
+        del lines[3:]
+        args_description = ('Arguments are passed to :class:`~altair.{0}`.'
+                            ''.format(obj._uses_signature.__name__))
+        lines.extend(['', args_description])
 
 
 def process_signature(app, what, name, obj, options, signature, return_annotation):
@@ -70,7 +71,7 @@ u"""
 """)
 
 
-def _import_obj(args):
+def import_obj_from_args(args):
     """Utility to import the object given arguments to directive"""
     if len(args) == 1:
         mod, clsname = args[0].rsplit('.', 1)
@@ -79,8 +80,7 @@ def _import_obj(args):
         clsname = args[0].split('(')[0]
     else:
         raise ValueError("Args do not look as expected: {0}".format(args))
-    mod = importlib.import_module(mod)
-    return getattr(mod, clsname)
+    return import_obj(clsname, default_module=mod)
 
 
 class AltairClassDirective(Directive):
@@ -90,7 +90,7 @@ class AltairClassDirective(Directive):
 
     def run(self):
         # figure out what attributes to exclude:
-        obj = _import_obj(self.arguments)
+        obj = import_obj_from_args(self.arguments)
         if not issubclass(obj, traitlets.HasTraits):
             raise ValueError('altair-class directive should only be used '
                              'on altair classes; not {0}'.format(obj))
