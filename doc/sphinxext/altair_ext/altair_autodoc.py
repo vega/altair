@@ -1,10 +1,9 @@
 """ Specialization of Sphinx autodoc for Altair objects"""
-
-
 from __future__ import absolute_import, print_function
 
 import types
 import importlib
+import warnings
 
 import jinja2
 import traitlets
@@ -16,10 +15,12 @@ from sphinx.util.nodes import nested_parse_with_titles
 
 from docutils import nodes
 from docutils.statemachine import ViewList
+from docutils.parsers.rst.directives import flag
 
 from altair.schema.baseobject import BaseObject
 
 from .utils import import_obj
+from .utils.altair_rst_table import altair_rst_table
 
 
 def process_docstring(app, what, name, obj, options, lines):
@@ -117,8 +118,43 @@ class AltairClassDirective(Directive):
         return node.children
 
 
+class AltairTraitTableDirective(Directive):
+    has_content = False
+    required_arguments = 1
+
+    option_spec = {'include-vegalite-link': flag}
+
+    def run(self):
+        env = self.state.document.settings.env
+        app = env.app
+
+        classname = self.arguments[0].split('(')[0].strip()
+
+        try:
+            obj = import_obj(classname, default_module='altair')
+        except ImportError:
+            raise
+            warnings.warn('Could not make table for {0}. Unable to import'
+                          ''.format(object))
+
+        # create the table from the object
+        include_vl_link = ('include-vegalite-link' in self.options)
+        table = altair_rst_table(obj, include_description=include_vl_link)
+
+        # parse and return documentation
+        result = ViewList()
+        for line in table:
+            result.append(line, "<altair-class>")
+        node = nodes.paragraph()
+        node.document = self.state.document
+        nested_parse_with_titles(self.state, result, node)
+
+        return node.children
+
+
 def setup(app):
     app.add_autodocumenter(AltairClassDocumenter)
     app.add_directive_to_domain('py', 'altair-class', AltairClassDirective)
+    app.add_directive('altair-trait-table', AltairTraitTableDirective)
     app.connect('autodoc-process-docstring', process_docstring)
     app.connect('autodoc-process-signature', process_signature)
