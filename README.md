@@ -14,7 +14,7 @@ simplicity produces beautiful and effective visualizations with a minimal amount
 ## Altair Documentation
 
 **Note: Altair's documentation is currently in a very incomplete form; we are
-in the process of creating more comprehensive docs solution. Stay tuned!**
+in the process of creating more comprehensive documentation. Stay tuned!**
 
 See the [Altair Notebook Documentation](altair/notebooks/01-Index.ipynb).
 
