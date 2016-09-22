@@ -5,7 +5,7 @@ import json
 
 import jinja2
 
-from .utils import strip_vl_extension, create_thumbnail, prev_this_next
+from .utils import strip_vl_extension, create_thumbnail, prev_this_next, dict_hash
 from altair import Chart
 from altair.examples import iter_examples_with_metadata
 from altair.utils.node import savechart, savechart_available, NodeExecError
@@ -130,7 +130,7 @@ def make_images(image_dir, default_image, make_thumbnails=True):
 
         # check whether image already exists
         spec = example['spec']
-        spec_hash = hash(json.dumps(spec, sort_keys=True))
+        spec_hash = dict_hash(spec)
         if hashes.get(filename, '') == spec_hash:
             continue
 

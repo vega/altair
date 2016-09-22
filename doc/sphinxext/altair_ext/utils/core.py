@@ -2,8 +2,21 @@ import ast
 import os
 import json
 import importlib
+from hashlib import md5
 
 from itertools import tee, chain, islice
+
+
+def dict_hash(dct):
+    """Return a hash of the contents of a dictionary"""
+    dct_s = json.dumps(dct, sort_keys=True)
+
+    try:
+        m = md5(dct_s)
+    except TypeError:
+        m = md5(dct_s.encode())
+
+    return m.hexdigest()
 
 
 def exec_then_eval(code, _globals=None, _locals=None):
