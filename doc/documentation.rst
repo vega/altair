@@ -117,25 +117,25 @@ circumstances; the following table summarizes them:
 
 Position Channels:
 
-=======  ================  ============================================  =================
-Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-column   :class:`Column`   The column of a faceted plot
-row      :class:`Row`      The row of a faceted plot
-x        :class:`X`        The x-axis value
-y        :class:`Y`        The y-axis value
-=======  ================  ============================================  =================
+=======  ================  ============================  ===================================
+Channel  Altair Class      Description                   Example
+=======  ================  ============================  ===================================
+column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_stacked_bar`
+row      :class:`Row`      The row of a faceted plot     :ref:`gallery_trellis_barley`
+x        :class:`X`        The x-axis value              :ref:`gallery_scatter`
+y        :class:`Y`        The y-axis value              :ref:`gallery_circle`
+=======  ================  ============================  ===================================
 
 Channels with Legend:
 
-=======  ================  ============================================  =================
-Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-color    :class:`Color`    The color of the mark
+=======  ================  ========================  =========================================
+Channel  Altair Class      Description               Example
+=======  ================  ========================  =========================================
+color    :class:`Color`    The color of the mark     :ref:`gallery_stacked_area`
 opacity  :class:`Opacity`  The opacity of the mark
-shape    :class:`Shape`    The shape of the mark
-size     :class:`Size`     The size of the mark
-=======  ================  ============================================  =================
+shape    :class:`Shape`    The shape of the mark     :ref:`gallery_scatter_colored_with_shape`
+size     :class:`Size`     The size of the mark      :ref:`gallery_scatter_binned`
+=======  ================  ========================  =========================================
 
 Order Channels:
 
@@ -148,14 +148,14 @@ path     :class:`Path`     --
 
 Field Channels:
 
-=======  ================  ============================================  =================
+=======  ================  ============================================  ===========================
 Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-text     :class:`Text`     The text to display at each mark
+=======  ================  ============================================  ===========================
+text     :class:`Text`     The text to display at each mark              :ref:`gallery_text_scatter_colored`
 detail   :class:`Detail`   Additional level of detail for a grouping,
                            without mapping to any particular channel
 label    :class:`Label`    --
-=======  ================  ============================================  =================
+=======  ================  ============================================  ===========================
 
 .. _data-types:
 
@@ -267,7 +267,7 @@ In altair, such an operation looks like this:
    )
 
 Notice here we use the shorthand version of expressing an encoding channel
-(see :ref:`shorthand-description`) along with the ``count`` aggregation,
+(see :ref:`shorthand-description`) with the ``count`` aggregation,
 the special ``*`` wild-card identifier often used with counts,
 and ``Q`` for quantitative type.
 
@@ -288,7 +288,7 @@ a "Bubble Plot"):
    )
 
 There is no need, however, to limit aggregations to counts alone. For example,
-we could similarly create a labeled heat-map where the color of each cell
+we could similarly create a plot where the color of each point
 represents the mean of a third quantity, such as acceleration:
 
 .. altair-plot::
@@ -309,13 +309,13 @@ aggregation functions built into Altair; they are listed in the following table:
 
 *TODO: fill-in examples*
 
-=========  ========================================  ============
+=========  ========================================  =================================
 Aggregate  Description                               Example
-=========  ========================================  ============
-sum        Sum of values
-mean       Arithmetic mean of values
+=========  ========================================  =================================
+sum        Sum of values                             :ref:`gallery_bar_aggregate`
+mean       Arithmetic mean of values                 :ref:`gallery_text_table_heatmap`
 average    Arithmetic mean of values
-count      Total number of values
+count      Total number of values                    :ref:`gallery_scatter_binned`
 distinct   Number of distinct values
 variance   Variance of values
 variancep  ??
@@ -332,7 +332,7 @@ argmax     Index of maximum value
 values     ??
 valid      ??
 missing    ??
-=========  ========================================  ============
+=========  ========================================  =================================
 
 
 .. _shorthand-description:
@@ -367,19 +367,19 @@ Altair provides a number of mark properties:
 
 *TODO: fill-in examples*
 
-==========  ==========================  ===================================================  =================
+==========  ==========================  ===================================================  ====================================
 Mark Name   Method                      Description                                          Example
-==========  ==========================  ===================================================  =================
-area        :meth:`~Chart.mark_area`    A filled area plot.
-bar         :meth:`~Chart.mark_bar`     A bar plot.
-circle      :meth:`~Chart.mark_circle`  A scatter plot with filled circles.
-line        :meth:`~Chart.mark_line`    A line plot.
-point       :meth:`~Chart.mark_point`   A scatter plot with configurable point shapes.
+==========  ==========================  ===================================================  ====================================
+area        :meth:`~Chart.mark_area`    A filled area plot.                                  :ref:`gallery_area`
+bar         :meth:`~Chart.mark_bar`     A bar plot.                                          :ref:`gallery_bar_aggregate`
+circle      :meth:`~Chart.mark_circle`  A scatter plot with filled circles.                  :ref:`gallery_bubble_health_income`
+line        :meth:`~Chart.mark_line`    A line plot.                                         :ref:`gallery_line_color`
+point       :meth:`~Chart.mark_point`   A scatter plot with configurable point shapes.       :ref:`gallery_scatter_binned`
 rule        :meth:`~Chart.mark_rule`    A vertical or horizontal line spanning the axis.
 square      :meth:`~Chart.mark_square`  A scatter plot with filled squares.
-text        :meth:`~Chart.mark_text`    A scatter plot with points represented by text
-tick        :meth:`~Chart.mark_tick`    A vertical or horizontal tick mark.
-==========  ==========================  ===================================================  =================
+text        :meth:`~Chart.mark_text`    A scatter plot with points represented by text       :ref:`gallery_text_scatter_colored`
+tick        :meth:`~Chart.mark_tick`    A vertical or horizontal tick mark.                  :ref:`gallery_tick_strip`
+==========  ==========================  ===================================================  ====================================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
 of the Chart object, which take optional keyword arguments that are passed
