@@ -40,6 +40,7 @@ Documentation
    displaying
    gallery/index
    documentation
+   recipes
    API
 
 

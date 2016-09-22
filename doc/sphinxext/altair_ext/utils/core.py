@@ -29,6 +29,8 @@ def exec_then_eval(code, _globals=None, _locals=None):
     last = ast.Expression(block.body.pop().value)
 
     exec(compile(block, '<string>', mode='exec'), _globals, _locals)
+    # fix bug where defined functions can't access globals
+    _globals.update(_locals)
     return eval(compile(last, '<string>', mode='eval'), _globals, _locals)
 
 

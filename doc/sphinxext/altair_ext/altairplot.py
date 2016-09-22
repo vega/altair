@@ -211,6 +211,9 @@ def html_visit_altair_plot(self, node):
     if node['setupcode']:
         exec(node['setupcode'], _globals, _locals)
 
+    # fix bug where functions can't see globals
+    _globals.update(_locals)
+
     # Execute the plot code in this context, evaluating the last line
     try:
         chart = exec_then_eval(node['code'], _globals, _locals)
