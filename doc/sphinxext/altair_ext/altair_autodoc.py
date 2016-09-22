@@ -4,6 +4,7 @@ from __future__ import absolute_import, print_function
 import types
 import importlib
 import warnings
+import inspect
 
 import jinja2
 import traitlets
@@ -28,13 +29,13 @@ def process_docstring(app, what, name, obj, options, lines):
 
     This captures the extracted docstring, and modifies it in-place
     """
-    if isinstance(obj, class_types) and issubclass(obj, BaseObject):
+    if inspect.isclass(obj) and issubclass(obj, BaseObject):
         del lines[3:]
         table_rst = '.. altair-trait-table:: {0}'.format(obj.__name__)
         table_opt = '   :include-vegalite-link:'
         lines.extend(['', table_rst, table_opt, ''])
 
-    elif isinstance(obj, types.MethodType) and hasattr(obj, '_uses_signature'):
+    elif hasattr(obj, '_uses_signature'):
         del lines[3:]
         args_description = ('Arguments are passed to :class:`~altair.{0}`.'
                             ''.format(obj._uses_signature.__name__))
@@ -47,7 +48,7 @@ def process_signature(app, what, name, obj, options, signature, return_annotatio
     This captures the signature and returns an updated version of
     (signature, return_annotation)
     """
-    if isinstance(obj, class_types) and issubclass(obj, BaseObject):
+    if inspect.isclass(obj) and issubclass(obj, BaseObject):
         signature = '(**kwargs)'
     return signature, return_annotation
 
@@ -58,7 +59,7 @@ class AltairClassDocumenter(ClassDocumenter):
 
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
-        return isinstance(member, class_types) and issubclass(member, BaseObject)
+        return inspect.isclass(member) and issubclass(member, BaseObject)
 
 
 ALTAIR_CLASS_TEMPLATE = jinja2.Template(
