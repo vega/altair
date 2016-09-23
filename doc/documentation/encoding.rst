@@ -1,83 +1,3 @@
-.. _api-documentation:
-
-Altair Documentation
-====================
-
-Altair's core functionality is to produce Vega-Lite JSON specifications, which
-specify :ref:`mappings <encoding-reference>` between :ref:`data <defining-data>` and :ref:`graphical markings <mark-reference>`.
-
-
-.. currentmodule:: altair
-
-
-.. _defining-data:
-
-Data in Altair
---------------
-
-Each top-level chart object, including :class:`Chart`, :class:`LayeredChart`,
-and :class:`FacetedChart`, can take a dataset as its first argument.
-The dataset can be specified in one of three ways:
-
-- as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
-- as a :class:`Data` object
-- as a url pointing to a ``json`` or ``csv`` formatted text file
-
-For example, here we specify data via a dataframe:
-
-.. altair-plot::
-
-   from altair import Chart
-   import pandas as pd
-
-   data = pd.DataFrame({'x': ['A', 'B', 'C', 'D', 'E'],
-                        'y': [5, 3, 6, 7, 2]})
-   Chart(data).mark_bar().encode(
-       x='x',
-       y='y',
-   )
-
-When data is specified as a DataFrame, the encoding is quite simple, as Altair
-uses the data type information provided by Pandas to automatically determine
-the data types required in the encoding.
-
-By comparison, here we create the same chart using a :class:`Data` object,
-with the data specified as a JSON-style list of records:
-
-.. altair-plot::
-
-   from altair import Chart, Data
-
-   data = Data(values=[{'x': 'A', 'y': 5},
-                       {'x': 'B', 'y': 3},
-                       {'x': 'C', 'y': 6},
-                       {'x': 'D', 'y': 7},
-                       {'x': 'E', 'y': 2}])
-   Chart(data).mark_bar().encode(
-       x='x:O',  # specify ordinal data
-       y='y:Q',  # specify quantitative data
-   )
-
-notice the extra markup required in the encoding; because Altair cannot infer
-the types within a :class:`Data` object, we must specify them manually
-(here we use :ref:`shorthand-description` to specify *ordinal* (``O``) for ``x``
-and *quantitative* (``Q``) for ``y``; see :ref:`data-types` below).
-
-Similarly, we must also specify the data type when referencing data by URL:
-
-.. altair-plot::
-
-   from altair import Chart
-
-   url = 'https://vega.github.io/vega-datasets/data/cars.json'
-
-   Chart(url).mark_point().encode(
-       x='Horsepower:Q',
-       y='Miles_per_Gallon:Q'
-   )
-
-We will further discuss encodings and associated types below.
-
 .. _encoding-reference:
 
 Encodings
@@ -117,25 +37,25 @@ circumstances; the following table summarizes them:
 
 Position Channels:
 
-=======  ================  ============================================  =================
-Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-column   :class:`Column`   The column of a faceted plot
-row      :class:`Row`      The row of a faceted plot
-x        :class:`X`        The x-axis value
-y        :class:`Y`        The y-axis value
-=======  ================  ============================================  =================
+=======  ================  ============================  ===================================
+Channel  Altair Class      Description                   Example
+=======  ================  ============================  ===================================
+column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_stacked_bar`
+row      :class:`Row`      The row of a faceted plot     :ref:`gallery_trellis_barley`
+x        :class:`X`        The x-axis value              :ref:`gallery_scatter`
+y        :class:`Y`        The y-axis value              :ref:`gallery_circle`
+=======  ================  ============================  ===================================
 
 Channels with Legend:
 
-=======  ================  ============================================  =================
-Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-color    :class:`Color`    The color of the mark
+=======  ================  ========================  =========================================
+Channel  Altair Class      Description               Example
+=======  ================  ========================  =========================================
+color    :class:`Color`    The color of the mark     :ref:`gallery_stacked_area`
 opacity  :class:`Opacity`  The opacity of the mark
-shape    :class:`Shape`    The shape of the mark
-size     :class:`Size`     The size of the mark
-=======  ================  ============================================  =================
+shape    :class:`Shape`    The shape of the mark     :ref:`gallery_scatter_colored_with_shape`
+size     :class:`Size`     The size of the mark      :ref:`gallery_scatter_binned`
+=======  ================  ========================  =========================================
 
 Order Channels:
 
@@ -148,14 +68,14 @@ path     :class:`Path`     --
 
 Field Channels:
 
-=======  ================  ============================================  =================
+=======  ================  ============================================  ===========================
 Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-text     :class:`Text`     The text to display at each mark
+=======  ================  ============================================  ===========================
+text     :class:`Text`     The text to display at each mark              :ref:`gallery_text_scatter_colored`
 detail   :class:`Detail`   Additional level of detail for a grouping,
                            without mapping to any particular channel
 label    :class:`Label`    --
-=======  ================  ============================================  =================
+=======  ================  ============================================  ===========================
 
 .. _data-types:
 
@@ -267,7 +187,7 @@ In altair, such an operation looks like this:
    )
 
 Notice here we use the shorthand version of expressing an encoding channel
-(see :ref:`shorthand-description`) along with the ``count`` aggregation,
+(see :ref:`shorthand-description`) with the ``count`` aggregation,
 the special ``*`` wild-card identifier often used with counts,
 and ``Q`` for quantitative type.
 
@@ -288,7 +208,7 @@ a "Bubble Plot"):
    )
 
 There is no need, however, to limit aggregations to counts alone. For example,
-we could similarly create a labeled heat-map where the color of each cell
+we could similarly create a plot where the color of each point
 represents the mean of a third quantity, such as acceleration:
 
 .. altair-plot::
@@ -309,13 +229,13 @@ aggregation functions built into Altair; they are listed in the following table:
 
 *TODO: fill-in examples*
 
-=========  ========================================  ============
+=========  ========================================  =================================
 Aggregate  Description                               Example
-=========  ========================================  ============
-sum        Sum of values
-mean       Arithmetic mean of values
+=========  ========================================  =================================
+sum        Sum of values                             :ref:`gallery_bar_aggregate`
+mean       Arithmetic mean of values                 :ref:`gallery_text_table_heatmap`
 average    Arithmetic mean of values
-count      Total number of values
+count      Total number of values                    :ref:`gallery_scatter_binned`
 distinct   Number of distinct values
 variance   Variance of values
 variancep  ??
@@ -332,7 +252,7 @@ argmax     Index of maximum value
 values     ??
 valid      ??
 missing    ??
-=========  ========================================  ============
+=========  ========================================  =================================
 
 
 .. _shorthand-description:
@@ -355,56 +275,3 @@ Shorthand            Equivalent long-form
 ``x='sum(name)'``    ``X('name', aggregate='sum')``
 ``x='sum(name):Q'``  ``X('name', aggregate='sum', type='quantitative')``
 ===================  ===================================================
-
-
-.. _mark-reference:
-
-Marks
------
-The chart encoding maps data columns to visual plot attributes; the ``mark``
-property specifies how those attributes should be represented.
-Altair provides a number of mark properties:
-
-*TODO: fill-in examples*
-
-==========  ==========================  ===================================================  =================
-Mark Name   Method                      Description                                          Example
-==========  ==========================  ===================================================  =================
-area        :meth:`~Chart.mark_area`    A filled area plot.
-bar         :meth:`~Chart.mark_bar`     A bar plot.
-circle      :meth:`~Chart.mark_circle`  A scatter plot with filled circles.
-line        :meth:`~Chart.mark_line`    A line plot.
-point       :meth:`~Chart.mark_point`   A scatter plot with configurable point shapes.
-rule        :meth:`~Chart.mark_rule`    A vertical or horizontal line spanning the axis.
-square      :meth:`~Chart.mark_square`  A scatter plot with filled squares.
-text        :meth:`~Chart.mark_text`    A scatter plot with points represented by text
-tick        :meth:`~Chart.mark_tick`    A vertical or horizontal tick mark.
-==========  ==========================  ===================================================  =================
-
-In Altair, marks can be most conveniently specified by the ``mark_*`` methods
-of the Chart object, which take optional keyword arguments that are passed
-to :class:`MarkConfig` to configure the look of the marks.
-For example, the following uses :meth:`~Chart.mark_circle` to represent
-points as red semi-transparent filled circles:
-
-.. altair-plot::
-
-   from altair import Chart
-
-   url = 'https://vega.github.io/vega-datasets/data/cars.json'
-
-   Chart(url).mark_circle(
-       color='red',
-       opacity=0.3
-   ).encode(
-       x='Horsepower:Q',
-       y='Miles_per_Gallon:Q'
-   )
-
-
-.. _data-transformations:
-
-Data Transformations
---------------------
-
-*TODO*

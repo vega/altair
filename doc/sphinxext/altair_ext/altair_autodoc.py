@@ -1,10 +1,10 @@
 """ Specialization of Sphinx autodoc for Altair objects"""
-
-
 from __future__ import absolute_import, print_function
 
 import types
 import importlib
+import warnings
+import inspect
 
 import jinja2
 import traitlets
@@ -16,10 +16,12 @@ from sphinx.util.nodes import nested_parse_with_titles
 
 from docutils import nodes
 from docutils.statemachine import ViewList
+from docutils.parsers.rst.directives import flag
 
 from altair.schema.baseobject import BaseObject
 
-from .altair_rst_table import altair_rst_table
+from .utils import import_obj
+from .utils.altair_rst_table import altair_rst_table
 
 
 def process_docstring(app, what, name, obj, options, lines):
@@ -27,16 +29,17 @@ def process_docstring(app, what, name, obj, options, lines):
 
     This captures the extracted docstring, and modifies it in-place
     """
-    if isinstance(obj, class_types) and issubclass(obj, BaseObject):
-        for i in range(len(lines)):
-            lines.pop()
-        lines.extend(altair_rst_table(obj))
+    if inspect.isclass(obj) and issubclass(obj, BaseObject):
+        del lines[3:]
+        table_rst = '.. altair-trait-table:: {0}'.format(obj.__name__)
+        table_opt = '   :include-vegalite-link:'
+        lines.extend(['', table_rst, table_opt, ''])
 
-    elif isinstance(obj, types.MethodType) and hasattr(obj, '_uses_signature'):
-        for i in range(len(lines) - 1):
-           lines.pop()
-        lines.extend(['', ('Arguments are passed to :class:`~altair.{0}`.'
-                           ''.format(obj._uses_signature.__name__))])
+    elif hasattr(obj, '_uses_signature'):
+        del lines[3:]
+        args_description = ('Arguments are passed to :class:`~altair.{0}`.'
+                            ''.format(obj._uses_signature.__name__))
+        lines.extend(['', args_description])
 
 
 def process_signature(app, what, name, obj, options, signature, return_annotation):
@@ -45,7 +48,7 @@ def process_signature(app, what, name, obj, options, signature, return_annotatio
     This captures the signature and returns an updated version of
     (signature, return_annotation)
     """
-    if isinstance(obj, class_types) and issubclass(obj, BaseObject):
+    if inspect.isclass(obj) and issubclass(obj, BaseObject):
         signature = '(**kwargs)'
     return signature, return_annotation
 
@@ -56,7 +59,7 @@ class AltairClassDocumenter(ClassDocumenter):
 
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
-        return isinstance(member, class_types) and issubclass(member, BaseObject)
+        return inspect.isclass(member) and issubclass(member, BaseObject)
 
 
 ALTAIR_CLASS_TEMPLATE = jinja2.Template(
@@ -70,7 +73,7 @@ u"""
 """)
 
 
-def _import_obj(args):
+def import_obj_from_args(args):
     """Utility to import the object given arguments to directive"""
     if len(args) == 1:
         mod, clsname = args[0].rsplit('.', 1)
@@ -79,8 +82,7 @@ def _import_obj(args):
         clsname = args[0].split('(')[0]
     else:
         raise ValueError("Args do not look as expected: {0}".format(args))
-    mod = importlib.import_module(mod)
-    return getattr(mod, clsname)
+    return import_obj(clsname, default_module=mod)
 
 
 class AltairClassDirective(Directive):
@@ -90,7 +92,7 @@ class AltairClassDirective(Directive):
 
     def run(self):
         # figure out what attributes to exclude:
-        obj = _import_obj(self.arguments)
+        obj = import_obj_from_args(self.arguments)
         if not issubclass(obj, traitlets.HasTraits):
             raise ValueError('altair-class directive should only be used '
                              'on altair classes; not {0}'.format(obj))
@@ -117,8 +119,43 @@ class AltairClassDirective(Directive):
         return node.children
 
 
+class AltairTraitTableDirective(Directive):
+    has_content = False
+    required_arguments = 1
+
+    option_spec = {'include-vegalite-link': flag}
+
+    def run(self):
+        env = self.state.document.settings.env
+        app = env.app
+
+        classname = self.arguments[0].split('(')[0].strip()
+
+        try:
+            obj = import_obj(classname, default_module='altair')
+        except ImportError:
+            raise
+            warnings.warn('Could not make table for {0}. Unable to import'
+                          ''.format(object))
+
+        # create the table from the object
+        include_vl_link = ('include-vegalite-link' in self.options)
+        table = altair_rst_table(obj, include_description=include_vl_link)
+
+        # parse and return documentation
+        result = ViewList()
+        for line in table:
+            result.append(line, "<altair-class>")
+        node = nodes.paragraph()
+        node.document = self.state.document
+        nested_parse_with_titles(self.state, result, node)
+
+        return node.children
+
+
 def setup(app):
     app.add_autodocumenter(AltairClassDocumenter)
     app.add_directive_to_domain('py', 'altair-class', AltairClassDirective)
+    app.add_directive('altair-trait-table', AltairTraitTableDirective)
     app.connect('autodoc-process-docstring', process_docstring)
     app.connect('autodoc-process-signature', process_signature)

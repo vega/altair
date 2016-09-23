@@ -45,7 +45,7 @@ def connection_ok():
 
 def list_datasets():
     """List the available datasets."""
-    return list(_datasets_json().keys())
+    return sorted(_datasets_json().keys())
 
 
 @lru_cache()
