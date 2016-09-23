@@ -15,8 +15,8 @@ source activate altair-docs-27
 conda install --yes --file requirements.txt --channel conda-forge
 conda install --yes --file doc/requirements.txt
 
-# nodejs is required for building thumbnails:
-conda install --yes nodejs --channel conda-forge
+# nodejs (vega-lite & canvas) & cairo are required for building thumbnails:
+conda install --yes cairo nodejs --channel conda-forge
 node -p "require('vega-lite/package.json').version" || npm install canvas vega-lite
 
 # install altair & build docs
