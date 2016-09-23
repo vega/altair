@@ -31,11 +31,8 @@ before_install:
   - conda update --yes conda
 
 script:
-  # under docs, first two commands start Virtual X, so default matplotlib backend works
   - if [[ $BUILD_TYPE == 'test' ]]; then
        py.test altair --doctest-modules;
     elif [[ $BUILD_TYPE == 'docs ]]; then
-       export DISPLAY=:99.0;
-       sh -e /etc/init.d/xvfb start;
        bash ./build_docs.sh;
     fi

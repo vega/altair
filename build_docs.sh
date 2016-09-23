@@ -15,8 +15,8 @@ source activate altair-docs-27
 conda install --yes --file requirements.txt --channel conda-forge
 conda install --yes --file doc/requirements.txt
 
-# nodejs used to build thumbnails
-conda install --yes nodejs --channel conda-forge
+# required for building thumbnails: nodejs & matplotlib
+conda install --yes matplotlib nodejs --channel conda-forge
 node -p "require('vega/package.json').version" || npm install vega
 node -p "require('canvas/package.json').version" || npm install canvas
 
