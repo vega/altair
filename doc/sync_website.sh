@@ -23,5 +23,5 @@ rsync -r ../html/ ./
 
 # add commit, and push to github
 git add . --all
-git commit -m $MSG
+git commit -m "$MSG"
 git push origin master
