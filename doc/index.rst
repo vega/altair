@@ -1,6 +1,13 @@
 Declarative Visualization in Python
 ===================================
 
+.. altair-minigallery::
+   :size: 6
+   :width: 125px
+   :shuffle:
+   :seed: 0
+
+
 Altair is a declarative statistical visualization library for Python, based on
 Vega-Lite_.
 
@@ -29,7 +36,11 @@ Here is an example of using the Altair API to quickly visualize a dataset:
 
 The key idea is that you are declaring links between *data columns* to *encoding channels*, such as the x-axis, y-axis, color, etc. and the rest of the plot details are handled automatically.
 Building on this declarative plotting idea, a surprising number of useful plots and visualizations can be created.
-For more details, see the documentation below:
+
+More examples are available in the :ref:`example-gallery`, or you can work
+through one of the :ref:`altair-tutorials`. The full documentation listing
+is available below.
+
 
 Documentation
 -------------

@@ -2,8 +2,17 @@ import os
 import shutil
 import warnings
 import json
+import random
+from operator import itemgetter
 
 import jinja2
+
+from docutils import nodes
+from docutils.statemachine import ViewList
+from docutils.parsers.rst.directives import flag
+
+from sphinx.util.compat import Directive
+from sphinx.util.nodes import nested_parse_with_titles
 
 from .utils import strip_vl_extension, create_thumbnail, prev_this_next, dict_hash
 from altair import Chart
@@ -43,14 +52,23 @@ The following examples are automatically generated from
 
 {% endfor %}
 
-{% for example in examples %}
-{% endfor %}
-
 .. toctree::
    :hidden:
 {% for example in examples %}
    {{ example.name }}
 {%- endfor %}
+""")
+
+
+MINIGALLERY_TEMPLATE = jinja2.Template(u"""
+{% for example in examples %}
+.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
+    :target: {{ gallery_dir }}/{{ example.name }}.html
+    :align: center
+    {% if width %}:width: {{ width }}{% endif %}
+
+    {% if titles %}:ref:`gallery_{{ example.name }}`{% endif %}
+{% endfor %}
 """)
 
 
@@ -78,10 +96,17 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 """)
 
 
-def populate_examples(**kwargs):
+def populate_examples(num_examples=None, category=None, shuffle=False,
+                      shuffle_seed=42, **kwargs):
     """Iterate through Altair examples and extract code"""
 
-    examples = list(iter_examples_with_metadata())
+    examples = sorted(iter_examples_with_metadata(), key=itemgetter('name'))
+    if category is not None:
+        examples = [ex for ex in examples if ex['category'] == category]
+    if shuffle:
+        random.Random(shuffle_seed).shuffle(examples)
+    if num_examples is not None:
+        examples = examples[:num_examples]
 
     for prev_ex, example, next_ex in prev_this_next(examples):
         try:
@@ -170,6 +195,52 @@ def make_images(image_dir, default_image, make_thumbnails=True):
             json.dump(hashes, f)
 
 
+class AltairMiniGalleryDirective(Directive):
+    has_content = False
+
+    option_spec = {'size': int,
+                   'shuffle': flag,
+                   'seed': int,
+                   'titles': bool,
+                   'width': str}
+
+    def run(self):
+        size = self.options.get('size', 4)
+        shuffle = 'shuffle' in self.options
+        seed = self.options.get('seed', 42)
+        titles = self.options.get('titles', False)
+        width = self.options.get('width', None)
+
+        env = self.state.document.settings.env
+        app = env.app
+
+        gallery_dir = app.builder.config.altair_gallery_dir
+        gallery_ref = app.builder.config.altair_gallery_ref
+
+        examples = populate_examples(shuffle=shuffle,
+                                     shuffle_seed=seed,
+                                     num_examples=size,
+                                     gallery_dir=gallery_dir,
+                                     gallery_ref=gallery_ref,
+                                     code_below=True)
+
+        include = MINIGALLERY_TEMPLATE.render(image_dir='/_images',
+                                              gallery_dir=gallery_dir,
+                                              examples=examples,
+                                              titles=titles,
+                                              width=width)
+
+        # parse and return documentation
+        result = ViewList()
+        for line in include.split('\n'):
+            result.append(line, "<altair-minigallery>")
+        node = nodes.paragraph()
+        node.document = self.state.document
+        nested_parse_with_titles(self.state, result, node)
+
+        return node.children
+
+
 def main(app):
     gallery_dir = app.builder.config.altair_gallery_dir
     target_dir = os.path.join(app.builder.srcdir, gallery_dir)
@@ -207,3 +278,4 @@ def setup(app):
     app.add_config_value('altair_gallery_dir', 'gallery', 'env')
     app.add_config_value('altair_gallery_ref', 'example-gallery', 'env')
     app.add_config_value('altair_gallery_title', 'Example Gallery', 'env')
+    app.add_directive_to_domain('py', 'altair-minigallery', AltairMiniGalleryDirective)

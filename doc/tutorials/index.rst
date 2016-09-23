@@ -1,3 +1,5 @@
+.. _altair-tutorials:
+
 Altair Tutorials
 ================
 

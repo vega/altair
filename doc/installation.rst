@@ -51,7 +51,7 @@ version directly from github using:
 
 .. code-block:: bash
 
-    $ pip install git+https://github.com/ellisonbg/altair
+    $ pip install git+https://github.com/altair-viz/altair
 
 
 .. _Vega-Lite: http://vega.github.io/vega-lite
@@ -61,4 +61,4 @@ version directly from github using:
 .. _Jupyter Notebook: https://jupyter.readthedocs.io/en/latest/install.html
 .. _ipyvega: http://github.com/vega/ipyvega
 .. _conda: http://conda.pydata.org
-.. _Altair source repository: http://github.com/ellisonbg/altair
+.. _Altair source repository: http://github.com/altair-viz/altair
