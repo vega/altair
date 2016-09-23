@@ -1,6 +1,6 @@
 # Altair
 
-[![build status](http://img.shields.io/travis/ellisonbg/altair/master.svg?style=flat)](https://travis-ci.org/ellisonbg/altair)
+[![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 
 Altair is a declarative statistical visualization library for Python.
 
@@ -16,7 +16,8 @@ simplicity produces beautiful and effective visualizations with a minimal amount
 **Note: Altair's documentation is currently in a very incomplete form; we are
 in the process of creating more comprehensive documentation. Stay tuned!**
 
-See the [Altair Notebook Documentation](altair/notebooks/01-Index.ipynb).
+See [Altair's Documentation Site](http://altair-viz.github.io),
+as well as Altair's [Tutorial Notebooks](altair/notebooks/01-Index.ipynb).
 
 ## Example
 
@@ -181,7 +182,7 @@ pip install -e .
 If you do not wish to clone the repository, you can install using:
 
 ```
-pip install git+https://github.com/ellisonbg/altair
+pip install git+https://github.com/altair-viz/altair
 ```
 
 ## Testing
@@ -197,7 +198,7 @@ py.test --pyargs altair
 ## Feedback and Contribution
 
 We welcome any input, feedback, bug reports, and contributions via [Altair's
-GitHub Repository](http://github.com/ellisonbg/altair/). In particular, we
+GitHub Repository](http://github.com/altair-viz/altair/). In particular, we
 welcome companion efforts from other visualization libraries to render the
 Vega-Lite specifications output by Altair. We see this portion of the effort
 as much bigger than Altair itself: the Vega and Vega-Lite specifications are
