@@ -228,3 +228,8 @@ dummy:
 	$(SPHINXBUILD) -b dummy $(ALLSPHINXOPTS) $(BUILDDIR)/dummy
 	@echo
 	@echo "Build finished. Dummy builder generates no files."
+
+
+.PHONY: publish
+publish: html
+	bash sync_website.sh
