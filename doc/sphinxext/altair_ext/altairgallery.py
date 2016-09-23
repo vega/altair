@@ -50,7 +50,12 @@ The following examples are automatically generated from
     :ref:`gallery_{{ example.name }}`
 {% endfor %}
 
+.. raw:: html
+
+   <div style='clear:left;'></div>
+
 {% endfor %}
+
 
 .. toctree::
    :hidden:
@@ -65,10 +70,16 @@ MINIGALLERY_TEMPLATE = jinja2.Template(u"""
 .. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
     :target: {{ gallery_dir }}/{{ example.name }}.html
     :align: center
+    :figclass: minigallery
     {% if width %}:width: {{ width }}{% endif %}
 
     {% if titles %}:ref:`gallery_{{ example.name }}`{% endif %}
 {% endfor %}
+
+.. raw:: html
+
+   <div style='clear:left;'></div>
+
 """)
 
 

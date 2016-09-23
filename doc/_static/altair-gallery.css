@@ -2,6 +2,11 @@
     float: left;
     margin: 10px;
     width: auto;
+    height: 200px;
+}
+
+.figure.minigallery {
+    height: auto;
 }
 
 .figure img {
@@ -29,7 +34,6 @@
 
 div.section h2 {
    padding-top: 30px;
-   clear: left;
    border-bottom: 1px solid #cccccc;
 }
 

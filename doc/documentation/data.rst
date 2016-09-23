@@ -3,6 +3,8 @@
 Defining Data
 -------------
 
+.. currentmodule:: altair
+
 Each top-level chart object, including :class:`Chart`, :class:`LayeredChart`,
 and :class:`FacetedChart`, can take a dataset as its first argument.
 The dataset can be specified in one of three ways:
@@ -64,4 +66,4 @@ Similarly, we must also specify the data type when referencing data by URL:
        y='Miles_per_Gallon:Q'
    )
 
-We will further discuss encodings and associated types below.
+We will further discuss encodings and associated types in :ref:`encoding-reference`, next.
