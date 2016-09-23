@@ -477,3 +477,13 @@ each define a new column using a javascript expression over existing columns.
 
 The :ref:`gallery_bar_grouped` example shows a more refined view of this dataset
 using these techniques.
+
+
+.. _configuring-altair:
+
+Configuring Plots
+-----------------
+
+.. todo
+
+*Coming soon*
