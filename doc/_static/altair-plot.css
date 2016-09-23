@@ -1,3 +1,5 @@
 .vega-actions a {
     margin-right: 10px;
+    color: gray;
+    font-weight: normal;
 }

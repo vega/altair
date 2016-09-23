@@ -263,6 +263,8 @@ def setup(app):
     setup.config = app.config
     setup.confdir = app.confdir
 
+    app.add_stylesheet('altair-plot.css')
+
     app.add_javascript("https://d3js.org/d3.v3.min.js")
     app.add_javascript("https://vega.github.io/vega/vega.js")
     app.add_javascript("https://vega.github.io/vega-lite/vega-lite.js")
