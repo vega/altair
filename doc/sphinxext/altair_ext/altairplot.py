@@ -230,8 +230,8 @@ def html_visit_altair_plot(self, node):
                                  'spec': spec})
 
         # Prevent http/https request errors by doing this
-        embed_spec.replace('http://', '//')
-        embed_spec.replace('https://', '//')
+        embed_spec = embed_spec.replace('http://', '//')
+        embed_spec = embed_spec.replace('https://', '//')
 
         # Write embed_spec to a *.vl.json file
         dest_dir = os.path.join(self.builder.outdir, node['relpath'])
