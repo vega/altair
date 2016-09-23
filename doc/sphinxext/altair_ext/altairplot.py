@@ -207,16 +207,13 @@ class AltairPlotDirective(Directive):
 
 def html_visit_altair_plot(self, node):
     # Execute the setup code, saving the global & local state
-    _globals, _locals = {}, {}
+    namespace = {}
     if node['setupcode']:
-        exec(node['setupcode'], _globals, _locals)
-
-    # fix bug where functions can't see globals
-    _globals.update(_locals)
+        exec(node['setupcode'], namespace)
 
     # Execute the plot code in this context, evaluating the last line
     try:
-        chart = exec_then_eval(node['code'], _globals, _locals)
+        chart = exec_then_eval(node['code'], namespace)
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
                       "{2}: {3}".format(node['rst_source'], node['rst_lineno'],

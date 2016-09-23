@@ -19,19 +19,16 @@ def dict_hash(dct):
     return m.hexdigest()
 
 
-def exec_then_eval(code, _globals=None, _locals=None):
+def exec_then_eval(code, namespace=None):
     """Exec a code block & return evaluation of the last line"""
     # TODO: make this less brittle.
-    _globals = _globals or {}
-    _locals = _locals or {}
+    namespace = namespace or {}
 
     block = ast.parse(code, mode='exec')
     last = ast.Expression(block.body.pop().value)
 
-    exec(compile(block, '<string>', mode='exec'), _globals, _locals)
-    # fix bug where defined functions can't access globals
-    _globals.update(_locals)
-    return eval(compile(last, '<string>', mode='eval'), _globals, _locals)
+    exec(compile(block, '<string>', mode='exec'), namespace)
+    return eval(compile(last, '<string>', mode='eval'), namespace)
 
 
 def import_obj(clsname, default_module=None):
