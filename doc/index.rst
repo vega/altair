@@ -8,6 +8,7 @@ Altair's API is simple, friendly and consistent and built on top of the
 powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.
 
+
 Example
 -------
 Here is an example of using the Altair API to quickly visualize a dataset:
