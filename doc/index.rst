@@ -38,9 +38,8 @@ Documentation
 
    installation
    tutorials/index
-   displaying
+   documentation/index
    gallery/index
-   documentation
    recipes
    API
 
