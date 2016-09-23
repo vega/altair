@@ -34,3 +34,7 @@ div.section h2 {
    clear: left;
    border-bottom: 1px solid #cccccc;
 }
+
+div.bottomnav {
+    clear: left;
+}
