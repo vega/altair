@@ -33,6 +33,6 @@ before_install:
 script:
   - if [[ $BUILD_TYPE == 'test' ]]; then
        py.test altair --doctest-modules;
-    elif [[ $BUILD_TYPE == 'docs ]]; then
+    elif [[ $BUILD_TYPE == 'docs' ]]; then
        bash ./build_docs.sh;
     fi
