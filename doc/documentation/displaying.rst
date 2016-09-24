@@ -148,7 +148,8 @@ environment with nodejs/npm and the required packages as follows
 Once you have successfully installed these packages, you should have new binary
 files ``vl2vg``, ``vg2png``, and ``vg2eps`` within your node root directory.
 
-With this set-up, you can use the installed command-line utilities to save your chart:
+With these packages properly installed, you can use the ``savechart`` method
+to save a chart to file:
 
 >>> from altair import Chart, load_dataset
 >>> data = load_dataset('cars', url_only=True)
@@ -157,17 +158,16 @@ With this set-up, you can use the installed command-line utilities to save your 
 ...             y='Miles_per_Gallon:Q',
 ...             color='Origin:N',
 ...         )
-
->>> from altair.utils.node import savechart
 >>> # save as PNG
->>> savechart(chart, 'mychart.png')  # doctest: +SKIP
+>>> chart.savechart('mychart.png')  # doctest: +SKIP
 >>> # save as SVG
->>> savechart(chart, 'mychart.svg')  # doctest: +SKIP
+>>> chart.savechart('mychart.svg')  # doctest: +SKIP
 
-Internally, this command requires the ``vl2png`` or ``vl2svg`` executables.
-They must either be in the system ``$PATH`` variable, or within the node
-binary directory specified by the command ``npm root``.
+Internally, this requires the ``vl2png`` or ``vl2svg`` executables, which
+must either be in the system ``$PATH`` variable, or within the node
+binary directory specified by the command ``npm bin``.
 
+This extra installation step is straightforward, but admittedly a bit clunky.
 We hope to find a way to streamline this in the future, but creating transparent
 interactions between Python packages and NodeJS packages remains challenging.
 If you have ideas on how to improve this aspect of Altair's user experience,
