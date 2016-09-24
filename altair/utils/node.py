@@ -8,7 +8,7 @@ from subprocess import Popen, PIPE, check_output, CalledProcessError
 
 import pandas as pd
 
-from .. import Chart
+from altair import Chart
 
 
 COMMANDS = ['vl2vg', 'vl2png', 'vl2svg']
@@ -44,7 +44,7 @@ def ensure_npm_bin_in_path(verbose=False):
 
 
 def vl_cmd_available(cmd, verbose=False):
-    spec = json.dumps(test_spec())
+    spec = json.dumps(_test_spec())
     with ensure_npm_bin_in_path(verbose):
         try:
             if verbose:
@@ -96,9 +96,7 @@ def savechart(chart, filename, filetype=None, verbose=False):
 
     The node binaries used here (``vl2vg``, ``vl2png``, ``vl2svg``) will be
     installed in the node root directory, which should be automatically
-    detected by this function. If you have these nodejs packages installed
-    and this function doesn't work, try explicitly passing their path using
-    the ``node_bin_dir`` argument.
+    detected by this function.
 
     Parameters
     ----------
