@@ -141,7 +141,7 @@ If you don't have ``nodejs`` and are using ``conda``, you can create an
 environment with nodejs/npm and the required packages as follows
 (note that the canvas tool seems to require Python 2.7):
 
-    $ conda create -n nodejs-env -c conda-forge python=2.7 nodejs altair
+    $ conda create -n nodejs-env -c conda-forge python=2.7 nodejs cairo altair
     $ source activate nodejs-env
     $ npm install canvas vega-lite
 
@@ -158,18 +158,15 @@ With this set-up, you can use the installed command-line utilities to save your 
 ...             color='Origin:N',
 ...         )
 
->>> from altair.utils.node import savechart, savechart_available
+>>> from altair.utils.node import savechart
 >>> # save as PNG
 >>> savechart(chart, 'mychart.png')  # doctest: +SKIP
 >>> # save as SVG
 >>> savechart(chart, 'mychart.svg')  # doctest: +SKIP
 
-Internally, the code executes ``npm root`` to determine the installation directory,
-and calls the ``vl2vg``, ``vg2png``, and ``vg2eps`` executables within this root.
-If you want to manually specify the npm executable directory, you can use the
-``node_bin_dir`` keyword:
-
->>> savechart(chart, 'mychart.svg', node_bin_dir='~/node_modules/.bin/')
+Internally, this command requires the ``vl2png`` or ``vl2svg`` executables.
+They must either be in the system ``$PATH`` variable, or within the node
+binary directory specified by the command ``npm root``.
 
 We hope to find a way to streamline this in the future, but creating transparent
 interactions between Python packages and NodeJS packages remains challenging.
