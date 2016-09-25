@@ -72,7 +72,10 @@ def test_savechart_html():
 
     with tempfile.NamedTemporaryFile(suffix='.html') as f:
         chart.savechart(f.name)
-        assert f.read().strip().startswith('<!DOCTYPE html>')
+        content = f.read()
+        if hasattr(content, 'decode'):
+            content = content.decode('utf-8')
+        assert content.strip().startswith('<!DOCTYPE html>')
 
 
 def test_savechart_json():
