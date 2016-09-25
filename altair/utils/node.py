@@ -4,22 +4,34 @@ from __future__ import print_function
 import os
 import json
 from contextlib import contextmanager
+from xml.etree import ElementTree
 from subprocess import Popen, PIPE, check_output, CalledProcessError
-
-import pandas as pd
-
-from altair import Chart
 
 
 COMMANDS = ['vl2vg', 'vl2png', 'vl2svg']
 SUPPORTED_FILETYPES = ['png', 'svg']
+TEST_SPEC = {'data': {'values': [{'x': 1, 'y': 1}, {'x': 2, 'y': 2}]},
+             'encoding': {'x': {'field': 'x', 'type': 'quantitative'},
+                          'y': {'field': 'y', 'type': 'quantitative'}},
+             'mark': 'point'}
 
 
-def _test_spec():
-    """Create a simple spec to test if commands are working"""
-    data = pd.DataFrame({'x': [1, 2, 3], 'y': [1, 2, 3]})
-    chart = Chart(data).mark_point().encode(x='x', y='y')
-    return chart.to_dict()
+def consistent_with_png(filename):
+    """Check that the file has a header consistent with PNG"""
+    with open(filename, 'rb') as f:
+        arr = f.read()
+    return arr.startswith(b'\x89PNG\r\n')
+
+
+def consistent_with_svg(filename):
+    """Check that the file has a structure consistent with SVG"""
+    try:
+        e = ElementTree.parse(filename)
+    except ElementTree.ParseError:
+        return False
+    else:
+        keys = e.getroot().keys()
+        return set(keys) == {'width', 'version', 'class', 'height'}
 
 
 @contextmanager
@@ -44,7 +56,7 @@ def ensure_npm_bin_in_path(verbose=False):
 
 
 def vl_cmd_available(cmd, verbose=False):
-    spec = json.dumps(_test_spec())
+    spec = json.dumps(TEST_SPEC)
     with ensure_npm_bin_in_path(verbose):
         try:
             if verbose:
@@ -80,7 +92,8 @@ def _convert_vegalite_spec(spec, cmd, outfile=None, verbose=False):
         return out
 
 
-def savechart(chart, filename, filetype=None, verbose=False):
+def savechart(chart, filename, filetype=None, verbose=False,
+              embedspec=False):
     """Save a chart to png or svg
 
     Note that this requires several nodejs packages to be installed and

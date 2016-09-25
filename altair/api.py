@@ -3,11 +3,14 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
+import os
+
 import traitlets as T
 import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
+from .utils import node
 
 from . import schema
 
@@ -67,6 +70,14 @@ def use_signature(Obj):
 # Top-level Objects
 #*************************************************************************
 class TopLevelMixin(object):
+    @staticmethod
+    def _png_output_available():
+        return node.vl_cmd_available('vl2png')
+
+    @staticmethod
+    def _svg_output_available():
+        return node.vl_cmd_available('vl2svg')
+
     def savechart(self, outfile, filetype=None):
         """Save a chart to file, in either png, svg, json, or html format.
 
@@ -87,20 +98,21 @@ class TopLevelMixin(object):
 
         Parameters
         ----------
-        filename : str
+        outfile : str
             The output filename
         filetype : str (optional)
-            The filetype to use (either 'svg' or 'png'). If not specified,
-            it will be inferred from the filename.
+            The filetype to use. One of ('svg', 'png', 'json', 'html').
+            If not specified, it will be inferred from outfile.
         """
         if filetype is None:
-            base, ext = os.path.splitext(filename)
-            filetype = ext[1:]
+            try:
+                base, ext = os.path.splitext(outfile)
+                filetype = ext[1:]
+            except AttributeError:
+                raise ValueError('filetype could not be inferred')
 
-        if filetype in _node.SUPPORTED_FILETYPES:
-            # import here to avoid circular imports
-            from .utils.node import savechart
-            savechart(self.to_dict(), outfile, filetype)
+        if filetype in node.SUPPORTED_FILETYPES:
+            node.savechart(self, outfile, filetype)
         elif filetype == 'json':
             if hasattr(outfile, 'write'):
                 outfile.write(self.to_json())

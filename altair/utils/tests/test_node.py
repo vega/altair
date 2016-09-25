@@ -1,30 +1,11 @@
 import tempfile
-from xml.etree import ElementTree
 from subprocess import CalledProcessError
 
 import pytest
 import pandas as pd
 
-from altair.utils.node import savechart, vl_cmd_available
+from altair.utils.node import savechart, vl_cmd_available, consistent_with_png, consistent_with_svg
 from altair import Chart
-
-
-def consistent_with_png(filename):
-    """Check that the file has a header consistent with PNG"""
-    with open(filename, 'rb') as f:
-        arr = f.read()
-    return arr.startswith(b'\x89PNG\r\n')
-
-
-def consistent_with_svg(filename):
-    """Check that the file has a structure consistent with SVG"""
-    try:
-        e = ElementTree.parse(filename)
-    except ElementTree.ParseError:
-        return False
-    else:
-        keys = e.getroot().keys()
-        return set(keys) == {'width', 'version', 'class', 'height'}
 
 
 def make_chart():
