@@ -1,5 +1,4 @@
 import tempfile
-from subprocess import CalledProcessError
 
 import pytest
 import pandas as pd

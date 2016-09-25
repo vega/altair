@@ -92,8 +92,7 @@ def _convert_vegalite_spec(spec, cmd, outfile=None, verbose=False):
         return out
 
 
-def savechart(chart, filename, filetype=None, verbose=False,
-              embedspec=False):
+def savechart(chart, filename, filetype=None, verbose=False):
     """Save a chart to png or svg
 
     Note that this requires several nodejs packages to be installed and
