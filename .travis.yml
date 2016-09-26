@@ -6,7 +6,16 @@ python:
   - 3.5
 
 env:
+  global:
   - DEPS="pandas pytest traitlets ipython pytest"
+
+  matrix:
+  - BUILD_TYPE="test"
+
+matrix:
+  include:
+  - python: 3.5
+    env: BUILD_TYPE="docs"
 
 install:
   - conda create -n testenv --yes python=$TRAVIS_PYTHON_VERSION
@@ -20,9 +29,13 @@ before_install:
   - ./miniconda.sh -b
   - export PATH=/home/travis/miniconda3/bin:$PATH
   - conda update --yes conda
-  # start Virtual X, so default matplotlib backend works
-  #- "export DISPLAY=:99.0"
-  #- "sh -e /etc/init.d/xvfb start"
+  - if [[ $BUILD_TYPE == 'docs' ]]; then
+       sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++;
+    fi
 
 script:
-  - py.test altair --doctest-modules
+  - if [[ $BUILD_TYPE == 'test' ]]; then
+       py.test altair --doctest-modules;
+    elif [[ $BUILD_TYPE == 'docs' ]]; then
+       bash ./build_docs.sh;
+    fi
