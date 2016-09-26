@@ -56,6 +56,12 @@ Documentation
    API
 
 
+Bug Reports & Questions
+-----------------------
+Altair is BSD-licensed and the source is available on `Github <http://github.com/altair-viz/altair>`_.
+If any questions or issues come up as you use Altair, please get in touch via the `Issues <http://github.com/altair-viz/altair/issues>`_ tracker there.
+
+
 Indices and tables
 ------------------
 
