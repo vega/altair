@@ -3,11 +3,14 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
+import os
+
 import traitlets as T
 import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
+from .utils import node
 
 from . import schema
 
@@ -67,6 +70,66 @@ def use_signature(Obj):
 # Top-level Objects
 #*************************************************************************
 class TopLevelMixin(object):
+    @staticmethod
+    def _png_output_available():
+        return node.vl_cmd_available('vl2png')
+
+    @staticmethod
+    def _svg_output_available():
+        return node.vl_cmd_available('vl2svg')
+
+    def savechart(self, outfile, filetype=None):
+        """Save a chart to file, in either png, svg, json, or html format.
+
+        Note that png/svg output requires several nodejs packages to be
+        installed and correctly configured. Before running this, you must
+        have nodejs and cairo on your system and use the node package manager
+        to install the ``canvas`` and ``vega-lite`` packages.
+
+        If you are using anaconda, you can set it up this way:
+
+            $ conda create -n node-env -c conda-forge python=2.7 cairo nodejs altair
+            $ source activate node-env
+            $ npm install canvas vega-lite
+
+        The node binaries used here (``vl2vg``, ``vl2png``, ``vl2svg``) will be
+        installed in the node root directory, which should be automatically
+        detected by this function.
+
+        Parameters
+        ----------
+        outfile : str
+            The output filename
+        filetype : str (optional)
+            The filetype to use. One of ('svg', 'png', 'json', 'html').
+            If not specified, it will be inferred from outfile.
+        """
+        if filetype is None:
+            try:
+                base, ext = os.path.splitext(outfile)
+                filetype = ext[1:]
+            except AttributeError:
+                raise ValueError('filetype could not be inferred')
+
+        if filetype in node.SUPPORTED_FILETYPES:
+            node.savechart(self, outfile, filetype)
+        elif filetype == 'json':
+            if hasattr(outfile, 'write'):
+                outfile.write(self.to_json())
+            else:
+                with open(outfile, 'w') as f:
+                    f.write(self.to_json())
+        elif filetype == 'html':
+            if hasattr(outfile, 'write'):
+                outfile.write(self.to_html())
+            else:
+                with open(outfile, 'w') as f:
+                    f.write(self.to_html())
+        else:
+            supported = _node.SUPPORTED_FILETYPES + ['json', 'html']
+            raise ValueError('Cannot save chart of type {0}; supported'
+                             'extensions are {1}'.format(filetype, supported))
+
     def to_html(self, template=None, title=None, **kwargs):
         """Emit a stand-alone HTML document containing this chart.
 

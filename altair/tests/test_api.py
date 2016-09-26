@@ -1,6 +1,7 @@
 import pytest
 import warnings
 import json
+import tempfile
 
 import numpy as np
 import pandas as pd
@@ -9,8 +10,14 @@ from .. import *
 from .. import schema
 from ..examples import iter_examples
 from ..utils import parse_shorthand, infer_vegalite_type
+from ..utils.node import consistent_with_png, consistent_with_svg
 from ..datasets import connection_ok
 from ..utils._py3k_compat import PY2
+
+def make_chart():
+    data = pd.DataFrame({'x': range(10),
+                         'y': range(10)})
+    return Chart(data).mark_point().encode(x='x', y='y')
 
 
 def test_chart_url_input():
@@ -38,6 +45,45 @@ def test_chart_to_json_round_trip():
     chart1 = Chart('data/data.json').mark_point().encode(x='blah:Q')
     chart2 = Chart.from_json(chart1.to_json())
     assert chart1.to_dict() == chart2.to_dict()
+
+
+@pytest.mark.skipif(not Chart._png_output_available(),
+                    reason='command-line tool vl2png is not available')
+def test_savechart_png():
+    chart = make_chart()
+
+    with tempfile.NamedTemporaryFile(suffix='.png') as f:
+        chart.savechart(f.name)
+        assert consistent_with_png(f.name)
+
+
+@pytest.mark.skipif(not Chart._svg_output_available(),
+                    reason='command-line tool vl2svg is not available')
+def test_savechart_svg():
+    chart = make_chart()
+
+    with tempfile.NamedTemporaryFile(suffix='.svg') as f:
+        chart.savechart(f.name)
+        assert consistent_with_svg(f.name)
+
+
+def test_savechart_html():
+    chart = make_chart()
+
+    with tempfile.NamedTemporaryFile(suffix='.html') as f:
+        chart.savechart(f.name)
+        content = f.read()
+        if hasattr(content, 'decode'):
+            content = content.decode('utf-8')
+        assert content.strip().startswith('<!DOCTYPE html>')
+
+
+def test_savechart_json():
+    chart = make_chart()
+
+    with tempfile.NamedTemporaryFile(suffix='.json') as f:
+        chart.savechart(f.name)
+        assert chart.to_dict() == json.load(open(f.name))
 
 
 def test_encode_update():
