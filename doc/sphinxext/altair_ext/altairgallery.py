@@ -7,6 +7,8 @@ from operator import itemgetter
 
 import jinja2
 
+from subprocess import CalledProcessError
+
 from docutils import nodes
 from docutils.statemachine import ViewList
 from docutils.parsers.rst.directives import flag
@@ -17,7 +19,6 @@ from sphinx.util.nodes import nested_parse_with_titles
 from .utils import strip_vl_extension, create_thumbnail, prev_this_next, dict_hash
 from altair import Chart
 from altair.examples import iter_examples_with_metadata
-from altair.utils.node import savechart, savechart_available, NodeExecError
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""
@@ -144,7 +145,7 @@ def populate_examples(num_examples=None, category=None, shuffle=False,
 def make_images(image_dir, default_image, make_thumbnails=True):
     """Use nodejs to make images and (optionally) thumbnails"""
 
-    can_save = savechart_available()
+    can_save = Chart._png_output_available()
     if not can_save:
         warnings.warn('Node is not correctly configured: cannot save images.')
 
@@ -174,8 +175,8 @@ def make_images(image_dir, default_image, make_thumbnails=True):
             chart = Chart.from_dict(spec)
             try:
                 print('-> saving {0}'.format(image_file))
-                savechart(chart, image_file)
-            except NodeExecError:
+                chart.savechart(image_file)
+            except CalledProcessError:
                 warnings.warn('Node is not correctly configured: cannot save images.')
                 can_save = False
                 if not os.path.exists(image_file):
