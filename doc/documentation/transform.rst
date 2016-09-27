@@ -69,7 +69,9 @@ The ``filter`` attribute of :meth:`~Chart.transform_data` accepts a string of
 javascript code, referring to the data column name as an attribute of
 ``datum``, which you can think of as the row within the dataset.
 The `calculate`` attribute accepts a list of :class:`Formula` objects, which
-each define a new column using a javascript expression over existing columns.
+each define a new column using an valid javascript expression over existing
+columns. For details on how this expression can be formed, see Vega's
+`Expression Documentation <https://github.com/vega/vega/wiki/Expressions>`_.
 
 The :ref:`gallery_bar_grouped` example shows a more refined view of this dataset
-using these techniques.
+using some of these techniques.
