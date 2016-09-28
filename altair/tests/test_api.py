@@ -431,3 +431,9 @@ def test_chart_serve():
     chart = Chart(data).mark_line().encode(x='x', y='y')
 
     chart.serve(open_browser=False, http_server=MockServer)
+
+
+def test_formula_expression():
+    formula = Formula('blah', vg.log(vg.d.value) / vg.LN10).to_dict()
+    assert formula['field'] == 'blah'
+    assert formula['expr'] == '(log(datum.value)/LN10)'

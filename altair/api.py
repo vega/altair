@@ -11,6 +11,7 @@ import pandas as pd
 from .utils import visitors
 from .utils._py3k_compat import string_types
 from .utils import node
+from .expression import _VgExpr
 
 from . import schema
 
@@ -28,7 +29,6 @@ from .schema import FacetGridConfig
 from .schema import FacetScaleConfig
 from .schema import FontStyle
 from .schema import FontWeight
-from .schema import Formula
 from .schema import HorizontalAlign
 from .schema import LegendConfig
 from .schema import Legend
@@ -64,6 +64,29 @@ def use_signature(Obj):
         f.__doc__ += Obj.__doc__[Obj.__doc__.index('\n'):]
         return f
     return decorate
+
+
+#*************************************************************************
+# Formula wrapper
+#*************************************************************************
+class Formula(schema.Formula):
+    field = T.Unicode(allow_none=True, default_value=None,
+                      help=schema.Formula.field.help)
+    expr = T.Union([T.Unicode(), T.Instance(_VgExpr)],
+                    allow_none=True, default_value=None,
+                    help=schema.Formula.expr.help)
+
+    @T.validate('expr')
+    def _check_expr(self, proposal):
+        expr = proposal['value']
+        if isinstance(expr, _VgExpr):
+            return expr.eval()
+        else:
+            return expr
+
+    def __init__(self, field, expr=None, **kwargs):
+        super(Formula, self).__init__(field=field, **kwargs)
+        self.expr = expr  # assign explicitly to trigger validation
 
 
 #*************************************************************************

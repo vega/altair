@@ -42,4 +42,6 @@ from .datasets import (
     load_dataset
 )
 
+from .expression import vg
+
 from .tutorial import tutorial
