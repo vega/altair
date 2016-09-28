@@ -55,7 +55,7 @@ _exp_consts = {
     'LN10': 'the natural log of 10 (alias to Math.LN10)',
     'LOG2E': 'the base 2 logarithm of e (alias to Math.LOG2E)',
     'LOG10E': 'the base 10 logarithm e (alias to Math.LOG10E)',
-    'PI': 'the transcendental number π (alias to Math.PI)',
+    'PI': 'the transcendental number pi (alias to Math.PI)',
     'SQRT1_2': 'the square root of 0.5 (alias to Math.SQRT1_2)',
     'SQRT2': 'the square root of 2 (alias to Math.SQRT1_2)',
 }
