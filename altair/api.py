@@ -302,9 +302,11 @@ class TopLevelMixin(object):
 
     # Display related methods
     def _ipython_display_(self):
-        from IPython.display import display
-        from vega import VegaLite
-        display(VegaLite(self.to_dict()))
+        data = {'application/vnd.vegalite+json': self.to_dict()}
+        display(data, raw=True)
+        # from IPython.display import display
+        # from vega import VegaLite
+        # display(VegaLite(self.to_dict()))
 
     def display(self):
         from IPython.display import display
