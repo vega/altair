@@ -309,8 +309,8 @@ class TopLevelMixin(object):
         DEFAULTS = {
             "config": {
                 "cell": {
-                    "width": 500,
-                    "height": 350
+                    "width": 400,
+                    "height": 400/1.5
                 }
             }
         }
