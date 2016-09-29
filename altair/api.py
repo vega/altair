@@ -302,11 +302,23 @@ class TopLevelMixin(object):
 
     # Display related methods
     def _ipython_display_(self):
-        data = {'application/vnd.vegalite+json': self.to_dict()}
+        import copy
+        from vega import utils
+        from IPython.display import display
+
+        DEFAULTS = {
+            "config": {
+                "cell": {
+                    "width": 500,
+                    "height": 350
+                }
+            }
+        }
+
+        spec = self.to_dict()
+        spec = utils.nested_update(copy.deepcopy(DEFAULTS), spec)
+        data = {'application/vnd.vegalite+json': spec}
         display(data, raw=True)
-        # from IPython.display import display
-        # from vega import VegaLite
-        # display(VegaLite(self.to_dict()))
 
     def display(self):
         from IPython.display import display
