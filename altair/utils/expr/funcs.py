@@ -10,7 +10,7 @@ class ExprFunc(object):
         self.__doc__ = """{0}(*args)\n    {1}""".format(name, doc)
 
     def __call__(self, *args):
-        return FunctionExpression(self.name, args)
+        return FunctionExpression(self.name, *args)
 
     def __repr__(self):
         return "<function expr.{0}(*args)>".format(self.name)
