@@ -18,6 +18,7 @@ def test_dataframe_namespace(data):
     df = expr.DataFrame(data)
     assert set(dir(df)) == set(iter(data))
 
+
 def test_dataframe_newcols(data):
     df = expr.DataFrame(data)
     df['sum'] = df.xxx + df.yyy + df.zzz
@@ -27,28 +28,41 @@ def test_dataframe_newcols(data):
     assert repr(df.prod.contents) == '((datum.xxx*datum.yyy)*datum.zzz)'
 
 
-def test_expr_namespace():
-    assert 'sin' in dir(expr)
-    assert 'LN2' in dir(expr)
+def test_unary_operations(data):
+    df = expr.DataFrame(data)
+    OP_MAP = {'-': operator.neg, '+': operator.pos}
+    for op, func in OP_MAP.items():
+        z = func(df.xxx)
+        assert repr(z) == '({0}datum.xxx)'.format(op)
 
 
 def test_binary_operations(data):
     df = expr.DataFrame(data)
     OP_MAP = {'+': operator.add, '-': operator.sub,
               '*': operator.mul, '/': operator.floordiv,
-              '%': operator.mod}
+              '%': operator.mod, '==': operator.eq,
+              '<': operator.lt, '<=': operator.le,
+              '>': operator.gt, '>=': operator.ge,
+              '!=': operator.ne}
+    # When these are on the RHS, the opposite is evaluated instead.
+    INEQ_REVERSE = {'>':'<', '<': '>',
+                    '<=':'>=', '>=':'<=',
+                    '==':'==', '!=':'!='}
     for op, func in OP_MAP.items():
         z1 = func(df.xxx, 2)
         assert repr(z1) == '(datum.xxx{0}2)'.format(op)
 
         z2 = func(2, df.xxx)
-        assert repr(z2) == '(2{0}datum.xxx)'.format(op)
+        if op in INEQ_REVERSE:
+            assert repr(z2) == '(datum.xxx{0}2)'.format(INEQ_REVERSE[op])
+        else:
+            assert repr(z2) == '(2{0}datum.xxx)'.format(op)
 
         z3 = func(df.xxx, df.yyy)
         assert repr(z3) == '(datum.xxx{0}datum.yyy)'.format(op)
 
 
-def test_ufunc_operations(data):
+def test_expr_ufuncs(data):
     """test numpy ufuncs"""
     df = expr.DataFrame(data)
     from ..core import METHOD_MAP
