@@ -5,18 +5,30 @@ import operator
 import pytest
 
 import numpy as np
+import pandas as pd
 
 from ... import expr
 
 
 @pytest.fixture
 def data():
-    return ['xxx', 'yyy', 'zzz']
-
+    return pd.DataFrame({'xxx': [1, 2, 3],
+                         'yyy': [4, 5, 6],
+                         'zzz': [7, 8, 9]})
 
 def test_dataframe_namespace(data):
     df = expr.DataFrame(data)
     assert set(dir(df)) == set(iter(data))
+
+    df = expr.DataFrame(data, cols=['x'])
+    assert set(dir(df)) == {'x'}
+
+    df = expr.DataFrame('http://url.com/path/to/data.json')
+    assert dir(df) == []
+
+    df = expr.DataFrame('http://url.com/path/to/data.json',
+                        cols=['a', 'b', 'c'])
+    assert set(dir(df)) == {'a', 'b', 'c'}
 
 
 def test_dataframe_newcols(data):
@@ -62,16 +74,10 @@ def test_binary_operations(data):
         assert repr(z3) == '(datum.xxx{0}datum.yyy)'.format(op)
 
 
-def test_expr_ufuncs(data):
-    """test numpy ufuncs"""
+def test_abs(data):
     df = expr.DataFrame(data)
-    from ..core import METHOD_MAP
-    for pyfunc, jsfunc in METHOD_MAP.items():
-        if pyfunc == '__abs__':
-            pyfunc = 'abs'
-        func = getattr(np, pyfunc)
-        z = func(df.xxx)
-        assert repr(z) == '{0}(datum.xxx)'.format(jsfunc)
+    z = abs(df.xxx)
+    assert repr(z) == 'abs(datum.xxx)'
 
 
 def test_expr_funcs(data):

@@ -3,32 +3,9 @@ __all__ = ['DataFrame']
 
 import warnings
 from collections import OrderedDict
+from .._py3k_compat import string_types
 
-
-# List of functions which should become methods of the dataframe wrapper.
-# Note that numpy ufuncs will point to the appropriately named method
-METHOD_MAP = {
-    '__abs__': 'abs',
-    #'isfinite': 'isFinite',
-    #'isnan': 'isNaN',
-    'cos': 'cos',
-    'sin': 'sin',
-    'tan': 'tan',
-    'arccos': 'acos',
-    'arcsin': 'asin',
-    'arctan': 'atan',
-    'log': 'log',
-    'sqrt': 'sqrt',
-    'round': 'round',
-    'ceil': 'ceil',
-    'floor': 'floor',
-    'exp': 'exp',
-    # binary ufuncs seem not to work
-    #'arctan2': 'atan2',
-    #'minimum': 'min',
-    #'maximum': 'max',
-    #'power': 'pow',
-}
+import pandas as pd
 
 
 class BaseExpression(object):
@@ -110,11 +87,14 @@ class BaseExpression(object):
     def __le__(self, other):
         return BinaryExpression("<=", self, other)
 
+    def __abs__(self):
+        return FunctionExpression('abs', self)
+
     # TODO: how to handle assignment? Overwriting would be an issue...
 
     # Logical Operators
     # TODO: how to handle bitwise/logical distinction here?
-    # should make the semantics match Pandas.
+    # should make the semantics match Pandas & reflect accurately in JS
 
     # def __and__(self, other):
     #     return BinaryExpression('&&', self, other)
@@ -124,39 +104,6 @@ class BaseExpression(object):
     #
     # def __invert__(self):
     #     return UnaryExpression('!', self)
-
-
-
-# Add methods to enable ufunc support.
-# Should we do something like this instead?
-#
-# for npfunc in _ufuncs_with_fixed_point_at_zero:
-#     name = npfunc.__name__
-#
-#     def _create_method(op):
-#         def method(self):
-#             result = op(self.data)
-#             x = self._with_data(result, copy=True)
-#             return x
-#
-#         method.__doc__ = ("Element-wise %s.\n\n"
-#                           "See numpy.%s for more information." % (name, name))
-#         method.__name__ = name
-#
-#         return method
-#
-#     setattr(_data_matrix, name, _create_method(npfunc))
-#
-
-
-for (pymethod, jsfunc) in METHOD_MAP.items():
-    func = """def {pymethod}(self, *args):
-    if any(args):
-        raise ValueError("additional ufunc args not valid")
-    return FunctionExpression('{jsfunc}', self)
-    """.format(pymethod=pymethod, jsfunc=jsfunc)
-    exec(func)
-    setattr(BaseExpression, pymethod, locals()[pymethod])
 
 
 class UnaryExpression(BaseExpression):
@@ -221,13 +168,43 @@ class DataFrame(object):
 
     Parameters
     ----------
+    data : string, pd.DataFrame, or altair.Data object
+        The data to wrap and do operations on
+    cols : list (optional)
+        The column names
     df : DataFrame or dict or iterable
         Object specifying the valid column names in the dataframe. Names can
         be DataFrame columns, dict keys, or items returned by an iterable.
     """
-    def __init__(self, cols=None):
-        self._cols = cols
-        self._calculated_columns = OrderedDict({})
+    def __init__(self, data, cols=None):
+        if isinstance(data, self.__class__):
+            self._data = data._data
+            if cols is None:
+                self._cols = self._get_cols(self._data, data._cols)
+            else:
+                self._cols = self._get_cols(self._data, cols)
+            self._calculated_columns = data._calculated_columns.copy()
+        else:
+            self._data = data
+            self._cols = self._get_cols(self._data, cols)
+            self._calculated_columns = OrderedDict({})
+
+    @classmethod
+    def _get_cols(cls, data, cols=None):
+        from ... import Data as altair_Data
+        if cols is not None:
+            return cols
+        elif isinstance(data, string_types):
+            return None
+        elif isinstance(data, pd.DataFrame):
+            return list(data.columns)
+        elif isinstance(data, altair_Data):
+            if hasattr(data, 'values'):
+                return list(data.values[0].keys())
+            else:
+                return None
+        else:
+            raise ValueError("Unrecognized data type")
 
     @property
     def _columns(self):
