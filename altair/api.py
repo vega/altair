@@ -4,6 +4,8 @@ Main API for Vega-lite spec generation.
 DSL mapping Vega types to IPython traitlets.
 """
 import os
+import functools
+import operator
 
 import traitlets as T
 import pandas as pd
@@ -39,7 +41,6 @@ from .schema import SortField
 from .schema import SortOrder
 from .schema import StackOffset
 from .schema import TimeUnit
-from .schema import Transform
 from .schema import UnitSpec
 from .schema import UnitEncoding
 from .schema import VerticalAlign
@@ -67,14 +68,17 @@ def use_signature(Obj):
 
 #*************************************************************************
 # Formula wrapper
+#
+# Does two things:
+# - makes field a required first argument of initialization
+# - allows expr trait to be an Expression and processes it properly
 #*************************************************************************
 class Formula(schema.Formula):
-    field = T.Unicode(allow_none=True, default_value=None,
-                      help=schema.Formula.field.help)
     expr = T.Union([T.Unicode(), T.Instance(expr.Expression)],
                     allow_none=True, default_value=None,
                     help=schema.Formula.expr.help)
 
+    # TODO: this conversion should be done in _finalize() instead
     @T.validate('expr')
     def _check_expr(self, proposal):
         val = proposal['value']
@@ -86,6 +90,31 @@ class Formula(schema.Formula):
     def __init__(self, field, expr=None, **kwargs):
         super(Formula, self).__init__(field=field, **kwargs)
         self.expr = expr  # assign explicitly to trigger validation
+
+
+#*************************************************************************
+# Transform wrapper
+#
+# Does one thing:
+# - allows filter trait to be an Expression and processes it properly
+#*************************************************************************
+class Transform(schema.Transform):
+    filter = T.Union([T.Unicode(), T.Instance(expr.Expression)],
+                     allow_none=True, default_value=None,
+                     help=schema.Transform.filter.help)
+
+    # TODO: this conversion should be done in _finalize() instead
+    @T.validate('filter')
+    def _check_filter(self, proposal):
+        val = proposal['value']
+        if isinstance(val, expr.Expression):
+            return repr(val)
+        else:
+            return val
+
+    def __init__(self, calculate=None, filter=None, filterNull=None, **kwargs):
+        super(Transform, self).__init__(calculate=calculate, filterNull=filterNull, **kwargs)
+        self.filter = filter  # assign explicitly to trigger validation
 
 
 #*************************************************************************
@@ -303,6 +332,7 @@ class TopLevelMixin(object):
         if isinstance(self.data, expr.DataFrame):
             columns = self.data._cols
             calculated_cols = self.data._calculated_cols
+            filters = self.data._filters
             self.data = self.data._data
             if columns is not None and isinstance(self.data, pd.DataFrame):
                 self.data = self.data[columns]
@@ -310,14 +340,19 @@ class TopLevelMixin(object):
                 self.transform_data(calculate=[Formula(field, expr=exp)
                                                for field, exp
                                                in calculated_cols.items()])
+            if filters:
+                self.transform_data(filter=functools.reduce(operator.and_,
+                                                            filters))
 
 
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     _data = None
 
-    # use specialized version of Encoding
+    # use specialized version of Encoding and Transform
     encoding = T.Instance(Encoding, allow_none=True, default_value=None,
                           help=schema.ExtendedUnitSpec.encoding.help)
+    transform = T.Instance(Transform, allow_none=True, default_value=None,
+                           help=schema.ExtendedUnitSpec.transform.help)
 
     @property
     def data(self):
@@ -462,9 +497,11 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
 
-    # Use specialized version of Chart
+    # Use specialized version of Chart and Transform
     layers = T.List(T.Instance(Chart), allow_none=True, default_value=None,
                     help=schema.LayerSpec.layers.help)
+    transform = T.Instance(Transform, allow_none=True, default_value=None,
+                           help=schema.LayerSpec.transform.help)
 
     @property
     def data(self):
@@ -520,11 +557,14 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
     _data = None
 
+    # Use specialized version of Facet, spec, and Transform
     facet = T.Instance(Facet, allow_none=True, default_value=None,
                        help=schema.FacetSpec.facet.help)
     spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)],
                    allow_none=True, default_value=None,
                    help=schema.FacetSpec.spec.help)
+    transform = T.Instance(Transform, allow_none=True, default_value=None,
+                           help=schema.FacetSpec.transform.help)
 
     @property
     def data(self):

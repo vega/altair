@@ -92,18 +92,21 @@ class Expression(object):
 
     # TODO: how to handle assignment? Overwriting would be an issue...
 
-    # Logical Operators
-    # TODO: how to handle bitwise/logical distinction here?
-    # should make the semantics match Pandas & reflect accurately in JS
+    # logical operators
+    def __and__(self, other):
+        return BinaryExpression('&&', self, other)
 
-    # def __and__(self, other):
-    #     return BinaryExpression('&&', self, other)
-    #
-    # def __or__(self, other):
-    #     return BinaryExpression('||', self, other)
-    #
-    # def __invert__(self):
-    #     return UnaryExpression('!', self)
+    def __rand__(self, other):
+        return BinaryExpression('&&', other, self)
+
+    def __or__(self, other):
+        return BinaryExpression('||', self, other)
+
+    def __ror__(self, other):
+        return BinaryExpression('||', other, self)
+
+    def __invert__(self):
+        return UnaryExpression('!', self)
 
 
 class UnaryExpression(Expression):
@@ -184,10 +187,15 @@ class DataFrame(object):
             else:
                 self._cols = self._get_cols(self._data, cols)
             self._calculated_cols = data._calculated_cols.copy()
+            self._filters = data._filters[:]
         else:
             self._data = data
-            self._cols = self._get_cols(self._data, cols)
+            self._cols = self._get_cols(data, cols)
             self._calculated_cols = OrderedDict({})
+            self._filters = []
+
+    def copy(self):
+        return self.__class__(self)
 
     @classmethod
     def _get_cols(cls, data, cols=None):
@@ -210,8 +218,6 @@ class DataFrame(object):
         else:
             raise ValueError("Unrecognized data type")
 
-    # TODO: add drop() method to remove columns, returning a new object
-
     def __dir__(self):
         return (self._cols or []) + list(self._calculated_cols.keys())
 
@@ -223,10 +229,22 @@ class DataFrame(object):
 
     def __getitem__(self, attr):
         # TODO: add support for attr=list of columns, returning a new object
-        if self._cols is None or attr in self._cols or attr in self._calculated_cols:
-            return Series(attr, self)
+        if isinstance(attr, string_types):
+            # Select a column
+            if self._cols is None or attr in self._cols or attr in self._calculated_cols:
+                return Series(attr, self)
+            else:
+                raise KeyError("No column {0}".format(attr))
+        elif isinstance(attr, Expression):
+            # Apply a filter
+            result = self.copy()
+            result._filters.append(attr)
+            return result
+        elif isinstance(attr, (list, tuple)):
+            # Return a subset array
+            raise NotImplementedError("list of columns")
         else:
-            raise KeyError("No column {0}".format(attr))
+            raise KeyError("attribute {0} not recognized".format(attr))
 
     def __setitem__(self, attr, obj):
         if (self._cols is not None and attr in self._cols) or attr in self._calculated_cols:

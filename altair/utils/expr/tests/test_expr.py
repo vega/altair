@@ -55,7 +55,8 @@ def test_binary_operations(data):
               '%': operator.mod, '==': operator.eq,
               '<': operator.lt, '<=': operator.le,
               '>': operator.gt, '>=': operator.ge,
-              '!=': operator.ne}
+              '!=': operator.ne, '&&': operator.and_,
+              '||': operator.or_}
     # When these are on the RHS, the opposite is evaluated instead.
     INEQ_REVERSE = {'>':'<', '<': '>',
                     '<=':'>=', '>=':'<=',
