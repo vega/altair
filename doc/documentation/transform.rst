@@ -3,10 +3,17 @@
 Data Transformations
 --------------------
 
+.. currentmodule:: altair
+
 Altair provides a data transformation API that allows both *filtering* and
-*transformation* of values within the plot renderer. In both cases, the
-expressions are given in terms of *javascript strings* passed to the
-``transform_data`` method.
+*transformation* of values within the plot renderer. Within Vega-Lite, filter
+and transforms operations are specified in terms of *javascript strings* which
+make use of Vega's
+`Expression Documentation <https://github.com/vega/vega/wiki/Expressions>`_.
+Altair provides a Python-style interface to generate these expressions without
+having to create the strings manually; this can be done either via a direct
+functional expression interface, or via a Pandas-like dataframe interface.
+We will see examples of both of these below.
 
 For example, consider this visualization of the historical US population,
 split by age and gender:
@@ -50,28 +57,100 @@ Let's remake the plot, using these transformation operations: we'll use
 
 .. altair-plot::
 
-    from altair import Chart, Color, Scale, Formula
+    from altair import Chart, Color, Scale, expr
+
+    pink_blue = Scale(range=["pink", "lightblue"])
+
+    # this does not actually download data;
+    # just puts a dataframe-like interface around the URL reference
+    data = expr.DataFrame('https://vega.github.io/vega-datasets/data/population.json')
+
+    # Add a new column to the data
+    data['gender'] = expr.if_(data.sex == 1, "Male", "Female")
+
+    # Create a filtered version of the data
+    data2000 = data[data.year == 2000]
+
+    Chart(data2000).mark_bar().encode(
+        x='age:O',
+        y='mean(people):Q',
+        color=Color('gender:N', scale=pink_blue)
+    )
+
+Creating and manipulating the data this way generates appropriate code that
+is stored in the spec and then evaluated at the time the plot is generated.
+We can see this by printing the resulting specification:
+
+>>> from altair import Chart, expr
+>>> data = expr.DataFrame('data.json')
+>>> data['gender'] = expr.if_(data.sex == 1, "Male", "Female")
+>>> data2000 = data[data.year == 2000]
+>>> print(Chart(data2000).to_json(indent=2))
+{
+  "data": {
+    "url": "data.json"
+  },
+  "transform": {
+    "calculate": [
+      {
+        "expr": "if_((datum.sex==1),'Male','Female')",
+        "field": "gender"
+      }
+    ],
+    "filter": "(datum.year==2000)"
+  }
+}
+
+Notice that in the resulting specification the ``data`` field contains only the
+URL, and the additional information has been encoded within a ``transform``
+field using the
+`Expression Interface <https://github.com/vega/vega/wiki/Expressions>`_ provided
+by the Vega package.
+
+If you would prefer to add these field manually rather than using the :class:`expr.DataFrame`
+interface, the :meth:`~Chart.transform_data` method gives you functional access
+to these attributes using the :mod:`vega.expr` syntax:
+
+.. altair-setup::
+
+    from altair import Chart, Color, Scale, Formula, expr
+    pink_blue = Scale(range=["pink", "lightblue"])
+
+.. altair-plot::
 
     data = 'https://vega.github.io/vega-datasets/data/population.json'
-    pink_blue = Scale(range=["pink", "lightblue"])
 
     Chart(data).mark_bar().encode(
         x='age:O',
         y='mean(people):Q',
         color=Color('gender:N', scale=pink_blue)
     ).transform_data(
-        filter='datum.year == 2000',
-        calculate=[Formula(field='gender',
-                           expr='datum.sex == 1 ? "Male" : "Female"')],
+        calculate=[Formula('gender', expr.if_(expr.df.sex==1,'Male','Female'))],
+        filter=(expr.df.year == 2000)
     )
 
-The ``filter`` attribute of :meth:`~Chart.transform_data` accepts a string of
-javascript code, referring to the data column name as an attribute of
-``datum``, which you can think of as the row within the dataset.
-The `calculate`` attribute accepts a list of :class:`Formula` objects, which
-each define a new column using an valid javascript expression over existing
-columns. For details on how this expression can be formed, see Vega's
-`Expression Documentation <https://github.com/vega/vega/wiki/Expressions>`_.
+Or if you really like to do things by hand, the raw javascript strings can be
+passed instead:
 
-The :ref:`gallery_bar_grouped` example shows a more refined view of this dataset
-using some of these techniques.
+.. altair-setup::
+
+   data = 'https://vega.github.io/vega-datasets/data/population.json'
+
+.. altair-plot::
+
+    Chart(data).mark_bar().encode(
+        x='age:O',
+        y='mean(people):Q',
+        color=Color('gender:N', scale=pink_blue)
+    ).transform_data(
+        calculate=[Formula('gender', 'if(datum.sex == 1, "M", "F")')],
+        filter=('datum.year == 2000')
+    )
+
+While in all these cases the data manipulation could be done as a preprocessing
+step, embedding the processed data directly in the URL, this sort of simple
+manipulation of an existing data source can lead to much more compact and efficient
+plot specifications.
+
+The :ref:`gallery_bar_grouped` example shows a more refined view of this
+same dataset using some of these techniques.
