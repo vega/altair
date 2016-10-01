@@ -12,8 +12,9 @@ import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
-from .utils import node, expr
+from .utils import node
 
+from . import expr
 from . import schema
 
 from .schema import AggregateOp
