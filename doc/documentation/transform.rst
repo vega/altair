@@ -44,16 +44,13 @@ in, say, pandas, and building a chart using the result, but it would be nice to
 do this within the Altair spec itself so that we can use the original data
 source.
 
-What we're looking for is a ``filter`` operation in the first case, and a
-``calculate`` operation in the second. Altair exposes these via the
-:meth:`Chart.transform_data` method, which passes its arguments to the
-:class:`Transform` class:
+Vega-Lite allows for this via a ``transform`` field within the plot specification,
+and Atltair provides a Pandas-style interface by which these transform fields
+can be specified.
 
-.. altair-trait-table:: Transform
-
-Let's remake the plot, using these transformation operations: we'll use
-``filter`` to limit the year to 2000, and ``calculate`` to convert the
-*1/2* labels to *Male/Female*:
+To demonstrate this, let's remake the plot using this interface to filter
+the data by year, and to create a new column which maps the *1/2* labels
+to "Male"/"Female":
 
 .. altair-plot::
 
@@ -108,8 +105,8 @@ field using the
 by the Vega package.
 
 If you would prefer to add these field manually rather than using the :class:`expr.DataFrame`
-interface, the :meth:`~Chart.transform_data` method gives you functional access
-to these attributes using the :mod:`vega.expr` syntax:
+interface, the :meth:`~Chart.transform_data` method and related :class:`~Transform`
+class gives you functional access to these attributes using the :mod:`vega.expr` syntax:
 
 .. altair-setup::
 
