@@ -83,10 +83,12 @@ def test_abs(data):
 def test_expr_funcs(data):
     """test all functions defined in expr.funcs"""
     df = expr.DataFrame(data)
+    name_map = expr.funcs.NAME_MAP
     for funcname in expr.funcs.__all__:
         func = getattr(expr, funcname)
         z = func(df.xxx)
-        assert repr(z) == '{0}(datum.xxx)'.format(funcname)
+        assert repr(z) == '{0}(datum.xxx)'.format(name_map.get(funcname,
+                                                               funcname))
 
 
 def test_expr_consts(data):
