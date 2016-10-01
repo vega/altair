@@ -10,8 +10,7 @@ import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
-from .utils import node
-from .expression import _VgExpr
+from .utils import node, expr
 
 from . import schema
 
@@ -72,17 +71,17 @@ def use_signature(Obj):
 class Formula(schema.Formula):
     field = T.Unicode(allow_none=True, default_value=None,
                       help=schema.Formula.field.help)
-    expr = T.Union([T.Unicode(), T.Instance(_VgExpr)],
+    expr = T.Union([T.Unicode(), T.Instance(expr.Expression)],
                     allow_none=True, default_value=None,
                     help=schema.Formula.expr.help)
 
     @T.validate('expr')
     def _check_expr(self, proposal):
-        expr = proposal['value']
-        if isinstance(expr, _VgExpr):
-            return expr.eval()
+        val = proposal['value']
+        if isinstance(val, expr.Expression):
+            return repr(val)
         else:
-            return expr
+            return val
 
     def __init__(self, field, expr=None, **kwargs):
         super(Formula, self).__init__(field=field, **kwargs)
@@ -295,6 +294,23 @@ class TopLevelMixin(object):
               files=files, jupyter_warning=jupyter_warning,
               open_browser=open_browser, http_server=http_server)
 
+    def _finalize_data(self):
+        """
+        This function is called by _finalize() below. It checks whether the
+        data attribute contains expressions, and if so it extracts the
+        appropriate data object and generates the appropriate transforms.
+        """
+        if isinstance(self.data, expr.DataFrame):
+            columns = self.data._cols
+            calculated_cols = self.data._calculated_cols
+            self.data = self.data._data
+            if columns is not None and isinstance(self.data, pd.DataFrame):
+                self.data = self.data[columns]
+            if calculated_cols:
+                self.transform_data(calculate=[Formula(field, expr=exp)
+                                               for field, exp
+                                               in calculated_cols.items()])
+
 
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     _data = None
@@ -311,7 +327,8 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     def data(self, new):
         if isinstance(new, string_types):
             self._data = Data(url=new)
-        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+        elif (new is None or isinstance(new, pd.DataFrame)
+              or isinstance(new, expr.DataFrame) or isinstance(new, Data)):
             self._data = new
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
@@ -397,6 +414,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         return self._update_subtraits('encoding', *args, **kwargs)
 
     def _finalize(self, **kwargs):
+        self._finalize_data()
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data
@@ -485,6 +503,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         return self
 
     def _finalize(self, **kwargs):
+        self._finalize_data()
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data
@@ -545,6 +564,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         return self._update_subtraits('facet', *args, **kwargs)
 
     def _finalize(self, **kwargs):
+        self._finalize_data()
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data

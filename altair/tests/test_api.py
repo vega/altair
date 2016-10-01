@@ -434,6 +434,27 @@ def test_chart_serve():
 
 
 def test_formula_expression():
-    formula = Formula('blah', vg.log(vg.d.value) / vg.LN10).to_dict()
-    assert formula['field'] == 'blah'
-    assert formula['expr'] == '(log(datum.value)/LN10)'
+     formula = Formula('blah', expr.log(expr.df.value) / expr.LN10).to_dict()
+     assert formula['field'] == 'blah'
+     assert formula['expr'] == '(log(datum.value)/LN10)'
+
+
+def test_df_formula():
+    # create a formula the manual way
+    chart1 = Chart('data.json').mark_line().encode(
+        x='x',
+        y='y'
+    ).transform_data(
+        calculate=[Formula('y', 'sin(((2*PI)*datum.x))')]
+    )
+
+    # create a formula with the dataframe interface
+    df = expr.DataFrame('data.json')
+    df['y'] = expr.sin(2 * expr.PI * df.x)
+    chart2 = Chart(df).mark_line().encode(
+        x='x',
+        y='y'
+    )
+
+    # make sure the outputs match
+    assert chart1.to_dict() == chart2.to_dict()

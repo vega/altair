@@ -8,7 +8,7 @@ from .._py3k_compat import string_types
 import pandas as pd
 
 
-class BaseExpression(object):
+class Expression(object):
     # TODO: Javascript's add is does things like string concatenation...
     # should we attempt to translate Python's semantics appropriately?
     def __add__(self, other):
@@ -106,7 +106,7 @@ class BaseExpression(object):
     #     return UnaryExpression('!', self)
 
 
-class UnaryExpression(BaseExpression):
+class UnaryExpression(Expression):
     def __init__(self, op, val):
         self.op = op
         self.val = val
@@ -115,7 +115,7 @@ class UnaryExpression(BaseExpression):
         return "({op}{val})".format(op=self.op, val=repr(self.val))
 
 
-class BinaryExpression(BaseExpression):
+class BinaryExpression(Expression):
     def __init__(self, op, lhs, rhs):
         self.op = op
         self.lhs = lhs
@@ -127,7 +127,7 @@ class BinaryExpression(BaseExpression):
                                          rhs=repr(self.rhs))
 
 
-class FunctionExpression(BaseExpression):
+class FunctionExpression(Expression):
     def __init__(self, name, *args):
         self.name = name
         self.args = args
@@ -137,7 +137,7 @@ class FunctionExpression(BaseExpression):
         return "{name}({args})".format(name=self.name, args=args)
 
 
-class ConstExpression(BaseExpression):
+class ConstExpression(Expression):
     def __init__(self, name, doc):
         self.name = name
         self.doc = doc
@@ -147,7 +147,7 @@ class ConstExpression(BaseExpression):
         return str(self.name)
 
 
-class Series(BaseExpression):
+class Series(Expression):
     def __init__(self, name, parent=None):
         self.name = name
         self.parent = parent
@@ -160,7 +160,7 @@ class Series(BaseExpression):
         if self.parent is None:
             return None
         else:
-            return self.parent._calculated_columns.get(self.name, None)
+            return self.parent._calculated_cols.get(self.name, None)
 
 
 class DataFrame(object):
@@ -183,22 +183,26 @@ class DataFrame(object):
                 self._cols = self._get_cols(self._data, data._cols)
             else:
                 self._cols = self._get_cols(self._data, cols)
-            self._calculated_columns = data._calculated_columns.copy()
+            self._calculated_cols = data._calculated_cols.copy()
         else:
             self._data = data
             self._cols = self._get_cols(self._data, cols)
-            self._calculated_columns = OrderedDict({})
+            self._calculated_cols = OrderedDict({})
 
     @classmethod
     def _get_cols(cls, data, cols=None):
-        from ... import Data as altair_Data
+        def is_altair_Data(data):
+            # importing here avoids circular imports
+            from ... import Data
+            return isinstance(data, Data)
+
         if cols is not None:
-            return cols
+            return list(cols)
         elif isinstance(data, string_types):
             return None
         elif isinstance(data, pd.DataFrame):
             return list(data.columns)
-        elif isinstance(data, altair_Data):
+        elif is_altair_Data(data):
             if hasattr(data, 'values'):
                 return list(data.values[0].keys())
             else:
@@ -206,33 +210,25 @@ class DataFrame(object):
         else:
             raise ValueError("Unrecognized data type")
 
-    @property
-    def _columns(self):
-        # return dataframe columns or dict keys or list of names
-        if self._cols is None:
-            return []
-        else:
-            return list(iter(self._cols))
-
     # TODO: add drop() method to remove columns, returning a new object
 
     def __dir__(self):
-        return list(self._columns) + list(self._calculated_columns.keys())
+        return (self._cols or []) + list(self._calculated_cols.keys())
 
     def __getattr__(self, attr):
-        if attr in self._columns or attr in self._calculated_columns:
+        if self._cols is None or attr in self._cols or attr in self._calculated_cols:
             return Series(attr, self)
         else:
             raise AttributeError("No attribute {0}".format(attr))
 
     def __getitem__(self, attr):
         # TODO: add support for attr=list of columns, returning a new object
-        if attr in self._columns or attr in self._calculated_columns:
+        if self._cols is None or attr in self._cols or attr in self._calculated_cols:
             return Series(attr, self)
         else:
             raise KeyError("No column {0}".format(attr))
 
     def __setitem__(self, attr, obj):
-        if attr in self._columns or attr in self._calculated_columns:
+        if (self._cols is not None and attr in self._cols) or attr in self._calculated_cols:
             raise ValueError("Cannot overwrite column '{0}'".format(attr))
-        self._calculated_columns[attr] = obj
+        self._calculated_cols[attr] = obj
