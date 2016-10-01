@@ -68,8 +68,6 @@ def use_signature(Obj):
 
 #*************************************************************************
 # Formula wrapper
-#
-# Does two things:
 # - makes field a required first argument of initialization
 # - allows expr trait to be an Expression and processes it properly
 #*************************************************************************
@@ -78,24 +76,18 @@ class Formula(schema.Formula):
                     allow_none=True, default_value=None,
                     help=schema.Formula.expr.help)
 
-    # TODO: this conversion should be done in _finalize() instead
-    @T.validate('expr')
-    def _check_expr(self, proposal):
-        val = proposal['value']
-        if isinstance(val, expr.Expression):
-            return repr(val)
-        else:
-            return val
-
     def __init__(self, field, expr=None, **kwargs):
-        super(Formula, self).__init__(field=field, **kwargs)
-        self.expr = expr  # assign explicitly to trigger validation
+        super(Formula, self).__init__(field=field, expr=expr, **kwargs)
+
+    def _finalize(self, **kwargs):
+        """Finalize: convert expr expression to string if necessary"""
+        if isinstance(self.expr, expr.Expression):
+            self.expr = repr(self.expr)
+        super(Formula, self)._finalize(**kwargs)
 
 
 #*************************************************************************
 # Transform wrapper
-#
-# Does one thing:
 # - allows filter trait to be an Expression and processes it properly
 #*************************************************************************
 class Transform(schema.Transform):
@@ -103,18 +95,11 @@ class Transform(schema.Transform):
                      allow_none=True, default_value=None,
                      help=schema.Transform.filter.help)
 
-    # TODO: this conversion should be done in _finalize() instead
-    @T.validate('filter')
-    def _check_filter(self, proposal):
-        val = proposal['value']
-        if isinstance(val, expr.Expression):
-            return repr(val)
-        else:
-            return val
-
-    def __init__(self, calculate=None, filter=None, filterNull=None, **kwargs):
-        super(Transform, self).__init__(calculate=calculate, filterNull=filterNull, **kwargs)
-        self.filter = filter  # assign explicitly to trigger validation
+    def _finalize(self, **kwargs):
+        """Finalize object: convert filter expression to string"""
+        if isinstance(self.filter, expr.Expression):
+            self.filter = repr(self.filter)
+        super(Transform, self)._finalize(**kwargs)
 
 
 #*************************************************************************
