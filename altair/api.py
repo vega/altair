@@ -81,7 +81,7 @@ class Formula(schema.Formula):
         super(Formula, self).__init__(field=field, expr=expr, **kwargs)
 
     def _finalize(self, **kwargs):
-        """Finalize: convert expr expression to string if necessary"""
+        """Finalize object: convert expr expression to string if necessary"""
         if isinstance(self.expr, expr.Expression):
             self.expr = repr(self.expr)
         super(Formula, self)._finalize(**kwargs)

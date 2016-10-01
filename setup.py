@@ -33,8 +33,8 @@ PACKAGES            = ['altair',
                        'altair.datasets',
                        'altair.examples',
                        'altair.examples.tests',
-                       'altair.expr'
-                       'altair.expr.tests'
+                       'altair.expr',
+                       'altair.expr.tests',
                        'altair.utils',
                        'altair.utils.tests',
                        'altair.schema',
