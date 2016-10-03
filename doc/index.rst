@@ -16,6 +16,11 @@ Altair's API is simple, friendly and consistent and built on top of the
 powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.
 
+**Note: Altair and the underlying Vega-Lite library are under active
+development; new plot types and streamlined plotting interfaces will be
+added in future releases. Please stay tuned for
+developments in the coming months! -- October 2016**
+
 
 Example
 -------
