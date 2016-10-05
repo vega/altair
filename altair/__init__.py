@@ -45,7 +45,3 @@ from .datasets import (
 from . import expr
 
 from .tutorial import tutorial
-
-# def test():
-#     import pytest
-#     return pytest.main(__path__)
