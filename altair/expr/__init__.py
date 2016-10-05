@@ -6,4 +6,4 @@ from .consts import *
 
 # This object provides lazily-evaluated dataframe-like operations
 # useful for any data source.
-df = DataFrame('anonymous')
+df = DataFrame('anonymous', cols=None, read_only=True)

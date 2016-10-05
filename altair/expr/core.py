@@ -300,7 +300,7 @@ class DataFrame(object):
 
     def __setitem__(self, attr, obj):
         if self.read_only:
-            raise ValueError("Cannot set a column in a read-only dataframe")
+            raise ValueError("Cannot set a column in a read-only data source")
         if (self._cols is not None and attr in self._cols) or attr in self._calculated_cols:
             raise ValueError("Cannot overwrite column '{0}'".format(attr))
         self._calculated_cols[attr] = obj
