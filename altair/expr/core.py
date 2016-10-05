@@ -205,8 +205,9 @@ class DataFrame(object):
     >>> df
     <Data Wrapper; colums=[*, density]>
 
-    >>> chart = Chart(df)                # filter and tranform operations are
-    >>> print(chart.to_json(indent=2))   # realized within the chart object
+    # Filter and transform operations are realized in the Chart object
+    >>> chart = Chart(df)
+    >>> print(chart.to_json(indent=2))         # doctest: +NORMALIZE_WHITESPACE
     {
       "data": {
         "url": "url/to/my/data.json"
