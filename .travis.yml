@@ -27,6 +27,8 @@ before_install:
   - conda install --file requirements.txt
   - if [[ $BUILD_TYPE == 'docs' ]]; then
        conda install --file doc/requirements.txt;
+    fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then
        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++;
        npm install canvas vega vega-lite;
     fi
