@@ -4,4 +4,6 @@ from .core import DataFrame, Expression
 from .funcs import *
 from .consts import *
 
-df = DataFrame('data.json')
+# This object provides lazily-evaluated dataframe-like operations
+# useful for any data source.
+df = DataFrame('anonymous')

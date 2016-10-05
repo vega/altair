@@ -98,3 +98,18 @@ def test_expr_consts(data):
         const = getattr(expr, constname)
         z = const * df.xxx
         assert repr(z) == '({0}*datum.xxx)'.format(constname)
+
+
+def test_getitem_list(data):
+    """Test getting a sub-dataframe"""
+    df = expr.DataFrame(data)
+    df['calculated'] = df.xxx + df.yyy + df.zzz
+
+    # df2 should have a subset of df's values
+    df2 = df[['xxx', 'yyy', 'calculated']]
+    assert set(dir(df2)) == {'xxx', 'yyy', 'calculated'}
+
+    # changing df2 shouldn't affect df1
+    df2['qqq'] = df2.xxx / df2.yyy
+    assert set(dir(df2)) == {'xxx', 'yyy', 'calculated', 'qqq'}
+    assert set(dir(df)) == {'xxx', 'yyy', 'zzz', 'calculated'}

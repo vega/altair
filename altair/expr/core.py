@@ -9,6 +9,12 @@ import pandas as pd
 
 
 class Expression(object):
+    """Expression
+
+    This is an object to enable the build-up of Javascript expressions using
+    a Python syntax. Calling ``repr(obj)`` will return a Javascript
+    representation of the object and/or the operations it encodes.
+    """
     # TODO: Javascript's add is does things like string concatenation...
     # should we attempt to translate Python's semantics appropriately?
     def __add__(self, other):
@@ -167,19 +173,58 @@ class Series(Expression):
 
 
 class DataFrame(object):
-    """Wrapper for pandas dataframe
+    """Lazy wrapper for altair data source
+
+    This object provides DataFrame-like operations for any data source, which
+    are not immediately computed but rather stored for later translation into
+    Vega-Lite's data transformation language, which is a subset of javascript.
+
+    If you need an "anonymous" DataFrame object, i.e. one not linked to any
+    particular dataset, ``altair.expr.df`` is available.
 
     Parameters
     ----------
     data : string, pd.DataFrame, or altair.Data object
         The data to wrap and do operations on
     cols : list (optional)
-        The column names
-    df : DataFrame or dict or iterable
-        Object specifying the valid column names in the dataframe. Names can
-        be DataFrame columns, dict keys, or items returned by an iterable.
+        The column names within the dataset. If not specified, columns will be
+        inferred from the data if possible (i.e. if data is a pandas DataFrame).
+
+    Notes
+    -----
+        When column names (``cols``) are present, they will be available via
+        tab-completion in the IPython shell, and attempting to access a column
+        which does not appear in the list will result in an error.
+
+    Examples
+    --------
+    >>> from altair import expr, Chart
+    >>> df = expr.DataFrame('url/to/my/data.json')
+    >>> df['density'] = df.population // df.area    # add calculated column
+    >>> df = df[df.density > 100]                   # filter by value
+    >>> df
+    <Data Wrapper; colums=[*, density]>
+
+    >>> chart = Chart(df)                # filter and tranform operations are
+    >>> print(chart.to_json(indent=2))   # realized within the chart object
+    {
+      "data": {
+        "url": "url/to/my/data.json"
+      },
+      "transform": {
+        "calculate": [
+          {
+            "expr": "(datum.population/datum.area)",
+            "field": "density"
+          }
+        ],
+        "filter": "(datum.density>100)"
+      }
+    }
     """
-    def __init__(self, data, cols=None):
+    def __init__(self, data, cols=None, read_only=False):
+        self.read_only = read_only
+
         if isinstance(data, self.__class__):
             self._data = data._data
             if cols is None:
@@ -194,8 +239,16 @@ class DataFrame(object):
             self._calculated_cols = OrderedDict({})
             self._filters = []
 
-    def copy(self):
-        return self.__class__(self)
+    def copy(self, **kwargs):
+        return self.__class__(self, **kwargs)
+
+    def __repr__(self):
+        if self._cols is None:
+            cols = ['*']
+        else:
+            cols = list(self._cols)
+        cols.extend(list(self._calculated_cols))
+        return ("<Data Wrapper; colums=[{0}]>".format(', '.join(cols)))
 
     @classmethod
     def _get_cols(cls, data, cols=None):
@@ -228,7 +281,6 @@ class DataFrame(object):
             raise AttributeError("No attribute {0}".format(attr))
 
     def __getitem__(self, attr):
-        # TODO: add support for attr=list of columns, returning a new object
         if isinstance(attr, string_types):
             # Select a column
             if self._cols is None or attr in self._cols or attr in self._calculated_cols:
@@ -241,12 +293,13 @@ class DataFrame(object):
             result._filters.append(attr)
             return result
         elif isinstance(attr, (list, tuple)):
-            # Return a subset array
-            raise NotImplementedError("list of columns")
+            return self.copy(cols=attr)
         else:
             raise KeyError("attribute {0} not recognized".format(attr))
 
     def __setitem__(self, attr, obj):
+        if self.read_only:
+            raise ValueError("Cannot set a column in a read-only dataframe")
         if (self._cols is not None and attr in self._cols) or attr in self._calculated_cols:
             raise ValueError("Cannot overwrite column '{0}'".format(attr))
         self._calculated_cols[attr] = obj
