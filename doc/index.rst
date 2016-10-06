@@ -55,6 +55,7 @@ Documentation
 
    installation
    tutorials/index
+   faq
    documentation/index
    gallery/index
    recipes
