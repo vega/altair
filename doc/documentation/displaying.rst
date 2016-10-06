@@ -1,3 +1,5 @@
+.. currentmodule:: altair
+
 .. _displaying-plots:
 
 Displaying and Saving Altair Visualizations
@@ -110,46 +112,58 @@ of Vega-Lite specifications.
 
 Saving Figures as PNG and SVG
 -----------------------------
-The easiest way to export figures to PNG or EPS is to click the
+The easiest way to export figures to PNG or SVG is to click the
 "Open In Vega Editor" link under any rendered figure, and then use the "Export"
 command to save the figure as either PNG format (With the Renderer set to
 "Canvas") or SVG format (with the renderer set to "SVG").
 
-Saving Figures Programatically
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Saving Figures Programmatically
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you would like to save an Altair visualization as PNG or EPS *from a script*,
+If you would like to save an Altair visualization as PNG or SVG *from a script*,
 Altair does provide an interface that allows this, though it requires some
 extra setup.
 
-.. note::
-
-   This feature is experimental and relatively brittle; we are working on
-   improving it and this API will likely change in the future.
-
 The `Vega-Lite`_ javascript library provides a NodeJS_ command-line tool to
 generate ``png`` and ``svg`` outputs from Altair/Vega-Lite specifications.
-The :func:`altair.utils.node.savechart` function provides an interface that
+The :meth:`Chart.savechart` method provides an interface that
 will use these command-line tools to output PNG or SVG outputs of a chart.
 
 If you have ``nodejs`` and ``npm`` available on your system, you can install
 the required command-line tools using::
 
-    $ npm install canvas vega-lite
+    $ npm install canvas vega vega-lite
 
 If you don't have ``nodejs`` and are using ``conda``, you can create an
 environment with nodejs/npm and the required packages as follows
-(note that the canvas tool seems to require Python 2.7):
+(note that the ``node-gyp`` tool related to canvas seems to require Python 2.7)::
 
     $ conda create -n nodejs-env -c conda-forge python=2.7 nodejs cairo altair
     $ source activate nodejs-env
-    $ npm install canvas vega-lite
+    $ npm install canvas vega vega-lite
 
-Once you have successfully installed these packages, you should have new binary
-files ``vl2vg``, ``vg2png``, and ``vg2eps`` within your node root directory.
+On Linux systems, the required tools can be installed with `Apt <https://wiki.debian.org/Apt>`_::
 
-With these packages properly installed, you can use the ``savechart`` method
-to save a chart to file:
+    $ sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
+    $ npm install canvas vega vega-lite
+
+As above, this appears to work only when using Python 2.7 because of the ``node-gyp`` dependency.
+
+More information on installing node and associated packages can be found on the
+`Node Installation Page <https://nodejs.org/en/download/>`_.
+
+If the installation was successful, you should have new executables called
+``vl2png`` and ``vl2svg`` within your node root directory, which you can determine
+by running::
+
+    $ npm bin
+    /Users/username/node_modules/.bin
+
+    $ ls /Users/username/node_modules/.bin
+    vg2png  vg2svg  vl2png  vl2svg  vl2vg
+
+With these packages properly installed, you can use the :meth:`Chart.savechart`
+method to save a chart to file:
 
 >>> from altair import Chart, load_dataset
 >>> data = load_dataset('cars', url_only=True)
@@ -163,13 +177,14 @@ to save a chart to file:
 >>> # save as SVG
 >>> chart.savechart('mychart.svg')  # doctest: +SKIP
 
-Internally, this requires the ``vl2png`` or ``vl2svg`` executables, which
-must either be in the system ``$PATH`` variable, or within the node
-binary directory specified by the command ``npm bin``.
+This command searches for the ``vl2png`` or ``vl2svg`` executable either in
+the ``npm bin`` location or in the system ``$PATH`` variable.
 
-This extra installation step is straightforward, but admittedly a bit clunky.
+The extra requirements here are straightforward, but the manual installation
+process is admittedly a bit clunky.
 We hope to find a way to streamline this in the future, but creating transparent
-interactions between Python packages and NodeJS packages remains challenging.
+interactions between Python packages and NodeJS packages remains a
+challenging area in general.
 If you have ideas on how to improve this aspect of Altair's user experience,
 please send comments or contributions via Altair's
 `Github Issue Tracker <https://github.com/altair-viz/altair/issues>`_.
