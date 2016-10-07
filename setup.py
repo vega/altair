@@ -1,15 +1,27 @@
 LONG_DESCRIPTION = """
-This package provides a Python API for building statistical visualizations in a
-declarative manner. This API contains no actual visualization rendering code, but
-instead emits JSON data structures following the `Vega-Lite`_ specification. For
-convenience, Altair can optionally use `ipyvega`_ to seamlessly display client-side
-renderings in the Jupyter notebook.
+http://altair-viz.github.io/
 
-Visit our GitHub repository (https://github.com/ellisonbg/altair) for
-installation instructions, examples and documentation.
+This package provides a Python API for building statistical visualizations
+in a declarative manner. This API contains no actual visualization rendering
+code, but instead emits JSON data structures following the `Vega-Lite`_
+specification. For convenience, Altair can optionally use `ipyvega`_ to
+seamlessly display client-side renderings in the Jupyter notebook.
 
 .. image:: https://raw.githubusercontent.com/ellisonbg/altair/master/images/cars.png
 
+Please note that if you wish to use altair in the Jupyter Notebook, the
+`ipyvega`_ notebook extension must be enabled as follows::
+
+    $ pip install altair
+    $ pip install --upgrade notebook
+    $ jupyter nbextension install --sys-prefix --py vega
+
+See the `Altair Documentation`_ for tutorials, detailed installation
+instructions, and examples.
+See the `Altair Github Repository`_ for issues, bug reports, and contributions.
+
+.. _Altair Github Repository: http://github.com/altair-viz/altair/
+.. _Altair Documentation: http://altair-viz.github.io/
 .. _Vega-Lite: https://github.com/vega/vega-lite
 .. _ipyvega: https://github.com/vega/ipyvega
 """
