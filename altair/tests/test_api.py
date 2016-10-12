@@ -20,6 +20,13 @@ def make_chart():
     return Chart(data).mark_point().encode(x='x', y='y')
 
 
+def test_mark_methods():
+    """Make sure the Chart's mark_*() methods all exist"""
+    from ..schema import Mark
+    for marktype in Mark().values:
+        assert hasattr(Chart, 'mark_{0}'.format(marktype))
+
+
 def test_chart_url_input():
     url = 'http://vega.github.io/vega-lite/data/'
     chart1 = Chart(Data(url=url))
