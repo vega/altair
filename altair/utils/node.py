@@ -80,7 +80,14 @@ def _convert_vegalite_spec(spec, cmd, outfile=None, verbose=False):
 
     out, err = p.communicate(input=input_)
     if p.returncode:
-        raise CalledProcessError(p.returncode, cmd, output=out, stderr=err)
+        try:
+            # python 3.5+
+            cpe = CalledProcessError(p.returncode, cmd, output=out, stderr=err)
+        except TypeError:
+            # older python versions
+            cpe = CalledProcessError(p.returncode, cmd, output=out)
+
+        raise cpe
 
     if outfile is not None:
         if hasattr(outfile, 'write'):
