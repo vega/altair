@@ -23,8 +23,9 @@ def make_chart():
 def test_mark_methods():
     """Make sure the Chart's mark_*() methods all exist"""
     from ..schema import Mark
-    for marktype in Mark().values:
-        assert hasattr(Chart, 'mark_{0}'.format(marktype))
+    assert set(Mark().values) == {method.split('_')[1]
+                                  for method in dir(Chart)
+                                  if method.startswith('mark_')}
 
 
 def test_chart_url_input():
