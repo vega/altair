@@ -234,7 +234,7 @@ class TopLevelMixin(object):
     @use_signature(OverlayConfig)
     def configure_overlay(self, *args, **kwargs):
         """Configure the chart's overlay by keyword args."""
-        return self.update_subtraits(('config', 'overlay'), *args, **kwargs)
+        return self._update_subtraits(('config', 'overlay'), *args, **kwargs)
 
     @use_signature(MarkConfig)
     def configure_mark(self, *args, **kwargs):

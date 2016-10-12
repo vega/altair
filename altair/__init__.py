@@ -31,6 +31,7 @@ from .api import (
     Color,
     Opacity,
     Chart,
+    DataFormat,
     LayeredChart,
     FacetedChart,
     CellConfig,
