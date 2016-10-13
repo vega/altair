@@ -61,11 +61,11 @@ class Expression(object):
 
     def __pow__(self, other):
         # "**" Javascript operator is not supported in all browsers
-        FunctionExpression('pow', (self, other))
+        return FunctionExpression('pow', self, other)
 
     def __rpow__(self, other):
         # "**" Javascript operator is not supported in all browsers
-        FunctionExpression('pow', (other, self))
+        return FunctionExpression('pow', other, self)
 
     def __neg__(self):
         return UnaryExpression('-', self)
