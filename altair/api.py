@@ -96,14 +96,25 @@ class Formula(schema.Formula):
 # - allows filter trait to be an Expression and processes it properly
 #*************************************************************************
 class Transform(schema.Transform):
-    filter = T.Union([T.Unicode(), T.Instance(expr.Expression)],
+    filter = T.Union([T.Unicode(),
+                      T.Instance(expr.Expression),
+                      T.Instance(schema.EqualFilter),
+                      T.Instance(schema.RangeFilter),
+                      T.Instance(schema.OneOfFilter),
+                      T.List(T.Union([T.Unicode(),
+                                      T.Instance(expr.Expression),
+                                      T.Instance(schema.EqualFilter),
+                                      T.Instance(schema.RangeFilter),
+                                      T.Instance(schema.OneOfFilter)]))],
                      allow_none=True, default_value=None,
                      help=schema.Transform.filter.help)
 
     def _finalize(self, **kwargs):
-        """Finalize object: convert filter expression to string"""
-        if isinstance(self.filter, expr.Expression):
-            self.filter = repr(self.filter)
+        """Finalize object: convert filter expressions to string"""
+        convert = lambda f: repr(f) if isinstance(f, expr.Expression) else f
+        self.filter = convert(self.filter)
+        if isinstance(self.filter, list):
+            self.filter = [convert(f) for f in self.filter]
         super(Transform, self)._finalize(**kwargs)
 
 
@@ -336,8 +347,11 @@ class TopLevelMixin(object):
                                                for field, exp
                                                in calculated_cols.items()])
             if filters:
-                self.transform_data(filter=functools.reduce(operator.and_,
-                                                            filters))
+                filters = [repr(f) for f in filters]
+                if len(filters) == 1:
+                    self.transform_data(filter=filters[0])
+                else:
+                    self.transform_data(filter=filters)
 
 
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):

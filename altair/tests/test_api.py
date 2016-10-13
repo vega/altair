@@ -500,7 +500,7 @@ def test_df_filter_multiple():
         x='x',
         y='y'
     ).transform_data(
-        filter='((datum.x<2)&&(datum.y>4))'
+        filter=['(datum.x<2)','(datum.y>4)']
     )
 
     # use the dataframe interface to create *two* filters
