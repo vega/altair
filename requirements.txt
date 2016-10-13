@@ -1,4 +1,4 @@
 traitlets>=4.1
 ipython
 pandas
-vega>=0.4.1
+vega>=0.4.3

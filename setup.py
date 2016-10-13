@@ -52,10 +52,10 @@ PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
                                   'expr/*.json']}
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
 AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu"
-URL                 = 'http://altair-viz.github.io/'
+URL                 = 'http://altair-viz.github.io'
 DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
-INSTALL_REQUIRES    = ['traitlets','ipython','pandas','vega>=0.4.1']
+INSTALL_REQUIRES    = ['traitlets','ipython','pandas','vega>=0.4.3']
 
 
 import io
