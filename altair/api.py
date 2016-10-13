@@ -497,7 +497,8 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
     def data(self, new):
         if isinstance(new, string_types):
             self._data = Data(url=new)
-        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+        elif (new is None or isinstance(new, pd.DataFrame)
+              or isinstance(new, expr.DataFrame) or isinstance(new, Data)):
             self._data = new
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
@@ -560,7 +561,8 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     def data(self, new):
         if isinstance(new, string_types):
             self._data = Data(url=new)
-        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+        elif (new is None or isinstance(new, pd.DataFrame)
+              or isinstance(new, expr.DataFrame) or isinstance(new, Data)):
             self._data = new
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
