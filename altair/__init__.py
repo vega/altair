@@ -42,4 +42,6 @@ from .datasets import (
     load_dataset
 )
 
+from . import expr
+
 from .tutorial import tutorial

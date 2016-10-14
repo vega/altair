@@ -33,6 +33,8 @@ PACKAGES            = ['altair',
                        'altair.datasets',
                        'altair.examples',
                        'altair.examples.tests',
+                       'altair.expr',
+                       'altair.expr.tests',
                        'altair.utils',
                        'altair.utils.tests',
                        'altair.schema',
@@ -46,7 +48,8 @@ PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
                                   'schema/*.json',
                                   'examples/*.json',
                                   'examples/json/*.json',
-                                  'datasets/*.json']}
+                                  'datasets/*.json',
+                                  'expr/*.json']}
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
 AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu"
 URL                 = 'http://github.com/ellisonbg/altair/'

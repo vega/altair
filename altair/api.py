@@ -4,6 +4,8 @@ Main API for Vega-lite spec generation.
 DSL mapping Vega types to IPython traitlets.
 """
 import os
+import functools
+import operator
 
 import traitlets as T
 import pandas as pd
@@ -12,6 +14,7 @@ from .utils import visitors
 from .utils._py3k_compat import string_types
 from .utils import node
 
+from . import expr
 from . import schema
 
 from .schema import AggregateOp
@@ -28,7 +31,6 @@ from .schema import FacetGridConfig
 from .schema import FacetScaleConfig
 from .schema import FontStyle
 from .schema import FontWeight
-from .schema import Formula
 from .schema import HorizontalAlign
 from .schema import LegendConfig
 from .schema import Legend
@@ -40,7 +42,6 @@ from .schema import SortField
 from .schema import SortOrder
 from .schema import StackOffset
 from .schema import TimeUnit
-from .schema import Transform
 from .schema import UnitSpec
 from .schema import UnitEncoding
 from .schema import VerticalAlign
@@ -64,6 +65,42 @@ def use_signature(Obj):
         f.__doc__ += Obj.__doc__[Obj.__doc__.index('\n'):]
         return f
     return decorate
+
+
+#*************************************************************************
+# Formula wrapper
+# - makes field a required first argument of initialization
+# - allows expr trait to be an Expression and processes it properly
+#*************************************************************************
+class Formula(schema.Formula):
+    expr = T.Union([T.Unicode(), T.Instance(expr.Expression)],
+                    allow_none=True, default_value=None,
+                    help=schema.Formula.expr.help)
+
+    def __init__(self, field, expr=None, **kwargs):
+        super(Formula, self).__init__(field=field, expr=expr, **kwargs)
+
+    def _finalize(self, **kwargs):
+        """Finalize object: convert expr expression to string if necessary"""
+        if isinstance(self.expr, expr.Expression):
+            self.expr = repr(self.expr)
+        super(Formula, self)._finalize(**kwargs)
+
+
+#*************************************************************************
+# Transform wrapper
+# - allows filter trait to be an Expression and processes it properly
+#*************************************************************************
+class Transform(schema.Transform):
+    filter = T.Union([T.Unicode(), T.Instance(expr.Expression)],
+                     allow_none=True, default_value=None,
+                     help=schema.Transform.filter.help)
+
+    def _finalize(self, **kwargs):
+        """Finalize object: convert filter expression to string"""
+        if isinstance(self.filter, expr.Expression):
+            self.filter = repr(self.filter)
+        super(Transform, self)._finalize(**kwargs)
 
 
 #*************************************************************************
@@ -272,13 +309,36 @@ class TopLevelMixin(object):
               files=files, jupyter_warning=jupyter_warning,
               open_browser=open_browser, http_server=http_server)
 
+    def _finalize_data(self):
+        """
+        This function is called by _finalize() below. It checks whether the
+        data attribute contains expressions, and if so it extracts the
+        appropriate data object and generates the appropriate transforms.
+        """
+        if isinstance(self.data, expr.DataFrame):
+            columns = self.data._cols
+            calculated_cols = self.data._calculated_cols
+            filters = self.data._filters
+            self.data = self.data._data
+            if columns is not None and isinstance(self.data, pd.DataFrame):
+                self.data = self.data[columns]
+            if calculated_cols:
+                self.transform_data(calculate=[Formula(field, expr=exp)
+                                               for field, exp
+                                               in calculated_cols.items()])
+            if filters:
+                self.transform_data(filter=functools.reduce(operator.and_,
+                                                            filters))
+
 
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     _data = None
 
-    # use specialized version of Encoding
+    # use specialized version of Encoding and Transform
     encoding = T.Instance(Encoding, allow_none=True, default_value=None,
                           help=schema.ExtendedUnitSpec.encoding.help)
+    transform = T.Instance(Transform, allow_none=True, default_value=None,
+                           help=schema.ExtendedUnitSpec.transform.help)
 
     @property
     def data(self):
@@ -288,7 +348,8 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     def data(self, new):
         if isinstance(new, string_types):
             self._data = Data(url=new)
-        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+        elif (new is None or isinstance(new, pd.DataFrame)
+              or isinstance(new, expr.DataFrame) or isinstance(new, Data)):
             self._data = new
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
@@ -374,6 +435,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         return self._update_subtraits('encoding', *args, **kwargs)
 
     def _finalize(self, **kwargs):
+        self._finalize_data()
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data
@@ -421,9 +483,11 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
 class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
 
-    # Use specialized version of Chart
+    # Use specialized version of Chart and Transform
     layers = T.List(T.Instance(Chart), allow_none=True, default_value=None,
                     help=schema.LayerSpec.layers.help)
+    transform = T.Instance(Transform, allow_none=True, default_value=None,
+                           help=schema.LayerSpec.transform.help)
 
     @property
     def data(self):
@@ -433,7 +497,8 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
     def data(self, new):
         if isinstance(new, string_types):
             self._data = Data(url=new)
-        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+        elif (new is None or isinstance(new, pd.DataFrame)
+              or isinstance(new, expr.DataFrame) or isinstance(new, Data)):
             self._data = new
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
@@ -462,6 +527,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         return self
 
     def _finalize(self, **kwargs):
+        self._finalize_data()
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data
@@ -478,11 +544,14 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
 class FacetedChart(schema.FacetSpec, TopLevelMixin):
     _data = None
 
+    # Use specialized version of Facet, spec, and Transform
     facet = T.Instance(Facet, allow_none=True, default_value=None,
                        help=schema.FacetSpec.facet.help)
     spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)],
                    allow_none=True, default_value=None,
                    help=schema.FacetSpec.spec.help)
+    transform = T.Instance(Transform, allow_none=True, default_value=None,
+                           help=schema.FacetSpec.transform.help)
 
     @property
     def data(self):
@@ -492,7 +561,8 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     def data(self, new):
         if isinstance(new, string_types):
             self._data = Data(url=new)
-        elif (isinstance(new, pd.DataFrame) or isinstance(new, Data) or new is None):
+        elif (new is None or isinstance(new, pd.DataFrame)
+              or isinstance(new, expr.DataFrame) or isinstance(new, Data)):
             self._data = new
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
@@ -522,6 +592,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         return self._update_subtraits('facet', *args, **kwargs)
 
     def _finalize(self, **kwargs):
+        self._finalize_data()
         # data comes from wrappers, but self.data overrides this if defined
         if self.data is not None:
             kwargs['data'] = self.data

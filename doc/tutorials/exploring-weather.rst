@@ -120,33 +120,33 @@ you can confirm for minimum daily temperatures as well.
 
 You might also wonder how the variability of the temperatures changes
 throughout the year. For this, we have to add a computation to derive a new field.
-We'll create a new field via a :class:`~altair.Formula` object that defines
-this field using a Javascript string:
+Altair provides a convenient syntax to express such transformations in a
+familiar Pandas-like syntax:
 
 .. altair-setup::
     :show:
 
-    from altair import Formula
-    temp_range = Formula(field='temp_range',
-                         expr='datum.temp_max - datum.temp_min')
+    from altair import expr
 
-Now we can pass this formula object to the :meth:`Chart.transform_data` method,
-and refer to this new data by name as we would with any other column:
+    df = expr.DataFrame(df)
+    df['temp_range'] = df.temp_max - df.temp_min
+
+Note that this calculation doesn't actually do any data manipulation, but rather
+encodes and stores the operations within the plot specification, where they will
+be calculated by the renderer.
 
 .. altair-plot::
 
     Chart(df).mark_line().encode(
         X('date:T', timeUnit='month'),
         y='mean(temp_range):Q'
-    ).transform_data(
-        calculate=[temp_range],
     )
 
 Of course, the same calculation could be done by using Pandas manipulations to
-add a column to the dataframe; the disadvantage there is that the derived value
-would have to be explicitly stored in the plot specification rather than
-computed on-demand in the browser.
-
+explicitly add a column to the dataframe; the disadvantage there is that the
+derived values would have to be stored in the plot specification
+rather than computed on-demand in the browser. For more information on these
+transformations, see :ref:`data-transformations`.
 
 Next we will explore the ``weather`` field, which encodes a categorical
 variable describing the weather on a given day.
@@ -170,55 +170,49 @@ stack the bars atop each other:
 The default color palette’s semantics might not match our expectation.
 For example, we probably do not expect “sun” (sunny) to be purple.
 We can tune the chart by providing a color scale range that maps the values
-from the weather field to meaningful colors, using standard hex color codes.
+from the weather field to meaningful colors, using standard hex color codes:
+
+.. altair-setup::
+   :show:
+
+   from altair import Scale
+
+   scale = Scale(domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
+                 range=['#e7ba52', '#c7c7c7', '#aec7e8', '#1f77b4', '#9467bd'])
+
+This scale can be passed to the color encoding to be applied to the plot style.
 In addition, we can customize the titles for the axis and legend to make the
 meaning of the plot more clear:
 
 .. altair-plot::
 
-    from altair import Axis, Scale
+    from altair import Axis, Legend
 
     Chart(df).mark_bar().encode(
-        x=X('date:T', timeUnit='month',
-            axis=Axis(title='Month of the year')),
+        x=X('date:T', timeUnit='month', axis=Axis(title='Month of the year')),
         y='count(*):Q',
-        color=Color('weather',
-                    legend=Legend(title='Weather type'),
-                    scale=Scale(
-                        domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
-                        range=['#e7ba52', '#c7c7c7', '#aec7e8', '#1f77b4', '#9467bd'],
-                    ),
-        ),
+        color=Color('weather', legend=Legend(title='Weather type'), scale=scale),
     )
 
 Combining the above ideas lets us create any number of flexible visualizations
-of this dataset. For example, here is a plot that explores the relationship
-between weather, precipitation, maximum temperature, and temperature range,
-and is also configured to use a larger canvas:
+of this dataset. For example, here is a plot that uses the customizations we
+have developed above to explore the relationship between weather, precipitation,
+maximum temperature, and temperature range, configured to use a larger canvas:
 
 .. altair-plot::
-
-    from altair import Chart, X, Y, Color, Formula, Axis, Scale
-
-    temp_range = Formula(field='temp_range',
-                         expr='datum.temp_max - datum.temp_min')
-    scale = Scale(domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
-                  range=['#e7ba52', '#c7c7c7', '#aec7e8', '#1f77b4', '#9467bd'])
 
     Chart(df).mark_point().encode(
         X('temp_max', axis=Axis(title='Maximum Daily Temperature (C)')),
         Y('temp_range', axis=Axis(title='Daily Temperature Range (C)')),
         Color('weather', scale=scale),
         size='precipitation',
-    ).transform_data(
-        calculate=[temp_range]
     ).configure_cell(width=600, height=400)
 
 This gives us even more insight into the weather patterns in Seattle: rainy and
 foggy days tend to be cooler with a narrower range of temperatures, while warmer
 days tend to be dry and sunny, with a wider spread between low and high temperature.
 
-This is the end of this tutorial where you have seen various ways to discretize
+This is the end of this tutorial where you have seen various ways to bin
 and aggregate data, derive new fields, and customize your charts.
 You can find more visualizations in the :ref:`example-gallery`.
 If you want to further customize your charts, you can refer to Altair's
