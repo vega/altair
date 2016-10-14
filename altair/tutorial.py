@@ -2,8 +2,6 @@
 
 import os
 import shutil
-import glob
-from six.moves.urllib.request import urlretrieve
 
 
 SRC_PATH = os.path.join(
