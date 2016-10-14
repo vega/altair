@@ -12,28 +12,22 @@ from . import sanitize_dataframe, construct_shorthand
 class Visitor(object):
     """Class implementing the external visitor pattern"""
     def visit(self, obj, *args, **kwargs):
-        for cls in obj.__class__.__mro__:
-            method = getattr(self, 'visit_' + cls.__name__, None)
-            if method:
-                break
-        else:
-            method = self.generic_visit
+        methods = (getattr(self, 'visit_' + cls.__name__, None)
+                   for cls in obj.__class__.__mro__)
+        method = next((m for m in methods if m), self.generic_visit)
         return method(obj, *args, **kwargs)
 
     def clsvisit(self, obj, *args, **kwargs):
-        for cls in obj.__mro__:
-            method = getattr(self, 'clsvisit_' + cls.__name__, None)
-            if method:
-                break
-        else:
-            method = self.generic_clsvisit
-        try:
-            return method(obj, *args, **kwargs)
-        except KeyError:
-            print(obj)
-            print(args)
-            print(kwargs)
-            raise
+        methods = (getattr(self, 'clsvisit_' + cls.__name__, None)
+                   for cls in obj.__mro__)
+        method = next((m for m in methods if m), self.generic_clsvisit)
+        return method(obj, *args, **kwargs)
+
+    def generic_visit(self, obj, *args, **kwargs):
+        raise NotImplementedError("visitor for {0}".format(obj))
+
+    def generic_clsvisit(self, obj, *args, **kwargs):
+        raise NotImplementedError("class visitor for {0}".format(obj))
 
 
 class ToDict(Visitor):
@@ -42,7 +36,7 @@ class ToDict(Visitor):
         return obj
 
     def visit_list(self, obj, *args, **kwargs):
-            return [self.visit(o) for o in obj]
+        return [self.visit(o) for o in obj]
 
     def visit_BaseObject(self, obj, *args, **kwargs):
         D = {}
@@ -105,17 +99,10 @@ class ToCode(Visitor):
         else:
             return code
 
-    def visit_ChannelWithLegend(self, obj, *args, **kwargs):
-        return self._visit_ChannelWrapper(obj, *args, **kwargs)
-
-    def visit_Field(self, obj, *args, **kwargs):
-        return self._visit_ChannelWrapper(obj, *args, **kwargs)
-
-    def visit_OrderChannel(self, obj, *args, **kwargs):
-        return self._visit_ChannelWrapper(obj, *args, **kwargs)
-
-    def visit_PositionChannel(self, obj, *args, **kwargs):
-        return self._visit_ChannelWrapper(obj, *args, **kwargs)
+    visit_ChannelWithLegend = _visit_ChannelWrapper
+    visit_Field = _visit_ChannelWrapper
+    visit_OrderChannel = _visit_ChannelWrapper
+    visit_PositionChannel = _visit_ChannelWrapper
 
     def visit_Encoding(self, obj, *args, **kwargs):
         kwds = {k: getattr(obj, k) for k in obj.traits()
@@ -168,11 +155,8 @@ class ToCode(Visitor):
 
         return code
 
-    def visit_LayeredChart(self, obj, data=None, *args, **kwargs):
-        return self._visit_with_data(obj, data, *args, **kwargs)
-
-    def visit_FacetedChart(self, obj, data=None, *args, **kwargs):
-        return self._visit_with_data(obj, data, *args, **kwargs)
+    visit_LayeredChart = _visit_with_data
+    visit_FacetedChart = _visit_with_data
 
 
 class FromDict(Visitor):
@@ -180,7 +164,7 @@ class FromDict(Visitor):
     def clsvisit_BaseObject(self, cls, dct, *args, **kwargs):
         try:
             obj = cls()
-        except TypeError as err:  # Argument missing
+        except TypeError:  # Argument missing
             obj = cls('')
 
         for prop, val in dct.items():
