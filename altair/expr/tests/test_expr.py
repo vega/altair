@@ -83,7 +83,7 @@ def test_abs(data):
 def test_expr_funcs(data):
     """test all functions defined in expr.funcs"""
     df = expr.DataFrame(data)
-    name_map = expr.funcs.NAME_MAP
+    name_map = {val:key for key, val in expr.funcs.NAME_MAP.items()}
     for funcname in expr.funcs.__all__:
         func = getattr(expr, funcname)
         z = func(df.xxx)
@@ -94,10 +94,12 @@ def test_expr_funcs(data):
 def test_expr_consts(data):
     """Test all constants defined in expr.consts"""
     df = expr.DataFrame(data)
+    name_map = {val:key for key, val in expr.consts.NAME_MAP.items()}
     for constname in expr.consts.__all__:
         const = getattr(expr, constname)
         z = const * df.xxx
-        assert repr(z) == '({0}*datum.xxx)'.format(constname)
+        assert repr(z) == '({0}*datum.xxx)'.format(name_map.get(constname,
+                                                                constname))
 
 
 def test_getitem_list(data):

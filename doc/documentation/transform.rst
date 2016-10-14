@@ -63,7 +63,7 @@ to "Male"/"Female":
     data = expr.DataFrame('https://vega.github.io/vega-datasets/data/population.json')
 
     # Add a new column to the data
-    data['gender'] = expr.if_(data.sex == 1, "Male", "Female")
+    data['gender'] = expr.where(data.sex == 1, "Male", "Female")
 
     # Create a filtered version of the data
     data2000 = data[data.year == 2000]
@@ -80,7 +80,7 @@ We can see this by printing the resulting specification:
 
 >>> from altair import Chart, expr
 >>> data = expr.DataFrame('data.json')
->>> data['gender'] = expr.if_(data.sex == 1, "Male", "Female")
+>>> data['gender'] = expr.where(data.sex == 1, "Male", "Female")
 >>> data2000 = data[data.year == 2000]
 >>> print(Chart(data2000).to_json(indent=2))
 {
@@ -90,7 +90,7 @@ We can see this by printing the resulting specification:
   "transform": {
     "calculate": [
       {
-        "expr": "if_((datum.sex==1),'Male','Female')",
+        "expr": "if((datum.sex==1),'Male','Female')",
         "field": "gender"
       }
     ],
@@ -122,7 +122,7 @@ class gives you functional access to these attributes using the :mod:`vega.expr`
         y='mean(people):Q',
         color=Color('gender:N', scale=pink_blue)
     ).transform_data(
-        calculate=[Formula('gender', expr.if_(expr.df.sex==1,'Male','Female'))],
+        calculate=[Formula('gender', expr.where(expr.df.sex==1,'Male','Female'))],
         filter=(expr.df.year == 2000)
     )
 

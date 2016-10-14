@@ -3,6 +3,10 @@ import json
 from .core import FunctionExpression
 
 
+# This maps vega expression function names to the Python name
+NAME_MAP = {'if': 'where'}
+
+
 class ExprFunc(object):
     def __init__(self, name, doc):
         self.name = name
@@ -16,16 +20,13 @@ class ExprFunc(object):
         return "<function expr.{0}(*args)>".format(self.name)
 
 
-NAME_MAP = {'if_': 'if'}
-
-
 def _populate_namespace():
     all_ = []
     with open(os.path.join(os.path.dirname(__file__), 'func_listing.json')) as f:
         func_listing = json.load(f)
     for name, doc in func_listing.items():
-        globals()[name] = ExprFunc(NAME_MAP.get(name, name), doc)
-        all_.append(name)
+        globals()[NAME_MAP.get(name, name)] = ExprFunc(name, doc)
+        all_.append(NAME_MAP.get(name, name))
     return all_
 
 

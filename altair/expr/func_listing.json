@@ -8,7 +8,7 @@
   "open": "opens a hyperlink (alias to `window.open`). This function is only valid when running in the browser. It should not be invoked within a server-side (e.g., node.js) environment.",
   "cos": "trigonometric cosine (alias to `Math.cos`)",
   "lastindexof": "returns the last index of an element (for array inputs) or substring (for string inputs)  e.g., `lastindexof(\"visualization\", \"i\") == 10",
-  "if_": "if the first argument evaluates true then the second argument is returned, otherwise the third argument is returned (`if(a, b, c)` is equivalent to `a ? b : c`)",
+  "if": "if the first argument evaluates true then the second argument is returned, otherwise the third argument is returned (`if(a, b, c)` is equivalent to `a ? b : c`)",
   "timeFormat": "formats a string as a local datetime; the first argument must be a valid [d3-time-format specifier](https://github.com/d3/d3-time-format/) (e.g., `timeFormat(\"%A\", datum.timestamp)`)",
   "timezoneoffset": "returns the timezone offset from the local timezone to UTC for a given date input",
   "utcmilliseconds": "returns the hours component for a given date input, in UTC time",
