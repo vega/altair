@@ -7,7 +7,7 @@ code, but instead emits JSON data structures following the `Vega-Lite`_
 specification. For convenience, Altair can optionally use `ipyvega`_ to
 seamlessly display client-side renderings in the Jupyter notebook.
 
-.. image:: https://raw.githubusercontent.com/ellisonbg/altair/master/images/cars.png
+.. image:: https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png
 
 Please note that if you wish to use altair in the Jupyter Notebook, the
 `ipyvega`_ notebook extension must be enabled as follows::
@@ -52,8 +52,8 @@ PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
                                   'expr/*.json']}
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
 AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu"
-URL                 = 'http://github.com/ellisonbg/altair/'
-DOWNLOAD_URL        = 'http://github.com/ellisonbg/altair/'
+URL                 = 'http://altair-viz.github.io/'
+DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
 INSTALL_REQUIRES    = ['traitlets','ipython','pandas','vega>=0.4.1']
 
