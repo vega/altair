@@ -25,7 +25,7 @@ packages using, e.g. ``conda update altair vega`` or
 ``pip install altair vega --update``.
 
 If this still doesn't work, please open an issue in the Altair's
-`Github Issue Tracker <https://github.com/altair-viz/altair/issues>`_,
+`GitHub Issue Tracker <https://github.com/altair-viz/altair/issues>`_,
 and we will do our best to help. In the meantime, other means of displaying Altair
 plots are listed in :ref:`displaying-plots`.
 
