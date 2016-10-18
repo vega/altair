@@ -1,11 +1,8 @@
 import os
-import pkgutil
-import json
 
 import pytest
 
-from .. import iter_examples, load_example
-from ... import examples
+from .. import iter_examples, load_example, iter_examples_with_metadata
 from ... import *
 
 
@@ -30,3 +27,12 @@ def test_load_example():
 
     assert load_example(filename) == spec
     assert load_example(root) == spec
+
+
+@pytest.mark.parametrize('D', iter_examples_with_metadata())
+def test_metadata(D):
+    expected_keys = {'spec', 'filename', 'category', 'name', 'title'}
+    assert len(expected_keys - set(D.keys())) == 0
+    assert 'data' in D['spec']
+    
+    

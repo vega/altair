@@ -51,7 +51,7 @@ def iter_examples_with_metadata():
     listing = load_example_listing()
     for category in listing:
         for example in listing[category]:
-            filename = example['name'] + '.json'
+            filename = example['name'] + '.vl.json'
             spec = load_example(filename)
             D = dict(filename=filename, spec=spec, category=category)
             D.update(example)
