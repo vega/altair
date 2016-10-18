@@ -3,7 +3,7 @@
 Altair Datasets
 ===============
 Altair includes a loader for a number of built-in datasets, available in the
-`vega-datasets`_ github repository.
+`vega-datasets`_ GitHub repository.
 These datasets are used throughout the documentation, and particularly in
 the :ref:`example-gallery`.
 

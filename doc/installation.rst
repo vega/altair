@@ -37,7 +37,7 @@ within the Jupyter Notebook:
 
 Development Install
 -------------------
-The `Altair source repository`_ is available on github.
+The `Altair source repository`_ is available on GitHub.
 Once you have cloned the repository and installed all the above dependencies,
 run the following command from the root of the repository to install the
 master version of Altair:
@@ -47,7 +47,7 @@ master version of Altair:
     $ pip install -e .
 
 If you do not wish to clone the source repository, you can install the development
-version directly from github using:
+version directly from GitHub using:
 
 .. code-block:: bash
 

@@ -187,7 +187,7 @@ interactions between Python packages and NodeJS packages remains a
 challenging area in general.
 If you have ideas on how to improve this aspect of Altair's user experience,
 please send comments or contributions via Altair's
-`Github Issue Tracker <https://github.com/altair-viz/altair/issues>`_.
+`GitHub Issue Tracker <https://github.com/altair-viz/altair/issues>`_.
 
 
 .. _NodeJS: https://nodejs.org/en/
