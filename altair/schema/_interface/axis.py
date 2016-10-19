@@ -4,6 +4,7 @@
 import traitlets as T
 from ..baseobject import BaseObject
 from .axisorient import AxisOrient
+from .datetime import DateTime
 
 
 class Axis(BaseObject):
@@ -87,7 +88,7 @@ class Axis(BaseObject):
         Max length for axis title if the title is automatically generated from the field's description.
     titleOffset: CFloat
         A title offset value for the axis.
-    values: List(CFloat)
+    values: Union(List(CFloat), List(DateTime))
         
     """
     axisColor = T.Unicode(allow_none=True, default_value=None, help="""Color of axis line.""")
@@ -128,7 +129,7 @@ class Axis(BaseObject):
     titleFontWeight = T.Unicode(allow_none=True, default_value=None, help="""Weight of the title.""")
     titleMaxLength = T.CFloat(allow_none=True, default_value=None, min=0, help="""Max length for axis title if the title is automatically generated from the field's description.""")
     titleOffset = T.CFloat(allow_none=True, default_value=None, help="""A title offset value for the axis.""")
-    values = T.List(T.CFloat(), allow_none=True, default_value=None)
+    values = T.Union([T.List(T.CFloat(), allow_none=True, default_value=None), T.List(T.Instance(DateTime), allow_none=True, default_value=None)])
     
     def __init__(self, axisColor=None, axisWidth=None, characterWidth=None, format=None, grid=None, gridColor=None, gridDash=None, gridOpacity=None, gridWidth=None, labelAlign=None, labelAngle=None, labelBaseline=None, labelMaxLength=None, labels=None, layer=None, offset=None, orient=None, properties=None, shortTimeLabels=None, subdivide=None, tickColor=None, tickLabelColor=None, tickLabelFont=None, tickLabelFontSize=None, tickPadding=None, tickSize=None, tickSizeEnd=None, tickSizeMajor=None, tickSizeMinor=None, tickWidth=None, ticks=None, title=None, titleColor=None, titleFont=None, titleFontSize=None, titleFontWeight=None, titleMaxLength=None, titleOffset=None, values=None, **kwargs):
         kwds = dict(axisColor=axisColor, axisWidth=axisWidth, characterWidth=characterWidth, format=format, grid=grid, gridColor=gridColor, gridDash=gridDash, gridOpacity=gridOpacity, gridWidth=gridWidth, labelAlign=labelAlign, labelAngle=labelAngle, labelBaseline=labelBaseline, labelMaxLength=labelMaxLength, labels=labels, layer=layer, offset=offset, orient=orient, properties=properties, shortTimeLabels=shortTimeLabels, subdivide=subdivide, tickColor=tickColor, tickLabelColor=tickLabelColor, tickLabelFont=tickLabelFont, tickLabelFontSize=tickLabelFontSize, tickPadding=tickPadding, tickSize=tickSize, tickSizeEnd=tickSizeEnd, tickSizeMajor=tickSizeMajor, tickSizeMinor=tickSizeMinor, tickWidth=tickWidth, ticks=ticks, title=title, titleColor=titleColor, titleFont=titleFont, titleFontSize=titleFontSize, titleFontWeight=titleFontWeight, titleMaxLength=titleMaxLength, titleOffset=titleOffset, values=values)

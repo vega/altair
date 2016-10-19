@@ -7,7 +7,7 @@ from ..baseobject import BaseObject
 
 class Bin(BaseObject):
     """Wrapper for Vega-Lite Bin definition.
-    
+    Binning properties or boolean flag for determining whether to bin data or not.
     Attributes
     ----------
     base: CFloat

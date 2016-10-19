@@ -5,7 +5,9 @@
         }
     },
     "data": {
-        "formatType": "csv",
+        "format": {
+            "type": "csv"
+        },
         "url": "http://vega.github.io/vega-lite/data/seattle-temps.csv"
     },
     "encoding": {

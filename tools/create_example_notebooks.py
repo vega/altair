@@ -1,6 +1,9 @@
 """Build example notebooks from JSON specs in altair.examples"""
 
 import os
+import sys
+sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(__file__),
+                                                '..')))
 
 import nbformat
 from nbformat.v4.nbbase import new_markdown_cell, new_code_cell, new_notebook
@@ -43,7 +46,10 @@ def write_notebook(cells, outputfile, execute=True, kernel='python3'):
 def create_example_notebook(filename, spec, notebook_directory,
                             execute=True, kernel='python3', verbose=True,
                             index_dict=None):
-    filestem = os.path.splitext(filename)[0]
+    if filename.endswith('.vl.json'):
+        filestem = filename[:-8]
+    else:
+        filestem = os.path.splitext(filename)[0]
     full_filename = os.path.join('altair', 'examples', 'json', filename)
     full_filepath = os.path.join('..', '..', full_filename)
     outputfile = filestem + '.ipynb'
@@ -104,9 +110,16 @@ def write_index(notebook_directory, index_dict, kernel='python3'):
 
 def write_all_examples(execute=True):
     notebook_directory = os.path.join(os.path.dirname(__file__),
-                                      '..', 'altair', 'notebooks', 'auto_examples')
+                                      '..', 'altair', 'notebooks',
+                                      'auto_examples')
+    
+    # Remove old examples before starting again
     if not os.path.exists(notebook_directory):
         os.makedirs(notebook_directory)
+
+    for example in os.listdir(notebook_directory):
+        if os.path.splitext(example)[1] == '.ipynb':
+            os.remove(os.path.join(notebook_directory, example))
 
     index_dict = {}
     for filename, spec in iter_examples():

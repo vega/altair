@@ -167,6 +167,21 @@
       }
     }
   ],
+  "Statistical": [
+    {
+      "name": "errorbar_aggregate",
+      "title": "Error Bars",
+      "galleryParameters": {
+        "backgroundSize": "150%"
+      }
+    }, {
+      "name": "errorbar_horizontal_aggregate",
+      "title": "Horizontal Error Bars",
+      "galleryParameters": {
+        "backgroundSize": "150%"
+      }
+    }
+  ],
   "Trellis": [
     { "name": "trellis_anscombe",
       "title": "Anscombe's Quartet",

@@ -4,6 +4,7 @@ from .api import (
     Label,
     Formula,
     Data,
+    DateTime,
     FacetScaleConfig,
     AxisConfig,
     Shape,
@@ -31,10 +32,14 @@ from .api import (
     Color,
     Opacity,
     Chart,
+    DataFormat,
     LayeredChart,
     FacetedChart,
     CellConfig,
     Detail,
+    EqualFilter,
+    RangeFilter,
+    OneOfFilter,
 )
 
 from .datasets import (

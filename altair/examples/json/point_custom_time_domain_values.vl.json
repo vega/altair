@@ -1,0 +1,75 @@
+{
+    "data": {
+        "format": {
+            "type": "csv"
+        },
+        "url": "http://vega.github.io/vega-lite/data/stocks.csv"
+    },
+    "description": "Google's stock price over time.",
+    "encoding": {
+        "color": {
+            "field": "date",
+            "legend": {
+                "format": "%y",
+                "values": [
+                    {
+                        "year": 2004
+                    },
+                    {
+                        "year": 2007
+                    },
+                    {
+                        "year": 2010
+                    }
+                ]
+            },
+            "scale": {
+                "domain": [
+                    {
+                        "year": 2004
+                    },
+                    {
+                        "year": 2010
+                    }
+                ]
+            },
+            "type": "temporal"
+        },
+        "x": {
+            "axis": {
+                "values": [
+                    {
+                        "year": 2005
+                    },
+                    {
+                        "year": 2007
+                    },
+                    {
+                        "year": 2009
+                    }
+                ]
+            },
+            "field": "date",
+            "scale": {
+                "domain": [
+                    {
+                        "month": 1,
+                        "year": 2005
+                    },
+                    {
+                        "year": 2009
+                    }
+                ]
+            },
+            "type": "temporal"
+        },
+        "y": {
+            "field": "price",
+            "type": "quantitative"
+        }
+    },
+    "mark": "point",
+    "transform": {
+        "filter": "datum.symbol==='GOOG'"
+    }
+}

@@ -1,19 +1,21 @@
 {
     "data": {
-        "formatType": "csv",
         "url": "http://vega.github.io/vega-lite/data/stocks.csv"
     },
-    "description": "Stock prices of 5 Tech Companies Over Time.",
+    "description": "Stock price average broken down by quarter.",
     "encoding": {
-        "detail": {
-            "field": "symbol",
-            "type": "nominal"
+        "color": {
+            "field": "date",
+            "timeUnit": "quarter",
+            "type": "temporal"
         },
         "x": {
             "field": "date",
+            "timeUnit": "year",
             "type": "temporal"
         },
         "y": {
+            "aggregate": "mean",
             "field": "price",
             "type": "quantitative"
         }

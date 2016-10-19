@@ -1,0 +1,22 @@
+{
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "x": {
+            "field": "Name",
+            "scale": {
+                "round": false
+            },
+            "type": "nominal"
+        },
+        "y": {
+            "aggregate": "count",
+            "field": "*",
+            "type": "quantitative"
+        }
+    },
+    "height": 120,
+    "mark": "bar",
+    "width": 120
+}

@@ -20,6 +20,14 @@ def make_chart():
     return Chart(data).mark_point().encode(x='x', y='y')
 
 
+def test_mark_methods():
+    """Make sure the Chart's mark_*() methods all exist"""
+    from ..schema import Mark
+    assert set(Mark().values) == {method.split('_')[1]
+                                  for method in dir(Chart)
+                                  if method.startswith('mark_')}
+
+
 def test_chart_url_input():
     url = 'http://vega.github.io/vega-lite/data/'
     chart1 = Chart(Data(url=url))
@@ -492,7 +500,7 @@ def test_df_filter_multiple():
         x='x',
         y='y'
     ).transform_data(
-        filter='((datum.x<2)&&(datum.y>4))'
+        filter=['(datum.x<2)','(datum.y>4)']
     )
 
     # use the dataframe interface to create *two* filters

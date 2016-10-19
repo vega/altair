@@ -40,13 +40,19 @@ JINJA_ENV = Environment(loader=FileSystemLoader(getpath('templates')))
 JINJA_ENV.filters['repr'] = repr
 JINJA_ENV.filters['merge_imports'] = merge_imports
 
-TYPE_MAP = {'oneOf': 'Union',
+TYPE_MAP = {"anyOf": 'Union',
             "array": "List",
             "boolean": "Bool",
             "number": "CFloat",
             "string": "Unicode",
             "object": "Any",
             }
+
+def _get_type(typ):
+    if isinstance(typ, list):
+        return 'TypeList'
+    else:
+        return TYPE_MAP.get(typ, "Any")
 
 # some traits have attributes: this mapping translates them from
 # vega-lite schema language to tratlets language
@@ -85,7 +91,10 @@ class SchemaProperty(object):
         trait = self.trait_name
         if trait == 'Union':
             return [self.__class__(s, '', self.top)
-                    for s in self.schema['oneOf']]
+                    for s in self.schema['anyOf']]
+        elif trait == 'TypeList':
+            return [self.__class__({'type': t}, '', self.top)
+                    for t in self.schema['type']]
         elif trait == 'List':
             return [self.__class__(self.schema['items'], '', self.top)]
         else:
@@ -118,8 +127,8 @@ class SchemaProperty(object):
     def type(self):
         if '$ref' in self.schema:
             return '$ref'
-        elif 'oneOf' in self.schema:
-            return 'oneOf'
+        elif 'anyOf' in self.schema:
+            return 'anyOf'
         else:
             return self.schema.get('type', '')
 
@@ -132,13 +141,16 @@ class SchemaProperty(object):
             else:
                 return self.refname
         else:
-            return TYPE_MAP.get(self.type, "Any")
+            return _get_type(self.type)
 
     @property
     def trait_descr(self):
         trait = self.trait_name
         if trait == 'Instance':
             return self.refname
+        elif trait == 'TypeList':
+            return 'Union({0})'.format(', '.join(t.trait_descr
+                                                 for t in self.subtypes))
         elif self.subtypes:
             return '{0}({1})'.format(trait, ', '.join(t.trait_descr
                                                       for t in self.subtypes))
@@ -169,6 +181,10 @@ class SchemaProperty(object):
             return ('T.Union([{0}])'
                     ''.format(_join(t._trait_fulldef()
                                     for t in self.subtypes)))
+        elif trait == 'TypeList':
+            return('T.Union([{}])'
+                   ''.format(_join(t._trait_fulldef()
+                                   for t in self.subtypes)))
         elif trait == 'List':
             subtrait = list(self.subtypes)[0]._trait_fulldef(kwds=[])
             return 'T.List({0}{1})'.format(subtrait, _join(kwds, True))
@@ -185,7 +201,7 @@ class SchemaProperty(object):
     def trait_or_subtrait(self):
         if self.refname is not None:
             return self.refname
-        elif self.trait_name in ['Union', 'List']:
+        elif self.trait_name in ['Union', 'List', 'TypeList']:
             for t in self.subtypes:
                 if t.trait_or_subtrait is not None:
                     return t.trait_or_subtrait

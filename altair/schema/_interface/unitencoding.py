@@ -34,11 +34,15 @@ class UnitEncoding(BaseObject):
         Text of the `text` mark.
     x: PositionChannelDef
         X coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
+    x2: FieldDef
+        X2 coordinates for ranged `bar`, `rule`, `area`.
     y: PositionChannelDef
         Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).
+    y2: FieldDef
+        Y2 coordinates for ranged `bar`, `rule`, `area`.
     """
     color = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Color of the marks - either fill or stroke color based on mark type.""")
-    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(FieldDef, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
+    detail = T.Union([T.Instance(FieldDef, allow_none=True, default_value=None), T.List(T.Instance(FieldDef), allow_none=True, default_value=None)])
     label = T.Instance(FieldDef, allow_none=True, default_value=None)
     opacity = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Opacity of the marks - either can be a value or in a range.""")
     order = T.Union([T.Instance(OrderChannelDef, allow_none=True, default_value=None), T.List(T.Instance(OrderChannelDef), allow_none=True, default_value=None)])
@@ -47,9 +51,11 @@ class UnitEncoding(BaseObject):
     size = T.Instance(ChannelDefWithLegend, allow_none=True, default_value=None, help="""Size of the mark.""")
     text = T.Instance(FieldDef, allow_none=True, default_value=None, help="""Text of the `text` mark.""")
     x = T.Instance(PositionChannelDef, allow_none=True, default_value=None, help="""X coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
+    x2 = T.Instance(FieldDef, allow_none=True, default_value=None, help="""X2 coordinates for ranged `bar`, `rule`, `area`.""")
     y = T.Instance(PositionChannelDef, allow_none=True, default_value=None, help="""Y coordinates for `point`, `circle`, `square`, `line`, `rule`, `text`, and `tick` (or to width and height for `bar` and `area` marks).""")
+    y2 = T.Instance(FieldDef, allow_none=True, default_value=None, help="""Y2 coordinates for ranged `bar`, `rule`, `area`.""")
     
-    def __init__(self, color=None, detail=None, label=None, opacity=None, order=None, path=None, shape=None, size=None, text=None, x=None, y=None, **kwargs):
-        kwds = dict(color=color, detail=detail, label=label, opacity=opacity, order=order, path=path, shape=shape, size=size, text=text, x=x, y=y)
+    def __init__(self, color=None, detail=None, label=None, opacity=None, order=None, path=None, shape=None, size=None, text=None, x=None, x2=None, y=None, y2=None, **kwargs):
+        kwds = dict(color=color, detail=detail, label=label, opacity=opacity, order=order, path=path, shape=shape, size=size, text=text, x=x, x2=x2, y=y, y2=y2)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(UnitEncoding, self).__init__(**kwargs)

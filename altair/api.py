@@ -26,6 +26,8 @@ from .schema import CellConfig
 from .schema import Config
 from .schema import Data
 from .schema import DataFormat
+from .schema import DateTime
+from .schema import EqualFilter
 from .schema import FacetConfig
 from .schema import FacetGridConfig
 from .schema import FacetScaleConfig
@@ -36,6 +38,9 @@ from .schema import LegendConfig
 from .schema import Legend
 from .schema import MarkConfig
 from .schema import NiceTime
+from .schema import OneOfFilter
+from .schema import OverlayConfig
+from .schema import RangeFilter
 from .schema import Scale
 from .schema import ScaleConfig
 from .schema import SortField
@@ -92,14 +97,25 @@ class Formula(schema.Formula):
 # - allows filter trait to be an Expression and processes it properly
 #*************************************************************************
 class Transform(schema.Transform):
-    filter = T.Union([T.Unicode(), T.Instance(expr.Expression)],
+    filter = T.Union([T.Unicode(),
+                      T.Instance(expr.Expression),
+                      T.Instance(schema.EqualFilter),
+                      T.Instance(schema.RangeFilter),
+                      T.Instance(schema.OneOfFilter),
+                      T.List(T.Union([T.Unicode(),
+                                      T.Instance(expr.Expression),
+                                      T.Instance(schema.EqualFilter),
+                                      T.Instance(schema.RangeFilter),
+                                      T.Instance(schema.OneOfFilter)]))],
                      allow_none=True, default_value=None,
                      help=schema.Transform.filter.help)
 
     def _finalize(self, **kwargs):
-        """Finalize object: convert filter expression to string"""
-        if isinstance(self.filter, expr.Expression):
-            self.filter = repr(self.filter)
+        """Finalize object: convert filter expressions to string"""
+        convert = lambda f: repr(f) if isinstance(f, expr.Expression) else f
+        self.filter = convert(self.filter)
+        if isinstance(self.filter, list):
+            self.filter = [convert(f) for f in self.filter]
         super(Transform, self)._finalize(**kwargs)
 
 
@@ -227,6 +243,11 @@ class TopLevelMixin(object):
         """Configure the chart's legend by keyword args."""
         return self._update_subtraits(('config', 'legend'), *args, **kwargs)
 
+    @use_signature(OverlayConfig)
+    def configure_overlay(self, *args, **kwargs):
+        """Configure the chart's overlay by keyword args."""
+        return self._update_subtraits(('config', 'overlay'), *args, **kwargs)
+
     @use_signature(MarkConfig)
     def configure_mark(self, *args, **kwargs):
         """Configure the chart's marks by keyword args."""
@@ -327,8 +348,11 @@ class TopLevelMixin(object):
                                                for field, exp
                                                in calculated_cols.items()])
             if filters:
-                self.transform_data(filter=functools.reduce(operator.and_,
-                                                            filters))
+                filters = [repr(f) for f in filters]
+                if len(filters) == 1:
+                    self.transform_data(filter=filters[0])
+                else:
+                    self.transform_data(filter=filters)
 
 
 class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
@@ -385,6 +409,12 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     def mark_bar(self, *args, **kwargs):
         """Set the mark to 'bar' and optionally specify mark properties"""
         self.mark = 'bar'
+        return self.configure_mark(*args, **kwargs)
+
+    @use_signature(MarkConfig)
+    def mark_errorBar(self, *args, **kwargs):
+        """Set the mark to 'errorBar' and optionally specify mark properties"""
+        self.mark = 'errorBar'
         return self.configure_mark(*args, **kwargs)
 
     @use_signature(MarkConfig)

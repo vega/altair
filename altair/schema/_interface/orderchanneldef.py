@@ -33,7 +33,7 @@ class OrderChannelDef(BaseObject):
         A constant value in visual domain.
     """
     aggregate = AggregateOp(allow_none=True, default_value=None, help="""Aggregation function for the field .""")
-    bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Bin, allow_none=True, default_value=None, help="""Binning properties or boolean flag for determining whether to bin data or not.""")])
+    bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Bin, allow_none=True, default_value=None)])
     field = T.Unicode(allow_none=True, default_value=None, help="""Name of the field from which to pull a data value.""")
     sort = SortOrder(allow_none=True, default_value=None)
     timeUnit = TimeUnit(allow_none=True, default_value=None, help="""Time unit for a `temporal` field .""")

@@ -14,13 +14,19 @@ def abspath(*args):
     return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
 
 
-VEGALITE_TAG = 'v1.0.12'
+VEGALITE_TAG = 'v1.2.1'
 VEGALITE_PATH = abspath('repos', 'vega-lite')
 VEGALITE_URL = 'https://github.com/vega/vega-lite.git'
 
-VEGA_DATA_TAG = 'v1.5.0'
+VEGA_DATA_TAG = 'v1.8.0'
 VEGA_DATA_PATH = abspath('repos', 'vega-datasets')
 VEGA_DATA_URL = 'https://github.com/vega/vega-datasets.git'
+
+VEGALITE_VERSION_FILE = """
+# Automatically written by tools/sync_vegalite.py
+# Do not modify this manually
+vegalite_version = '{version}'
+"""
 
 
 @contextmanager
@@ -49,9 +55,13 @@ def checkout_tag(tag, local_repo, url):
         vegalite.branches[0].checkout()
 
 
-def sync_schema(vegalite_repo,
+def sync_schema(vegalite_repo, version,
                 filename='vega-lite-schema.json',
                 destination=abspath('..', 'altair', 'schema')):
+    versionfile = os.path.join(destination, '_vegalite_version.py')
+    with open(versionfile, 'w') as f:
+        f.write(VEGALITE_VERSION_FILE.format(version=version))
+
     source = os.path.join(vegalite_repo, filename)
     destination = os.path.join(destination, filename)
     print("Copying Vega-Lite Schema:")
@@ -141,7 +151,7 @@ def main():
     if args.schema:
         tag = args.tag or VEGALITE_TAG
         with checkout_tag(tag, VEGALITE_PATH, VEGALITE_URL):
-            sync_schema(VEGALITE_PATH)
+            sync_schema(VEGALITE_PATH, tag.strip('v'))
 
     if args.examples:
         tag = args.tag or VEGALITE_TAG

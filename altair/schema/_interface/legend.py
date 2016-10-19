@@ -3,6 +3,7 @@
 
 import traitlets as T
 from ..baseobject import BaseObject
+from .datetime import DateTime
 
 
 class Legend(BaseObject):
@@ -27,9 +28,9 @@ class Legend(BaseObject):
     labelColor: Unicode
         The color of the legend label, can be in hex color code or regular color name.
     labelFont: Unicode
-        The font of the lengend label.
+        The font of the legend label.
     labelFontSize: CFloat
-        The font size of lengend lable.
+        The font size of legend label.
     labelOffset: CFloat
         The offset of the legend label.
     margin: CFloat
@@ -39,7 +40,7 @@ class Legend(BaseObject):
     orient: Unicode
         The orientation of the legend.
     padding: CFloat
-        The padding, in pixels, between the lengend and axis.
+        The padding, in pixels, between the legend and axis.
     properties: Any
         Optional mark property definitions for custom legend styling.
     shortTimeLabels: Bool
@@ -47,9 +48,9 @@ class Legend(BaseObject):
     symbolColor: Unicode
         The color of the legend symbol,.
     symbolShape: Unicode
-        The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down'.
+        The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down', or else a custom SVG path string.
     symbolSize: CFloat
-        The size of the lengend symbol, in pixels.
+        The size of the legend symbol, in pixels.
     symbolStrokeWidth: CFloat
         The width of the symbol's stroke.
     title: Unicode
@@ -62,7 +63,7 @@ class Legend(BaseObject):
         The font size of the legend title.
     titleFontWeight: Unicode
         The font weight of the legend title.
-    values: List(Any)
+    values: Union(List(CFloat), List(Unicode), List(DateTime))
         Explicitly set the visible legend values.
     """
     format = T.Unicode(allow_none=True, default_value=None, help="""An optional formatting pattern for legend labels.""")
@@ -73,25 +74,25 @@ class Legend(BaseObject):
     labelAlign = T.Unicode(allow_none=True, default_value=None, help="""The alignment of the legend label, can be left, middle or right.""")
     labelBaseline = T.Unicode(allow_none=True, default_value=None, help="""The position of the baseline of legend label, can be top, middle or bottom.""")
     labelColor = T.Unicode(allow_none=True, default_value=None, help="""The color of the legend label, can be in hex color code or regular color name.""")
-    labelFont = T.Unicode(allow_none=True, default_value=None, help="""The font of the lengend label.""")
-    labelFontSize = T.CFloat(allow_none=True, default_value=None, help="""The font size of lengend lable.""")
+    labelFont = T.Unicode(allow_none=True, default_value=None, help="""The font of the legend label.""")
+    labelFontSize = T.CFloat(allow_none=True, default_value=None, help="""The font size of legend label.""")
     labelOffset = T.CFloat(allow_none=True, default_value=None, help="""The offset of the legend label.""")
     margin = T.CFloat(allow_none=True, default_value=None, help="""The margin around the legend, in pixels.""")
     offset = T.CFloat(allow_none=True, default_value=None, help="""The offset, in pixels, by which to displace the legend from the edge of the enclosing group or data rectangle.""")
     orient = T.Unicode(allow_none=True, default_value=None, help="""The orientation of the legend.""")
-    padding = T.CFloat(allow_none=True, default_value=None, help="""The padding, in pixels, between the lengend and axis.""")
+    padding = T.CFloat(allow_none=True, default_value=None, help="""The padding, in pixels, between the legend and axis.""")
     properties = T.Any(allow_none=True, default_value=None, help="""Optional mark property definitions for custom legend styling.""")
     shortTimeLabels = T.Bool(allow_none=True, default_value=None, help="""Whether month names and weekday names should be abbreviated.""")
     symbolColor = T.Unicode(allow_none=True, default_value=None, help="""The color of the legend symbol,.""")
-    symbolShape = T.Unicode(allow_none=True, default_value=None, help="""The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down'.""")
-    symbolSize = T.CFloat(allow_none=True, default_value=None, help="""The size of the lengend symbol, in pixels.""")
-    symbolStrokeWidth = T.CFloat(allow_none=True, default_value=None, help="""The width of the symbol's stroke.""")
+    symbolShape = T.Unicode(allow_none=True, default_value=None, help="""The shape of the legend symbol, can be the 'circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down', or else a custom SVG path string.""")
+    symbolSize = T.CFloat(allow_none=True, default_value=None, help="""The size of the legend symbol, in pixels.""")
+    symbolStrokeWidth = T.CFloat(allow_none=True, default_value=None, min=0, help="""The width of the symbol's stroke.""")
     title = T.Unicode(allow_none=True, default_value=None, help="""A title for the legend.""")
     titleColor = T.Unicode(allow_none=True, default_value=None, help="""Optional mark property definitions for custom legend styling.""")
     titleFont = T.Unicode(allow_none=True, default_value=None, help="""The font of the legend title.""")
     titleFontSize = T.CFloat(allow_none=True, default_value=None, help="""The font size of the legend title.""")
     titleFontWeight = T.Unicode(allow_none=True, default_value=None, help="""The font weight of the legend title.""")
-    values = T.List(T.Any(), allow_none=True, default_value=None, help="""Explicitly set the visible legend values.""")
+    values = T.Union([T.List(T.CFloat(), allow_none=True, default_value=None), T.List(T.Unicode(), allow_none=True, default_value=None), T.List(T.Instance(DateTime), allow_none=True, default_value=None)])
     
     def __init__(self, format=None, gradientHeight=None, gradientStrokeColor=None, gradientStrokeWidth=None, gradientWidth=None, labelAlign=None, labelBaseline=None, labelColor=None, labelFont=None, labelFontSize=None, labelOffset=None, margin=None, offset=None, orient=None, padding=None, properties=None, shortTimeLabels=None, symbolColor=None, symbolShape=None, symbolSize=None, symbolStrokeWidth=None, title=None, titleColor=None, titleFont=None, titleFontSize=None, titleFontWeight=None, values=None, **kwargs):
         kwds = dict(format=format, gradientHeight=gradientHeight, gradientStrokeColor=gradientStrokeColor, gradientStrokeWidth=gradientStrokeWidth, gradientWidth=gradientWidth, labelAlign=labelAlign, labelBaseline=labelBaseline, labelColor=labelColor, labelFont=labelFont, labelFontSize=labelFontSize, labelOffset=labelOffset, margin=margin, offset=offset, orient=orient, padding=padding, properties=properties, shortTimeLabels=shortTimeLabels, symbolColor=symbolColor, symbolShape=symbolShape, symbolSize=symbolSize, symbolStrokeWidth=symbolStrokeWidth, title=title, titleColor=titleColor, titleFont=titleFont, titleFontSize=titleFontSize, titleFontWeight=titleFontWeight, values=values)
