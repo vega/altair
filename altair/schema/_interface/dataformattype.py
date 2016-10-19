@@ -5,7 +5,9 @@ import traitlets as T
 
 
 class DataFormatType(T.Enum):
-    """One of ['json', 'csv', 'tsv', 'topojson']"""
+    """
+    One of ['json', 'csv', 'tsv', 'topojson']
+    """
     def __init__(self, default_value=T.Undefined, **metadata):
         super(DataFormatType, self).__init__(['json', 'csv', 'tsv', 'topojson'],
                                     default_value=default_value,

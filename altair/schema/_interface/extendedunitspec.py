@@ -12,7 +12,15 @@ from .transform import Transform
 
 class ExtendedUnitSpec(UnitSpec):
     """Wrapper for Vega-Lite ExtendedUnitSpec definition.
-    
+    Schema for a unit Vega-Lite specification, with the syntactic sugar extensions:
+
+- `row` and `column` are included in the encoding.
+
+- (Future) label, box plot
+
+
+
+Note: the spec could contain facet.
     Attributes
     ----------
     config: Config

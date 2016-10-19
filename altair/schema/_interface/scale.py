@@ -4,6 +4,7 @@
 import traitlets as T
 from ..baseobject import BaseObject
 from .bandsize import BandSize
+from .datetime import DateTime
 from .nicetime import NiceTime
 from .scaletype import ScaleType
 
@@ -17,7 +18,7 @@ class Scale(BaseObject):
         
     clamp: Bool
         If true, values that exceed the data domain are clamped to either the minimum or maximum range value.
-    domain: Union(List(CFloat), List(Unicode))
+    domain: Union(List(CFloat), List(Unicode), List(DateTime))
         The domain of the scale, representing the set of data values.
     exponent: CFloat
         Sets the exponent of the scale transformation.
@@ -38,7 +39,7 @@ class Scale(BaseObject):
     """
     bandSize = T.Union([T.CFloat(allow_none=True, default_value=None), BandSize(allow_none=True, default_value=None)])
     clamp = T.Bool(allow_none=True, default_value=None, help="""If true, values that exceed the data domain are clamped to either the minimum or maximum range value.""")
-    domain = T.Union([T.List(T.CFloat(), allow_none=True, default_value=None), T.List(T.Unicode(), allow_none=True, default_value=None)])
+    domain = T.Union([T.List(T.CFloat(), allow_none=True, default_value=None), T.List(T.Unicode(), allow_none=True, default_value=None), T.List(T.Instance(DateTime), allow_none=True, default_value=None)])
     exponent = T.CFloat(allow_none=True, default_value=None, help="""Sets the exponent of the scale transformation.""")
     nice = T.Union([T.Bool(allow_none=True, default_value=None), NiceTime(allow_none=True, default_value=None)])
     padding = T.CFloat(allow_none=True, default_value=None, help="""Applies spacing among ordinal elements in the scale range.""")

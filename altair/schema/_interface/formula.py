@@ -7,7 +7,7 @@ from ..baseobject import BaseObject
 
 class Formula(BaseObject):
     """Wrapper for Vega-Lite Formula definition.
-    
+    Formula object for calculate.
     Attributes
     ----------
     expr: Unicode

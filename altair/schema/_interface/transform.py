@@ -21,7 +21,7 @@ class Transform(BaseObject):
     filterInvalid: Bool
         Whether to filter invalid values (`null` and `NaN`) from the data.
     """
-    calculate = T.List(T.Instance(Formula, help="""Formula object for calculate."""), allow_none=True, default_value=None, help="""Calculate new field(s) using the provided expresssion(s).""")
+    calculate = T.List(T.Instance(Formula), allow_none=True, default_value=None, help="""Calculate new field(s) using the provided expresssion(s).""")
     filter = T.Union([T.Unicode(allow_none=True, default_value=None), T.Instance(EqualFilter, allow_none=True, default_value=None), T.Instance(RangeFilter, allow_none=True, default_value=None), T.Instance(OneOfFilter, allow_none=True, default_value=None), T.List(T.Union([T.Unicode(allow_none=True, default_value=None), T.Instance(EqualFilter, allow_none=True, default_value=None), T.Instance(RangeFilter, allow_none=True, default_value=None), T.Instance(OneOfFilter, allow_none=True, default_value=None)]), allow_none=True, default_value=None)])
     filterInvalid = T.Bool(allow_none=True, default_value=None, help="""Whether to filter invalid values (`null` and `NaN`) from the data.""")
     

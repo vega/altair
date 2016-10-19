@@ -19,7 +19,7 @@ class EqualFilter(BaseObject):
     timeUnit: TimeUnit
         Time unit for the field to be filtered.
     """
-    equal = T.Union([T.Unicode(allow_none=True, default_value=None), T.CFloat(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None), T.Instance(DateTime, allow_none=True, default_value=None, help="""Object for defining datetime in Vega-Lite Filter.""")])
+    equal = T.Union([T.Unicode(allow_none=True, default_value=None), T.CFloat(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None), T.Instance(DateTime, allow_none=True, default_value=None)])
     field = T.Unicode(allow_none=True, default_value=None, help="""Field to be filtered.""")
     timeUnit = TimeUnit(allow_none=True, default_value=None, help="""Time unit for the field to be filtered.""")
     

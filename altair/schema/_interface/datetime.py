@@ -7,7 +7,13 @@ from ..baseobject import BaseObject
 
 class DateTime(BaseObject):
     """Wrapper for Vega-Lite DateTime definition.
-    
+    Object for defining datetime in Vega-Lite Filter.
+
+If both month and quarter are provided, month has higher precedence.
+
+`day` cannot be combined with other date.
+
+We accept string for month and day names.
     Attributes
     ----------
     date: CFloat
@@ -29,14 +35,14 @@ class DateTime(BaseObject):
     year: CFloat
         Integer value representing the year.
     """
-    date = T.CFloat(allow_none=True, default_value=None, help="""Integer value representing the date from 1-31.""")
+    date = T.CFloat(allow_none=True, default_value=None, max=31, min=1, help="""Integer value representing the date from 1-31.""")
     day = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None)])
-    hours = T.CFloat(allow_none=True, default_value=None, help="""Integer value representing the hour of day from 0-23.""")
-    milliseconds = T.CFloat(allow_none=True, default_value=None, help="""Integer value representing millisecond segment of a time.""")
-    minutes = T.CFloat(allow_none=True, default_value=None, help="""Integer value representing minute segment of a time from 0-59.""")
+    hours = T.CFloat(allow_none=True, default_value=None, max=23, min=0, help="""Integer value representing the hour of day from 0-23.""")
+    milliseconds = T.CFloat(allow_none=True, default_value=None, max=999, min=0, help="""Integer value representing millisecond segment of a time.""")
+    minutes = T.CFloat(allow_none=True, default_value=None, max=59, min=0, help="""Integer value representing minute segment of a time from 0-59.""")
     month = T.Union([T.CFloat(allow_none=True, default_value=None), T.Unicode(allow_none=True, default_value=None)])
-    quarter = T.CFloat(allow_none=True, default_value=None, help="""Integer value representing the quarter of the year (from 1-4).""")
-    seconds = T.CFloat(allow_none=True, default_value=None, help="""Integer value representing second segment of a time from 0-59.""")
+    quarter = T.CFloat(allow_none=True, default_value=None, max=4, min=1, help="""Integer value representing the quarter of the year (from 1-4).""")
+    seconds = T.CFloat(allow_none=True, default_value=None, max=59, min=0, help="""Integer value representing second segment of a time from 0-59.""")
     year = T.CFloat(allow_none=True, default_value=None, help="""Integer value representing the year.""")
     
     def __init__(self, date=None, day=None, hours=None, milliseconds=None, minutes=None, month=None, quarter=None, seconds=None, year=None, **kwargs):

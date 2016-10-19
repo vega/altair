@@ -5,7 +5,9 @@ import traitlets as T
 
 
 class AreaOverlay(T.Enum):
-    """One of ['line', 'linepoint', 'none']"""
+    """
+    One of ['line', 'linepoint', 'none']
+    """
     def __init__(self, default_value=T.Undefined, **metadata):
         super(AreaOverlay, self).__init__(['line', 'linepoint', 'none'],
                                     default_value=default_value,

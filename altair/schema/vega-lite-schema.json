@@ -1,8 +1,7 @@
 {
-    "oneOf": [
+    "anyOf": [
         {
-            "$ref": "#/definitions/ExtendedUnitSpec",
-            "description": "Schema for a unit Vega-Lite specification, with the syntactic sugar extensions:\n\n- `row` and `column` are included in the encoding.\n\n- (Future) label, box plot\n\n\n\nNote: the spec could contain facet."
+            "$ref": "#/definitions/ExtendedUnitSpec"
         },
         {
             "$ref": "#/definitions/FacetSpec"
@@ -13,6 +12,7 @@
     ],
     "definitions": {
         "ExtendedUnitSpec": {
+            "description": "Schema for a unit Vega-Lite specification, with the syntactic sugar extensions:\n\n- `row` and `column` are included in the encoding.\n\n- (Future) label, box plot\n\n\n\nNote: the spec could contain facet.",
             "type": "object",
             "properties": {
                 "width": {
@@ -114,16 +114,14 @@
                 },
                 "detail": {
                     "description": "Additional levels of detail for grouping data in aggregate views and\n\nin line and area marks without mapping data to a specific visual channel.",
-                    "oneOf": [
+                    "anyOf": [
                         {
-                            "$ref": "#/definitions/FieldDef",
-                            "description": "Interface for any kind of FieldDef;\n\nFor simplicity, we do not declare multiple interfaces of FieldDef like\n\nwe do for JSON schema."
+                            "$ref": "#/definitions/FieldDef"
                         },
                         {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/FieldDef",
-                                "description": "Interface for any kind of FieldDef;\n\nFor simplicity, we do not declare multiple interfaces of FieldDef like\n\nwe do for JSON schema."
+                                "$ref": "#/definitions/FieldDef"
                             }
                         }
                     ]
@@ -137,7 +135,7 @@
                 },
                 "path": {
                     "description": "Order of data points in line marks.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"
                         },
@@ -151,7 +149,7 @@
                 },
                 "order": {
                     "description": "Layer order for non-stacked marks, or stack order for stacked marks.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"
                         },
@@ -169,7 +167,7 @@
             "type": "object",
             "properties": {
                 "axis": {
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "boolean"
                         },
@@ -182,7 +180,7 @@
                     "$ref": "#/definitions/Scale"
                 },
                 "sort": {
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/SortField"
                         },
@@ -201,16 +199,10 @@
                 },
                 "value": {
                     "description": "A constant value in visual domain.",
-                    "oneOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "boolean"
-                        }
+                    "type": [
+                        "number",
+                        "string",
+                        "boolean"
                     ]
                 },
                 "timeUnit": {
@@ -219,13 +211,12 @@
                 },
                 "bin": {
                     "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "boolean"
                         },
                         {
-                            "$ref": "#/definitions/Bin",
-                            "description": "Binning properties or boolean flag for determining whether to bin data or not."
+                            "$ref": "#/definitions/Bin"
                         }
                     ]
                 },
@@ -259,10 +250,20 @@
                     "type": "string"
                 },
                 "values": {
-                    "type": "array",
-                    "items": {
-                        "type": "number"
-                    }
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DateTime"
+                            }
+                        }
+                    ]
                 },
                 "axisWidth": {
                     "description": "Width of the axis line",
@@ -420,6 +421,66 @@
                 "bottom"
             ]
         },
+        "DateTime": {
+            "description": "Object for defining datetime in Vega-Lite Filter.\n\nIf both month and quarter are provided, month has higher precedence.\n\n`day` cannot be combined with other date.\n\nWe accept string for month and day names.",
+            "type": "object",
+            "properties": {
+                "year": {
+                    "description": "Integer value representing the year.",
+                    "type": "number"
+                },
+                "quarter": {
+                    "description": "Integer value representing the quarter of the year (from 1-4).",
+                    "minimum": 1,
+                    "maximum": 4,
+                    "type": "number"
+                },
+                "month": {
+                    "description": "One of: (1) integer value representing the month from `1`-`12`. `1` represents January;  (2) case-insensitive month name (e.g., `\"January\"`);  (3) case-insensitive, 3-character short month name (e.g., `\"Jan\"`).",
+                    "type": [
+                        "number",
+                        "string"
+                    ]
+                },
+                "date": {
+                    "description": "Integer value representing the date from 1-31.",
+                    "minimum": 1,
+                    "maximum": 31,
+                    "type": "number"
+                },
+                "day": {
+                    "description": "Value representing the day of week.  This can be one of: (1) integer value -- `1` represents Monday; (2) case-insensitive day name (e.g., `\"Monday\"`);  (3) case-insensitive, 3-character short day name (e.g., `\"Mon\"`).   <br/> **Warning:** A DateTime definition object with `day`** should not be combined with `year`, `quarter`, `month`, or `date`.",
+                    "type": [
+                        "number",
+                        "string"
+                    ]
+                },
+                "hours": {
+                    "description": "Integer value representing the hour of day from 0-23.",
+                    "minimum": 0,
+                    "maximum": 23,
+                    "type": "number"
+                },
+                "minutes": {
+                    "description": "Integer value representing minute segment of a time from 0-59.",
+                    "minimum": 0,
+                    "maximum": 59,
+                    "type": "number"
+                },
+                "seconds": {
+                    "description": "Integer value representing second segment of a time from 0-59.",
+                    "minimum": 0,
+                    "maximum": 59,
+                    "type": "number"
+                },
+                "milliseconds": {
+                    "description": "Integer value representing millisecond segment of a time.",
+                    "minimum": 0,
+                    "maximum": 999,
+                    "type": "number"
+                }
+            }
+        },
         "Scale": {
             "type": "object",
             "properties": {
@@ -428,7 +489,7 @@
                 },
                 "domain": {
                     "description": "The domain of the scale, representing the set of data values. For quantitative data, this can take the form of a two-element array with minimum and maximum values. For ordinal/categorical data, this may be an array of valid input values.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "array",
                             "items": {
@@ -440,12 +501,18 @@
                             "items": {
                                 "type": "string"
                             }
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DateTime"
+                            }
                         }
                     ]
                 },
                 "range": {
                     "description": "The range of the scale, representing the set of visual values. For numeric values, the range can take the form of a two-element array with minimum and maximum values. For ordinal or quantized data, the range may by an array of desired output values, which are mapped to elements in the specified domain. For ordinal scales only, the range can be defined using a DataRef: the range values are then drawn dynamically from a backing data set.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "string"
                         },
@@ -469,7 +536,7 @@
                 },
                 "bandSize": {
                     "minimum": 0,
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "number"
                         },
@@ -488,7 +555,7 @@
                 },
                 "nice": {
                     "description": "If specified, modifies the scale domain to use a more human-friendly value range. If specified as a true boolean, modifies the scale domain to use a more human-friendly number range (e.g., 7 instead of 6.96). If specified as a string, modifies the scale domain to use a more human-friendly value range. For time and utc scale types only, the nice value should be a string indicating the desired time interval.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "boolean"
                         },
@@ -621,6 +688,7 @@
                 "yearmonthdatehours",
                 "yearmonthdatehoursminutes",
                 "yearmonthdatehoursminutesseconds",
+                "monthdate",
                 "hoursminutes",
                 "hoursminutesseconds",
                 "minutesseconds",
@@ -632,6 +700,7 @@
             ]
         },
         "Bin": {
+            "description": "Binning properties or boolean flag for determining whether to bin data or not.",
             "type": "object",
             "properties": {
                 "min": {
@@ -688,16 +757,10 @@
                 },
                 "value": {
                     "description": "A constant value in visual domain.",
-                    "oneOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "boolean"
-                        }
+                    "type": [
+                        "number",
+                        "string",
+                        "boolean"
                     ]
                 },
                 "timeUnit": {
@@ -706,13 +769,12 @@
                 },
                 "bin": {
                     "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "boolean"
                         },
                         {
-                            "$ref": "#/definitions/Bin",
-                            "description": "Binning properties or boolean flag for determining whether to bin data or not."
+                            "$ref": "#/definitions/Bin"
                         }
                     ]
                 },
@@ -736,7 +798,7 @@
                     "$ref": "#/definitions/Scale"
                 },
                 "sort": {
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/SortField"
                         },
@@ -755,16 +817,10 @@
                 },
                 "value": {
                     "description": "A constant value in visual domain.",
-                    "oneOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "boolean"
-                        }
+                    "type": [
+                        "number",
+                        "string",
+                        "boolean"
                     ]
                 },
                 "timeUnit": {
@@ -773,13 +829,12 @@
                 },
                 "bin": {
                     "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "boolean"
                         },
                         {
-                            "$ref": "#/definitions/Bin",
-                            "description": "Binning properties or boolean flag for determining whether to bin data or not."
+                            "$ref": "#/definitions/Bin"
                         }
                     ]
                 },
@@ -806,8 +861,26 @@
                 },
                 "values": {
                     "description": "Explicitly set the visible legend values.",
-                    "type": "array",
-                    "items": {}
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/DateTime"
+                            }
+                        }
+                    ]
                 },
                 "orient": {
                     "description": "The orientation of the legend. One of \"left\" or \"right\". This determines how the legend is positioned within the scene. The default is \"right\".",
@@ -818,7 +891,7 @@
                     "type": "number"
                 },
                 "padding": {
-                    "description": "The padding, in pixels, between the lengend and axis.",
+                    "description": "The padding, in pixels, between the legend and axis.",
                     "type": "number"
                 },
                 "margin": {
@@ -854,11 +927,11 @@
                     "type": "string"
                 },
                 "labelFont": {
-                    "description": "The font of the lengend label.",
+                    "description": "The font of the legend label.",
                     "type": "string"
                 },
                 "labelFontSize": {
-                    "description": "The font size of lengend lable.",
+                    "description": "The font size of legend label.",
                     "type": "number"
                 },
                 "labelOffset": {
@@ -878,11 +951,12 @@
                     "type": "string"
                 },
                 "symbolSize": {
-                    "description": "The size of the lengend symbol, in pixels.",
+                    "description": "The size of the legend symbol, in pixels.",
                     "type": "number"
                 },
                 "symbolStrokeWidth": {
                     "description": "The width of the symbol's stroke.",
+                    "minimum": 0,
                     "type": "number"
                 },
                 "titleColor": {
@@ -922,16 +996,10 @@
                 },
                 "value": {
                     "description": "A constant value in visual domain.",
-                    "oneOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "boolean"
-                        }
+                    "type": [
+                        "number",
+                        "string",
+                        "boolean"
                     ]
                 },
                 "timeUnit": {
@@ -940,13 +1008,12 @@
                 },
                 "bin": {
                     "description": "Flag for binning a `quantitative` field, or a bin property object\n\nfor binning parameters.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "boolean"
                         },
                         {
-                            "$ref": "#/definitions/Bin",
-                            "description": "Binning properties or boolean flag for determining whether to bin data or not."
+                            "$ref": "#/definitions/Bin"
                         }
                     ]
                 },
@@ -985,6 +1052,9 @@
                     "$ref": "#/definitions/DataFormatType",
                     "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`.\n\nThe default format type is determined by the extension of the file url.\n\nIf no extension is detected, `\"json\"` will be used by default."
                 },
+                "parse": {
+                    "description": "A collection of parsing instructions can be used to define the data types of string-valued attributes in the JSON file. Each instruction is a name-value pair, where the name is the name of the attribute, and the value is the desired data type (one of `\"number\"`, `\"boolean\"` or `\"date\"`). For example, `\"parse\": {\"modified_on\":\"date\"}` ensures that the `modified_on` value in each row of the input data is parsed as a Date value. (See Datalib's [`dl.read.types` method](https://github.com/vega/datalib/wiki/Import#dl_read_types) for more information.)"
+                },
                 "property": {
                     "description": "JSON only) The JSON property containing the desired data.\n\nThis parameter can be used when the loaded JSON file may have surrounding structure or meta-data.\n\nFor example `\"property\": \"values.features\"` is equivalent to retrieving `json.values.features`\n\nfrom the loaded JSON object.",
                     "type": "string"
@@ -994,7 +1064,7 @@
                     "type": "string"
                 },
                 "mesh": {
-                    "description": "The name of the TopoJSON object set to convert to a mesh.\n\nSimilar to the `feature` option, `mesh` extracts a named TopoJSON object set.\n\nUnlike the `feature` option, the corresponding geo data is returned as a single, unified mesh instance, not as inidividual GeoJSON features.\n\nExtracting a mesh is useful for more efficiently drawing borders or other geographic elements that you do not need to associate with specific regions such as individual countries, states or counties.",
+                    "description": "The name of the TopoJSON object set to convert to a mesh.\n\nSimilar to the `feature` option, `mesh` extracts a named TopoJSON object set.\n\nUnlike the `feature` option, the corresponding geo data is returned as a single, unified mesh instance, not as individual GeoJSON features.\n\nExtracting a mesh is useful for more efficiently drawing borders or other geographic elements that you do not need to associate with specific regions such as individual countries, states or counties.",
                     "type": "string"
                 }
             }
@@ -1013,7 +1083,7 @@
             "properties": {
                 "filter": {
                     "description": "A string containing the filter Vega expression. Use `datum` to refer to the current data object.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "string"
                         },
@@ -1029,7 +1099,7 @@
                         {
                             "type": "array",
                             "items": {
-                                "oneOf": [
+                                "anyOf": [
                                     {
                                         "type": "string"
                                     },
@@ -1055,8 +1125,7 @@
                     "description": "Calculate new field(s) using the provided expresssion(s). Calculation are applied before filter.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Formula",
-                        "description": "Formula object for calculate."
+                        "$ref": "#/definitions/Formula"
                     }
                 }
             }
@@ -1074,7 +1143,7 @@
                 },
                 "equal": {
                     "description": "Value that the field should be equal to.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "string"
                         },
@@ -1085,8 +1154,7 @@
                             "type": "boolean"
                         },
                         {
-                            "$ref": "#/definitions/DateTime",
-                            "description": "Object for defining datetime in Vega-Lite Filter.\n\nIf both month and quarter are provided, month has higher precedence.\n\n`day` cannot be combined with other date.\n\nWe accept string for month and day names."
+                            "$ref": "#/definitions/DateTime"
                         }
                     ]
                 }
@@ -1095,61 +1163,6 @@
                 "field",
                 "equal"
             ]
-        },
-        "DateTime": {
-            "type": "object",
-            "properties": {
-                "year": {
-                    "description": "Integer value representing the year.",
-                    "type": "number"
-                },
-                "quarter": {
-                    "description": "Integer value representing the quarter of the year (from 1-4).",
-                    "type": "number"
-                },
-                "month": {
-                    "description": "One of: (1) integer value representing the month from `1`-`12`. `1` represents January;  (2) case-insensitive month name (e.g., `\"January\"`);  (3) case-insensitive, 3-character short month name (e.g., `\"Jan\"`).",
-                    "oneOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
-                },
-                "date": {
-                    "description": "Integer value representing the date from 1-31.",
-                    "type": "number"
-                },
-                "day": {
-                    "description": "Value representing the day of week.  This can be one of: (1) integer value -- `1` represents Monday; (2) case-insensitive day name (e.g., `\"Monday\"`);  (3) case-insensitive, 3-character short day name (e.g., `\"Mon\"`).   <br/> **Warning:** A DateTime definition object with `day`** should not be combined with `year`, `quarter`, `month`, or `date`.",
-                    "oneOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
-                },
-                "hours": {
-                    "description": "Integer value representing the hour of day from 0-23.",
-                    "type": "number"
-                },
-                "minutes": {
-                    "description": "Integer value representing minute segment of a time from 0-59.",
-                    "type": "number"
-                },
-                "seconds": {
-                    "description": "Integer value representing second segment of a time from 0-59.",
-                    "type": "number"
-                },
-                "milliseconds": {
-                    "description": "Integer value representing millisecond segment of a time.",
-                    "type": "number"
-                }
-            }
         },
         "RangeFilter": {
             "type": "object",
@@ -1168,13 +1181,12 @@
                     "minItems": 2,
                     "type": "array",
                     "items": {
-                        "oneOf": [
+                        "anyOf": [
                             {
                                 "type": "number"
                             },
                             {
-                                "$ref": "#/definitions/DateTime",
-                                "description": "Object for defining datetime in Vega-Lite Filter.\n\nIf both month and quarter are provided, month has higher precedence.\n\n`day` cannot be combined with other date.\n\nWe accept string for month and day names."
+                                "$ref": "#/definitions/DateTime"
                             }
                         ]
                     }
@@ -1200,7 +1212,7 @@
                     "description": "A set of values that the `field`'s value should be a member of,\n\nfor a data item included in the filtered data.",
                     "type": "array",
                     "items": {
-                        "oneOf": [
+                        "anyOf": [
                             {
                                 "type": "string"
                             },
@@ -1211,8 +1223,7 @@
                                 "type": "boolean"
                             },
                             {
-                                "$ref": "#/definitions/DateTime",
-                                "description": "Object for defining datetime in Vega-Lite Filter.\n\nIf both month and quarter are provided, month has higher precedence.\n\n`day` cannot be combined with other date.\n\nWe accept string for month and day names."
+                                "$ref": "#/definitions/DateTime"
                             }
                         ]
                     }
@@ -1224,6 +1235,7 @@
             ]
         },
         "Formula": {
+            "description": "Formula object for calculate.",
             "type": "object",
             "properties": {
                 "field": {
@@ -1424,7 +1436,7 @@
                 },
                 "shape": {
                     "description": "The symbol shape to use. One of circle (default), square, cross, diamond, triangle-up, or triangle-down, or a custom SVG path.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/Shape"
                         },
@@ -1626,7 +1638,7 @@
                 "bandSize": {
                     "description": "Default band size for (1) `y` ordinal scale,\n\nand (2) `x` ordinal scale when the mark is not `text`.",
                     "minimum": 0,
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "number"
                         },
@@ -1652,7 +1664,7 @@
                 },
                 "nominalColorRange": {
                     "description": "Default range for nominal color scale",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "string"
                         },
@@ -1666,7 +1678,7 @@
                 },
                 "sequentialColorRange": {
                     "description": "Default range for ordinal / continuous color scale",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "string"
                         },
@@ -1680,7 +1692,7 @@
                 },
                 "shapeRange": {
                     "description": "Default range for shape",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "type": "string"
                         },
@@ -1895,7 +1907,7 @@
                     "type": "number"
                 },
                 "padding": {
-                    "description": "The padding, in pixels, between the lengend and axis.",
+                    "description": "The padding, in pixels, between the legend and axis.",
                     "type": "number"
                 },
                 "margin": {
@@ -1931,11 +1943,11 @@
                     "type": "string"
                 },
                 "labelFont": {
-                    "description": "The font of the lengend label.",
+                    "description": "The font of the legend label.",
                     "type": "string"
                 },
                 "labelFontSize": {
-                    "description": "The font size of lengend lable.",
+                    "description": "The font size of legend label.",
                     "type": "number"
                 },
                 "labelOffset": {
@@ -1955,11 +1967,12 @@
                     "type": "string"
                 },
                 "symbolSize": {
-                    "description": "The size of the lengend symbol, in pixels.",
+                    "description": "The size of the legend symbol, in pixels.",
                     "type": "number"
                 },
                 "symbolStrokeWidth": {
                     "description": "The width of the symbol's stroke.",
+                    "minimum": 0,
                     "type": "number"
                 },
                 "titleColor": {
@@ -2037,7 +2050,7 @@
                     "$ref": "#/definitions/Facet"
                 },
                 "spec": {
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/LayerSpec"
                         },
@@ -2203,16 +2216,14 @@
                 },
                 "detail": {
                     "description": "Additional levels of detail for grouping data in aggregate views and\n\nin line and area marks without mapping data to a specific visual channel.",
-                    "oneOf": [
+                    "anyOf": [
                         {
-                            "$ref": "#/definitions/FieldDef",
-                            "description": "Interface for any kind of FieldDef;\n\nFor simplicity, we do not declare multiple interfaces of FieldDef like\n\nwe do for JSON schema."
+                            "$ref": "#/definitions/FieldDef"
                         },
                         {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/FieldDef",
-                                "description": "Interface for any kind of FieldDef;\n\nFor simplicity, we do not declare multiple interfaces of FieldDef like\n\nwe do for JSON schema."
+                                "$ref": "#/definitions/FieldDef"
                             }
                         }
                     ]
@@ -2226,7 +2237,7 @@
                 },
                 "path": {
                     "description": "Order of data points in line marks.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"
                         },
@@ -2240,7 +2251,7 @@
                 },
                 "order": {
                     "description": "Layer order for non-stacked marks, or stack order for stacked marks.",
-                    "oneOf": [
+                    "anyOf": [
                         {
                             "$ref": "#/definitions/OrderChannelDef"
                         },

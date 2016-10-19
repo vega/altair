@@ -20,7 +20,7 @@ class RangeFilter(BaseObject):
         time unit for the field to be filtered.
     """
     field = T.Unicode(allow_none=True, default_value=None, help="""Field to be filtered.""")
-    range = T.List(T.Union([T.CFloat(allow_none=True, default_value=None), T.Instance(DateTime, allow_none=True, default_value=None, help="""Object for defining datetime in Vega-Lite Filter.""")]), allow_none=True, default_value=None, maxlen=2, minlen=2, help="""Array of inclusive minimum and maximum values for a field value of a data item to be included in the filtered data.""")
+    range = T.List(T.Union([T.CFloat(allow_none=True, default_value=None), T.Instance(DateTime, allow_none=True, default_value=None)]), allow_none=True, default_value=None, maxlen=2, minlen=2, help="""Array of inclusive minimum and maximum values for a field value of a data item to be included in the filtered data.""")
     timeUnit = TimeUnit(allow_none=True, default_value=None, help="""time unit for the field to be filtered.""")
     
     def __init__(self, field=None, range=None, timeUnit=None, **kwargs):

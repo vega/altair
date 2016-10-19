@@ -4,6 +4,7 @@ from .api import (
     Label,
     Formula,
     Data,
+    DateTime,
     FacetScaleConfig,
     AxisConfig,
     Shape,

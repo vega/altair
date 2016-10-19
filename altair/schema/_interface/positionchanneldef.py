@@ -41,7 +41,7 @@ class PositionChannelDef(BaseObject):
     """
     aggregate = AggregateOp(allow_none=True, default_value=None, help="""Aggregation function for the field .""")
     axis = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Axis, allow_none=True, default_value=None)])
-    bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Bin, allow_none=True, default_value=None, help="""Binning properties or boolean flag for determining whether to bin data or not.""")])
+    bin = T.Union([T.Bool(allow_none=True, default_value=None), T.Instance(Bin, allow_none=True, default_value=None)])
     field = T.Unicode(allow_none=True, default_value=None, help="""Name of the field from which to pull a data value.""")
     scale = T.Instance(Scale, allow_none=True, default_value=None)
     sort = T.Union([T.Instance(SortField, allow_none=True, default_value=None), SortOrder(allow_none=True, default_value=None)])

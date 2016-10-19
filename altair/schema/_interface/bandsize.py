@@ -5,7 +5,9 @@ import traitlets as T
 
 
 class BandSize(T.Enum):
-    """One of ['fit']"""
+    """
+    One of ['fit']
+    """
     def __init__(self, default_value=T.Undefined, **metadata):
         super(BandSize, self).__init__(['fit'],
                                     default_value=default_value,

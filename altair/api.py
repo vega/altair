@@ -26,6 +26,7 @@ from .schema import CellConfig
 from .schema import Config
 from .schema import Data
 from .schema import DataFormat
+from .schema import DateTime
 from .schema import EqualFilter
 from .schema import FacetConfig
 from .schema import FacetGridConfig

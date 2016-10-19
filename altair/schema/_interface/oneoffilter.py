@@ -20,7 +20,7 @@ class OneOfFilter(BaseObject):
         time unit for the field to be filtered.
     """
     field = T.Unicode(allow_none=True, default_value=None, help="""Field to be filtered.""")
-    oneOf = T.List(T.Union([T.Unicode(allow_none=True, default_value=None), T.CFloat(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None), T.Instance(DateTime, allow_none=True, default_value=None, help="""Object for defining datetime in Vega-Lite Filter.""")]), allow_none=True, default_value=None, help="""A set of values that the `field`'s value should be a member of, for a data item included in the filtered data.""")
+    oneOf = T.List(T.Union([T.Unicode(allow_none=True, default_value=None), T.CFloat(allow_none=True, default_value=None), T.Bool(allow_none=True, default_value=None), T.Instance(DateTime, allow_none=True, default_value=None)]), allow_none=True, default_value=None, help="""A set of values that the `field`'s value should be a member of, for a data item included in the filtered data.""")
     timeUnit = TimeUnit(allow_none=True, default_value=None, help="""time unit for the field to be filtered.""")
     
     def __init__(self, field=None, oneOf=None, timeUnit=None, **kwargs):

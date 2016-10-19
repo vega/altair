@@ -46,7 +46,7 @@ class Encoding(schema.Encoding):
     """
     color = T.Instance(Color, allow_none=True, default_value=None, help="""Color of the marks - either fill or stroke color based on mark type.""")
     column = T.Instance(Column, allow_none=True, default_value=None, help="""Horizontal facets for trellis plots.""")
-    detail = T.Union([T.Instance(Detail, allow_none=True, default_value=None, help="""Interface for any kind of FieldDef."""), T.List(T.Instance(Detail, help="""Interface for any kind of FieldDef."""), allow_none=True, default_value=None)])
+    detail = T.Union([T.Instance(Detail, allow_none=True, default_value=None), T.List(T.Instance(Detail), allow_none=True, default_value=None)])
     label = T.Instance(Label, allow_none=True, default_value=None)
     opacity = T.Instance(Opacity, allow_none=True, default_value=None, help="""Opacity of the marks - either can be a value or in a range.""")
     order = T.Union([T.Instance(Order, allow_none=True, default_value=None), T.List(T.Instance(Order), allow_none=True, default_value=None)])
