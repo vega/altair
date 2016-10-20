@@ -1,7 +1,7 @@
 {
   "Basic": [
     {
-      "name": "bar_1d",
+      "name": "bar",
       "title": "Simple Bar Chart",
       "galleryParameters": {
         "backgroundPosition": "25% 50%"

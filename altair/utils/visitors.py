@@ -176,11 +176,7 @@ class FromDict(Visitor):
         # Remove data first and handle it specially later
         if 'data' in dct:
             dct = dct.copy()
-            data = dct.pop('data')
-            if set(data.keys()) == {'values'}:
-                data = pd.DataFrame(data['values'])
-            else:
-                data = self.clsvisit_BaseObject(schema.Data, data)
+            data = self.clsvisit(schema.Data, dct.pop('data'))
             obj = self.clsvisit_BaseObject(cls, dct)
             obj.data = data
         else:
@@ -190,6 +186,13 @@ class FromDict(Visitor):
     clsvisit_Chart = _clsvisit_with_data
     clsvisit_LayeredChart = _clsvisit_with_data
     clsvisit_FacetedChart = _clsvisit_with_data
+
+    def clsvisit_Data(self, trait, dct, *args, **kwargs):
+        dct = dct.copy()
+        values = dct.pop('values', None)
+        obj = self.clsvisit_BaseObject(trait, dct, *args, **kwargs)
+        obj.values = values
+        return obj
 
     def visit_List(self, trait, dct, *args, **kwargs):
         return [self.visit(trait._trait, item) for item in dct]

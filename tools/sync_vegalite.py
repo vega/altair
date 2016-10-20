@@ -101,12 +101,9 @@ def sync_examples(vegalite_repo,
             spec = json.load(f)
 
         # Adjust to use absolute URLs
-        try:
-            url = spec['data']['url']
-            if url.startswith('data/'):
-                spec['data']['url'] = data_url + url
-        except KeyError:
-            continue
+        url = spec['data'].get('url', '')
+        if url.startswith('data/'):
+            spec['data']['url'] = data_url + url
 
         print(" -> {0}".format(destination_file))
         with open(destination_file, 'w') as f:
