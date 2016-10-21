@@ -7,26 +7,39 @@ python:
 
 env:
   matrix:
-  - BUILD_TYPE="test"
+  - BUILD="test" INSTALL="conda"
+  - BUILD="test" INSTALL="pip"
 
 matrix:
   include:
-  - python: 2.7  # 2.7 is required for node-gyp used below
-    env: BUILD_TYPE="docs"
+  - python: 2.7  # 2.7 is required for node-gyp used in docs build
+    env: BUILD="docs" INSTALL="pip"
 
 before_install:
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-  - chmod +x miniconda.sh
-  - ./miniconda.sh -b
-  - export PATH=/home/travis/miniconda3/bin:$PATH
-  - conda config --set always_yes yes
-  - conda config --add channels conda-forge
-  - conda update conda
-  - conda create -n testenv python=$TRAVIS_PYTHON_VERSION pytest
-  - source activate testenv
-  - conda install --file requirements.txt
-  - if [[ $BUILD_TYPE == 'docs' ]]; then
-       conda install --file doc/requirements.txt;
+  - if [[ $INSTALL == 'pip' ]]; then
+       pip install -r requirements.txt;
+    elif [[ $INSTALL == 'conda' ]]; then
+       if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+          wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+       else
+          wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+       fi;
+       bash ./miniconda.sh -b -p $HOME/miniconda;
+       export PATH="$HOME/miniconda/bin:$PATH";
+       conda config --set always_yes yes --set changeps1 no;
+       conda update -q conda;
+       conda info -a;
+       conda config --add channels conda-forge;
+       conda create -q -n testenv python=$TRAVIS_PYTHON_VERSION pytest;
+       source activate testenv;
+       conda install --file requirements.txt;
+    fi
+  - if [[ $BUILD == 'docs' ]]; then
+       if [[ $INSTALL == 'conda' ]]; then
+          conda install --file doc/requirements.txt;
+       elif [[ $INSTALL == 'pip' ]]; then
+          pip install -r doc/requirements.txt;
+       fi
     fi
   - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then
        sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++;
@@ -37,8 +50,8 @@ install:
   - python setup.py install
 
 script:
-  - if [[ $BUILD_TYPE == 'test' ]]; then
+  - if [[ $BUILD == 'test' ]]; then
        python -m pytest altair --doctest-modules;
-    elif [[ $BUILD_TYPE == 'docs' ]]; then
+    elif [[ $BUILD == 'docs' ]]; then
        cd doc && make html;
     fi
