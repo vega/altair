@@ -1,4 +1,4 @@
-traitlets>=4.1
+traitlets>=4.3.1
 ipython
 pandas
 vega>=0.4.4
