@@ -168,38 +168,29 @@ def make_images(image_dir, default_image, make_thumbnails=True):
         # check whether image already exists
         spec = example['spec']
         spec_hash = dict_hash(spec)
-        if hashes.get(filename, '') == spec_hash:
-            continue
+        hashes_match = not hashes.get(filename, '') == spec_hash
 
-        if can_save:
-            chart = Chart.from_dict(spec)
-            try:
-                print('-> saving {0}'.format(image_file))
-                chart.savechart(image_file)
-            except CalledProcessError:
-                warnings.warn('Node is not correctly configured: cannot save images.')
-                can_save = False
-                if not os.path.exists(image_file):
-                    shutil.copyfile(default_image, image_file)
-            else:
-                hashes[filename] = spec_hash
-        elif not os.path.exists(image_file):
-            shutil.copyfile(default_image, image_file)
+        if hashes_match or not os.path.exists(image_file) or hashes_match:
+            if can_save:
+                chart = Chart.from_dict(spec)
+                try:
+                    print('-> saving {0}'.format(image_file))
+                    chart.savechart(image_file)
+                except CalledProcessError:
+                    warnings.warn('Node is not correctly configured: '
+                                  'cannot save images.')
+                    can_save = False
+                    if not os.path.exists(image_file):
+                        shutil.copyfile(default_image, image_file)
+                else:
+                    hashes[filename] = spec_hash
+            elif not os.path.exists(image_file):
+                shutil.copyfile(default_image, image_file)
 
         if make_thumbnails:
-            convert_pct = lambda x: 0.01 * int(x.strip('%'))
             params = example.get('galleryParameters', {})
-
-            zoom = params.get('backgroundSize', '100%')
-            if zoom == 'contains': zoom = '100%'
-            zoom = convert_pct(zoom)
-
-            #position = params.get('backgroundPosition', '0% 0%')
-            #if position == 'left': position = '0% 0%'
-            #xoffset, yoffset = map(convert_pct, position.split())
-
             thumb_file = os.path.join(image_dir, example['name'] + '-thumb.png')
-            create_thumbnail(image_file, thumb_file, zoom=zoom)
+            create_thumbnail(image_file, thumb_file, **params)
 
     # Save hashes so we know whether we need to re-generate plots
     if hashes:
