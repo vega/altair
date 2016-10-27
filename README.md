@@ -108,7 +108,7 @@ Many excellent plotting libraries exist in Python, including the main ones:
 * [Lightning](http://lightning-viz.org/)
 * [Plotly](https://plot.ly/)
 * [Pandas built-in plotting](http://pandas.pydata.org/pandas-docs/stable/visualization.html)
-* [HoloViews](http://ioam.github.io/holoviews/)
+* [HoloViews](http://holoviews.org)
 * [VisPy](http://vispy.org/)
 * [pygg](http://www.github.com/sirrice/pygg)
 
