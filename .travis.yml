@@ -54,4 +54,5 @@ script:
        python -m pytest altair --doctest-modules;
     elif [[ $BUILD == 'docs' ]]; then
        cd doc && make html;
+       cd doc && make doctest;
     fi
