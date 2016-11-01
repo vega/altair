@@ -139,7 +139,7 @@ be calculated by the renderer.
 
     Chart(df).mark_line().encode(
         X('date:T', timeUnit='month'),
-        y='mean(temp_range):Q'
+        y='mean(temp_range)'
     )
 
 Of course, the same calculation could be done by using Pandas manipulations to
