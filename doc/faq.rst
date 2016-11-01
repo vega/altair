@@ -41,7 +41,8 @@ via a pandas DataFrame, a file or URL, or a JSON data object. When you specify
 the data as a pandas DataFrame, this data is converted to JSON and included
 in its entirety in the plot spec.
 
-For example, here is a simple chart made from a dataframe with three columns:
+For example, here is a simple chart made from a dataframe with three rows
+of data:
 
 .. testcode::
 
@@ -89,14 +90,17 @@ For example, here is a simple chart made from a dataframe with three columns:
     }
 
 
-The resulting spec stores the data in JSON format, and this specification
-is embedded in the notebook or web page displaying the plot.
+The resulting specification includes a representation of the data converted
+to JSON format, and this specification is embedded in the notebook or web page
+where it can be used by Vega-Lite to render the plot.
 As the size of the data grows, this explicit data storage can lead to some
 very large specifications, and by extension, some very large notebooks or
 web pages.
 
-The best way around this is to specify the data not by value, but by URL. For
-example, you can save your data as follows:
+The best way around this is to specify the data not by value, but by URL.
+Vega-Lite can then load the data from the URL at the time that it renders
+the plot. For example, you can save your data in the appropriate format
+as follows:
 
 
 .. testsetup::
@@ -107,10 +111,10 @@ example, you can save your data as follows:
 
 .. testcode::
 
-   filename = 'data.csv'
-   data.to_csv(filename, orient='records', index=False)
+   url = 'data.csv'
+   data.to_csv(url, orient='records', index=False)
 
-   chart = Chart(filename).mark_line().encode(
+   chart = Chart(url).mark_line().encode(
                 x='x:Q',
                 y='y:Q'
            )
@@ -138,11 +142,14 @@ example, you can save your data as follows:
 
 
 The data is now stored in a separate CSV file rather than embedded in the
-notebook or web page, leading to much smaller plot specifications.
-
+notebook or web page, leading to much more compact plot specifications.
 The disadvantage, of course, is a loss of portability: if the notebook is
-ever moved, the data file must accompany it.
+ever moved, the data file must accompany it or the plot may not display.
 
+In the future, we hope to add a third option for the notebook: adding an
+option to rendering and embedd only the png or svg image.
+This feature will require an update to Altair's dependencies, which currently
+implement the notebook rendering of Altair plots.
 
 
 .. _Altair-faq-recipes:
