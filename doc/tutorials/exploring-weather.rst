@@ -186,7 +186,7 @@ meaning of the plot more clear:
 
 .. altair-plot::
 
-    from altair import Axis, Legend
+    from altair import Axis, Color, Legend
 
     Chart(df).mark_bar().encode(
         x=X('date:T', timeUnit='month', axis=Axis(title='Month of the year')),
