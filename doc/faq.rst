@@ -30,7 +30,122 @@ and we will do our best to help. In the meantime, other means of displaying Alta
 plots are listed in :ref:`displaying-plots`.
 
 
-.. _altair-faq-recipes:
+.. _altair-faq-large-notebook:
+
+Why do Altair plots lead to such extremely large notebooks?
+-----------------------------------------------------------
+By design, Altair does not produce plots consisting of pixels, but plots
+consisting of data plus a visualization specification. As discussed in
+:ref:`defining-data`, this data can be specified in one of several ways, either
+via a pandas DataFrame, a file or URL, or a JSON data object. When you specify
+the data as a pandas DataFrame, this data is converted to JSON and included
+in its entirety in the plot spec.
+
+For example, here is a simple chart made from a dataframe with three columns:
+
+.. testcode::
+
+    import pandas as pd
+    data = pd.DataFrame({'x': [1, 2, 3], 'y': [2, 1, 2]})
+
+    from altair import Chart
+    chart = Chart(data).mark_line().encode(
+                 x='x',
+                 y='y'
+            )
+
+    print(chart.to_json(indent=2))
+
+.. testoutput::
+
+    {
+      "data": {
+        "values": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ]
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        }
+      },
+      "mark": "line"
+    }
+
+
+The resulting spec stores the data in JSON format, and this specification
+is embedded in the notebook or web page displaying the plot.
+As the size of the data grows, this explicit data storage can lead to some
+very large specifications, and by extension, some very large notebooks or
+web pages.
+
+The best way around this is to specify the data not by value, but by URL. For
+example, you can save your data as follows:
+
+
+.. testsetup::
+
+   import pandas as pd
+   from altair import Chart
+   data = pd.DataFrame({'x': [1, 2, 3], 'y': [2, 1, 2]})
+
+.. testcode::
+
+   filename = 'data.csv'
+   data.to_csv(filename, orient='records', index=False)
+
+   chart = Chart(filename).mark_line().encode(
+                x='x:Q',
+                y='y:Q'
+           )
+   print(chart.to_json(indent=2))
+
+
+.. testoutput::
+
+    {
+      "data": {
+        "url": "data.csv"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        }
+      },
+      "mark": "line"
+    }
+
+
+The data is now stored in a separate CSV file rather than embedded in the
+notebook or web page, leading to much smaller plot specifications.
+
+The disadvantage, of course, is a loss of portability: if the notebook is
+ever moved, the data file must accompany it.
+
+
+
+.. _Altair-faq-recipes:
 
 How do I make a heatmap / violin plot / histogram / regression plot?
 --------------------------------------------------------------------
