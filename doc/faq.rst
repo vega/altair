@@ -5,6 +5,10 @@
 Altair Frequently Asked Questions
 =================================
 
+.. contents::
+   :local:
+
+
 .. _altair-faq-no-display:
 
 Why isn't my plot displaying in the Jupyter Notebook?

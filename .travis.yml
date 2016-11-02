@@ -53,5 +53,7 @@ script:
   - if [[ $BUILD == 'test' ]]; then
        python -m pytest altair --doctest-modules;
     elif [[ $BUILD == 'docs' ]]; then
-       cd doc && make html;
+       cd doc;
+       make html;
+       make doctest;
     fi
