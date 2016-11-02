@@ -246,3 +246,30 @@ The :meth:`Chart.to_altair` method outputs Python code that will reconstruct thi
     )
 
 In this way you can easily discover how Altair implements any Vega-Lite feature.
+
+.. _Altair-faq-recipes:
+
+How can I add marks to my line plot?
+------------------------------------
+Altair suports multiple plot markers through a layering API, accessed via
+:class:`LayeredChart`. So, for example, to create a plot where data is
+marked with both a line and points, you can do something like the following:
+
+.. altair-plot::
+
+   from altair import Chart, LayeredChart
+   import pandas as pd
+   import numpy as np
+
+   x = np.arange(50.)
+   data = pd.DataFrame({'x': x, 'y': np.sin(x / 5)})
+
+   chart = LayeredChart(data)
+
+   chart += Chart().mark_line().encode(x='x', y='y')
+   chart += Chart().mark_circle().encode(x='x', y='y')
+
+   chart
+
+This layering API is considered experimental currently, and will be finalized
+in the 2.0 release.
