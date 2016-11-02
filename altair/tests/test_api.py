@@ -514,3 +514,29 @@ def test_df_filter_multiple():
 
     # make sure outputs match
     assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_chart_dir():
+    # test that the dir() method of top-level objects (and by extension the
+    # IPython tab-completion) exposes what we want to have exposed.
+    chart = dir(Chart())
+    layerchart = dir(LayeredChart())
+    facetchart = dir(FacetedChart())
+
+    for L in [chart, layerchart, facetchart]:
+        # T.HasTraits methods should not appear
+        assert 'has_own_traits' not in L
+        # TopLevel methods should appear
+        assert 'to_html' in L
+        # Common traits should appear
+        assert 'config' in L
+
+    # Specialized chart methods should appear
+    assert 'mark_point' in chart
+    assert 'set_layers' in layerchart
+    assert 'set_facet' in facetchart
+
+    # traits should appear
+    assert 'mark' in chart
+    assert 'layers' in layerchart
+    assert 'facet' in facetchart
