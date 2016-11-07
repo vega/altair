@@ -343,6 +343,8 @@ in the ``vlSpec`` Javascript variable:
     </body>
     </html>
 
+The :meth:`~Chart.savechart` method provides a convenient way to save such HTML
+output to file.
 For more information on embedding Altair/Vega-Lite, see the documentation of the Vega-Embed_ project.
 
 
