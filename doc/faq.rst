@@ -247,7 +247,7 @@ The :meth:`Chart.to_altair` method outputs Python code that will reconstruct thi
 
 In this way you can easily discover how Altair implements any Vega-Lite feature.
 
-.. _Altair-faq-recipes:
+.. _Altair-faq-multiple-marks:
 
 How can I add marks to my line plot?
 ------------------------------------
