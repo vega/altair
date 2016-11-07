@@ -5,6 +5,8 @@
 
 ### Major additions
 
+- Update to Vega-Lite 1.2 and make all its enhancements available to Altair
+
 - Add ``Chart.serve`` method
   ([#197](https://github.com/altair-viz/altair/pull/197))
 
