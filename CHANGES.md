@@ -1,7 +1,7 @@
 # Altair Change Log
 
 
-## Version 1.1: Nov 7, 2016
+## Version 1.2: Nov 7, 2016
 
 ### Major additions
 
