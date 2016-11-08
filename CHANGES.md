@@ -11,10 +11,10 @@
   ([#197](https://github.com/altair-viz/altair/pull/197))
 
 - Add ``altair.expr`` machinery to specify transformations and filterings
-  ([#213](https://github.com/altair-viz/altair/pull/213))
+  ([#215](https://github.com/altair-viz/altair/pull/215))
 
 - Add ``Chart.savechart`` method, which can output JSON, HTML, and (if Node
-  is installed) PNG and SVG. See https://altair-viz.github.io/documentation/displaying.html
+  is installed) PNG and SVG. See https://altair-viz.github.io/documentation/displaying.html ([#213](https://github.com/altair-viz/altair/pull/213))
 
 ### Bug Fixes
 
