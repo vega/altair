@@ -13,7 +13,7 @@ please read :ref:`tutorial-getting-started` first.
 For this tutorial, we will create visualizations to explore
 weather data for Seattle, taken from NOAA.
 The dataset is a CSV file with columns for the temperature
-(in Celsius), precipitation (in centimeters),
+(in Celsius), precipitation (in millimeters),
 wind speed (in meter/second), and weather type.
 We have one row for each day from January 1st, 2012 to December 31st, 2015.
 
