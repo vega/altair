@@ -540,3 +540,13 @@ def test_chart_dir():
     assert 'mark' in chart
     assert 'layers' in layerchart
     assert 'facet' in facetchart
+
+
+def test_empty_traits():
+    # regression test for #264
+    axis = Axis(title='')
+    assert axis.to_dict() == {'title': ''}
+
+    # regression test for changes in #265
+    assert Transform().to_dict() == {}  # filter not present
+    assert Formula('blah').to_dict() == {'field': 'blah'}  # expr not present

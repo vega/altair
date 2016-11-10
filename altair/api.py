@@ -78,7 +78,8 @@ def use_signature(Obj):
 # - allows expr trait to be an Expression and processes it properly
 #*************************************************************************
 class Formula(schema.Formula):
-    expr = T.Union([T.Unicode(), T.Instance(expr.Expression)],
+    expr = T.Union([T.Unicode(allow_none=True, default_value=None),
+                    T.Instance(expr.Expression)],
                     allow_none=True, default_value=None,
                     help=schema.Formula.expr.help)
 
@@ -97,7 +98,7 @@ class Formula(schema.Formula):
 # - allows filter trait to be an Expression and processes it properly
 #*************************************************************************
 class Transform(schema.Transform):
-    filter = T.Union([T.Unicode(),
+    filter = T.Union([T.Unicode(allow_none=True, default_value=None),
                       T.Instance(expr.Expression),
                       T.Instance(schema.EqualFilter),
                       T.Instance(schema.RangeFilter),

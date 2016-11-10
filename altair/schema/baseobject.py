@@ -116,7 +116,7 @@ class BaseObject(T.HasTraits):
         if isinstance(value, pd.DataFrame):
             return True
         elif value is not None:
-            if isinstance(value, (int, float, bool)):
+            if isinstance(value, (int, float, bool, string_types)):
                 return True
             else:
                 return bool(value)
