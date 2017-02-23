@@ -8,6 +8,18 @@ from ..utils._py3k_compat import string_types
 import pandas as pd
 
 
+def js_repr(val):
+    """Return a javascript-safe string representation of val"""
+    if val is True:
+        return 'true'
+    elif val is False:
+        return 'false'
+    elif val is None:
+        return 'null'
+    else:
+        return repr(val)
+
+
 class Expression(object):
     """Expression
 
@@ -121,7 +133,7 @@ class UnaryExpression(Expression):
         self.val = val
 
     def __repr__(self):
-        return "({op}{val})".format(op=self.op, val=repr(self.val))
+        return "({op}{val})".format(op=self.op, val=js_repr(self.val))
 
 
 class BinaryExpression(Expression):
@@ -132,8 +144,8 @@ class BinaryExpression(Expression):
 
     def __repr__(self):
         return "({lhs}{op}{rhs})".format(op=self.op,
-                                         lhs=repr(self.lhs),
-                                         rhs=repr(self.rhs))
+                                         lhs=js_repr(self.lhs),
+                                         rhs=js_repr(self.rhs))
 
 
 class FunctionExpression(Expression):
@@ -142,7 +154,7 @@ class FunctionExpression(Expression):
         self.args = args
 
     def __repr__(self):
-        args = ','.join(repr(arg) for arg in self.args)
+        args = ','.join(js_repr(arg) for arg in self.args)
         return "{name}({args})".format(name=self.name, args=args)
 
 
