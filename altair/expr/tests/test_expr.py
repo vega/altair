@@ -115,3 +115,11 @@ def test_getitem_list(data):
     df2['qqq'] = df2.xxx / df2.yyy
     assert set(dir(df2)) == {'xxx', 'yyy', 'calculated', 'qqq'}
     assert set(dir(df)) == {'xxx', 'yyy', 'zzz', 'calculated'}
+
+
+def test_json_reprs(data):
+    df = expr.DataFrame(data)
+
+    assert repr(df.xxx == None) == '(datum.xxx==null)'
+    assert repr(df.xxx == False) == '(datum.xxx==false)'
+    assert repr(df.xxx == True) == '(datum.xxx==true)'
