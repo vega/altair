@@ -215,7 +215,7 @@ class DataFrame(object):
     >>> df['density'] = df.population // df.area    # add calculated column
     >>> df = df[df.density > 100]                   # filter by value
     >>> df
-    <Data Wrapper; colums=[*, density]>
+    <Data Wrapper; columns=[*, density]>
 
     # Filter and transform operations are realized in the Chart object
     >>> chart = Chart(df)
@@ -261,7 +261,7 @@ class DataFrame(object):
         else:
             cols = list(self._cols)
         cols.extend(list(self._calculated_cols))
-        return ("<Data Wrapper; colums=[{0}]>".format(', '.join(cols)))
+        return ("<Data Wrapper; columns=[{0}]>".format(', '.join(cols)))
 
     @classmethod
     def _get_cols(cls, data, cols=None):
