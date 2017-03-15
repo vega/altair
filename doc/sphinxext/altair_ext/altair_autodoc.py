@@ -36,7 +36,7 @@ def process_docstring(app, what, name, obj, options, lines):
         lines.extend(['', table_rst, table_opt, ''])
 
     elif hasattr(obj, '_uses_signature'):
-        del lines[3:]
+        del lines[2:]
         args_description = ('Arguments are passed to :class:`~altair.{0}`.'
                             ''.format(obj._uses_signature.__name__))
         lines.extend(['', args_description])
