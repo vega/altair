@@ -301,6 +301,12 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
+# Hide extra class members
+numpydoc_show_class_members = False
 
-# XXX: just for testing
-todo_include_todos = True
+# For the altairplot extension
+# altairplot_links = {'editor': True, 'source': True, 'export': True}
+# altairplot_d3_js_url = "https://d3js.org/d3.v3.min.js"
+altairplot_vega_js_url = "https://vega.github.io/vega/releases/v2.6.5/vega.js"
+# altairplot_vegalite_js_url = "https://vega.github.io/vega-lite/vega-lite.js"
+# altairplot_vegaembed_js_url = "https://vega.github.io/vega-editor/vendor/vega-embed.js"

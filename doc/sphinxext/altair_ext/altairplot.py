@@ -42,13 +42,13 @@ The directives have the following options::
         Chart()
 
 Additionally, this extension introduces a global configuration
-``altair_plot_links``, set in your ``conf.py`` which is a dictionary
+``altairplot_links``, set in your ``conf.py`` which is a dictionary
 of links that will appear below plots, unless the ``:links:`` option
 again overrides it. It should look something like this::
 
     # conf.py
     # ...
-    altair_plot_links = {'editor': True, 'source': True, 'export': True}
+    altairplot_links = {'editor': True, 'source': True, 'export': True}
     # ...
 
 If this configuration is not specified, all are set to True.
@@ -70,6 +70,12 @@ from sphinx.util.nodes import set_source_info
 
 from altair.api import TopLevelMixin
 from .utils import exec_then_eval
+
+# These default URLs can be changed in conf.py; see setup() below.
+D3_JS_URL_DEFAULT = "https://d3js.org/d3.v3.min.js"
+VEGA_JS_URL_DEFAULT = "https://vega.github.io/vega/vega.js"
+VEGALITE_JS_URL_DEFAULT = "https://vega.github.io/vega-lite/vega-lite.js"
+VEGAEMBED_JS_URL_DEFAULT = "https://vega.github.io/vega-editor/vendor/vega-embed.js"
 
 
 VGL_TEMPLATE = jinja2.Template("""
@@ -125,7 +131,7 @@ def purge_altair_plot_setup(app, env, docname):
                              if item['docname'] != docname]
 
 
-DEFAULT_LINKS = {'editor': True, 'source': True, 'export': True}
+DEFAULT_ALTAIRPLOT_LINKS = {'editor': True, 'source': True, 'export': True}
 
 
 def validate_links(links):
@@ -133,10 +139,10 @@ def validate_links(links):
         return {}
 
     links = links.strip().split()
-    diff = set(links) - set(DEFAULT_LINKS.keys())
+    diff = set(links) - set(DEFAULT_ALTAIRPLOT_LINKS.keys())
     if diff:
         raise ValueError("Following links are invalid: {0}".format(list(diff)))
-    return dict((link, link in links) for link in DEFAULT_LINKS)
+    return dict((link, link in links) for link in DEFAULT_ALTAIRPLOT_LINKS)
 
 
 class AltairPlotDirective(Directive):
@@ -187,8 +193,7 @@ class AltairPlotDirective(Directive):
         plot_node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
         plot_node['rst_source'] = rst_source
         plot_node['rst_lineno'] = self.lineno
-        default_links = app.builder.config.altair_plot_links
-        plot_node['links'] = self.options.get('links', default_links)
+        plot_node['links'] = self.options.get('links', app.builder.config.altairplot_links)
 
         if 'alt' in self.options:
             plot_node['alt'] = self.options['alt']
@@ -262,18 +267,29 @@ def generic_visit_altair_plot(self, node):
     raise nodes.SkipNode
 
 
+def builder_inited(app):
+    app.add_javascript(app.config.altairplot_d3_js_url)
+    app.add_javascript(app.config.altairplot_vega_js_url)
+    app.add_javascript(app.config.altairplot_vegalite_js_url)
+    app.add_javascript(app.config.altairplot_vegaembed_js_url)
+
+
 def setup(app):
     setup.app = app
     setup.config = app.config
     setup.confdir = app.confdir
 
-    app.add_stylesheet('altair-plot.css')
+    app.add_config_value('altairplot_links', DEFAULT_ALTAIRPLOT_LINKS, 'env')
 
-    app.add_javascript("https://d3js.org/d3.v3.min.js")
-    app.add_javascript("https://vega.github.io/vega/vega.js")
-    app.add_javascript("https://vega.github.io/vega-lite/vega-lite.js")
-    app.add_javascript("https://vega.github.io/vega-editor/vendor/vega-embed.js")
-    app.add_config_value('altair_plot_links', DEFAULT_LINKS, 'env')
+    app.add_config_value('altairplot_d3_js_url', D3_JS_URL_DEFAULT, 'html')
+    app.add_config_value('altairplot_vega_js_url', VEGA_JS_URL_DEFAULT, 'html')
+    app.add_config_value('altairplot_vegalite_js_url', VEGALITE_JS_URL_DEFAULT, 'html')
+    app.add_config_value('altairplot_vegaembed_js_url', VEGAEMBED_JS_URL_DEFAULT, 'html')
+
+    app.add_directive('altair-plot', AltairPlotDirective)
+    app.add_directive('altair-setup', AltairSetupDirective)
+
+    app.add_stylesheet('altair-plot.css')
 
     app.add_node(altair_plot,
                  html=(html_visit_altair_plot, None),
@@ -282,8 +298,7 @@ def setup(app):
                  text=(generic_visit_altair_plot, None),
                  man=(generic_visit_altair_plot, None))
 
-    app.add_directive('altair-plot', AltairPlotDirective)
-    app.add_directive('altair-setup', AltairSetupDirective)
     app.connect('env-purge-doc', purge_altair_plot_setup)
+    app.connect('builder-inited', builder_inited)
 
     return {'version': '0.1'}
