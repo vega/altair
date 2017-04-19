@@ -4,7 +4,7 @@
 import traitlets as T
 import pandas as pd
 
-from ...utils import parse_shorthand, infer_vegalite_type
+from ...utils import parse_shorthand, preparse_shorthand, infer_vegalite_type
 
 {% for import_statement in objects|merge_imports -%}
   {{ import_statement }}
@@ -34,7 +34,7 @@ class {{ object.name }}({{ object.base.name }}):
     # Class Methods
     {%- set comma = joiner(", ") %}
     def __init__(self, shorthand='', {% for attr in object.base.attributes %}{{ attr.name }}=None, {% endfor %}**kwargs):
-        kwargs['shorthand'] = shorthand
+        kwargs['shorthand'] = preparse_shorthand(shorthand)
         kwds = dict({% for attr in object.base.attributes %}{{ comma() }}{{ attr.name }}={{ attr.name }}{% endfor %})
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super({{ object.name }}, self).__init__(**kwargs)

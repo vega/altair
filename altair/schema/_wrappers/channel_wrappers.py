@@ -4,7 +4,7 @@
 import traitlets as T
 import pandas as pd
 
-from ...utils import parse_shorthand, infer_vegalite_type
+from ...utils import parse_shorthand, preparse_shorthand, infer_vegalite_type
 
 from .._interface import ChannelDefWithLegend, FieldDef, OrderChannelDef, PositionChannelDef
 
@@ -43,7 +43,7 @@ class PositionChannel(PositionChannelDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=None, axis=None, bin=None, field=None, scale=None, sort=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
-        kwargs['shorthand'] = shorthand
+        kwargs['shorthand'] = preparse_shorthand(shorthand)
         kwds = dict(aggregate=aggregate, axis=axis, bin=bin, field=field, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(PositionChannel, self).__init__(**kwargs)
@@ -97,7 +97,7 @@ class ChannelWithLegend(ChannelDefWithLegend):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=None, bin=None, field=None, legend=None, scale=None, sort=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
-        kwargs['shorthand'] = shorthand
+        kwargs['shorthand'] = preparse_shorthand(shorthand)
         kwds = dict(aggregate=aggregate, bin=bin, field=field, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(ChannelWithLegend, self).__init__(**kwargs)
@@ -145,7 +145,7 @@ class Field(FieldDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=None, bin=None, field=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
-        kwargs['shorthand'] = shorthand
+        kwargs['shorthand'] = preparse_shorthand(shorthand)
         kwds = dict(aggregate=aggregate, bin=bin, field=field, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(Field, self).__init__(**kwargs)
@@ -195,7 +195,7 @@ class OrderChannel(OrderChannelDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=None, bin=None, field=None, sort=None, timeUnit=None, title=None, type=None, value=None, **kwargs):
-        kwargs['shorthand'] = shorthand
+        kwargs['shorthand'] = preparse_shorthand(shorthand)
         kwds = dict(aggregate=aggregate, bin=bin, field=field, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not None})
         super(OrderChannel, self).__init__(**kwargs)
