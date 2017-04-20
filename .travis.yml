@@ -14,9 +14,12 @@ matrix:
   include:
   - python: 2.7  # 2.7 is required for node-gyp used in docs build
     env: BUILD="docs" INSTALL="pip"
+  allow_failures:
+    - env: BUILD="docs"
 
 before_install:
   - if [[ $INSTALL == 'pip' ]]; then
+       pip install pip --upgrade
        pip install -r requirements.txt;
     elif [[ $INSTALL == 'conda' ]]; then
        if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
