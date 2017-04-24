@@ -180,7 +180,7 @@ class TopLevelMixin(object):
                 with open(outfile, 'w') as f:
                     f.write(self.to_html())
         else:
-            supported = _node.SUPPORTED_FILETYPES + ['json', 'html']
+            supported = node.SUPPORTED_FILETYPES + ['json', 'html']
             raise ValueError('Cannot save chart of type {0}; supported'
                              'extensions are {1}'.format(filetype, supported))
 
