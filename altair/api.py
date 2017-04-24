@@ -203,6 +203,11 @@ class TopLevelMixin(object):
         -------
         html : string
             A string of HTML representing the chart
+
+        See Also
+        --------
+        savechart : save a chart representation to file in various formats,
+                    including HTML
         """
         from .utils.html import to_html
         return to_html(self.to_dict(), template=template, title=title, **kwargs)
