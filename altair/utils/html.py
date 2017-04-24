@@ -1,7 +1,15 @@
 import json
 
+from .. import urls
 
-def to_html(json_dict, template=None, title=None, **kwargs):
+
+def to_html(json_dict,
+            template=None, title=None,
+            d3_js_url=urls.D3_JS_URL,
+            vega_js_url=urls.VEGA_JS_URL,
+            vegalite_js_url=urls.VEGALITE_JS_URL,
+            vegaembed_js_url=urls.VEGAEMBED_JS_URL,
+            **kwargs):
     """Embed a Vega-Lite JSON into an HTML document.
 
     Parameters
@@ -26,7 +34,12 @@ def to_html(json_dict, template=None, title=None, **kwargs):
     if title is None:
         title = "Vega-Lite Chart"
     spec = json.dumps(json_dict, indent=4)
-    return template.format(spec=spec, title=title, **kwargs)
+    return template.format(spec=spec, title=title,
+                           d3_js_url=d3_js_url,
+                           vega_js_url=vega_js_url,
+                           vegalite_js_url=vegalite_js_url,
+                           vegaembed_js_url=vegaembed_js_url,
+                           **kwargs)
 
 
 DEFAULT_TEMPLATE = """
@@ -35,10 +48,10 @@ DEFAULT_TEMPLATE = """
   <title>{title}</title>
   <meta charset="utf-8">
 
-  <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="https://vega.github.io/vega/vega.js"></script>
-  <script src="https://vega.github.io/vega-lite/vega-lite.js"></script>
-  <script src="https://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+  <script src="{d3_js_url}"></script>
+  <script src="{vega_js_url}"></script>
+  <script src="{vegalite_js_url}"></script>
+  <script src="{vegaembed_js_url}" charset="utf-8"></script>
 
   <style media="screen">
     /* Add space between vega-embed links  */
