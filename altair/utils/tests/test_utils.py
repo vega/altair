@@ -84,6 +84,7 @@ def test_sanitize_dataframe():
     df = pd.DataFrame({'s': list('abcde'),
                        'f': np.arange(5, dtype=float),
                        'i': np.arange(5, dtype=int),
+                       'b': np.array([True, False, True, True, False]),
                        'd': pd.date_range('2012-01-01', periods=5, freq='H'),
                        'c': pd.Series(list('ababc'), dtype='category'),
                        'o': pd.Series([np.array(i) for i in range(5)])})

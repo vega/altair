@@ -180,7 +180,7 @@ class TopLevelMixin(object):
                 with open(outfile, 'w') as f:
                     f.write(self.to_html())
         else:
-            supported = _node.SUPPORTED_FILETYPES + ['json', 'html']
+            supported = node.SUPPORTED_FILETYPES + ['json', 'html']
             raise ValueError('Cannot save chart of type {0}; supported'
                              'extensions are {1}'.format(filetype, supported))
 
@@ -203,6 +203,11 @@ class TopLevelMixin(object):
         -------
         html : string
             A string of HTML representing the chart
+
+        See Also
+        --------
+        savechart : save a chart representation to file in various formats,
+                    including HTML
         """
         from .utils.html import to_html
         return to_html(self.to_dict(), template=template, title=title, **kwargs)
