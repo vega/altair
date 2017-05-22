@@ -7,6 +7,10 @@ import warnings
 import pandas as pd
 import numpy as np
 
+try:
+    from pandas.api.types import infer_dtype
+except ImportError: # Pandas before 0.20.0
+    from pandas.lib import infer_dtype
 
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',
@@ -107,7 +111,7 @@ def infer_vegalite_type(data, field=None):
             return parsed['type']
 
     # Otherwise, infer based on the dtype of the input
-    typ = pd.lib.infer_dtype(data)
+    typ = infer_dtype(data)
 
     # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
 
