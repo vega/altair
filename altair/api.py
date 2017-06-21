@@ -331,7 +331,7 @@ class TopLevelMixin(object):
             prepare_vegalite_spec(spec),
             mime=mime,
             javascript=javascript
-            )
+        )
         return bundle
 
     def display(self):

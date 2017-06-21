@@ -43,7 +43,7 @@ def create_vega_mime_bundle(spec, mime=False, javascript=True):
     bundle = {}
     bundle['text/plain'] = '<altair.Vega object>'
     if mime:
-        bundle[VEGA_MIME_TYPE] = prepare_vega_spec(spec)
+        bundle[VEGA_MIME_TYPE] = spec
     if javascript:
         pass
     return bundle
@@ -61,7 +61,7 @@ def create_vegalite_mime_bundle(spec, mime=False, javascript=True):
     bundle = {}
     bundle['text/plain'] = '<altair.VegaLite object>'
     if mime:
-        bundle[VEGALITE_MIME_TYPE] = prepare_vegalite_spec(spec)
+        bundle[VEGALITE_MIME_TYPE] = spec
     if javascript:
         pass
     return bundle
@@ -177,7 +177,11 @@ class Vega(object):
 
     def _repr_mimebundle_(self, include, exclude, **kwargs):
         """Return a MIME bundle for display in Jupyter frontends."""
-        return create_vega_mime_bundle(prepare_vega_spec(self.spec, self.data))
+        return create_vega_mime_bundle(
+            prepare_vega_spec(self.spec, self.data),
+            mime=True,
+            javascript=False
+        )
 
 
 
@@ -217,4 +221,8 @@ class VegaLite(Vega):
                     
     def _repr_mimebundle_(self, include, exclude, **kwargs):
         """Return a MIME bundle for display in Jupyter frontends."""
-        return create_vegalite_mime_bundle(prepare_vega_spec(self.spec, self.data))
+        return create_vegalite_mime_bundle(
+            prepare_vegalite_spec(self.spec, self.data),
+            mime=True,
+            javascript=False
+        )
