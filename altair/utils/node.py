@@ -80,7 +80,7 @@ def _convert_vegalite_spec(spec, cmd, outfile=None, verbose=False):
 
     out, err = p.communicate(input=input_)
     if p.returncode:
-        combined_output = out + '\nError:\n' + err
+        combined_output = out + b'\nError:\n' + err
         raise CalledProcessError(p.returncode, cmd, output=combined_output)
 
     if outfile is not None:
