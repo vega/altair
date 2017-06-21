@@ -41,6 +41,8 @@ from .api import (
     RangeFilter,
     OneOfFilter,
     MaxRowsExceeded
+    enable_mime_rendering,
+    disable_mime_rendering
 )
 
 from .datasets import (

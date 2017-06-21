@@ -60,6 +60,23 @@ class MaxRowsExceeded(Exception):
 DEFAULT_MAX_ROWS = 5000
 
 #*************************************************************************
+# Rendering configuration
+#*************************************************************************
+
+_use_mime_rendering = False
+
+def enable_mime_rendering():
+    """Enable MIME bundle based rendering used in JupyterLab/nteract."""
+    global _use_mime_rendering
+    _use_mime_rendering = True
+
+def disable_mime_rendering():
+    """Disable MIME bundle based rendering used in JupyterLab/nteract."""
+    global _use_mime_rendering
+    _use_mime_rendering = False
+
+
+#*************************************************************************
 # Channel Aliases
 #*************************************************************************
 from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
@@ -306,11 +323,19 @@ class TopLevelMixin(object):
         spec = self.to_dict()
         bundle = {}
         bundle['text/plain'] = '<altair.VegaLite object>'
-        bundle['application/vnd.vegalite.v1+json'] = prepare_vegalite_spec(spec)
+        if _use_mime_rendering:
+            bundle['application/vnd.vegalite.v1+json'] = prepare_vegalite_spec(spec)
         return bundle
 
     def display(self):
-        """Display the Chart using the Jupyter Notebook's rich output."""
+        """Display the Chart using the Jupyter Notebook's rich output.
+        
+        To use this is the classic Jupyter Notebook, the ``ipyvega`` package
+        must be installed.
+
+        To use this in JupyterLab/nteract, run the ``enable_mime_rendering``
+        function first.
+        """
         from IPython.display import display
         display(self)
 
