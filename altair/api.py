@@ -13,7 +13,7 @@ import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
-from .utils import node, prepare_vegalite_spec
+from .utils import node, create_vegalite_mime_bundle, prepare_vegalite_spec
 
 from . import expr
 from . import schema
@@ -321,10 +321,17 @@ class TopLevelMixin(object):
     def _repr_mimebundle_(self, include, exclude, **kwargs):
         """Return a MIME-bundle for rich display in the Jupyter Notebook."""
         spec = self.to_dict()
-        bundle = {}
-        bundle['text/plain'] = '<altair.VegaLite object>'
         if _use_mime_rendering:
-            bundle['application/vnd.vegalite.v1+json'] = prepare_vegalite_spec(spec)
+            mime = True
+            javascript = False
+        else:
+            mime = False
+            javascript = True
+        bundle = create_vegalite_mime_bundle(
+            prepare_vegalite_spec(spec),
+            mime=mime,
+            javascript=javascript
+            )
         return bundle
 
     def display(self):
