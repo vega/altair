@@ -6,6 +6,7 @@ DSL mapping Vega types to IPython traitlets.
 import os
 import functools
 import operator
+import uuid
 
 import traitlets as T
 import pandas as pd
@@ -280,34 +281,36 @@ class TopLevelMixin(object):
     def configure_facet_axis(self, *args, **kwargs):
         """Configure the facet's axes by keyword args."""
         return self._update_subtraits(('config', 'facet', 'axis'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
 
     @use_signature(CellConfig)
     def configure_facet_cell(self, *args, **kwargs):
         """Configure the facet's cells by keyword args."""
         return self._update_subtraits(('config', 'facet', 'cell'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
 
     @use_signature(FacetGridConfig)
     def configure_facet_grid(self, *args, **kwargs):
         """Configure the facet's grid by keyword args."""
         return self._update_subtraits(('config', 'facet', 'grid'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
 
     @use_signature(FacetScaleConfig)
     def configure_facet_scale(self, *args, **kwargs):
         """Configure the facet's scales by keyword args."""
         return self._update_subtraits(('config', 'facet', 'scale'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
 
-    # Display related methods
-    def _ipython_display_(self):
-        from IPython.display import display
+    def _repr_mimebundle_(self, include, exclude, **kwargs):
+        """Return a MIME-bundle for rich display in the Jupyter Notebook."""
         spec = self.to_dict()
-        data = {'application/vnd.vegalite+json': spec}
-        display(data, raw=True)
+        bundle = {}
+        bundle['text/plain'] = '<altair.VegaLite object>'
+        bundle['application/vnd.vegalite.v1+json'] = spec
+        return bundle
 
     def display(self):
+        """Display the Chart using the Jupyter Notebook's rich output."""
         from IPython.display import display
         display(self)
 
