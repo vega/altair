@@ -40,9 +40,8 @@ from .api import (
     EqualFilter,
     RangeFilter,
     OneOfFilter,
-    MaxRowsExceeded
+    MaxRowsExceeded,
     enable_mime_rendering,
-    disable_mime_rendering
 )
 
 from .datasets import (

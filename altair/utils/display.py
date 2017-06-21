@@ -10,6 +10,7 @@ MIME types in these frontends.
 
 import json
 import os
+import uuid
 
 import pandas as pd
 
@@ -31,42 +32,24 @@ def _safe_exists(path):
         return False
 
 
-def create_vega_mime_bundle(spec, mime=False, javascript=True):
+def create_vega_mime_bundle(spec, data=None):
     """Create a MIME bundle for Vega given a spec.
-
-    The spec should be prepared as follows before passing to this function:
-
-    * It should be a dict.
-    * The spec should have been prepared using ``prepare_vega_spec``.
     """
     assert isinstance(spec, dict)
     bundle = {}
     bundle['text/plain'] = '<altair.Vega object>'
-    if mime:
-        bundle[VEGA_MIME_TYPE] = spec
-    if javascript:
-        pass
+    bundle[VEGA_MIME_TYPE] = prepare_vega_spec(spec, data=data)
     return bundle
 
 
-def create_vegalite_mime_bundle(spec, mime=False, javascript=True):
+def create_vegalite_mime_bundle(spec, data=None):
     """Create a MIME bundle for Vega-Lite given a spec.
-
-    The spec should be prepared as follows before passing to this function:
-
-    * It should be a dict.
-    * The spec should have been prepared using ``prepare_vegalite_spec``.
     """
     assert isinstance(spec, dict)
     bundle = {}
     bundle['text/plain'] = '<altair.VegaLite object>'
-    if mime:
-        bundle[VEGALITE_MIME_TYPE] = spec
-    if javascript:
-        pass
+    bundle[VEGALITE_MIME_TYPE] = prepare_vegalite_spec(spec, data=data)
     return bundle
-
-
 
 
 class Vega(object):
@@ -177,11 +160,7 @@ class Vega(object):
 
     def _repr_mimebundle_(self, include, exclude, **kwargs):
         """Return a MIME bundle for display in Jupyter frontends."""
-        return create_vega_mime_bundle(
-            prepare_vega_spec(self.spec, self.data),
-            mime=True,
-            javascript=False
-        )
+        return create_vega_mime_bundle(self.spec, self.data)
 
 
 
@@ -210,7 +189,7 @@ class VegaLite(Vega):
         filename : unicode
             Path to a local file to load the data from.
         """
-        
+
         super(VegaLite, self).__init__(spec=spec, data=data, url=url, filename=filename)
 
     def _check_data(self):
@@ -221,8 +200,4 @@ class VegaLite(Vega):
                     
     def _repr_mimebundle_(self, include, exclude, **kwargs):
         """Return a MIME bundle for display in Jupyter frontends."""
-        return create_vegalite_mime_bundle(
-            prepare_vegalite_spec(self.spec, self.data),
-            mime=True,
-            javascript=False
-        )
+        return create_vegalite_mime_bundle(self.spec, self.data)

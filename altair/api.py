@@ -13,7 +13,7 @@ import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
-from .utils import node, create_vegalite_mime_bundle, prepare_vegalite_spec
+from .utils import node, create_vegalite_mime_bundle
 
 from . import expr
 from . import schema
@@ -63,18 +63,19 @@ DEFAULT_MAX_ROWS = 5000
 # Rendering configuration
 #*************************************************************************
 
-_use_mime_rendering = False
+
+def _repr_mimebundle_(self, include, exclude, **kwargs):
+    """Return a MIME-bundle for rich display in the Jupyter Notebook."""
+    spec = self.to_dict()
+    bundle = create_vegalite_mime_bundle(spec)
+    return bundle
+
 
 def enable_mime_rendering():
     """Enable MIME bundle based rendering used in JupyterLab/nteract."""
-    global _use_mime_rendering
-    _use_mime_rendering = True
-
-def disable_mime_rendering():
-    """Disable MIME bundle based rendering used in JupyterLab/nteract."""
-    global _use_mime_rendering
-    _use_mime_rendering = False
-
+    # This is what makes Python fun!
+    delattr(TopLevelMixin, '_ipython_display_')
+    TopLevelMixin._repr_mimebundle_ = _repr_mimebundle_
 
 #*************************************************************************
 # Channel Aliases
@@ -318,21 +319,14 @@ class TopLevelMixin(object):
         return self._update_subtraits(('config', 'facet', 'scale'),
                                       *args, **kwargs)
 
-    def _repr_mimebundle_(self, include, exclude, **kwargs):
-        """Return a MIME-bundle for rich display in the Jupyter Notebook."""
-        spec = self.to_dict()
-        if _use_mime_rendering:
-            mime = True
-            javascript = False
-        else:
-            mime = False
-            javascript = True
-        bundle = create_vegalite_mime_bundle(
-            prepare_vegalite_spec(spec),
-            mime=mime,
-            javascript=javascript
-        )
-        return bundle
+
+    # Display related methods
+
+    def _ipython_display_(self):
+        """Use the vega package to display in the classic Jupyter Notebook."""
+        from IPython.display import display
+        from vega import VegaLite
+        display(VegaLite(self.to_dict()))
 
     def display(self):
         """Display the Chart using the Jupyter Notebook's rich output.
