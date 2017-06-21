@@ -13,7 +13,7 @@ import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
-from .utils import node
+from .utils import node, prepare_vegalite_spec
 
 from . import expr
 from . import schema
@@ -306,7 +306,7 @@ class TopLevelMixin(object):
         spec = self.to_dict()
         bundle = {}
         bundle['text/plain'] = '<altair.VegaLite object>'
-        bundle['application/vnd.vegalite.v1+json'] = spec
+        bundle['application/vnd.vegalite.v1+json'] = prepare_vegalite_spec(spec)
         return bundle
 
     def display(self):
