@@ -63,7 +63,7 @@ DEFAULT_MAX_ROWS = 5000
 # Rendering configuration
 #*************************************************************************
 
-
+# This is added to TopLevelMixin as a method if MIME rendering is enabled
 def _repr_mimebundle_(self, include, exclude, **kwargs):
     """Return a MIME-bundle for rich display in the Jupyter Notebook."""
     spec = self.to_dict()
