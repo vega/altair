@@ -50,7 +50,11 @@ def test_create_vegalite_mimebundle():
 def test_VegaLite():
     vl = VegaLite(_spec, _data)
     assert vl.spec == _spec
-    to_open = list(os.path.split(__file__)[0:2])
-    to_open.extend(['examples', 'area.vl.json'])
-    filename = os.path.join(to_open)
+    from altair import examples
+    filename = os.path.abspath(
+        os.path.join(os.path.dirname(examples.__file__), 'json', 'area.vl.json')
+    )
     vl = VegaLite(filename=filename)
+    assert vl.spec['mark']=='area'
+    assert 'encoding' in vl.spec
+    assert vl.data is None
