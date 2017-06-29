@@ -355,7 +355,8 @@ class TopLevelMixin(object):
                     "time to send to the frontend or to render. To override the "
                     "default maximum rows (%s), set the max_rows property of "
                     "your Chart to an integer larger than the number of rows "
-                    "in your dataset." % DEFAULT_MAX_ROWS
+                    "in your dataset. Alternatively you could perform aggregations "
+                    "or other data reductions before using it with Altair" % DEFAULT_MAX_ROWS
                 )
 
     def _finalize_data(self):
