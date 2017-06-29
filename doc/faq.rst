@@ -10,6 +10,23 @@ Altair Frequently Asked Questions
 
 .. _altair-faq-no-display:
 
+Does Altair work in more modern frontends such as JupyterLab or nteract
+-----------------------------------------------------------------------
+
+Yes! In fact, JupyterLab and nteract ship with builtin rendering for Vega
+and VegaLite. This functionality is still being finalized, but this version
+of Altair should work without any additional installations in these
+fronteds. However, you will need to call the ``enable_mime_rendering`` function
+to enable this support in Altair:
+
+.. code-block: Python
+
+    from altair import enable_mime_rendering
+    enable_mime_rendering()
+
+Eventually, the classic Jupyter Notebook will be migrated to this new,
+cleaner rendering approach and this additional call will not be needed.
+
 Why isn't my plot displaying in the Jupyter Notebook?
 -----------------------------------------------------
 The most common cause of a non-displaying plot in the Jupyter Notebook is
