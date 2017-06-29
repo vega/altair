@@ -51,6 +51,13 @@ from .schema import UnitSpec
 from .schema import UnitEncoding
 from .schema import VerticalAlign
 
+
+class MaxRowsExceeded(Exception):
+    """Raised if the number of rows in the dataset is too large."""
+    pass
+
+DEFAULT_MAX_ROWS = 5000
+
 #*************************************************************************
 # Channel Aliases
 #*************************************************************************
@@ -336,12 +343,28 @@ class TopLevelMixin(object):
               files=files, jupyter_warning=jupyter_warning,
               open_browser=open_browser, http_server=http_server)
 
+    def _check_data(self):
+        """
+        This private method can be used to perform any last minute checks
+        on the data before it is sanitized and serialized.
+        """
+        if isinstance(self.data, pd.DataFrame):
+            if len(self.data) > self.max_rows:
+                raise MaxRowsExceeded(
+                    "Your dataset has too many rows and could take a long "
+                    "time to send to the frontend or to render. To override the "
+                    "default maximum rows (%s), set the max_rows property of "
+                    "your Chart to an integer larger than the number of rows "
+                    "in your dataset." % DEFAULT_MAX_ROWS
+                )
+
     def _finalize_data(self):
         """
         This function is called by _finalize() below. It checks whether the
         data attribute contains expressions, and if so it extracts the
         appropriate data object and generates the appropriate transforms.
         """
+        self._check_data()
         if isinstance(self.data, expr.DataFrame):
             columns = self.data._cols
             calculated_cols = self.data._calculated_cols
@@ -370,6 +393,11 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.ExtendedUnitSpec.transform.help)
     mark = schema.Mark(allow_none=True, default_value='point', help="""The mark type.""")
+    
+    max_rows = T.Int(
+        default_value=DEFAULT_MAX_ROWS,
+        help="Maximum number of rows in the dataset to accept."
+    )
 
     @property
     def data(self):
@@ -513,6 +541,10 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
                     help=schema.LayerSpec.layers.help)
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.LayerSpec.transform.help)
+    max_rows = T.Int(
+        default_value=DEFAULT_MAX_ROWS,
+        help="Maximum number of rows in the dataset to accept."
+    )
 
     @property
     def data(self):
@@ -567,6 +599,10 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
                    help=schema.FacetSpec.spec.help)
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.FacetSpec.transform.help)
+    max_rows = T.Int(
+        default_value=DEFAULT_MAX_ROWS,
+        help="Maximum number of rows in the dataset to accept."
+    )
 
     @property
     def data(self):
