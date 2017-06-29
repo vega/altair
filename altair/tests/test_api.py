@@ -20,6 +20,12 @@ def make_chart():
     return Chart(data).mark_point().encode(x='x', y='y')
 
 
+def test_default_mark():
+    """Make sure the default mark is a point."""
+    c = Chart()
+    assert c.mark=='point'
+
+
 def test_mark_methods():
     """Make sure the Chart's mark_*() methods all exist"""
     from ..schema import Mark

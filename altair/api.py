@@ -369,6 +369,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
                           help=schema.ExtendedUnitSpec.encoding.help)
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.ExtendedUnitSpec.transform.help)
+    mark = schema.Mark(allow_none=True, default_value='point', help="""The mark type.""")
 
     @property
     def data(self):
