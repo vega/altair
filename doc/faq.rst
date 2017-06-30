@@ -14,10 +14,10 @@ Does Altair work in more modern frontends such as JupyterLab or nteract
 -----------------------------------------------------------------------
 
 Yes! In fact, JupyterLab and nteract ship with builtin rendering for Vega
-and VegaLite. This functionality is still being finalized, but this version
-of Altair should work without any additional installations in these
-fronteds. However, you will need to call the ``enable_mime_rendering`` function
-to enable this support in Altair:
+and VegaLite. As of the release of Altair version 1.3, this functionality is
+still being finalized, but Altair should work without any additional
+installations in these fronteds. However, you will need to call the
+``enable_mime_rendering`` function to enable this support in Altair:
 
 .. code-block: Python
 

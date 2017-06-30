@@ -33,8 +33,8 @@ Here is an example of using the Altair API to quickly visualize a dataset:
     # load built-in dataset as a pandas DataFrame
     cars = load_dataset('cars')
 
-    # Needed for rendering in JupyterLab, nteract, omit in the classic Jupyter Notebook
-    enable_mime_rendering()
+    # Uncomment for rendering in JupyterLab & nteract
+    # enable_mime_rendering()
 
     Chart(cars).mark_circle().encode(
         x='Horsepower',
