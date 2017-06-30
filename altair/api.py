@@ -343,11 +343,17 @@ class TopLevelMixin(object):
               files=files, jupyter_warning=jupyter_warning,
               open_browser=open_browser, http_server=http_server)
 
-    def _check_data(self):
+    def _finalize_data(self):
         """
-        This private method can be used to perform any last minute checks
-        on the data before it is sanitized and serialized.
+        This function is called by _finalize() below. 
+
+        It performs final checks on the data:
+
+        * If the data has too many rows (more than max_rows).
+        * Whether the data attribute contains expressions, and if so it extracts
+          the appropriate data object and generates the appropriate transforms.
         """
+        # Check to see if data has too many rows.
         if isinstance(self.data, pd.DataFrame):
             if len(self.data) > self.max_rows:
                 raise MaxRowsExceeded(
@@ -359,13 +365,7 @@ class TopLevelMixin(object):
                     "or other data reductions before using it with Altair" % DEFAULT_MAX_ROWS
                 )
 
-    def _finalize_data(self):
-        """
-        This function is called by _finalize() below. It checks whether the
-        data attribute contains expressions, and if so it extracts the
-        appropriate data object and generates the appropriate transforms.
-        """
-        self._check_data()
+        # Handle expressions.
         if isinstance(self.data, expr.DataFrame):
             columns = self.data._cols
             calculated_cols = self.data._calculated_cols
@@ -414,7 +414,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data']
+    skip = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(Chart, self).__init__(**kwargs)
@@ -561,7 +561,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data']
+    skip = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(LayeredChart, self).__init__(**kwargs)
@@ -619,7 +619,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data']
+    skip = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(FacetedChart, self).__init__(**kwargs)

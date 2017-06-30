@@ -565,4 +565,6 @@ def test_max_rows():
     with pytest.raises(MaxRowsExceeded):
         chart.to_dict()
     chart.max_rows = 15
-    assert isinstance(chart.to_dict(), dict)
+    d = chart.to_dict()
+    assert isinstance(d, dict)
+    assert 'max_rows' not in d
