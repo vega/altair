@@ -224,6 +224,7 @@ class DataFrame(object):
       "data": {
         "url": "url/to/my/data.json"
       },
+      "mark": "point",
       "transform": {
         "calculate": [
           {
