@@ -51,6 +51,13 @@ from .schema import UnitSpec
 from .schema import UnitEncoding
 from .schema import VerticalAlign
 
+
+class MaxRowsExceeded(Exception):
+    """Raised if the number of rows in the dataset is too large."""
+    pass
+
+DEFAULT_MAX_ROWS = 5000
+
 #*************************************************************************
 # Channel Aliases
 #*************************************************************************
@@ -338,10 +345,27 @@ class TopLevelMixin(object):
 
     def _finalize_data(self):
         """
-        This function is called by _finalize() below. It checks whether the
-        data attribute contains expressions, and if so it extracts the
-        appropriate data object and generates the appropriate transforms.
+        This function is called by _finalize() below. 
+
+        It performs final checks on the data:
+
+        * If the data has too many rows (more than max_rows).
+        * Whether the data attribute contains expressions, and if so it extracts
+          the appropriate data object and generates the appropriate transforms.
         """
+        # Check to see if data has too many rows.
+        if isinstance(self.data, pd.DataFrame):
+            if len(self.data) > self.max_rows:
+                raise MaxRowsExceeded(
+                    "Your dataset has too many rows and could take a long "
+                    "time to send to the frontend or to render. To override the "
+                    "default maximum rows (%s), set the max_rows property of "
+                    "your Chart to an integer larger than the number of rows "
+                    "in your dataset. Alternatively you could perform aggregations "
+                    "or other data reductions before using it with Altair" % DEFAULT_MAX_ROWS
+                )
+
+        # Handle expressions.
         if isinstance(self.data, expr.DataFrame):
             columns = self.data._cols
             calculated_cols = self.data._calculated_cols
@@ -370,6 +394,11 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.ExtendedUnitSpec.transform.help)
     mark = schema.Mark(allow_none=True, default_value='point', help="""The mark type.""")
+    
+    max_rows = T.Int(
+        default_value=DEFAULT_MAX_ROWS,
+        help="Maximum number of rows in the dataset to accept."
+    )
 
     @property
     def data(self):
@@ -385,7 +414,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data']
+    skip = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(Chart, self).__init__(**kwargs)
@@ -513,6 +542,10 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
                     help=schema.LayerSpec.layers.help)
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.LayerSpec.transform.help)
+    max_rows = T.Int(
+        default_value=DEFAULT_MAX_ROWS,
+        help="Maximum number of rows in the dataset to accept."
+    )
 
     @property
     def data(self):
@@ -528,7 +561,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data']
+    skip = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(LayeredChart, self).__init__(**kwargs)
@@ -567,6 +600,10 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
                    help=schema.FacetSpec.spec.help)
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.FacetSpec.transform.help)
+    max_rows = T.Int(
+        default_value=DEFAULT_MAX_ROWS,
+        help="Maximum number of rows in the dataset to accept."
+    )
 
     @property
     def data(self):
@@ -582,7 +619,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data']
+    skip = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(FacetedChart, self).__init__(**kwargs)

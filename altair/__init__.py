@@ -40,6 +40,7 @@ from .api import (
     EqualFilter,
     RangeFilter,
     OneOfFilter,
+    MaxRowsExceeded
 )
 
 from .datasets import (

@@ -556,3 +556,15 @@ def test_empty_traits():
     # regression test for changes in #265
     assert Transform().to_dict() == {}  # filter not present
     assert Formula('blah').to_dict() == {'field': 'blah'}  # expr not present
+
+
+def test_max_rows():
+    chart = make_chart()
+    assert isinstance(chart.to_dict(), dict)
+    chart.max_rows = 5
+    with pytest.raises(MaxRowsExceeded):
+        chart.to_dict()
+    chart.max_rows = 15
+    d = chart.to_dict()
+    assert isinstance(d, dict)
+    assert 'max_rows' not in d
