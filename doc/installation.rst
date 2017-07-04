@@ -35,6 +35,19 @@ within the Jupyter Notebook:
 - `Jupyter Notebook`_
 - ipyvega_
 
+Both JupyterLab_ and nteract_ have builtin rendering for Vega-Lite, so ipyvega_
+doesn't need to be installed. However, to get Altiar to emit the right data
+to render in these more modern frontends, you must call the ``enable_mime_rendering``
+function before trying to render a visualization:
+
+.. code-block: Python
+
+    from altair import enable_mime_rendering
+    enable_mime_rendering()
+
+Eventually this will not be needed, but is being provided to keep Altair working
+without change in the classic Jupyter notebook.
+
 Development Install
 -------------------
 The `Altair source repository`_ is available on GitHub.
@@ -62,3 +75,5 @@ version directly from GitHub using:
 .. _ipyvega: http://github.com/vega/ipyvega
 .. _conda: http://conda.pydata.org
 .. _Altair source repository: http://github.com/altair-viz/altair
+.. _JupyterLab: https://github.com/jupyterlab/jupyterlab
+.. _nteract: https://github.com/nteract/nteract

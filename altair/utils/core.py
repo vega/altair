@@ -178,3 +178,48 @@ def sanitize_dataframe(df):
             col = df[col_name].apply(to_list_if_array, convert_dtype=False)
             df[col_name] = col.where(col.notnull(), None)
     return df
+
+
+def prepare_vegalite_spec(spec, data=None):
+    """Prepare a Vega-Lite spec for sending to the frontend.
+
+    This allows data to be passed in either as part of the spec
+    or separately. If separately, the data is assumed to be a
+    pandas DataFrame or object that can be converted to to a DataFrame.
+    Note that if data is not None, this modifies spec in-place
+    """
+
+    if isinstance(data, pd.DataFrame):
+        # We have to do the isinstance test first because we can't
+        # compare a DataFrame to None.
+        data = sanitize_dataframe(data)
+        spec['data'] = {'values': data.to_dict(orient='records')}
+    elif data is None:
+        # Data is either passed in spec or error
+        if 'data' not in spec:
+            raise ValueError('No data provided')
+    else:
+        # As a last resort try to pass the data to a DataFrame and use it
+        data = pd.DataFrame(data)
+        data = sanitize_dataframe(data)
+        spec['data'] = {'values': data.to_dict(orient='records')}
+    return spec
+
+
+def prepare_vega_spec(spec, data=None):
+    """Prepare a Vega spec for sending to the frontend.
+    
+    This allows data to be passed in either as part of the spec
+    or separately. If separately, the data is assumed to be a
+    pandas DataFrame or object that can be converted to to a DataFrame.
+    Note that if data is not None, this modifies spec in-place
+    """
+
+    if isinstance(data, dict):
+        spec['data'] = []
+        # We have to do the isinstance test first because we can't
+        # compare a DataFrame to None.
+        for key, value in data.items():
+            data = sanitize_dataframe(value)
+            spec['data'].append({'name': key, 'values': data.to_dict(orient='records')})
+    return spec

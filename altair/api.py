@@ -6,13 +6,14 @@ DSL mapping Vega types to IPython traitlets.
 import os
 import functools
 import operator
+import uuid
 
 import traitlets as T
 import pandas as pd
 
 from .utils import visitors
 from .utils._py3k_compat import string_types
-from .utils import node
+from .utils import node, create_vegalite_mime_bundle
 
 from . import expr
 from . import schema
@@ -57,6 +58,24 @@ class MaxRowsExceeded(Exception):
     pass
 
 DEFAULT_MAX_ROWS = 5000
+
+#*************************************************************************
+# Rendering configuration
+#*************************************************************************
+
+# This is added to TopLevelMixin as a method if MIME rendering is enabled
+def _repr_mimebundle_(self, include, exclude, **kwargs):
+    """Return a MIME-bundle for rich display in the Jupyter Notebook."""
+    spec = self.to_dict()
+    bundle = create_vegalite_mime_bundle(spec)
+    return bundle
+
+
+def enable_mime_rendering():
+    """Enable MIME bundle based rendering used in JupyterLab/nteract."""
+    # This is what makes Python fun!
+    delattr(TopLevelMixin, '_ipython_display_')
+    TopLevelMixin._repr_mimebundle_ = _repr_mimebundle_
 
 #*************************************************************************
 # Channel Aliases
@@ -280,33 +299,44 @@ class TopLevelMixin(object):
     def configure_facet_axis(self, *args, **kwargs):
         """Configure the facet's axes by keyword args."""
         return self._update_subtraits(('config', 'facet', 'axis'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
 
     @use_signature(CellConfig)
     def configure_facet_cell(self, *args, **kwargs):
         """Configure the facet's cells by keyword args."""
         return self._update_subtraits(('config', 'facet', 'cell'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
 
     @use_signature(FacetGridConfig)
     def configure_facet_grid(self, *args, **kwargs):
         """Configure the facet's grid by keyword args."""
         return self._update_subtraits(('config', 'facet', 'grid'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
 
     @use_signature(FacetScaleConfig)
     def configure_facet_scale(self, *args, **kwargs):
         """Configure the facet's scales by keyword args."""
         return self._update_subtraits(('config', 'facet', 'scale'),
-                                     *args, **kwargs)
+                                      *args, **kwargs)
+
 
     # Display related methods
+
     def _ipython_display_(self):
+        """Use the vega package to display in the classic Jupyter Notebook."""
         from IPython.display import display
         from vega import VegaLite
         display(VegaLite(self.to_dict()))
 
     def display(self):
+        """Display the Chart using the Jupyter Notebook's rich output.
+
+        To use this is the classic Jupyter Notebook, the ``ipyvega`` package
+        must be installed.
+
+        To use this in JupyterLab/nteract, run the ``enable_mime_rendering``
+        function first.
+        """
         from IPython.display import display
         display(self)
 

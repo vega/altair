@@ -28,10 +28,13 @@ Here is an example of using the Altair API to quickly visualize a dataset:
 
 .. altair-plot::
 
-    from altair import Chart, load_dataset
+    from altair import Chart, load_dataset, enable_mime_rendering
 
     # load built-in dataset as a pandas DataFrame
     cars = load_dataset('cars')
+
+    # Uncomment for rendering in JupyterLab & nteract
+    # enable_mime_rendering()
 
     Chart(cars).mark_circle().encode(
         x='Horsepower',

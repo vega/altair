@@ -40,12 +40,18 @@ from .api import (
     EqualFilter,
     RangeFilter,
     OneOfFilter,
-    MaxRowsExceeded
+    MaxRowsExceeded,
+    enable_mime_rendering,
 )
 
 from .datasets import (
     list_datasets,
     load_dataset
+)
+
+from .utils import (
+    Vega,
+    VegaLite
 )
 
 from . import expr
