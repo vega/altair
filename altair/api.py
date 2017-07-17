@@ -18,9 +18,9 @@ from .utils.traitlet_helpers import update_subtraits
 from . import expr
 from . import schema
 
-from .schema import AggregateOp
+from .schema import jstraitlets as jst
+
 from .schema import AxisConfig
-from .schema import AxisOrient
 from .schema import Axis
 from .schema import Bin
 from .schema import CellConfig
@@ -104,10 +104,9 @@ def use_signature(Obj):
 # - allows expr trait to be an Expression and processes it properly
 #*************************************************************************
 class Formula(schema.Formula):
-    expr = T.Union([T.Unicode(allow_none=True, default_value=None),
-                    T.Instance(expr.Expression)],
-                    allow_none=True, default_value=None,
-                    help=schema.Formula.expr.help)
+    expr = jst.JSONUnion([jst.JSONString(),
+                          jst.JSONInstance(expr.Expression)],
+                         help=schema.Formula.expr.help)
 
     def __init__(self, field, expr=None, **kwargs):
         super(Formula, self).__init__(field=field, expr=expr, **kwargs)
@@ -124,18 +123,18 @@ class Formula(schema.Formula):
 # - allows filter trait to be an Expression and processes it properly
 #*************************************************************************
 class Transform(schema.Transform):
-    filter = T.Union([T.Unicode(allow_none=True, default_value=None),
-                      T.Instance(expr.Expression),
-                      T.Instance(schema.EqualFilter),
-                      T.Instance(schema.RangeFilter),
-                      T.Instance(schema.OneOfFilter),
-                      T.List(T.Union([T.Unicode(),
-                                      T.Instance(expr.Expression),
-                                      T.Instance(schema.EqualFilter),
-                                      T.Instance(schema.RangeFilter),
-                                      T.Instance(schema.OneOfFilter)]))],
-                     allow_none=True, default_value=None,
-                     help=schema.Transform.filter.help)
+    filter = jst.JSONUnion([jst.JSONString(),
+                            jst.JSONInstance(expr.Expression),
+                            jst.JSONInstance(schema.EqualFilter),
+                            jst.JSONInstance(schema.RangeFilter),
+                            jst.JSONInstance(schema.OneOfFilter),
+                            jst.JSONArray(jst.JSONUnion([
+                                jst.JSONString(),
+                                jst.JSONInstance(expr.Expression),
+                                jst.JSONInstance(schema.EqualFilter),
+                                jst.JSONInstance(schema.RangeFilter),
+                                jst.JSONInstance(schema.OneOfFilter)]))],
+                           help=schema.Transform.filter.help)
 
     def _finalize(self, **kwargs):
         """Finalize object: convert filter expressions to string"""
@@ -237,6 +236,18 @@ class TopLevelMixin(object):
         """
         from .utils.html import to_html
         return to_html(self.to_dict(), template=template, title=title, **kwargs)
+
+    def to_dict(self, data=True, **kwargs):
+        D = super(TopLevelMixin, self).to_dict(data=data, **kwargs)
+        if data:
+            if isinstance(self.data, schema.Data):
+                D['data'] = self.data.to_dict()
+            elif isinstance(obj.data, pd.DataFrame):
+                values = sanitize_dataframe(obj.data).to_dict(orient='records')
+                D['data'] = schema.Data(values=values).to_dict()
+        else:
+            D.pop('data', None)
+        return D
 
     def _to_code(self, data=None):
         """Emit the CodeGen object used to export this chart to Python code."""
@@ -418,11 +429,11 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     _data = None
 
     # use specialized version of Encoding and Transform
-    encoding = T.Instance(Encoding, allow_none=True, default_value=None,
-                          help=schema.ExtendedUnitSpec.encoding.help)
-    transform = T.Instance(Transform, allow_none=True, default_value=None,
-                           help=schema.ExtendedUnitSpec.transform.help)
-    mark = schema.Mark(allow_none=True, default_value='point', help="""The mark type.""")
+    encoding = jst.JSONInstance(Encoding,
+                                help=schema.ExtendedUnitSpec.encoding.help)
+    transform = jst.JSONInstance(Transform,
+                                 help=schema.ExtendedUnitSpec.transform.help)
+    mark = schema.Mark(allow_undefined=False, default_value='point', help="""The mark type.""")
 
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
@@ -567,10 +578,10 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
     _data = None
 
     # Use specialized version of Chart and Transform
-    layers = T.List(T.Instance(Chart), allow_none=True, default_value=None,
-                    help=schema.LayerSpec.layers.help)
-    transform = T.Instance(Transform, allow_none=True, default_value=None,
-                           help=schema.LayerSpec.transform.help)
+    layers = jst.JSONArray(jst.JSONInstance(Chart),
+                           help=schema.LayerSpec.layers.help)
+    transform = jst.JSONInstance(Transform,
+                                 help=schema.LayerSpec.transform.help)
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."
@@ -622,13 +633,12 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     _data = None
 
     # Use specialized version of Facet, spec, and Transform
-    facet = T.Instance(Facet, allow_none=True, default_value=None,
-                       help=schema.FacetSpec.facet.help)
-    spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)],
-                   allow_none=True, default_value=None,
-                   help=schema.FacetSpec.spec.help)
-    transform = T.Instance(Transform, allow_none=True, default_value=None,
-                           help=schema.FacetSpec.transform.help)
+    facet = jst.JSONInstance(Facet, help=schema.FacetSpec.facet.help)
+    spec = jst.JSONUnion([jst.JSONInstance(LayeredChart),
+                          jst.JSONInstance(Chart)],
+                         help=schema.FacetSpec.spec.help)
+    transform = jst.JSONInstance(Transform,
+                                 help=schema.FacetSpec.transform.help)
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."

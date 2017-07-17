@@ -1,3 +1,4 @@
+from ._interface import jstraitlets
 from .baseobject import BaseObject
 from ._interface import *
 from ._wrappers import *
