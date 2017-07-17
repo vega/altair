@@ -105,8 +105,25 @@ class AltairJSONSchema(JSONSchema):
             yield dict(classname=base.replace('Def', ''),
                        base=schema.wrapped_definitions()[base.lower()],
                        root='channel_wrappers')
+
+    @property
+    def module_imports(self):
+        imports = super(AltairJSONSchema, self).module_imports
+        imports += ['from .channel_wrappers import {0}'.format(cls['classname'])
+                    for cls in self.wrapped_channel_classes()]
+        return imports
+
+    def source_tree(self):
+        template = jinja2.Template(CHANNEL_WRAPPER_TEMPLATE)
+        date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        version = get_git_commit_info()
+        objects = list(schema.wrapped_channel_classes())
+        tree = super(AltairJSONSchema, self).source_tree()
+        tree['channel_wrappers.py'] = template.render(date=date,
+                                                      version=version,
+                                                      objects=objects)
+        return tree
                                   
-            
 
 # TODO: use vega-schema repo locally
 schemafile = '../altair/schema/vega-lite-schema.json'
@@ -125,16 +142,4 @@ schema = AltairJSONSchema.from_json_file(schemafile, module=module)
 source_tree = schema.source_tree()
 print("writing to {module}".format(module=module))
 save_module(source_tree, module, os.path.abspath(path))
-
-# Save the encoding channel specializations
-
-env = jinja2.Environment()
-env.filters['repr'] = repr
-template = env.from_string(CHANNEL_WRAPPER_TEMPLATE)
-
-date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-version = get_git_commit_info()
-with open(os.path.join(fullpath, 'channel_wrappers.py'), 'w') as f:
-    f.write(template.render(date=date, version=version,
-                            objects=list(schema.wrapped_channel_classes())))
 
