@@ -10,8 +10,17 @@ from collections import defaultdict
 
 import jinja2
 
-from altair_parser import JSONSchema
+from altair_parser import JSONSchema, JSONSchemaPlugin
 from altair_parser.utils import load_dynamic_module, save_module
+
+
+def get_git_commit_info():
+    """Return a string describing the git version information"""
+    try:
+        label = subprocess.check_output(["git", "describe"]).decode().strip()
+    except subprocess.CalledProcessError:
+        label = "<unavailable>"
+    return label
 
 
 CHANNEL_WRAPPER_TEMPLATE = '''# Auto-generated file: do not modify directly
@@ -68,27 +77,18 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
 {% endfor %}
 '''
 
-def get_git_commit_info():
-    """Return a string describing the git version information"""
-    try:
-        label = subprocess.check_output(["git", "describe"]).decode().strip()
-    except subprocess.CalledProcessError:
-        label = "<unavailable>"
-    return label
-
-
-class AltairJSONSchema(JSONSchema):
-    def encoding_classes(self):
+class ChannelWrapperPlugin(JSONSchemaPlugin):
+    def encoding_classes(self, schema):
         """return the list of encoding class names"""
-        return [name for name in self.definitions if 'Encoding' in name]
+        return [name for name in schema.definitions if 'Encoding' in name]
 
-    def channel_classes(self):
+    def channel_classes(self, schema):
         """return the list of channel class names"""
         channels = set()
-        wrapped_defs = self.wrapped_definitions()
-        for encoding_class in self.encoding_classes():
-            schema = self.make_child(self.definitions[encoding_class])
-            for prop, propschema in schema.wrapped_properties().items():
+        wrapped_defs = schema.wrapped_definitions()
+        for encoding_class in self.encoding_classes(schema):
+            childschema = schema.make_child(schema.definitions[encoding_class])
+            for prop, propschema in childschema.wrapped_properties().items():
                 if not propschema.is_reference:
                     subschemas = (propschema.make_child(s)
                                   for s in propschema['anyOf'])
@@ -100,29 +100,79 @@ class AltairJSONSchema(JSONSchema):
                 channels.add(propschema.classname)
         return channels
 
-    def wrapped_channel_classes(self):
-        for base in self.channel_classes():
+    def wrapped_channel_classes(self, schema):
+        """return a dictionary of channel base class info"""
+        for base in self.channel_classes(schema):
             yield dict(classname=base.replace('Def', ''),
                        base=schema.wrapped_definitions()[base.lower()],
                        root='channel_wrappers')
 
-    @property
-    def module_imports(self):
-        imports = super(AltairJSONSchema, self).module_imports
-        imports += ['from .channel_wrappers import {0}'.format(cls['classname'])
-                    for cls in self.wrapped_channel_classes()]
-        return imports
+    def module_imports(self, schema):
+        return['from .channel_wrappers import {0}'.format(cls['classname'])
+               for cls in self.wrapped_channel_classes(schema)]
 
-    def source_tree(self):
+    def code_files(self, schema):
         template = jinja2.Template(CHANNEL_WRAPPER_TEMPLATE)
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         version = get_git_commit_info()
-        objects = list(schema.wrapped_channel_classes())
-        tree = super(AltairJSONSchema, self).source_tree()
-        tree['channel_wrappers.py'] = template.render(date=date,
-                                                      version=version,
-                                                      objects=objects)
-        return tree
+        objects = list(self.wrapped_channel_classes(schema))
+        return {'channel_wrappers.py': template.render(date=date,
+                                                       version=version,
+                                                       objects=objects)}
+    
+
+NAMED_CHANNEL_TEMPLATE = '''# Auto-generated file: do not modify directly
+# - altair version info: {{ version }}
+# - date: {{ date }}
+
+{% for import_statement in objects|merge_imports -%}
+  {{ import_statement }}
+{% endfor %}
+
+{% for object in objects -%}
+class {{ object.name }}({{ object.base.name }}):
+    pass
+
+
+{% endfor -%}
+'''
+
+
+CHANNEL_COLLECTION_TEMPLATE = '''# Auto-generated file: do not modify directly
+# - altair version info: {{ version }}
+# - date: {{ date }}
+
+
+import traitlets as T
+
+from .. import _interface as schema
+
+{% for import_statement in objects|merge_imports -%}
+  {{ import_statement }}
+{% endfor %}
+
+{% for cls in objects -%}
+class {{ cls.name }}(schema.{{ cls.basename }}):
+    """Object for storing channel encodings
+
+    Attributes
+    ----------
+    {% for attr in cls.attributes -%}
+    {{ attr.name }}: {{ attr.trait_descr }}
+        {{ attr.short_description }}
+    {% endfor -%}
+    """
+    {% for attr in cls.attributes -%}
+    {{ attr.name }} = {{ attr.trait_fulldef }}
+    {% endfor %}
+
+    {%- set comma = joiner(", ") %}
+    channel_names = [{% for attr in cls.attributes %}{{ comma() }}'{{ attr.name }}'{% endfor %}]
+    skip = ['channel_names']
+
+
+{% endfor -%}
+'''
                                   
 
 # TODO: use vega-schema repo locally
@@ -138,8 +188,7 @@ if os.path.exists(fullpath):
     shutil.rmtree(fullpath)
 
 # Save the basic schema wrappers
-schema = AltairJSONSchema.from_json_file(schemafile, module=module)
-source_tree = schema.source_tree()
-print("writing to {module}".format(module=module))
-save_module(source_tree, module, os.path.abspath(path))
+schema = JSONSchema.from_json_file(schemafile, module=module)
+schema.add_plugins(ChannelWrapperPlugin())
+schema.write_module(module=module, path=os.path.abspath(path))
 
