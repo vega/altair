@@ -7,7 +7,7 @@ import shutil
 from datetime import datetime
 from itertools import chain
 from collections import defaultdict
-from copy import deepcopy
+import copy
 
 import jinja2
 
@@ -118,7 +118,7 @@ class ChannelWrapperPlugin(JSONSchemaPlugin):
         return {'channel_wrappers.py': template.render(date=date,
                                                        version=version,
                                                        objects=objects)}
-    
+
 
 NAMED_CHANNEL_TEMPLATE = '''# Auto-generated file: do not modify directly
 # - altair version info: {{ version }}
@@ -170,8 +170,8 @@ class NamedChannelPlugin(JSONSchemaPlugin):
         return {'named_channels.py': template.render(date=date,
                                                      version=version,
                                                      objects=objects)}
-        
-    
+
+
 
 CHANNEL_COLLECTION_TEMPLATE = '''# Auto-generated file: do not modify directly
 # - altair version info: {{ version }}
@@ -179,7 +179,12 @@ CHANNEL_COLLECTION_TEMPLATE = '''# Auto-generated file: do not modify directly
 
 import traitlets as T
 from . import jstraitlets as jst
-from . import named_channels, schema
+from . import schema
+
+
+def _localname(name):
+    return '.'.join(__name__.split('.')[:-1] + ['named_channels', name])
+
 
 {% for obj in objects -%}
 class {{ obj.classname }}(schema.{{ obj.classname }}):
@@ -187,16 +192,15 @@ class {{ obj.classname }}(schema.{{ obj.classname }}):
 
     Attributes
     ----------
-    {% for (name, prop) in obj.base.properties.items() -%}
+    {% for (name, prop) in obj.wrapped_properties().items() -%}
     {{ name }}: {{ prop.type }}
         {{ prop.indented_description() }}
     {% endfor -%}
     """
     {%- set comma = joiner(", ") %}
-    channel_names = [{% for name, prop in obj.properties %}{{ comma() }}'{{ name }}'{% endfor %}]
+    channel_names = [{% for name, prop in obj.wrapped_properties().items() %}{{ comma() }}'{{ name }}'{% endfor %}]
     skip = ['channel_names']
-
-    {%- for (name, prop) in obj.properties %}
+    {% for (name, prop) in obj.wrapped_properties().items() %}
     {{ name }} = {{ prop.trait_code }}
     {%- endfor %}
 
@@ -208,19 +212,19 @@ class {{ obj.classname }}(schema.{{ obj.classname }}):
 class ChannelCollectionPlugin(JSONSchemaPlugin):
     encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
 
-    def get_base(self, name, schema):
+    def get_base(self, schema):
         if '$ref' in schema:
-            return schema['$ref'].rsplit('/')[-1]
+            return schema['$ref'].rsplit('/', 1)[-1]
         for subschema in schema.get('anyOf', []):
-            if '$ref' in schema:
-                return schema['$ref'].rsplit('/')[-1]
+            if '$ref' in subschema:
+                return subschema['$ref'].rsplit('/', 1)[-1]
         raise ValueError("Cannot get base for schema {0}".format(schema))
 
     def replace_base_with_name(self, name, schema):
-        schema = deepcopy(schema)
+        schema = copy.deepcopy(schema)
         if '$ref' in schema:
-            a, b = schema['$ref'].rsplit('/')
-            schema['$ref'] = '/'.join(a, name)
+            a, b = schema['$ref'].rsplit('/', 1)
+            schema['$ref'] = '/'.join([a, name])
         if 'anyOf' in schema:
             schema['anyOf'] = [self.replace_base_with_name(name, subschema)
                                for subschema in schema['anyOf']]
@@ -229,16 +233,33 @@ class ChannelCollectionPlugin(JSONSchemaPlugin):
         return schema
 
     def module_imports(self, schema):
-        return []
-        #return ['from .channel_wrappers import {0}'.format(name)
-        #        for name in self.encoding_classes]
+        return ['from .channel_collections import {0}'.format(name)
+                for name in self.encoding_classes]
 
     def code_files(self, schema):
         template = jinja2.Template(CHANNEL_COLLECTION_TEMPLATE)
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         version = get_git_commit_info()
 
-        return {'channel_collections.py': "# TODO\n"}
+        # here we need to make a copy of the schema, in which we will add
+        # specialized definitions for each of the channel collections
+
+        # first, create a copy of the schema object with a deep-copy of
+        # its schema dictionary.
+        toplevel = schema.copy(deepcopy=True)
+        definitions = toplevel.wrapped_definitions()
+        objects = []
+        for classname in self.encoding_classes:
+            obj = definitions[classname.lower()]
+            for name, prop in obj.properties.items():
+                basename = self.get_base(prop)
+                toplevel.definitions[name.title()] = toplevel.definitions[basename]
+                obj.properties[name] = self.replace_base_with_name(name.title(), prop)
+            objects.append(obj)
+
+        return {'channel_collections.py': template.render(date=date,
+                                                          version=version,
+                                                          objects=objects)}
 
 
 def write_wrappers():
@@ -264,4 +285,3 @@ def write_wrappers():
 
 if __name__ == '__main__':
     write_wrappers()
-
