@@ -6,6 +6,7 @@ hierarchies from dictionaries and lists of trait names.
 """
 import six
 import traitlets as T
+from ..schema import jstraitlets as jst
 
 
 def infer_keywords(cls, *args, **kwargs):
@@ -50,7 +51,7 @@ def infer_keywords(cls, *args, **kwargs):
     name_to_trait = {}
     while classes:
         name, trait = classes.popitem()
-        if trait is None:
+        if trait is jst.undefined:
             continue
         if trait not in set.union(set(classes.values()),
                                   set(name_to_trait.values())):
@@ -93,7 +94,7 @@ def update_subtraits(obj, attrs, *args, **kwargs):
     else:
         attr = attrs[0]
         trait = getattr(obj, attr)  # error here if attr is not present
-        if trait is None:
+        if trait is jst.undefined:
             trait = obj.traits()[attr].klass()
         setattr(obj, attr, update_subtraits(trait, attrs[1:], *args, **kwargs))
     return obj

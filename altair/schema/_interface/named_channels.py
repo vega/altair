@@ -1,6 +1,6 @@
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-31-g9016ca4
-# - date: 2017-07-19 08:59:00
+# - altair version info: v1.2.0-68-g3ada237
+# - date: 2017-07-19 11:12:59
 
 from . import channel_wrappers
 
