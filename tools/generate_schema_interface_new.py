@@ -237,23 +237,31 @@ class ChannelCollectionPlugin(JSONSchemaPlugin):
                 for name in self.encoding_classes]
 
     def code_files(self, schema):
+        # This creates a specialization of each of the encoding classes, where
+        # the generic channel names are replaced by named classes derived
+        # from the channels (in named_channels.py)
+        # We do this by copying and modifying the schema dictionary before
+        # generating the code for these three classes.
         template = jinja2.Template(CHANNEL_COLLECTION_TEMPLATE)
         date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         version = get_git_commit_info()
 
-        # here we need to make a copy of the schema, in which we will add
-        # specialized definitions for each of the channel collections
-
-        # first, create a copy of the schema object with a deep-copy of
-        # its schema dictionary.
+        # Here's where the schema is copied: we use a deep copy because we
+        # are going to modify pieces of the dictionary.
         toplevel = schema.copy(deepcopy=True)
-        definitions = toplevel.wrapped_definitions()
+
+        # Now we cycle though the encoding classes and modify their schema
+        # dictionaries, such that the properties point to the named channel
+        # definitions rather than pointing to the generic channel definitions.
         objects = []
+        definitions = toplevel.wrapped_definitions()
         for classname in self.encoding_classes:
             obj = definitions[classname.lower()]
             for name, prop in obj.properties.items():
                 basename = self.get_base(prop)
+                # add a new definition
                 toplevel.definitions[name.title()] = toplevel.definitions[basename]
+                # rewrite the object schema to point to this definition
                 obj.properties[name] = self.replace_base_with_name(name.title(), prop)
             objects.append(obj)
 
