@@ -11,9 +11,9 @@ import uuid
 import traitlets as T
 import pandas as pd
 
-from .utils import visitors
+from .utils import visitors, node, create_vegalite_mime_bundle
 from .utils._py3k_compat import string_types
-from .utils import node, create_vegalite_mime_bundle
+from .utils.traitlet_helpers import update_subtraits
 
 from . import expr
 from . import schema
@@ -252,73 +252,72 @@ class TopLevelMixin(object):
     @use_signature(schema.Transform)
     def transform_data(self, *args, **kwargs):
         """Set the data transform by keyword args."""
-        return self._update_subtraits('transform', *args, **kwargs)
+        return update_subtraits(self, 'transform', *args, **kwargs)
 
     # Configuration methods
     @use_signature(schema.Config)
     def configure(self, *args, **kwargs):
         """Set chart configuration"""
-        return self._update_subtraits('config', *args, **kwargs)
+        return update_subtraits(self, 'config', *args, **kwargs)
 
     @use_signature(AxisConfig)
     def configure_axis(self, *args, **kwargs):
         """Configure the chart's axes by keyword args."""
-        return self._update_subtraits(('config', 'axis'), *args, **kwargs)
+        return update_subtraits(self, ('config', 'axis'), *args, **kwargs)
 
     @use_signature(CellConfig)
     def configure_cell(self, *args, **kwargs):
         """Configure the chart's cell's by keyword args."""
-        return self._update_subtraits(('config', 'cell'), *args, **kwargs)
+        return update_subtraits(self, ('config', 'cell'), *args, **kwargs)
 
     @use_signature(LegendConfig)
     def configure_legend(self, *args, **kwargs):
         """Configure the chart's legend by keyword args."""
-        return self._update_subtraits(('config', 'legend'), *args, **kwargs)
+        return update_subtraits(self, ('config', 'legend'), *args, **kwargs)
 
     @use_signature(OverlayConfig)
     def configure_overlay(self, *args, **kwargs):
         """Configure the chart's overlay by keyword args."""
-        return self._update_subtraits(('config', 'overlay'), *args, **kwargs)
+        return update_subtraits(self, ('config', 'overlay'), *args, **kwargs)
 
     @use_signature(MarkConfig)
     def configure_mark(self, *args, **kwargs):
         """Configure the chart's marks by keyword args."""
-        return self._update_subtraits(('config', 'mark'), *args, **kwargs)
+        return update_subtraits(self, ('config', 'mark'), *args, **kwargs)
 
     @use_signature(ScaleConfig)
     def configure_scale(self, *args, **kwargs):
         """Configure the chart's scales by keyword args."""
-        return self._update_subtraits(('config', 'scale'), *args, **kwargs)
+        return update_subtraits(self, ('config', 'scale'), *args, **kwargs)
 
     @use_signature(FacetConfig)
     def configure_facet(self, *args, **kwargs):
         """Configure the chart's scales by keyword args."""
-        return self._update_subtraits(('config', 'facet'), *args, **kwargs)
+        return update_subtraits(self, ('config', 'facet'), *args, **kwargs)
 
     @use_signature(AxisConfig)
     def configure_facet_axis(self, *args, **kwargs):
         """Configure the facet's axes by keyword args."""
-        return self._update_subtraits(('config', 'facet', 'axis'),
-                                      *args, **kwargs)
+        return update_subtraits(self, ('config', 'facet', 'axis'),
+                                *args, **kwargs)
 
     @use_signature(CellConfig)
     def configure_facet_cell(self, *args, **kwargs):
         """Configure the facet's cells by keyword args."""
-        return self._update_subtraits(('config', 'facet', 'cell'),
-                                      *args, **kwargs)
+        return update_subtraits(self, ('config', 'facet', 'cell'),
+                                *args, **kwargs)
 
     @use_signature(FacetGridConfig)
     def configure_facet_grid(self, *args, **kwargs):
         """Configure the facet's grid by keyword args."""
-        return self._update_subtraits(('config', 'facet', 'grid'),
-                                      *args, **kwargs)
+        return update_subtraits(self, ('config', 'facet', 'grid'),
+                                *args, **kwargs)
 
     @use_signature(FacetScaleConfig)
     def configure_facet_scale(self, *args, **kwargs):
         """Configure the facet's scales by keyword args."""
-        return self._update_subtraits(('config', 'facet', 'scale'),
-                                      *args, **kwargs)
-
+        return update_subtraits(self, ('config', 'facet', 'scale'),
+                                *args, **kwargs)
 
     # Display related methods
 
@@ -375,7 +374,7 @@ class TopLevelMixin(object):
 
     def _finalize_data(self):
         """
-        This function is called by _finalize() below. 
+        This function is called by _finalize() below.
 
         It performs final checks on the data:
 
@@ -424,7 +423,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     transform = T.Instance(Transform, allow_none=True, default_value=None,
                            help=schema.ExtendedUnitSpec.transform.help)
     mark = schema.Mark(allow_none=True, default_value='point', help="""The mark type.""")
-    
+
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."
@@ -516,7 +515,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
     @use_signature(Encoding)
     def encode(self, *args, **kwargs):
         """Define the encoding for the Chart."""
-        return self._update_subtraits('encoding', *args, **kwargs)
+        return update_subtraits(self, 'encoding', *args, **kwargs)
 
     def _finalize(self, **kwargs):
         self._finalize_data()
@@ -661,7 +660,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
     @use_signature(Facet)
     def set_facet(self, *args, **kwargs):
         """Define the facet encoding for the Chart."""
-        return self._update_subtraits('facet', *args, **kwargs)
+        return update_subtraits(self, 'facet', *args, **kwargs)
 
     def _finalize(self, **kwargs):
         self._finalize_data()
