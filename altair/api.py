@@ -11,9 +11,8 @@ import uuid
 import traitlets as T
 import pandas as pd
 
-from .utils import visitors, node
-from .utils._py3k_compat import string_types
 from .utils import visitors, node, create_vegalite_mime_bundle
+from .utils._py3k_compat import string_types
 from .utils.traitlet_helpers import update_subtraits
 
 from . import expr
