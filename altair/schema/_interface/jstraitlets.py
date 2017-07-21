@@ -141,14 +141,9 @@ class JSONHasTraits(T.HasTraits):
         def finalize_obj(obj):
             if hasattr(obj, '_finalize'):
                 obj._finalize(*args, **kwargs)
-            else:
-                try:
-                    obj = iter(obj)
-                except TypeError:
-                    pass  # Not iterable
-                else:
-                    for item in obj:
-                        finalize_obj(obj)
+            elif isinstance(obj, list):
+                for item in obj:
+                    finalize_obj(item)
 
         for name in self.traits():
             value = getattr(self, name)

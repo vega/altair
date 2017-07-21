@@ -60,11 +60,17 @@ def infer_keywords(cls, *args, **kwargs):
 
     # Update all arguments
     for arg in args:
-        name = trait_to_name.get(type(arg), None)
+        # find highest-level class in the method resolution order that appears
+        # in the dict:
+        names = (trait_to_name.get(cls, None) for cls in arg.__class__.__mro__)
+        name = next((n for n in names if n), None)
         if name is None:
-            raise ValueError("{0}: Unable to infer argument name for {1}".format(cls, arg))
+            raise ValueError("{0}: Unable to infer argument name for {1}"
+                             "".format(cls, arg))
         elif name in kwargs:
-            raise ValueError("{0}: {1} specified both by arg and kwarg".format(cls, name))
+            raise ValueError("{0}: {1} specified both by arg and kwarg"
+                             "".format(cls, name))
+
         else:
             kwargs[name] = arg
     return kwargs

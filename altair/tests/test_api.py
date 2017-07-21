@@ -559,7 +559,6 @@ def test_empty_traits():
 
     # regression test for changes in #265
     assert Transform().to_dict() == {}  # filter not present
-    assert Formula('blah').to_dict() == {'field': 'blah'}  # expr not present
 
 
 def test_max_rows():
