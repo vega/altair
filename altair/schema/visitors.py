@@ -1,5 +1,9 @@
+import pandas as pd
+
 from ._interface import jstraitlets as jst
 from . import _interface as schema
+
+from ..utils import sanitize_dataframe
 
 
 class ToDict(jst.ToDict):

@@ -50,7 +50,7 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
     """
     # Traitlets
     shorthand = jst.JSONString(default_value='', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`)")
-    skip = ['shorthand']
+    _skip_on_export = ['shorthand']
 
     # Class Methods
     {%- set comma = joiner(", ") %}
@@ -67,8 +67,8 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
             setattr(self, key, val)
 
         # infer the type if not already specified
-        if self.type is None:
-            data = kwargs.get('data', None)
+        if self.type is jst.undefined:
+            data = kwargs.get('data', jst.undefined)
             if isinstance(data, pd.DataFrame) and self.field in data:
                 self.type = infer_vegalite_type(data[self.field])
 
@@ -197,9 +197,9 @@ class {{ obj.classname }}(schema.{{ obj.classname }}):
         {{ prop.indented_description() }}
     {% endfor -%}
     """
+    _skip_on_export = ['channel_names']
     {%- set comma = joiner(", ") %}
     channel_names = [{% for name, prop in obj.wrapped_properties().items() %}{{ comma() }}'{{ name }}'{% endfor %}]
-    skip = ['channel_names']
     {% for (name, prop) in obj.wrapped_properties().items() %}
     {{ name }} = {{ prop.trait_code }}
     {%- endfor %}

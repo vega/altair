@@ -108,7 +108,7 @@ class Formula(schema.Formula):
                           jst.JSONInstance(expr.Expression)],
                          help=schema.Formula.expr.help)
 
-    def __init__(self, field, expr=None, **kwargs):
+    def __init__(self, field, expr=jst.undefined, **kwargs):
         super(Formula, self).__init__(field=field, expr=expr, **kwargs)
 
     def _finalize(self, **kwargs):
@@ -454,7 +454,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data', 'max_rows']
+    _skip_on_export = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(Chart, self).__init__(**kwargs)
@@ -601,7 +601,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data', 'max_rows']
+    _skip_on_export = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(LayeredChart, self).__init__(**kwargs)
@@ -622,7 +622,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         super(LayeredChart, self)._finalize(**kwargs)
 
     def __iadd__(self, layer):
-        if self.layers is None:
+        if self.layers is jst.undefined:
             self.layers = [layer]
         else:
             self.layers = self.layers + [layer]
@@ -658,7 +658,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data', 'max_rows']
+    _skip_on_export = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(FacetedChart, self).__init__(**kwargs)

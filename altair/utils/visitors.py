@@ -5,6 +5,7 @@ import traitlets as T
 
 from ._py3k_compat import integer_types, string_types
 from .. import schema
+from ..schema import jstraitlets as jst
 from .codegen import CodeGen
 from . import sanitize_dataframe, construct_shorthand
 
@@ -43,7 +44,7 @@ class ToDict(Visitor):
         for k in obj.traits():
             if k in obj and k not in obj.skip:
                 v = getattr(obj, k)
-                if v is not None:
+                if v is not jst.undefined:
                     D[k] = self.visit(v)
         return D
 
