@@ -237,11 +237,71 @@ class TopLevelMixin(object):
         from .utils.html import to_html
         return to_html(self.to_dict(), template=template, title=title, **kwargs)
 
-    def to_json(self, data=True, **kwargs):
+    def to_dict(self, data=True):
+        """Emit the JSON representation for this object as as dict.
+
+        Parameters
+        ----------
+        data : bool
+            If True (default) then include data in the representation.
+
+        Returns
+        -------
+        spec : dict
+            The JSON specification of the chart object.
+        """
+        return super(TopLevelMixin, self).to_dict(data=data)
+
+    @classmethod
+    def from_dict(cls, dct):
+        """Instantiate the object from a valid JSON dictionary
+
+        Parameters
+        ----------
+        dct : dict
+            The dictionary containing a valid JSON chart specification.
+
+        Returns
+        -------
+        chart : Chart object
+            The altair Chart object built from the specification.
+        """
+        return super(TopLevelMixin, cls).from_dict(dct)
+
+    def to_json(self, data=True, sort_keys=True, **kwargs):
+        """Emit the JSON representation for this object as a string.
+
+        Parameters
+        ----------
+        data : bool
+            If True (default) then include data in the representation.
+        sort_keys : bool
+            If True (default) then sort the keys in the output
+        **kwargs
+            Additional keyword arguments are passed to ``json.dumps()``
+
+        Returns
+        -------
+        spec : string
+            The JSON specification of the chart object.
+        """
+        kwargs['sort_keys'] = sort_keys
         return super(TopLevelMixin, self).to_json(data=data, json_kwds=kwargs)
 
     @classmethod
     def from_json(cls, json_string, **kwargs):
+        """Instantiate the object from a valid JSON string
+
+        Parameters
+        ----------
+        spec : string
+            The string containing a valid JSON chart specification.
+
+        Returns
+        -------
+        chart : Chart object
+            The altair Chart object built from the specification.
+        """
         return super(TopLevelMixin, cls).from_json(json_string,
                                                    json_kwds=kwargs)
 
