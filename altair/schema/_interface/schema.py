@@ -192,7 +192,7 @@ class Root(jst.AnyOfObject):
 class Axis(jst.JSONHasTraits):
     """Axis class
 
-    
+
 
     Attributes
     ----------
@@ -268,7 +268,7 @@ class Axis(jst.JSONHasTraits):
         generated from the field's description. By default, this is
         automatically based on cell size and characterWidth property.
     values : object
-        
+
     gridDash : array
         The offset (in pixels) into which to begin drawing with the
         grid dash array.
@@ -346,7 +346,7 @@ class Axis(jst.JSONHasTraits):
 class AxisConfig(jst.JSONHasTraits):
     """AxisConfig class
 
-    
+
 
     Attributes
     ----------
@@ -536,7 +536,7 @@ class Bin(jst.JSONHasTraits):
 class CellConfig(jst.JSONHasTraits):
     """CellConfig class
 
-    
+
 
     Attributes
     ----------
@@ -547,7 +547,7 @@ class CellConfig(jst.JSONHasTraits):
     stroke : string
         The stroke color.
     height : number
-        
+
     strokeDashOffset : number
         The offset (in pixels) into which to begin drawing with the
         stroke dash array.
@@ -557,11 +557,11 @@ class CellConfig(jst.JSONHasTraits):
     fill : string
         The fill color.
     clip : boolean
-        
+
     strokeOpacity : number
         The stroke opacity (value between [0,1]).
     width : number
-        
+
     """
     _additional_traits = True
     _required_traits = []
@@ -585,7 +585,7 @@ class CellConfig(jst.JSONHasTraits):
 class ChannelDefWithLegend(jst.JSONHasTraits):
     """ChannelDefWithLegend class
 
-    
+
 
     Attributes
     ----------
@@ -601,11 +601,11 @@ class ChannelDefWithLegend(jst.JSONHasTraits):
         `"N"`).
         This property is case insensitive.
     sort : object
-        
+
     field : string
         Name of the field from which to pull a data value.
     legend : object
-        
+
     title : string
         Title for axis or legend.
     value : ['number', 'string', 'boolean']
@@ -618,7 +618,7 @@ class ChannelDefWithLegend(jst.JSONHasTraits):
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
     scale : object
-        
+
     """
     _additional_traits = True
     _required_traits = []
@@ -642,7 +642,7 @@ class ChannelDefWithLegend(jst.JSONHasTraits):
 class Config(jst.JSONHasTraits):
     """Config class
 
-    
+
 
     Attributes
     ----------
@@ -699,7 +699,7 @@ class Config(jst.JSONHasTraits):
 class Data(jst.JSONHasTraits):
     """Data class
 
-    
+
 
     Attributes
     ----------
@@ -728,7 +728,7 @@ class Data(jst.JSONHasTraits):
 class DataFormat(jst.JSONHasTraits):
     """DataFormat class
 
-    
+
 
     Attributes
     ----------
@@ -847,7 +847,7 @@ class DateTime(jst.JSONHasTraits):
 class Encoding(jst.JSONHasTraits):
     """Encoding class
 
-    
+
 
     Attributes
     ----------
@@ -899,7 +899,7 @@ class Encoding(jst.JSONHasTraits):
         - For `text` – the text's font size.
         - Size is currently unsupported for `line` and `area`.
     label : object
-        
+
     y2 : object
         Y2 coordinates for ranged `bar`, `rule`, `area`
     """
@@ -930,7 +930,7 @@ class Encoding(jst.JSONHasTraits):
 class EqualFilter(jst.JSONHasTraits):
     """EqualFilter class
 
-    
+
 
     Attributes
     ----------
@@ -972,7 +972,7 @@ class ExtendedUnitSpec(jst.JSONHasTraits):
         One of `"bar"`, `"circle"`, `"square"`, `"tick"`, `"line"`,
         `"area"`, `"point"`, `"rule"`, and `"text"`.
     height : number
-        
+
     transform : object
         An object describing filter and new field calculation.
     name : string
@@ -985,7 +985,7 @@ class ExtendedUnitSpec(jst.JSONHasTraits):
     data : object
         An object describing the data source
     width : number
-        
+
     """
     _additional_traits = True
     _required_traits = ['mark']
@@ -1008,14 +1008,14 @@ class ExtendedUnitSpec(jst.JSONHasTraits):
 class Facet(jst.JSONHasTraits):
     """Facet class
 
-    
+
 
     Attributes
     ----------
     row : object
-        
+
     column : object
-        
+
     """
     _additional_traits = True
     _required_traits = []
@@ -1031,7 +1031,7 @@ class Facet(jst.JSONHasTraits):
 class FacetConfig(jst.JSONHasTraits):
     """FacetConfig class
 
-    
+
 
     Attributes
     ----------
@@ -1060,16 +1060,16 @@ class FacetConfig(jst.JSONHasTraits):
 class FacetGridConfig(jst.JSONHasTraits):
     """FacetGridConfig class
 
-    
+
 
     Attributes
     ----------
     offset : number
-        
+
     opacity : number
-        
+
     color : string
-        
+
     """
     _additional_traits = True
     _required_traits = []
@@ -1086,14 +1086,14 @@ class FacetGridConfig(jst.JSONHasTraits):
 class FacetScaleConfig(jst.JSONHasTraits):
     """FacetScaleConfig class
 
-    
+
 
     Attributes
     ----------
     round : boolean
-        
+
     padding : number
-        
+
     """
     _additional_traits = True
     _required_traits = []
@@ -1109,19 +1109,19 @@ class FacetScaleConfig(jst.JSONHasTraits):
 class FacetSpec(jst.JSONHasTraits):
     """FacetSpec class
 
-    
+
 
     Attributes
     ----------
     spec : object
-        
+
     transform : object
         An object describing filter and new field calculation.
     description : string
         An optional description of this mark for commenting purpose.
         This property has no effect on the output visualization.
     facet : object
-        
+
     config : object
         Configuration object
     name : string
@@ -1148,7 +1148,7 @@ class FacetSpec(jst.JSONHasTraits):
 class FieldDef(jst.JSONHasTraits):
     """FieldDef class
 
-    
+
 
     Attributes
     ----------
@@ -1220,12 +1220,12 @@ class Formula(jst.JSONHasTraits):
 class LayerSpec(jst.JSONHasTraits):
     """LayerSpec class
 
-    
+
 
     Attributes
     ----------
     height : number
-        
+
     transform : object
         An object describing filter and new field calculation.
     description : string
@@ -1240,7 +1240,7 @@ class LayerSpec(jst.JSONHasTraits):
     data : object
         An object describing the data source
     width : number
-        
+
     """
     _additional_traits = True
     _required_traits = ['layers']
@@ -1262,7 +1262,7 @@ class LayerSpec(jst.JSONHasTraits):
 class Legend(jst.JSONHasTraits):
     """Legend class
 
-    
+
 
     Attributes
     ----------
@@ -1374,7 +1374,7 @@ class Legend(jst.JSONHasTraits):
 class LegendConfig(jst.JSONHasTraits):
     """LegendConfig class
 
-    
+
 
     Attributes
     ----------
@@ -1475,7 +1475,7 @@ class LegendConfig(jst.JSONHasTraits):
 class MarkConfig(jst.JSONHasTraits):
     """MarkConfig class
 
-    
+
 
     Attributes
     ----------
@@ -1519,13 +1519,13 @@ class MarkConfig(jst.JSONHasTraits):
         cross, diamond, triangle-up, or triangle-down, or a custom SVG
         path.
     opacity : number
-        
+
     dy : number
         The vertical offset, in pixels, between the text label and its
         anchor point. The offset is applied after rotation by the
         angle property.
     fillOpacity : number
-        
+
     size : number
         The pixel area each the point. For example: in the case of
         circles, the radius is determined in part by the square root
@@ -1535,11 +1535,11 @@ class MarkConfig(jst.JSONHasTraits):
         `bandSize-1`,
         which provides 1 pixel offset between bars.
     stacked : object
-        
+
     shortTimeLabels : boolean
         Whether month names and weekday names should be abbreviated.
     strokeWidth : number
-        
+
     filled : boolean
         Whether the shape\'s color should be used as fill color
         instead of stroke color.
@@ -1566,7 +1566,7 @@ class MarkConfig(jst.JSONHasTraits):
     barThinSize : number
         The size of the bars on continuous scales.
     strokeOpacity : number
-        
+
     tickSize : number
         The width of the ticks.
     text : string
@@ -1647,7 +1647,7 @@ class MarkConfig(jst.JSONHasTraits):
 class OneOfFilter(jst.JSONHasTraits):
     """OneOfFilter class
 
-    
+
 
     Attributes
     ----------
@@ -1675,7 +1675,7 @@ class OneOfFilter(jst.JSONHasTraits):
 class OrderChannelDef(jst.JSONHasTraits):
     """OrderChannelDef class
 
-    
+
 
     Attributes
     ----------
@@ -1691,7 +1691,7 @@ class OrderChannelDef(jst.JSONHasTraits):
         `"N"`).
         This property is case insensitive.
     sort : object
-        
+
     bin : object
         Flag for binning a `quantitative` field, or a bin property
         object
@@ -1726,7 +1726,7 @@ class OrderChannelDef(jst.JSONHasTraits):
 class OverlayConfig(jst.JSONHasTraits):
     """OverlayConfig class
 
-    
+
 
     Attributes
     ----------
@@ -1755,7 +1755,7 @@ class OverlayConfig(jst.JSONHasTraits):
 class PositionChannelDef(jst.JSONHasTraits):
     """PositionChannelDef class
 
-    
+
 
     Attributes
     ----------
@@ -1773,9 +1773,9 @@ class PositionChannelDef(jst.JSONHasTraits):
     field : string
         Name of the field from which to pull a data value.
     sort : object
-        
+
     axis : object
-        
+
     bin : object
         Flag for binning a `quantitative` field, or a bin property
         object
@@ -1788,7 +1788,7 @@ class PositionChannelDef(jst.JSONHasTraits):
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
     scale : object
-        
+
     """
     _additional_traits = True
     _required_traits = []
@@ -1812,7 +1812,7 @@ class PositionChannelDef(jst.JSONHasTraits):
 class RangeFilter(jst.JSONHasTraits):
     """RangeFilter class
 
-    
+
 
     Attributes
     ----------
@@ -1840,12 +1840,12 @@ class RangeFilter(jst.JSONHasTraits):
 class Scale(jst.JSONHasTraits):
     """Scale class
 
-    
+
 
     Attributes
     ----------
     type : object
-        
+
     range : object
         The range of the scale, representing the set of visual values.
         For numeric values, the range can take the form of a two-
@@ -1873,7 +1873,7 @@ class Scale(jst.JSONHasTraits):
         of the raw data domain (e.g. `"count"`, `"sum"`), this
         property is ignored.
     bandSize : object
-        
+
     domain : object
         The domain of the scale, representing the set of data values.
         For quantitative data, this can take the form of a two-element
@@ -1932,7 +1932,7 @@ class Scale(jst.JSONHasTraits):
 class ScaleConfig(jst.JSONHasTraits):
     """ScaleConfig class
 
-    
+
 
     Attributes
     ----------
@@ -2003,14 +2003,14 @@ class ScaleConfig(jst.JSONHasTraits):
 class SortField(jst.JSONHasTraits):
     """SortField class
 
-    
+
 
     Attributes
     ----------
     op : object
         The sort aggregation operator
     order : object
-        
+
     field : string
         The field name to aggregate over.
     """
@@ -2029,7 +2029,7 @@ class SortField(jst.JSONHasTraits):
 class Transform(jst.JSONHasTraits):
     """Transform class
 
-    
+
 
     Attributes
     ----------
@@ -2061,7 +2061,7 @@ class Transform(jst.JSONHasTraits):
 class UnitEncoding(jst.JSONHasTraits):
     """UnitEncoding class
 
-    
+
 
     Attributes
     ----------
@@ -2109,7 +2109,7 @@ class UnitEncoding(jst.JSONHasTraits):
         - For `text` – the text's font size.
         - Size is currently unsupported for `line` and `area`.
     label : object
-        
+
     y2 : object
         Y2 coordinates for ranged `bar`, `rule`, `area`
     """
@@ -2138,7 +2138,7 @@ class UnitEncoding(jst.JSONHasTraits):
 class UnitSpec(jst.JSONHasTraits):
     """UnitSpec class
 
-    
+
 
     Attributes
     ----------
@@ -2150,7 +2150,7 @@ class UnitSpec(jst.JSONHasTraits):
         One of `"bar"`, `"circle"`, `"square"`, `"tick"`, `"line"`,
         `"area"`, `"point"`, `"rule"`, and `"text"`.
     height : number
-        
+
     transform : object
         An object describing filter and new field calculation.
     name : string
@@ -2163,7 +2163,7 @@ class UnitSpec(jst.JSONHasTraits):
     data : object
         An object describing the data source
     width : number
-        
+
     """
     _additional_traits = True
     _required_traits = ['mark']

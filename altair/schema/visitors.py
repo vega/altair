@@ -7,7 +7,7 @@ from ..utils import sanitize_dataframe
 
 
 class ToDict(jst.ToDict):
-    def _visit_with_data(self, obj, data=True):
+    def _visit_with_data(self, obj, data=True, **kwargs):
         D = self.visit_JSONHasTraits(obj)
         if data:
             if isinstance(obj.data, schema.Data):

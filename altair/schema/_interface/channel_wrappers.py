@@ -1,6 +1,6 @@
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-70-g6173dc1
-# - date: 2017-07-21 10:12:17
+# - altair version info: v1.2.0-72-ge93cbd1
+# - date: 2017-07-31 13:54:43
 
 import pandas as pd
 
@@ -16,9 +16,22 @@ class ChannelWithLegend(schema.ChannelDefWithLegend):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    timeUnit : object
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
-        `month`, `hour`).
+    field : string
+        Name of the field from which to pull a data value.
+    sort : object
+        
+    title : string
+        Title for axis or legend.
+    bin : object
+        Flag for binning a `quantitative` field, or a bin property
+        object
+        for binning parameters.
+    scale : object
+        
+    value : ['number', 'string', 'boolean']
+        A constant value in visual domain.
+    legend : object
+        
     type : object
         The encoded field's type of measurement. This can be either a
         full type
@@ -27,34 +40,21 @@ class ChannelWithLegend(schema.ChannelDefWithLegend):
         or an initial character of the type name (`"Q"`, `"T"`, `"O"`,
         `"N"`).
         This property is case insensitive.
-    sort : object
-        
-    field : string
-        Name of the field from which to pull a data value.
-    legend : object
-        
-    title : string
-        Title for axis or legend.
-    value : ['number', 'string', 'boolean']
-        A constant value in visual domain.
-    bin : object
-        Flag for binning a `quantitative` field, or a bin property
-        object
-        for binning parameters.
     aggregate : object
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
-    scale : object
-        
+    timeUnit : object
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
+        `month`, `hour`).
     """
     # Traitlets
     shorthand = jst.JSONString(default_value='', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`)")
     _skip_on_export = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', timeUnit=jst.undefined, type=jst.undefined, sort=jst.undefined, field=jst.undefined, legend=jst.undefined, title=jst.undefined, value=jst.undefined, bin=jst.undefined, aggregate=jst.undefined, scale=jst.undefined, **kwargs):
+    def __init__(self, shorthand='', field=jst.undefined, sort=jst.undefined, title=jst.undefined, bin=jst.undefined, scale=jst.undefined, value=jst.undefined, legend=jst.undefined, type=jst.undefined, aggregate=jst.undefined, timeUnit=jst.undefined, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(timeUnit=timeUnit, type=type, sort=sort, field=field, legend=legend, title=title, value=value, bin=bin, aggregate=aggregate, scale=scale)
+        kwds = dict(field=field, sort=sort, title=title, bin=bin, scale=scale, value=value, legend=legend, type=type, aggregate=aggregate, timeUnit=timeUnit)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(ChannelWithLegend, self).__init__(**kwargs)
 
@@ -80,6 +80,14 @@ class Field(schema.FieldDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
+    title : string
+        Title for axis or legend.
+    bin : object
+        Flag for binning a `quantitative` field, or a bin property
+        object
+        for binning parameters.
+    value : ['number', 'string', 'boolean']
+        A constant value in visual domain.
     timeUnit : object
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
@@ -91,14 +99,6 @@ class Field(schema.FieldDef):
         or an initial character of the type name (`"Q"`, `"T"`, `"O"`,
         `"N"`).
         This property is case insensitive.
-    value : ['number', 'string', 'boolean']
-        A constant value in visual domain.
-    title : string
-        Title for axis or legend.
-    bin : object
-        Flag for binning a `quantitative` field, or a bin property
-        object
-        for binning parameters.
     aggregate : object
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
@@ -110,9 +110,9 @@ class Field(schema.FieldDef):
     _skip_on_export = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', timeUnit=jst.undefined, type=jst.undefined, value=jst.undefined, title=jst.undefined, bin=jst.undefined, aggregate=jst.undefined, field=jst.undefined, **kwargs):
+    def __init__(self, shorthand='', title=jst.undefined, bin=jst.undefined, value=jst.undefined, timeUnit=jst.undefined, type=jst.undefined, aggregate=jst.undefined, field=jst.undefined, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(timeUnit=timeUnit, type=type, value=value, title=title, bin=bin, aggregate=aggregate, field=field)
+        kwds = dict(title=title, bin=bin, value=value, timeUnit=timeUnit, type=type, aggregate=aggregate, field=field)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(Field, self).__init__(**kwargs)
 
@@ -141,6 +141,16 @@ class OrderChannel(schema.OrderChannelDef):
     timeUnit : object
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
+    title : string
+        Title for axis or legend.
+    bin : object
+        Flag for binning a `quantitative` field, or a bin property
+        object
+        for binning parameters.
+    value : ['number', 'string', 'boolean']
+        A constant value in visual domain.
+    sort : object
+        
     type : object
         The encoded field's type of measurement. This can be either a
         full type
@@ -149,16 +159,6 @@ class OrderChannel(schema.OrderChannelDef):
         or an initial character of the type name (`"Q"`, `"T"`, `"O"`,
         `"N"`).
         This property is case insensitive.
-    sort : object
-        
-    bin : object
-        Flag for binning a `quantitative` field, or a bin property
-        object
-        for binning parameters.
-    value : ['number', 'string', 'boolean']
-        A constant value in visual domain.
-    title : string
-        Title for axis or legend.
     aggregate : object
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
@@ -170,9 +170,9 @@ class OrderChannel(schema.OrderChannelDef):
     _skip_on_export = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', timeUnit=jst.undefined, type=jst.undefined, sort=jst.undefined, bin=jst.undefined, value=jst.undefined, title=jst.undefined, aggregate=jst.undefined, field=jst.undefined, **kwargs):
+    def __init__(self, shorthand='', timeUnit=jst.undefined, title=jst.undefined, bin=jst.undefined, value=jst.undefined, sort=jst.undefined, type=jst.undefined, aggregate=jst.undefined, field=jst.undefined, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(timeUnit=timeUnit, type=type, sort=sort, bin=bin, value=value, title=title, aggregate=aggregate, field=field)
+        kwds = dict(timeUnit=timeUnit, title=title, bin=bin, value=value, sort=sort, type=type, aggregate=aggregate, field=field)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(OrderChannel, self).__init__(**kwargs)
 
@@ -198,9 +198,22 @@ class PositionChannel(schema.PositionChannelDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    timeUnit : object
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
-        `month`, `hour`).
+    axis : object
+        
+    field : string
+        Name of the field from which to pull a data value.
+    title : string
+        Title for axis or legend.
+    bin : object
+        Flag for binning a `quantitative` field, or a bin property
+        object
+        for binning parameters.
+    scale : object
+        
+    value : ['number', 'string', 'boolean']
+        A constant value in visual domain.
+    sort : object
+        
     type : object
         The encoded field's type of measurement. This can be either a
         full type
@@ -209,34 +222,21 @@ class PositionChannel(schema.PositionChannelDef):
         or an initial character of the type name (`"Q"`, `"T"`, `"O"`,
         `"N"`).
         This property is case insensitive.
-    field : string
-        Name of the field from which to pull a data value.
-    sort : object
-        
-    axis : object
-        
-    bin : object
-        Flag for binning a `quantitative` field, or a bin property
-        object
-        for binning parameters.
-    value : ['number', 'string', 'boolean']
-        A constant value in visual domain.
-    title : string
-        Title for axis or legend.
     aggregate : object
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
-    scale : object
-        
+    timeUnit : object
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
+        `month`, `hour`).
     """
     # Traitlets
     shorthand = jst.JSONString(default_value='', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`)")
     _skip_on_export = ['shorthand']
 
     # Class Methods
-    def __init__(self, shorthand='', timeUnit=jst.undefined, type=jst.undefined, field=jst.undefined, sort=jst.undefined, axis=jst.undefined, bin=jst.undefined, value=jst.undefined, title=jst.undefined, aggregate=jst.undefined, scale=jst.undefined, **kwargs):
+    def __init__(self, shorthand='', axis=jst.undefined, field=jst.undefined, title=jst.undefined, bin=jst.undefined, scale=jst.undefined, value=jst.undefined, sort=jst.undefined, type=jst.undefined, aggregate=jst.undefined, timeUnit=jst.undefined, **kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict(timeUnit=timeUnit, type=type, field=field, sort=sort, axis=axis, bin=bin, value=value, title=title, aggregate=aggregate, scale=scale)
+        kwds = dict(axis=axis, field=field, title=title, bin=bin, scale=scale, value=value, sort=sort, type=type, aggregate=aggregate, timeUnit=timeUnit)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(PositionChannel, self).__init__(**kwargs)
 

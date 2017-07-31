@@ -237,17 +237,13 @@ class TopLevelMixin(object):
         from .utils.html import to_html
         return to_html(self.to_dict(), template=template, title=title, **kwargs)
 
-    def to_dict(self, data=True, **kwargs):
-        D = super(TopLevelMixin, self).to_dict(data=data, **kwargs)
-        if data:
-            if isinstance(self.data, schema.Data):
-                D['data'] = self.data.to_dict()
-            elif isinstance(obj.data, pd.DataFrame):
-                values = sanitize_dataframe(obj.data).to_dict(orient='records')
-                D['data'] = schema.Data(values=values).to_dict()
-        else:
-            D.pop('data', None)
-        return D
+    def to_json(self, data=True, **kwargs):
+        return super(TopLevelMixin, self).to_json(data=data, json_kwds=kwargs)
+
+    @classmethod
+    def from_json(cls, json_string, **kwargs):
+        return super(TopLevelMixin, cls).from_json(json_string,
+                                                   json_kwds=kwargs)
 
     def _to_code(self, data=None):
         """Emit the CodeGen object used to export this chart to Python code."""
@@ -425,7 +421,7 @@ class TopLevelMixin(object):
                     self.transform_data(filter=filters)
 
 
-class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
+class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
     _data = None
 
     # use specialized version of Encoding and Transform
@@ -574,7 +570,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         return cls.from_dict(spec)
 
 
-class LayeredChart(schema.LayerSpec, TopLevelMixin):
+class LayeredChart(TopLevelMixin, schema.LayerSpec):
     _data = None
 
     # Use specialized version of Chart and Transform
@@ -629,7 +625,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         return self
 
 
-class FacetedChart(schema.FacetSpec, TopLevelMixin):
+class FacetedChart(TopLevelMixin, schema.FacetSpec):
     _data = None
 
     # Use specialized version of Facet, spec, and Transform

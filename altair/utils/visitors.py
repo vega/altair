@@ -5,9 +5,9 @@ import traitlets as T
 
 from ._py3k_compat import integer_types, string_types
 from .. import schema
-from ..schema import jstraitlets as jst
 from .codegen import CodeGen
 from . import sanitize_dataframe, construct_shorthand
+from ..schema import jstraitlets as jst
 
 
 class Visitor(object):
@@ -41,11 +41,10 @@ class ToDict(Visitor):
 
     def visit_BaseObject(self, obj, *args, **kwargs):
         D = {}
-        for k in obj.traits():
-            if k in obj and k not in obj.skip:
-                v = getattr(obj, k)
-                if v is not jst.undefined:
-                    D[k] = self.visit(v)
+        for k in obj.traits() and k not in getattr(obj, 'skip', []):
+            v = getattr(obj, k, jst.undefined)
+            if v is not jst.undefined:
+                D[k] = self.visit(v)
         return D
 
     def _visit_with_data(self, obj, data=True):
@@ -75,7 +74,8 @@ class ToCode(Visitor):
 
     def visit_BaseObject(self, obj, *args, **kwargs):
         kwds = {k: getattr(obj, k) for k in obj.traits()
-                if k not in obj.skip and k in obj}
+                if k not in obj.skip and
+                getattr(obj, k, jst.undefined) is not jst.undefined}
         kwds = {k: self.visit(v) for k, v in kwds.items()}
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
@@ -107,7 +107,7 @@ class ToCode(Visitor):
 
     def visit_Encoding(self, obj, *args, **kwargs):
         kwds = {k: getattr(obj, k) for k in obj.traits()
-                if k not in obj.skip and k in obj}
+                if k not in obj.skip and getattr(obj, k, jst.undefined) is not jst.undefinedj}
         kwds = {k: self.visit(v, shorten=True) for k, v in kwds.items()}
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
