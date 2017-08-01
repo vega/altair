@@ -1,6 +1,6 @@
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-76-g4c72983
-# - date: 2017-08-01 12:14:15
+# - altair version info: v1.2.0-79-gdc35e8f
+# - date: 2017-08-01 13:08:02
 
 import pandas as pd
 
