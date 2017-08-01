@@ -494,7 +494,7 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
                                 help=schema.ExtendedUnitSpec.encoding.help)
     transform = jst.JSONInstance(Transform,
                                  help=schema.ExtendedUnitSpec.transform.help)
-    mark = schema.Mark(allow_undefined=False, default_value='point', help="""The mark type.""")
+    mark = schema.Mark(default_value='point', help="""The mark type.""")
 
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
