@@ -2,36 +2,9 @@ import traitlets as T
 import pandas as pd
 
 from ._interface import jstraitlets as jst
-from . import _interface as schema
+from ._interface import schema
 
-from ..utils import sanitize_dataframe
-
-
-TYPECODE_MAP = {'ordinal': 'O',
-                'nominal': 'N',
-                'quantitative': 'Q',
-                'temporal': 'T'}
-
-
-def construct_shorthand(field=None, aggregate=None, type=None):
-    """Construct a shorthand representation.
-
-    See also: parse_shorthand"""
-    if field is jst.undefined or field is None:
-        return ''
-
-    sh = field
-
-    if aggregate is not jst.undefined and aggregate is not None:
-        sh = '{0}({1})'.format(aggregate, sh)
-
-    if type is not jst.undefined and type is not None:
-        type = TYPECODE_MAP.get(type, type)
-        if type not in TYPECODE_MAP.values():
-            raise ValueError('Unrecognized Type: {0}'.format(type))
-        sh = '{0}:{1}'.format(sh, type)
-
-    return sh
+from ..utils import sanitize_dataframe, construct_shorthand
 
 
 class ToDict(jst.ToDict):
