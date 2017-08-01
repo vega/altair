@@ -43,7 +43,7 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    {%- for (name, prop) in obj.base.wrapped_properties().items()|sort %}
+    {%- for (name, prop) in obj.base.wrapped_properties().items() %}
     {{ name }} : {{ prop.type }}
         {{ prop.indented_description() }}
     {%- endfor %}
@@ -54,9 +54,9 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
 
     # Class Methods
     {%- set comma = joiner(", ") %}
-    def __init__(self, shorthand='', {% for name in obj.base.wrapped_properties()|sort %}{{ name }}=jst.undefined, {% endfor %}**kwargs):
+    def __init__(self, shorthand='', {% for name in obj.base.wrapped_properties() %}{{ name }}=jst.undefined, {% endfor %}**kwargs):
         kwargs['shorthand'] = shorthand
-        kwds = dict({% for name in obj.base.wrapped_properties()|sort %}{{ comma() }}{{ name }}={{ name }}{% endfor %})
+        kwds = dict({% for name in obj.base.wrapped_properties() %}{{ comma() }}{{ name }}={{ name }}{% endfor %})
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super({{ obj.classname }}, self).__init__(**kwargs)
 
