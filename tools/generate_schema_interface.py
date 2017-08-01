@@ -1,448 +1,295 @@
+"""
+Wrap the altair schema and save to a source tree
+"""
+import subprocess
 import os
-import json
-import re
-import copy
-from itertools import chain, groupby
+import shutil
+from datetime import datetime
+from itertools import chain
 from collections import defaultdict
-from operator import itemgetter
+import copy
 
-from jinja2 import Environment, FileSystemLoader, environmentfilter
+import jinja2
+
+from altair_parser import JSONSchema, JSONSchemaPlugin
+from altair_parser.utils import load_dynamic_module, save_module
 
 
-def ensure_ascii_compatible(s):
-    """Ensure a string is ascii-compatible.
-    This is not an issue for Python 3, but if used in code will break Python 2
+def get_git_commit_info():
+    """Return a string describing the git version information"""
+    try:
+        label = subprocess.check_output(["git", "describe"]).decode().strip()
+    except subprocess.CalledProcessError:
+        label = "<unavailable>"
+    return label
+
+
+CHANNEL_WRAPPER_TEMPLATE = '''# Auto-generated file: do not modify directly
+# - altair version info: {{ version }}
+# - date: {{ date }}
+
+import pandas as pd
+
+from . import jstraitlets as jst
+from . import schema
+from ...utils import parse_shorthand, infer_vegalite_type
+
+
+{% for obj in objects -%}
+class {{ obj.classname }}(schema.{{ obj.base.classname }}):
+    """Wrapper for Vega-Lite {{ obj.base.classname }} definition.
+    {{ obj.base.indented_description(1) }}
+    Attributes
+    ----------
+    shorthand: Unicode
+        A shorthand description of the channel
+    {%- for (name, prop) in obj.base.wrapped_properties().items() %}
+    {{ name }} : {{ prop.type }}
+        {{ prop.indented_description() }}
+    {%- endfor %}
     """
-    # Replace common non-ascii characters with suitable equivalents
-    s = s.replace('\u2013', '-')
-    s.encode('ascii')  # if this errors, then add more replacements above
-    return s
+    # Traitlets
+    shorthand = jst.JSONString(default_value='', help="Shorthand specification of field, optionally including the aggregate and type (see :ref:`shorthand-description`)")
+    _skip_on_export = ['shorthand']
+
+    # Class Methods
+    {%- set comma = joiner(", ") %}
+    def __init__(self, shorthand='', {% for name in obj.base.wrapped_properties() %}{{ name }}=jst.undefined, {% endfor %}**kwargs):
+        kwargs['shorthand'] = shorthand
+        kwds = dict({% for name in obj.base.wrapped_properties() %}{{ comma() }}{{ name }}={{ name }}{% endfor %})
+        kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
+        super({{ obj.classname }}, self).__init__(**kwargs)
+
+    def _finalize(self, **kwargs):
+        """Finalize object: this involves inferring types if necessary"""
+        # parse the shorthand to extract the field, type, and aggregate
+        for key, val in parse_shorthand(self.shorthand).items():
+            setattr(self, key, val)
+
+        # infer the type if not already specified
+        if self.type is jst.undefined:
+            data = kwargs.get('data', jst.undefined)
+            if isinstance(data, pd.DataFrame) and self.field in data:
+                self.type = infer_vegalite_type(data[self.field])
+
+        super({{ obj.classname }}, self)._finalize(**kwargs)
 
 
-@environmentfilter
-def merge_imports(env, objects):
-    """Jinja filter to merge all imports from a list of objects"""
-    imports = chain(*(env.getattr(obj, 'imports') for obj in objects))
-    modules = defaultdict(set)
-    for imp in imports:
-        modules[env.getattr(imp, 'module')] |= set(env.getattr(imp, 'names'))
-    return ["from {0} import {1}".format(module, ', '.join(sorted(names)))
-            for module, names in sorted(modules.items())]
+{% endfor %}
+'''
 
+class ChannelWrapperPlugin(JSONSchemaPlugin):
+    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
 
-def getpath(*args):
-    """Get absolute path of joined directories relative to this file"""
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
+    def channel_classes(self, schema):
+        """return the list of channel class names"""
+        channels = set()
+        wrapped_defs = schema.wrapped_definitions()
+        for encoding_class in self.encoding_classes:
+            childschema = schema.make_child(schema.definitions[encoding_class])
+            for prop, propschema in childschema.wrapped_properties().items():
+                if not propschema.is_reference:
+                    subschemas = (propschema.make_child(s)
+                                  for s in propschema['anyOf'])
+                    propschema = next((sub for sub in subschemas
+                                       if sub.is_reference), None)
+                    if propschema is None:
+                        raise ValueError("Could not find classname for "
+                                         "property '{0}'".format(prop))
+                channels.add(propschema.classname)
+        return sorted(channels)
 
-
-# Construct the jinja template environment
-JINJA_ENV = Environment(loader=FileSystemLoader(getpath('templates')))
-JINJA_ENV.filters['repr'] = repr
-JINJA_ENV.filters['merge_imports'] = merge_imports
-
-TYPE_MAP = {"anyOf": 'Union',
-            "array": "List",
-            "boolean": "Bool",
-            "number": "CFloat",
-            "string": "Unicode",
-            "object": "Any",
-            }
-
-def _get_type(typ):
-    if isinstance(typ, list):
-        return 'TypeList'
-    else:
-        return TYPE_MAP.get(typ, "Any")
-
-# some traits have attributes: this mapping translates them from
-# vega-lite schema language to tratlets language
-ATTR_MAP = {'minimum': 'min',
-            'maximum': 'max',
-            'minItems': 'minlen',
-            'maxItems': 'maxlen'}
-
-# Map class names to their bases
-BASE_MAP = defaultdict(lambda: 'BaseObject')
-BASE_MAP['ExtendedUnitSpec'] = 'UnitSpec'
-BASE_MAP['Encoding'] = 'UnitEncoding'
-
-
-CHANNEL_COLLECTIONS = ['Encoding', 'Facet']
-
-
-class SchemaProperty(object):
-    """Class Wrapper for a property in a VegaLite Schema
-
-    This class exposes methods used in the templating.
-    """
-    def __init__(self, schema, name, top):
-        self.name = name
-        self.schema = schema
-        self.top = top
-
-        self.properties = {k: SchemaProperty(v, k, self.top)
-                           for k, v in self.schema.get('properties',
-                                                       {}).items()}
-
-    @property
-    def subtypes(self):
-        if hasattr(self, '_subtypes'):
-            return self._subtypes
-        trait = self.trait_name
-        if trait == 'Union':
-            return [self.__class__(s, '', self.top)
-                    for s in self.schema['anyOf']]
-        elif trait == 'TypeList':
-            return [self.__class__({'type': t}, '', self.top)
-                    for t in self.schema['type']]
-        elif trait == 'List':
-            return [self.__class__(self.schema['items'], '', self.top)]
-        else:
-            return []
-
-    @subtypes.setter
-    def subtypes(self, arg):
-        self._subtypes = arg
-
-    def rename(self, newname):
-        return self.__class__(self.schema, newname, self.top)
-
-    def copy(self):
-        return self.__class__(copy.deepcopy(self.schema), self.name, self.top)
-
-    def replace_refs(self, dct, module=None):
-        """Return a new object with all references replaced according to dct"""
-        refname = self.refname
-        if refname in dct:
-            newname = dct[refname]
-            self.top.definitions[newname] = self.top.definitions[refname]
-            self.refname = newname
-            if module is not None:
-                self.module = module
-        self.subtypes = [subtype.replace_refs(dct, module=module)
-                        for subtype in self.subtypes]
-        return self
-
-    @property
-    def type(self):
-        if '$ref' in self.schema:
-            return '$ref'
-        elif 'anyOf' in self.schema:
-            return 'anyOf'
-        else:
-            return self.schema.get('type', '')
-
-    @property
-    def trait_name(self):
-        if self.refname:
-            trait = self.top.definitions[self.refname].trait_name
-            if trait == 'Any':
-                return 'Instance'
-            else:
-                return self.refname
-        else:
-            return _get_type(self.type)
-
-    @property
-    def trait_descr(self):
-        trait = self.trait_name
-        if trait == 'Instance':
-            return self.refname
-        elif trait == 'TypeList':
-            return 'Union({0})'.format(', '.join(t.trait_descr
-                                                 for t in self.subtypes))
-        elif self.subtypes:
-            return '{0}({1})'.format(trait, ', '.join(t.trait_descr
-                                                      for t in self.subtypes))
-        else:
-            return trait
-
-    def _trait_fulldef(self, kwds=('allow_none=True', 'default_value=None')):
-        """This returns the full trait definition; e.g.
-
-        T.List(T.CFloat(), allow_none=True, default_value=None,
-               help="The offset (in pixels)"
-        """
-        kwds = list(kwds)
-        trait = self.trait_name
-
-        kwds += ['{0}={1}'.format(ATTR_MAP[key], self.schema[key])
-                 for key in sorted(ATTR_MAP.keys() & self.schema.keys())]
-
-        if self.description:
-            kwds.append('help="""{0}"""'.format(self.short_description))
-
-        def _join(kwds, precomma=False):
-            if precomma and kwds:
-                kwds = [''] + kwds
-            return ', '.join(kwds)
-
-        if trait == 'Union':
-            return ('T.Union([{0}])'
-                    ''.format(_join(t._trait_fulldef()
-                                    for t in self.subtypes)))
-        elif trait == 'TypeList':
-            return('T.Union([{}])'
-                   ''.format(_join(t._trait_fulldef()
-                                   for t in self.subtypes)))
-        elif trait == 'List':
-            subtrait = list(self.subtypes)[0]._trait_fulldef(kwds=[])
-            return 'T.List({0}{1})'.format(subtrait, _join(kwds, True))
-        elif trait == 'Instance':
-            return 'T.Instance({0}{1})'.format(self.refname, _join(kwds, True))
-        elif trait == self.refname:
-            return '{0}({1})'.format(self.refname, _join(kwds))
-        else:
-            return 'T.{0}({1})'.format(trait, _join(kwds))
-
-    trait_fulldef = property(_trait_fulldef)
-
-    @property
-    def trait_or_subtrait(self):
-        if self.refname is not None:
-            return self.refname
-        elif self.trait_name in ['Union', 'List', 'TypeList']:
-            for t in self.subtypes:
-                if t.trait_or_subtrait is not None:
-                    return t.trait_or_subtrait
-            else:
-                return None
-        else:
-            return None
-
-    @property
-    def description(self):
-        return ensure_ascii_compatible(self.schema.get('description', ''))
-
-    @property
-    def short_description(self):
-        if self.description:
-            # replace all whitespace with single spaces.
-            desc = re.sub(r"\s+", ' ', self.description)
-            # truncate description in appropriate place
-            for lineend in ['(e.g.', '.', ';']:
-                desc = desc.split(lineend)[0]
-            return desc + '.'
-        else:
-            return ''
-
-    @property
-    def long_description(self):
-        return self.description
-
-    @property
-    def refname(self):
-        if '$ref' in self.schema:
-            return self.schema['$ref'].split('/')[-1]
-        else:
-            return None
-
-    @refname.setter
-    def refname(self, refname):
-        if not self.refname:
-            raise AttributeError("cannot set refname")
-        self.schema['$ref'] = 'definitions/{0}'.format(refname)
-
-    @property
-    def module(self):
-        mod = getattr(self, '_module', '')
-        if mod:
-            return mod
-        elif self.refname:
-            return '.' + self.refname.lower()
-        else:
-            return ''
-
-    @module.setter
-    def module(self, mod):
-        self._module = mod
-
-    @property
-    def channelclassname(self):
-        refname = self.refname
-        if refname:
-            return refname
-
-        for subtype in self.subtypes:
-            name = subtype.channelclassname
-            if name:
-                return name
-
-        return None
-
-    @property
-    def imports(self):
-        if self.refname:
-            yield dict(module=self.module, names=[self.refname])
-        for t in self.subtypes:
-            yield from t.imports
-        for v in self.properties.values():
-            yield from v.imports
-
-    @property
-    def base_import(self):
-        if self.basename == 'BaseObject':
-            return 'from ..baseobject import BaseObject'
-        else:
-            return 'from .{0} import {1}'.format(self.basename.lower(),
-                                                 self.basename)
-
-    @property
-    def basename(self):
-        return getattr(self, '_basename', None) or BASE_MAP[self.name]
-
-    @basename.setter
-    def basename(self, name):
-        self._basename = name
-
-    @property
-    def attributes(self):
-        return [v for k, v in sorted(self.properties.items())]
-
-    @property
-    def enum(self):
-        return self.schema.get('enum', [])
-
-
-class VegaLiteSchema(SchemaProperty):
-    """
-    This is a wrapper for the vegalite JSON schema that provides tools to
-    export Python wrappers.
-    """
-    def __init__(self, schema_file=None):
-        if schema_file is None:
-            schema_file = getpath('..', 'altair', 'schema',
-                                  'vega-lite-schema.json')
-        with open(schema_file) as f:
-            schema = json.load(f)
-
-        self.definitions = {k: SchemaProperty(v, k, self)
-                            for k, v in schema['definitions'].items()}
-
-        super(VegaLiteSchema, self).__init__(schema, 'VegaLiteSchema', self)
-
-    def wrappers(self):
-        """Iterator over all class aliases to generate.
-
-        These will be passed via jinja to ``templates/{template}.tpl``
-        and saved to ``altair/schema/_wrappers/{template}.py``
-        """
-
-        # Channel wrapper classes
-        for base in ['PositionChannelDef', 'ChannelDefWithLegend',
-                     'FieldDef', 'OrderChannelDef']:
-            wrappername = base.replace('Def', '')
-            yield dict(name=wrappername,
-                       base=self.definitions[base],
-                       imports=[dict(module='.._interface', names=[base])],
+    def wrapped_channel_classes(self, schema):
+        """return a dictionary of channel base class info"""
+        for base in self.channel_classes(schema):
+            yield dict(classname=base.replace('Def', ''),
+                       base=schema.wrapped_definitions()[base.lower()],
                        root='channel_wrappers')
 
-        # Encoding channel specializations
-        encoding = self.definitions['Encoding']
-        for attr in encoding.attributes:
-            base = attr.trait_or_subtrait
-            wrappername = base.replace('Def', '')
-            yield dict(name=attr.name.title(),
-                       base=self.definitions[base].rename(wrappername),
-                       imports=[dict(module='.channel_wrappers', names=[wrappername])],
-                       root='named_channels')
+    def module_imports(self, schema):
+        return ['from .channel_wrappers import {0}'.format(cls['classname'])
+                for cls in self.wrapped_channel_classes(schema)]
 
-        # Channel collections
-        def construct_dct(name):
-            return {key: name for key in ['PositionChannelDef', 'FieldDef',
-                                          'OrderChannelDef', 'ChannelDefWithLegend']}
-        for name in CHANNEL_COLLECTIONS:
-            obj = self.top.definitions[name].copy()
-            obj.basename = name
-            obj.root = 'channel_collections'
-            for prop, val in obj.properties.items():
-                obj.properties[prop] = val.replace_refs(construct_dct(prop.title()),
-                                                        module='.named_channels')
-            yield obj
+    def code_files(self, schema):
+        template = jinja2.Template(CHANNEL_WRAPPER_TEMPLATE)
+        date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        version = get_git_commit_info()
+        objects = self.wrapped_channel_classes(schema)
+        return {'channel_wrappers.py': template.render(date=date,
+                                                       version=version,
+                                                       objects=objects)}
 
-    def write_interface(self, path=None):
-        # Make sure the path is valid
-        if path is None:
-            path = getpath('..', 'altair', 'schema', '_interface')
-        if not os.path.exists(path):
-            os.makedirs(path)
 
-        print("Writing code to {0}".format(path))
+NAMED_CHANNEL_TEMPLATE = '''# Auto-generated file: do not modify directly
+# - altair version info: {{ version }}
+# - date: {{ date }}
 
-        # Write Init File
-        template = JINJA_ENV.get_template('interface_init.tpl')
-        header = "Auto-generated Python wrappers for Vega-Lite Schema"
-        print(" - Writing __init__.py")
-        objects = [dict(module=obj.lower(), classname=obj)
-                   for obj in sorted(self.definitions)]
-        with open(os.path.join(path, '__init__.py'), 'w') as f:
-            f.write(template.render(objects=objects,
-                                    header=header))
+from . import channel_wrappers
 
-        # Write Class Definition files
-        templates = {'string': JINJA_ENV.get_template('interface_enum.tpl'),
-                     'object': JINJA_ENV.get_template('interface_object.tpl')}
-        for key, prop in sorted(self.definitions.items()):
-            if prop.type not in templates:
-                raise ValueError("No template for type={0}".format(prop.type))
-            outfile = os.path.join(path, '{0}.py'.format(key.lower()))
-            print(" - Writing {0}".format(os.path.basename(outfile)))
-            with open(outfile, 'w') as f:
-                f.write(templates[prop.type].render(cls=prop))
+{% for object in objects -%}
+class {{ object.classname }}(channel_wrappers.{{ object.basename }}):
+    pass
 
-    def write_interface_tests(self, path=None):
-        # Make sure the path is valid
-        if path is None:
-            path = getpath('..', 'altair', 'schema', '_interface', 'tests')
-        if not os.path.exists(path):
-            os.makedirs(path)
 
-        print("Writing tests to {0}".format(path))
+{% endfor -%}
+'''
 
-        # Write test Init File
-        template = JINJA_ENV.get_template('interface_init.tpl')
-        header = 'Auto-generated tests for Vega-Lite Schema wrappers'
-        print(" - Writing __init__.py")
-        with open(os.path.join(path, '__init__.py'), 'w') as f:
-            f.write(template.render(objects=[], header=header))
+class NamedChannelPlugin(JSONSchemaPlugin):
+    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
 
-        # Write test file
-        template = JINJA_ENV.get_template('interface_test.tpl')
-        classes = [prop for key, prop in sorted(self.definitions.items())]
-        print(" - Writing test_instantiations.py")
-        with open(os.path.join(path, 'test_instantiations.py'), 'w') as f:
-            f.write(template.render(classes=classes))
+    def channel_classes(self, schema):
+        """return the list of channel class names"""
+        channels = {}
+        wrapped_defs = schema.wrapped_definitions()
+        for encoding_class in self.encoding_classes:
+            childschema = schema.make_child(schema.definitions[encoding_class])
+            for prop, propschema in childschema.wrapped_properties().items():
+                if not propschema.is_reference:
+                    subschemas = (propschema.make_child(s)
+                                  for s in propschema['anyOf'])
+                    propschema = next((sub for sub in subschemas
+                                       if sub.is_reference), None)
+                    if propschema is None:
+                        raise ValueError("Could not find classname for "
+                                         "property '{0}'".format(prop))
+                channels[prop.title()] = propschema.classname
+        return channels
 
-    def write_wrappers(self, path=None):
-        # make sure the path is valid
-        if path is None:
-            path = getpath('..', 'altair', 'schema', '_wrappers')
-        if not os.path.exists(path):
-            os.makedirs(path)
+    def module_imports(self, schema):
+        return['from .named_channels import {0}'.format(name)
+               for name in sorted(self.channel_classes(schema))]
 
-        print("Writing wrappers to {0}".format(path))
+    def code_files(self, schema):
+        template = jinja2.Template(NAMED_CHANNEL_TEMPLATE)
+        date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        version = get_git_commit_info()
 
-        # Write wrapper definition files
-        groups = groupby(self.wrappers(), lambda w: JINJA_ENV.getattr(w, 'root'))
-        for root, wrappers in groups:
-            template = JINJA_ENV.get_template('{0}.tpl'.format(root))
-            filename = os.path.join(path, '{0}.py'.format(root))
-            print("- writing {0}".format(filename))
-            with open(filename, 'w') as f:
-                f.write(template.render(objects=list(wrappers)))
+        objects = [{'classname': name, 'basename': base.replace('Def', '')}
+                   for (name, base)
+                   in sorted(self.channel_classes(schema).items())]
+        return {'named_channels.py': template.render(date=date,
+                                                     version=version,
+                                                     objects=objects)}
 
-        # Write wrapper __init__.py file
-        template = JINJA_ENV.get_template('wrapper_init.tpl')
-        filename = os.path.join(path, '__init__.py')
-        header = 'Wrappers for low-level schema objects'
-        print("- writing {0}".format(filename))
-        with open(filename, 'w') as f:
-            f.write(template.render(objects=list(self.wrappers()),
-                                    header=header))
+
+
+CHANNEL_COLLECTION_TEMPLATE = '''# Auto-generated file: do not modify directly
+# - altair version info: {{ version }}
+# - date: {{ date }}
+
+import traitlets as T
+from . import jstraitlets as jst
+from . import schema
+
+
+def _localname(name):
+    return '.'.join(__name__.split('.')[:-1] + ['named_channels', name])
+
+
+{% for obj in objects -%}
+class {{ obj.classname }}(schema.{{ obj.classname }}):
+    """Object for storing channel encodings
+
+    Attributes
+    ----------
+    {% for (name, prop) in obj.wrapped_properties().items() -%}
+    {{ name }}: {{ prop.type }}
+        {{ prop.indented_description() }}
+    {% endfor -%}
+    """
+    _skip_on_export = ['channel_names']
+    {%- set comma = joiner(", ") %}
+    channel_names = [{% for name, prop in obj.wrapped_properties().items() %}{{ comma() }}'{{ name }}'{% endfor %}]
+    {% for (name, prop) in obj.wrapped_properties().items() %}
+    {{ name }} = {{ prop.trait_code }}
+    {%- endfor %}
+
+
+{% endfor -%}
+'''
+
+
+class ChannelCollectionPlugin(JSONSchemaPlugin):
+    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
+
+    def get_base(self, schema):
+        if '$ref' in schema:
+            return schema['$ref'].rsplit('/', 1)[-1]
+        for subschema in schema.get('anyOf', []):
+            if '$ref' in subschema:
+                return subschema['$ref'].rsplit('/', 1)[-1]
+        raise ValueError("Cannot get base for schema {0}".format(schema))
+
+    def replace_base_with_name(self, name, schema):
+        schema = copy.deepcopy(schema)
+        if '$ref' in schema:
+            a, b = schema['$ref'].rsplit('/', 1)
+            schema['$ref'] = '/'.join([a, name])
+        if 'anyOf' in schema:
+            schema['anyOf'] = [self.replace_base_with_name(name, subschema)
+                               for subschema in schema['anyOf']]
+        if schema.get('type', None) == 'array':
+            schema['items'] = self.replace_base_with_name(name, schema['items'])
+        return schema
+
+    def module_imports(self, schema):
+        return ['from .channel_collections import {0}'.format(name)
+                for name in self.encoding_classes]
+
+    def code_files(self, schema):
+        # This creates a specialization of each of the encoding classes, where
+        # the generic channel names are replaced by named classes derived
+        # from the channels (in named_channels.py)
+        # We do this by copying and modifying the schema dictionary before
+        # generating the code for these three classes.
+        template = jinja2.Template(CHANNEL_COLLECTION_TEMPLATE)
+        date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        version = get_git_commit_info()
+
+        # Here's where the schema is copied: we use a deep copy because we
+        # are going to modify pieces of the dictionary.
+        toplevel = schema.copy(deepcopy=True)
+
+        # Now we cycle though the encoding classes and modify their schema
+        # dictionaries, such that the properties point to the named channel
+        # definitions rather than pointing to the generic channel definitions.
+        objects = []
+        definitions = toplevel.wrapped_definitions()
+        for classname in self.encoding_classes:
+            obj = definitions[classname.lower()]
+            for name, prop in obj.properties.items():
+                basename = self.get_base(prop)
+                # add a new definition
+                toplevel.definitions[name.title()] = toplevel.definitions[basename]
+                # rewrite the object schema to point to this definition
+                obj.properties[name] = self.replace_base_with_name(name.title(), prop)
+            objects.append(obj)
+
+        return {'channel_collections.py': template.render(date=date,
+                                                          version=version,
+                                                          objects=objects)}
+
+
+def write_wrappers():
+    # TODO: use vega-schema repo locally
+    schemafile = '../altair/schema/vega-lite-schema.json'
+    module = '_interface'
+    path = os.path.abspath(os.path.join('..', 'altair', 'schema'))
+    fullpath = os.path.join(path, module)
+
+    if not os.path.exists(path):
+        raise ValueError("'{0}' does not exist".format(path))
+
+    if os.path.exists(fullpath):
+        shutil.rmtree(fullpath)
+
+    # Save the basic schema wrappers
+    schema = JSONSchema.from_json_file(schemafile, module=module)
+    schema.add_plugins(ChannelWrapperPlugin(),
+                       NamedChannelPlugin(),
+                       ChannelCollectionPlugin())
+    schema.write_module(module=module, path=os.path.abspath(path))
 
 
 if __name__ == '__main__':
-    schema = VegaLiteSchema()
-    schema.write_interface()
-    schema.write_interface_tests()
-    schema.write_wrappers()
+    write_wrappers()
