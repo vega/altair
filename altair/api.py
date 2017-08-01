@@ -7,11 +7,12 @@ import os
 import functools
 import operator
 import uuid
+import warnings
 
 import traitlets as T
 import pandas as pd
 
-from .utils import visitors, node, create_vegalite_mime_bundle
+from .utils import node, create_vegalite_mime_bundle
 from .utils._py3k_compat import string_types
 from .utils.traitlet_helpers import update_subtraits
 
@@ -305,15 +306,19 @@ class TopLevelMixin(object):
         return super(TopLevelMixin, cls).from_json(json_string,
                                                    json_kwds=kwargs)
 
-    def _to_code(self, data=None):
-        """Emit the CodeGen object used to export this chart to Python code."""
-        # do not call _finalize(), as we want the output code
-        # to reflect the exact input
-        return visitors.ToCode().visit(self, data=data)
-
+    # TODO: Deprecate this
     def to_altair(self, data=None):
+        """DEPRECATED. Use to_python() instead.
+
+        Emit the Python code as a string required to created this Chart.
+        """
+        warnings.warn("to_altair() is deprecated. Use to_python() instead",
+                      category=DeprecationWarning)
+        return self.to_python(data=data)
+
+    def to_python(self, data=None):
         """Emit the Python code as a string required to created this Chart."""
-        return str(self._to_code(data=data))
+        return super(TopLevelMixin, self).to_python(data=data)
 
     # transform method
     @use_signature(schema.Transform)

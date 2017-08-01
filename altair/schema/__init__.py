@@ -5,4 +5,5 @@ from . import visitors
 
 from ._interface import jstraitlets
 jstraitlets.JSONHasTraits.register_converters(to_dict=visitors.ToDict,
-                                              from_dict=visitors.FromDict)
+                                              from_dict=visitors.FromDict,
+                                              to_python=visitors.ToPython)
