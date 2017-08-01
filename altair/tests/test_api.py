@@ -10,7 +10,6 @@ from .. import *
 from .. import schema
 from ..schema import jstraitlets as jst
 from ..examples import iter_examples
-from ..utils import parse_shorthand, infer_vegalite_type
 from ..utils.node import consistent_with_png, consistent_with_svg
 from ..datasets import connection_ok
 from ..utils._py3k_compat import PY2

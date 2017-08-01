@@ -1,3 +1,4 @@
+import traitlets as T
 import pandas as pd
 
 from ._interface import jstraitlets as jst
@@ -88,6 +89,9 @@ class ToPython(jst.ToPython):
         kwds = {k: getattr(obj, k) for k in obj.traits()
                 if k not in obj._skip_on_export and
                 getattr(obj, k, jst.undefined) is not jst.undefined}
+        missing = set(obj._required_traits) - set(kwds)
+        if missing:
+            raise T.TraitError("Required traits {0} missing".format(missing))
         kwds = {k: self.visit(v) for k, v in kwds.items()}
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 
