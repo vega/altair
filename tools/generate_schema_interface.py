@@ -291,7 +291,7 @@ def write_wrappers():
     schema.add_plugins(ChannelWrapperPlugin(),
                        NamedChannelPlugin(),
                        ChannelCollectionPlugin())
-    schema.write_module(module=module, path=os.path.abspath(path))
+    schema.write_module(module=module, path=os.path.abspath(path), quiet=False)
 
 
 if __name__ == '__main__':
