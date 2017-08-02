@@ -24,7 +24,8 @@ def get_git_commit_info():
     return label
 
 
-CHANNEL_WRAPPER_TEMPLATE = '''# Auto-generated file: do not modify directly
+CHANNEL_WRAPPER_TEMPLATE = '''# -*- coding: utf-8 -*-
+# Auto-generated file: do not modify directly
 # - altair version info: {{ version }}
 # - date: {{ date }}
 
@@ -120,7 +121,8 @@ class ChannelWrapperPlugin(JSONSchemaPlugin):
                                                        objects=objects)}
 
 
-NAMED_CHANNEL_TEMPLATE = '''# Auto-generated file: do not modify directly
+NAMED_CHANNEL_TEMPLATE = '''# -*- coding: utf-8 -*-
+# Auto-generated file: do not modify directly
 # - altair version info: {{ version }}
 # - date: {{ date }}
 
@@ -173,7 +175,8 @@ class NamedChannelPlugin(JSONSchemaPlugin):
 
 
 
-CHANNEL_COLLECTION_TEMPLATE = '''# Auto-generated file: do not modify directly
+CHANNEL_COLLECTION_TEMPLATE = '''# -*- coding: utf-8 -*-
+# Auto-generated file: do not modify directly
 # - altair version info: {{ version }}
 # - date: {{ date }}
 
