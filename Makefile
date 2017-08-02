@@ -18,7 +18,7 @@ generate-examples :
 
 
 generate-schema :
-	rm -rf altair/schema/_interface altair/schema/_wrappers
+	rm -rf altair/schema/_interface
 	python tools/generate_schema_interface.py
 
 

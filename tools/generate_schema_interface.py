@@ -277,8 +277,11 @@ def write_wrappers():
     # TODO: use vega-schema repo locally
     schemafile = '../altair/schema/vega-lite-schema.json'
     module = '_interface'
-    path = os.path.abspath(os.path.join('..', 'altair', 'schema'))
+    filepath = os.path.dirname(__file__)
+
+    path = os.path.abspath(os.path.join(filepath, '..', 'altair', 'schema'))
     fullpath = os.path.join(path, module)
+    schemafile = os.path.abspath(os.path.join(filepath, schemafile))
 
     if not os.path.exists(path):
         raise ValueError("'{0}' does not exist".format(path))
