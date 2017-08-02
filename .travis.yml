@@ -4,8 +4,8 @@ sudo: required
 
 python:
   - 2.7
-  - 3.4
   - 3.5
+  - 3.6
 
 env:
   matrix:
@@ -14,7 +14,7 @@ env:
 
 matrix:
   include:
-  - python: 2.7  # 2.7 is required for node-gyp used in docs build
+  - python: 3.6
     env: BUILD="docs" INSTALL="pip"
   allow_failures:
     - env: BUILD="docs"
