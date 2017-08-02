@@ -228,7 +228,7 @@ and use it to create an Altair plot, changing only the data URL to make it absol
     """
     Chart.from_json(spec)
 
-The :meth:`Chart.to_altair` method outputs Python code that will reconstruct this chart:
+The :meth:`Chart.to_python` method outputs Python code that will reconstruct this chart:
 
 .. testsetup::
 
@@ -250,7 +250,7 @@ The :meth:`Chart.to_altair` method outputs Python code that will reconstruct thi
 .. testcode::
 
     chart = Chart.from_json(spec)
-    print(chart.to_altair())
+    print(chart.to_python())
 
 .. testoutput::
 

@@ -122,7 +122,13 @@ def populate_examples(num_examples=None, category=None, shuffle=False,
 
     for prev_ex, example, next_ex in prev_this_next(examples):
         try:
-            code = Chart.from_dict(example['spec']).to_altair()
+            chart = Chart.from_dict(example['spec'])
+            if hasattr(chart, 'to_python'):
+                # Altair > 1.2
+                code = chart.to_python()
+            else:
+                # Altair <= 1.2
+                code = chart.to_altair()
         except Exception as e:
             warnings.warn('altair-gallery: example {0} produced an error:\n'
                           '{1}\n{2}'.format(example['name'], type(e), str(e)))
