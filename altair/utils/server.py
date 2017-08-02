@@ -25,6 +25,8 @@ You must interrupt the kernel to cancel this command.
 class MockRequest(object):
     def makefile(self, *args, **kwargs):
         return IO(b"GET /")
+    def sendall(self, response):
+        pass
 
 class MockServer(object):
     def __init__(self, ip_port, Handler):
