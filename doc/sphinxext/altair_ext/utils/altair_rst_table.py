@@ -7,9 +7,12 @@ import traitlets
 from traitlets.utils.importstring import import_item
 
 from altair.api import TopLevelMixin
-from altair.schema.baseobject import BaseObject
-from altair.schema._wrappers import named_channels, channel_collections
-
+try:
+    # Altair > 1.2
+    from altair.schema._interface import named_channels, channel_collections
+except:
+    # Altair <= 1.2
+    from altair.schema._wrappers import named_channels, channel_collections
 
 __all__ = ['altair_rst_table']
 
@@ -65,8 +68,6 @@ def _get_trait_info(name, trait):
 
 def _get_category(obj):
     """Get the category of an altair object"""
-    from altair.schema._wrappers import named_channels, channel_collections
-
     name = obj.__name__
 
     if 'Chart' in name:

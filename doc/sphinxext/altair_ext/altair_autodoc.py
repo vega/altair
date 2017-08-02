@@ -23,7 +23,7 @@ try:
     from altair.schema.baseobject import BaseObject as AltairBase
 except ImportError:
     # Altair > 1.2
-    from altair.schema.jstraitlets import JSONHasTraits as AltairBase
+    from altair.schema._interface.jstraitlets import JSONHasTraits as AltairBase
 
 from .utils import import_obj
 from .utils.altair_rst_table import altair_rst_table
