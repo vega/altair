@@ -1,7 +1,10 @@
 """
 Utility for creating an rst table for documenting altair objects
 """
+import six
+
 import traitlets
+from traitlets.utils.importstring import import_item
 
 from altair.api import TopLevelMixin
 from altair.schema.baseobject import BaseObject
@@ -49,8 +52,11 @@ def _get_trait_info(name, trait):
         help_ += '/'.join([info['help'] for info in trait_info
                            if info['help'] != '--'])
     elif isinstance(trait, traitlets.Instance):
-        if issubclass(trait.klass, traitlets.HasTraits):
-            type_ = ':class:`~altair.{0}`'.format(trait.klass.__name__)
+        cls = trait.klass
+        if isinstance(cls, six.string_types):
+            cls = import_item(cls)
+        if issubclass(cls, traitlets.HasTraits):
+            type_ = ':class:`~altair.{0}`'.format(cls.__name__)
 
     type_ = type_.replace('a ', '')
     type_ = type_.replace('unicode string', 'string')
