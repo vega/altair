@@ -1,4 +1,6 @@
 LONG_DESCRIPTION = """
+Altair: A declarative statistical visualization library for Python.
+
 http://altair-viz.github.io/
 
 This package provides a Python API for building statistical visualizations
@@ -31,6 +33,7 @@ NAME                = "altair"
 PACKAGES            = ['altair',
                        'altair.tests',
                        'altair.datasets',
+                       'altair.datasets.tests',
                        'altair.examples',
                        'altair.examples.tests',
                        'altair.expr',
@@ -39,6 +42,7 @@ PACKAGES            = ['altair',
                        'altair.utils.tests',
                        'altair.schema',
                        'altair.schema._interface',
+                       'altair.schema._interface.tests',
                        ]
 PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
                                   'notebooks/*.html',
