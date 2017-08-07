@@ -311,9 +311,9 @@ in the ``vlSpec`` Javascript variable:
       <meta charset="utf-8">
 
       <script src="https://d3js.org/d3.v3.min.js"></script>
-      <script src="https://vega.github.io/vega/vega.js"></script>
-      <script src="https://vega.github.io/vega-lite/vega-lite.js"></script>
-      <script src="https://vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/2.6.5/vega.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/1.2.1/vega-lite.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/2.2.0/vega-embed.min.js"></script>
 
       <style media="screen">
         /* Add space between vega-embed links  */
