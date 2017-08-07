@@ -17,7 +17,6 @@ def test_json_examples_round_trip(example):
     Test that Altair correctly round-trips JSON with to_dict() and to_python()
     """
     filename, json_dict = example
-    print(filename)
 
     v = Chart.from_dict(json_dict)
     v_dict = v.to_dict()
