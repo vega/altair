@@ -11,8 +11,8 @@ import copy
 
 import jinja2
 
-from altair_parser import JSONSchema, JSONSchemaPlugin
-from altair_parser.utils import load_dynamic_module, save_module
+from schemapi import JSONSchema, JSONSchemaPlugin
+from schemapi.utils import load_dynamic_module, save_module
 
 
 def get_git_commit_info():
