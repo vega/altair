@@ -290,11 +290,12 @@ def write_wrappers():
         shutil.rmtree(fullpath)
 
     # Save the basic schema wrappers
-    schema = JSONSchema.from_json_file(schemafile, module=module)
+    schema = JSONSchema.from_json_file(schemafile)
     schema.add_plugins(ChannelWrapperPlugin(),
                        NamedChannelPlugin(),
                        ChannelCollectionPlugin())
-    schema.write_module(module=module, path=os.path.abspath(path), quiet=False)
+    schema.write_module(modulename=module, location=os.path.abspath(path),
+                        quiet=False)
 
 
 if __name__ == '__main__':
