@@ -150,6 +150,7 @@ class Transform(schema.Transform):
 # Top-level Objects
 #*************************************************************************
 class TopLevelMixin(object):
+
     @staticmethod
     def _png_output_available():
         return node.vl_cmd_available('vl2png')
@@ -251,7 +252,9 @@ class TopLevelMixin(object):
         spec : dict
             The JSON specification of the chart object.
         """
-        return super(TopLevelMixin, self).to_dict(data=data)
+        dct = super(TopLevelMixin, self).to_dict(data=data)
+        dct['$schema'] = schema.vegalite_schema_url
+        return dct
 
     @classmethod
     def from_dict(cls, dct):
@@ -267,6 +270,14 @@ class TopLevelMixin(object):
         chart : Chart object
             The altair Chart object built from the specification.
         """
+        if '$schema' in dct:
+            if dct['$schema'] != schema.vegalite_schema_url:
+                warnings.warn('from_dict: $schema={0} does not match '
+                              'schema used to build this Altair version '
+                              '({1}. '
+                              ''.format(dct['$schema'],
+                                        schema.vegalite_schema_url))
+            dct = {k: v for k, v in dct.items() if k != '$schema'}
         return super(TopLevelMixin, cls).from_dict(dct)
 
     def to_json(self, data=True, sort_keys=True, **kwargs):
