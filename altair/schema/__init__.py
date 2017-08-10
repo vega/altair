@@ -1,6 +1,6 @@
 from ._interface import *
 from ._schema import SCHEMA_FILE, load_schema
-from ._vegalite_version import vegalite_version
+from ._vegalite_version import vegalite_version, vegalite_schema_url
 from . import visitors
 
 from ._interface import jstraitlets

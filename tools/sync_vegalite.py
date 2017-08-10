@@ -8,24 +8,33 @@ from contextlib import contextmanager
 
 import git  # pip install gitpython
 
+try:
+    from urllib.request import urlopen
+except ImportError:
+    # Python 2.X
+    from urllib2 import urlopen
+
 
 def abspath(*args):
     """Get absolute path relative to this file"""
     return os.path.abspath(os.path.join(os.path.dirname(__file__), *args))
 
 
-VEGALITE_TAG = 'v1.2.1'
+SCHEMA_URL = "https://vega.github.io/schema/{library}/{version}.json"
+
+VEGALITE_VERSION = 'v1.2.1'
+VEGA_VERSION = 'v2.6.5'
 VEGALITE_PATH = abspath('repos', 'vega-lite')
 VEGALITE_URL = 'https://github.com/vega/vega-lite.git'
 
-VEGA_DATA_TAG = 'v1.8.0'
+VEGA_DATA_VERSION = 'v1.8.0'
 VEGA_DATA_PATH = abspath('repos', 'vega-datasets')
 VEGA_DATA_URL = 'https://github.com/vega/vega-datasets.git'
 
-VEGALITE_VERSION_FILE = """
-# Automatically written by tools/sync_vegalite.py
+VERSION_FILE = """# Automatically written by tools/sync_vegalite.py
 # Do not modify this manually
-vegalite_version = '{version}'
+vegalite_version = '{vegalite_version}'
+vegalite_schema_url = '{vegalite_schema_url}'
 """
 
 
@@ -55,19 +64,28 @@ def checkout_tag(tag, local_repo, url):
         vegalite.branches[0].checkout()
 
 
-def sync_schema(vegalite_repo, version,
-                filename='vega-lite-schema.json',
-                destination=abspath('..', 'altair', 'schema')):
-    versionfile = os.path.join(destination, '_vegalite_version.py')
-    with open(versionfile, 'w') as f:
-        f.write(VEGALITE_VERSION_FILE.format(version=version))
+def sync_schema(vegalite_version,
+                destination=abspath('..', 'altair', 'schema'),
+                schema_filename='vega-lite-schema.json'):
+    vegalite_schema_url = SCHEMA_URL.format(library='vega-lite',
+                                            version=vegalite_version)
 
-    source = os.path.join(vegalite_repo, filename)
-    destination = os.path.join(destination, filename)
-    print("Copying Vega-Lite Schema:")
-    print("  Source:     ", source)
-    print("  Destination:", destination)
-    shutil.copyfile(source, destination)
+    version_file_path = os.path.join(destination, '_vegalite_version.py')
+    version_file_content = VERSION_FILE.format(
+                                    vegalite_version=vegalite_version,
+                                    vegalite_schema_url=vegalite_schema_url)
+    print("Writing version info")
+    print(" Filename: {0}".format(version_file_path))
+    with open(version_file_path, 'w') as f:
+        f.write(version_file_content)
+
+    schema_destination = os.path.join(destination, schema_filename)
+    print("Downloading Vega-Lite {0} Schema".format(vegalite_version))
+    print(" Source:      {0}".format(vegalite_schema_url))
+    print(" Destination: {0}".format(schema_destination))
+    with urlopen(vegalite_schema_url) as source:
+        with open(schema_destination, 'wb') as dest:
+            dest.write(source.read())
 
 
 def sync_examples(vegalite_repo,
@@ -146,12 +164,11 @@ def main():
         parser.print_help()
 
     if args.schema:
-        tag = args.tag or VEGALITE_TAG
-        with checkout_tag(tag, VEGALITE_PATH, VEGALITE_URL):
-            sync_schema(VEGALITE_PATH, tag.strip('v'))
+        version = args.tag or VEGALITE_VERSION
+        sync_schema(version)
 
     if args.examples:
-        tag = args.tag or VEGALITE_TAG
+        tag = args.tag or VEGALITE_VERSION
         with checkout_tag(tag, VEGALITE_PATH, VEGALITE_URL):
             sync_examples(VEGALITE_PATH)
 

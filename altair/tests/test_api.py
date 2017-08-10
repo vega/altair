@@ -567,3 +567,15 @@ def test_max_rows():
     d = chart.to_dict()
     assert isinstance(d, dict)
     assert 'max_rows' not in d
+
+
+def test_schema_url():
+    chart = make_chart()
+
+    # Make sure that $schema is added to the output
+    dct = chart.to_dict()
+    assert '$schema' in dct
+    assert dct['$schema'] == schema.vegalite_schema_url
+
+    # Make sure that $schema
+    chart = Chart.from_dict(dct)

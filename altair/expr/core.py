@@ -221,6 +221,7 @@ class DataFrame(object):
     >>> chart = Chart(df)
     >>> print(chart.to_json(indent=2))         # doctest: +NORMALIZE_WHITESPACE
     {
+      "$schema": "https://vega.github.io/schema/vega-lite/v1.2.1.json",
       "data": {
         "url": "url/to/my/data.json"
       },
