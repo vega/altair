@@ -7,20 +7,21 @@ import os
 import functools
 import operator
 import uuid
+import warnings
 
 import traitlets as T
 import pandas as pd
 
-from .utils import visitors, node, create_vegalite_mime_bundle
+from .utils import node, create_vegalite_mime_bundle
 from .utils._py3k_compat import string_types
 from .utils.traitlet_helpers import update_subtraits
 
 from . import expr
 from . import schema
 
-from .schema import AggregateOp
+from .schema import jstraitlets as jst
+
 from .schema import AxisConfig
-from .schema import AxisOrient
 from .schema import Axis
 from .schema import Bin
 from .schema import CellConfig
@@ -104,12 +105,11 @@ def use_signature(Obj):
 # - allows expr trait to be an Expression and processes it properly
 #*************************************************************************
 class Formula(schema.Formula):
-    expr = T.Union([T.Unicode(allow_none=True, default_value=None),
-                    T.Instance(expr.Expression)],
-                    allow_none=True, default_value=None,
-                    help=schema.Formula.expr.help)
+    expr = jst.JSONUnion([jst.JSONString(),
+                          jst.JSONInstance(expr.Expression)],
+                         help=schema.Formula.expr.help)
 
-    def __init__(self, field, expr=None, **kwargs):
+    def __init__(self, field, expr=jst.undefined, **kwargs):
         super(Formula, self).__init__(field=field, expr=expr, **kwargs)
 
     def _finalize(self, **kwargs):
@@ -124,18 +124,18 @@ class Formula(schema.Formula):
 # - allows filter trait to be an Expression and processes it properly
 #*************************************************************************
 class Transform(schema.Transform):
-    filter = T.Union([T.Unicode(allow_none=True, default_value=None),
-                      T.Instance(expr.Expression),
-                      T.Instance(schema.EqualFilter),
-                      T.Instance(schema.RangeFilter),
-                      T.Instance(schema.OneOfFilter),
-                      T.List(T.Union([T.Unicode(),
-                                      T.Instance(expr.Expression),
-                                      T.Instance(schema.EqualFilter),
-                                      T.Instance(schema.RangeFilter),
-                                      T.Instance(schema.OneOfFilter)]))],
-                     allow_none=True, default_value=None,
-                     help=schema.Transform.filter.help)
+    filter = jst.JSONUnion([jst.JSONString(),
+                            jst.JSONInstance(expr.Expression),
+                            jst.JSONInstance(schema.EqualFilter),
+                            jst.JSONInstance(schema.RangeFilter),
+                            jst.JSONInstance(schema.OneOfFilter),
+                            jst.JSONArray(jst.JSONUnion([
+                                jst.JSONString(),
+                                jst.JSONInstance(expr.Expression),
+                                jst.JSONInstance(schema.EqualFilter),
+                                jst.JSONInstance(schema.RangeFilter),
+                                jst.JSONInstance(schema.OneOfFilter)]))],
+                           help=schema.Transform.filter.help)
 
     def _finalize(self, **kwargs):
         """Finalize object: convert filter expressions to string"""
@@ -238,15 +238,87 @@ class TopLevelMixin(object):
         from .utils.html import to_html
         return to_html(self.to_dict(), template=template, title=title, **kwargs)
 
-    def _to_code(self, data=None):
-        """Emit the CodeGen object used to export this chart to Python code."""
-        # do not call _finalize(), as we want the output code
-        # to reflect the exact input
-        return visitors.ToCode().visit(self, data=data)
+    def to_dict(self, data=True):
+        """Emit the JSON representation for this object as as dict.
 
+        Parameters
+        ----------
+        data : bool
+            If True (default) then include data in the representation.
+
+        Returns
+        -------
+        spec : dict
+            The JSON specification of the chart object.
+        """
+        return super(TopLevelMixin, self).to_dict(data=data)
+
+    @classmethod
+    def from_dict(cls, dct):
+        """Instantiate the object from a valid JSON dictionary
+
+        Parameters
+        ----------
+        dct : dict
+            The dictionary containing a valid JSON chart specification.
+
+        Returns
+        -------
+        chart : Chart object
+            The altair Chart object built from the specification.
+        """
+        return super(TopLevelMixin, cls).from_dict(dct)
+
+    def to_json(self, data=True, sort_keys=True, **kwargs):
+        """Emit the JSON representation for this object as a string.
+
+        Parameters
+        ----------
+        data : bool
+            If True (default) then include data in the representation.
+        sort_keys : bool
+            If True (default) then sort the keys in the output
+        **kwargs
+            Additional keyword arguments are passed to ``json.dumps()``
+
+        Returns
+        -------
+        spec : string
+            The JSON specification of the chart object.
+        """
+        kwargs['sort_keys'] = sort_keys
+        return super(TopLevelMixin, self).to_json(data=data, json_kwds=kwargs)
+
+    @classmethod
+    def from_json(cls, json_string, **kwargs):
+        """Instantiate the object from a valid JSON string
+
+        Parameters
+        ----------
+        spec : string
+            The string containing a valid JSON chart specification.
+
+        Returns
+        -------
+        chart : Chart object
+            The altair Chart object built from the specification.
+        """
+        return super(TopLevelMixin, cls).from_json(json_string,
+                                                   json_kwds=kwargs)
+
+    # TODO: Deprecate this
     def to_altair(self, data=None):
+        """DEPRECATED. Use to_python() instead.
+
+        Emit the Python code as a string required to created this Chart.
+        """
+        warnings.warn("to_altair() is deprecated. Use to_python() instead",
+                      category=DeprecationWarning)
+        return self.to_python(data=data)
+
+    def to_python(self, data=None):
         """Emit the Python code as a string required to created this Chart."""
-        return str(self._to_code(data=data))
+        return super(TopLevelMixin, self).to_python(data=data)
 
     # transform method
     @use_signature(schema.Transform)
@@ -414,15 +486,15 @@ class TopLevelMixin(object):
                     self.transform_data(filter=filters)
 
 
-class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
+class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
     _data = None
 
     # use specialized version of Encoding and Transform
-    encoding = T.Instance(Encoding, allow_none=True, default_value=None,
-                          help=schema.ExtendedUnitSpec.encoding.help)
-    transform = T.Instance(Transform, allow_none=True, default_value=None,
-                           help=schema.ExtendedUnitSpec.transform.help)
-    mark = schema.Mark(allow_none=True, default_value='point', help="""The mark type.""")
+    encoding = jst.JSONInstance(Encoding,
+                                help=schema.ExtendedUnitSpec.encoding.help)
+    transform = jst.JSONInstance(Transform,
+                                 help=schema.ExtendedUnitSpec.transform.help)
+    mark = schema.Mark(default_value='point', help="""The mark type.""")
 
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
@@ -443,7 +515,7 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data', 'max_rows']
+    _skip_on_export = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(Chart, self).__init__(**kwargs)
@@ -563,14 +635,14 @@ class Chart(schema.ExtendedUnitSpec, TopLevelMixin):
         return cls.from_dict(spec)
 
 
-class LayeredChart(schema.LayerSpec, TopLevelMixin):
+class LayeredChart(TopLevelMixin, schema.LayerSpec):
     _data = None
 
     # Use specialized version of Chart and Transform
-    layers = T.List(T.Instance(Chart), allow_none=True, default_value=None,
-                    help=schema.LayerSpec.layers.help)
-    transform = T.Instance(Transform, allow_none=True, default_value=None,
-                           help=schema.LayerSpec.transform.help)
+    layers = jst.JSONArray(jst.JSONInstance(Chart),
+                           help=schema.LayerSpec.layers.help)
+    transform = jst.JSONInstance(Transform,
+                                 help=schema.LayerSpec.transform.help)
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."
@@ -590,7 +662,7 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data', 'max_rows']
+    _skip_on_export = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(LayeredChart, self).__init__(**kwargs)
@@ -611,24 +683,23 @@ class LayeredChart(schema.LayerSpec, TopLevelMixin):
         super(LayeredChart, self)._finalize(**kwargs)
 
     def __iadd__(self, layer):
-        if self.layers is None:
+        if self.layers is jst.undefined:
             self.layers = [layer]
         else:
             self.layers = self.layers + [layer]
         return self
 
 
-class FacetedChart(schema.FacetSpec, TopLevelMixin):
+class FacetedChart(TopLevelMixin, schema.FacetSpec):
     _data = None
 
     # Use specialized version of Facet, spec, and Transform
-    facet = T.Instance(Facet, allow_none=True, default_value=None,
-                       help=schema.FacetSpec.facet.help)
-    spec = T.Union([T.Instance(LayeredChart), T.Instance(Chart)],
-                   allow_none=True, default_value=None,
-                   help=schema.FacetSpec.spec.help)
-    transform = T.Instance(Transform, allow_none=True, default_value=None,
-                           help=schema.FacetSpec.transform.help)
+    facet = jst.JSONInstance(Facet, help=schema.FacetSpec.facet.help)
+    spec = jst.JSONUnion([jst.JSONInstance(LayeredChart),
+                          jst.JSONInstance(Chart)],
+                         help=schema.FacetSpec.spec.help)
+    transform = jst.JSONInstance(Transform,
+                                 help=schema.FacetSpec.transform.help)
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."
@@ -648,7 +719,7 @@ class FacetedChart(schema.FacetSpec, TopLevelMixin):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    skip = ['data', '_data', 'max_rows']
+    _skip_on_export = ['data', '_data', 'max_rows']
 
     def __init__(self, data=None, **kwargs):
         super(FacetedChart, self).__init__(**kwargs)

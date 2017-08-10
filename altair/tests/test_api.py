@@ -8,8 +8,8 @@ import pandas as pd
 
 from .. import *
 from .. import schema
+from ..schema import jstraitlets as jst
 from ..examples import iter_examples
-from ..utils import parse_shorthand, infer_vegalite_type
 from ..utils.node import consistent_with_png, consistent_with_svg
 from ..datasets import connection_ok
 from ..utils._py3k_compat import PY2
@@ -40,8 +40,7 @@ def test_chart_url_input():
     chart2 = Chart(url)
 
     assert chart1.to_dict() == chart2.to_dict()
-
-    assert chart1.to_altair() == chart2.to_altair()
+    assert chart1.to_python() == chart2.to_python()
 
 
 def test_chart_to_html():
@@ -216,28 +215,28 @@ def test_Chart_load_example():
     assert chart1.to_dict() == chart2.to_dict()
 
 
-def test_to_altair():
+def test_to_python():
     df = pd.DataFrame({'x':[1,2,3], 'y':[4,5,6]})
     obj = Chart(df).mark_point().encode(x='x', y='y')
 
-    code = obj.to_altair(data='df')
+    code = obj.to_python(data='df')
     obj2 = eval(code)
 
     assert obj.to_dict() == obj2.to_dict()
 
 
-def test_to_altair_with_methods():
+def test_to_python_with_methods():
     from ..utils._py3k_compat import PY2
     if PY2:
         code_in = "Chart('http://vega.github.io').mark_point(color=u'red',)"
     else:
         code_in = "Chart('http://vega.github.io').mark_point(color='red',)"
-    code_out = eval(code_in).to_altair()
+    code_out = eval(code_in).to_python()
     assert code_in == code_out.replace(' ', '').replace('\n','')
 
 
 @pytest.mark.skipif(not connection_ok(), reason="No Internet Connection")
-def test_to_altair_stocks():
+def test_to_python_stocks():
     """Test a more complicated spec for conversion to altair"""
     data = load_dataset('stocks')
 
@@ -250,7 +249,7 @@ def test_to_altair_stocks():
         mark=MarkConfig(color='red')
     )
 
-    code = chart.to_altair(data='data')
+    code = chart.to_python(data='data')
     chart2 = eval(code)
 
     assert chart.to_dict() == chart2.to_dict()
@@ -391,14 +390,15 @@ def sample_code():
 def test_finalize(sample_code):
     cars = load_dataset('cars')
 
-    # Test that finalize is not called for ``to_altair()`` method
+    # Test that finalize is not called for ``to_python()`` method
     obj = eval(sample_code)
-    assert obj.to_altair(data='cars') == sample_code
+
+    assert obj.to_python(data='cars') == sample_code
 
     # Confirm that _finalize() changes the state
-    assert obj.encoding.x.type is None
+    assert obj.encoding.x.type is jst.undefined
     obj._finalize()
-    assert obj.encoding.x.type is not None
+    assert obj.encoding.x.type is not jst.undefined
 
     # Confirm that finalized object contains correct type information
     D = obj.to_dict(data=False)
@@ -555,7 +555,6 @@ def test_empty_traits():
 
     # regression test for changes in #265
     assert Transform().to_dict() == {}  # filter not present
-    assert Formula('blah').to_dict() == {'field': 'blah'}  # expr not present
 
 
 def test_max_rows():

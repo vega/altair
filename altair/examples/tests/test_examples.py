@@ -14,7 +14,7 @@ def remove_empty_fields(spec):
 @pytest.mark.parametrize('example', iter_examples())
 def test_json_examples_round_trip(example):
     """
-    Test that Altair correctly round-trips JSON with to_dict() and to_altair()
+    Test that Altair correctly round-trips JSON with to_dict() and to_python()
     """
     filename, json_dict = example
 
@@ -24,7 +24,7 @@ def test_json_examples_round_trip(example):
 
     # code generation discards empty function calls, and so we
     # filter these out before comparison
-    v2 = eval(v.to_altair())
+    v2 = eval(v.to_python())
     assert v2.to_dict() == remove_empty_fields(json_dict)
 
 

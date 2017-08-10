@@ -6,6 +6,7 @@ hierarchies from dictionaries and lists of trait names.
 """
 import six
 import traitlets as T
+from ..schema import jstraitlets as jst
 
 
 def infer_keywords(cls, *args, **kwargs):
@@ -50,7 +51,7 @@ def infer_keywords(cls, *args, **kwargs):
     name_to_trait = {}
     while classes:
         name, trait = classes.popitem()
-        if trait is None:
+        if trait is jst.undefined:
             continue
         if trait not in set.union(set(classes.values()),
                                   set(name_to_trait.values())):
@@ -59,11 +60,17 @@ def infer_keywords(cls, *args, **kwargs):
 
     # Update all arguments
     for arg in args:
-        name = trait_to_name.get(type(arg), None)
+        # find highest-level class in the method resolution order that appears
+        # in the dict:
+        names = (trait_to_name.get(cls, None) for cls in arg.__class__.__mro__)
+        name = next((n for n in names if n), None)
         if name is None:
-            raise ValueError("{0}: Unable to infer argument name for {1}".format(cls, arg))
+            raise ValueError("{0}: Unable to infer argument name for {1}"
+                             "".format(cls, arg))
         elif name in kwargs:
-            raise ValueError("{0}: {1} specified both by arg and kwarg".format(cls, name))
+            raise ValueError("{0}: {1} specified both by arg and kwarg"
+                             "".format(cls, name))
+
         else:
             kwargs[name] = arg
     return kwargs
@@ -93,7 +100,7 @@ def update_subtraits(obj, attrs, *args, **kwargs):
     else:
         attr = attrs[0]
         trait = getattr(obj, attr)  # error here if attr is not present
-        if trait is None:
+        if trait is jst.undefined:
             trait = obj.traits()[attr].klass()
         setattr(obj, attr, update_subtraits(trait, attrs[1:], *args, **kwargs))
     return obj

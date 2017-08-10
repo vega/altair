@@ -18,7 +18,12 @@ from docutils import nodes
 from docutils.statemachine import ViewList
 from docutils.parsers.rst.directives import flag
 
-from altair.schema.baseobject import BaseObject
+try:
+    # Altair <= 1.2
+    from altair.schema.baseobject import BaseObject as AltairBase
+except ImportError:
+    # Altair > 1.2
+    from altair.schema._interface.jstraitlets import JSONHasTraits as AltairBase
 
 from .utils import import_obj
 from .utils.altair_rst_table import altair_rst_table
@@ -29,7 +34,7 @@ def process_docstring(app, what, name, obj, options, lines):
 
     This captures the extracted docstring, and modifies it in-place
     """
-    if inspect.isclass(obj) and issubclass(obj, BaseObject):
+    if inspect.isclass(obj) and issubclass(obj, AltairBase):
         del lines[3:]
         table_rst = '.. altair-trait-table:: {0}'.format(obj.__name__)
         table_opt = '   :include-vegalite-link:'
@@ -48,7 +53,7 @@ def process_signature(app, what, name, obj, options, signature, return_annotatio
     This captures the signature and returns an updated version of
     (signature, return_annotation)
     """
-    if inspect.isclass(obj) and issubclass(obj, BaseObject):
+    if inspect.isclass(obj) and issubclass(obj, AltairBase):
         signature = '(**kwargs)'
     return signature, return_annotation
 
@@ -59,7 +64,7 @@ class AltairClassDocumenter(ClassDocumenter):
 
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
-        return inspect.isclass(member) and issubclass(member, BaseObject)
+        return inspect.isclass(member) and issubclass(member, AltairBase)
 
 
 ALTAIR_CLASS_TEMPLATE = jinja2.Template(

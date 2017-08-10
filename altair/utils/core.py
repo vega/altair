@@ -12,14 +12,13 @@ try:
 except ImportError: # Pandas before 0.20.0
     from pandas.lib import infer_dtype
 
+
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',
                 'quantitative': 'Q',
                 'temporal': 'T'}
 
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
-
-TYPE_ABBR = TYPECODE_MAP.values()
 
 
 def parse_shorthand(shorthand):
@@ -77,17 +76,20 @@ def construct_shorthand(field=None, aggregate=None, type=None):
     """Construct a shorthand representation.
 
     See also: parse_shorthand"""
-    if field is None:
+    # Import here to avoid circular imports
+    from ..schema._interface import jstraitlets as jst
+
+    if field is jst.undefined or field is None:
         return ''
 
     sh = field
 
-    if aggregate is not None:
+    if aggregate is not jst.undefined and aggregate is not None:
         sh = '{0}({1})'.format(aggregate, sh)
 
-    if type is not None:
+    if type is not jst.undefined and type is not None:
         type = TYPECODE_MAP.get(type, type)
-        if type not in TYPE_ABBR:
+        if type not in INV_TYPECODE_MAP:
             raise ValueError('Unrecognized Type: {0}'.format(type))
         sh = '{0}:{1}'.format(sh, type)
 
@@ -208,7 +210,7 @@ def prepare_vegalite_spec(spec, data=None):
 
 def prepare_vega_spec(spec, data=None):
     """Prepare a Vega spec for sending to the frontend.
-    
+
     This allows data to be passed in either as part of the spec
     or separately. If separately, the data is assumed to be a
     pandas DataFrame or object that can be converted to to a DataFrame.
