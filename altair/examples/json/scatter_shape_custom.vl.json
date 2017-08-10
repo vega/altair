@@ -1,9 +1,5 @@
 {
-    "config": {
-        "mark": {
-            "shape": "M0,0.2L0.2351,0.3236 0.1902,0.0618 0.3804,-0.1236 0.1175,-0.1618 0,-0.4 -0.1175,-0.1618 -0.3804,-0.1236 -0.1902,0.0618 -0.2351,0.3236 0,0.2Z"
-        }
-    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/cars.json"
     },
@@ -12,6 +8,9 @@
         "color": {
             "field": "Cylinders",
             "type": "nominal"
+        },
+        "shape": {
+            "value": "M0,0.2L0.2351,0.3236 0.1902,0.0618 0.3804,-0.1236 0.1175,-0.1618 0,-0.4 -0.1175,-0.1618 -0.3804,-0.1236 -0.1902,0.0618 -0.2351,0.3236 0,0.2Z"
         },
         "size": {
             "field": "Weight_in_lbs",

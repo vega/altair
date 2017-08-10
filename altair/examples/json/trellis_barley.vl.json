@@ -1,4 +1,5 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/barley.json"
     },
@@ -13,21 +14,26 @@
             "type": "ordinal"
         },
         "x": {
-            "aggregate": "mean",
+            "aggregate": "median",
             "field": "yield",
+            "scale": {
+                "zero": false
+            },
             "type": "quantitative"
         },
         "y": {
             "field": "variety",
             "scale": {
-                "bandSize": 12
+                "rangeStep": 12
             },
             "sort": {
                 "field": "yield",
-                "op": "mean"
+                "op": "median",
+                "order": "descending"
             },
             "type": "ordinal"
         }
     },
-    "mark": "point"
+    "mark": "point",
+    "name": "trellis_barley"
 }

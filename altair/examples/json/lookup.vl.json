@@ -1,0 +1,33 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/lookup_groups.csv"
+    },
+    "encoding": {
+        "x": {
+            "field": "group",
+            "type": "ordinal"
+        },
+        "y": {
+            "aggregate": "mean",
+            "field": "age",
+            "type": "quantitative"
+        }
+    },
+    "mark": "bar",
+    "transform": [
+        {
+            "from": {
+                "data": {
+                    "url": "data/lookup_people.csv"
+                },
+                "fields": [
+                    "age",
+                    "height"
+                ],
+                "key": "name"
+            },
+            "lookup": "person"
+        }
+    ]
+}

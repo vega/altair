@@ -1,9 +1,5 @@
 {
-    "config": {
-        "mark": {
-            "stacked": "normalize"
-        }
-    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/population.json"
     },
@@ -21,7 +17,7 @@
         "x": {
             "field": "age",
             "scale": {
-                "bandSize": 17
+                "rangeStep": 17
             },
             "type": "ordinal"
         },
@@ -31,17 +27,18 @@
                 "title": "population"
             },
             "field": "people",
+            "stack": "normalize",
             "type": "quantitative"
         }
     },
     "mark": "bar",
-    "transform": {
-        "calculate": [
-            {
-                "expr": "datum.sex == 2 ? \"Female\" : \"Male\"",
-                "field": "gender"
-            }
-        ],
-        "filter": "datum.year == 2000"
-    }
+    "transform": [
+        {
+            "filter": "datum.year == 2000"
+        },
+        {
+            "as": "gender",
+            "calculate": "datum.sex == 2 ? 'Female' : 'Male'"
+        }
+    ]
 }

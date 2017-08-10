@@ -1,8 +1,6 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
-        "format": {
-            "type": "csv"
-        },
         "url": "http://vega.github.io/vega-lite/data/seattle-weather.csv"
     },
     "encoding": {
@@ -39,7 +37,6 @@
         },
         "y": {
             "aggregate": "count",
-            "field": "*",
             "type": "quantitative"
         }
     },

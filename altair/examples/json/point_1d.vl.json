@@ -1,10 +1,11 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/cars.json"
+        "url": "http://vega.github.io/vega-lite/data/movies.json"
     },
     "encoding": {
         "x": {
-            "field": "Horsepower",
+            "field": "IMDB_Rating",
             "type": "quantitative"
         }
     },

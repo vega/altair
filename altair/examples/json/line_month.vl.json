@@ -1,20 +1,15 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "config": {
-        "mark": {
-            "interpolate": "monotone"
+        "axis": {
+            "shortTimeLabels": true
         }
     },
     "data": {
-        "format": {
-            "type": "csv"
-        },
         "url": "http://vega.github.io/vega-lite/data/seattle-temps.csv"
     },
     "encoding": {
         "x": {
-            "axis": {
-                "shortTimeLabels": true
-            },
             "field": "date",
             "timeUnit": "month",
             "type": "temporal"
@@ -25,5 +20,8 @@
             "type": "quantitative"
         }
     },
-    "mark": "line"
+    "mark": {
+        "interpolate": "monotone",
+        "type": "line"
+    }
 }

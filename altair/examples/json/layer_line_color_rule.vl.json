@@ -1,11 +1,10 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
-        "format": {
-            "type": "csv"
-        },
         "url": "http://vega.github.io/vega-lite/data/stocks.csv"
     },
-    "layers": [
+    "description": "Stock prices of 5 Tech Companies over Time with Averages.",
+    "layer": [
         {
             "encoding": {
                 "color": {
@@ -24,11 +23,6 @@
             "mark": "line"
         },
         {
-            "config": {
-                "mark": {
-                    "opacity": 0.5
-                }
-            },
             "encoding": {
                 "color": {
                     "field": "symbol",

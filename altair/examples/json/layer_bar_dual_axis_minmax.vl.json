@@ -1,0 +1,86 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/seattle-weather.csv"
+    },
+    "description": "Barchart for precipitation overlayed with linecharts to show temperature range.",
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "date",
+                    "timeUnit": "month",
+                    "type": "temporal"
+                },
+                "y": {
+                    "aggregate": "mean",
+                    "axis": {
+                        "grid": false,
+                        "title": "Mean Precipitation"
+                    },
+                    "field": "precipitation",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "bar"
+        },
+        {
+            "layer": [
+                {
+                    "encoding": {
+                        "color": {
+                            "value": "firebrick"
+                        },
+                        "x": {
+                            "field": "date",
+                            "timeUnit": "month",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "aggregate": "max",
+                            "axis": {
+                                "grid": false,
+                                "title": "Temperature (min and max)"
+                            },
+                            "field": "temp_max",
+                            "scale": {
+                                "zero": false
+                            },
+                            "type": "quantitative"
+                        }
+                    },
+                    "mark": "line"
+                },
+                {
+                    "encoding": {
+                        "color": {
+                            "value": "firebrick"
+                        },
+                        "x": {
+                            "field": "date",
+                            "timeUnit": "month",
+                            "type": "temporal"
+                        },
+                        "y": {
+                            "aggregate": "min",
+                            "axis": {
+                                "grid": false
+                            },
+                            "field": "temp_min",
+                            "scale": {
+                                "zero": false
+                            },
+                            "type": "quantitative"
+                        }
+                    },
+                    "mark": "line"
+                }
+            ]
+        }
+    ],
+    "resolve": {
+        "y": {
+            "scale": "independent"
+        }
+    }
+}

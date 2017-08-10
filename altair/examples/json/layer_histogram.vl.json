@@ -1,8 +1,9 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/flights-2k.json"
     },
-    "layers": [
+    "layer": [
         {
             "encoding": {
                 "x": {
@@ -12,7 +13,6 @@
                 },
                 "y": {
                     "aggregate": "count",
-                    "field": "*",
                     "type": "quantitative"
                 }
             },
@@ -30,14 +30,15 @@
                 },
                 "y": {
                     "aggregate": "count",
-                    "field": "*",
                     "type": "quantitative"
                 }
             },
             "mark": "bar",
-            "transform": {
-                "filter": "datum.delay < 5"
-            }
+            "transform": [
+                {
+                    "filter": "datum.delay < 500"
+                }
+            ]
         }
     ]
 }

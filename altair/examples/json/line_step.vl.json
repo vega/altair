@@ -1,13 +1,6 @@
 {
-    "config": {
-        "mark": {
-            "interpolate": "step-after"
-        }
-    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
-        "format": {
-            "type": "csv"
-        },
         "url": "http://vega.github.io/vega-lite/data/stocks.csv"
     },
     "description": "Google's stock price over time.",
@@ -21,8 +14,13 @@
             "type": "quantitative"
         }
     },
-    "mark": "line",
-    "transform": {
-        "filter": "datum.symbol==='GOOG'"
-    }
+    "mark": {
+        "interpolate": "step-after",
+        "type": "line"
+    },
+    "transform": [
+        {
+            "filter": "datum.symbol==='GOOG'"
+        }
+    ]
 }

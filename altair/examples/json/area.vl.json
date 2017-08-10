@@ -1,17 +1,11 @@
 {
-    "config": {
-        "cell": {
-            "height": 200,
-            "width": 300
-        }
-    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/unemployment-across-industries.json"
     },
     "encoding": {
         "x": {
             "axis": {
-                "axisWidth": 0,
                 "format": "%Y",
                 "labelAngle": 0
             },
@@ -28,5 +22,7 @@
             "type": "quantitative"
         }
     },
-    "mark": "area"
+    "height": 200,
+    "mark": "area",
+    "width": 300
 }
