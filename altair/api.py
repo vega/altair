@@ -20,38 +20,7 @@ from . import expr
 from . import schema
 
 from .schema import jstraitlets as jst
-
-from .schema import AxisConfig
-from .schema import Axis
-from .schema import Bin
-from .schema import CellConfig
-from .schema import Config
-from .schema import Data
-from .schema import DataFormat
-from .schema import DateTime
-from .schema import EqualFilter
-from .schema import FacetConfig
-from .schema import FacetGridConfig
-from .schema import FacetScaleConfig
-from .schema import FontStyle
-from .schema import FontWeight
-from .schema import HorizontalAlign
-from .schema import LegendConfig
-from .schema import Legend
-from .schema import MarkConfig
-from .schema import NiceTime
-from .schema import OneOfFilter
-from .schema import OverlayConfig
-from .schema import RangeFilter
-from .schema import Scale
-from .schema import ScaleConfig
-from .schema import SortField
-from .schema import SortOrder
-from .schema import StackOffset
-from .schema import TimeUnit
-from .schema import UnitSpec
-from .schema import UnitEncoding
-from .schema import VerticalAlign
+from .schema import *
 
 
 class MaxRowsExceeded(Exception):
@@ -81,8 +50,9 @@ def enable_mime_rendering():
 #*************************************************************************
 # Channel Aliases
 #*************************************************************************
-from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
-from .schema import Encoding, Facet
+from .schema import (Color, Column, Detail, Opacity, Order, Row,
+                     Shape, Size, Text, Tooltip, X, X2, Y, Y2)
+from .schema import Encoding, EncodingWithFacet, Facet
 
 
 def use_signature(Obj):
@@ -343,60 +313,60 @@ class TopLevelMixin(object):
         """Set chart configuration"""
         return update_subtraits(self, 'config', *args, **kwargs)
 
-    @use_signature(AxisConfig)
+    @use_signature(schema.AxisConfig)
     def configure_axis(self, *args, **kwargs):
         """Configure the chart's axes by keyword args."""
         return update_subtraits(self, ('config', 'axis'), *args, **kwargs)
 
-    @use_signature(CellConfig)
+    @use_signature(schema.CellConfig)
     def configure_cell(self, *args, **kwargs):
         """Configure the chart's cell's by keyword args."""
         return update_subtraits(self, ('config', 'cell'), *args, **kwargs)
 
-    @use_signature(LegendConfig)
+    @use_signature(schema.LegendConfig)
     def configure_legend(self, *args, **kwargs):
         """Configure the chart's legend by keyword args."""
         return update_subtraits(self, ('config', 'legend'), *args, **kwargs)
 
-    @use_signature(OverlayConfig)
+    @use_signature(schema.OverlayConfig)
     def configure_overlay(self, *args, **kwargs):
         """Configure the chart's overlay by keyword args."""
         return update_subtraits(self, ('config', 'overlay'), *args, **kwargs)
 
-    @use_signature(MarkConfig)
+    @use_signature(schema.MarkConfig)
     def configure_mark(self, *args, **kwargs):
         """Configure the chart's marks by keyword args."""
         return update_subtraits(self, ('config', 'mark'), *args, **kwargs)
 
-    @use_signature(ScaleConfig)
+    @use_signature(schema.ScaleConfig)
     def configure_scale(self, *args, **kwargs):
         """Configure the chart's scales by keyword args."""
         return update_subtraits(self, ('config', 'scale'), *args, **kwargs)
 
-    @use_signature(FacetConfig)
+    @use_signature(schema.FacetConfig)
     def configure_facet(self, *args, **kwargs):
         """Configure the chart's scales by keyword args."""
         return update_subtraits(self, ('config', 'facet'), *args, **kwargs)
 
-    @use_signature(AxisConfig)
+    @use_signature(schema.AxisConfig)
     def configure_facet_axis(self, *args, **kwargs):
         """Configure the facet's axes by keyword args."""
         return update_subtraits(self, ('config', 'facet', 'axis'),
                                 *args, **kwargs)
 
-    @use_signature(CellConfig)
+    @use_signature(schema.CellConfig)
     def configure_facet_cell(self, *args, **kwargs):
         """Configure the facet's cells by keyword args."""
         return update_subtraits(self, ('config', 'facet', 'cell'),
                                 *args, **kwargs)
 
-    @use_signature(FacetGridConfig)
+    @use_signature(schema.FacetGridConfig)
     def configure_facet_grid(self, *args, **kwargs):
         """Configure the facet's grid by keyword args."""
         return update_subtraits(self, ('config', 'facet', 'grid'),
                                 *args, **kwargs)
 
-    @use_signature(FacetScaleConfig)
+    @use_signature(schema.FacetScaleConfig)
     def configure_facet_scale(self, *args, **kwargs):
         """Configure the facet's scales by keyword args."""
         return update_subtraits(self, ('config', 'facet', 'scale'),

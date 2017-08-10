@@ -15,6 +15,9 @@ from schemapi import JSONSchema, JSONSchemaPlugin
 from schemapi.utils import load_dynamic_module, save_module
 
 
+ENCODING_CLASSES = ['Encoding', 'EncodingWithFacet', 'Facet']
+
+
 def get_git_commit_info():
     """Return a string describing the git version information"""
     try:
@@ -80,7 +83,7 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
 '''
 
 class ChannelWrapperPlugin(JSONSchemaPlugin):
-    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
+    encoding_classes = ENCODING_CLASSES
 
     def channel_classes(self, schema):
         """return the list of channel class names"""
@@ -137,7 +140,7 @@ class {{ object.classname }}(channel_wrappers.{{ object.basename }}):
 '''
 
 class NamedChannelPlugin(JSONSchemaPlugin):
-    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
+    encoding_classes = ENCODING_CLASSES
 
     def channel_classes(self, schema):
         """return the list of channel class names"""
@@ -213,7 +216,7 @@ class {{ obj.classname }}(schema.{{ obj.classname }}):
 
 
 class ChannelCollectionPlugin(JSONSchemaPlugin):
-    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
+    encoding_classes = ENCODING_CLASSES
 
     def get_base(self, schema):
         if '$ref' in schema:

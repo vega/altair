@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-98-g8a98636
-# - date: 2017-08-09 12:14:26
+# - altair version info: v1.2.0-106-gcc65ce0
+# - date: 2017-08-10 14:19:00
 
 from . import channel_wrappers
 
-class Color(channel_wrappers.ChannelWithLegend):
+class Color(channel_wrappers.ConditionalStringLegend):
     pass
 
 
-class Column(channel_wrappers.PositionChannel):
+class Column(channel_wrappers.FacetField):
     pass
 
 
@@ -17,39 +17,35 @@ class Detail(channel_wrappers.Field):
     pass
 
 
-class Label(channel_wrappers.Field):
+class Opacity(channel_wrappers.ConditionalNumberLegend):
     pass
 
 
-class Opacity(channel_wrappers.ChannelWithLegend):
+class Order(channel_wrappers.OrderField):
     pass
 
 
-class Order(channel_wrappers.OrderChannel):
+class Row(channel_wrappers.FacetField):
     pass
 
 
-class Path(channel_wrappers.OrderChannel):
+class Shape(channel_wrappers.ConditionalStringLegend):
     pass
 
 
-class Row(channel_wrappers.PositionChannel):
+class Size(channel_wrappers.ConditionalNumberLegend):
     pass
 
 
-class Shape(channel_wrappers.ChannelWithLegend):
+class Text(channel_wrappers.ConditionalText):
     pass
 
 
-class Size(channel_wrappers.ChannelWithLegend):
+class Tooltip(channel_wrappers.ConditionalText):
     pass
 
 
-class Text(channel_wrappers.Field):
-    pass
-
-
-class X(channel_wrappers.PositionChannel):
+class X(channel_wrappers.PositionField):
     pass
 
 
@@ -57,7 +53,7 @@ class X2(channel_wrappers.Field):
     pass
 
 
-class Y(channel_wrappers.PositionChannel):
+class Y(channel_wrappers.PositionField):
     pass
 
 
