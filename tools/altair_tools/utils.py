@@ -1,7 +1,9 @@
 import os
+import subprocess
+from contextlib import contextmanager
+
 import git  # pip install gitpython
 
-from contextlib import contextmanager
 
 try:
     from urllib.request import urlopen
@@ -16,6 +18,15 @@ ALTAIR_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__),
 
 def path_within_altair(*args):
     return os.path.join(ALTAIR_PATH, *args)
+
+
+def get_git_commit_info():
+    """Return a string describing the git version information"""
+    try:
+        label = subprocess.check_output(["git", "describe"]).decode().strip()
+    except subprocess.CalledProcessError:
+        label = "<unavailable>"
+    return label
 
 
 @contextmanager
