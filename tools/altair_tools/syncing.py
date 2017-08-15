@@ -64,6 +64,10 @@ def sync_examples(vegalite_version,
                   destination=path_within_altair('examples', 'json'),
                   data_url='http://vega.github.io/vega-lite/',
                   vegalite_path=VEGALITE_PATH, vegalite_url=VEGALITE_URL):
+    """
+    Clone the vega-lite repository, check-out the appropriate version, and
+    copy all example files into Altair
+    """
     source_dir = os.path.join(vegalite_path, 'examples', 'specs')
     index_source = os.path.join(vegalite_path, 'examples', 'vl-examples.json')
     index_destination = os.path.join(destination, '..', 'example-listing.json')
@@ -110,6 +114,10 @@ def sync_datasets(datasets_version,
                   destination=path_within_altair('datasets'),
                   filename='datasets.json',
                   vega_data_path=VEGA_DATA_PATH, vega_data_url=VEGA_DATA_URL):
+    """
+    Clone the vega-datasets repository, check-out the appropriate version,
+    and copy data URL listing into Altair.
+    """
     with checkout_tag(datasets_version, vega_data_path, vega_data_url):
         sourcedir = os.path.join(vega_data_path, 'data')
         datasets_dict = {}
