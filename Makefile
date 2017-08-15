@@ -23,12 +23,12 @@ generate-schema :
 
 
 sync-examples :
-	python tools/sync_vegalite.py --examples
+	python tools/sync_vegalite_examples.py
 
 
 sync-schema :
-	python tools/sync_vegalite.py --schema
+	python tools/sync_vegalite_schema.py
 
 
 sync-datasets :
-	python tools/sync_vegalite.py --datasets
+	python tools/sync_vegalite_datasets.py
