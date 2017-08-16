@@ -25,7 +25,7 @@ import pandas as pd
 
 from . import jstraitlets as jst
 from . import schema
-from ...utils import parse_shorthand, infer_vegalite_type
+from ...traitlet_utils import parse_shorthand, infer_vegalite_type
 
 
 {% for obj in objects -%}

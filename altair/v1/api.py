@@ -14,7 +14,7 @@ import pandas as pd
 
 from ..utils import node, create_vegalite_mime_bundle
 from ..utils._py3k_compat import string_types
-from .utils import update_subtraits
+from .traitlet_utils import update_subtraits
 
 from .. import expr
 from . import schema

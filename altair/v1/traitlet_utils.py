@@ -18,7 +18,7 @@ except ImportError: # Pandas before 0.20.0
 
 import traitlets as T
 
-from ..utils import *
+from ..utils import infer_vegalite_type
 
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',

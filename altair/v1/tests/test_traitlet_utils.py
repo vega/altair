@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from ..utils import parse_shorthand, construct_shorthand
+from ..traitlet_utils import parse_shorthand, construct_shorthand
 
 
 def test_parse_shorthand():

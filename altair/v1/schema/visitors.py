@@ -4,7 +4,7 @@ import pandas as pd
 from ._interface import jstraitlets as jst
 from ._interface import schema
 
-from ..utils import construct_shorthand
+from ..traitlet_utils import construct_shorthand
 from ...utils import sanitize_dataframe, CodeGen
 
 

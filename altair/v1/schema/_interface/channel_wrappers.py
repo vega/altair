@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-108-g9caae32
-# - date: 2017-08-15 22:14:11
+# - altair version info: v1.2.0-109-g6bd6562
+# - date: 2017-08-15 22:31:26
 
 import pandas as pd
 
 from . import jstraitlets as jst
 from . import schema
-from ...utils import parse_shorthand, infer_vegalite_type
+from ...traitlet_utils import parse_shorthand, infer_vegalite_type
 
 
 class ChannelWithLegend(schema.ChannelDefWithLegend):
