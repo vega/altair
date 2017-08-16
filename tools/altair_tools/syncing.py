@@ -37,6 +37,9 @@ def sync_schema(vegalite_version,
     Download the appropriate version of the vega-lite schema
     and save at the specified destination
     """
+    if not os.path.exists(schema_path):
+        os.makedirs(schema_path)
+
     vegalite_schema_url = SCHEMA_URL.format(library='vega-lite',
                                             version=vegalite_version)
     schema_file = os.path.join(schema_path, schema_file)
@@ -68,6 +71,9 @@ def sync_examples(vegalite_version,
     Clone the vega-lite repository, check-out the appropriate version, and
     copy all example files into Altair
     """
+    if not os.path.exists(destination):
+        os.makedirs(destination)
+
     source_dir = os.path.join(vegalite_path, 'examples', 'specs')
     index_source = os.path.join(vegalite_path, 'examples', 'vl-examples.json')
     index_destination = os.path.join(destination, '..', 'example-listing.json')
@@ -118,6 +124,9 @@ def sync_datasets(datasets_version,
     Clone the vega-datasets repository, check-out the appropriate version,
     and copy data URL listing into Altair.
     """
+    if not os.path.exists(destination):
+        os.makedirs(destination)
+
     with checkout_tag(datasets_version, vega_data_path, vega_data_url):
         sourcedir = os.path.join(vega_data_path, 'data')
         datasets_dict = {}

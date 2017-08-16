@@ -12,11 +12,11 @@ import warnings
 import traitlets as T
 import pandas as pd
 
-from .utils import node, create_vegalite_mime_bundle
-from .utils._py3k_compat import string_types
-from .utils.traitlet_helpers import update_subtraits
+from ..utils import node, create_vegalite_mime_bundle
+from ..utils._py3k_compat import string_types
+from .utils import update_subtraits
 
-from . import expr
+from .. import expr
 from . import schema
 
 from .schema import jstraitlets as jst
@@ -236,7 +236,7 @@ class TopLevelMixin(object):
         savechart : save a chart representation to file in various formats,
                     including HTML
         """
-        from .utils.html import to_html
+        from ..utils.html import to_html
         return to_html(self.to_dict(), template=template, title=title, **kwargs)
 
     def to_dict(self, data=True):
@@ -449,7 +449,7 @@ class TopLevelMixin(object):
             optionally specify an HTTPServer class to use for showing the
             figure. The default is Python's basic HTTPServer.
         """
-        from .utils.server import serve
+        from ..utils.server import serve
         html = self.to_html(**html_kwargs)
         serve(html, ip=ip, port=port, n_retries=n_retries,
               files=files, jupyter_warning=jupyter_warning,
