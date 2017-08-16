@@ -1,3 +1,6 @@
+from .schema import jstraitlets
+undefined = jstraitlets.undefined
+
 from .api import (
     Label,
     Formula,
