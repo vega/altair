@@ -1,0 +1,96 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "config": {
+        "text": {
+            "align": "right",
+            "dx": -5,
+            "dy": 5
+        }
+    },
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/stocks.csv"
+    },
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "color": {
+                    "field": "symbol",
+                    "type": "nominal"
+                },
+                "x": {
+                    "axis": null,
+                    "field": "date",
+                    "type": "temporal"
+                },
+                "y": {
+                    "field": "price",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "line",
+            "selection": {
+                "index": {
+                    "encodings": [
+                        "x"
+                    ],
+                    "nearest": true,
+                    "on": "mousemove",
+                    "type": "single"
+                }
+            }
+        },
+        {
+            "encoding": {
+                "x": {
+                    "axis": null,
+                    "field": "date",
+                    "type": "temporal"
+                }
+            },
+            "mark": "rule",
+            "transform": [
+                {
+                    "filter": {
+                        "and": [
+                            "index.date",
+                            {
+                                "selection": "index"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "encoding": {
+                "text": {
+                    "field": "date",
+                    "type": "temporal"
+                },
+                "x": {
+                    "axis": null,
+                    "field": "date",
+                    "type": "temporal"
+                },
+                "y": {
+                    "value": 10
+                }
+            },
+            "mark": "text",
+            "transform": [
+                {
+                    "filter": {
+                        "and": [
+                            "index.date",
+                            {
+                                "selection": "index"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ],
+    "width": 600
+}

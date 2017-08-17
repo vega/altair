@@ -1,0 +1,24 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "color": {
+            "field": "Cylinders",
+            "type": "nominal"
+        },
+        "x": {
+            "bin": {},
+            "field": "Acceleration",
+            "type": "quantitative"
+        },
+        "y": {
+            "aggregate": "sum",
+            "bin": false,
+            "field": "Horsepower",
+            "type": "quantitative"
+        }
+    },
+    "mark": "area"
+}

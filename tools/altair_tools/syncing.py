@@ -75,12 +75,52 @@ def sync_examples(vegalite_version,
         os.makedirs(destination)
 
     source_dir = os.path.join(vegalite_path, 'examples', 'specs')
-    index_source = os.path.join(vegalite_path, 'examples', 'vl-examples.json')
+    if vegalite_version.startswith('v1'):
+        index_source = os.path.join(vegalite_path, 'examples',
+                                    'vl-examples.json')
+    else:
+        index_source = os.path.join(vegalite_path, '_data', 'examples.json')
     index_destination = os.path.join(destination, '..', 'example-listing.json')
     print("Reading from {0}".format(source_dir))
 
     if not os.path.exists(destination):
         raise ValueError("{0} does not exist".format(destination))
+
+
+    def make_data_urls_absolute(spec, root_data_url):
+        """Modify spec in-place, making all data urls absolute"""
+        for key, subspec in spec.items():
+            if key == 'data':
+                url = subspec.get('url', '')
+                if url.startswith('data/'):
+                    subspec['url'] = root_data_url + url
+            if isinstance(subspec, dict):
+                make_data_urls_absolute(subspec, root_data_url=root_data_url)
+        return spec
+
+
+    def copy_tree_and_replace_urls(source_dir, destination):
+        os.mkdir(destination)
+        for filename in os.listdir(source_dir):
+            source_file = os.path.join(source_dir, filename)
+            destination_file = os.path.join(destination, filename)
+            print(source_file)
+            print(" -> {0}".format(destination_file))
+            if os.path.isdir(source_file):
+                pass
+                # TODO: copy subdirectories as well. This will require updating
+                #       iter_examples to handle this correctly
+                #copy_tree_and_replace_urls(source_file,
+                #                           destination_file)
+            else:
+                with open(source_file) as f:
+                    spec = json.load(f)
+
+                # Adjust to use absolute URLs
+                make_data_urls_absolute(spec, data_url)
+
+                with open(destination_file, 'w') as f:
+                    json.dump(spec, f, indent=4, sort_keys=True)
 
     with checkout_tag(vegalite_version, vegalite_path, vegalite_url):
         if not os.path.exists(source_dir):
@@ -88,32 +128,15 @@ def sync_examples(vegalite_version,
         if not os.path.exists(index_source):
             raise ValueError("{0} does not exist".format(index_source))
 
+
         # remove old files before syncing
-        for example in os.listdir(destination):
-            if os.path.splitext(example)[1] == '.json':
-                os.remove(os.path.join(destination, example))
+        shutil.rmtree(destination)
+        copy_tree_and_replace_urls(source_dir, destination)
 
         # sync the index
         with open(index_source) as f:
             with open(index_destination, 'w') as of:
                 of.write(f.read())
-
-        for filename in os.listdir(source_dir):
-            source_file = os.path.join(source_dir, filename)
-            destination_file = os.path.join(destination, filename)
-
-            print(source_file)
-            with open(source_file) as f:
-                spec = json.load(f)
-
-            # Adjust to use absolute URLs
-            url = spec['data'].get('url', '')
-            if url.startswith('data/'):
-                spec['data']['url'] = data_url + url
-
-            print(" -> {0}".format(destination_file))
-            with open(destination_file, 'w') as f:
-                json.dump(spec, f, indent=4, sort_keys=True)
 
 
 def sync_datasets(datasets_version,

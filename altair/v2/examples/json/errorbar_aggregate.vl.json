@@ -1,0 +1,96 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/population.json"
+    },
+    "description": "A error bar plot showing mean, min, and max in the US population distribution of age groups in 2000.",
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "age",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "aggregate": "min",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "y2": {
+                    "aggregate": "max",
+                    "field": "people",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "rule"
+        },
+        {
+            "encoding": {
+                "size": {
+                    "value": 5
+                },
+                "x": {
+                    "field": "age",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "aggregate": "min",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "tick"
+        },
+        {
+            "encoding": {
+                "size": {
+                    "value": 5
+                },
+                "x": {
+                    "field": "age",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "aggregate": "max",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "tick"
+        },
+        {
+            "encoding": {
+                "size": {
+                    "value": 2
+                },
+                "x": {
+                    "field": "age",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "aggregate": "mean",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "point"
+        }
+    ],
+    "transform": [
+        {
+            "filter": "datum.year == 2000"
+        }
+    ]
+}

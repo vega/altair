@@ -1,0 +1,48 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/population.json"
+    },
+    "description": "A horizontal box plot showing median, min, and max in the US population distribution of age groups in 2000.",
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "age",
+                    "type": "ordinal"
+                }
+            },
+            "mark": "box-plot"
+        },
+        {
+            "encoding": {
+                "color": {
+                    "value": "black"
+                },
+                "opacity": {
+                    "value": 0.1
+                },
+                "x": {
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "age",
+                    "type": "ordinal"
+                }
+            },
+            "mark": "circle"
+        }
+    ],
+    "width": 500
+}

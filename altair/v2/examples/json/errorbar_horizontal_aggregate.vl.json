@@ -1,0 +1,96 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/population.json"
+    },
+    "description": "A bar chart showing the US population distribution of age groups in 2000.",
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "aggregate": "min",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "x2": {
+                    "aggregate": "max",
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "age",
+                    "type": "ordinal"
+                }
+            },
+            "mark": "rule"
+        },
+        {
+            "encoding": {
+                "size": {
+                    "value": 5
+                },
+                "x": {
+                    "aggregate": "min",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "age",
+                    "type": "ordinal"
+                }
+            },
+            "mark": "tick"
+        },
+        {
+            "encoding": {
+                "size": {
+                    "value": 5
+                },
+                "x": {
+                    "aggregate": "max",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "age",
+                    "type": "ordinal"
+                }
+            },
+            "mark": "tick"
+        },
+        {
+            "encoding": {
+                "size": {
+                    "value": 2
+                },
+                "x": {
+                    "aggregate": "mean",
+                    "axis": {
+                        "title": "population"
+                    },
+                    "field": "people",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "age",
+                    "type": "ordinal"
+                }
+            },
+            "mark": "point"
+        }
+    ],
+    "transform": [
+        {
+            "filter": "datum.year == 2000"
+        }
+    ]
+}

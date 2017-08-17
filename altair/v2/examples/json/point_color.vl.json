@@ -1,0 +1,17 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "config": {
+        "mark": {
+            "color": "purple"
+        }
+    },
+    "data": {
+        "values": [
+            {
+                "a": 2
+            }
+        ]
+    },
+    "encoding": {},
+    "mark": "point"
+}
