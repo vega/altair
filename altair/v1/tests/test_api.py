@@ -587,3 +587,9 @@ def test_enable_mime_rendering():
     enable_mime_rendering()
     disable_mime_rendering()
     disable_mime_rendering()
+
+    
+def test_validate_spec():
+    c = make_chart()
+
+    
