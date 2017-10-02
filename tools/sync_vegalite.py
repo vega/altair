@@ -22,7 +22,7 @@ def abspath(*args):
 
 SCHEMA_URL = "https://vega.github.io/schema/{library}/{version}.json"
 
-VEGALITE_VERSION = 'v1.2.1'
+VEGALITE_VERSION = 'v2.0.0-beta.11'
 VEGA_VERSION = 'v2.6.5'
 VEGALITE_PATH = abspath('repos', 'vega-lite')
 VEGALITE_URL = 'https://github.com/vega/vega-lite.git'
@@ -92,17 +92,12 @@ def sync_examples(vegalite_repo,
                   destination=abspath('..', 'altair', 'examples', 'json'),
                   data_url='http://vega.github.io/vega-lite/'):
     source_dir = os.path.join(vegalite_repo, 'examples', 'specs')
-    index_source = os.path.join(vegalite_repo, 'examples', 'vl-examples.json')
+    index_source = os.path.join(vegalite_repo, '_data', 'examples.json')
     print("Reading from {0}".format(source_dir))
     if not os.path.exists(source_dir):
         raise ValueError("{0} does not exist".format(source_dir))
     if not os.path.exists(destination):
         raise ValueError("{0} does not exist".format(destination))
-
-    # remove old files before syncing
-    for example in os.listdir(destination):
-        if os.path.splitext(example)[1] == '.json':
-            os.remove(os.path.join(destination, example))
 
     # sync the index
     listingfile = abspath(destination, '..', 'example-listing.json')
@@ -110,22 +105,46 @@ def sync_examples(vegalite_repo,
         with open(listingfile, 'w') as of:
             of.write(f.read())
 
-    for filename in os.listdir(source_dir):
-        source_file = os.path.join(source_dir, filename)
-        destination_file = os.path.join(destination, filename)
+    # remove old files before syncing
+    shutil.rmtree(destination)
 
-        print(source_file)
-        with open(source_file) as f:
-            spec = json.load(f)
 
-        # Adjust to use absolute URLs
-        url = spec['data'].get('url', '')
-        if url.startswith('data/'):
-            spec['data']['url'] = data_url + url
+    def make_data_urls_absolute(spec, root_data_url):
+        """Modify spec in-place, making all data urls absolute"""
+        for key, subspec in spec.items():
+            if key == 'data':
+                url = subspec.get('url', '')
+                if url.startswith('data/'):
+                    subspec['url'] = root_data_url + url
+            if isinstance(subspec, dict):
+                make_data_urls_absolute(subspec, root_data_url=root_data_url)
+        return spec
 
-        print(" -> {0}".format(destination_file))
-        with open(destination_file, 'w') as f:
-            json.dump(spec, f, indent=4, sort_keys=True)
+
+    def copy_tree_and_replace_urls(source_dir, destination):
+        os.mkdir(destination)
+        for filename in os.listdir(source_dir):
+            source_file = os.path.join(source_dir, filename)
+            destination_file = os.path.join(destination, filename)
+            print(source_file)
+            print(" -> {0}".format(destination_file))
+            if os.path.isdir(source_file):
+                pass
+                # TODO: copy subdirectories as well. This will require updating
+                #       iter_examples to handle this correctly
+                #copy_tree_and_replace_urls(source_file,
+                #                           destination_file)
+            else:
+                with open(source_file) as f:
+                    spec = json.load(f)
+
+                # Adjust to use absolute URLs
+                make_data_urls_absolute(spec, data_url)
+
+                with open(destination_file, 'w') as f:
+                    json.dump(spec, f, indent=4, sort_keys=True)
+
+    copy_tree_and_replace_urls(source_dir, destination)
 
 
 def sync_datasets(datasets_repo,

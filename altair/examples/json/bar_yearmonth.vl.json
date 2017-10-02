@@ -1,4 +1,5 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "format": {
             "type": "csv"
@@ -12,9 +13,6 @@
                 "format": "%B of %Y"
             },
             "field": "date",
-            "scale": {
-                "type": "ordinal"
-            },
             "timeUnit": "yearmonth",
             "type": "temporal"
         },

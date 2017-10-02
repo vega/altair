@@ -1,4 +1,5 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "config": {
         "overlay": {
             "line": true
@@ -8,7 +9,7 @@
         "url": "http://vega.github.io/vega-lite/data/driving.json"
     },
     "encoding": {
-        "path": {
+        "order": {
             "field": "year",
             "type": "temporal"
         },

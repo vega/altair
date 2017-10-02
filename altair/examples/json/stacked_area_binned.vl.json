@@ -1,4 +1,5 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/cars.json"
     },
@@ -13,7 +14,7 @@
             "type": "quantitative"
         },
         "y": {
-            "aggregate": "mean",
+            "aggregate": "sum",
             "bin": false,
             "field": "Horsepower",
             "type": "quantitative"

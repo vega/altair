@@ -1,0 +1,36 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "description": "Select multiple points with the shift key.",
+    "encoding": {
+        "color": {
+            "condition": {
+                "field": "Cylinders",
+                "selection": "paintbrush",
+                "type": "ordinal"
+            },
+            "value": "grey"
+        },
+        "size": {
+            "value": 75
+        },
+        "x": {
+            "field": "Horsepower",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "Miles_per_Gallon",
+            "type": "quantitative"
+        }
+    },
+    "mark": "circle",
+    "selection": {
+        "paintbrush": {
+            "nearest": true,
+            "on": "mouseover",
+            "type": "multi"
+        }
+    }
+}

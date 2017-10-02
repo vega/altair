@@ -2,10 +2,7 @@
   "Basic": [
     {
       "name": "bar",
-      "title": "Simple Bar Chart",
-      "galleryParameters": {
-        "backgroundPosition": "25% 50%"
-      }
+      "title": "Simple Bar Chart"
     },
     {
       "name": "bar_aggregate",
@@ -13,11 +10,7 @@
     },
     {
       "name": "bar_grouped",
-      "title": "Grouped Bar Chart",
-      "galleryParameters": {
-        "backgroundSize": "220%",
-        "backgroundPosition": "22% 60%"
-      }
+      "title": "Grouped Bar Chart"
     },
     {
       "name": "scatter",
@@ -31,94 +24,66 @@
       "name": "scatter_binned",
       "title": "Binned Scatterplot",
       "galleryParameters": {
-        "backgroundSize": "150%",
-        "backgroundPosition": "1% 26%"
+        "backgroundSize": "110%"
       }
     },
     {
       "name": "scatter_colored_with_shape",
       "title": "Colored Scatterplot",
       "galleryParameters": {
-        "backgroundSize": "180%",
-        "backgroundPosition": "50% 30%"
+        "backgroundSize": "110%"
       }
     },
     {
       "name": "text_scatter_colored",
       "title": "Colored Text Scatter Plot",
       "galleryParameters": {
-        "backgroundSize": "180%",
-        "backgroundPosition": "50% 20%"
+        "backgroundSize": "110%"
       }
     },
     {
       "name": "scatter_bubble",
-      "title": "Bubble Plot",
-      "galleryParameters": {
-        "backgroundPosition": "left"
-      }
+      "title": "Bubble Plot"
     },
     {
       "name": "bubble_health_income",
       "title": "Gapminder Bubble Plot",
       "galleryParameters": {
-        "backgroundSize": "230%",
-        "backgroundPosition": "40% 20%"
+        "backgroundSize": "160%"
       }
     },
     {
       "name": "tick_strip",
       "title": "Strip Plot",
       "galleryParameters": {
-        "backgroundSize": "contains"
+        "backgroundSize": "contain"
       }
     },
     {
       "name": "line",
-      "title": "Line Chart",
-      "galleryParameters": {
-        "backgroundSize": "134%",
-        "backgroundPosition": "1% 5%"
-      }
+      "title": "Line Chart"
     },
     {
       "name": "line_color",
-      "title": "Multi Series Line Chart",
-      "galleryParameters": {
-        "backgroundSize": "170%",
-        "backgroundPosition": "40% 15%"
-      }
+      "title": "Multi Series Line Chart"
     },
     {
       "name": "line_slope",
-      "title": "Slope Graph",
-      "galleryParameters": {
-        "backgroundSize": "170%",
-        "backgroundPosition": "40% 15%"
-      }
+      "title": "Slope Graph"
     },
     {
       "name": "histogram",
-      "title": "Histogram",
-      "galleryParameters": {
-        "backgroundSize": "120%",
-        "backgroundPosition": "50% 50%"
-      }
+      "title": "Histogram"
     },
     {
       "name": "area",
-      "title": "Area Chart",
-      "galleryParameters": {
-        "backgroundSize": "170%",
-        "backgroundPosition": "60% 50%"
-      }
+      "title": "Area Chart"
     },
     {
-      "name": "text_table_heatmap",
-      "title": "Text Table Heatmap",
+      "name": "rect_heatmap",
+      "title": "Table Heatmap",
       "galleryParameters": {
-        "backgroundSize": "250%",
-        "backgroundPosition": "35% 40%"
+        "backgroundSize": "110%"
       }
     },
     {
@@ -129,17 +94,13 @@
   "Stack": [
     {
       "name": "stacked_bar_weather",
-      "title": "Stacked Bar Chart",
-      "galleryParameters": {
-        "backgroundSize": "150%"
-      }
+      "title": "Stacked Bar Chart"
     },
     {
       "name": "stacked_bar_h",
       "title": "Horizontal Stacked Bar Chart",
       "galleryParameters": {
-        "backgroundSize": "200%",
-        "backgroundPosition": "55% 25%"
+        "backgroundSize": "120%"
       }
     },
     {
@@ -162,8 +123,7 @@
       "name": "bar_layered_transparent",
       "title": "Layered Bar Chart",
       "galleryParameters": {
-        "backgroundSize": "310%",
-        "backgroundPosition": "6% 0%"
+        "backgroundSize": "110%"
       }
     }
   ],
@@ -176,10 +136,7 @@
       }
     }, {
       "name": "errorbar_horizontal_aggregate",
-      "title": "Horizontal Error Bars",
-      "galleryParameters": {
-        "backgroundSize": "150%"
-      }
+      "title": "Horizontal Error Bars"
     }
   ],
   "Trellis": [
@@ -191,42 +148,69 @@
     },
     {
       "name": "trellis_bar",
-      "title": "Trellis Bar Chart",
-      "galleryParameters": {
-        "backgroundSize": "130%",
-        "backgroundPosition": "10% 10%"
-      }
+      "title": "Trellis Bar Chart"
     },
     {
       "name": "trellis_stacked_bar",
       "title": "Trellis Stacked Bar Chart",
       "galleryParameters": {
-        "backgroundSize": "230%"
+        "backgroundSize": "150%"
       }
     },
     {
       "name": "trellis_scatter",
-      "title": "Trellis Scatter Plot",
-      "galleryParameters": {
-        "backgroundSize": "450%",
-        "backgroundPosition": "6% 50%"
-      }
+      "title": "Trellis Scatter Plot"
     },
     {
       "name": "trellis_bar_histogram",
-      "title": "Trellis Histograms",
-      "galleryParameters": {
-        "backgroundSize": "104%",
-        "backgroundPosition": "0% 30%"
-      }
+      "title": "Trellis Histograms"
     },
     {
       "name": "trellis_barley",
-      "title": "Becker's Barley Trellis Plot",
-      "galleryParameters": {
-        "backgroundSize": "150%",
-        "backgroundPosition": "30% 0%"
-      }
+      "title": "Becker's Barley Trellis Plot"
+    }
+  ],
+  "Layering": [
+    {
+      "name": "layer_precipitation_mean",
+      "title": "Mean overlay over precipitation chart"
+    },{
+      "name": "layer_text_heatmap",
+      "title": "Layering text over heatmap"
+    },
+    {
+      "name": "layer_candlestick",
+      "title": "Candlestick Chart"
+    }
+  ],
+  "Interactive": [
+    {
+      "name": "brush",
+      "title": "Rectangular Brush"
+    },
+    {
+      "name": "paintbrush",
+      "title": "Paintbrush Highlight"
+    },
+    {
+      "name": "selection_translate_scatterplot_drag",
+      "title": "Scatterplot Pan & Zoom"
+    },
+    {
+      "name": "query_widgets",
+      "title": "Query Widgets"
+    },
+    {
+      "name": "overview_detail",
+      "title": "Overview and Detail"
+    },
+    {
+      "name": "layered_crossfilter",
+      "title": "Crossfilter"
+    },
+    {
+      "name": "interactive_splom",
+      "title": "Scatterplot Matrix"
     }
   ]
 }

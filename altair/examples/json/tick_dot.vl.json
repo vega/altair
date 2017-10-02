@@ -1,10 +1,11 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/cars.json"
+        "url": "http://vega.github.io/vega-lite/data/seattle-weather.csv"
     },
     "encoding": {
         "x": {
-            "field": "Horsepower",
+            "field": "precipitation",
             "type": "quantitative"
         }
     },

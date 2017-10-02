@@ -1,0 +1,49 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "repeat": {
+        "column": [
+            "Horsepower",
+            "Acceleration",
+            "Miles_per_Gallon"
+        ],
+        "row": [
+            "Horsepower",
+            "Acceleration",
+            "Miles_per_Gallon"
+        ]
+    },
+    "spec": {
+        "encoding": {
+            "color": {
+                "condition": {
+                    "field": "Origin",
+                    "selection": "brush",
+                    "type": "nominal"
+                },
+                "value": "grey"
+            },
+            "x": {
+                "field": {
+                    "repeat": "row"
+                },
+                "type": "quantitative"
+            },
+            "y": {
+                "field": {
+                    "repeat": "column"
+                },
+                "type": "quantitative"
+            }
+        },
+        "mark": "point",
+        "selection": {
+            "brush": {
+                "resolve": "global",
+                "type": "interval"
+            }
+        }
+    }
+}

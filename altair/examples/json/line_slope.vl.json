@@ -1,4 +1,5 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/barley.json"
     },
@@ -11,8 +12,8 @@
         "x": {
             "field": "year",
             "scale": {
-                "bandSize": 50,
-                "padding": 0.5
+                "padding": 0.5,
+                "rangeStep": 50
             },
             "type": "ordinal"
         },

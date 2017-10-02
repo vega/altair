@@ -1,9 +1,5 @@
 {
-    "config": {
-        "mark": {
-            "interpolate": "monotone"
-        }
-    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/cars.json"
     },
@@ -20,5 +16,8 @@
             "type": "temporal"
         }
     },
-    "mark": "area"
+    "mark": {
+        "interpolate": "monotone",
+        "type": "area"
+    }
 }

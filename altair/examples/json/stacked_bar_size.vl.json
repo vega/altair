@@ -1,16 +1,12 @@
 {
-    "config": {
-        "mark": {
-            "opacity": 0.5
-        }
-    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
-        "format": {
-            "type": "csv"
-        },
         "url": "http://vega.github.io/vega-lite/data/seattle-weather.csv"
     },
     "encoding": {
+        "opacity": {
+            "value": 0.5
+        },
         "size": {
             "field": "weather",
             "type": "nominal"
@@ -22,7 +18,6 @@
         },
         "y": {
             "aggregate": "count",
-            "field": "*",
             "type": "quantitative"
         }
     },

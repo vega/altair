@@ -1,0 +1,47 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/iris.json"
+    },
+    "repeat": {
+        "column": [
+            "sepalLength",
+            "sepalWidth",
+            "petalLength",
+            "petalWidth"
+        ],
+        "row": [
+            "petalWidth",
+            "petalLength",
+            "sepalWidth",
+            "sepalLength"
+        ]
+    },
+    "spec": {
+        "encoding": {
+            "color": {
+                "field": "species",
+                "type": "nominal"
+            },
+            "x": {
+                "field": {
+                    "repeat": "column"
+                },
+                "scale": {
+                    "zero": false
+                },
+                "type": "quantitative"
+            },
+            "y": {
+                "field": {
+                    "repeat": "row"
+                },
+                "scale": {
+                    "zero": false
+                },
+                "type": "quantitative"
+            }
+        },
+        "mark": "point"
+    }
+}

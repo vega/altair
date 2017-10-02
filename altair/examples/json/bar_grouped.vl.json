@@ -1,9 +1,11 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "config": {
-        "facet": {
-            "cell": {
-                "strokeWidth": 0
-            }
+        "axis": {
+            "domainWidth": 1
+        },
+        "cell": {
+            "stroke": "transparent"
         }
     },
     "data": {
@@ -21,22 +23,16 @@
             "type": "nominal"
         },
         "column": {
-            "axis": {
-                "axisWidth": 1,
-                "offset": -8,
-                "orient": "bottom"
-            },
             "field": "age",
-            "scale": {
-                "padding": 4
-            },
             "type": "ordinal"
         },
         "x": {
-            "axis": false,
+            "axis": {
+                "title": ""
+            },
             "field": "gender",
             "scale": {
-                "bandSize": 6
+                "rangeStep": 12
             },
             "type": "nominal"
         },
@@ -51,13 +47,13 @@
         }
     },
     "mark": "bar",
-    "transform": {
-        "calculate": [
-            {
-                "expr": "datum.sex == 2 ? \"Female\" : \"Male\"",
-                "field": "gender"
-            }
-        ],
-        "filter": "datum.year == 2000"
-    }
+    "transform": [
+        {
+            "filter": "datum.year == 2000"
+        },
+        {
+            "as": "gender",
+            "calculate": "datum.sex == 2 ? 'Female' : 'Male'"
+        }
+    ]
 }

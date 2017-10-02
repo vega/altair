@@ -1,0 +1,49 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "config": {
+        "overlay": {
+            "line": true
+        }
+    },
+    "layer": [
+        {
+            "data": {
+                "url": "data/cars.json"
+            },
+            "encoding": {
+                "color": {
+                    "value": "darkred"
+                },
+                "x": {
+                    "field": "Cylinders",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "aggregate": "max",
+                    "bin": false,
+                    "field": "Horsepower",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "line"
+        },
+        {
+            "data": {
+                "url": "data/cars.json"
+            },
+            "encoding": {
+                "x": {
+                    "field": "Cylinders",
+                    "type": "ordinal"
+                },
+                "y": {
+                    "aggregate": "min",
+                    "bin": false,
+                    "field": "Horsepower",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "line"
+        }
+    ]
+}

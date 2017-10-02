@@ -1,0 +1,56 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "bin": true,
+                    "field": "Acceleration",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "aggregate": "count",
+                    "field": "*",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "bar",
+            "selection": {
+                "brush": {
+                    "encodings": [
+                        "x"
+                    ],
+                    "type": "interval"
+                }
+            }
+        },
+        {
+            "encoding": {
+                "color": {
+                    "value": "goldenrod"
+                },
+                "x": {
+                    "bin": true,
+                    "field": "Acceleration",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "aggregate": "count",
+                    "field": "*",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "bar",
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "brush"
+                    }
+                }
+            ]
+        }
+    ]
+}

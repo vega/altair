@@ -1,10 +1,5 @@
 {
-    "config": {
-        "cell": {
-            "height": 200,
-            "width": 200
-        }
-    },
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/cars.json"
     },
@@ -12,15 +7,16 @@
         "x": {
             "field": "Origin",
             "scale": {
-                "bandSize": "fit"
+                "rangeStep": null
             },
             "type": "nominal"
         },
         "y": {
             "aggregate": "count",
-            "field": "*",
             "type": "quantitative"
         }
     },
-    "mark": "bar"
+    "height": 200,
+    "mark": "bar",
+    "width": 200
 }

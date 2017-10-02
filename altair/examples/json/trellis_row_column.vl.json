@@ -1,8 +1,13 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "data": {
         "url": "http://vega.github.io/vega-lite/data/cars.json"
     },
     "encoding": {
+        "color": {
+            "field": "Cylinders",
+            "type": "nominal"
+        },
         "column": {
             "field": "Origin",
             "type": "ordinal"
@@ -10,6 +15,10 @@
         "row": {
             "field": "Cylinders",
             "type": "ordinal"
+        },
+        "shape": {
+            "field": "Origin",
+            "type": "nominal"
         },
         "x": {
             "field": "Horsepower",

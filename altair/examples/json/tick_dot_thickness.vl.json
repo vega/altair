@@ -1,8 +1,9 @@
 {
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
     "config": {
-        "mark": {
-            "tickSize": 10,
-            "tickThickness": 2
+        "tick": {
+            "bandSize": 10,
+            "thickness": 2
         }
     },
     "data": {
