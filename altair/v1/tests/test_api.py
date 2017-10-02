@@ -588,8 +588,27 @@ def test_enable_mime_rendering():
     disable_mime_rendering()
     disable_mime_rendering()
 
-    
-def test_validate_spec():
-    c = make_chart()
 
+def test_validate_spec():
+
+    # Make sure we catch channels with no field specified
+    c = make_chart()
+    c.encode(Color())
+    with pytest.raises(FieldError):
+        c.to_dict()
+
+    # Make sure we catch encoded fields not in the data
+    c = make_chart()
+    c.encode(x='x', y='y', color='z')
+    c.encode(color='z')
+    with pytest.raises(FieldError):
+        c.to_dict()
     
+    # Make sure we can resolve computed fields
+    c = make_chart()
+    c.encode(x='x', y='y', color='z')
+    c.encode(color='z')
+    c.transform_data(
+        calculate=[Formula('z', 'sin(((2*PI)*datum.x))')]
+    )
+    assert isinstance(c.to_dict(), dict)

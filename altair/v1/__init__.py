@@ -42,6 +42,7 @@ from .api import (
     RangeFilter,
     OneOfFilter,
     MaxRowsExceeded,
+    FieldError,
     enable_mime_rendering,
     disable_mime_rendering
 )
