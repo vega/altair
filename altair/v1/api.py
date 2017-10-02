@@ -58,6 +58,16 @@ class MaxRowsExceeded(Exception):
     """Raised if the number of rows in the dataset is too large."""
     pass
 
+class FieldError(Exception):
+    """Raised if a channel has a field related error.
+    
+    This is raised if a channel has no field name or if the field name is
+    not found as the column name of the ``DataFrame``.
+    """
+
+
+
+
 DEFAULT_MAX_ROWS = 5000
 
 #*************************************************************************
@@ -512,6 +522,51 @@ class TopLevelMixin(object):
                 else:
                     self.transform_data(filter=filters)
 
+    def _validate_spec(self):
+        """Validate the spec.
+        
+        This has to be called after the rest of the _finalize() logic, which fills in the
+        shortcut field names and also processes the expressions for computed fields.
+
+        This validates:
+
+        1. That each encoding channel has a field (column name).
+        2. That the specified field name is present the column names of the ``DataFrame`` or
+           computed field from transform expressions.
+
+        This logic only runs when the dataset is a ``DataFrame``. 
+        """
+
+        # If we have a concrete dataset (not a URL) make sure field names in the encodings
+        # are present in the data or formulas
+        if isinstance(self.data, pd.DataFrame):
+            # Find columns with visual encodings
+            encoded_columns = set()
+            encoding = self.encoding
+            if encoding is not jst.undefined:
+                for channel_name in encoding.channel_names:
+                    channel = getattr(encoding, channel_name)
+                    if channel is not jst.undefined:
+                        field = channel.field
+                        if field is jst.undefined:
+                            raise FieldError("Missing field/column name for channel: {}".format(channel_name))
+                        else:
+                            encoded_columns.add(field)
+            # Find columns in the data
+            data_columns = set(self.data.columns.values)
+            transform = self.transform
+            if transform is not jst.undefined:
+                calculate = transform.calculate
+                if calculate is not jst.undefined:
+                    for formula in calculate:
+                        field = formula.field
+                        if field is not jst.undefined:
+                            data_columns.add(field)
+            # Find columns in the visual encoding that are not in the data
+            missing_columns = encoded_columns - data_columns
+            if missing_columns:
+                raise FieldError("Fields/columns not found in the data: {}".format(missing_columns))
+
 
 class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
     _data = None
@@ -630,6 +685,9 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
         if self.data is not None:
             kwargs['data'] = self.data
         super(Chart, self)._finalize(**kwargs)
+        # After the rest of _finalize() has run, validate the spec.
+        # This is last as field names are not yet filled in from shortcuts until now.
+        self._validate_spec()
 
     def __add__(self, other):
         if isinstance(other, Chart):
