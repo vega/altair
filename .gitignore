@@ -62,5 +62,5 @@ target/
 
 .ipynb_checkpoints
 .idea/*
-tools/repos
+tools/_build
 Untitled*.ipynb

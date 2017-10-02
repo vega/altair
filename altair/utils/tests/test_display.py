@@ -52,7 +52,7 @@ def test_VegaLite():
     assert vl.spec == _spec
     from altair import examples
     filename = os.path.abspath(
-        os.path.join(os.path.dirname(examples.__file__), 'json', 'area.vl.json')
+        os.path.join(examples.JSON_DIR, 'area.vl.json')
     )
     vl = VegaLite(filename=filename)
     assert vl.spec['mark']=='area'

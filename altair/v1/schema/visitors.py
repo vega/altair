@@ -4,7 +4,8 @@ import pandas as pd
 from ._interface import jstraitlets as jst
 from ._interface import schema
 
-from ..utils import sanitize_dataframe, construct_shorthand, CodeGen
+from ..traitlet_utils import construct_shorthand
+from ...utils import sanitize_dataframe, CodeGen
 
 
 class ToDict(jst.ToDict):

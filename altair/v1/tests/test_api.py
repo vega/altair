@@ -10,9 +10,9 @@ from .. import *
 from .. import schema
 from ..schema import jstraitlets as jst
 from ..examples import iter_examples
-from ..utils.node import consistent_with_png, consistent_with_svg
-from ..datasets import connection_ok
-from ..utils._py3k_compat import PY2
+from ...datasets import connection_ok
+from ...utils.node import consistent_with_png, consistent_with_svg
+from ...utils._py3k_compat import PY2
 
 def make_chart():
     data = pd.DataFrame({'x': range(10),
@@ -226,7 +226,7 @@ def test_to_python():
 
 
 def test_to_python_with_methods():
-    from ..utils._py3k_compat import PY2
+    from ...utils._py3k_compat import PY2
     if PY2:
         code_in = "Chart('http://vega.github.io').mark_point(color=u'red',)"
     else:

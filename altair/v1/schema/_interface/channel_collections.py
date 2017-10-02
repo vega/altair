@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-98-g8a98636
-# - date: 2017-08-09 12:14:27
+# - altair version info: v1.2.0-109-g6bd6562
+# - date: 2017-08-15 22:31:26
 
 import traitlets as T
 from . import jstraitlets as jst

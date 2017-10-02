@@ -9,10 +9,10 @@ from traitlets.utils.importstring import import_item
 from altair.api import TopLevelMixin
 try:
     # Altair > 1.2
-    from altair.schema._interface import named_channels, channel_collections
+    from altair.v1.schema._interface import named_channels, channel_collections
 except:
     # Altair <= 1.2
-    from altair.schema._wrappers import named_channels, channel_collections
+    from altair.schema import named_channels, channel_collections
 
 __all__ = ['altair_rst_table']
 
