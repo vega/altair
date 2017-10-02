@@ -24,17 +24,21 @@ as well as Altair's [Tutorial Notebooks](altair/notebooks/01-Index.ipynb).
 Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the Jupyter Notebook:
 
 ```python
-from altair import Chart, load_dataset
+import altair as alt
+
+# Uncomment/run this line to enable Altair in JupyterLab/nteract:
+# alt.enable_mime_rendering()
 
 # load data as a pandas DataFrame
-cars = load_dataset('cars')
+cars = alt.load_dataset('cars')
 
-Chart(cars).mark_point().encode(
+alt.Chart(cars).mark_point().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
     color='Origin',
 )
 ```
+
 ![Altair Visualization](images/cars.png?raw=true)
 
 ## A Python API for statistical visualizations
@@ -46,13 +50,16 @@ manner. By statistical visualization we mean:
 * The `DataFrame` is in a [tidy format](http://vita.had.co.nz/papers/tidy-data.pdf)
   where the rows correspond to samples and the columns correspond the observed variables.
 * The data is mapped to the **visual properties** (position, color, size, shape,
-  faceting, etc.) using the group-by operation of Pandas and SQL.
+  faceting, etc.) using the group-by data transformation.
 
 The Altair API contains no actual visualization rendering code but instead
 emits JSON data structures following the
-[Vega-Lite](https://github.com/vega/vega-lite) specification. For convenience,
-Altair can optionally use [ipyvega](https://github.com/vega/ipyvega) to
-display client-side renderings seamlessly in the Jupyter notebook.
+[Vega-Lite](https://github.com/vega/vega-lite) specification. The resulting
+Vega-Lite JSON data can be rendered in the following user-interfaces:
+
+* [Jupyter Notebook](https://github.com/jupyter/notebook) (by installing [ipyvega](https://github.com/vega/ipyvega)).
+* [JupyterLab](https://github.com/jupyterlab/jupyterlab) (no additional dependencies needed).
+* [nteract](https://github.com/nteract/nteract) (no additional dependencies needed).
 
 ## Features
 
@@ -62,7 +69,7 @@ display client-side renderings seamlessly in the Jupyter notebook.
   in full conformance with the [Vega-Lite](https://github.com/vega/vega-lite)
   specification.
 * Auto-generate Altair Python code from a Vega-Lite JSON spec.
-* Display visualizations in the live Jupyter Notebook, on GitHub and
+* Display visualizations in the live Jupyter Notebook, JupyterLab, nteract, on GitHub and
   [nbviewer](http://nbviewer.jupyter.org/).
 * Export visualizations to PNG images, stand-alone HTML pages and the [Online Vega-Lite
   Editor](https://vega.github.io/vega-editor/?mode=vega-lite).
@@ -75,28 +82,38 @@ Altair can be installed with the following commands:
 
 ```
 pip install altair
-pip install --upgrade notebook  # need jupyter_client >= 4.2 for sys-prefix below
+pip install --upgrade notebook  # need jupyter_client >= 4.2
+```
+
+In addition, to render Altair visualizations in the classic Jupyter Notebook,
+you will need to enable the [ipyvega](https://github.com/vega/ipyvega) nbextension:
+
+```
 jupyter nbextension install --sys-prefix --py vega
 ```
 
-Or using conda (conda builds may take a few hours to go live after a release):
+This single step is not needed for usage with JupyterLab and nteract, which have built-in
+support for Vega-Lite.
+
+If you use conda to install Altair:
 
 ```
 conda install altair --channel conda-forge
 ```
 
-## Examples and tutorial
+the nbextension is automatically enabled.
 
-For more information and examples of Altair's API, see the [Altair
-Documentation](altair/notebooks/01-Index.ipynb).
+## Example and tutorial notebooks
 
-To immediately download the Altair Documentation as runnable Jupyter
-notebooks, run the following code from a Jupyter Notebook:
+We maintain a separate Github repository of Jupyter Notebooks that contain an
+interactive tutorial and examples:
 
-```python
-from altair import tutorial
-tutorial()
-```
+https://github.com/altair-viz/altair_notebooks
+
+To launch a live notebook server with those notebook using [binder](https://beta.mybinder.org/),
+click on the following badge:
+
+[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
 
 ## Project philosophy
 
@@ -205,9 +222,8 @@ as much bigger than Altair itself: the Vega and Vega-Lite specifications are
 perhaps the best existing candidates for a principled *lingua franca* of data
 visualization.
 
-To contribute additional examples to the documentation please add or
-update notebooks in `altair/notebooks/*.ipynb` and open a pull request.
-Be sure to add links to `01-Index.ipynb` if needed. Thanks!
+We are also seeking contributions of additional Jupyter notebook-based examples
+in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
 ## Whence Altair?
 
