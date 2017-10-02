@@ -64,6 +64,8 @@ DEFAULT_MAX_ROWS = 5000
 # Rendering configuration
 #*************************************************************************
 
+_original_ipython_display_ = None
+
 # This is added to TopLevelMixin as a method if MIME rendering is enabled
 def _repr_mimebundle_(self, include, exclude, **kwargs):
     """Return a MIME-bundle for rich display in the Jupyter Notebook."""
@@ -75,8 +77,22 @@ def _repr_mimebundle_(self, include, exclude, **kwargs):
 def enable_mime_rendering():
     """Enable MIME bundle based rendering used in JupyterLab/nteract."""
     # This is what makes Python fun!
-    delattr(TopLevelMixin, '_ipython_display_')
-    TopLevelMixin._repr_mimebundle_ = _repr_mimebundle_
+    global _original_ipython_display_
+    if _original_ipython_display_ is None:
+        TopLevelMixin._repr_mimebundle_ = _repr_mimebundle_
+        _original_ipython_display_ = TopLevelMixin._ipython_display_
+        delattr(TopLevelMixin, '_ipython_display_')
+
+
+def disable_mime_rendering():
+    """Disable MIME bundle based rendering used in JupyterLab/nteract."""
+    global _original_ipython_display_
+    if _original_ipython_display_ is not None:
+        delattr(TopLevelMixin, '_repr_mimebundle_')
+        TopLevelMixin._ipython_display_ = _original_ipython_display_
+        _original_ipython_display_ = None
+
+
 
 #*************************************************************************
 # Channel Aliases

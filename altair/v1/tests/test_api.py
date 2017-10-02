@@ -448,7 +448,7 @@ def test_chart_serve():
 
 
 def test_formula_expression():
-     formula = Formula('blah', expr.log(expr.df.value) / expr.LN10)
+     formula = Formula('blah', expr.log(expr.df.value) // expr.LN10)
      assert formula.field == 'blah'
      assert formula.expr == '(log(datum.value)/LN10)'
 
@@ -579,3 +579,11 @@ def test_schema_url():
 
     # Make sure that $schema
     chart = Chart.from_dict(dct)
+
+
+def test_enable_mime_rendering():
+    # Make sure these functions are safe to call multiple times.
+    enable_mime_rendering()
+    enable_mime_rendering()
+    disable_mime_rendering()
+    disable_mime_rendering()

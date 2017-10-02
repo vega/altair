@@ -112,7 +112,7 @@ def test_getitem_list(data):
     assert set(dir(df2)) == {'xxx', 'yyy', 'calculated'}
 
     # changing df2 shouldn't affect df1
-    df2['qqq'] = df2.xxx / df2.yyy
+    df2['qqq'] = df2.xxx // df2.yyy
     assert set(dir(df2)) == {'xxx', 'yyy', 'calculated', 'qqq'}
     assert set(dir(df)) == {'xxx', 'yyy', 'zzz', 'calculated'}
 
