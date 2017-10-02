@@ -43,6 +43,7 @@ from .api import (
     OneOfFilter,
     MaxRowsExceeded,
     enable_mime_rendering,
+    disable_mime_rendering
 )
 
 from ..datasets import (
