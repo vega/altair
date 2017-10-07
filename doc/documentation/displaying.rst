@@ -77,11 +77,11 @@ Serving to http://127.0.0.1:8888/    [Ctrl-C to exit]
 
 .. _displaying-plots-vega-editor:
 
-Representation output to file
------------------------------
-Altair supports writing plot to a web or image file. This file can be an HTML,
-JSON, PNG or SVG file. This functionality is available through
-:meth:`Chart.savechart`.
+Saving a visualization to a file
+--------------------------------
+Altair supports writing visualizations to an image or HTML file. 
+This file can be an HTML, JSON, PNG or SVG file. This functionality
+is available through :meth:`Chart.savechart`.
 
 An example useage of :meth:`Chart.savechart`:
 
