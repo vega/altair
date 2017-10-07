@@ -3,9 +3,9 @@
 Interactive visualization
 -------------------------
 
-Another package, `altair_widgets`_ provides interactive visualization of a
-DataFrame. It provides a widget that allows to choose the encodings for
-different columns:
+Another experimental package, `altair_widgets`_ provides interactive
+visualization of a DataFrame. It provides a widget that allows to choose
+the encodings for different columns:
 
 .. _altair_widgets: https://github.com/altair-viz/altair_widgets
 
