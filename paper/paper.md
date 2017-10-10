@@ -31,7 +31,7 @@ visualizations to be expressed using a small number of grammar primitives. Vega-
 As a Python library, Altair provides an API oriented towards scientists and data scientists
 doing exploratory data analysis []. Altair's Python API emits Vega-Lite JSON data, which is then
 rendered in a user-interface such as the Jupyter Notebook, JupyterLab or nteract using the
-Vega-Lite JavaScript library [].
+Vega-Lite JavaScript library []. Vega-Lite JSON is compiled to a full Vega specification [], which is then parsed and executed using a reactive runtime that internally makes use of D3.js [].
 
 The declarative nature of the Vega-Lite visualization grammar, and its encoding in a formal
 JSON schema, provide Altair with a number of benefits. First, much of the Altair Python code,
