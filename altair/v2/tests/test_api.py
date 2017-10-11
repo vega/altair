@@ -350,22 +350,22 @@ def test_data_finalization():
     # Facet containing data and a layer
     chart1 = Chart().mark_point().encode(x='x', y='y')
     chart2 = Chart().mark_rule().encode(x='average(x)', y='average(y)')
-    layer = LayeredChart(layers=[chart1, chart2])
+    layer = LayeredChart(layer=[chart1, chart2])
     facet = FacetedChart(data, spec=layer).set_facet(row='row')
     D = facet.to_dict()
     assert D['facet']['row']['type'] == 'nominal'
-    for layer in D['spec']['layers']:
+    for layer in D['spec']['layer']:
         assert layer['encoding']['x']['type'] == 'quantitative'
         assert layer['encoding']['y']['type'] == 'temporal'
 
     # Facet containing a layer and no data
     chart1 = Chart().mark_point().encode(x='x', y='y')
     chart2 = Chart().mark_rule().encode(x='average(x)', y='average(y)')
-    layer = LayeredChart(layers=[chart1, chart2])
+    layer = LayeredChart(layer=[chart1, chart2])
     facet = FacetedChart(spec=layer).set_facet(row='row')
     D = facet.to_dict()
     assert 'type' not in D['facet']['row']
-    for layer in D['spec']['layers']:
+    for layer in D['spec']['layer']:
         assert 'type' not in layer['encoding']['x']
         assert 'type' not in layer['encoding']['y']
 
@@ -544,7 +544,7 @@ def test_chart_dir():
 
     # traits should appear
     assert 'mark' in chart
-    assert 'layers' in layerchart
+    assert 'layer' in layerchart
     assert 'facet' in facetchart
 
 

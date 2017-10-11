@@ -20,7 +20,168 @@ from .. import expr
 from . import schema
 
 from .schema import jstraitlets as jst
-from .schema import *
+
+from .schema import (
+    AggregateOp,
+    AndFilter,
+    Axis,
+    AxisConfig,
+    AxisConfigMixins,
+    AxisEncoding,
+    AxisOrient,
+    BOXPLOT,
+    BarConfig,
+    BaseBin,
+    BaseSelectionDef,
+    BaseSpec,
+    Bin,
+    BinTransform,
+    BoxPlotConfig,
+    BoxPlotConfigMixins,
+    BoxPlotDef,
+    BrushConfig,
+    CalculateTransform,
+    CellConfig,
+    CompositeMarkConfigMixins,
+    CompositeMarkDef,
+    CompositeUnitSpec,
+    CompositeUnitSpecAlias,
+    ConditionLegendFieldDef,
+    ConditionNumberValueDef,
+    ConditionOnlyNumberLegendDef,
+    ConditionOnlyStringLegendDef,
+    ConditionOnlyTextDef,
+    ConditionStringValueDef,
+    ConditionTextFieldDef,
+    ConditionTextValueDef,
+    ConditionalNumberLegendDef,
+    ConditionalNumberLegendFieldDef,
+    ConditionalNumberLegendValueDef,
+    ConditionalStringLegendDef,
+    ConditionalStringLegendFieldDef,
+    ConditionalStringLegendValueDef,
+    ConditionalTextDef,
+    ConditionalTextFieldDef,
+    ConditionalTextValueDef,
+    Config,
+    Data,
+    DataFormat,
+    DataFormatType,
+    DataUrlFormat,
+    DateTime,
+    ERRORBAR,
+    Encoding,
+    EncodingWithFacet,
+    EqualFilter,
+    ExtendedScheme,
+    Facet,
+    FacetFieldDef,
+    FacetedCompositeUnitSpecAlias,
+    FacetedSpec,
+    FacetedUnitSpec,
+    FieldDef,
+    FieldDefBase,
+    FilterTransform,
+    FontStyle,
+    FontWeight,
+    Guide,
+    GuideEncodingEntry,
+    HConcatSpec,
+    Header,
+    HorizontalAlign,
+    InlineData,
+    Interpolate,
+    IntervalSelection,
+    IntervalSelectionConfig,
+    LayerSpec,
+    LayoutSizeMixins,
+    Legend,
+    LegendConfig,
+    LegendEncoding,
+    LegendFieldDef,
+    LegendOrient,
+    LookupData,
+    LookupTransform,
+    Mark,
+    MarkConfig,
+    MarkConfigMixins,
+    MarkDef,
+    MultiSelection,
+    MultiSelectionConfig,
+    NamedData,
+    NonspatialResolve,
+    NotFilter,
+    NumberValueDef,
+    OneOfFilter,
+    OrFilter,
+    OrderFieldDef,
+    Orient,
+    PositionFieldDef,
+    RangeFilter,
+    Repeat,
+    RepeatRef,
+    RepeatSpec,
+    ResolveMapping,
+    ResolveMode,
+    Root,
+    Scale,
+    ScaleConfig,
+    ScaleFieldDef,
+    ScaleType,
+    SelectionAnd,
+    SelectionConfig,
+    SelectionDef,
+    SelectionDomain,
+    SelectionFilter,
+    SelectionNot,
+    SelectionOr,
+    SelectionResolution,
+    SingleDefChannel,
+    SingleSelection,
+    SingleSelectionConfig,
+    SortField,
+    SpatialResolve,
+    Spec,
+    StackOffset,
+    StringValueDef,
+    Summarize,
+    SummarizeTransform,
+    TextConfig,
+    TextFieldDef,
+    TextValueDef,
+    TickConfig,
+    TimeUnit,
+    TimeUnitTransform,
+    TopLevelExtendedSpec,
+    TopLevelFacetedSpec,
+    TopLevelFacetedUnitSpec,
+    TopLevelHConcatSpec,
+    TopLevelLayerSpec,
+    TopLevelProperties,
+    TopLevelRepeatSpec,
+    TopLevelVConcatSpec,
+    Transform,
+    Type,
+    UrlData,
+    VConcatSpec,
+    VLOnlyConfig,
+    ValueDef,
+    VerticalAlign,
+    VgAxisBase,
+    VgAxisConfig,
+    VgBinding,
+    VgCheckboxBinding,
+    VgGenericBinding,
+    VgLegendBase,
+    VgLegendConfig,
+    VgMarkConfig,
+    VgRadioBinding,
+    VgRangeBinding,
+    VgRangeScheme,
+    VgSelectBinding,
+    VgTitleConfig,
+    VlOnlyGuideConfig,
+)
 
 
 class MaxRowsExceeded(Exception):
@@ -70,30 +231,30 @@ def use_signature(Obj):
 
 
 #*************************************************************************
-# Formula wrapper
+# CalculateTransform wrapper
 # - makes field a required first argument of initialization
 # - allows expr trait to be an Expression and processes it properly
 #*************************************************************************
-class Formula(schema.Formula):
-    expr = jst.JSONUnion([jst.JSONString(),
-                          jst.JSONInstance(expr.Expression)],
-                         help=schema.Formula.expr.help)
+class CalculateTransform(schema.CalculateTransform):
+    calculate = jst.JSONUnion([jst.JSONString(),
+                               jst.JSONInstance(expr.Expression)],
+                               help=schema.CalculateTransform.calculate.help)
 
-    def __init__(self, field, expr=jst.undefined, **kwargs):
-        super(Formula, self).__init__(field=field, expr=expr, **kwargs)
+    def __init__(self, as_, calculate=jst.undefined, **kwargs):
+        super(CalculateTransform, self).__init__(as_=as_, calculate=calculate, **kwargs)
 
     def _finalize(self, **kwargs):
         """Finalize object: convert expr expression to string if necessary"""
-        if isinstance(self.expr, expr.Expression):
-            self.expr = repr(self.expr)
-        super(Formula, self)._finalize(**kwargs)
+        if isinstance(self.calculate, expr.Expression):
+            self.calculate = repr(self.calculate)
+        super(CalculateTransform, self)._finalize(**kwargs)
 
 
 #*************************************************************************
-# Transform wrapper
+# FilterTransform wrapper
 # - allows filter trait to be an Expression and processes it properly
 #*************************************************************************
-class Transform(schema.Transform):
+class FilterTransform(schema.FilterTransform):
     filter = jst.JSONUnion([jst.JSONString(),
                             jst.JSONInstance(expr.Expression),
                             jst.JSONInstance(schema.EqualFilter),
@@ -105,7 +266,7 @@ class Transform(schema.Transform):
                                 jst.JSONInstance(schema.EqualFilter),
                                 jst.JSONInstance(schema.RangeFilter),
                                 jst.JSONInstance(schema.OneOfFilter)]))],
-                           help=schema.Transform.filter.help)
+                           help=schema.FilterTransform.filter.help)
 
     def _finalize(self, **kwargs):
         """Finalize object: convert filter expressions to string"""
@@ -301,77 +462,6 @@ class TopLevelMixin(object):
         """Emit the Python code as a string required to created this Chart."""
         return super(TopLevelMixin, self).to_python(data=data)
 
-    # transform method
-    @use_signature(schema.schema.Transform)
-    def transform_data(self, *args, **kwargs):
-        """Set the data transform by keyword args."""
-        return update_subtraits(self, 'transform', *args, **kwargs)
-
-    # Configuration methods
-    @use_signature(schema.schema.Config)
-    def configure(self, *args, **kwargs):
-        """Set chart configuration"""
-        return update_subtraits(self, 'config', *args, **kwargs)
-
-    @use_signature(schema.AxisConfig)
-    def configure_axis(self, *args, **kwargs):
-        """Configure the chart's axes by keyword args."""
-        return update_subtraits(self, ('config', 'axis'), *args, **kwargs)
-
-    @use_signature(schema.CellConfig)
-    def configure_cell(self, *args, **kwargs):
-        """Configure the chart's cell's by keyword args."""
-        return update_subtraits(self, ('config', 'cell'), *args, **kwargs)
-
-    @use_signature(schema.LegendConfig)
-    def configure_legend(self, *args, **kwargs):
-        """Configure the chart's legend by keyword args."""
-        return update_subtraits(self, ('config', 'legend'), *args, **kwargs)
-
-    @use_signature(schema.OverlayConfig)
-    def configure_overlay(self, *args, **kwargs):
-        """Configure the chart's overlay by keyword args."""
-        return update_subtraits(self, ('config', 'overlay'), *args, **kwargs)
-
-    @use_signature(schema.MarkConfig)
-    def configure_mark(self, *args, **kwargs):
-        """Configure the chart's marks by keyword args."""
-        return update_subtraits(self, ('config', 'mark'), *args, **kwargs)
-
-    @use_signature(schema.ScaleConfig)
-    def configure_scale(self, *args, **kwargs):
-        """Configure the chart's scales by keyword args."""
-        return update_subtraits(self, ('config', 'scale'), *args, **kwargs)
-
-    @use_signature(schema.FacetConfig)
-    def configure_facet(self, *args, **kwargs):
-        """Configure the chart's scales by keyword args."""
-        return update_subtraits(self, ('config', 'facet'), *args, **kwargs)
-
-    @use_signature(schema.AxisConfig)
-    def configure_facet_axis(self, *args, **kwargs):
-        """Configure the facet's axes by keyword args."""
-        return update_subtraits(self, ('config', 'facet', 'axis'),
-                                *args, **kwargs)
-
-    @use_signature(schema.CellConfig)
-    def configure_facet_cell(self, *args, **kwargs):
-        """Configure the facet's cells by keyword args."""
-        return update_subtraits(self, ('config', 'facet', 'cell'),
-                                *args, **kwargs)
-
-    @use_signature(schema.FacetGridConfig)
-    def configure_facet_grid(self, *args, **kwargs):
-        """Configure the facet's grid by keyword args."""
-        return update_subtraits(self, ('config', 'facet', 'grid'),
-                                *args, **kwargs)
-
-    @use_signature(schema.FacetScaleConfig)
-    def configure_facet_scale(self, *args, **kwargs):
-        """Configure the facet's scales by keyword args."""
-        return update_subtraits(self, ('config', 'facet', 'scale'),
-                                *args, **kwargs)
-
     # Display related methods
 
     def _ipython_display_(self):
@@ -456,7 +546,7 @@ class TopLevelMixin(object):
             if columns is not None and isinstance(self.data, pd.DataFrame):
                 self.data = self.data[columns]
             if calculated_cols:
-                self.transform_data(calculate=[Formula(field, expr=exp)
+                self.transform_data(calculate=[CalculateTransform(field, expr=exp)
                                                for field, exp
                                                in calculated_cols.items()])
             if filters:
@@ -467,14 +557,14 @@ class TopLevelMixin(object):
                     self.transform_data(filter=filters)
 
 
-class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
+class Chart(TopLevelMixin, schema.TopLevelFacetedUnitSpec):
     _data = None
 
     # use specialized version of Encoding and Transform
     encoding = jst.JSONInstance(Encoding,
-                                help=schema.ExtendedUnitSpec.encoding.help)
+                                help=schema.TopLevelFacetedUnitSpec.encoding.help)
     transform = jst.JSONInstance(Transform,
-                                 help=schema.ExtendedUnitSpec.transform.help)
+                                 help=schema.TopLevelFacetedUnitSpec.transform.help)
     mark = schema.Mark(default_value='point', help="""The mark type.""")
 
     max_rows = T.Int(
@@ -565,6 +655,11 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
         self.mark = 'square'
         return self.configure_mark(*args, **kwargs)
 
+    @use_signature(schema.MarkConfig)
+    def configure_mark(self, *args, **kwargs):
+        """Configure the chart's marks by keyword args."""
+        return update_subtraits(self, ('config', 'mark'), *args, **kwargs)
+
     @use_signature(schema.Encoding)
     def encode(self, *args, **kwargs):
         """Define the encoding for the Chart."""
@@ -588,7 +683,7 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
 
     @classmethod
     def from_dict(cls, spec):
-        if 'layers' in spec:
+        if 'layer' in spec:
             return LayeredChart.from_dict(spec)
         elif 'facet' in spec:
             return FacetedChart.from_dict(spec)
@@ -616,14 +711,14 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
         return cls.from_dict(spec)
 
 
-class LayeredChart(TopLevelMixin, schema.LayerSpec):
+class LayeredChart(TopLevelMixin, schema.TopLevelLayerSpec):
     _data = None
 
     # Use specialized version of Chart and Transform
-    layers = jst.JSONArray(jst.JSONInstance(Chart),
-                           help=schema.LayerSpec.layers.help)
+    layer = jst.JSONArray(jst.JSONInstance(Chart),
+                          help=schema.TopLevelLayerSpec.layer.help)
     transform = jst.JSONInstance(Transform,
-                                 help=schema.LayerSpec.transform.help)
+                                 help=schema.TopLevelLayerSpec.transform.help)
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."
@@ -653,7 +748,7 @@ class LayeredChart(TopLevelMixin, schema.LayerSpec):
         return [m for m in dir(self.__class__) if m not in dir(T.HasTraits)]
 
     def set_layers(self, *layers):
-        self.layers = list(layers)
+        self.layer = list(layers)
         return self
 
     def _finalize(self, **kwargs):
@@ -664,23 +759,23 @@ class LayeredChart(TopLevelMixin, schema.LayerSpec):
         super(LayeredChart, self)._finalize(**kwargs)
 
     def __iadd__(self, layer):
-        if self.layers is jst.undefined:
-            self.layers = [layer]
+        if self.layer is jst.undefined:
+            self.layer = [layer]
         else:
-            self.layers = self.layers + [layer]
+            self.layer = self.layer + [layer]
         return self
 
 
-class FacetedChart(TopLevelMixin, schema.FacetSpec):
+class FacetedChart(TopLevelMixin, schema.TopLevelFacetedSpec):
     _data = None
 
     # Use specialized version of Facet, spec, and Transform
-    facet = jst.JSONInstance(Facet, help=schema.FacetSpec.facet.help)
+    facet = jst.JSONInstance(Facet, help=schema.TopLevelFacetedSpec.facet.help)
     spec = jst.JSONUnion([jst.JSONInstance(LayeredChart),
                           jst.JSONInstance(Chart)],
-                         help=schema.FacetSpec.spec.help)
+                         help=schema.TopLevelFacetedSpec.spec.help)
     transform = jst.JSONInstance(Transform,
-                                 help=schema.FacetSpec.transform.help)
+                                 help=schema.TopLevelFacetedSpec.transform.help)
     max_rows = T.Int(
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."

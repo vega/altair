@@ -135,15 +135,15 @@ class ToPython(jst.ToPython):
             code.add_methods(markconfig.rename('mark_{0}'.format(obj.mark)))
 
         # enable Chart().encode(**kwargs)
-        code.convert_arg_to_method('encoding', 'encode', depth=1)
+        #code.convert_arg_to_method('encoding', 'encode', depth=1)
 
         # enable Chart().transform_data(**kwargs)
-        code.convert_arg_to_method('transform', 'transform_data', depth=1)
+        #code.convert_arg_to_method('transform', 'transform_data', depth=1)
 
         # enable Chart().configure(**kwargs)
         #                configure_<arg>(**kwargs)
         #                configure_facet_<arg>(**kwargs)
-        code.convert_arg_to_method('config', 'configure', depth=3)
+        #code.convert_arg_to_method('config', 'configure', depth=3)
 
         return code
 
