@@ -25,13 +25,15 @@ def consistent_with_png(filename):
 
 def consistent_with_svg(filename):
     """Check that the file has a structure consistent with SVG"""
-    try:
-        e = ElementTree.parse(filename)
-    except ElementTree.ParseError:
-        return False
-    else:
-        keys = e.getroot().keys()
-        return set(keys) == {'width', 'version', 'class', 'height'}
+    with open(filename) as file_obj:
+        element_tag = ""
+        try:
+            for event, element in ElementTree.iterparse(file_obj, ('start',)):
+                element_tag = element.tag
+                break
+        except ElementTree.ParseError:
+            pass
+    return element_tag == '{http://www.w3.org/2000/svg}svg'
 
 
 @contextmanager
