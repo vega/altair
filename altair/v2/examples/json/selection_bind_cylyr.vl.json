@@ -1,0 +1,61 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "color": {
+            "condition": {
+                "field": "Origin",
+                "selection": "CylYr",
+                "type": "nominal"
+            },
+            "value": "grey"
+        },
+        "size": {
+            "condition": {
+                "selection": "CylYr",
+                "value": 100
+            },
+            "value": 50
+        },
+        "x": {
+            "field": "Horsepower",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "Miles_per_Gallon",
+            "type": "quantitative"
+        }
+    },
+    "mark": "circle",
+    "selection": {
+        "CylYr": {
+            "bind": {
+                "Cylinders": {
+                    "input": "range",
+                    "max": 8,
+                    "min": 3,
+                    "step": 1
+                },
+                "Year": {
+                    "input": "range",
+                    "max": 1981,
+                    "min": 1969,
+                    "step": 1
+                }
+            },
+            "fields": [
+                "Cylinders",
+                "Year"
+            ],
+            "type": "single"
+        }
+    },
+    "transform": [
+        {
+            "as": "Year",
+            "calculate": "year(datum.Year)"
+        }
+    ]
+}

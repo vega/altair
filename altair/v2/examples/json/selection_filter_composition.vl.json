@@ -1,0 +1,63 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "vconcat": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "Horsepower",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "Miles_per_Gallon",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "point",
+            "selection": {
+                "brush": {
+                    "type": "interval"
+                }
+            }
+        },
+        {
+            "encoding": {
+                "x": {
+                    "field": "Acceleration",
+                    "scale": {
+                        "domain": [
+                            0,
+                            25
+                        ]
+                    },
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "Displacement",
+                    "scale": {
+                        "domain": [
+                            0,
+                            500
+                        ]
+                    },
+                    "type": "quantitative"
+                }
+            },
+            "mark": "point",
+            "transform": [
+                {
+                    "filter": {
+                        "and": [
+                            "datum.Weight_in_lbs > 3000",
+                            {
+                                "selection": "brush"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

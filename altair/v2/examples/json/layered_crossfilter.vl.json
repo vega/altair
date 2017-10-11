@@ -1,0 +1,82 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "format": {
+            "parse": {
+                "date": "date"
+            }
+        },
+        "url": "http://vega.github.io/vega-lite/data/flights-2k.json"
+    },
+    "repeat": {
+        "column": [
+            "distance",
+            "delay",
+            "time"
+        ]
+    },
+    "spec": {
+        "layer": [
+            {
+                "encoding": {
+                    "x": {
+                        "bin": {
+                            "maxbins": 20
+                        },
+                        "field": {
+                            "repeat": "column"
+                        },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar",
+                "selection": {
+                    "brush": {
+                        "encodings": [
+                            "x"
+                        ],
+                        "type": "interval"
+                    }
+                }
+            },
+            {
+                "encoding": {
+                    "color": {
+                        "value": "goldenrod"
+                    },
+                    "x": {
+                        "bin": {
+                            "maxbins": 20
+                        },
+                        "field": {
+                            "repeat": "column"
+                        },
+                        "type": "quantitative"
+                    },
+                    "y": {
+                        "aggregate": "count",
+                        "type": "quantitative"
+                    }
+                },
+                "mark": "bar",
+                "transform": [
+                    {
+                        "filter": {
+                            "selection": "brush"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "transform": [
+        {
+            "as": "time",
+            "calculate": "hours(datum.date)"
+        }
+    ]
+}

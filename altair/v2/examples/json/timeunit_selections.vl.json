@@ -1,0 +1,82 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "values": [
+            {
+                "date": "Sun, 01 Jan 2012 23:00:01",
+                "price": 150
+            },
+            {
+                "date": "Sun, 02 Jan 2012 00:10:02",
+                "price": 100
+            },
+            {
+                "date": "Sun, 02 Jan 2012 01:20:03",
+                "price": 170
+            },
+            {
+                "date": "Sun, 02 Jan 2012 02:30:04",
+                "price": 165
+            },
+            {
+                "date": "Sun, 02 Jan 2012 03:40:05",
+                "price": 200
+            }
+        ]
+    },
+    "hconcat": [
+        {
+            "encoding": {
+                "color": {
+                    "condition": {
+                        "selection": "brush",
+                        "value": "goldenrod"
+                    },
+                    "value": "steelblue"
+                },
+                "x": {
+                    "field": "date",
+                    "timeUnit": "seconds",
+                    "type": "temporal"
+                },
+                "y": {
+                    "field": "price",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "point",
+            "selection": {
+                "brush": {
+                    "encodings": [
+                        "x"
+                    ],
+                    "type": "interval"
+                }
+            }
+        },
+        {
+            "encoding": {
+                "color": {
+                    "value": "goldenrod"
+                },
+                "x": {
+                    "field": "date",
+                    "timeUnit": "minutes",
+                    "type": "temporal"
+                },
+                "y": {
+                    "field": "price",
+                    "type": "quantitative"
+                }
+            },
+            "mark": "point",
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "brush"
+                    }
+                }
+            ]
+        }
+    ]
+}

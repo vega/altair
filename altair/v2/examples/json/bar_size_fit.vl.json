@@ -1,0 +1,22 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "x": {
+            "field": "Origin",
+            "scale": {
+                "rangeStep": null
+            },
+            "type": "nominal"
+        },
+        "y": {
+            "aggregate": "count",
+            "type": "quantitative"
+        }
+    },
+    "height": 200,
+    "mark": "bar",
+    "width": 200
+}

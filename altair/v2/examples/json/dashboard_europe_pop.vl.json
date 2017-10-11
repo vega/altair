@@ -1,0 +1,416 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "values": [
+            {
+                "Code": "ALB",
+                "Country": "Albania",
+                "Population_ages_15_64_of_total": 69.0574620108062,
+                "Population_ages_65_and_above_of_total": 12.3963338706153
+            },
+            {
+                "Code": "ARM",
+                "Country": "Armenia",
+                "Population_ages_15_64_of_total": 70.7901217876325,
+                "Population_ages_65_and_above_of_total": 10.8259833940416
+            },
+            {
+                "Code": "AUT",
+                "Country": "Austria",
+                "Population_ages_15_64_of_total": 67.0332301646914,
+                "Population_ages_65_and_above_of_total": 18.7591300503032
+            },
+            {
+                "Code": "AZE",
+                "Country": "Azerbaijan",
+                "Population_ages_15_64_of_total": 72.4553638068118,
+                "Population_ages_65_and_above_of_total": 5.62608981288436
+            },
+            {
+                "Code": "BLR",
+                "Country": "Belarus",
+                "Population_ages_15_64_of_total": 69.9508710458679,
+                "Population_ages_65_and_above_of_total": 13.9809217228707
+            },
+            {
+                "Code": "BEL",
+                "Country": "Belgium",
+                "Population_ages_15_64_of_total": 64.8307418795963,
+                "Population_ages_65_and_above_of_total": 18.2248164293518
+            },
+            {
+                "Code": "BIH",
+                "Country": "Bosnia and Herzegovina",
+                "Population_ages_15_64_of_total": 71.0579632250127,
+                "Population_ages_65_and_above_of_total": 15.4439567753232
+            },
+            {
+                "Code": "BGR",
+                "Country": "Bulgaria",
+                "Population_ages_15_64_of_total": 65.8285064995643,
+                "Population_ages_65_and_above_of_total": 20.0274777416446
+            },
+            {
+                "Code": "CHI",
+                "Country": "Channel Islands",
+                "Population_ages_15_64_of_total": 68.022872223444,
+                "Population_ages_65_and_above_of_total": 17.2684065195611
+            },
+            {
+                "Code": "HRV",
+                "Country": "Croatia",
+                "Population_ages_15_64_of_total": 66.1722696675744,
+                "Population_ages_65_and_above_of_total": 18.9370747517226
+            },
+            {
+                "Code": "CYP",
+                "Country": "Cyprus",
+                "Population_ages_15_64_of_total": 70.6035355702394,
+                "Population_ages_65_and_above_of_total": 12.8454475242427
+            },
+            {
+                "Code": "CZE",
+                "Country": "Czech Republic",
+                "Population_ages_15_64_of_total": 66.8821170374875,
+                "Population_ages_65_and_above_of_total": 18.075987656862
+            },
+            {
+                "Code": "DNK",
+                "Country": "Denmark",
+                "Population_ages_15_64_of_total": 64.1595524918413,
+                "Population_ages_65_and_above_of_total": 18.9594398104384
+            },
+            {
+                "Code": "EST",
+                "Country": "Estonia",
+                "Population_ages_15_64_of_total": 65.1524732621339,
+                "Population_ages_65_and_above_of_total": 18.7597043330657
+            },
+            {
+                "Code": "FIN",
+                "Country": "Finland",
+                "Population_ages_15_64_of_total": 63.1844856787288,
+                "Population_ages_65_and_above_of_total": 20.4771837047151
+            },
+            {
+                "Code": "FRA",
+                "Country": "France",
+                "Population_ages_15_64_of_total": 62.3959557946308,
+                "Population_ages_65_and_above_of_total": 19.1205109623995
+            },
+            {
+                "Code": "GEO",
+                "Country": "Georgia",
+                "Population_ages_15_64_of_total": 68.6468764031909,
+                "Population_ages_65_and_above_of_total": 14.0256592059827
+            },
+            {
+                "Code": "DEU",
+                "Country": "Germany",
+                "Population_ages_15_64_of_total": 65.8735239308132,
+                "Population_ages_65_and_above_of_total": 21.2406519413629
+            },
+            {
+                "Code": "GRC",
+                "Country": "Greece",
+                "Population_ages_15_64_of_total": 64.001114781101,
+                "Population_ages_65_and_above_of_total": 21.396558181815
+            },
+            {
+                "Code": "HUN",
+                "Country": "Hungary",
+                "Population_ages_15_64_of_total": 67.6233936744744,
+                "Population_ages_65_and_above_of_total": 17.8178985477761
+            },
+            {
+                "Code": "ISL",
+                "Country": "Iceland",
+                "Population_ages_15_64_of_total": 65.9664567048645,
+                "Population_ages_65_and_above_of_total": 13.7138954238446
+            },
+            {
+                "Code": "IRL",
+                "Country": "Ireland",
+                "Population_ages_15_64_of_total": 65.079935543936,
+                "Population_ages_65_and_above_of_total": 13.1395030143128
+            },
+            {
+                "Code": "ITA",
+                "Country": "Italy",
+                "Population_ages_15_64_of_total": 63.8797421672762,
+                "Population_ages_65_and_above_of_total": 22.4098759007142
+            },
+            {
+                "Code": "KAZ",
+                "Country": "Kazakhstan",
+                "Population_ages_15_64_of_total": 66.5468630019269,
+                "Population_ages_65_and_above_of_total": 6.73573774316427
+            },
+            {
+                "Code": "XKX",
+                "Country": "Kosovo",
+                "Population_ages_15_64_of_total": 67.5956284153006,
+                "Population_ages_65_and_above_of_total": 6.77595628415301
+            },
+            {
+                "Code": "KGZ",
+                "Country": "Kyrgyz Republic",
+                "Population_ages_15_64_of_total": 64.3715060803419,
+                "Population_ages_65_and_above_of_total": 4.22684522224216
+            },
+            {
+                "Code": "LVA",
+                "Country": "Latvia",
+                "Population_ages_15_64_of_total": 65.7100750417533,
+                "Population_ages_65_and_above_of_total": 19.3677959383975
+            },
+            {
+                "Code": "LTU",
+                "Country": "Lithuania",
+                "Population_ages_15_64_of_total": 66.637321711156,
+                "Population_ages_65_and_above_of_total": 18.8477993888977
+            },
+            {
+                "Code": "LUX",
+                "Country": "Luxembourg",
+                "Population_ages_15_64_of_total": 69.5849129798452,
+                "Population_ages_65_and_above_of_total": 13.981414540389
+            },
+            {
+                "Code": "MDA",
+                "Country": "Moldova",
+                "Population_ages_15_64_of_total": 74.3086639941979,
+                "Population_ages_65_and_above_of_total": 9.95793208822932
+            },
+            {
+                "Code": "MNE",
+                "Country": "Montenegro",
+                "Population_ages_15_64_of_total": 67.7000420274825,
+                "Population_ages_65_and_above_of_total": 13.6450291715472
+            },
+            {
+                "Code": "NLD",
+                "Country": "Netherlands",
+                "Population_ages_15_64_of_total": 65.2462589355619,
+                "Population_ages_65_and_above_of_total": 18.2304693863117
+            },
+            {
+                "Code": "NOR",
+                "Country": "Norway",
+                "Population_ages_15_64_of_total": 65.6985354157875,
+                "Population_ages_65_and_above_of_total": 16.3329186310334
+            },
+            {
+                "Code": "POL",
+                "Country": "Poland",
+                "Population_ages_15_64_of_total": 69.5203957630148,
+                "Population_ages_65_and_above_of_total": 15.5333238336452
+            },
+            {
+                "Code": "PRT",
+                "Country": "Portugal",
+                "Population_ages_15_64_of_total": 65.1552111668212,
+                "Population_ages_65_and_above_of_total": 20.7914682047571
+            },
+            {
+                "Code": "ROU",
+                "Country": "Romania",
+                "Population_ages_15_64_of_total": 67.1654214752418,
+                "Population_ages_65_and_above_of_total": 17.3139967333842
+            },
+            {
+                "Code": "RUS",
+                "Country": "Russian Federation",
+                "Population_ages_15_64_of_total": 69.8822387917186,
+                "Population_ages_65_and_above_of_total": 13.3658426985027
+            },
+            {
+                "Code": "SRB",
+                "Country": "Serbia",
+                "Population_ages_15_64_of_total": 66.6173161713822,
+                "Population_ages_65_and_above_of_total": 17.0823666319247
+            },
+            {
+                "Code": "SVK",
+                "Country": "Slovak Republic",
+                "Population_ages_15_64_of_total": 71.0312889656187,
+                "Population_ages_65_and_above_of_total": 13.8450659736415
+            },
+            {
+                "Code": "SVN",
+                "Country": "Slovenia",
+                "Population_ages_15_64_of_total": 67.2471833486012,
+                "Population_ages_65_and_above_of_total": 17.9683834689382
+            },
+            {
+                "Code": "ESP",
+                "Country": "Spain",
+                "Population_ages_15_64_of_total": 66.3288553181877,
+                "Population_ages_65_and_above_of_total": 18.7894661035796
+            },
+            {
+                "Code": "SWE",
+                "Country": "Sweden",
+                "Population_ages_15_64_of_total": 62.7731014069742,
+                "Population_ages_65_and_above_of_total": 19.9420190919181
+            },
+            {
+                "Code": "CHE",
+                "Country": "Switzerland",
+                "Population_ages_15_64_of_total": 67.1827980001116,
+                "Population_ages_65_and_above_of_total": 18.0418460178465
+            },
+            {
+                "Code": "TJK",
+                "Country": "Tajikistan",
+                "Population_ages_15_64_of_total": 62.1561674893051,
+                "Population_ages_65_and_above_of_total": 3.00628812918872
+            },
+            {
+                "Code": "TUR",
+                "Country": "Turkey",
+                "Population_ages_15_64_of_total": 66.790794681757,
+                "Population_ages_65_and_above_of_total": 7.53869755140193
+            },
+            {
+                "Code": "TKM",
+                "Country": "Turkmenistan",
+                "Population_ages_15_64_of_total": 67.6209109068909,
+                "Population_ages_65_and_above_of_total": 4.15507428861104
+            },
+            {
+                "Code": "UKR",
+                "Country": "Ukraine",
+                "Population_ages_15_64_of_total": 69.7661921081373,
+                "Population_ages_65_and_above_of_total": 15.3061908119499
+            },
+            {
+                "Code": "GBR",
+                "Country": "United Kingdom",
+                "Population_ages_15_64_of_total": 64.4654096116544,
+                "Population_ages_65_and_above_of_total": 17.7603695294859
+            },
+            {
+                "Code": "UZB",
+                "Country": "Uzbekistan",
+                "Population_ages_15_64_of_total": 66.8223460574423,
+                "Population_ages_65_and_above_of_total": 4.6577368288371
+            },
+            {
+                "Code": "MKD",
+                "Country": "Macedonia",
+                "Population_ages_15_64_of_total": 70.7240914276147,
+                "Population_ages_65_and_above_of_total": 12.3228189427425
+            }
+        ]
+    },
+    "hconcat": [
+        {
+            "encoding": {
+                "color": {
+                    "condition": {
+                        "selection": {
+                            "not": "brush"
+                        },
+                        "value": "steelblue"
+                    },
+                    "value": "goldenrod"
+                },
+                "x": {
+                    "field": "Population_ages_15_64_of_total",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "Country",
+                    "sort": {
+                        "field": "Population_ages_15_64_of_total",
+                        "op": "min",
+                        "order": "descending"
+                    },
+                    "type": "ordinal"
+                }
+            },
+            "height": 700,
+            "mark": "bar",
+            "selection": {
+                "brush": {
+                    "encodings": [
+                        "y"
+                    ],
+                    "type": "interval"
+                }
+            }
+        },
+        {
+            "encoding": {
+                "color": {
+                    "condition": {
+                        "selection": {
+                            "not": "brush"
+                        },
+                        "value": "steelblue"
+                    },
+                    "value": "goldenrod"
+                },
+                "x": {
+                    "field": "Population_ages_65_and_above_of_total",
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "Country",
+                    "sort": {
+                        "field": "Population_ages_65_and_above_of_total",
+                        "op": "min",
+                        "order": "descending"
+                    },
+                    "type": "ordinal"
+                }
+            },
+            "height": 700,
+            "mark": "bar",
+            "selection": {
+                "brush": {
+                    "encodings": [
+                        "y"
+                    ],
+                    "type": "interval"
+                }
+            }
+        },
+        {
+            "encoding": {
+                "color": {
+                    "condition": {
+                        "selection": {
+                            "not": "brush"
+                        },
+                        "value": "steelblue"
+                    },
+                    "value": "goldenrod"
+                },
+                "x": {
+                    "field": "Population_ages_65_and_above_of_total",
+                    "scale": {
+                        "zero": false
+                    },
+                    "type": "quantitative"
+                },
+                "y": {
+                    "field": "Population_ages_15_64_of_total",
+                    "scale": {
+                        "zero": false
+                    },
+                    "type": "quantitative"
+                }
+            },
+            "height": 260,
+            "mark": "point",
+            "selection": {
+                "brush": {
+                    "type": "interval"
+                }
+            },
+            "width": 260
+        }
+    ]
+}

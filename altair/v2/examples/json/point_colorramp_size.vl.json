@@ -1,0 +1,25 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "data": {
+        "url": "http://vega.github.io/vega-lite/data/cars.json"
+    },
+    "encoding": {
+        "color": {
+            "field": "Miles_per_Gallon",
+            "type": "quantitative"
+        },
+        "size": {
+            "field": "Miles_per_Gallon",
+            "type": "quantitative"
+        },
+        "x": {
+            "field": "Horsepower",
+            "type": "quantitative"
+        },
+        "y": {
+            "field": "Acceleration",
+            "type": "quantitative"
+        }
+    },
+    "mark": "point"
+}
