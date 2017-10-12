@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-118-g2c340ac
-# - date: 2017-10-11 20:10:40
+# - altair version info: v1.2.0-119-g2aef5cf
+# - date: 2017-10-11 20:49:19
 
 import pandas as pd
 
@@ -125,25 +125,25 @@ class FacetField(schema.FacetFieldDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : AnyOf([string, string])
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
         __Default value:__ `undefined` (None)
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
-    field : object
+    field : AnyOf([string, RepeatRef])
         __Required.__ Name of the field from which to pull a data
         value.
         __Note:__ `field` is not required if `aggregate` is `count`.
-    header : object
+    header : Header
         
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
         __Default value:__ `undefined` (None)
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and
@@ -186,23 +186,23 @@ class Field(schema.FieldDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : AnyOf([string, string])
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
         __Default value:__ `undefined` (None)
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
-    field : object
+    field : AnyOf([string, RepeatRef])
         __Required.__ Name of the field from which to pull a data
         value.
         __Note:__ `field` is not required if `aggregate` is `count`.
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
         __Default value:__ `undefined` (None)
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and
@@ -244,25 +244,25 @@ class OrderField(schema.OrderFieldDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : AnyOf([string, string])
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
         __Default value:__ `undefined` (None)
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
-    field : object
+    field : AnyOf([string, RepeatRef])
         __Required.__ Name of the field from which to pull a data
         value.
         __Note:__ `field` is not required if `aggregate` is `count`.
-    sort : object
+    sort : AnyOf([string, string, null])
         
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
         __Default value:__ `undefined` (None)
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and
@@ -304,42 +304,42 @@ class PositionField(schema.PositionFieldDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : AnyOf([string, string])
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
         __Default value:__ `undefined` (None)
-    axis : object
+    axis : AnyOf([Axis, null])
         By default, Vega-Lite automatically creates axes for `x` and
         `y` channels when they are encoded.
         If `axis` is not defined, default axis properties are applied.
         User can provide set `axis` to an object to customize [axis
         properties](axis.html#axis-properties)
         or set `axis` to `null` to remove the axis.
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
-    field : object
+    field : AnyOf([string, RepeatRef])
         __Required.__ Name of the field from which to pull a data
         value.
         __Note:__ `field` is not required if `aggregate` is `count`.
-    scale : object
+    scale : Scale
         
-    sort : object
+    sort : AnyOf([SortField, AnyOf([string, string, null])])
         Sort order for a field with discrete domain.
         This can be `"ascending"`, `"descending"`, `null`, or a [sort
         field definition object](sort.html#sort-field) for sorting by
         an aggregate calculation of a specified sort field.
         __Note:__ For fields with continuous domain, please use
         `"scale": {"reverse": true}` to flip the scale instead.
-    stack : object
+    stack : string
         Type of stacking offset if the field should be stacked.
         "none" or null, if the field should not be stacked.
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
         __Default value:__ `undefined` (None)
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and

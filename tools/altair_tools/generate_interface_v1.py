@@ -74,7 +74,7 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
     shorthand: Unicode
         A shorthand description of the channel
     {%- for (name, prop) in obj.base.wrapped_properties().items() %}
-    {{ name }} : {{ prop.type }}
+    {{ name }} : {{ prop.type_description }}
         {{ prop.indented_description() }}
     {%- endfor %}
     """
@@ -189,7 +189,7 @@ class {{ obj.classname }}(schema.{{ obj.classname }}):
     Attributes
     ----------
     {% for (name, prop) in obj.wrapped_properties().items() -%}
-    {{ name }}: {{ prop.type }}
+    {{ name }}: {{ prop.type_description }}
         {{ prop.indented_description() }}
     {% endfor -%}
     """

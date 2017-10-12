@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-118-g2c340ac
-# - date: 2017-10-11 20:10:39
+# - altair version info: v1.2.0-119-g2aef5cf
+# - date: 2017-10-11 20:49:18
 
 import traitlets as T
 from . import jstraitlets as jst
@@ -17,56 +17,56 @@ class Encoding(schema.Encoding):
 
     Attributes
     ----------
-    color: object
+    color: Color
         Color of the marks – either fill or stroke color based on mark
         type.
         (By default, fill color for `area`, `bar`, `tick`, `text`,
         `circle`, and `square` /
         stroke color for `line` and `point`.)
-    column: object
+    column: Column
         Horizontal facets for trellis plots.
-    detail: object
+    detail: AnyOf([Detail, Array(Detail)])
         Additional levels of detail for grouping data in aggregate
         views and
         in line and area marks without mapping data to a specific
         visual channel.
-    label: object
+    label: Label
         
-    opacity: object
+    opacity: Opacity
         Opacity of the marks – either can be a value or in a range.
-    order: object
+    order: AnyOf([Order, Array(Order)])
         Layer order for non-stacked marks, or stack order for stacked
         marks.
-    path: object
+    path: AnyOf([Path, Array(Path)])
         Order of data points in line marks.
-    row: object
+    row: Row
         Vertical facets for trellis plots.
-    shape: object
+    shape: Shape
         The symbol's shape (only for `point` marks). The supported
         values are
         `"circle"` (default), `"square"`, `"cross"`, `"diamond"`,
         `"triangle-up"`,
         or `"triangle-down"`, or else a custom SVG path string.
-    size: object
+    size: Size
         Size of the mark.
         - For `point`, `square` and `circle`
         – the symbol size, or pixel area of the mark.
         - For `bar` and `tick` – the bar and tick's size.
         - For `text` – the text's font size.
         - Size is currently unsupported for `line` and `area`.
-    text: object
+    text: Text
         Text of the `text` mark.
-    x: object
+    x: X
         X coordinates for `point`, `circle`, `square`,
         `line`, `rule`, `text`, and `tick`
         (or to width and height for `bar` and `area` marks).
-    x2: object
+    x2: X2
         X2 coordinates for ranged `bar`, `rule`, `area`
-    y: object
+    y: Y
         Y coordinates for `point`, `circle`, `square`,
         `line`, `rule`, `text`, and `tick`
         (or to width and height for `bar` and `area` marks).
-    y2: object
+    y2: Y2
         Y2 coordinates for ranged `bar`, `rule`, `area`
     """
     _skip_on_export = ['channel_names']
@@ -94,52 +94,52 @@ class UnitEncoding(schema.UnitEncoding):
 
     Attributes
     ----------
-    color: object
+    color: Color
         Color of the marks – either fill or stroke color based on mark
         type.
         (By default, fill color for `area`, `bar`, `tick`, `text`,
         `circle`, and `square` /
         stroke color for `line` and `point`.)
-    detail: object
+    detail: AnyOf([Detail, Array(Detail)])
         Additional levels of detail for grouping data in aggregate
         views and
         in line and area marks without mapping data to a specific
         visual channel.
-    label: object
+    label: Label
         
-    opacity: object
+    opacity: Opacity
         Opacity of the marks – either can be a value or in a range.
-    order: object
+    order: AnyOf([Order, Array(Order)])
         Layer order for non-stacked marks, or stack order for stacked
         marks.
-    path: object
+    path: AnyOf([Path, Array(Path)])
         Order of data points in line marks.
-    shape: object
+    shape: Shape
         The symbol's shape (only for `point` marks). The supported
         values are
         `"circle"` (default), `"square"`, `"cross"`, `"diamond"`,
         `"triangle-up"`,
         or `"triangle-down"`, or else a custom SVG path string.
-    size: object
+    size: Size
         Size of the mark.
         - For `point`, `square` and `circle`
         – the symbol size, or pixel area of the mark.
         - For `bar` and `tick` – the bar and tick's size.
         - For `text` – the text's font size.
         - Size is currently unsupported for `line` and `area`.
-    text: object
+    text: Text
         Text of the `text` mark.
-    x: object
+    x: X
         X coordinates for `point`, `circle`, `square`,
         `line`, `rule`, `text`, and `tick`
         (or to width and height for `bar` and `area` marks).
-    x2: object
+    x2: X2
         X2 coordinates for ranged `bar`, `rule`, `area`
-    y: object
+    y: Y
         Y coordinates for `point`, `circle`, `square`,
         `line`, `rule`, `text`, and `tick`
         (or to width and height for `bar` and `area` marks).
-    y2: object
+    y2: Y2
         Y2 coordinates for ranged `bar`, `rule`, `area`
     """
     _skip_on_export = ['channel_names']
@@ -165,9 +165,9 @@ class Facet(schema.Facet):
 
     Attributes
     ----------
-    column: object
+    column: Column
         
-    row: object
+    row: Row
         
     """
     _skip_on_export = ['channel_names']

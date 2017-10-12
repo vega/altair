@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-118-g2c340ac
-# - date: 2017-10-11 20:10:39
+# - altair version info: v1.2.0-119-g2aef5cf
+# - date: 2017-10-11 20:49:18
 
 import pandas as pd
 
@@ -17,27 +17,27 @@ class ChannelWithLegend(schema.ChannelDefWithLegend):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : string
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    legend : object
+    legend : Legend
         
-    scale : object
+    scale : Scale
         
-    sort : object
+    sort : AnyOf([SortField, string])
         
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
     title : string
         Title for axis or legend.
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and
@@ -81,21 +81,21 @@ class Field(schema.FieldDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : string
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
     title : string
         Title for axis or legend.
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and
@@ -139,23 +139,23 @@ class OrderChannel(schema.OrderChannelDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : string
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    sort : object
+    sort : string
         
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
     title : string
         Title for axis or legend.
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and
@@ -199,27 +199,27 @@ class PositionChannel(schema.PositionChannelDef):
     ----------
     shorthand: Unicode
         A shorthand description of the channel
-    aggregate : object
+    aggregate : string
         Aggregation function for the field
         (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
-    axis : object
+    axis : AnyOf([boolean, Axis])
         
-    bin : object
+    bin : AnyOf([boolean, Bin])
         Flag for binning a `quantitative` field, or a bin property
         object
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    scale : object
+    scale : Scale
         
-    sort : object
+    sort : AnyOf([SortField, string])
         
-    timeUnit : object
+    timeUnit : string
         Time unit for a `temporal` field  (e.g., `year`, `yearmonth`,
         `month`, `hour`).
     title : string
         Title for axis or legend.
-    type : object
+    type : string
         The encoded field's type of measurement. This can be either a
         full type
         name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and

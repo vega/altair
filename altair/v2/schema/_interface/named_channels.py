@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-118-g2c340ac
-# - date: 2017-10-11 20:10:40
+# - altair version info: v1.2.0-119-g2aef5cf
+# - date: 2017-10-11 20:49:19
 
 from . import channel_wrappers
+from .schema import NumberValueDef  # needed for channel collections import
 
 class Color(channel_wrappers.ConditionalStringLegend):
     pass
