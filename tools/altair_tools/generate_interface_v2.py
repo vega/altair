@@ -216,16 +216,17 @@ class ChannelCollectionPlugin(JSONSchemaPlugin):
                 return subschema['$ref'].rsplit('/', 1)[-1]
         raise ValueError("Cannot get base for schema {0}".format(schema))
 
-    def replace_base_with_name(self, name, schema):
+    def replace_base_with_name(self, name, basename, schema):
         schema = copy.deepcopy(schema)
         if '$ref' in schema:
-            a, b = schema['$ref'].rsplit('/', 1)
-            schema['$ref'] = '/'.join([a, name])
+            path, oldname = schema['$ref'].rsplit('/', 1)
+            if oldname == basename:
+                schema['$ref'] = '/'.join([path, name])
         if 'anyOf' in schema:
-            schema['anyOf'] = [self.replace_base_with_name(name, subschema)
+            schema['anyOf'] = [self.replace_base_with_name(name, basename, subschema)
                                for subschema in schema['anyOf']]
         if schema.get('type', None) == 'array':
-            schema['items'] = self.replace_base_with_name(name, schema['items'])
+            schema['items'] = self.replace_base_with_name(name, basename, schema['items'])
         return schema
 
     def module_imports(self, schema):
@@ -258,7 +259,7 @@ class ChannelCollectionPlugin(JSONSchemaPlugin):
                 # add a new definition
                 toplevel.definitions[name.title()] = toplevel.definitions[basename]
                 # rewrite the object schema to point to this definition
-                obj.properties[name] = self.replace_base_with_name(name.title(), prop)
+                obj.properties[name] = self.replace_base_with_name(name.title(), basename, prop)
             objects.append(obj)
 
         return {'channel_collections.py': template.render(date=date,

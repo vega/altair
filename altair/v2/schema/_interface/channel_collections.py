@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-115-g599688d
-# - date: 2017-10-11 13:42:35
+# - altair version info: v1.2.0-118-g2c340ac
+# - date: 2017-10-11 20:10:40
 
 import traitlets as T
 from . import jstraitlets as jst
@@ -74,10 +74,10 @@ class Encoding(schema.Encoding):
     size = jst.JSONInstance(_localname('Size'), help='Size of the mark. - For `point`, `square` and `circle` – the [...]')
     text = jst.JSONInstance(_localname('Text'), help='Text of the `text` mark.')
     tooltip = jst.JSONInstance(_localname('Tooltip'), help='The tooltip text to show upon mouse hover.')
-    x = jst.JSONAnyOf([jst.JSONInstance(_localname('X')), jst.JSONInstance(_localname('X'))], help='X coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
-    x2 = jst.JSONAnyOf([jst.JSONInstance(_localname('X2')), jst.JSONInstance(_localname('X2'))], help='X2 coordinates for ranged `bar`, `rule`, `area`.')
-    y = jst.JSONAnyOf([jst.JSONInstance(_localname('Y')), jst.JSONInstance(_localname('Y'))], help='Y coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
-    y2 = jst.JSONAnyOf([jst.JSONInstance(_localname('Y2')), jst.JSONInstance(_localname('Y2'))], help='Y2 coordinates for ranged `bar`, `rule`, `area`.')
+    x = jst.JSONAnyOf([jst.JSONInstance(_localname('X')), jst.JSONInstance(_localname('NumberValueDef'))], help='X coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
+    x2 = jst.JSONAnyOf([jst.JSONInstance(_localname('X2')), jst.JSONInstance(_localname('NumberValueDef'))], help='X2 coordinates for ranged `bar`, `rule`, `area`.')
+    y = jst.JSONAnyOf([jst.JSONInstance(_localname('Y')), jst.JSONInstance(_localname('NumberValueDef'))], help='Y coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
+    y2 = jst.JSONAnyOf([jst.JSONInstance(_localname('Y2')), jst.JSONInstance(_localname('NumberValueDef'))], help='Y2 coordinates for ranged `bar`, `rule`, `area`.')
 
 
 class EncodingWithFacet(schema.EncodingWithFacet):
@@ -148,10 +148,10 @@ class EncodingWithFacet(schema.EncodingWithFacet):
     size = jst.JSONInstance(_localname('Size'), help='Size of the mark. - For `point`, `square` and `circle` – the [...]')
     text = jst.JSONInstance(_localname('Text'), help='Text of the `text` mark.')
     tooltip = jst.JSONInstance(_localname('Tooltip'), help='The tooltip text to show upon mouse hover.')
-    x = jst.JSONAnyOf([jst.JSONInstance(_localname('X')), jst.JSONInstance(_localname('X'))], help='X coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
-    x2 = jst.JSONAnyOf([jst.JSONInstance(_localname('X2')), jst.JSONInstance(_localname('X2'))], help='X2 coordinates for ranged `bar`, `rule`, `area`.')
-    y = jst.JSONAnyOf([jst.JSONInstance(_localname('Y')), jst.JSONInstance(_localname('Y'))], help='Y coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
-    y2 = jst.JSONAnyOf([jst.JSONInstance(_localname('Y2')), jst.JSONInstance(_localname('Y2'))], help='Y2 coordinates for ranged `bar`, `rule`, `area`.')
+    x = jst.JSONAnyOf([jst.JSONInstance(_localname('X')), jst.JSONInstance(_localname('NumberValueDef'))], help='X coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
+    x2 = jst.JSONAnyOf([jst.JSONInstance(_localname('X2')), jst.JSONInstance(_localname('NumberValueDef'))], help='X2 coordinates for ranged `bar`, `rule`, `area`.')
+    y = jst.JSONAnyOf([jst.JSONInstance(_localname('Y')), jst.JSONInstance(_localname('NumberValueDef'))], help='Y coordinates for `point`, `circle`, `square`, `line`, `rule`, [...]')
+    y2 = jst.JSONAnyOf([jst.JSONInstance(_localname('Y2')), jst.JSONInstance(_localname('NumberValueDef'))], help='Y2 coordinates for ranged `bar`, `rule`, `area`.')
 
 
 class Facet(schema.Facet):
