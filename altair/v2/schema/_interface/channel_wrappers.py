@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-119-g2aef5cf
-# - date: 2017-10-11 20:49:19
+# - altair version info: v1.2.0-120-g7d42848
+# - date: 2017-10-14 14:01:07
 
 import pandas as pd
 
@@ -26,7 +26,7 @@ class ConditionalNumberLegend(schema.ConditionalNumberLegendDef):
 
     # Class Methods
     def __init__(self, shorthand='', **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict()
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(ConditionalNumberLegend, self).__init__(**kwargs)
@@ -62,7 +62,7 @@ class ConditionalStringLegend(schema.ConditionalStringLegendDef):
 
     # Class Methods
     def __init__(self, shorthand='', **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict()
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(ConditionalStringLegend, self).__init__(**kwargs)
@@ -98,7 +98,7 @@ class ConditionalText(schema.ConditionalTextDef):
 
     # Class Methods
     def __init__(self, shorthand='', **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict()
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(ConditionalText, self).__init__(**kwargs)
@@ -158,7 +158,7 @@ class FacetField(schema.FacetFieldDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, bin=jst.undefined, field=jst.undefined, header=jst.undefined, timeUnit=jst.undefined, type=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, bin=bin, field=field, header=header, timeUnit=timeUnit, type=type)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(FacetField, self).__init__(**kwargs)
@@ -217,7 +217,7 @@ class Field(schema.FieldDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, bin=jst.undefined, field=jst.undefined, timeUnit=jst.undefined, type=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, bin=bin, field=field, timeUnit=timeUnit, type=type)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(Field, self).__init__(**kwargs)
@@ -277,7 +277,7 @@ class OrderField(schema.OrderFieldDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, bin=jst.undefined, field=jst.undefined, sort=jst.undefined, timeUnit=jst.undefined, type=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, bin=bin, field=field, sort=sort, timeUnit=timeUnit, type=type)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(OrderField, self).__init__(**kwargs)
@@ -354,7 +354,7 @@ class PositionField(schema.PositionFieldDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, axis=jst.undefined, bin=jst.undefined, field=jst.undefined, scale=jst.undefined, sort=jst.undefined, stack=jst.undefined, timeUnit=jst.undefined, type=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, axis=axis, bin=bin, field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit, type=type)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(PositionField, self).__init__(**kwargs)

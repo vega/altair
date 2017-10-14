@@ -28,6 +28,41 @@ TYPECODE_MAP = {'ordinal': 'O',
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
 
+def channel_type_dict(cls):
+    """Create a dict of trait names to channel type"""
+    # Import here to avoid circular imports
+    from .schema import NumberValueDef
+
+    traits = cls.class_traits()
+
+    def is_union_of_trait_and_list(trait):
+        return (isinstance(trait, T.Union) and
+                len(trait.trait_types) == 2 and
+                isinstance(trait.trait_types[0], T.Instance) and
+                isinstance(trait.trait_types[1], T.List) and
+                trait.trait_types[0].klass == trait.trait_types[1]._trait.klass)
+
+    def is_union_of_trait_and_value(trait):
+        return (isinstance(trait, T.Union) and
+                len(trait.trait_types) == 2 and
+                isinstance(trait.trait_types[0], T.Instance) and
+                isinstance(trait.trait_types[1], T.Instance) and
+                trait.trait_types[1].klass == NumberValueDef)
+
+    def get_class(trait):
+        if isinstance(trait, T.Instance):
+            return trait.klass
+        elif is_union_of_trait_and_list(trait):
+            return trait.trait_types[0].klass
+        elif is_union_of_trait_and_value(trait):
+            return trait.trait_types[0].klass
+        else:
+            return None
+
+    classes = {n: get_class(t) for n, t in traits.items()}
+    return {n:t for n, t in classes.items() if t is not None}
+
+
 def infer_keywords(cls, *args, **kwargs):
     """Utility to initialize a HasTraits object from args and kwargs
 
@@ -39,30 +74,13 @@ def infer_keywords(cls, *args, **kwargs):
     # Import here to avoid circular imports
     from .schema import jstraitlets as jst
 
-    # TODO: can we make this more efficient & less fragile?
-    def is_simple_union(trait):
-        """Return True if trait is, e.g. Union(Class, List(Class))"""
-        return (isinstance(trait, T.Union) and
-                len(trait.trait_types) == 2 and
-                isinstance(trait.trait_types[0], T.Instance) and
-                isinstance(trait.trait_types[1], T.List) and
-                trait.trait_types[0].klass == trait.trait_types[1]._trait.klass)
-
-    # TODO: make this less brittle
-    def get_class(trait):
-        if isinstance(trait, T.Instance):
-            return trait.klass
-        elif is_simple_union(trait):
-            return trait.trait_types[0].klass
-        else:
-            return None
-
+    # For all traits, extract the channel type.
     traits = cls.class_traits()
-    classes = {n: get_class(t) for n, t in traits.items()}
+    trait_classes = channel_type_dict(cls)
 
     # Turn all keyword arguments to the appropriate class
     for name, arg in kwargs.items():
-        Trait = classes.get(name, None)
+        Trait = trait_classes.get(name, None)
         if Trait is not None and not isinstance(arg, Trait):
             try:
                 kwargs[name] = Trait(arg)
@@ -71,11 +89,11 @@ def infer_keywords(cls, *args, **kwargs):
 
     # find forward/backward mapping among unique classes
     name_to_trait = {}
-    while classes:
-        name, trait = classes.popitem()
+    while trait_classes:
+        name, trait = trait_classes.popitem()
         if trait is jst.undefined:
             continue
-        if trait not in set.union(set(classes.values()),
+        if trait not in set.union(set(trait_classes.values()),
                                   set(name_to_trait.values())):
             name_to_trait[name] = trait
     trait_to_name = {t: n for n, t in name_to_trait.items()}

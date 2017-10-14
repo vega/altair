@@ -85,7 +85,7 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
     # Class Methods
     {%- set comma = joiner(", ") %}
     def __init__(self, shorthand='', {% for name in obj.base.wrapped_properties() %}{{ name }}=jst.undefined, {% endfor %}**kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict({% for name in obj.base.wrapped_properties() %}{{ comma() }}{{ name }}={{ name }}{% endfor %})
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super({{ obj.classname }}, self).__init__(**kwargs)
