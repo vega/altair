@@ -32,10 +32,10 @@ def test_json_examples_round_trip(example):
     v2 = eval(v.to_python())
     v2_dict = v2.to_dict()
 
-    if json_dict.get('$schema', None) != v_dict.get('$schema', None):
+    if json_dict.get('$schema', None) != v2_dict.get('$schema', None):
         json_dict.pop('$schema', None)
-        v_dict.pop('$schema', None)
-        
+        v2_dict.pop('$schema', None)
+
     assert v2_dict == remove_empty_fields(json_dict)
 
 
