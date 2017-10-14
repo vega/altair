@@ -21,9 +21,9 @@ def test_json_examples_round_trip(example):
     v = Chart.from_dict(json_dict)
     v_dict = v.to_dict()
 
-    if json_dict.get('$schema', None) != v_dict.get('$schema', None):
-        json_dict.pop('$schema', None)
-        v_dict.pop('$schema', None)
+    # $schema may not match exactly: remove it to be more stable
+    json_dict.pop('$schema', None)
+    v_dict.pop('$schema', None)
 
     assert v_dict == json_dict
 
@@ -32,9 +32,9 @@ def test_json_examples_round_trip(example):
     v2 = eval(v.to_python())
     v2_dict = v2.to_dict()
 
-    if json_dict.get('$schema', None) != v2_dict.get('$schema', None):
-        json_dict.pop('$schema', None)
-        v2_dict.pop('$schema', None)
+    # $schema may not match exactly: remove it to be more stable
+    json_dict.pop('$schema', None)
+    v2_dict.pop('$schema', None)
 
     assert v2_dict == remove_empty_fields(json_dict)
 
