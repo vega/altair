@@ -383,7 +383,11 @@ class TopLevelMixin(object):
         spec : dict
             The JSON specification of the chart object.
         """
-        dct = super(TopLevelMixin, self).to_dict(data=data)
+        try:
+            dct = super(TopLevelMixin, self).to_dict(data=data)
+        except jst.UndefinedTraitError as err:
+            # Suppress full traceback for clarity
+            raise jst.UndefinedTraitError(str(err))
         dct['$schema'] = schema.vegalite_schema_url
         return dct
 
@@ -429,7 +433,13 @@ class TopLevelMixin(object):
             The JSON specification of the chart object.
         """
         kwargs['sort_keys'] = sort_keys
-        return super(TopLevelMixin, self).to_json(data=data, json_kwds=kwargs)
+        try:
+            json_output = super(TopLevelMixin, self).to_json(data=data,
+                                                             json_kwds=kwargs)
+        except jst.UndefinedTraitError as err:
+            # Suppress full traceback for clarity
+            raise jst.UndefinedTraitError(str(err))
+        return json_output
 
     @classmethod
     def from_json(cls, json_string, **kwargs):
@@ -460,7 +470,12 @@ class TopLevelMixin(object):
 
     def to_python(self, data=None):
         """Emit the Python code as a string required to created this Chart."""
-        return super(TopLevelMixin, self).to_python(data=data)
+        try:
+            python_output = super(TopLevelMixin, self).to_python(data=data)
+        except jst.UndefinedTraitError as err:
+            # Suppress full traceback for clarity
+            raise jst.UndefinedTraitError(str(err))
+        return python_output
 
     # Display related methods
 
