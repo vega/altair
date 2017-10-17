@@ -19,7 +19,7 @@ def test_json_examples_round_trip(example):
     filename, json_dict = example
 
     v = Chart.from_dict(json_dict)
-    v_dict = v.to_dict()
+    v_dict = v.to_dict(validate_columns=True)
     if '$schema' not in json_dict:
         v_dict.pop('$schema')
     assert v_dict == json_dict
@@ -27,7 +27,7 @@ def test_json_examples_round_trip(example):
     # code generation discards empty function calls, and so we
     # filter these out before comparison
     v2 = eval(v.to_python())
-    v2_dict = v2.to_dict()
+    v2_dict = v2.to_dict(validate_columns=True)
     if '$schema' not in json_dict:
         v2_dict.pop('$schema')
     assert v2_dict == remove_empty_fields(json_dict)
