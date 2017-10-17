@@ -579,7 +579,8 @@ class TopLevelMixin(object):
                                 "Missing field/column name for channel: {}".format(channel_name)
                             )
                         else:
-                            encoded_columns.add(field)
+                            if field != '*':
+                                encoded_columns.add(field)
             # Find columns in the data
             data_columns = set(self.data.columns.values)
             transform = self.transform

@@ -612,6 +612,10 @@ def test_validate_spec():
     c.validate_columns = False
     assert isinstance(c.to_dict(validate_columns=True), dict)
     
+    c = make_chart()
+    c.encode(x='x', y='count(*)')
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
     # Make sure we can resolve computed fields
     c = make_chart()
     c.encode(x='x', y='y', color='z')
