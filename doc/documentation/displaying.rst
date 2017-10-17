@@ -3,7 +3,7 @@
 .. _displaying-plots:
 
 Displaying and Saving Visualizations
-===========================================
+====================================
 
 .. contents::
 

@@ -14,17 +14,8 @@ First, you will need to make sure you have the Altair package and its
 dependencies installed (see :ref:`Installation`)
 and make sure you understand how altair
 plots are displayed (see :ref:`displaying-plots`).
-This tutorial will assume you are working within the Jupyter Notebook,
-so that plots are automatically rendered.
-
-In short, perhaps the easiest way to get started is to run
-
-.. code-block:: bash
-
-    $ conda install altair --channel conda-forge
-    $ jupyter notebook
-
-and then follow along with this tutorial in the notebook.
+This tutorial will assume you are working within a Jupyter notebook
+user interface, so that plots are automatically rendered.
 
 Here is the outline of this basic tutorial:
 
