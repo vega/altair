@@ -98,16 +98,6 @@ function before trying to render a visualization:
 Eventually this will not be needed, but is being provided to keep Altair working
 without change in the classic Jupyter Notebook.
 
-Saving as PNG and SVG
----------------------
-
-The easiest way to export figures to PNG is to render them in a Jupyter notebook and then
-click on the "Export as PNG" link below the visualization.
-
-Previous releases of Altair had support for saving Altair visualizations to PNG or SVG
-programmatically. The code for that remains in Altair, but it is based on a NodeJS_ package
-that we are currently unable to build and use. 
-
 .. _displaying-plots-html:
 
 Displaying via a Local HTTP Server
@@ -123,7 +113,15 @@ Given a chart object, you can do this with
 Serving to http://127.0.0.1:8888/    [Ctrl-C to exit]
 127.0.0.1 - - [15/Sep/2016 14:40:39] "GET / HTTP/1.1" 200 -
 
-.. _displaying-plots-vega-editor:
+Saving as PNG and SVG
+---------------------
+
+The easiest way to export figures to PNG is to render them in a Jupyter notebook and then
+click on the "Export as PNG" link below the visualization.
+
+Previous releases of Altair had support for saving Altair visualizations to PNG or SVG
+programmatically. The code for that remains in Altair, but it is based on a NodeJS_ package
+that we are currently unable to build and use. 
 
 Saving to an HTML file
 ----------------------

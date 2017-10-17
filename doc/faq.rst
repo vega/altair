@@ -14,10 +14,10 @@ Does Altair work in more modern frontends such as JupyterLab or nteract
 -----------------------------------------------------------------------
 
 Yes! In fact, JupyterLab and nteract ship with builtin rendering for Vega
-and VegaLite. As of the release of Altair version 1.3, this functionality is
+and VegaLite. As of the release of Altair version 1.2.1, this functionality is
 still being finalized, but Altair should work without any additional
 installations in these fronteds. However, you will need to call the
-``enable_mime_rendering`` function to enable this support in Altair:
+:func:`enable_mime_rendering` function to enable this support in Altair:
 
 .. code-block: Python
 
@@ -29,6 +29,7 @@ cleaner rendering approach and this additional call will not be needed.
 
 Why isn't my plot displaying in the Jupyter Notebook?
 -----------------------------------------------------
+
 The most common cause of a non-displaying plot in the Jupyter Notebook is
 incorrect configuration of the ipyvega jupyter extension, which is what
 recognizes an Altair object and automatically renders the plot with the
@@ -54,6 +55,7 @@ plots are listed in :ref:`displaying-plots`.
 
 Why do Altair plots lead to such extremely large notebooks?
 -----------------------------------------------------------
+
 By design, Altair does not produce plots consisting of pixels, but plots
 consisting of data plus a visualization specification. As discussed in
 :ref:`defining-data`, this data can be specified in one of several ways, either
