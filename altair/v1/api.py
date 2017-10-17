@@ -268,7 +268,7 @@ class TopLevelMixin(object):
         spec : dict
             The JSON specification of the chart object.
         """
-        dct = super(TopLevelMixin, self).to_dict(data=data)
+        dct = super(TopLevelMixin, self.clone()).to_dict(data=data)
         dct['$schema'] = schema.vegalite_schema_url
         return dct
 
@@ -528,6 +528,14 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
         help="Maximum number of rows in the dataset to accept."
     )
 
+    def clone(self):
+        """
+        Return a clone of this object, recursively cloning each trait
+        """
+        copy = super(Chart, self).clone()
+        copy._data = self._data
+        return copy
+
     @property
     def data(self):
         return self._data
@@ -675,6 +683,14 @@ class LayeredChart(TopLevelMixin, schema.LayerSpec):
         help="Maximum number of rows in the dataset to accept."
     )
 
+    def clone(self):
+        """
+        Return a clone of this object, recursively cloning each trait
+        """
+        copy = super(LayeredChart, self).clone()
+        copy._data = self._data
+        return copy
+
     @property
     def data(self):
         return self._data
@@ -731,6 +747,14 @@ class FacetedChart(TopLevelMixin, schema.FacetSpec):
         default_value=DEFAULT_MAX_ROWS,
         help="Maximum number of rows in the dataset to accept."
     )
+
+    def clone(self):
+        """
+        Return a clone of this object, recursively cloning each trait
+        """
+        copy = super(FacetedChart, self).clone()
+        copy._data = self._data
+        return copy
 
     @property
     def data(self):
