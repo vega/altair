@@ -65,7 +65,8 @@ class ToPython(jst.ToPython):
                 getattr(obj, k, jst.undefined) is not jst.undefined}
         missing = set(obj._required_traits) - set(kwds)
         if missing:
-            raise T.TraitError("Required traits {0} missing".format(missing))
+            raise jst.UndefinedTraitError("Required traits {0} missing"
+                                          "".format(missing))
         kwds = {k: self.visit(v) for k, v in kwds.items()}
         return CodeGen(obj.__class__.__name__, kwargs=kwds)
 

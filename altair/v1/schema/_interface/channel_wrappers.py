@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-122-g9ac89eb
-# - date: 2017-10-11 11:25:24
+# - altair version info: v1.2.0-125-gaaa558d
+# - date: 2017-10-16 20:17:34
 
 import pandas as pd
 
