@@ -1,6 +1,6 @@
 .. _defining-data:
 
-Peformance considerations
+Peformance Considerations
 -------------------------
 
 .. currentmodule:: altair

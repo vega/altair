@@ -15,7 +15,6 @@ are discussed in the following
 
 .. toctree::
 
-   rendering
    data
    encoding
    marks

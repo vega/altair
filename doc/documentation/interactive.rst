@@ -1,6 +1,6 @@
 .. _interactive-reference:
 
-Interactive visualization
+Interactive Visualization
 -------------------------
 
 Another experimental package, `altair_widgets`_ provides interactive

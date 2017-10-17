@@ -2,8 +2,8 @@
 
 .. _configuring-altair:
 
-Configuring Altair Visualizations
-=================================
+Configuring Visualizations
+==========================
 
 Altair's goal is to automatically choose useful plot settings and configurations
 so that the user is free to think about the data rather than the plotting
