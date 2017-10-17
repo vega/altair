@@ -6,7 +6,7 @@
         }
     },
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/unemployment-across-industries.json"
+        "url": "https://vega.github.io/vega-lite/data/unemployment-across-industries.json"
     },
     "encoding": {
         "x": {

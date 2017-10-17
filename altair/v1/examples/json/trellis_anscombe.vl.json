@@ -5,7 +5,7 @@
         }
     },
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/anscombe.json"
+        "url": "https://vega.github.io/vega-lite/data/anscombe.json"
     },
     "description": "Anscombe's Quartet",
     "encoding": {

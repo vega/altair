@@ -3,7 +3,7 @@
         "format": {
             "type": "csv"
         },
-        "url": "http://vega.github.io/vega-lite/data/stocks.csv"
+        "url": "https://vega.github.io/vega-lite/data/stocks.csv"
     },
     "description": "Google's stock price over time.",
     "encoding": {

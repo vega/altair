@@ -1,6 +1,6 @@
 {
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/github.csv"
+        "url": "https://vega.github.io/vega-lite/data/github.csv"
     },
     "encoding": {
         "size": {

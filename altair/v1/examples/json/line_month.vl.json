@@ -8,7 +8,7 @@
         "format": {
             "type": "csv"
         },
-        "url": "http://vega.github.io/vega-lite/data/seattle-temps.csv"
+        "url": "https://vega.github.io/vega-lite/data/seattle-temps.csv"
     },
     "encoding": {
         "x": {

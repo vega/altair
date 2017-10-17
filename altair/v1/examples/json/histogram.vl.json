@@ -1,6 +1,6 @@
 {
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/movies.json"
+        "url": "https://vega.github.io/vega-lite/data/movies.json"
     },
     "encoding": {
         "x": {

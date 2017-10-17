@@ -1,6 +1,6 @@
 {
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/population.json"
+        "url": "https://vega.github.io/vega-lite/data/population.json"
     },
     "description": "A bar chart showing the US population distribution of age groups in 2000.",
     "layers": [
