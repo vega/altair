@@ -217,7 +217,6 @@ column as well:
 
 .. testcode::
 
-    import altair as alt
     y = alt.Y('average(b):Q')
     print(y.to_json())
 
@@ -242,8 +241,6 @@ of the more advanced field configurations:
 
 .. altair-plot::
 
-    import altair as alt
-
     alt.Chart(data).mark_bar().encode(
         alt.X('a', type='nominal'),
         alt.Y('b', type='quantitative', aggregate='average')
@@ -264,8 +261,6 @@ color string:
 
 .. altair-plot::
 
-    import altair as alt
-
     alt.Chart(data).mark_bar(color='lightgreen').encode(
         alt.X('a', axis=alt.Axis(title='category')),
         alt.Y('average(b)', axis=alt.Axis(title='avg(b) by category'))
@@ -283,8 +278,6 @@ A simple example of a stand-alone HTML document can be generated for any
 chart using the :meth:`Chart.to_html` method:
 
 .. testcode::
-
-    import altair as alt
 
     chart = alt.Chart(data).mark_bar().encode(
         x='a',

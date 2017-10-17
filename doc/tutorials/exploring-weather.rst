@@ -66,8 +66,6 @@ The result is a histogram of precipitation values:
 
 .. altair-plot::
 
-    import altair as alt
-
     alt.Chart(df).mark_bar().encode(
         alt.X('precipitation', bin=True),
         alt.Y('count(*):Q')
@@ -80,8 +78,6 @@ For example, in the following plot, we compute the total precipitation for each 
 To discretize the data into months, we set the keyword ``timeUnit="month"``:
 
 .. altair-plot::
-
-    import altair as alt
 
     alt.Chart(df).mark_line().encode(
         alt.X('date:T', timeUnit='month'),
@@ -100,8 +96,6 @@ We might also wish to see the maximum and minimum temperature in each month:
 
 .. altair-plot::
 
-    import altair as alt
-
     alt.Chart(df).mark_line().encode(
         alt.X('date:T', timeUnit='yearmonth'),
         alt.Y('max(temp_max)'),
@@ -113,8 +107,6 @@ To look closer into this, let’s instead look at the mean of the
 maximum daily temperatures for each year:
 
 .. altair-plot::
-
-    import altair as alt
 
     alt.Chart(df).mark_line().encode(
         alt.X('date:T', timeUnit='year'),
@@ -133,7 +125,6 @@ familiar Pandas-like syntax:
 .. altair-setup::
     :show:
 
-    import altair as alt
     from altair import expr
 
     df = expr.DataFrame(df)
@@ -144,8 +135,6 @@ encodes and stores the operations within the plot specification, where they will
 be calculated by the renderer.
 
 .. altair-plot::
-
-    import altair as alt
 
     alt.Chart(df).mark_line().encode(
         alt.X('date:T', timeUnit='month'),
@@ -170,8 +159,6 @@ When a bar chart has a field mapped to color, Altair will automatically
 stack the bars atop each other:
 
 .. altair-plot::
-
-    import altair as alt
 
     alt.Chart(df).mark_bar().encode(
         x=alt.X('date:T', timeUnit='month'),
@@ -198,8 +185,6 @@ meaning of the plot more clear:
 
 .. altair-plot::
 
-    import altair as alt
-
     alt.Chart(df).mark_bar().encode(
         x=alt.X('date:T', timeUnit='month', axis=alt.Axis(title='Month of the year')),
         y='count(*):Q',
@@ -212,8 +197,6 @@ have developed above to explore the relationship between weather, precipitation,
 maximum temperature, and temperature range, configured to use a larger canvas:
 
 .. altair-plot::
-
-    import altair as alt
 
     alt.Chart(df).mark_point().encode(
         alt.X('temp_max', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
