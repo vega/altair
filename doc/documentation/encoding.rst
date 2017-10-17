@@ -11,11 +11,11 @@ channel encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
 
 .. altair-plot::
 
-   from altair import Chart, load_dataset
+   import altair as alt
 
-   cars = load_dataset('cars')
+   cars = alt.load_dataset('cars')
 
-   Chart(cars).mark_point().encode(
+   alt.Chart(cars).mark_point().encode(
        x='Horsepower',
        y='Miles_per_Gallon',
        color='Origin',
@@ -99,14 +99,14 @@ classes such as :class:`X` and :class:`Y`, or in short-form using the
 For example, the following two means of specifying the type result in identical
 plot specifications:
 
->>> from altair import Chart, X
->>> chart = Chart().encode(
-...             x=X('name', type='quantitative')
+>>> import altair as alt
+>>> chart = alt.Chart().encode(
+...             x=alt.X('name', type='quantitative')
 ...         )
 >>> print(chart.to_json())
 {"encoding": {"x": {"field": "name", "type": "quantitative"}}}
 
->>> chart = Chart().encode(
+>>> chart = alt.Chart().encode(
 ...             x='name:Q'
 ...         )
 >>> print(chart.to_json())
@@ -126,12 +126,12 @@ with the color encoded as a *quantitative*, *ordinal*, and *nominal* type:
 
 .. altair-setup::
 
-   from altair import Chart, load_dataset
-   cars = load_dataset('cars', url_only=True)
+   import altair as alt
+   cars = alt.load_dataset('cars', url_only=True)
 
 .. altair-plot::
 
-   Chart(cars).mark_point().encode(
+   alt.Chart(cars).mark_point().encode(
        x='Horsepower:Q',
        y='Miles_per_Gallon:Q',
        color='Cylinders:Q'           # Encode as quantitative (Q)
@@ -139,7 +139,7 @@ with the color encoded as a *quantitative*, *ordinal*, and *nominal* type:
 
 .. altair-plot::
 
-   Chart(cars).mark_point().encode(
+   alt.Chart(cars).mark_point().encode(
        x='Horsepower:Q',
        y='Miles_per_Gallon:Q',
        color='Cylinders:O'           # Encode as ordinal (O)
@@ -147,7 +147,7 @@ with the color encoded as a *quantitative*, *ordinal*, and *nominal* type:
 
 .. altair-plot::
 
-   Chart(cars).mark_point().encode(
+   alt.Chart(cars).mark_point().encode(
        x='Horsepower:Q',
        y='Miles_per_Gallon:Q',
        color='Cylinders:N'           # Encode as nominal (N)
@@ -176,12 +176,12 @@ In altair, such an operation looks like this:
 
 .. altair-plot::
 
-   from altair import load_dataset, Chart, X
+   import altair as alt
 
-   cars = load_dataset('cars')
+   cars = alt.load_dataset('cars')
 
-   Chart(cars).mark_bar().encode(
-       X('Horsepower', bin=True),
+   alt.Chart(cars).mark_bar().encode(
+       alt.X('Horsepower', bin=True),
        y='count(*):Q'
        # could also use Y('*', aggregate='count', type='quantitative')
    )
@@ -197,13 +197,13 @@ a "Bubble Plot"):
 
 .. altair-plot::
 
-   from altair import load_dataset, Chart, X, Y
+   import altair as alt
 
-   cars = load_dataset('cars')
+   cars = alt.load_dataset('cars')
 
-   Chart(cars).mark_point().encode(
-       X('Horsepower', bin=True),
-       Y('Miles_per_Gallon', bin=True),
+   alt.Chart(cars).mark_point().encode(
+       alt.X('Horsepower', bin=True),
+       alt.Y('Miles_per_Gallon', bin=True),
        size='count(*):Q',
    )
 
@@ -213,13 +213,13 @@ represents the mean of a third quantity, such as acceleration:
 
 .. altair-plot::
 
-   from altair import load_dataset, Chart, X, Y
+   import altair as alt
 
-   cars = load_dataset('cars')
+   cars = alt.load_dataset('cars')
 
-   Chart(cars).mark_circle().encode(
-       X('Horsepower', bin=True),
-       Y('Miles_per_Gallon', bin=True),
+   alt.Chart(cars).mark_circle().encode(
+       alt.X('Horsepower', bin=True),
+       alt.Y('Miles_per_Gallon', bin=True),
        size='count(*):Q',
        color='average(Acceleration):Q'
    )

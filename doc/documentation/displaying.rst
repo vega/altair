@@ -13,9 +13,9 @@ Vega-Lite JSON specification
 Fundamentally, Altair does one thing: create Vega-Lite JSON specifications of
 visualizations. For example, consider the following plot specification
 
->>> from altair import Chart, load_dataset
->>> data = load_dataset('cars', url_only=True)
->>> chart = Chart(data).mark_point().encode(
+>>> import altair as alt
+>>> data = alt.load_dataset('cars', url_only=True)
+>>> chart = alt.Chart(data).mark_point().encode(
 ...             x='Horsepower:Q',
 ...             y='Miles_per_Gallon:Q',
 ...             color='Origin:N',

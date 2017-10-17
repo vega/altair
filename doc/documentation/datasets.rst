@@ -33,14 +33,14 @@ within Altair:
 
 .. altair-setup::
 
-   from altair import load_dataset
-   data = load_dataset('movies')
+   import altair as alt
+   data = alt.load_dataset('movies')
 
 .. altair-plot::
 
-    from altair import Chart
+    import altair as alt
 
-    Chart(data).mark_tick().encode(
+    alt.Chart(data).mark_tick().encode(
         x='Production_Budget',
         y='MPAA_Rating'
     ).configure_cell(
@@ -60,13 +60,13 @@ you must specify the :ref:`data-types` explicitly:
 
 .. altair-setup::
 
-   url = load_dataset('movies', url_only=True)
+   url = alt.load_dataset('movies', url_only=True)
 
 .. altair-plot::
 
-    from altair import Chart
+    import altair as alt
 
-    Chart(url).mark_tick().encode(
+    alt.Chart(url).mark_tick().encode(
         x='Production_Budget:Q',
         y='MPAA_Rating:N'
     ).configure_cell(

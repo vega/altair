@@ -30,11 +30,11 @@ points as red semi-transparent filled circles:
 
 .. altair-plot::
 
-   from altair import Chart
+   import altair as alt
 
    url = 'https://vega.github.io/vega-datasets/data/cars.json'
 
-   Chart(url).mark_circle(
+   alt.Chart(url).mark_circle(
        color='red',
        opacity=0.3
    ).encode(

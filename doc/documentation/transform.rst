@@ -20,15 +20,15 @@ split by age and gender:
 
 .. altair-plot::
 
-    from altair import Chart, Color, Scale
+    import altair as alt
 
     data = 'https://vega.github.io/vega-datasets/data/population.json'
-    pink_blue = Scale(range=["lightblue", "pink"])
+    pink_blue = alt.Scale(range=["lightblue", "pink"])
 
-    Chart(data).mark_bar().encode(
+    alt.Chart(data).mark_bar().encode(
         x='age:O',
         y='mean(people):Q',
-        color=Color('sex:N', scale=pink_blue)
+        color=alt.Color('sex:N', scale=pink_blue)
     )
 
 This visualization shows that on average over the course of history, the
@@ -54,9 +54,10 @@ to "Male"/"Female":
 
 .. altair-plot::
 
-    from altair import Chart, Color, Scale, expr
+    import altair as alt
+    from altair import expr
 
-    pink_blue = Scale(range=["pink", "lightblue"])
+    pink_blue = alt.Scale(range=["pink", "lightblue"])
 
     # this does not actually download data;
     # just puts a dataframe-like interface around the URL reference
@@ -68,21 +69,22 @@ to "Male"/"Female":
     # Create a filtered version of the data
     data2000 = data[data.year == 2000]
 
-    Chart(data2000).mark_bar().encode(
+    alt.Chart(data2000).mark_bar().encode(
         x='age:O',
         y='mean(people):Q',
-        color=Color('gender:N', scale=pink_blue)
+        color=alt.Color('gender:N', scale=pink_blue)
     )
 
 Creating and manipulating the data this way generates appropriate code that
 is stored in the spec and then evaluated at the time the plot is generated.
 We can see this by printing the resulting specification:
 
->>> from altair import Chart, expr
+>>> import altair as alt
+>>> from altair import expr
 >>> data = expr.DataFrame('data.json')
 >>> data['gender'] = expr.where(data.sex == 1, "Male", "Female")
 >>> data2000 = data[data.year == 2000]
->>> print(Chart(data2000).to_json(indent=2))
+>>> print(alt.Chart(data2000).to_json(indent=2))
 {
   "data": {
     "url": "data.json"
@@ -110,19 +112,20 @@ class gives you functional access to these attributes using the :mod:`vega.expr`
 
 .. altair-setup::
 
-    from altair import Chart, Color, Scale, Formula, expr
-    pink_blue = Scale(range=["pink", "lightblue"])
+    import altair as alt
+    from altair import expr
+    pink_blue = alt.Scale(range=["pink", "lightblue"])
 
 .. altair-plot::
 
     data = 'https://vega.github.io/vega-datasets/data/population.json'
 
-    Chart(data).mark_bar().encode(
+    alt.Chart(data).mark_bar().encode(
         x='age:O',
         y='mean(people):Q',
-        color=Color('gender:N', scale=pink_blue)
+        color=alt.Color('gender:N', scale=pink_blue)
     ).transform_data(
-        calculate=[Formula('gender', expr.where(expr.df.sex==1,'Male','Female'))],
+        calculate=[alt.Formula('gender', expr.where(expr.df.sex==1,'Male','Female'))],
         filter=(expr.df.year == 2000)
     )
 
@@ -135,12 +138,12 @@ passed instead:
 
 .. altair-plot::
 
-    Chart(data).mark_bar().encode(
+    alt.Chart(data).mark_bar().encode(
         x='age:O',
         y='mean(people):Q',
-        color=Color('gender:N', scale=pink_blue)
+        color=alt.Color('gender:N', scale=pink_blue)
     ).transform_data(
-        calculate=[Formula('gender', 'if(datum.sex == 1, "M", "F")')],
+        calculate=[alt.Formula('gender', 'if(datum.sex == 1, "M", "F")')],
         filter=('datum.year == 2000')
     )
 

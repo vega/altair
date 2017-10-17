@@ -22,8 +22,8 @@ dataframes, and contains a loader for this and other built-in datasets:
 
 .. testcode::
 
-    from altair import load_dataset
-    df = load_dataset('seattle-weather')
+    import altair as alt
+    df = alt.load_dataset('seattle-weather')
     print(df.head())
 
 .. testoutput::
@@ -43,13 +43,14 @@ distribution of precipitation values:
 
 .. altair-setup::
 
-    from altair import *
-    df = load_dataset('seattle-weather')
+    import altair as alt
+    df = alt.load_dataset('seattle-weather')
 
 .. altair-plot::
 
-    from altair import Chart
-    Chart(df).mark_tick().encode(
+    import altair as alt
+
+    alt.Chart(df).mark_tick().encode(
         x='precipitation',
     )
 
@@ -65,11 +66,11 @@ The result is a histogram of precipitation values:
 
 .. altair-plot::
 
-    from altair import X, Y
+    import altair as alt
 
-    Chart(df).mark_bar().encode(
-        X('precipitation', bin=True),
-        Y('count(*):Q')
+    alt.Chart(df).mark_bar().encode(
+        alt.X('precipitation', bin=True),
+        alt.Y('count(*):Q')
     )
 
 Next, let’s look at how precipitation in Seattle changes throughout the year.
@@ -80,9 +81,11 @@ To discretize the data into months, we set the keyword ``timeUnit="month"``:
 
 .. altair-plot::
 
-    Chart(df).mark_line().encode(
-        X('date:T', timeUnit='month'),
-        Y('average(precipitation)')
+    import altair as alt
+
+    alt.Chart(df).mark_line().encode(
+        alt.X('date:T', timeUnit='month'),
+        alt.Y('average(precipitation)')
     )
 
 This chart shows that in Seattle the precipitation in the winter is, on average,
@@ -97,9 +100,11 @@ We might also wish to see the maximum and minimum temperature in each month:
 
 .. altair-plot::
 
-    Chart(df).mark_line().encode(
-        X('date:T', timeUnit='yearmonth'),
-        Y('max(temp_max)'),
+    import altair as alt
+
+    alt.Chart(df).mark_line().encode(
+        alt.X('date:T', timeUnit='yearmonth'),
+        alt.Y('max(temp_max)'),
     )
 
 In this chart, it looks as though the maximum temperature is increasing from
@@ -109,9 +114,11 @@ maximum daily temperatures for each year:
 
 .. altair-plot::
 
-    Chart(df).mark_line().encode(
-        X('date:T', timeUnit='year'),
-        Y('mean(temp_max)'),
+    import altair as alt
+
+    alt.Chart(df).mark_line().encode(
+        alt.X('date:T', timeUnit='year'),
+        alt.Y('mean(temp_max)'),
     )
 
 And in fact, the chart indicates that yes, the annual average of the daily
@@ -126,6 +133,7 @@ familiar Pandas-like syntax:
 .. altair-setup::
     :show:
 
+    import altair as alt
     from altair import expr
 
     df = expr.DataFrame(df)
@@ -137,8 +145,10 @@ be calculated by the renderer.
 
 .. altair-plot::
 
-    Chart(df).mark_line().encode(
-        X('date:T', timeUnit='month'),
+    import altair as alt
+
+    alt.Chart(df).mark_line().encode(
+        alt.X('date:T', timeUnit='month'),
         y='mean(temp_range):Q'
     )
 
@@ -161,8 +171,10 @@ stack the bars atop each other:
 
 .. altair-plot::
 
-    Chart(df).mark_bar().encode(
-        x=X('date:T', timeUnit='month'),
+    import altair as alt
+
+    alt.Chart(df).mark_bar().encode(
+        x=alt.X('date:T', timeUnit='month'),
         y='count(*)',
         color='weather',
     )
@@ -175,9 +187,9 @@ from the weather field to meaningful colors, using standard hex color codes:
 .. altair-setup::
    :show:
 
-   from altair import Scale
+   import altair as alt
 
-   scale = Scale(domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
+   scale = alt.Scale(domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
                  range=['#e7ba52', '#c7c7c7', '#aec7e8', '#1f77b4', '#9467bd'])
 
 This scale can be passed to the color encoding to be applied to the plot style.
@@ -186,12 +198,12 @@ meaning of the plot more clear:
 
 .. altair-plot::
 
-    from altair import Axis, Color, Legend
+    import altair as alt
 
-    Chart(df).mark_bar().encode(
-        x=X('date:T', timeUnit='month', axis=Axis(title='Month of the year')),
+    alt.Chart(df).mark_bar().encode(
+        x=alt.X('date:T', timeUnit='month', axis=alt.Axis(title='Month of the year')),
         y='count(*):Q',
-        color=Color('weather', legend=Legend(title='Weather type'), scale=scale),
+        color=alt.Color('weather', legend=alt.Legend(title='Weather type'), scale=scale),
     )
 
 Combining the above ideas lets us create any number of flexible visualizations
@@ -201,10 +213,12 @@ maximum temperature, and temperature range, configured to use a larger canvas:
 
 .. altair-plot::
 
-    Chart(df).mark_point().encode(
-        X('temp_max', axis=Axis(title='Maximum Daily Temperature (C)')),
-        Y('temp_range', axis=Axis(title='Daily Temperature Range (C)')),
-        Color('weather', scale=scale),
+    import altair as alt
+
+    alt.Chart(df).mark_point().encode(
+        alt.X('temp_max', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
+        alt.Y('temp_range', axis=alt.Axis(title='Daily Temperature Range (C)')),
+        alt.Color('weather', scale=scale),
         size='precipitation',
     ).configure_cell(width=600, height=400)
 

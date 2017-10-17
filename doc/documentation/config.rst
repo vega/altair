@@ -25,12 +25,14 @@ encodings. For example, consider the following plot:
 .. altair-setup::
     :show:
 
-    from altair import Chart, load_dataset, X, Y, Scale
-    data = load_dataset('cars', url_only=True)
+    import altair as alt
+    data = alt.load_dataset('cars', url_only=True)
 
 .. altair-plot::
 
-    Chart(data).mark_point().encode(
+    import altair as alt
+
+    alt.Chart(data).mark_point().encode(
         x='Acceleration:Q',
         y='Horsepower:Q'
     )
@@ -42,8 +44,10 @@ these limits:
 
 .. altair-plot::
 
-    Chart(data).mark_point().encode(
-        X('Acceleration:Q', scale=Scale(domain=(5, 15))),
+    import altair as alt
+
+    alt.Chart(data).mark_point().encode(
+        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 15))),
         y='Horsepower:Q'
     )
 
@@ -53,8 +57,10 @@ to adjust it so that data beyond the limits are moved to the limit:
 
 .. altair-plot::
 
-    Chart(data).mark_point().encode(
-        X('Acceleration:Q', scale=Scale(domain=(5, 15), clamp=True)),
+    import altair as alt
+
+    alt.Chart(data).mark_point().encode(
+        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 15), clamp=True)),
         y='Horsepower:Q'
     )
 
@@ -63,8 +69,10 @@ method, to remove these values from the dataset:
 
 .. altair-plot::
 
-    Chart(data).mark_point().encode(
-        X('Acceleration:Q', scale=Scale(domain=(5, 15))),
+    import altair as alt
+
+    alt.Chart(data).mark_point().encode(
+        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 15))),
         y='Horsepower:Q'
     ).transform_data(filter='datum.Acceleration < 15')
 
@@ -80,11 +88,11 @@ For example consider this plot:
 .. altair-plot::
 
    import pandas as pd
-   from altair import Chart
+   import altair as alt
    df = pd.DataFrame({'x': [0.03, 0.04, 0.05, 0.12, 0.07, 0.15],
                       'y': [10, 35, 39, 50, 24, 35]})
 
-   Chart(df).mark_circle().encode(
+   alt.Chart(df).mark_circle().encode(
        x='x',
        y='y'
    )
@@ -107,11 +115,11 @@ the y labels as a dollar value:
 
 .. altair-plot::
 
-   from altair import Chart, X, Y, Axis
+   import altair as alt
 
-   Chart(df).mark_circle().encode(
-       x=X('x', axis=Axis(format='%', title='percentage')),
-       y=Y('y', axis=Axis(format='$', title='dollar amount'))
+   alt.Chart(df).mark_circle().encode(
+       x=alt.X('x', axis=alt.Axis(format='%', title='percentage')),
+       y=alt.Y('y', axis=alt.Axis(format='$', title='dollar amount'))
    )
 
 

@@ -17,12 +17,12 @@ For example, here we specify data via a DataFrame:
 
 .. altair-plot::
 
-   from altair import Chart
+   import altair as alt
    import pandas as pd
 
    data = pd.DataFrame({'x': ['A', 'B', 'C', 'D', 'E'],
                         'y': [5, 3, 6, 7, 2]})
-   Chart(data).mark_bar().encode(
+   alt.Chart(data).mark_bar().encode(
        x='x',
        y='y',
    )
@@ -36,14 +36,14 @@ with the data specified as a JSON-style list of records:
 
 .. altair-plot::
 
-   from altair import Chart, Data
+   import altair as alt
 
-   data = Data(values=[{'x': 'A', 'y': 5},
+   data = alt.Data(values=[{'x': 'A', 'y': 5},
                        {'x': 'B', 'y': 3},
                        {'x': 'C', 'y': 6},
                        {'x': 'D', 'y': 7},
                        {'x': 'E', 'y': 2}])
-   Chart(data).mark_bar().encode(
+   alt.Chart(data).mark_bar().encode(
        x='x:O',  # specify ordinal data
        y='y:Q',  # specify quantitative data
    )
@@ -57,13 +57,13 @@ Similarly, we must also specify the data type when referencing data by URL:
 
 .. altair-plot::
 
-   from altair import Chart
+    import altair as alt
 
-   url = 'https://vega.github.io/vega-datasets/data/cars.json'
+    url = 'https://vega.github.io/vega-datasets/data/cars.json'
 
-   Chart(url).mark_point().encode(
-       x='Horsepower:Q',
-       y='Miles_per_Gallon:Q'
-   )
+    alt.Chart(url).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q'
+    )
 
 We will further discuss encodings and associated types in :ref:`encoding-reference`, next.
