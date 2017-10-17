@@ -65,7 +65,7 @@ def sync_schema(vegalite_version,
 
 def sync_examples(vegalite_version,
                   destination=path_within_altair('examples', 'json'),
-                  data_url='http://vega.github.io/vega-lite/',
+                  data_url='https://vega.github.io/vega-lite/',
                   vegalite_path=VEGALITE_PATH, vegalite_url=VEGALITE_URL):
     """
     Clone the vega-lite repository, check-out the appropriate version, and

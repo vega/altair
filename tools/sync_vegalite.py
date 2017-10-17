@@ -90,7 +90,7 @@ def sync_schema(vegalite_version,
 
 def sync_examples(vegalite_repo,
                   destination=abspath('..', 'altair', 'examples', 'json'),
-                  data_url='http://vega.github.io/vega-lite/'):
+                  data_url='https://vega.github.io/vega-lite/'):
     source_dir = os.path.join(vegalite_repo, 'examples', 'specs')
     index_source = os.path.join(vegalite_repo, 'examples', 'vl-examples.json')
     print("Reading from {0}".format(source_dir))
