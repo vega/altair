@@ -21,6 +21,5 @@ are discussed in the following
    transform
    config
    displaying
-   interactive
    datasets
    performance
