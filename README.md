@@ -82,14 +82,14 @@ Altair can be installed with the following commands:
 
 ```
 pip install altair
-pip install --upgrade notebook  # need jupyter_client >= 4.2
+pip install --upgrade notebook
 ```
 
 In addition, to render Altair visualizations in the classic Jupyter Notebook,
 you will need to enable the [ipyvega](https://github.com/vega/ipyvega) nbextension:
 
 ```
-jupyter nbextension install --sys-prefix --py vega
+jupyter nbextension enable --sys-prefix --py vega
 ```
 
 This single step is not needed for usage with JupyterLab and nteract, which have built-in

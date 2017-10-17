@@ -1,7 +1,7 @@
 .. _api-documentation:
 
-Altair Documentation
-====================
+Narrative Documentation
+=======================
 
 
 Altair's core functionality is to produce Vega-Lite JSON specifications, which
@@ -21,5 +21,5 @@ are discussed in the following
    transform
    config
    displaying
-   interactive
    datasets
+   performance

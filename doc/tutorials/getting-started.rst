@@ -14,17 +14,8 @@ First, you will need to make sure you have the Altair package and its
 dependencies installed (see :ref:`Installation`)
 and make sure you understand how altair
 plots are displayed (see :ref:`displaying-plots`).
-This tutorial will assume you are working within the Jupyter Notebook,
-so that plots are automatically rendered.
-
-In short, perhaps the easiest way to get started is to run
-
-.. code-block:: bash
-
-    $ conda install altair --channel conda-forge
-    $ jupyter notebook
-
-and then follow along with this tutorial in the notebook.
+This tutorial will assume you are working within a Jupyter notebook
+user interface, so that plots are automatically rendered.
 
 Here is the outline of this basic tutorial:
 
@@ -51,14 +42,14 @@ numerical variable in column b:
 
 .. testsetup:: *
 
-    from altair import *
+    import altair as alt
     import pandas as pd
     data = pd.DataFrame({'a': list('CCCDDDEEE'),
                          'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
 
 .. altair-setup::
 
-    from altair import *
+    import altair as alt
     import pandas as pd
     data = pd.DataFrame({'a': list('CCCDDDEEE'),
                          'b': [2, 7, 4, 1, 2, 6, 8, 4, 7]})
@@ -78,8 +69,8 @@ dataframe as a single argument:
 
 .. testcode::
 
-    from altair import Chart
-    chart = Chart(data)
+    import altair as alt
+    chart = alt.Chart(data)
 
 So far, we have defined the Chart object, but we have not yet told the chart
 to *do* anything with the data. That will come next.
@@ -96,7 +87,7 @@ For example, we can show the data as a point using :meth:`~Chart.mark_point`:
 
 .. altair-plot::
 
-    Chart(data).mark_point()
+    alt.Chart(data).mark_point()
 
 Here the rendering consists of one point per row in the dataset, all plotted
 on top of each other since we have not yet specified the point's position.
@@ -109,7 +100,7 @@ This can be done straightforwardly via the :meth:`Chart.encode` method:
 
 .. altair-plot::
 
-    Chart(data).mark_point().encode(
+    alt.Chart(data).mark_point().encode(
         x='a',
     )
 
@@ -127,7 +118,7 @@ adding a ``y`` encoding channel, mapped to the ``"b"`` column:
 
 .. altair-plot::
 
-    Chart(data).mark_point().encode(
+    alt.Chart(data).mark_point().encode(
         x='a',
         y='b'
     )
@@ -152,7 +143,7 @@ aggregate within the column identifier:
 
 .. altair-plot::
 
-    Chart(data).mark_point().encode(
+    alt.Chart(data).mark_point().encode(
         x='a',
         y='average(b)'
     )
@@ -166,7 +157,7 @@ with :meth:`~Chart.mark_bar`:
 
 .. altair-plot::
 
-    Chart(data).mark_bar().encode(
+    alt.Chart(data).mark_bar().encode(
         x='a',
         y='average(b)'
     )
@@ -177,7 +168,7 @@ swap the ``x`` and ``y`` keywords:
 
 .. altair-plot::
 
-    Chart(data).mark_bar().encode(
+    alt.Chart(data).mark_bar().encode(
         y='a',
         x='average(b)'
     )
@@ -193,7 +184,7 @@ For clarity, we'll leave out the data and make a nicely-formatted output:
 
 .. testcode::
 
-    chart = Chart(data).mark_bar().encode(
+    chart = alt.Chart(data).mark_bar().encode(
         x='a',
         y='average(b)',
     )
@@ -226,8 +217,7 @@ column as well:
 
 .. testcode::
 
-    from altair import Y
-    y = Y('average(b):Q')
+    y = alt.Y('average(b):Q')
     print(y.to_json())
 
 .. testoutput::
@@ -238,7 +228,7 @@ This short-hand is equivalent to spelling-out the attributes by name:
 
 .. testcode::
 
-    y = Y(field='b', type='quantitative', aggregate='average')
+    y = alt.Y(field='b', type='quantitative', aggregate='average')
     print(y.to_json())
 
 .. testoutput::
@@ -251,11 +241,9 @@ of the more advanced field configurations:
 
 .. altair-plot::
 
-    from altair import X, Y
-
-    Chart(data).mark_bar().encode(
-        X('a', type='nominal'),
-        Y('b', type='quantitative', aggregate='average')
+    alt.Chart(data).mark_bar().encode(
+        alt.X('a', type='nominal'),
+        alt.Y('b', type='quantitative', aggregate='average')
     )
 
 
@@ -273,11 +261,9 @@ color string:
 
 .. altair-plot::
 
-    from altair import X, Y, Axis
-
-    Chart(data).mark_bar(color='lightgreen').encode(
-        X('a', axis=Axis(title='category')),
-        Y('average(b)', axis=Axis(title='avg(b) by category'))
+    alt.Chart(data).mark_bar(color='lightgreen').encode(
+        alt.X('a', axis=alt.Axis(title='category')),
+        alt.Y('average(b)', axis=alt.Axis(title='avg(b) by category'))
     )
 
 
@@ -293,7 +279,7 @@ chart using the :meth:`Chart.to_html` method:
 
 .. testcode::
 
-    chart = Chart(data).mark_bar().encode(
+    chart = alt.Chart(data).mark_bar().encode(
         x='a',
         y='average(b)',
     )

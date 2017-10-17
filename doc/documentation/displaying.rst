@@ -2,8 +2,10 @@
 
 .. _displaying-plots:
 
-Displaying and Saving Altair Visualizations
-===========================================
+Displaying and Saving Visualizations
+====================================
+
+.. contents::
 
 Vega-Lite JSON specification
 ----------------------------
@@ -11,9 +13,9 @@ Vega-Lite JSON specification
 Fundamentally, Altair does one thing: create Vega-Lite JSON specifications of
 visualizations. For example, consider the following plot specification
 
->>> from altair import Chart, load_dataset
->>> data = load_dataset('cars', url_only=True)
->>> chart = Chart(data).mark_point().encode(
+>>> import altair as alt
+>>> data = alt.load_dataset('cars', url_only=True)
+>>> chart = alt.Chart(data).mark_point().encode(
 ...             x='Horsepower:Q',
 ...             y='Miles_per_Gallon:Q',
 ...             color='Origin:N',
@@ -38,33 +40,69 @@ can be rendered in one of several ways.
 
 .. _displaying-plots-jupyter:
 
-Displaying Plots in Jupyter Notebook
-------------------------------------
+Displaying in Jupyter notebooks
+-------------------------------
 
-Perhaps the most straightforward way to interactively create and render
-Altair visualizations is in the `Jupyter Notebook`_.
-If you have installed correctly configured the `ipyvega`_ package
-(See :ref:`Installation`), then a chart on the last line of a code cell
-will automatically be represented within the notebook as a rendered plot:
+Usually, you will want to render your Altair visualization in your Jupyter notebooks.
+The following Jupyter notebook user interfaces can render Altair visualizations:
 
-.. altair-plot::
+- `Jupyter Notebook`_ (the ipyvega_ package is required)
+- `JupyterLab`_ (built-in support)
+- `nteract`_ (built-in-support)
 
-    # Within Jupyter Notebook
-    from altair import Chart, load_dataset
-    data = load_dataset('cars', url_only=True)
-    Chart(data).mark_point().encode(
-        x='Horsepower:Q',
-        y='Miles_per_Gallon:Q',
-        color='Origin:N',
+In these environments, you can trigger the rendering of an Altair visualization by simply
+returning your Chart at the end of a cell:
+
+.. code-block:: python
+
+    c = alt.Chart(...)
+    c
+
+Of you can use IPython's :func:`display` function at any point:
+
+.. code-block:: python
+
+    from IPython.display import display
+
+    c = alt.Chart(...)
+    display(c)
+
+Lastly, there is a :meth:`Chart.display` method on the :class:`Chart` object itself:
+
+.. code-block:: python
+
+    c = alt.Chart(...)
+    c.display()
+
+Both JupyterLab_ and nteract_ have builtin rendering for Vega-Lite, so ipyvega_
+doesn't need to be installed. However, to get Altair to emit the right data
+to render in these more modern frontends, you must call the :func:`enable_mime_rendering`
+function before trying to render a visualization:
+
+.. code-block:: python
+
+    import altair as alt
+
+    # load built-in dataset as a pandas DataFrame
+    cars = alt.load_dataset('cars')
+
+    # For rendering in JupyterLab & nteract
+    alt.enable_mime_rendering()
+
+    alt.Chart(cars).mark_circle().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color='Origin',
     )
 
-Alternatively, you can use ``chart.display()`` to more explicitly display
-any chart object
+Eventually this will not be needed, but is being provided to keep Altair working
+without change in the classic Jupyter Notebook.
 
 .. _displaying-plots-html:
 
-Displaying Plots via a Local HTTP Server
-----------------------------------------
+Displaying via a Local HTTP Server
+----------------------------------
+
 Because the above exercise (outputting html, saving to file, and opening a
 web browser) can be a bit tedious, Altair provides a ``chart.serve()`` method
 that will use Python's ``HTTPServer`` to launch a local web server and open
@@ -75,12 +113,21 @@ Given a chart object, you can do this with
 Serving to http://127.0.0.1:8888/    [Ctrl-C to exit]
 127.0.0.1 - - [15/Sep/2016 14:40:39] "GET / HTTP/1.1" 200 -
 
-.. _displaying-plots-vega-editor:
+Saving as PNG and SVG
+---------------------
 
-Saving a visualization to a file
---------------------------------
+The easiest way to export figures to PNG is to render them in a Jupyter notebook and then
+click on the "Export as PNG" link below the visualization.
+
+Previous releases of Altair had support for saving Altair visualizations to PNG or SVG
+programmatically. The code for that remains in Altair, but it is based on a NodeJS_ package
+that we are currently unable to build and use. 
+
+Saving to an HTML file
+----------------------
+
 Altair supports writing visualizations to an image or HTML file. 
-This file can be an HTML, JSON, PNG or SVG file. This functionality
+This file can be an HTML or  JSON file. This functionality
 is available through :meth:`Chart.savechart`.
 
 An example useage of :meth:`Chart.savechart`:
@@ -92,17 +139,9 @@ For more information on embedding Vega-Lite plots within HTML pages, see
 Vega-Lite's documentation, in particular
 `Embedding Vega-Lite <http://vega.github.io/vega-lite/usage/embed.html>`_.
 
-It is also possible to save to a PNG or SVG
-
->>> # NOTE: requires additional install, mentioned below
->>> chart.savechart('plot.png')  # doctest: +SKIP
->>> chart.savechart('plot.svg')  # doctest: +SKIP
-
-Note: saving PNG/SVG images requires more setup as mentioned in `Saving Figures
-as PNG and SVG`.
-
 Obtaining other representations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
+
 Altair charts can be represented as HTML, a Python dict, a JSON object and an
 Altair chart. To convert between these representations, Altair provides
 
@@ -113,7 +152,6 @@ Altair chart. To convert between these representations, Altair provides
 provides several methods to variety of methods to convert between
 different representations.
 
-
 Online Vega-Lite Editor
 -----------------------
 
@@ -122,84 +160,7 @@ can paste the JSON into the `Vega-Lite Online Editor`_.
 This provides an interface in which to directly explore the plot outputs
 of Vega-Lite specifications.
 
-Saving Figures as PNG and SVG
------------------------------
-The easiest way to export figures to PNG or SVG is to click the
-"Open In Vega Editor" link under any rendered figure, and then use the "Export"
-command to save the figure as either PNG format (With the Renderer set to
-"Canvas") or SVG format (with the renderer set to "SVG").
 
-Saving Figures Programmatically
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you would like to save an Altair visualization as PNG or SVG *from a script*,
-Altair does provide an interface that allows this, though it requires some
-extra setup.
-
-The `Vega-Lite`_ javascript library provides a NodeJS_ command-line tool to
-generate ``png`` and ``svg`` outputs from Altair/Vega-Lite specifications.
-The :meth:`Chart.savechart` method provides an interface that
-will use these command-line tools to output PNG or SVG outputs of a chart.
-
-If you have ``nodejs`` and ``npm`` available on your system, you can install
-the required command-line tools using::
-
-    $ npm install canvas vega vega-lite
-
-If you don't have ``nodejs`` and are using ``conda``, you can create an
-environment with nodejs/npm and the required packages as follows
-(note that the ``node-gyp`` tool related to canvas seems to require Python 2.7)::
-
-    $ conda create -n nodejs-env -c conda-forge python=2.7 nodejs cairo altair
-    $ source activate nodejs-env
-    $ npm install canvas vega vega-lite
-
-On Linux systems, the required tools can be installed with `Apt <https://wiki.debian.org/Apt>`_::
-
-    $ sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
-    $ npm install canvas vega vega-lite
-
-As above, this appears to work only when using Python 2.7 because of the ``node-gyp`` dependency.
-
-More information on installing node and associated packages can be found on the
-`Node Installation Page <https://nodejs.org/en/download/>`_.
-
-If the installation was successful, you should have new executables called
-``vl2png`` and ``vl2svg`` within your node root directory, which you can determine
-by running::
-
-    $ npm bin
-    /Users/username/node_modules/.bin
-
-    $ ls /Users/username/node_modules/.bin
-    vg2png  vg2svg  vl2png  vl2svg  vl2vg
-
-With these packages properly installed, you can use the :meth:`Chart.savechart`
-method to save a chart to file:
-
->>> from altair import Chart, load_dataset
->>> data = load_dataset('cars', url_only=True)
->>> chart = Chart(data).mark_point().encode(
-...             x='Horsepower:Q',
-...             y='Miles_per_Gallon:Q',
-...             color='Origin:N',
-...         )
->>> # save as PNG
->>> chart.savechart('mychart.png')  # doctest: +SKIP
->>> # save as SVG
->>> chart.savechart('mychart.svg')  # doctest: +SKIP
-
-This command searches for the ``vl2png`` or ``vl2svg`` executable either in
-the ``npm bin`` location or in the system ``$PATH`` variable.
-
-The extra requirements here are straightforward, but the manual installation
-process is admittedly a bit clunky.
-We hope to find a way to streamline this in the future, but creating transparent
-interactions between Python packages and NodeJS packages remains a
-challenging area in general.
-If you have ideas on how to improve this aspect of Altair's user experience,
-please send comments or contributions via Altair's
-`GitHub Issue Tracker <https://github.com/altair-viz/altair/issues>`_.
 
 
 .. _NodeJS: https://nodejs.org/en/
@@ -208,3 +169,6 @@ please send comments or contributions via Altair's
 .. _Vega-Lite: https://github.com/vega/vega-lite
 .. _Jupyter Notebook: https://jupyter.readthedocs.io/en/latest/install.html
 .. _ipyvega: http://github.com/vega/ipyvega
+.. _Jupyter Notebook: https://jupyter.readthedocs.io/en/latest/install.html
+.. _JupyterLab: https://github.com/jupyterlab/jupyterlab
+.. _nteract: https://github.com/nteract/nteract
