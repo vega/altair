@@ -88,24 +88,3 @@ Alternatively, the default version can be synced using
 ```
 $ make sync-examples
 ```
-
-### Automatic Altair Examples
-Because Altair has the ability to round-trip from Vega-Lite JSON specifications
-to Altair specifications and back, we built a script to automatically create
-example Jupyter notebooks from the plot examples in Vega-Lite, which are stored
-in ``notebooks/auto_examples/``. To generate the
-examples from the current set of JSON files in ``altair/examples``, you can run
-```
-$ python tools/create_example_notebooks.py
-```
-to optionally execute all the notebooks (and display any exceptions due to
-running the code) use
-```
-$ python tools/create_example_notebooks.py --execute
-```
-Be warned, though, that this auto-execution takes several minutes!
-
-Avoid committing the executed notebooks to the github repository, though, as
-they are much larger than the raw notebooks, and due to Javascript security
-concerns, generated plots will not appear on github or nbviewer which negates
-any advantage of committing executed notebooks.
