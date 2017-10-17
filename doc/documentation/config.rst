@@ -44,8 +44,6 @@ these limits:
 
 .. altair-plot::
 
-    import altair as alt
-
     alt.Chart(data).mark_point().encode(
         alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 15))),
         y='Horsepower:Q'
@@ -57,8 +55,6 @@ to adjust it so that data beyond the limits are moved to the limit:
 
 .. altair-plot::
 
-    import altair as alt
-
     alt.Chart(data).mark_point().encode(
         alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 15), clamp=True)),
         y='Horsepower:Q'
@@ -68,8 +64,6 @@ Another option is to *filter* the data, using the :meth:`Chart.transform_data`
 method, to remove these values from the dataset:
 
 .. altair-plot::
-
-    import altair as alt
 
     alt.Chart(data).mark_point().encode(
         alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 15))),
@@ -88,7 +82,6 @@ For example consider this plot:
 .. altair-plot::
 
    import pandas as pd
-   import altair as alt
    df = pd.DataFrame({'x': [0.03, 0.04, 0.05, 0.12, 0.07, 0.15],
                       'y': [10, 35, 39, 50, 24, 35]})
 
@@ -114,8 +107,6 @@ the y labels as a dollar value:
 
 
 .. altair-plot::
-
-   import altair as alt
 
    alt.Chart(df).mark_circle().encode(
        x=alt.X('x', axis=alt.Axis(format='%', title='percentage')),
