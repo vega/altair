@@ -587,3 +587,40 @@ def test_enable_mime_rendering():
     enable_mime_rendering()
     disable_mime_rendering()
     disable_mime_rendering()
+
+
+def test_validate_spec():
+
+    # Make sure we catch channels with no field specified
+    c = make_chart()
+    c.encode(Color())
+    assert isinstance(c.to_dict(), dict)
+    assert isinstance(c.to_dict(validate_columns=False), dict)
+    with pytest.raises(FieldError):
+        c.to_dict(validate_columns=True)
+    c.validate_columns = False
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
+    # Make sure we catch encoded fields not in the data
+    c = make_chart()
+    c.encode(x='x', y='y', color='z')
+    c.encode(color='z')
+    assert isinstance(c.to_dict(), dict)
+    assert isinstance(c.to_dict(validate_columns=False), dict)
+    with pytest.raises(FieldError):
+        c.to_dict(validate_columns=True)
+    c.validate_columns = False
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+    
+    c = make_chart()
+    c.encode(x='x', y='count(*)')
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
+    # Make sure we can resolve computed fields
+    c = make_chart()
+    c.encode(x='x', y='y', color='z')
+    c.encode(color='z')
+    c.transform_data(
+        calculate=[Formula('z', 'sin(((2*PI)*datum.x))')]
+    )
+    assert isinstance(c.to_dict(), dict)
