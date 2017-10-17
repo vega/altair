@@ -5,6 +5,9 @@
 Displaying and Saving Altair Visualizations
 ===========================================
 
+Vega-Lite JSON specification
+----------------------------
+
 Fundamentally, Altair does one thing: create Vega-Lite JSON specifications of
 visualizations. For example, consider the following plot specification
 
@@ -19,24 +22,13 @@ visualizations. For example, consider the following plot specification
 The ``chart`` object defined here is an Altair chart, which contains functionality
 to generate a JSON encoding that conforms to the `Vega-Lite Schema`_:
 
->>> print(chart.to_json(indent=2))
+>>> print(chart.to_json(indent=2))  # doctest: +SKIP
 {
-  "data": {
-    "url": "https://vega.github.io/vega-datasets/data/cars.json"
-  },
+  "data": { "url": "https://vega.github.io/vega-datasets/data/cars.json" },
   "encoding": {
-    "color": {
-      "field": "Origin",
-      "type": "nominal"
-    },
-    "x": {
-      "field": "Horsepower",
-      "type": "quantitative"
-    },
-    "y": {
-      "field": "Miles_per_Gallon",
-      "type": "quantitative"
-    }
+    "color": { "field": "Origin", "type": "nominal" },
+    "x": { "field": "Horsepower", "type": "quantitative" },
+    "y": { "field": "Miles_per_Gallon", "type": "quantitative" }
   },
   "mark": "point"
 }
@@ -71,23 +63,6 @@ any chart object
 
 .. _displaying-plots-html:
 
-Outputting Plots as HTML
-------------------------
-If you prefer working outside the notebook, Altair includes the ability to
-generate a stand-alone HTML document containing the JSON specification along
-with the javascript commands to render it:
-
->>> html = chart.to_html()
->>> with open('chart.html', 'w') as f:
-...     f.write(html)  # doctest: +SKIP
-
-If you then point your browser at ``chart.html``, you will see the rendered result.
-For more information on embedding Vega-Lite plots within HTML pages, see
-Vega-Lite's documentation, in particular
-`Embedding Vega-Lite <http://vega.github.io/vega-lite/usage/embed.html>`_.
-
-.. _displaying-plots-server:
-
 Displaying Plots via a Local HTTP Server
 ----------------------------------------
 Because the above exercise (outputting html, saving to file, and opening a
@@ -101,6 +76,43 @@ Serving to http://127.0.0.1:8888/    [Ctrl-C to exit]
 127.0.0.1 - - [15/Sep/2016 14:40:39] "GET / HTTP/1.1" 200 -
 
 .. _displaying-plots-vega-editor:
+
+Saving a visualization to a file
+--------------------------------
+Altair supports writing visualizations to an image or HTML file. 
+This file can be an HTML, JSON, PNG or SVG file. This functionality
+is available through :meth:`Chart.savechart`.
+
+An example useage of :meth:`Chart.savechart`:
+
+>>> chart.savechart('plot.html')  # doctest: +SKIP
+
+If you then point your browser at ``chart.html``, you will see the rendered result.
+For more information on embedding Vega-Lite plots within HTML pages, see
+Vega-Lite's documentation, in particular
+`Embedding Vega-Lite <http://vega.github.io/vega-lite/usage/embed.html>`_.
+
+It is also possible to save to a PNG or SVG
+
+>>> # NOTE: requires additional install, mentioned below
+>>> chart.savechart('plot.png')  # doctest: +SKIP
+>>> chart.savechart('plot.svg')  # doctest: +SKIP
+
+Note: saving PNG/SVG images requires more setup as mentioned in `Saving Figures
+as PNG and SVG`.
+
+Obtaining other representations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Altair charts can be represented as HTML, a Python dict, a JSON object and an
+Altair chart. To convert between these representations, Altair provides
+
+* :meth:`Chart.to_dict`, :meth:`Chart.from_dict`
+* :meth:`Chart.to_json`, :meth:`Chart.from_json`
+* :meth:`Chart.to_altair`
+
+provides several methods to variety of methods to convert between
+different representations.
+
 
 Online Vega-Lite Editor
 -----------------------
