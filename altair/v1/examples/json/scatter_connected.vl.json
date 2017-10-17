@@ -5,7 +5,7 @@
         }
     },
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/driving.json"
+        "url": "https://vega.github.io/vega-lite/data/driving.json"
     },
     "encoding": {
         "path": {

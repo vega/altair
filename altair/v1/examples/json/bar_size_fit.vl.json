@@ -6,7 +6,7 @@
         }
     },
     "data": {
-        "url": "http://vega.github.io/vega-lite/data/cars.json"
+        "url": "https://vega.github.io/vega-lite/data/cars.json"
     },
     "encoding": {
         "x": {
