@@ -1,7 +1,7 @@
 .. _altair-tutorials:
 
-Altair Tutorials
-================
+Tutorials
+=========
 
 .. toctree::
 

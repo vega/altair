@@ -13,7 +13,7 @@ The dataset can be specified in one of three ways:
 - as a :class:`Data` object
 - as a url pointing to a ``json`` or ``csv`` formatted text file
 
-For example, here we specify data via a dataframe:
+For example, here we specify data via a DataFrame:
 
 .. altair-plot::
 

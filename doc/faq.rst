@@ -2,8 +2,8 @@
 
 .. _altair-faq:
 
-Altair Frequently Asked Questions
-=================================
+Frequently Asked Questions
+==========================
 
 .. contents::
    :local:

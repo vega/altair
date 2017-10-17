@@ -1,7 +1,7 @@
 .. _plot-recipes:
 
-Altair Plot Recipes
-===================
+Plot Recipes
+============
 
 Altair is a powerfully expressive system, but some standard plot types are
 expressed more verbosely than in other graphics systems. This section contains
