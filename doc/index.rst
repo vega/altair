@@ -17,7 +17,9 @@ powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.
 
 **Note: Altair and the underlying Vega-Lite library are under active
-development. We are currently working on support for Vega-Lite 2.0 (October 2017).**
+development, and the documentation here remains incomplete.
+We are currently (October 2017) working on support for Vega-Lite 2.0,
+and plan to significantly improve the documentation once that is released.**
 
 
 Example
