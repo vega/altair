@@ -17,7 +17,7 @@ simplicity produces beautiful and effective visualizations with a minimal amount
 in the process of creating more comprehensive documentation. Stay tuned!**
 
 See [Altair's Documentation Site](http://altair-viz.github.io),
-as well as Altair's [Tutorial Notebooks](altair/notebooks/01-Index.ipynb).
+as well as Altair's [Tutorial Notebooks](http://github.com/altair-viz/altair_notebooks).
 
 ## Example
 
@@ -184,11 +184,6 @@ Altair requires the following dependencies:
 * [pandas](http://pandas.pydata.org/)
 * [traitlets](https://github.com/ipython/traitlets)
 * [IPython](https://github.com/ipython/ipython)
-
-For visualization in the IPython/Jupyter notebook using the Vega-Lite renderer, Altair additionally requires
-
-* [Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
-* [ipyvega](https://github.com/vega/ipyvega)
 
 If you have cloned the repository, run the following command from the root of the repository:
 
