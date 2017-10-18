@@ -2,7 +2,7 @@ Declarative Visualization in Python
 ===================================
 
 .. altair-minigallery::
-   :size: 6
+   :size: 5
    :width: 125px
    :shuffle:
    :seed: 0

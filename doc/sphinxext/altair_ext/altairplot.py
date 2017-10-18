@@ -81,7 +81,11 @@ VEGAEMBED_JS_URL_DEFAULT = "https://vega.github.io/vega-editor/vendor/vega-embed
 VGL_TEMPLATE = jinja2.Template("""
 <div id="{{ div_id }}">
 <script>
-  vg.embed("#{{ div_id }}", "{{ filename }}", function(error, result) {});
+  // embed when document is loaded, to ensure vega library is available
+  // this works on all modern browsers, except IE8 and older
+  document.addEventListener("DOMContentLoaded", function(event) {
+    vg.embed("#{{ div_id }}", "{{ filename }}", function(error, result) {});
+  });
 </script>
 </div>
 """)
