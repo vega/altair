@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-157-g91fdb9b
-# - date: 2017-10-17 17:01:04
+# - altair version info: v1.2.0-167-gac441ae
+# - date: 2017-10-18 12:48:51
 
 import pandas as pd
 
@@ -54,7 +54,7 @@ class ChannelWithLegend(schema.ChannelDefWithLegend):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, bin=jst.undefined, field=jst.undefined, legend=jst.undefined, scale=jst.undefined, sort=jst.undefined, timeUnit=jst.undefined, title=jst.undefined, type=jst.undefined, value=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, bin=bin, field=field, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(ChannelWithLegend, self).__init__(**kwargs)
@@ -112,7 +112,7 @@ class Field(schema.FieldDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, bin=jst.undefined, field=jst.undefined, timeUnit=jst.undefined, title=jst.undefined, type=jst.undefined, value=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, bin=bin, field=field, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(Field, self).__init__(**kwargs)
@@ -172,7 +172,7 @@ class OrderChannel(schema.OrderChannelDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, bin=jst.undefined, field=jst.undefined, sort=jst.undefined, timeUnit=jst.undefined, title=jst.undefined, type=jst.undefined, value=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, bin=bin, field=field, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(OrderChannel, self).__init__(**kwargs)
@@ -236,7 +236,7 @@ class PositionChannel(schema.PositionChannelDef):
 
     # Class Methods
     def __init__(self, shorthand='', aggregate=jst.undefined, axis=jst.undefined, bin=jst.undefined, field=jst.undefined, scale=jst.undefined, sort=jst.undefined, timeUnit=jst.undefined, title=jst.undefined, type=jst.undefined, value=jst.undefined, **kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict(aggregate=aggregate, axis=axis, bin=bin, field=field, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value)
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super(PositionChannel, self).__init__(**kwargs)

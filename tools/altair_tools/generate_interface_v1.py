@@ -15,6 +15,43 @@ from schemapi.utils import load_dynamic_module, save_module
 
 from .utils import get_git_commit_info
 
+# Encoding classes are those whose properties are simply a list of channels.
+ENCODING_CLASSES = ['Encoding', 'UnitEncoding', 'Facet']
+
+
+def channel_classes(schema, encoding_classes=ENCODING_CLASSES):
+    """
+    Find mapping of named channel classes to their base class name.
+    For example:
+
+    {'X': 'PositionFieldDef',
+     'X2': 'FieldDef',
+     'Color': 'ConditionalStringLegendDef',
+     ...}
+    """
+    channels = {}
+    wrapped_defs = schema.wrapped_definitions()
+    for encoding_class in encoding_classes:
+        childschema = schema.make_child(schema.definitions[encoding_class])
+        for prop, propschema in childschema.wrapped_properties().items():
+            if not propschema.is_reference:
+                subschemas = (propschema.make_child(s)
+                              for s in propschema['anyOf'])
+                propschema = next((sub for sub in subschemas
+                                   if sub.is_reference), None)
+                if propschema is None:
+                    raise ValueError("Could not find classname for "
+                                     "property '{0}'".format(prop))
+            channels[prop.title()] = propschema.classname
+    return channels
+
+
+def channel_bases(schema, encoding_classes=ENCODING_CLASSES):
+    """
+    Return a sorted list of all unique channel base classes
+    """
+    return sorted(set(channel_classes(schema, encoding_classes).values()))
+
 
 CHANNEL_WRAPPER_TEMPLATE = '''# -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
@@ -48,7 +85,7 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
     # Class Methods
     {%- set comma = joiner(", ") %}
     def __init__(self, shorthand='', {% for name in obj.base.wrapped_properties() %}{{ name }}=jst.undefined, {% endfor %}**kwargs):
-        kwargs['shorthand'] = shorthand
+        self.shorthand = shorthand
         kwds = dict({% for name in obj.base.wrapped_properties() %}{{ comma() }}{{ name }}={{ name }}{% endfor %})
         kwargs.update({k:v for k, v in kwds.items() if v is not jst.undefined})
         super({{ obj.classname }}, self).__init__(**kwargs)
@@ -72,29 +109,11 @@ class {{ obj.classname }}(schema.{{ obj.base.classname }}):
 '''
 
 class ChannelWrapperPlugin(JSONSchemaPlugin):
-    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
-
-    def channel_classes(self, schema):
-        """return the list of channel class names"""
-        channels = set()
-        wrapped_defs = schema.wrapped_definitions()
-        for encoding_class in self.encoding_classes:
-            childschema = schema.make_child(schema.definitions[encoding_class])
-            for prop, propschema in childschema.wrapped_properties().items():
-                if not propschema.is_reference:
-                    subschemas = (propschema.make_child(s)
-                                  for s in propschema['anyOf'])
-                    propschema = next((sub for sub in subschemas
-                                       if sub.is_reference), None)
-                    if propschema is None:
-                        raise ValueError("Could not find classname for "
-                                         "property '{0}'".format(prop))
-                channels.add(propschema.classname)
-        return sorted(channels)
+    encoding_classes = ENCODING_CLASSES
 
     def wrapped_channel_classes(self, schema):
         """return a dictionary of channel base class info"""
-        for base in self.channel_classes(schema):
+        for base in channel_bases(schema, self.encoding_classes):
             yield dict(classname=base.replace('Def', ''),
                        base=schema.wrapped_definitions()[base.lower()],
                        root='channel_wrappers')
@@ -129,29 +148,11 @@ class {{ object.classname }}(channel_wrappers.{{ object.basename }}):
 '''
 
 class NamedChannelPlugin(JSONSchemaPlugin):
-    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
-
-    def channel_classes(self, schema):
-        """return the list of channel class names"""
-        channels = {}
-        wrapped_defs = schema.wrapped_definitions()
-        for encoding_class in self.encoding_classes:
-            childschema = schema.make_child(schema.definitions[encoding_class])
-            for prop, propschema in childschema.wrapped_properties().items():
-                if not propschema.is_reference:
-                    subschemas = (propschema.make_child(s)
-                                  for s in propschema['anyOf'])
-                    propschema = next((sub for sub in subschemas
-                                       if sub.is_reference), None)
-                    if propschema is None:
-                        raise ValueError("Could not find classname for "
-                                         "property '{0}'".format(prop))
-                channels[prop.title()] = propschema.classname
-        return channels
+    encoding_classes = ENCODING_CLASSES
 
     def module_imports(self, schema):
         return['from .named_channels import {0}'.format(name)
-               for name in sorted(self.channel_classes(schema))]
+               for name in sorted(channel_classes(schema, self.encoding_classes))]
 
     def code_files(self, schema):
         template = jinja2.Template(NAMED_CHANNEL_TEMPLATE)
@@ -160,7 +161,7 @@ class NamedChannelPlugin(JSONSchemaPlugin):
 
         objects = [{'classname': name, 'basename': base.replace('Def', '')}
                    for (name, base)
-                   in sorted(self.channel_classes(schema).items())]
+                   in sorted(channel_classes(schema, self.encoding_classes).items())]
         return {'named_channels.py': template.render(date=date,
                                                      version=version,
                                                      objects=objects)}
@@ -205,7 +206,7 @@ class {{ obj.classname }}(schema.{{ obj.classname }}):
 
 
 class ChannelCollectionPlugin(JSONSchemaPlugin):
-    encoding_classes = ['Encoding', 'UnitEncoding', 'Facet']
+    encoding_classes = ENCODING_CLASSES
 
     def get_base(self, schema):
         if '$ref' in schema:
@@ -215,16 +216,17 @@ class ChannelCollectionPlugin(JSONSchemaPlugin):
                 return subschema['$ref'].rsplit('/', 1)[-1]
         raise ValueError("Cannot get base for schema {0}".format(schema))
 
-    def replace_base_with_name(self, name, schema):
+    def replace_base_with_name(self, name, basename, schema):
         schema = copy.deepcopy(schema)
         if '$ref' in schema:
-            a, b = schema['$ref'].rsplit('/', 1)
-            schema['$ref'] = '/'.join([a, name])
+            path, oldname = schema['$ref'].rsplit('/', 1)
+            if oldname == basename:
+                schema['$ref'] = '/'.join([path, name])
         if 'anyOf' in schema:
-            schema['anyOf'] = [self.replace_base_with_name(name, subschema)
+            schema['anyOf'] = [self.replace_base_with_name(name, basename, subschema)
                                for subschema in schema['anyOf']]
         if schema.get('type', None) == 'array':
-            schema['items'] = self.replace_base_with_name(name, schema['items'])
+            schema['items'] = self.replace_base_with_name(name, basename, schema['items'])
         return schema
 
     def module_imports(self, schema):
@@ -257,7 +259,7 @@ class ChannelCollectionPlugin(JSONSchemaPlugin):
                 # add a new definition
                 toplevel.definitions[name.title()] = toplevel.definitions[basename]
                 # rewrite the object schema to point to this definition
-                obj.properties[name] = self.replace_base_with_name(name.title(), prop)
+                obj.properties[name] = self.replace_base_with_name(name.title(), basename, prop)
             objects.append(obj)
 
         return {'channel_collections.py': template.render(date=date,
