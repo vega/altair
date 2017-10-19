@@ -447,7 +447,7 @@ class TopLevelMixin(object):
     def display(self):
         """Display the Chart using the Jupyter Notebook's rich output.
 
-        To use this is the classic Jupyter Notebook, the ``ipyvega`` package
+        To use this in the classic Jupyter Notebook, the ``ipyvega`` package
         must be installed.
 
         To use this in JupyterLab/nteract, run the ``enable_mime_rendering``
