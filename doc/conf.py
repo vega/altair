@@ -156,13 +156,10 @@ html_favicon = '_static/favicon.ico'
 html_static_path = ['_static', '_images']
 
 # adapted from: http://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html
-html_context = {
-    'css_files': [
-        '_static/theme_overrides.css',  # override wide tables in RTD theme
-        '_static/altair-gallery.css',
-        '_static/altair-plot.css'
-        ],
-    }
+# and
+# https://github.com/rtfd/sphinx_rtd_theme/issues/117
+def setup(app):
+    app.add_stylesheet('theme_overrides.css')
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

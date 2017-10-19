@@ -11,3 +11,8 @@
         overflow: visible !important;
     }
 }
+
+.rst-content dl:not(.docutils) dt em {
+    font-style: normal; !important;
+    line-height: 1.4em; !important;
+}
