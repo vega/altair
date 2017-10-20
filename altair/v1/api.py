@@ -60,7 +60,7 @@ class MaxRowsExceeded(Exception):
 
 class FieldError(Exception):
     """Raised if a channel has a field related error.
-    
+
     This is raised if a channel has no field name or if the field name is
     not found as the column name of the ``DataFrame``.
     """
@@ -286,7 +286,7 @@ class TopLevelMixin(object):
         spec : dict
             The JSON specification of the chart object.
         """
-        dct = super(TopLevelMixin, self.clone()).to_dict(data=data, validate_columns=validate_columns)
+        dct = super(TopLevelMixin, self).to_dict(data=data, validate_columns=validate_columns)
         dct['$schema'] = schema.vegalite_schema_url
         return dct
 
@@ -536,7 +536,7 @@ class TopLevelMixin(object):
                 else:
                     self.transform_data(filter=filters)
 
-        # If self.data is a pd.DataFrame, check to see if data has too many rows. 
+        # If self.data is a pd.DataFrame, check to see if data has too many rows.
         if isinstance(self.data, pd.DataFrame):
             if len(self.data) > self.max_rows:
                 raise MaxRowsExceeded(
@@ -551,7 +551,7 @@ class TopLevelMixin(object):
 
     def _validate_columns(self):
         """Validate the columns in the encoding, but only if if the data is a ``DataFrame``.
-        
+
         This has to be called after the rest of the ``_finalize()`` logic, which fills in the
         shortcut field names and also processes the expressions for computed fields.
 
@@ -561,7 +561,7 @@ class TopLevelMixin(object):
         2. That the specified field name is present the column names of the ``DataFrame`` or
            computed field from transform expressions.
 
-        This logic only runs when the dataset is a ``DataFrame``. 
+        This logic only runs when the dataset is a ``DataFrame``.
         """
 
         # Only validate columns if the data is a pd.DataFrame.

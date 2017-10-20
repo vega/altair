@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Auto-generated file: do not modify directly
-# - altair version info: v1.2.0-167-gac441ae
-# - date: 2017-10-18 12:48:51
+# - altair version info: v1.2.1-19-g07c4e7d
+# - date: 2017-10-20 12:12:41
 
 from . import channel_wrappers
 
