@@ -144,13 +144,13 @@ Obtaining other representations
 
 Altair charts can be represented as HTML, a Python dict, a JSON object and an
 Altair chart. To convert between these representations, Altair provides
+a variety of methods, including:
 
-* :meth:`Chart.to_dict`, :meth:`Chart.from_dict`
-* :meth:`Chart.to_json`, :meth:`Chart.from_json`
-* :meth:`Chart.to_altair`
-
-provides several methods to variety of methods to convert between
-different representations.
+* :meth:`Chart.to_dict` / :meth:`Chart.from_dict`
+* :meth:`Chart.to_json` / :meth:`Chart.from_json`
+* :meth:`Chart.to_html`
+* :meth:`Chart.to_python`
+  
 
 Online Vega-Lite Editor
 -----------------------
