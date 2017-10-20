@@ -109,12 +109,14 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 
 
 def populate_examples(num_examples=None, category=None, shuffle=False,
-                      shuffle_seed=42, **kwargs):
+                      shuffle_seed=42, indices=None, **kwargs):
     """Iterate through Altair examples and extract code"""
 
     examples = sorted(iter_examples_with_metadata(), key=itemgetter('name'))
     if category is not None:
         examples = [ex for ex in examples if ex['category'] == category]
+    if indices:
+        examples = [examples[i] for i in indices]
     if shuffle:
         random.Random(shuffle_seed).shuffle(examples)
     if num_examples is not None:
@@ -208,6 +210,7 @@ class AltairMiniGalleryDirective(Directive):
     has_content = False
 
     option_spec = {'size': int,
+                   'indices': lambda x: list(map(int, x.split())),
                    'shuffle': flag,
                    'seed': int,
                    'titles': bool,
@@ -215,6 +218,7 @@ class AltairMiniGalleryDirective(Directive):
 
     def run(self):
         size = self.options.get('size', 4)
+        indices = self.options.get('indices', [])
         shuffle = 'shuffle' in self.options
         seed = self.options.get('seed', 42)
         titles = self.options.get('titles', False)
@@ -226,7 +230,8 @@ class AltairMiniGalleryDirective(Directive):
         gallery_dir = app.builder.config.altair_gallery_dir
         gallery_ref = app.builder.config.altair_gallery_ref
 
-        examples = populate_examples(shuffle=shuffle,
+        examples = populate_examples(indices=indices,
+                                     shuffle=shuffle,
                                      shuffle_seed=seed,
                                      num_examples=size,
                                      gallery_dir=gallery_dir,
