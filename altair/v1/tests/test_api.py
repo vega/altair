@@ -10,7 +10,6 @@ from .. import *
 from .. import schema
 from ..schema import jstraitlets as jst
 from ..examples import iter_examples
-from ...datasets import connection_ok
 from ...utils.node import consistent_with_png, consistent_with_svg
 from ...utils._py3k_compat import PY2
 
@@ -235,10 +234,12 @@ def test_to_python_with_methods():
     assert code_in == code_out.replace(' ', '').replace('\n','')
 
 
-@pytest.mark.skipif(not connection_ok(), reason="No Internet Connection")
 def test_to_python_stocks():
     """Test a more complicated spec for conversion to altair"""
-    data = load_dataset('stocks')
+    data = pd.DataFrame({'date': ['Jan 1 2000', 'Jan 1 2000',
+                                  'Jan 2 2000', 'Jan 2 2000'],
+                          'price': [500, 100, 501, 101],
+                          'symbol': ['GOOG', 'MSFT', 'GOOG', 'MSFT']})
 
     chart = Chart(data).mark_line().encode(
         x='date:T',
@@ -386,19 +387,28 @@ def sample_code():
         return SAMPLE_CODE.strip()
 
 
-@pytest.mark.skipif(not connection_ok(), reason="No Internet Connection")
 def test_finalize(sample_code):
-    cars = load_dataset('cars')
-
-    # Test that finalize is not called for ``to_python()`` method
+    cars = pd.DataFrame({'Miles_per_Gallon': [32, 33, 21, 22],
+                         'Origin': ['Europe', 'Europe', 'USA', 'USA']})
     obj = eval(sample_code)
 
+    # Test that to_dict() does not modify the object's state
+    D = obj.to_dict()
+    assert obj.encoding.x.type is jst.undefined
+
+    # Test that to_code() does not modify the object's state
+    code = obj.to_python(data='df')
+    assert obj.encoding.x.type is jst.undefined
+
+    # Test that code round-trip works as expected
     assert obj.to_python(data='cars') == sample_code
 
-    # Confirm that _finalize() changes the state
+    # Confirm that _finalize() changes the state & infers types
     assert obj.encoding.x.type is jst.undefined
+    assert obj.encoding.y.type is jst.undefined
     obj._finalize()
-    assert obj.encoding.x.type is not jst.undefined
+    assert obj.encoding.x.type == 'quantitative'
+    assert obj.encoding.y.type == 'nominal'
 
     # Confirm that finalized object contains correct type information
     D = obj.to_dict(data=False)
@@ -611,7 +621,7 @@ def test_validate_spec():
         c.to_dict(validate_columns=True)
     c.validate_columns = False
     assert isinstance(c.to_dict(validate_columns=True), dict)
-    
+
     c = make_chart()
     c.encode(x='x', y='count(*)')
     assert isinstance(c.to_dict(validate_columns=True), dict)
