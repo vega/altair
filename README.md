@@ -48,7 +48,7 @@ manner. By statistical visualization we mean:
 
 * The **data source** is a `DataFrame` that consists of columns of different data types (quantitative, ordinal, nominal and date/time).
 * The `DataFrame` is in a [tidy format](http://vita.had.co.nz/papers/tidy-data.pdf)
-  where the rows correspond to samples and the columns correspond the observed variables.
+  where the rows correspond to samples and the columns correspond to the observed variables.
 * The data is mapped to the **visual properties** (position, color, size, shape,
   faceting, etc.) using the group-by data transformation.
 
