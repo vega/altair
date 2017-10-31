@@ -611,6 +611,12 @@ def test_validate_spec():
     c.validate_columns = False
     assert isinstance(c.to_dict(validate_columns=True), dict)
 
+    # Make sure we can assign value to chanel
+    c = make_chart()
+    c.encode(size = Size(value=2.0))
+    assert isinstance(c.to_dict(), dict)
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
     # Make sure we catch encoded fields not in the data
     c = make_chart()
     c.encode(x='x', y='y', color='z')
@@ -631,6 +637,56 @@ def test_validate_spec():
     c.encode(x='x', y='y', color='z')
     c.encode(color='z')
     c.transform_data(
+        calculate=[Formula('z', 'sin(((2*PI)*datum.x))')]
+    )
+    assert isinstance(c.to_dict(), dict)
+
+
+def test_validate_spec_layered_chart():
+    def make_layered_chart():
+        data = pd.DataFrame({'x': np.random.rand(10), 'y': np.random.rand(10)})
+        l1 = Chart().mark_line().encode(x='x', y='y')
+        l2 = Chart().mark_point().encode(x='x', y='y')
+
+        chart = LayeredChart(data,layers=[l1,l2])
+        return chart, l2
+
+    # Make sure we catch channels with no field specified
+    c,sc = make_layered_chart()
+    sc.encode(Color())
+    assert isinstance(c.to_dict(), dict)
+    assert isinstance(c.to_dict(validate_columns=False), dict)
+    with pytest.raises(FieldError):
+        c.to_dict(validate_columns=True)
+    sc.validate_columns = False
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
+    # Make sure we can assign value to chanel
+    c, sc = make_layered_chart()
+    sc.encode(size = Size(value=2.0))
+    assert isinstance(c.to_dict(), dict)
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
+    # Make sure we catch encoded fields not in the data
+    c, sc = make_layered_chart()
+    sc.encode(x='x', y='y', color='z')
+    sc.encode(color='z')
+    assert isinstance(c.to_dict(), dict)
+    assert isinstance(c.to_dict(validate_columns=False), dict)
+    with pytest.raises(FieldError):
+        c.to_dict(validate_columns=True)
+    sc.validate_columns = False
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
+    c, sc = make_layered_chart()
+    sc.encode(x='x', y='count(*)')
+    assert isinstance(c.to_dict(validate_columns=True), dict)
+
+    # Make sure we can resolve computed fields
+    c, sc = make_layered_chart()
+    sc.encode(x='x', y='y', color='z')
+    sc.encode(color='z')
+    sc.transform_data(
         calculate=[Formula('z', 'sin(((2*PI)*datum.x))')]
     )
     assert isinstance(c.to_dict(), dict)
