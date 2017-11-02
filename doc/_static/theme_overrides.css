@@ -16,3 +16,7 @@
     font-style: normal; !important;
     line-height: 1.4em; !important;
 }
+
+img.logo {
+    width: 120px !important;
+}
