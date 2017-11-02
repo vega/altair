@@ -502,7 +502,7 @@ class TopLevelMixin(object):
         # Only do validation if the requested as a keyword arg to `_finalize`
         # and the Chart allows it.
         if validate_columns and self.validate_columns:
-            self._validate_columns()
+            self._validate_columns(kwargs.get('data'))
 
     def _finalize_data(self):
         """
@@ -549,7 +549,7 @@ class TopLevelMixin(object):
                 )
 
 
-    def _validate_columns(self):
+    def _validate_columns(self,data):
         """Validate the columns in the encoding, but only if if the data is a ``DataFrame``.
 
         This has to be called after the rest of the ``_finalize()`` logic, which fills in the
@@ -565,7 +565,7 @@ class TopLevelMixin(object):
         """
 
         # Only validate columns if the data is a pd.DataFrame.
-        if isinstance(self.data, pd.DataFrame):
+        if isinstance(data, pd.DataFrame):
             # Find columns with visual encodings
             encoded_columns = set()
             encoding = self.encoding
@@ -575,14 +575,16 @@ class TopLevelMixin(object):
                     if channel is not jst.undefined:
                         field = channel.field
                         if field is jst.undefined:
-                            raise FieldError(
-                                "Missing field/column name for channel: {}".format(channel_name)
-                            )
+                            value = channel.value # channels can have fixed value
+                            if value is jst.undefined:
+                                raise FieldError(
+                                    "Missing field/column name for channel: {}".format(channel_name)
+                                )
                         else:
                             if field != '*':
                                 encoded_columns.add(field)
             # Find columns in the data
-            data_columns = set(self.data.columns.values)
+            data_columns = set(data.columns.values)
             transform = self.transform
             if transform is not jst.undefined:
                 calculate = transform.calculate
@@ -765,7 +767,7 @@ class LayeredChart(TopLevelMixin, schema.LayerSpec):
         help="Maximum number of rows in the dataset to accept."
     )
     validate_columns = T.Bool(
-        default_value=True,
+        default_value=False, # it should be done by sublayers with access to root data
         help="Raise FieldError if the data is a DataFrame and there are missing columns."
     )
 
