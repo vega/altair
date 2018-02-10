@@ -1,5 +1,13 @@
 # Altair
 
+**WARNING: As of 2/10/2018, the master branch of this repository is under
+construction as we reorganize and refactor for the upcoming 2.0 release.
+The 2.x series of Altair will have full support for VegaLite 1.0/2.0 and Vega
+2.0/3.0, along with support for an extensible rendering system to enable
+Altair to work in any frontend (Jupyter Notebook, JupyterLab, nteract,
+Colaboratory, Zeppelin, etc.). We have created a 1.x
+branch for maintenance of the 1.x series.**
+
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 
 Altair is a declarative statistical visualization library for Python.
