@@ -6,3 +6,5 @@ from .display import (
 )
 
 from .codegen import CodeGen
+
+from .plugin_registry import PluginRegistry
