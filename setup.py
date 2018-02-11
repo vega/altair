@@ -103,7 +103,9 @@ INSTALL_REQUIRES    = ['traitlets>=4.3.1',
                        'pandas',
                        'vega==0.4.4',
                        'mypy',
-                       'mypy_extensions'
+                       'mypy_extensions',
+                       'jsonschema',
+                       'toolz'
                        ]
 VERSION             = version('altair/__init__.py')
 

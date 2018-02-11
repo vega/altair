@@ -52,11 +52,6 @@ from ...datasets import (
     load_dataset
 )
 
-from ...utils import (
-    Vega,
-    VegaLite
-)
-
 from .. import expr
 
 

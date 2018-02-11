@@ -1,5 +1,7 @@
-from typing import Callable, Union, TypeVar, cast, Generic, List
+from typing import Callable, Generic, List, TypeVar, Union, cast
+
 import entrypoints
+
 
 
 PluginType = TypeVar('PluginType')
@@ -22,7 +24,7 @@ class PluginRegistry(Generic[PluginType]):
 
     """
 
-    def __init__(self, entry_point_group: str = '', plugin_type=None) -> None:
+    def __init__(self, entry_point_group: str = '', plugin_type=object) -> None:
         """Create a PluginRegistry for a named entry point group.
         
         Parameters
@@ -37,6 +39,7 @@ class PluginRegistry(Generic[PluginType]):
         self.plugin_type = plugin_type
         self._active = None     # type: None
         self._plugins = {}      # type: dict
+        self._options = {}      # type: dict
     
 
     def register(self, name: str, value: Union[PluginType,None]) -> PluginType:
@@ -87,3 +90,10 @@ class PluginRegistry(Generic[PluginType]):
         """Return the currently active plugin."""
         return self._active
 
+
+    def set_options(self, **kwargs):
+        self._options = kwargs
+
+
+    def get_options(self):
+        return self._options
