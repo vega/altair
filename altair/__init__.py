@@ -1,3 +1,1 @@
-__version__ = '1.3.0dev'
-
-from .v1 import *
+__version__ = '2.0.0dev'

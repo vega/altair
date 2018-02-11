@@ -10,7 +10,8 @@ from ..utils.core import sanitize_dataframe
 # Utilities
 #==============================================================================
 
-
+# From https://github.com/JulienPalard/Pipe/blob/master/pipe.py
+# MIT license
 class pipe(object):
     """A pipe decorator for data model transformers."""
     def __init__(self, function):

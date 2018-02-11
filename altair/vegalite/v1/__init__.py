@@ -47,16 +47,16 @@ from .api import (
     disable_mime_rendering
 )
 
-from ..datasets import (
+from ...datasets import (
     list_datasets,
     load_dataset
 )
 
-from ..utils import (
+from ...utils import (
     Vega,
     VegaLite
 )
 
 from .. import expr
 
-from ..tutorial import tutorial
+
