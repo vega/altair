@@ -4,8 +4,10 @@ import pandas as pd
 from IPython.display import display
 
 from ...utils import PluginRegistry
-from ..display import RendererType, VegaLiteBase, json_renderer
+from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
+from ..display import json_renderer as json_renderer_base
+from ..display import SpecType, MimeBundleType, RendererType
 
 
 #==============================================================================
@@ -27,8 +29,13 @@ renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
 here = os.path.dirname(os.path.realpath(__file__))
 
 
+
 def default_renderer(spec):
-    return default_renderer_base(spec, VEGALITE_MIME_TYPE)
+    return default_renderer_base(spec, VEGALITE_MIME_TYPE, '<VegaLite 2 object>')
+
+
+def json_renderer(spec):
+    return json_renderer_base(spec, '<VegaLite 2 object>')
 
 
 renderers.register('default', default_renderer)
@@ -36,7 +43,7 @@ renderers.register('json', json_renderer)
 renderers.enable('default')
 
 
-class VegaLite(VegaLiteBase):
+class VegaLite(Displayable):
     """An IPython/Jupyter display class for rendering VegaLite 2."""
 
     renderers = renderers
