@@ -4,7 +4,8 @@ import pandas as pd
 from IPython.display import display
 
 from ...utils import PluginRegistry
-from ..display import RendererType, VegaLiteBase
+from ..display import RendererType, VegaLiteBase, json_renderer
+from ..display import default_renderer as default_renderer_base
 
 
 #==============================================================================
@@ -27,20 +28,11 @@ here = os.path.dirname(os.path.realpath(__file__))
 
 
 def default_renderer(spec):
-    """A default renderer for VegaLite 2 that works for modern frontends.
-
-    This renderer works with modern frontends (JupyterLab, nteract) that know
-    how to render the custom VegaLite MIME type listed above.
-    """
-    assert isinstance(spec, dict)
-    bundle = {}
-    metadata = {}
-    bundle['text/plain'] = '<VegaLite object>'
-    bundle[VEGALITE_MIME_TYPE] = spec
-    return bundle, metadata
+    return default_renderer_base(spec, VEGALITE_MIME_TYPE)
 
 
 renderers.register('default', default_renderer)
+renderers.register('json', json_renderer)
 renderers.enable('default')
 
 
