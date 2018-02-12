@@ -12,8 +12,8 @@ import warnings
 import traitlets as T
 import pandas as pd
 
-from ..utils import node, create_vegalite_mime_bundle
-from ..utils._py3k_compat import string_types
+from ....utils import node
+from ....utils._py3k_compat import string_types
 from .traitlet_utils import update_subtraits
 
 from .. import expr
@@ -54,54 +54,12 @@ from .schema import UnitEncoding
 from .schema import VerticalAlign
 
 
-class MaxRowsExceeded(Exception):
-    """Raised if the number of rows in the dataset is too large."""
-    pass
-
 class FieldError(Exception):
     """Raised if a channel has a field related error.
 
     This is raised if a channel has no field name or if the field name is
     not found as the column name of the ``DataFrame``.
     """
-
-
-
-
-DEFAULT_MAX_ROWS = 5000
-
-#*************************************************************************
-# Rendering configuration
-#*************************************************************************
-
-_original_ipython_display_ = None
-
-# This is added to TopLevelMixin as a method if MIME rendering is enabled
-def _repr_mimebundle_(self, include, exclude, **kwargs):
-    """Return a MIME-bundle for rich display in the Jupyter Notebook."""
-    spec = self.to_dict(validate_columns=True)
-    bundle = create_vegalite_mime_bundle(spec)
-    return bundle
-
-
-def enable_mime_rendering():
-    """Enable MIME bundle based rendering used in JupyterLab/nteract."""
-    # This is what makes Python fun!
-    global _original_ipython_display_
-    if _original_ipython_display_ is None:
-        TopLevelMixin._repr_mimebundle_ = _repr_mimebundle_
-        _original_ipython_display_ = TopLevelMixin._ipython_display_
-        delattr(TopLevelMixin, '_ipython_display_')
-
-
-def disable_mime_rendering():
-    """Disable MIME bundle based rendering used in JupyterLab/nteract."""
-    global _original_ipython_display_
-    if _original_ipython_display_ is not None:
-        delattr(TopLevelMixin, '_repr_mimebundle_')
-        TopLevelMixin._ipython_display_ = _original_ipython_display_
-        _original_ipython_display_ = None
-
 
 
 #*************************************************************************
@@ -266,7 +224,7 @@ class TopLevelMixin(object):
         savechart : save a chart representation to file in various formats,
                     including HTML
         """
-        from ..utils.html import to_html
+        from ...utils.html import to_html
         return to_html(self.to_dict(validate_columns=True), template=template, title=title, **kwargs)
 
     def to_dict(self, data=True, validate_columns=False):
@@ -351,16 +309,6 @@ class TopLevelMixin(object):
         return super(TopLevelMixin, cls).from_json(json_string,
                                                    json_kwds=kwargs)
 
-    # TODO: Deprecate this
-    def to_altair(self, data=None):
-        """DEPRECATED. Use to_python() instead.
-
-        Emit the Python code as a string required to created this Chart.
-        """
-        warnings.warn("to_altair() is deprecated. Use to_python() instead",
-                      category=DeprecationWarning)
-        return self.to_python(data=data)
-
     def to_python(self, data=None):
         """Emit the Python code as a string required to created this Chart."""
         return super(TopLevelMixin, self).to_python(data=data)
@@ -438,7 +386,7 @@ class TopLevelMixin(object):
 
     # Display related methods
 
-    def _ipython_display_(self):
+    def _repr_mimebundle_(self):
         """Use the vega package to display in the classic Jupyter Notebook."""
         from IPython.display import display
         from vega import VegaLite
@@ -483,7 +431,7 @@ class TopLevelMixin(object):
             optionally specify an HTTPServer class to use for showing the
             figure. The default is Python's basic HTTPServer.
         """
-        from ..utils.server import serve
+        from ...utils.server import serve
         html = self.to_html(**html_kwargs)
         serve(html, ip=ip, port=port, n_retries=n_retries,
               files=files, jupyter_warning=jupyter_warning,
@@ -496,21 +444,12 @@ class TopLevelMixin(object):
             kwargs['data'] = self.data
         super(TopLevelMixin, self)._finalize(**kwargs)
 
-        # Validate columns after the rest of _finalize() has run. This is last as
-        # field names are not yet filled in from shortcuts until now.
-        validate_columns = kwargs.get('validate_columns')
-        # Only do validation if the requested as a keyword arg to `_finalize`
-        # and the Chart allows it.
-        if validate_columns and self.validate_columns:
-            self._validate_columns()
-
     def _finalize_data(self):
         """
         This function is called by _finalize() below.
 
         It performs final checks on the data:
 
-        * If the data has too many rows (more than max_rows).
         * Whether the data attribute contains expressions, and if so it extracts
           the appropriate data object and generates the appropriate transforms.
         """
@@ -536,68 +475,6 @@ class TopLevelMixin(object):
                 else:
                     self.transform_data(filter=filters)
 
-        # If self.data is a pd.DataFrame, check to see if data has too many rows.
-        if isinstance(self.data, pd.DataFrame):
-            if len(self.data) > self.max_rows:
-                raise MaxRowsExceeded(
-                    "Your dataset has too many rows and could take a long "
-                    "time to send to the frontend or to render. To override the "
-                    "default maximum rows (%s), set the max_rows property of "
-                    "your Chart to an integer larger than the number of rows "
-                    "in your dataset. Alternatively you could perform aggregations "
-                    "or other data reductions before using it with Altair" % DEFAULT_MAX_ROWS
-                )
-
-
-    def _validate_columns(self):
-        """Validate the columns in the encoding, but only if if the data is a ``DataFrame``.
-
-        This has to be called after the rest of the ``_finalize()`` logic, which fills in the
-        shortcut field names and also processes the expressions for computed fields.
-
-        This validates:
-
-        1. That each encoding channel has a field (column name).
-        2. That the specified field name is present the column names of the ``DataFrame`` or
-           computed field from transform expressions.
-
-        This logic only runs when the dataset is a ``DataFrame``.
-        """
-
-        # Only validate columns if the data is a pd.DataFrame.
-        if isinstance(self.data, pd.DataFrame):
-            # Find columns with visual encodings
-            encoded_columns = set()
-            encoding = self.encoding
-            if encoding is not jst.undefined:
-                for channel_name in encoding.channel_names:
-                    channel = getattr(encoding, channel_name)
-                    if channel is not jst.undefined:
-                        field = channel.field
-                        if field is jst.undefined:
-                            raise FieldError(
-                                "Missing field/column name for channel: {}".format(channel_name)
-                            )
-                        else:
-                            if field != '*':
-                                encoded_columns.add(field)
-            # Find columns in the data
-            data_columns = set(self.data.columns.values)
-            transform = self.transform
-            if transform is not jst.undefined:
-                calculate = transform.calculate
-                if calculate is not jst.undefined:
-                    for formula in calculate:
-                        field = formula.field
-                        if field is not jst.undefined:
-                            data_columns.add(field)
-            # Find columns in the visual encoding that are not in the data
-            missing_columns = encoded_columns - data_columns
-            if missing_columns:
-                raise FieldError(
-                    "Fields/columns not found in the data: {}".format(missing_columns)
-                )
-
 
 class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
     _data = None
@@ -608,14 +485,6 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
     transform = jst.JSONInstance(Transform,
                                  help=schema.ExtendedUnitSpec.transform.help)
     mark = schema.Mark(default_value='point', help="""The mark type.""")
-    max_rows = T.Int(
-        default_value=DEFAULT_MAX_ROWS,
-        help="Maximum number of rows in the dataset to accept."
-    )
-    validate_columns = T.Bool(
-        default_value=True,
-        help="Raise FieldError if the data is a DataFrame and there are missing columns."
-    )
 
     def clone(self):
         """
@@ -639,7 +508,7 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    _skip_on_export = ['data', '_data', 'max_rows', 'validate_columns']
+    _skip_on_export = ['data', '_data']
 
     def __init__(self, data=None, **kwargs):
         super(Chart, self).__init__(**kwargs)
@@ -760,14 +629,6 @@ class LayeredChart(TopLevelMixin, schema.LayerSpec):
                            help=schema.LayerSpec.layers.help)
     transform = jst.JSONInstance(Transform,
                                  help=schema.LayerSpec.transform.help)
-    max_rows = T.Int(
-        default_value=DEFAULT_MAX_ROWS,
-        help="Maximum number of rows in the dataset to accept."
-    )
-    validate_columns = T.Bool(
-        default_value=True,
-        help="Raise FieldError if the data is a DataFrame and there are missing columns."
-    )
 
     def clone(self):
         """
@@ -791,7 +652,7 @@ class LayeredChart(TopLevelMixin, schema.LayerSpec):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    _skip_on_export = ['data', '_data', 'max_rows', 'validate_columns']
+    _skip_on_export = ['data', '_data']
 
     def __init__(self, data=None, **kwargs):
         super(LayeredChart, self).__init__(**kwargs)
@@ -822,14 +683,6 @@ class FacetedChart(TopLevelMixin, schema.FacetSpec):
                          help=schema.FacetSpec.spec.help)
     transform = jst.JSONInstance(Transform,
                                  help=schema.FacetSpec.transform.help)
-    max_rows = T.Int(
-        default_value=DEFAULT_MAX_ROWS,
-        help="Maximum number of rows in the dataset to accept."
-    )
-    validate_columns = T.Bool(
-        default_value=True,
-        help="Raise FieldError if the data is a DataFrame and there are missing columns."
-    )
 
     def clone(self):
         """
@@ -853,7 +706,7 @@ class FacetedChart(TopLevelMixin, schema.FacetSpec):
         else:
             raise TypeError('Expected DataFrame or altair.Data, got: {0}'.format(new))
 
-    _skip_on_export = ['data', '_data', 'max_rows', 'validate_columns']
+    _skip_on_export = ['data', '_data']
 
     def __init__(self, data=None, **kwargs):
         super(FacetedChart, self).__init__(**kwargs)
