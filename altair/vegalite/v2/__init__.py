@@ -1,5 +1,4 @@
 
-
 from .display import vegalite, VegaLite, renderers
 
 from .data import (
@@ -8,4 +7,3 @@ from .data import (
     default_data_transformer,
     data_transformers
 )
-

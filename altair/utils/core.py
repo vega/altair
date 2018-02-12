@@ -150,3 +150,54 @@ def prepare_vega_spec(spec, data=None):
             data = sanitize_dataframe(value)
             spec['data'].append({'name': key, 'values': data.to_dict(orient='records')})
     return spec
+
+
+def parse_shorthand(shorthand):
+    """
+    Parse the shorthand expression for aggregation, field, and type.
+
+    These are of the form:
+
+    - "col_name"
+    - "col_name:O"
+    - "average(col_name)"
+    - "average(col_name):O"
+
+    Parameters
+    ----------
+    shorthand: str
+        Shorthand string
+
+    Returns
+    -------
+    D : dict
+        Dictionary containing the field, aggregate, and typecode
+    """
+    if not shorthand:
+        return {}
+
+    # Must import this here to avoid circular imports
+    from .schema import AggregateOp
+    valid_aggregates = AggregateOp().values
+    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
+
+    # build regular expressions
+    units = dict(field='(?P<field>.*)',
+                 type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
+                 aggregate='(?P<aggregate>{0})'.format('|'.join(valid_aggregates)))
+    patterns = [r'{field}',
+                r'{field}:{type}',
+                r'{aggregate}\({field}\)',
+                r'{aggregate}\({field}\):{type}']
+    regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
+               for p in patterns[::-1])
+
+    # find matches depending on valid fields passed
+    match = next(exp.match(shorthand).groupdict() for exp in regexps
+                 if exp.match(shorthand))
+
+    # Use short form of the type expression
+    typ = match.get('type', None)
+    if typ:
+        match['type'] = INV_TYPECODE_MAP.get(typ, typ)
+    return match
