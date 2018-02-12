@@ -17,9 +17,10 @@ class ToDict(jst.ToDict):
             if isinstance(obj.data, schema.Data):
                 D['data'] = self.visit(obj.data)
             elif isinstance(obj.data, pd.DataFrame):
+                data = data_transformers.get()(obj.data)
                 D['data'] = self.visit(
-                    schema.Data(
-                        data_transformers.get()(obj.data)
+                    schema.Data.from_dict(
+                        data
                     )
                 )
         else:

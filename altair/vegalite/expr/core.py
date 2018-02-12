@@ -3,7 +3,7 @@ __all__ = ['DataFrame']
 
 import warnings
 from collections import OrderedDict
-from ..utils._py3k_compat import string_types
+from ...utils._py3k_compat import string_types
 
 import pandas as pd
 

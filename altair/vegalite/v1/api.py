@@ -200,26 +200,22 @@ class TopLevelMixin(object):
                     including HTML
         """
         from ...utils.html import to_html
-        return to_html(self.to_dict(validate_columns=True), template=template, title=title, **kwargs)
+        return to_html(self.to_dict(), template=template, title=title, **kwargs)
 
-    def to_dict(self, data=True, validate_columns=False):
+    def to_dict(self, data=True):
         """Emit the JSON representation for this object as as dict.
 
         Parameters
         ----------
         data : bool
             If True (default) then include data in the representation.
-        validate_columns : bool
-            If True (default is False) raise FieldError if there are missing or misspelled
-            column names. This only actually raises if self.validate_columns is also set
-            (it defaults to True).
 
         Returns
         -------
         spec : dict
             The JSON specification of the chart object.
         """
-        dct = super(TopLevelMixin, self).to_dict(data=data, validate_columns=validate_columns)
+        dct = super(TopLevelMixin, self).to_dict(data=data)
         dct['$schema'] = schema.vegalite_schema_url
         return dct
 
@@ -363,10 +359,7 @@ class TopLevelMixin(object):
 
     def _repr_mimebundle_(self, include, exclude):
         """Return a MIME bundle for display in Jupyter frontends."""
-        if self.renderers is not None:
-            return self.renderers.get()(self.spec)
-        else:
-            return {}
+        return renderers.get()(self.to_dict())
 
     def display(self):
         """Display the Chart using the Jupyter Notebook's rich output.
