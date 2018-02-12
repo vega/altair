@@ -50,4 +50,4 @@ class VegaLiteBase(object):
         if self.renderers is not None:
             return self.renderers.get()(self.spec)
         else:
-            return {'text/plain': 'WOW'}
+            return {}

@@ -7,8 +7,8 @@ from ._interface import jstraitlets as jst
 from ._interface import schema
 
 from ..traitlet_utils import construct_shorthand
-from ...utils import sanitize_dataframe, CodeGen
-
+from ....utils import CodeGen
+from ..data import data_transformers
 
 class ToDict(jst.ToDict):
     def _visit_with_data(self, obj, data=True, **kwargs):
@@ -17,8 +17,11 @@ class ToDict(jst.ToDict):
             if isinstance(obj.data, schema.Data):
                 D['data'] = self.visit(obj.data)
             elif isinstance(obj.data, pd.DataFrame):
-                values = sanitize_dataframe(obj.data).to_dict(orient='records')
-                D['data'] = self.visit(schema.Data(values=values))
+                D['data'] = self.visit(
+                    schema.Data(
+                        data_transformers.get()(obj.data)
+                    )
+                )
         else:
             D.pop('data', None)
         return D

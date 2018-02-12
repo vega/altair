@@ -41,10 +41,7 @@ from .api import (
     EqualFilter,
     RangeFilter,
     OneOfFilter,
-    MaxRowsExceeded,
-    FieldError,
-    enable_mime_rendering,
-    disable_mime_rendering
+    FieldError
 )
 
 from ...datasets import (

@@ -3,55 +3,32 @@ Main API for Vega-lite spec generation.
 
 DSL mapping Vega types to IPython traitlets.
 """
-import os
+
 import functools
 import operator
+import os
 import uuid
 import warnings
 
-import traitlets as T
 import pandas as pd
+import traitlets as T
 
-from ....utils import node
-from ....utils._py3k_compat import string_types
-from .traitlet_utils import update_subtraits
-
-from .. import expr
 from . import schema
-
+from .. import expr
+from .display import renderers
+from ...utils import node
+from ...utils._py3k_compat import string_types
 from .schema import jstraitlets as jst
-
-from .schema import AxisConfig
-from .schema import Axis
-from .schema import Bin
-from .schema import CellConfig
-from .schema import Config
-from .schema import Data
-from .schema import DataFormat
-from .schema import DateTime
-from .schema import EqualFilter
-from .schema import FacetConfig
-from .schema import FacetGridConfig
-from .schema import FacetScaleConfig
-from .schema import FontStyle
-from .schema import FontWeight
-from .schema import HorizontalAlign
-from .schema import LegendConfig
-from .schema import Legend
-from .schema import MarkConfig
-from .schema import NiceTime
-from .schema import OneOfFilter
-from .schema import OverlayConfig
-from .schema import RangeFilter
-from .schema import Scale
-from .schema import ScaleConfig
-from .schema import SortField
-from .schema import SortOrder
-from .schema import StackOffset
-from .schema import TimeUnit
-from .schema import UnitSpec
-from .schema import UnitEncoding
-from .schema import VerticalAlign
+from .schema import (Axis, AxisConfig, Bin, CellConfig, Color, Column, Config,
+                     Data, DataFormat, DateTime, Detail, Encoding, EqualFilter,
+                     Facet, FacetConfig, FacetGridConfig, FacetScaleConfig,
+                     FontStyle, FontWeight, HorizontalAlign, Label, Legend,
+                     LegendConfig, MarkConfig, NiceTime, OneOfFilter, Opacity,
+                     Order, OverlayConfig, Path, RangeFilter, Row, Scale,
+                     ScaleConfig, Shape, Size, SortField, SortOrder,
+                     StackOffset, Text, TimeUnit, UnitEncoding, UnitSpec,
+                     VerticalAlign, X, Y)
+from .traitlet_utils import update_subtraits
 
 
 class FieldError(Exception):
@@ -66,8 +43,6 @@ class FieldError(Exception):
 # Channel Aliases
 #*************************************************************************
 
-from .schema import X, Y, Row, Column, Color, Size, Shape, Text, Label, Detail, Opacity, Order, Path
-from .schema import Encoding, Facet
 
 
 def use_signature(Obj):
@@ -386,11 +361,12 @@ class TopLevelMixin(object):
 
     # Display related methods
 
-    def _repr_mimebundle_(self):
-        """Use the vega package to display in the classic Jupyter Notebook."""
-        from IPython.display import display
-        from vega import VegaLite
-        display(VegaLite(self.to_dict(validate_columns=True)))
+    def _repr_mimebundle_(self, include, exclude):
+        """Return a MIME bundle for display in Jupyter frontends."""
+        if self.renderers is not None:
+            return self.renderers.get()(self.spec)
+        else:
+            return {}
 
     def display(self):
         """Display the Chart using the Jupyter Notebook's rich output.
@@ -599,26 +575,6 @@ class Chart(TopLevelMixin, schema.ExtendedUnitSpec):
             return FacetedChart.from_dict(spec)
         else:
             return super(Chart, cls).from_dict(spec)
-
-    @classmethod
-    def load_example(cls, name):
-        """Load an example chart
-
-        Initialize a chart object from one of the built-in examples
-
-        Parameters
-        ----------
-        example : string
-            The example ID or filename, e.g. ``"line"`` or ``"line.json"``
-
-        Returns
-        -------
-        chart : Chart, LayeredChart, or FacetedChart
-            The Chart object containing the example
-        """
-        from .examples import load_example
-        spec = load_example(name)
-        return cls.from_dict(spec)
 
 
 class LayeredChart(TopLevelMixin, schema.LayerSpec):
