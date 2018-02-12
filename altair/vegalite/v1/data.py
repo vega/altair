@@ -8,7 +8,7 @@ from ..data import (MaxRowsError, curry, default_data_transformer, limit_rows,
 #==============================================================================
 
 
-ENTRY_POINT_GROUP = 'altair.vegalite.v2.data_transformer'  # type: str
+ENTRY_POINT_GROUP = 'altair.vegalite.v1.data_transformer'  # type: str
 
 
 data_transformers = PluginRegistry(entry_point_group=ENTRY_POINT_GROUP)  # type: PluginRegistry

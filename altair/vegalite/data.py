@@ -9,64 +9,24 @@ from toolz.curried import curry, pipe
 
 from ..utils.core import sanitize_dataframe
 
-#==============================================================================
-# Private utilities
-#==============================================================================
-
-
-def _check_data_type(data):
-    """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)):
-        raise TypeError('Expected dict or DataFrame, got: {}'.format(type(data)))
-
-
-def _url_path_join(*pieces):
-    """Join components of url into a relative url
-    Use to prevent double slash when joining subpath. This will leave the
-    initial and final / in place
-    """
-    initial = pieces[0].startswith('/')
-    final = pieces[-1].endswith('/')
-    stripped = [s.strip('/') for s in pieces]
-    result = '/'.join(s for s in stripped if s)
-    if initial: result = '/' + result
-    if final: result = result + '/'
-    if result == '//': result = '/'
-    return result
-
-
-def _compute_nbserver_url(filename, base_url='/', nbserver_cwd='~'):
-    nbserver_cwd = os.path.expanduser(nbserver_cwd)
-    here = os.getcwd()
-    rel_path = os.path.relpath(here, nbserver_cwd)
-    return _url_path_join(base_url, '/files/', rel_path, filename)
-
-
-def _compute_uuid_filename(prefix, ext):
-    return prefix + '-' + str(uuid.uuid4()) + ext
-
-
-def _compute_filename_and_url(filename=None, prefix='altair',
-                         base_url='/', nbserver_cwd='~',
-                         ext='.csv'):
-
-    if filename is None:
-        filename = _compute_uuid_filename(prefix, ext)
-    else:
-        if not filename.endswith(ext):
-            filename = filename + ext
-    url = _compute_nbserver_url(filename, base_url=base_url, nbserver_cwd=nbserver_cwd)
-    return filename, url
-
 
 #==============================================================================
 # Data model transformers
+#
+# A data model transformer is a pure function that takes a dict or DataFrame
+# and returns a transformed version of a dict or DataFrame. The dict objects
+# will be the Data portion of the VegaLite schema. The idea is that user can
+# pipe a sequence of these data transformers together to prepare the data before
+# it hits the renderer.
+#
+# In this version of Altair, renderers only deal with the dict form of a
+# VegaLite spec, after the Data model has been put into a schema compliant
+# form.
 #
 # A data model transformer has the following type signature:
 # DataModelType = Union[dict, pd.DataFrame]
 # DataModelTransformerType = Callable[[DataModelType, KwArgs], DataModelType]
 #==============================================================================
-
 
 
 class MaxRowsError(Exception):
@@ -156,3 +116,53 @@ def to_values(data):
 @curry
 def default_data_transformer(data):
     return pipe(data, limit_rows, to_values)
+
+
+#==============================================================================
+# Private utilities
+#==============================================================================
+
+
+def _check_data_type(data):
+    """Raise if the data is not a dict or DataFrame."""
+    if not isinstance(data, (dict, pd.DataFrame)):
+        raise TypeError('Expected dict or DataFrame, got: {}'.format(type(data)))
+
+
+def _url_path_join(*pieces):
+    """Join components of url into a relative url
+    Use to prevent double slash when joining subpath. This will leave the
+    initial and final / in place
+    """
+    initial = pieces[0].startswith('/')
+    final = pieces[-1].endswith('/')
+    stripped = [s.strip('/') for s in pieces]
+    result = '/'.join(s for s in stripped if s)
+    if initial: result = '/' + result
+    if final: result = result + '/'
+    if result == '//': result = '/'
+    return result
+
+
+def _compute_nbserver_url(filename, base_url='/', nbserver_cwd='~'):
+    nbserver_cwd = os.path.expanduser(nbserver_cwd)
+    here = os.getcwd()
+    rel_path = os.path.relpath(here, nbserver_cwd)
+    return _url_path_join(base_url, '/files/', rel_path, filename)
+
+
+def _compute_uuid_filename(prefix, ext):
+    return prefix + '-' + str(uuid.uuid4()) + ext
+
+
+def _compute_filename_and_url(filename=None, prefix='altair',
+                         base_url='/', nbserver_cwd='~',
+                         ext='.csv'):
+
+    if filename is None:
+        filename = _compute_uuid_filename(prefix, ext)
+    else:
+        if not filename.endswith(ext):
+            filename = filename + ext
+    url = _compute_nbserver_url(filename, base_url=base_url, nbserver_cwd=nbserver_cwd)
+    return filename, url

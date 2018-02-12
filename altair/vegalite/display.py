@@ -4,12 +4,32 @@ from typing import Callable, Dict, Union
 
 from jsonschema import validate
 
+
+#==============================================================================
+# VegaLite v1/v2 renderer logic
+#==============================================================================
+
+
+# Custom types for the renderer APIs.
 SpecType = dict
 MimeBundleType = Dict[str, object]
 RendererType = Callable[[SpecType], MimeBundleType]
 
 
 class VegaLiteBase(object):
+    """A base display class for VegaLite v1/v2.
+
+    This class takes a VegaLite v1/v2 spec and does the following:
+    
+    1. Optionally validates the spec against a schema.
+    2. Uses the RendererPlugin to grab a renderer and call it when the
+       IPython/Jupyter display method (_repr_mimebundle_) is called.
+
+    The spec passed to this class must be fully schema compliant and already
+    have the data portion of the spec fully processed and ready to serialize.
+    In practice, this means, the data portion of the spec should have been passed
+    through appropriate data model transformers.
+    """
 
     renderers = None
     schema_path = ''
