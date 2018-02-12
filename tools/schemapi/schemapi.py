@@ -56,10 +56,10 @@ class SchemaBase(object):
                     for key, val in self._kwds.items()
                     if val is not Undefined)
             args = '\n' + ',\n'.join(args)
-            return "<{0} {{{1}\n}}>".format(self.__class__.__name__,
+            return "{0}({{{1}\n}})".format(self.__class__.__name__,
                                             args.replace('\n', '\n  '))
         else:
-            return "<{0}({1})>".format(self.__class__.__name__, self._args[0])
+            return "{0}({1})".format(self.__class__.__name__, self._args[0])
 
     def to_dict(self, validate=True, ignore=[], context={}):
         """Return a dictionary representation of the object

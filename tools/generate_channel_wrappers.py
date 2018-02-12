@@ -23,7 +23,7 @@ class {classname}Value(schema.{basename}):
         super({classname}Value, self).__init__(value=value, *args, **kwargs)
 '''
 
-def generate_channel_wrappers(schemafile, imports=None):
+def generate_vegalite_channel_wrappers(schemafile, imports=None):
     with open(schemafile) as f:
         schema = json.load(f)
     if imports is None:

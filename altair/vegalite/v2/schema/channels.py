@@ -1,11 +1,11 @@
 # The contents of this file are automatically generated
-# 2018-02-12 13:47:17
+# 2018-02-12 15:09:50
 
-from altair.vegalite.v2 import schema
+from . import core
 from altair.utils import parse_shorthand
 
 
-class Color(schema.MarkPropFieldDefWithCondition):
+class Color(core.MarkPropFieldDefWithCondition):
     """Color channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -13,13 +13,13 @@ class Color(schema.MarkPropFieldDefWithCondition):
         super(Color, self).__init__(**kwds)
 
 
-class ColorValue(schema.MarkPropValueDefWithCondition):
+class ColorValue(core.MarkPropValueDefWithCondition):
     """Color channel"""
     def __init__(self, value, *args, **kwargs):
         super(ColorValue, self).__init__(value=value, *args, **kwargs)
 
 
-class Column(schema.FacetFieldDef):
+class Column(core.FacetFieldDef):
     """Column channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -27,7 +27,7 @@ class Column(schema.FacetFieldDef):
         super(Column, self).__init__(**kwds)
 
 
-class Detail(schema.FieldDef):
+class Detail(core.FieldDef):
     """Detail channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -35,7 +35,7 @@ class Detail(schema.FieldDef):
         super(Detail, self).__init__(**kwds)
 
 
-class Href(schema.FieldDefWithCondition):
+class Href(core.FieldDefWithCondition):
     """Href channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -43,13 +43,13 @@ class Href(schema.FieldDefWithCondition):
         super(Href, self).__init__(**kwds)
 
 
-class HrefValue(schema.ValueDefWithCondition):
+class HrefValue(core.ValueDefWithCondition):
     """Href channel"""
     def __init__(self, value, *args, **kwargs):
         super(HrefValue, self).__init__(value=value, *args, **kwargs)
 
 
-class Opacity(schema.MarkPropFieldDefWithCondition):
+class Opacity(core.MarkPropFieldDefWithCondition):
     """Opacity channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -57,13 +57,13 @@ class Opacity(schema.MarkPropFieldDefWithCondition):
         super(Opacity, self).__init__(**kwds)
 
 
-class OpacityValue(schema.MarkPropValueDefWithCondition):
+class OpacityValue(core.MarkPropValueDefWithCondition):
     """Opacity channel"""
     def __init__(self, value, *args, **kwargs):
         super(OpacityValue, self).__init__(value=value, *args, **kwargs)
 
 
-class Order(schema.OrderFieldDef):
+class Order(core.OrderFieldDef):
     """Order channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -71,7 +71,7 @@ class Order(schema.OrderFieldDef):
         super(Order, self).__init__(**kwds)
 
 
-class Row(schema.FacetFieldDef):
+class Row(core.FacetFieldDef):
     """Row channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -79,7 +79,7 @@ class Row(schema.FacetFieldDef):
         super(Row, self).__init__(**kwds)
 
 
-class Shape(schema.MarkPropFieldDefWithCondition):
+class Shape(core.MarkPropFieldDefWithCondition):
     """Shape channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -87,13 +87,13 @@ class Shape(schema.MarkPropFieldDefWithCondition):
         super(Shape, self).__init__(**kwds)
 
 
-class ShapeValue(schema.MarkPropValueDefWithCondition):
+class ShapeValue(core.MarkPropValueDefWithCondition):
     """Shape channel"""
     def __init__(self, value, *args, **kwargs):
         super(ShapeValue, self).__init__(value=value, *args, **kwargs)
 
 
-class Size(schema.MarkPropFieldDefWithCondition):
+class Size(core.MarkPropFieldDefWithCondition):
     """Size channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -101,13 +101,13 @@ class Size(schema.MarkPropFieldDefWithCondition):
         super(Size, self).__init__(**kwds)
 
 
-class SizeValue(schema.MarkPropValueDefWithCondition):
+class SizeValue(core.MarkPropValueDefWithCondition):
     """Size channel"""
     def __init__(self, value, *args, **kwargs):
         super(SizeValue, self).__init__(value=value, *args, **kwargs)
 
 
-class Text(schema.TextFieldDefWithCondition):
+class Text(core.TextFieldDefWithCondition):
     """Text channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -115,13 +115,13 @@ class Text(schema.TextFieldDefWithCondition):
         super(Text, self).__init__(**kwds)
 
 
-class TextValue(schema.TextValueDefWithCondition):
+class TextValue(core.TextValueDefWithCondition):
     """Text channel"""
     def __init__(self, value, *args, **kwargs):
         super(TextValue, self).__init__(value=value, *args, **kwargs)
 
 
-class Tooltip(schema.TextFieldDefWithCondition):
+class Tooltip(core.TextFieldDefWithCondition):
     """Tooltip channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -129,13 +129,13 @@ class Tooltip(schema.TextFieldDefWithCondition):
         super(Tooltip, self).__init__(**kwds)
 
 
-class TooltipValue(schema.TextValueDefWithCondition):
+class TooltipValue(core.TextValueDefWithCondition):
     """Tooltip channel"""
     def __init__(self, value, *args, **kwargs):
         super(TooltipValue, self).__init__(value=value, *args, **kwargs)
 
 
-class X(schema.PositionFieldDef):
+class X(core.PositionFieldDef):
     """X channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -143,13 +143,13 @@ class X(schema.PositionFieldDef):
         super(X, self).__init__(**kwds)
 
 
-class XValue(schema.ValueDef):
+class XValue(core.ValueDef):
     """X channel"""
     def __init__(self, value, *args, **kwargs):
         super(XValue, self).__init__(value=value, *args, **kwargs)
 
 
-class X2(schema.FieldDef):
+class X2(core.FieldDef):
     """X2 channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -157,13 +157,13 @@ class X2(schema.FieldDef):
         super(X2, self).__init__(**kwds)
 
 
-class X2Value(schema.ValueDef):
+class X2Value(core.ValueDef):
     """X2 channel"""
     def __init__(self, value, *args, **kwargs):
         super(X2Value, self).__init__(value=value, *args, **kwargs)
 
 
-class Y(schema.PositionFieldDef):
+class Y(core.PositionFieldDef):
     """Y channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -171,13 +171,13 @@ class Y(schema.PositionFieldDef):
         super(Y, self).__init__(**kwds)
 
 
-class YValue(schema.ValueDef):
+class YValue(core.ValueDef):
     """Y channel"""
     def __init__(self, value, *args, **kwargs):
         super(YValue, self).__init__(value=value, *args, **kwargs)
 
 
-class Y2(schema.FieldDef):
+class Y2(core.FieldDef):
     """Y2 channel"""
     def __init__(self, field, **kwargs):
         kwds = parse_shorthand(field)
@@ -185,7 +185,7 @@ class Y2(schema.FieldDef):
         super(Y2, self).__init__(**kwds)
 
 
-class Y2Value(schema.ValueDef):
+class Y2Value(core.ValueDef):
     """Y2 channel"""
     def __init__(self, value, *args, **kwargs):
         super(Y2Value, self).__init__(value=value, *args, **kwargs)

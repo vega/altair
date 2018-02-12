@@ -14,13 +14,15 @@ class CodeSnippet(object):
 SCHEMA_CLASS_TEMPLATE = '''
 class {classname}({basename}):
     """{docstring}"""
-    __schema = {schema!r}
+    _schema = {schema!r}
+    _rootschema = {rootschema!r}
 
     {init_code}
 '''
 
 
-def schema_class(classname, schema, schemarepr=None, basename='SchemaBase'):
+def schema_class(classname, schema, schemarepr=None,
+                 rootschema=None, basename='SchemaBase'):
     """Generate code for a schema class
 
     Parameters
@@ -37,10 +39,13 @@ def schema_class(classname, schema, schemarepr=None, basename='SchemaBase'):
         a predefined schema object. The user must ensure that the schema within
         the evaluated code is identical to the schema used to generate the code.
     """
+    schemarepr = schemarepr if schemarepr is not None else schema
+    rootschema = rootschema if rootschema is not None else CodeSnippet('_schema')
     return SCHEMA_CLASS_TEMPLATE.format(
         classname=classname,
         basename=basename,
-        schema=schema if schemarepr is None else schemarepr,
+        schema=schemarepr,
+        rootschema=rootschema,
         docstring=docstring(classname, schema, indent=4),
         init_code=init_code(classname, schema, indent=4)
     )
