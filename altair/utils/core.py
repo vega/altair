@@ -176,9 +176,11 @@ def parse_shorthand(shorthand):
     if not shorthand:
         return {}
 
-    # Must import this here to avoid circular imports
-    from .schema import AggregateOp
-    valid_aggregates = AggregateOp().values
+    # List taken from vega-lite v2 AggregateOp
+    valid_aggregates = ["argmax", "argmin", "average", "count", "distinct",
+                        "max", "mean", "median", "min", "missing", "q1", "q3",
+                        "ci0", "ci1", "stdev", "stdevp", "sum", "valid",
+                        "values", "variance", "variancep"]
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
     # build regular expressions
@@ -201,3 +203,65 @@ def parse_shorthand(shorthand):
     if typ:
         match['type'] = INV_TYPECODE_MAP.get(typ, typ)
     return match
+
+
+def parse_shorthand_plus_data(shorthand, data):
+    """Parse a field shorthand, and use data to infer type if not specified
+
+    Parameters
+    ----------
+    shorthand: str
+        Shorthand string of the form "agg(col):typ"
+    data : pd.DataFrame
+        Dataframe from which to infer types
+
+    Returns
+    -------
+    D : dict
+        Dictionary which always contains a 'field' key, and additionally
+        contains an 'aggregate' and 'type' key depending on the input.
+
+    Examples
+    --------
+    >>> data = pd.DataFrame({'foo': ['A', 'B', 'A', 'B'],
+    ...                      'bar': [1, 2, 3, 4]})
+    ...
+
+    >>> parse_shorthand_plus_data('foo', data)
+    {'field': 'foo', 'type': 'nominal'}
+
+    >>> parse_shorthand_plus_data('bar', data)
+    {'field': 'bar', 'type': 'quantitative'}
+
+    >>> parse_shorthand_plus_data('bar:O', data)
+    {'field': 'bar', 'type': 'ordinal'}
+
+    >>> parse_shorthand_plus_data('sum(bar)', data)
+    {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
+    """
+    attrs = parse_shorthand(shorthand)
+    if 'type' not in attrs:
+        field = attrs['field']
+        if not isinstance(data, pd.DataFrame):
+            raise ValueError("type must be specified unless data is provided "
+                             "in the form of a dataframe")
+        col = data[field]
+        attrs['type'] = infer_vegalite_type(col)
+    return attrs
+
+
+def use_signature(Obj):
+    """Apply call signature and documentation of Obj to the decorated method"""
+    def decorate(f):
+        # call-signature of f is exposed via __wrapped__.
+        # we want it to mimic Obj.__init__
+        f.__wrapped__ = Obj.__init__
+        f._uses_signature = Obj
+
+        # Supplement the docstring of f with information from Obj
+        doclines = Obj.__doc__.splitlines()
+        if not f.__doc__:
+            f.__doc__ = ""
+        f.__doc__ += '\n'.join(doclines[1:])
+        return f
+    return decorate
