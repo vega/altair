@@ -1,5 +1,4 @@
 
-
 from .display import vegalite, VegaLite, renderers
 
 from .data import (
@@ -9,3 +8,5 @@ from .data import (
     data_transformers
 )
 
+
+from .schema.channels import *
