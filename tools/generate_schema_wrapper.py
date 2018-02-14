@@ -25,9 +25,16 @@ FIELD_TEMPLATE = '''
 class {classname}(core.{basename}):
     """{classname} channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super({classname}, self).__init__(**kwds)
+        super({classname}, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={{}}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super({classname}, self).to_dict(validate=validate, ignore=ignore, context=context)
 '''
 
 VALUE_TEMPLATE = '''
@@ -77,11 +84,13 @@ def generate_schema_wrapper(schema_file):
     return '\n'.join(contents)
 
 def generate_vegalite_channel_wrappers(schemafile, imports=None):
+    # TODO: generate __all__ for top of file
     with open(schemafile) as f:
         schema = json.load(f)
     if imports is None:
-            imports = ["from . import core",
-                       "from altair.utils import parse_shorthand"]
+        imports = ["from . import core",
+                   "from altair.utils.schemapi import Undefined",
+                   "from altair.utils import parse_shorthand, parse_shorthand_plus_data"]
     contents = ["# The contents of this file are automatically generated",
                 "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
     contents.extend(imports)

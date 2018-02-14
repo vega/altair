@@ -2,12 +2,21 @@ import six
 
 import pandas as pd
 
-from . import schema
+from .schema import *
 
 from .data import data_transformers, pipe
 from .schema import core, channels, Undefined
 from ...utils import infer_vegalite_type, parse_shorthand_plus_data, use_signature
 from .display import renderers
+
+
+def _get_channels_mapping():
+    mapping = {}
+    for attr in dir(channels):
+        cls = getattr(channels, attr)
+        if isinstance(cls, type) and issubclass(cls, SchemaBase):
+            mapping[cls] = attr.replace('Value', '').lower()
+    return mapping
 
 
 class TopLevelMixin(object):
@@ -23,7 +32,12 @@ class TopLevelMixin(object):
             self.data = core.UrlData(self.data)
 
     def to_dict(self, *args, **kwargs):
+        original_data = getattr(self, 'data', Undefined)
         self._prepare_data()
+        context = kwargs.get('context', {})
+        if 'data' not in context and original_data is not Undefined:
+            context['data'] = original_data
+        kwargs['context'] = context
         return super(TopLevelMixin, self).to_dict(*args, **kwargs)
 
     # Layering and stacking
@@ -131,13 +145,23 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     def encode(self, *args, **kwargs):
         if args:
-            raise NotImplementedError()
+            mapping = _get_channels_mapping()
+            for arg in args:
+                encoding = mapping.get(type(arg), None)
+                if encoding is None:
+                    raise NotImplementedError("non-keyword arg of type {0}"
+                                              "".format(type(arg)))
+                if encoding in kwargs:
+                    raise ValueError("encode: encoding {0} specified twice"
+                                     "".format(encoding))
+                kwargs[encoding] = arg
+                
         for prop, field in list(kwargs.items()):
-            # TODO: this logic should be put into to_dict somehow
-            if isinstance(field, six.string_types):
-                attrs = parse_shorthand_plus_data(field, self.data)
+            if not isinstance(field, SchemaBase):
                 cls = getattr(channels, prop.title())
-                kwargs[prop] = cls(**attrs)
+                # Don't validate now, because field will be computed
+                # as part of the to_dict() call.
+                kwargs[prop] = cls.from_dict(field, validate=False)
         # TODO: update nested values rather than overwriting them
         self.encoding = core.EncodingWithFacet(*args, **kwargs)
         return self

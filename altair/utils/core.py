@@ -241,11 +241,10 @@ def parse_shorthand_plus_data(shorthand, data):
     """
     attrs = parse_shorthand(shorthand)
     if 'type' not in attrs:
-        field = attrs['field']
         if not isinstance(data, pd.DataFrame):
             raise ValueError("type must be specified unless data is provided "
-                             "in the form of a dataframe")
-        col = data[field]
+                             "in the form of a dataframe.")
+        col = data[attrs['field']]
         attrs['type'] = infer_vegalite_type(col)
     return attrs
 

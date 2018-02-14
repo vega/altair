@@ -25,6 +25,25 @@ def test_chart_data_types():
     assert dct['data']['values'] == data.to_dict(orient='records')
 
     # Altair data object
-    data = alt.schema.NamedData(name='Foo')
+    data = alt.NamedData(name='Foo')
     dct = Chart(data).to_dict()
     assert dct['data'] == {'name': 'Foo'}
+
+
+def test_chart_infer_types():
+    data = pd.DataFrame({'x': range(10), 'y': list('abcabcabca')})
+
+    chart = alt.Chart(data).mark_point().encode(x='x', y='y')
+    dct = chart.to_dict()
+    assert dct['encoding']['x']['type'] == 'quantitative'
+    assert dct['encoding']['y']['type'] == 'nominal'
+
+    chart = alt.Chart(data).mark_point().encode(x=alt.X('x'), y=alt.Y('y'))
+    dct = chart.to_dict()
+    assert dct['encoding']['x']['type'] == 'quantitative'
+    assert dct['encoding']['y']['type'] == 'nominal'
+
+    chart = alt.Chart(data).mark_point().encode(alt.X('x'), alt.Y('y'))
+    dct = chart.to_dict()
+    assert dct['encoding']['x']['type'] == 'quantitative'
+    assert dct['encoding']['y']['type'] == 'nominal'

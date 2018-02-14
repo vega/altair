@@ -1,16 +1,24 @@
 # The contents of this file are automatically generated
-# 2018-02-13 19:08:44
+# 2018-02-14 13:13:41
 
 from . import core
-from altair.utils import parse_shorthand
+from altair.utils.schemapi import Undefined
+from altair.utils import parse_shorthand, parse_shorthand_plus_data
 
 
 class Color(core.MarkPropFieldDefWithCondition):
     """Color channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Color, self).__init__(**kwds)
+        super(Color, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Color, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class ColorValue(core.MarkPropValueDefWithCondition):
@@ -22,25 +30,46 @@ class ColorValue(core.MarkPropValueDefWithCondition):
 class Column(core.FacetFieldDef):
     """Column channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Column, self).__init__(**kwds)
+        super(Column, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Column, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class Detail(core.FieldDef):
     """Detail channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Detail, self).__init__(**kwds)
+        super(Detail, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Detail, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class Href(core.FieldDefWithCondition):
     """Href channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Href, self).__init__(**kwds)
+        super(Href, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Href, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class HrefValue(core.ValueDefWithCondition):
@@ -52,9 +81,16 @@ class HrefValue(core.ValueDefWithCondition):
 class Opacity(core.MarkPropFieldDefWithCondition):
     """Opacity channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Opacity, self).__init__(**kwds)
+        super(Opacity, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Opacity, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class OpacityValue(core.MarkPropValueDefWithCondition):
@@ -66,25 +102,46 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
 class Order(core.OrderFieldDef):
     """Order channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Order, self).__init__(**kwds)
+        super(Order, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Order, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class Row(core.FacetFieldDef):
     """Row channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Row, self).__init__(**kwds)
+        super(Row, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Row, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class Shape(core.MarkPropFieldDefWithCondition):
     """Shape channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Shape, self).__init__(**kwds)
+        super(Shape, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Shape, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class ShapeValue(core.MarkPropValueDefWithCondition):
@@ -96,9 +153,16 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
 class Size(core.MarkPropFieldDefWithCondition):
     """Size channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Size, self).__init__(**kwds)
+        super(Size, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Size, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class SizeValue(core.MarkPropValueDefWithCondition):
@@ -110,9 +174,16 @@ class SizeValue(core.MarkPropValueDefWithCondition):
 class Text(core.TextFieldDefWithCondition):
     """Text channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Text, self).__init__(**kwds)
+        super(Text, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Text, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class TextValue(core.TextValueDefWithCondition):
@@ -124,9 +195,16 @@ class TextValue(core.TextValueDefWithCondition):
 class Tooltip(core.TextFieldDefWithCondition):
     """Tooltip channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Tooltip, self).__init__(**kwds)
+        super(Tooltip, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Tooltip, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class TooltipValue(core.TextValueDefWithCondition):
@@ -138,9 +216,16 @@ class TooltipValue(core.TextValueDefWithCondition):
 class X(core.PositionFieldDef):
     """X channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(X, self).__init__(**kwds)
+        super(X, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(X, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class XValue(core.ValueDef):
@@ -152,9 +237,16 @@ class XValue(core.ValueDef):
 class X2(core.FieldDef):
     """X2 channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(X2, self).__init__(**kwds)
+        super(X2, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(X2, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class X2Value(core.ValueDef):
@@ -166,9 +258,16 @@ class X2Value(core.ValueDef):
 class Y(core.PositionFieldDef):
     """Y channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Y, self).__init__(**kwds)
+        super(Y, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Y, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class YValue(core.ValueDef):
@@ -180,9 +279,16 @@ class YValue(core.ValueDef):
 class Y2(core.FieldDef):
     """Y2 channel"""
     def __init__(self, field, **kwargs):
-        kwds = parse_shorthand(field)
-        kwds.update(kwargs)
-        super(Y2, self).__init__(**kwds)
+        super(Y2, self).__init__(field=field, **kwargs)
+
+    def to_dict(self, validate=True, ignore=[], context={}):
+        type_ = getattr(self, 'type', Undefined)
+        if type_ is Undefined and 'data' in context:
+            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        else:
+            kwds = parse_shorthand(self.field)
+        self._kwds.update(kwds)
+        return super(Y2, self).to_dict(validate=validate, ignore=ignore, context=context)
 
 
 class Y2Value(core.ValueDef):
