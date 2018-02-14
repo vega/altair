@@ -9,8 +9,15 @@ from .display import renderers
 
 
 class TopLevelMixin(object):
+    def _prepare_data(self):
+        if isinstance(self.data, (dict, core.Data, core.InlineData,
+                                  core.UrlData, core.NamedData)):
+            pass
+        elif isinstance(self.data, pd.DataFrame):
+            self.data = pipe(self.data, data_transformers.get())
+
     def to_dict(self, *args, **kwargs):
-        self.data = pipe(self.data, data_transformers.get())
+        self._prepare_data()
         return super(TopLevelMixin, self).to_dict(*args, **kwargs)
 
     # Layering and stacking
@@ -29,6 +36,10 @@ class TopLevelMixin(object):
     def _repr_mimebundle_(self, include, exclude):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
+
+    def display(self):
+        from vega3 import VegaLite
+        return VegaLite(self.to_dict())
 
 
 class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):

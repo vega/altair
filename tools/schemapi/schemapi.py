@@ -39,7 +39,10 @@ class SchemaBase(object):
 
     def __getattr__(self, item):
         # reminder: getattr is called after the normal lookups
-        return self._kwds[item]
+        try:
+            return self._kwds[item]
+        except KeyError:
+            return super(SchemaBase, self).__getattr__(self, item)
 
     def __setattr__(self, item , val):
         self._kwds[item] = val

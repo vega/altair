@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly
-# 2018-02-12 15:12:33
+# 2018-02-13 19:08:44
 import collections
 import json
 
@@ -42,7 +42,10 @@ class SchemaBase(object):
 
     def __getattr__(self, item):
         # reminder: getattr is called after the normal lookups
-        return self._kwds[item]
+        try:
+            return self._kwds[item]
+        except KeyError:
+            return super(SchemaBase, self).__getattr__(self, item)
 
     def __setattr__(self, item , val):
         self._kwds[item] = val

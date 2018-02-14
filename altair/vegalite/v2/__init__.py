@@ -7,3 +7,6 @@ from .data import (
     default_data_transformer,
     data_transformers
 )
+
+
+from .schema.channels import *
