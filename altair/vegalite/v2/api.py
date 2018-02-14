@@ -144,6 +144,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
     # TODO: add hooks for more configure functions
 
     def encode(self, *args, **kwargs):
+        # First convert args to kwargs by inferring the class from the argument
         if args:
             mapping = _get_channels_mapping()
             for arg in args:
@@ -155,7 +156,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                     raise ValueError("encode: encoding {0} specified twice"
                                      "".format(encoding))
                 kwargs[encoding] = arg
-                
+
         for prop, field in list(kwargs.items()):
             if not isinstance(field, SchemaBase):
                 cls = getattr(channels, prop.title())
@@ -163,12 +164,12 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                 # as part of the to_dict() call.
                 kwargs[prop] = cls.from_dict(field, validate=False)
         # TODO: update nested values rather than overwriting them
-        self.encoding = core.EncodingWithFacet(*args, **kwargs)
+        self.encoding = core.EncodingWithFacet(**kwargs)
         return self
 
-    def interactive(self):
+    def interactive(self, name='grid'):
         """Make chart axes interactive"""
-        self.selection = {'grid': {'bind': 'scales', 'type': 'interval'}}
+        self.selection = {name: {'bind': 'scales', 'type': 'interval'}}
         return self
 
 
