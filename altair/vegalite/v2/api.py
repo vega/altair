@@ -2,6 +2,8 @@ import six
 
 import pandas as pd
 
+from . import schema
+
 from .data import data_transformers, pipe
 from .schema import core, channels, Undefined
 from ...utils import infer_vegalite_type, parse_shorthand_plus_data, use_signature
@@ -10,11 +12,15 @@ from .display import renderers
 
 class TopLevelMixin(object):
     def _prepare_data(self):
+        # TODO: it's a bit weird that to_dict, via _prepare_data,
+        #       modifies the object. Should we create a copy first?
         if isinstance(self.data, (dict, core.Data, core.InlineData,
                                   core.UrlData, core.NamedData)):
             pass
         elif isinstance(self.data, pd.DataFrame):
             self.data = pipe(self.data, data_transformers.get())
+        elif isinstance(self.data, six.string_types):
+            self.data = core.UrlData(self.data)
 
     def to_dict(self, *args, **kwargs):
         self._prepare_data()

@@ -108,6 +108,9 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None):
     return '\n'.join(contents)
 
 
+# TODO: generate useful docstrings & simple unit tests
+
+
 def main():
     copy_schemapi_util()
 
