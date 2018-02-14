@@ -5,9 +5,17 @@ import re
 import textwrap
 
 import jsonschema
+import pkgutil
+import json
 
 
 EXCLUDE_KEYS = ('definitions', 'title', 'description', '$schema', 'id')
+
+
+def load_metaschema():
+    schema = pkgutil.get_data('schemapi', 'jsonschema-draft04.json')
+    schema = schema.decode()
+    return json.loads(schema)
 
 
 def resolve_references(schema, root=None):
@@ -19,7 +27,29 @@ def resolve_references(schema, root=None):
 
 
 def get_valid_identifier(prop, replacement_character='', allow_unicode=False):
-    """Given a string property, generate a valid Python identifier"""
+    """Given a string property, generate a valid Python identifier
+
+    Parameters
+    ----------
+    replacement_character: string, default ''
+        The character to replace invalid characters with.
+    allow_unicode: boolean, default False
+        If True, then allow Python 3-style unicode identifiers.
+
+    Examples
+    --------
+    >>> get_valid_identifier('my-var')
+    'myvar'
+
+    >>> get_valid_identifier('if')
+    'if_'
+
+    >>> get_valid_identifier('$schema', '_')
+    '_schema'
+
+    >>> get_valid_identifier('$*#$')
+    '_'
+    """
     # First substitute-out all non-valid characters.
     flags = re.UNICODE if allow_unicode else re.ASCII
     valid = re.sub('\W', replacement_character, prop, flags=flags)
@@ -55,6 +85,9 @@ def is_valid_identifier(var, allow_unicode=False):
 
 
 class SchemaProperties(object):
+    """A wrapper for properties within a schema
+
+    """
     def __init__(self, properties, schema):
         self.__properties = properties
         self.__schema = schema
@@ -63,7 +96,10 @@ class SchemaProperties(object):
         return list(self.__properties.keys())
 
     def __getattr__(self, attr):
-        return self[attr]
+        try:
+            return self[attr]
+        except KeyError:
+            return super(SchemaProperties, self).__getattr__(attr)
 
     def __getitem__(self, attr):
         dct = self.__properties[attr]
@@ -85,12 +121,17 @@ class SchemaProperties(object):
 
 
 class SchemaInfo(object):
-    def __init__(self, schema, rootschema=None):
+    """A wrapper for inspecting a JSON schema"""
+    def __init__(self, schema, rootschema=None, validate=True):
         if hasattr(schema, '_schema'):
             if hasattr(schema, '_rootschema'):
                 schema, rootschema = schema._schema, schema._rootschema
             else:
                 schema, rootschema = schema._schema, schema._schema
+        if validate:
+            metaschema = load_metaschema()
+            jsonschema.validate(schema, metaschema)
+            jsonschema.validate(rootschema, metaschema)
         self.raw_schema = schema
         self.schema = resolve_references(schema, rootschema)
 
@@ -107,6 +148,21 @@ class SchemaInfo(object):
                 rval = '{\n    ' + '\n    '.join(sorted(map(repr, val))) + '\n  }'
             keys.append('"{0}": {1}'.format(key, rval))
         return "SchemaInfo({\n  " + '\n  '.join(keys) + "\n})"
+
+    @property
+    def short_description(self):
+        # TODO
+        return 'schema'
+
+    @property
+    def medium_description(self):
+        # TODO
+        return 'A schema of type <type>'
+
+    @property
+    def long_description(self):
+        # TODO
+        return 'Long description including arguments and their types'
 
     @property
     def properties(self):
@@ -152,11 +208,23 @@ class SchemaInfo(object):
     def enum(self):
         return self.schema.get('enum', [])
 
+    def is_reference(self):
+        return '$ref' in self.raw_schema
+
     def is_empty(self):
         return set(self.schema.keys()) - set(EXCLUDE_KEYS) == {}
 
     def is_compound(self):
         return any(key in self.schema for key in ['anyOf', 'allOf', 'oneOf'])
+
+    def is_anyOf(self):
+        return 'anyOf' in self.schema
+
+    def is_allOf(self):
+        return 'allOf' in self.schema
+
+    def is_oneOf(self):
+        return 'oneOf' in self.schema
 
     def is_object(self):
         if self.type == 'object':
