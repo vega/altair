@@ -5,9 +5,17 @@ import re
 import textwrap
 
 import jsonschema
+import pkgutil
+import json
 
 
 EXCLUDE_KEYS = ('definitions', 'title', 'description', '$schema', 'id')
+
+
+def load_metaschema():
+    schema = pkgutil.get_data('schemapi', 'jsonschema-draft04.json')
+    schema = schema.decode()
+    return json.loads(schema)
 
 
 def resolve_references(schema, root=None):
@@ -19,7 +27,29 @@ def resolve_references(schema, root=None):
 
 
 def get_valid_identifier(prop, replacement_character='', allow_unicode=False):
-    """Given a string property, generate a valid Python identifier"""
+    """Given a string property, generate a valid Python identifier
+
+    Parameters
+    ----------
+    replacement_character: string, default ''
+        The character to replace invalid characters with.
+    allow_unicode: boolean, default False
+        If True, then allow Python 3-style unicode identifiers.
+
+    Examples
+    --------
+    >>> get_valid_identifier('my-var')
+    'myvar'
+
+    >>> get_valid_identifier('if')
+    'if_'
+
+    >>> get_valid_identifier('$schema', '_')
+    '_schema'
+
+    >>> get_valid_identifier('$*#$')
+    '_'
+    """
     # First substitute-out all non-valid characters.
     flags = re.UNICODE if allow_unicode else re.ASCII
     valid = re.sub('\W', replacement_character, prop, flags=flags)
@@ -55,44 +85,63 @@ def is_valid_identifier(var, allow_unicode=False):
 
 
 class SchemaProperties(object):
-    def __init__(self, properties, schema):
-        self.__properties = properties
-        self.__schema = schema
+    """A wrapper for properties within a schema"""
+    def __init__(self, properties, schema, rootschema=None):
+        self._properties = properties
+        self._schema = schema
+        self._rootschema = rootschema or schema
+
+    def __bool__(self):
+        return bool(self._properties)
 
     def __dir__(self):
-        return list(self.__properties.keys())
+        return list(self._properties.keys())
 
     def __getattr__(self, attr):
-        return self[attr]
+        try:
+            return self[attr]
+        except KeyError:
+            return super(SchemaProperties, self).__getattr__(attr)
 
     def __getitem__(self, attr):
-        dct = self.__properties[attr]
-        if 'definitions' in self.__schema and 'definitions' not in dct:
-            dct = dict(definitions=self.__schema['definitions'], **dct)
-        return SchemaInfo(dct)
+        dct = self._properties[attr]
+        if 'definitions' in self._schema and 'definitions' not in dct:
+            dct = dict(definitions=self._schema['definitions'], **dct)
+        return SchemaInfo(dct, self._rootschema)
 
     def __iter__(self):
-        return iter(self.__properties)
+        return iter(self._properties)
 
     def items(self):
-        return self.__properties.items()
+        return ((key, self[key]) for key in self)
 
     def keys(self):
-        return self.__properties.keys()
+        return self._properties.keys()
 
     def values(self):
-        return self.__properties.values()
+        return (self[key] for key in self)
 
 
 class SchemaInfo(object):
-    def __init__(self, schema, rootschema=None):
+    """A wrapper for inspecting a JSON schema"""
+    def __init__(self, schema, rootschema=None, validate=False):
         if hasattr(schema, '_schema'):
             if hasattr(schema, '_rootschema'):
                 schema, rootschema = schema._schema, schema._rootschema
             else:
                 schema, rootschema = schema._schema, schema._schema
+        elif not rootschema:
+            rootschema = schema
+        if validate:
+            metaschema = load_metaschema()
+            jsonschema.validate(schema, metaschema)
+            jsonschema.validate(rootschema, metaschema)
         self.raw_schema = schema
+        self.rootschema = rootschema
         self.schema = resolve_references(schema, rootschema)
+
+    def child(self, schema):
+        return self.__class__(schema, rootschema=self.rootschema)
 
     def __repr__(self):
         keys = []
@@ -109,12 +158,60 @@ class SchemaInfo(object):
         return "SchemaInfo({\n  " + '\n  '.join(keys) + "\n})"
 
     @property
+    def short_description(self):
+        _simple_types = {'string': 'string',
+                         'number': 'float',
+                         'integer': 'integer',
+                         'object': 'mapping',
+                         'boolean': 'boolean',
+                         'array': 'list',
+                         'null': 'None'}
+        if self.is_empty():
+            return 'any'
+        elif self.is_reference():
+            return self.refname
+        elif self.is_anyOf():
+            return 'anyOf({0})'.format(', '.join(s.short_description
+                                                 for s in self.anyOf))
+        elif self.is_oneOf():
+            return 'oneOf({0})'.format(', '.join(s.short_description
+                                                 for s in self.oneOf))
+        elif self.is_allOf():
+            return 'allOf({0})'.format(', '.join(s.short_description
+                                                 for s in self.allOf))
+        elif self.is_not():
+            return 'not {0}'.format(self.not_)
+        elif isinstance(self.type, list):
+            options = []
+            subschema = SchemaInfo(dict(**self.schema))
+            for typ_ in self.type:
+                subschema.schema['type'] = typ_
+                options.append(subschema.short_description)
+            return "anyOf({0})".format(', '.join(options))
+        elif self.type in _simple_types:
+            return _simple_types[self.type]
+        elif self.type == '':
+            return 'any'
+
+    @property
+    def medium_description(self):
+        # TODO
+        return 'A schema of type <type>'
+
+    @property
+    def long_description(self):
+        # TODO
+        return 'Long description including arguments and their types'
+
+    @property
     def properties(self):
-        return SchemaProperties(self.schema.get('properties', {}), self.schema)
+        return SchemaProperties(self.schema.get('properties', {}),
+                                self.schema, self.rootschema)
 
     @property
     def definitions(self):
-        return SchemaProperties(self.schema.get('definitions', {}), self.schema)
+        return SchemaProperties(self.schema.get('definitions', {}),
+                                self.schema, self.rootschema)
 
     @property
     def required(self):
@@ -134,15 +231,19 @@ class SchemaInfo(object):
 
     @property
     def anyOf(self):
-        return self.schema.get('anyOf', [])
+        return [self.child(s) for s in self.schema.get('anyOf', [])]
 
     @property
     def oneOf(self):
-        return self.schema.get('oneOf', [])
+        return [self.child(s) for s in self.schema.get('oneOf', [])]
 
     @property
     def allOf(self):
-        return self.schema.get('allOf', [])
+        return [self.child(s) for s in self.schema.get('allOf', [])]
+
+    @property
+    def not_(self):
+        return self.child(self.schema.get('not_', {}))
 
     @property
     def items(self):
@@ -152,11 +253,41 @@ class SchemaInfo(object):
     def enum(self):
         return self.schema.get('enum', [])
 
+    @property
+    def refname(self):
+        return self.raw_schema.get('$ref', '#/').split('/')[-1]
+
+    @property
+    def ref(self):
+        return self.raw_schema.get('$ref', None)
+
+    @property
+    def description(self):
+        return self.raw_schema.get('description', '')
+
+    def is_reference(self):
+        return '$ref' in self.raw_schema
+
+    def is_enum(self):
+        return 'enum' in self.schema
+
     def is_empty(self):
         return set(self.schema.keys()) - set(EXCLUDE_KEYS) == {}
 
     def is_compound(self):
         return any(key in self.schema for key in ['anyOf', 'allOf', 'oneOf'])
+
+    def is_anyOf(self):
+        return 'anyOf' in self.schema
+
+    def is_allOf(self):
+        return 'allOf' in self.schema
+
+    def is_oneOf(self):
+        return 'oneOf' in self.schema
+
+    def is_not(self):
+        return 'not' in self.schema
 
     def is_object(self):
         if self.type == 'object':

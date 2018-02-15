@@ -65,21 +65,21 @@ def copy_schemapi_util():
 def generate_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
     with open(schema_file) as f:
-        schema = json.load(f)
+        rootschema = json.load(f)
     contents = ["# The contents of this file are automatically generated",
                 "# at time {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
                 "from altair.utils.schemapi import SchemaBase, Undefined",
                 LOAD_SCHEMA]
-    contents.append(schema_class('Root', schema=schema,
+    contents.append(schema_class('Root', schema=rootschema,
                                  schemarepr=CodeSnippet('load_schema()')))
-    for name in schema['definitions']:
-        defschema = {'$ref': '#/definitions/' + name,
-                     'definitions': schema['definitions']}
+    for name in rootschema['definitions']:
+        defschema = {'$ref': '#/definitions/' + name}
         defschema_repr = {'$ref': '#/definitions/' + name}
 
         contents.append(schema_class(get_valid_identifier(name),
                                      schema=defschema, schemarepr=defschema_repr,
-                                     rootschema=CodeSnippet("Root._schema")))
+                                     rootschema=rootschema,
+                                     rootschemarepr=CodeSnippet("Root._schema")))
     contents.append('')  # end with newline
     return '\n'.join(contents)
 
@@ -96,13 +96,14 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None):
     contents.extend(imports)
     contents.append('')
 
-    encoding = SchemaInfo(schema['definitions']['EncodingWithFacet'])
+    encoding = SchemaInfo(schema['definitions']['EncodingWithFacet'],
+                          rootschema=schema)
 
     for prop, propschema in encoding.properties.items():
-        if '$ref' in propschema:
-            definitions = [propschema['$ref']]
-        elif 'anyOf' in propschema:
-            definitions = [s['$ref'] for s in propschema['anyOf'] if '$ref' in s]
+        if propschema.is_reference():
+            definitions = [propschema.ref]
+        elif propschema.is_anyOf():
+            definitions = [s.ref for s in propschema.anyOf if s.is_reference()]
         else:
             raise ValueError("either $ref or anyOf expected")
         for definition in definitions:

@@ -31,19 +31,36 @@ def test_chart_data_types():
 
 
 def test_chart_infer_types():
-    data = pd.DataFrame({'x': range(10), 'y': list('abcabcabca')})
+    data = pd.DataFrame({'x': pd.date_range('2012', periods=10, freq='Y'),
+                         'y': range(10),
+                         'c': list('abcabcabca')})
 
-    chart = alt.Chart(data).mark_point().encode(x='x', y='y')
-    dct = chart.to_dict()
-    assert dct['encoding']['x']['type'] == 'quantitative'
-    assert dct['encoding']['y']['type'] == 'nominal'
+    def _check_encodings(chart):
+        dct = chart.to_dict()
+        assert dct['encoding']['x']['type'] == 'temporal'
+        assert dct['encoding']['x']['field'] == 'x'
+        assert dct['encoding']['y']['type'] == 'quantitative'
+        assert dct['encoding']['y']['field'] == 'y'
+        assert dct['encoding']['color']['type'] == 'nominal'
+        assert dct['encoding']['color']['field'] == 'c'
 
-    chart = alt.Chart(data).mark_point().encode(x=alt.X('x'), y=alt.Y('y'))
-    dct = chart.to_dict()
-    assert dct['encoding']['x']['type'] == 'quantitative'
-    assert dct['encoding']['y']['type'] == 'nominal'
+    # Pass field names by keyword
+    chart = alt.Chart(data).mark_point().encode(x='x', y='y', color='c')
+    _check_encodings(chart)
 
-    chart = alt.Chart(data).mark_point().encode(alt.X('x'), alt.Y('y'))
+    # pass Channel objects by keyword
+    chart = alt.Chart(data).mark_point().encode(x=alt.X('x'), y=alt.Y('y'),
+                                                color=alt.Color('c'))
+    _check_encodings(chart)
+
+    # pass Channel objects by value
+    chart = alt.Chart(data).mark_point().encode(alt.X('x'), alt.Y('y'),
+                                                alt.Color('c'))
+    _check_encodings(chart)
+
+    # override default types
+    chart = alt.Chart(data).mark_point().encode(alt.X('x', type='nominal'),
+                                                alt.Y('y', type='ordinal'))
     dct = chart.to_dict()
-    assert dct['encoding']['x']['type'] == 'quantitative'
-    assert dct['encoding']['y']['type'] == 'nominal'
+    assert dct['encoding']['x']['type'] == 'nominal'
+    assert dct['encoding']['y']['type'] == 'ordinal'
