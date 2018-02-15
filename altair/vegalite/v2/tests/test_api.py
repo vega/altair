@@ -35,31 +35,32 @@ def test_chart_infer_types():
                          'y': range(10),
                          'c': list('abcabcabca')})
 
-    chart = alt.Chart(data).mark_point().encode(x='x', y='y', color='c')
-    dct = chart.to_dict()
-    assert dct['encoding']['x']['type'] == 'temporal'
-    assert dct['encoding']['x']['field'] == 'x'
-    assert dct['encoding']['y']['type'] == 'quantitative'
-    assert dct['encoding']['y']['field'] == 'y'
-    assert dct['encoding']['color']['type'] == 'nominal'
-    assert dct['encoding']['color']['field'] == 'c'
+    def _check_encodings(chart):
+        dct = chart.to_dict()
+        assert dct['encoding']['x']['type'] == 'temporal'
+        assert dct['encoding']['x']['field'] == 'x'
+        assert dct['encoding']['y']['type'] == 'quantitative'
+        assert dct['encoding']['y']['field'] == 'y'
+        assert dct['encoding']['color']['type'] == 'nominal'
+        assert dct['encoding']['color']['field'] == 'c'
 
+    # Pass field names by keyword
+    chart = alt.Chart(data).mark_point().encode(x='x', y='y', color='c')
+    _check_encodings(chart)
+
+    # pass Channel objects by keyword
     chart = alt.Chart(data).mark_point().encode(x=alt.X('x'), y=alt.Y('y'),
                                                 color=alt.Color('c'))
-    dct = chart.to_dict()
-    assert dct['encoding']['x']['type'] == 'temporal'
-    assert dct['encoding']['x']['field'] == 'x'
-    assert dct['encoding']['y']['type'] == 'quantitative'
-    assert dct['encoding']['y']['field'] == 'y'
-    assert dct['encoding']['color']['type'] == 'nominal'
-    assert dct['encoding']['color']['field'] == 'c'
+    _check_encodings(chart)
 
+    # pass Channel objects by value
     chart = alt.Chart(data).mark_point().encode(alt.X('x'), alt.Y('y'),
                                                 alt.Color('c'))
+    _check_encodings(chart)
+
+    # override default types
+    chart = alt.Chart(data).mark_point().encode(alt.X('x', type='nominal'),
+                                                alt.Y('y', type='ordinal'))
     dct = chart.to_dict()
-    assert dct['encoding']['x']['type'] == 'temporal'
-    assert dct['encoding']['x']['field'] == 'x'
-    assert dct['encoding']['y']['type'] == 'quantitative'
-    assert dct['encoding']['y']['field'] == 'y'
-    assert dct['encoding']['color']['type'] == 'nominal'
-    assert dct['encoding']['color']['field'] == 'c'
+    assert dct['encoding']['x']['type'] == 'nominal'
+    assert dct['encoding']['y']['type'] == 'ordinal'
