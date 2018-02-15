@@ -263,7 +263,8 @@ class SchemaInfo(object):
 
     @property
     def description(self):
-        return self.raw_schema.get('description', '')
+        return self.raw_schema.get('description',
+                                   self.schema.get('description', ''))
 
     def is_reference(self):
         return '$ref' in self.raw_schema
