@@ -168,7 +168,14 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
         return self
 
     def interactive(self, name='grid'):
-        """Make chart axes interactive"""
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The selection name to use for the axes scales. This name should be
+            unique among all selections within the chart.
+        """
         self.selection = {name: {'bind': 'scales', 'type': 'interval'}}
         return self
 

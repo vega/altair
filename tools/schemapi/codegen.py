@@ -21,8 +21,8 @@ class {classname}({basename}):
 '''
 
 
-def schema_class(classname, schema, schemarepr=None,
-                 rootschema=None, basename='SchemaBase'):
+def schema_class(classname, schema, rootschema=None, basename='SchemaBase',
+                 schemarepr=None, rootschemarepr=None):
     """Generate code for a schema class
 
     Parameters
@@ -31,6 +31,8 @@ def schema_class(classname, schema, schemarepr=None,
         The name of the class to generate
     schema : dict
         The dictionary defining the schema class
+    rootschema : dict (optional)
+        The root schema for the class
     basename : string (default: "SchemaBase")
         The name of the base class to use in the class definition
     schemarepr : CodeSnippet or object, optional
@@ -38,22 +40,37 @@ def schema_class(classname, schema, schemarepr=None,
         This can be useful, for example, when the generated code should reference
         a predefined schema object. The user must ensure that the schema within
         the evaluated code is identical to the schema used to generate the code.
+    rootschemarepr : CodeSnippet or object, optional
+        An object whose repr will be used in the place of the explicit root
+        schema.
     """
+    rootschema = rootschema if rootschema is not None else schema
     schemarepr = schemarepr if schemarepr is not None else schema
-    rootschema = rootschema if rootschema is not None else CodeSnippet('_schema')
+    if rootschemarepr is None:
+        if rootschema is schema:
+            rootschemarepr = CodeSnippet('_schema')
+        else:
+            rootschemarepr = rootschema
     return SCHEMA_CLASS_TEMPLATE.format(
         classname=classname,
         basename=basename,
         schema=schemarepr,
-        rootschema=rootschema,
-        docstring=docstring(classname, schema, indent=4),
-        init_code=init_code(classname, schema, indent=4)
+        rootschema=rootschemarepr,
+        docstring=docstring(classname=classname, schema=schema,
+                            rootschema=rootschema, indent=4),
+        init_code=init_code(classname=classname, schema=schema,
+                            rootschema=rootschema, indent=4)
     )
 
 
-def docstring(classname, schema, indent=4):
-    # TODO fill this out
+def docstring(classname, schema, rootschema=None, indent=4):
     return "{0} schema wrapper".format(classname)
+    # info = SchemaInfo(schema)
+    # doc = ["{0} schema wrapper".format(classname),
+    #        '',
+    #        'Attributes'
+    #        '----------']
+
 
 
 INIT_DEF = """
@@ -62,9 +79,9 @@ def __init__({arglist}):
 """.lstrip()
 
 
-def init_code(classname, schema, indent=0):
-    """Return code suitable for the __init__ function of a Schema class"""
-    info = SchemaInfo(schema)
+def init_code(classname, schema, rootschema=None, indent=0):
+    """Return code suitablde for the __init__ function of a Schema class"""
+    info = SchemaInfo(schema, rootschema=rootschema)
 
     args = ['self']
     super_args = []
