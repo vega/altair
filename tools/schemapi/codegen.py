@@ -64,13 +64,20 @@ def schema_class(classname, schema, rootschema=None, basename='SchemaBase',
 
 
 def docstring(classname, schema, rootschema=None, indent=4):
-    return "{0} schema wrapper".format(classname)
-    # info = SchemaInfo(schema)
-    # doc = ["{0} schema wrapper".format(classname),
-    #        '',
-    #        'Attributes'
-    #        '----------']
-
+    info = SchemaInfo(schema, rootschema)
+    doc = ["{0} schema wrapper".format(classname)]
+    if info.description:
+        doc += ['', info.description]
+    if info.properties:
+        doc += ['',
+                'Attributes',
+                '----------']
+        for prop, propinfo in info.properties.items():
+            doc += ["{0} : {1}".format(prop, propinfo.short_description),
+                    "    {0}".format(propinfo.description.replace('\n', ' '))]
+    if len(doc) > 1:
+        doc += ['']
+    return ("\n" + indent * " ").join(doc)
 
 
 INIT_DEF = """

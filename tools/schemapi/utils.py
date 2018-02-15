@@ -91,6 +91,9 @@ class SchemaProperties(object):
         self._schema = schema
         self._rootschema = rootschema or schema
 
+    def __bool__(self):
+        return bool(self._properties)
+
     def __dir__(self):
         return list(self._properties.keys())
 
@@ -121,7 +124,7 @@ class SchemaProperties(object):
 
 class SchemaInfo(object):
     """A wrapper for inspecting a JSON schema"""
-    def __init__(self, schema, rootschema=None, validate=True):
+    def __init__(self, schema, rootschema=None, validate=False):
         if hasattr(schema, '_schema'):
             if hasattr(schema, '_rootschema'):
                 schema, rootschema = schema._schema, schema._rootschema
@@ -183,7 +186,7 @@ class SchemaInfo(object):
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
                 subschema.schema['type'] = typ_
-                options.append(SchemaInfo(subschema).short_description)
+                options.append(subschema.short_description)
             return "anyOf({0})".format(', '.join(options))
         elif self.type in _simple_types:
             return _simple_types[self.type]
@@ -258,6 +261,10 @@ class SchemaInfo(object):
     def ref(self):
         return self.raw_schema.get('$ref', None)
 
+    @property
+    def description(self):
+        return self.raw_schema.get('description', '')
+
     def is_reference(self):
         return '$ref' in self.raw_schema
 
@@ -278,6 +285,9 @@ class SchemaInfo(object):
 
     def is_oneOf(self):
         return 'oneOf' in self.schema
+
+    def is_not(self):
+        return 'not' in self.schema
 
     def is_object(self):
         if self.type == 'object':
