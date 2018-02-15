@@ -64,6 +64,9 @@ def schema_class(classname, schema, rootschema=None, basename='SchemaBase',
 
 
 def docstring(classname, schema, rootschema=None, indent=4):
+    # TODO: add a general description at the top, derived from the schema.
+    #       for example, a non-object definition should list valid type, enum
+    #       values, etc.
     info = SchemaInfo(schema, rootschema)
     doc = ["{0} schema wrapper".format(classname)]
     if info.description:
