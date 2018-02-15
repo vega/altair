@@ -1,5 +1,5 @@
 # The contents of this file are automatically generated
-# at time 2018-02-15 10:10:36
+# at time 2018-02-15 13:27:12
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -401,6 +401,8 @@ class BasicType(SchemaBase):
 
 class BinParams(SchemaBase):
     """BinParams schema wrapper
+    
+    Binning properties or boolean flag for determining whether to bin data or not.
     
     Attributes
     ----------
@@ -908,6 +910,11 @@ class DataFormat(SchemaBase):
 class DateTime(SchemaBase):
     """DateTime schema wrapper
     
+    Object for defining datetime in Vega-Lite Filter.
+If both month and quarter are provided, month has higher precedence.
+`day` cannot be combined with other date.
+We accept string for month and day names.
+    
     Attributes
     ----------
     date : float
@@ -1082,6 +1089,8 @@ class FacetMapping(SchemaBase):
 class FieldDef(SchemaBase):
     """FieldDef schema wrapper
     
+    Definition object for a data field, its type and transformation of an encoding channel.
+    
     Attributes
     ----------
     aggregate : Aggregate
@@ -1105,6 +1114,13 @@ class FieldDef(SchemaBase):
 
 class FieldDefWithCondition(SchemaBase):
     """FieldDefWithCondition schema wrapper
+    
+    A FieldDef with Condition<ValueDef>
+{
+   condition: {value: ...},
+   field: ...,
+   ...
+}
     
     Attributes
     ----------
@@ -1131,6 +1147,13 @@ class FieldDefWithCondition(SchemaBase):
 
 class MarkPropFieldDefWithCondition(SchemaBase):
     """MarkPropFieldDefWithCondition schema wrapper
+    
+    A FieldDef with Condition<ValueDef>
+{
+   condition: {value: ...},
+   field: ...,
+   ...
+}
     
     Attributes
     ----------
@@ -1163,6 +1186,13 @@ class MarkPropFieldDefWithCondition(SchemaBase):
 
 class TextFieldDefWithCondition(SchemaBase):
     """TextFieldDefWithCondition schema wrapper
+    
+    A FieldDef with Condition<ValueDef>
+{
+   condition: {value: ...},
+   field: ...,
+   ...
+}
     
     Attributes
     ----------
@@ -1538,6 +1568,8 @@ class GeoType(SchemaBase):
 class Header(SchemaBase):
     """Header schema wrapper
     
+    Headers of row / column channels for faceted plots.
+    
     Attributes
     ----------
     format : string
@@ -1681,6 +1713,8 @@ class JsonDataFormat(SchemaBase):
 
 class Legend(SchemaBase):
     """Legend schema wrapper
+    
+    Properties of a legend or boolean flag for determining whether to show it.
     
     Attributes
     ----------
@@ -2010,7 +2044,10 @@ class LookupTransform(SchemaBase):
 
 
 class Mark(SchemaBase):
-    """Mark schema wrapper"""
+    """Mark schema wrapper
+    
+    All types of primitive marks.
+    """
     _schema = {'$ref': '#/definitions/Mark'}
     _rootschema = Root._schema
 
@@ -2414,6 +2451,8 @@ class Projection(SchemaBase):
 class ProjectionConfig(SchemaBase):
     """ProjectionConfig schema wrapper
     
+    Any property of Projection can be in config
+    
     Attributes
     ----------
     center : list
@@ -2522,6 +2561,8 @@ class Repeat(SchemaBase):
 class RepeatRef(SchemaBase):
     """RepeatRef schema wrapper
     
+    Reference to a repeated value.
+    
     Attributes
     ----------
     repeat : string
@@ -2537,6 +2578,8 @@ class RepeatRef(SchemaBase):
 
 class Resolve(SchemaBase):
     """Resolve schema wrapper
+    
+    Defines how scales, axes, and legends from different specs should be combined. Resolve is a mapping from `scale`, `axis`, and `legend` to a mapping from channels to resolutions.
     
     Attributes
     ----------
@@ -3442,7 +3485,11 @@ class Transform(SchemaBase):
 
 
 class Type(SchemaBase):
-    """Type schema wrapper"""
+    """Type schema wrapper
+    
+    Constants and utilities for data type  
+ Data type based on level of measurement 
+    """
     _schema = {'$ref': '#/definitions/Type'}
     _rootschema = Root._schema
 
@@ -3492,6 +3539,8 @@ class UtcSingleTimeUnit(SchemaBase):
 class ValueDef(SchemaBase):
     """ValueDef schema wrapper
     
+    Definition object for a constant value of an encoding channel.
+    
     Attributes
     ----------
     value : anyOf(float, string, boolean)
@@ -3507,6 +3556,12 @@ class ValueDef(SchemaBase):
 
 class ValueDefWithCondition(SchemaBase):
     """ValueDefWithCondition schema wrapper
+    
+    A ValueDef with Condition<ValueDef | FieldDef>
+{
+   condition: {field: ...} | {value: ...},
+   value: ...,
+}
     
     Attributes
     ----------
@@ -3526,6 +3581,12 @@ class ValueDefWithCondition(SchemaBase):
 class MarkPropValueDefWithCondition(SchemaBase):
     """MarkPropValueDefWithCondition schema wrapper
     
+    A ValueDef with Condition<ValueDef | FieldDef>
+{
+   condition: {field: ...} | {value: ...},
+   value: ...,
+}
+    
     Attributes
     ----------
     condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, list)
@@ -3543,6 +3604,12 @@ class MarkPropValueDefWithCondition(SchemaBase):
 
 class TextValueDefWithCondition(SchemaBase):
     """TextValueDefWithCondition schema wrapper
+    
+    A ValueDef with Condition<ValueDef | FieldDef>
+{
+   condition: {field: ...} | {value: ...},
+   value: ...,
+}
     
     Attributes
     ----------

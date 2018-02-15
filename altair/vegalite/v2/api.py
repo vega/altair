@@ -167,7 +167,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
         self.encoding = core.EncodingWithFacet(**kwargs)
         return self
 
-    def interactive(self, name='grid'):
+    def interactive(self, name='grid', bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
         Parameters
@@ -176,7 +176,14 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
             The selection name to use for the axes scales. This name should be
             unique among all selections within the chart.
         """
-        self.selection = {name: {'bind': 'scales', 'type': 'interval'}}
+        encodings = []
+        if bind_x:
+            encodings.append('x')
+        if bind_y:
+            encodings.append('y')
+        self.selection = {name: {'bind': 'scales',
+                                 'type': 'interval',
+                                 'encodings': encodings}}
         return self
 
 
