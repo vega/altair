@@ -167,14 +167,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
             copy.mark = 'geoshape'
         return copy
 
-    def configure_mark(self, *args, **kwargs):
-        if args or kwargs:
-            if self.config is Undefined:
-                self.config = core.Config()
-            self.config.mark = core.MarkConfig(*args, **kwargs)
-        return self
-
-    # TODO: add hooks for more configure functions
+    # TODO: add configure_* methods
 
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
@@ -197,8 +190,18 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                 # as part of the to_dict() call.
                 kwargs[prop] = cls.from_dict(field, validate=False)
         # TODO: update nested values rather than overwriting them
-        self.encoding = core.EncodingWithFacet(**kwargs)
-        return self
+        copy = self.copy()
+        encoding = copy.encoding
+        if encoding is Undefined:
+            encoding = {}
+        elif isinstance(encoding, dict):
+            encoding = encoding.copy()
+        else:
+            encoding = {k: v for k, v in encoding._kwds.items()
+                        if v is not Undefined}
+        encoding.update(kwargs)
+        copy.encoding = core.EncodingWithFacet(**encoding)
+        return copy
 
     def interactive(self, name='grid', bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -214,10 +217,12 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
             encodings.append('x')
         if bind_y:
             encodings.append('y')
-        self.selection = {name: {'bind': 'scales',
+        copy = self.copy()
+        # TODO: don't overwrite previous selections?
+        copy.selection = {name: {'bind': 'scales',
                                  'type': 'interval',
                                  'encodings': encodings}}
-        return self
+        return copy
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
