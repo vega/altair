@@ -41,7 +41,7 @@ def limit_rows(data, max_rows=5000):
     if isinstance(data, pd.DataFrame):
         values = data
     elif isinstance(data, dict):
-        if 'values' in dict:
+        if 'values' in data:
             values = data['values']
         else:
             return data
