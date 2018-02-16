@@ -37,9 +37,15 @@ class MaxRowsError(Exception):
 @curry
 def limit_rows(data, max_rows=5000):
     """Raise MaxRowsError if the data model has more than max_rows."""
-    if not isinstance(data, (list, pd.DataFrame)):
-        raise TypeError('Expected dict or DataFrame, got: {}'.format(type(data)))
-    if len(data) > max_rows:
+    _check_data_type(data)
+    if isinstance(data, pd.DataFrame):
+        values = data
+    elif isinstance(data, dict):
+        if 'values' in dict:
+            values = data['values']
+        else:
+            return data
+    if len(values) > max_rows:
         raise MaxRowsError('The number of rows in your dataset is greater than the max of {}'.format(max_rows))
     return data
 
