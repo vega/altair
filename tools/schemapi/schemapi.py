@@ -37,16 +37,9 @@ class SchemaBase(object):
         object.__setattr__(self, '_args', args)
         object.__setattr__(self, '_kwds', kwds)
 
-    def copy(self, deep=False):
-        """Return a deep copy of the object"""
-        args = self._args
-        kwds = self._kwds
-
-        if deep:
-            import copy
-            args = copy.deepcopy(args)
-            kwds = copy.deepcopy(kwds)
-        return self.__class__(*args, **kwds)
+    def copy(self):
+        """Return a shallow copy of the object"""
+        return self.__class__(*self._args, **self._kwds)
 
     def __getattr__(self, item):
         # reminder: getattr is called after the normal lookups
