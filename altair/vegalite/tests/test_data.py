@@ -15,6 +15,7 @@ def _create_data_with_values(N):
 
 
 def test_limit_rows():
+    """Test the limit_rows data transformer."""
     data = _create_dataframe(10)
     result = limit_rows(data, max_rows=20)
     assert data is result
@@ -28,6 +29,7 @@ def test_limit_rows():
 
 
 def test_sample():
+    """Test the sample data transformer."""
     data = _create_dataframe(20)
     result = pipe(data, sample(n=10))
     assert len(result)==10
@@ -49,6 +51,14 @@ def test_sample():
 
 
 def test_to_values():
+    """Test the to_values data transformer."""
     data = _create_dataframe(10)
     result = pipe(data, to_values)
     assert result=={'values': data.to_dict(orient='records')}
+
+
+def test_type_error():
+    """Ensure that TypeError is raised for types other than dict/DataFrame."""
+    for f in (sample, limit_rows, to_values):
+        with pytest.raises(TypeError):
+            pipe(0, f)
