@@ -70,7 +70,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_area(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='area', **kwargs)
         else:
@@ -79,7 +79,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_bar(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='bar', **kwargs)
         else:
@@ -88,7 +88,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_line(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='line', **kwargs)
         else:
@@ -97,7 +97,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_point(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='point', **kwargs)
         else:
@@ -106,7 +106,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_text(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='text', **kwargs)
         else:
@@ -115,7 +115,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_tick(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='tick', **kwargs)
         else:
@@ -124,7 +124,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_rect(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='rect', **kwargs)
         else:
@@ -133,7 +133,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_rule(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='rule', **kwargs)
         else:
@@ -142,7 +142,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_circle(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='circle', **kwargs)
         else:
@@ -151,7 +151,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_square(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='square', **kwargs)
         else:
@@ -160,7 +160,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
     @use_signature(core.MarkDef)
     def mark_geoshape(self, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         if kwargs:
             copy.mark = core.MarkDef(type='geoshape', **kwargs)
         else:
@@ -190,12 +190,12 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                 # as part of the to_dict() call.
                 kwargs[prop] = cls.from_dict(field, validate=False)
         # TODO: update nested values rather than overwriting them
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         encoding = copy.encoding
         if encoding is Undefined:
             encoding = {}
         elif isinstance(encoding, dict):
-            encoding = encoding.copy()
+            pass
         else:
             encoding = {k: v for k, v in encoding._kwds.items()
                         if v is not Undefined}
@@ -217,7 +217,7 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
             encodings.append('x')
         if bind_y:
             encodings.append('y')
-        copy = self.copy()
+        copy = self.copy(deep=True, ignore=['data'])
         # TODO: don't overwrite previous selections?
         copy.selection = {name: {'bind': 'scales',
                                  'type': 'interval',

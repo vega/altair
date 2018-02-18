@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly
-# 2018-02-16 06:27:48
+# 2018-02-18 06:49:20
 import collections
 import json
 
@@ -40,9 +40,37 @@ class SchemaBase(object):
         object.__setattr__(self, '_args', args)
         object.__setattr__(self, '_kwds', kwds)
 
-    def copy(self):
-        """Return a shallow copy of the object"""
-        return self.__class__(*self._args, **self._kwds)
+    def copy(self, deep=True, ignore=()):
+        """Return a copy of the object
+
+        Parameters
+        ----------
+        deep : boolean, optional
+            if True (default) then return a deep copy of all dict, list, and
+            SchemaBase objects within the object structure
+        ignore : list, optional
+            A list of keys for which the contents should not be copied, but
+            only stored by reference.
+        """
+        def _deep_copy(obj, ignore=()):
+            if isinstance(obj, SchemaBase):
+                args = tuple(_deep_copy(args) for arg in obj._args)
+                kwds = {k: (_deep_copy(v, ignore=ignore)
+                            if k not in ignore else v)
+                        for k, v in obj._kwds.items()}
+                return obj.__class__(*args, **kwds)
+            elif isinstance(obj, list):
+                return [_deep_copy(v, ignore=ignore) for v in obj]
+            elif isinstance(obj, dict):
+                return {k: (_deep_copy(v, ignore=ignore)
+                            if k not in ignore else v)
+                        for k, v in val.items()}
+            else:
+                return obj
+        if deep:
+            return _deep_copy(self, ignore=ignore)
+        else:
+            return self.__class__(*self._args, **self._kwds)
 
     def __getattr__(self, item):
         # reminder: getattr is called after the normal lookups
