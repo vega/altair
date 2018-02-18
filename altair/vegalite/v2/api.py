@@ -250,11 +250,3 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
         super(LayerChart, self).__init__(layer=layer, **kwargs)
 
     # TODO: think about the most useful class API here
-
-
-class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
-    def __init__(self, spec, repeat, **kwargs):
-        super(RepeatChart, self).__init__(spec=spec, repeat=repeat, **kwargs)
-
-    # TODO: change channel classes to allow repeat values
-    # TODO: think about the most useful class API here
