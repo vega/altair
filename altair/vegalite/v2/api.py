@@ -189,8 +189,9 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                 # Don't validate now, because field will be computed
                 # as part of the to_dict() call.
                 kwargs[prop] = cls.from_dict(field, validate=False)
-        # TODO: update nested values rather than overwriting them
         copy = self.copy(deep=True, ignore=['data'])
+
+        # get a copy of the dict representation of the previous encoding
         encoding = copy.encoding
         if encoding is Undefined:
             encoding = {}
@@ -199,6 +200,8 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
         else:
             encoding = {k: v for k, v in encoding._kwds.items()
                         if v is not Undefined}
+
+        # update with the new encodings, and apply them to the copy
         encoding.update(kwargs)
         copy.encoding = core.EncodingWithFacet(**encoding)
         return copy
