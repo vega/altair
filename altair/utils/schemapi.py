@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly
-# 2018-02-18 21:30:42
+# 2018-02-19 12:07:26
 import collections
 import json
 
@@ -34,7 +34,10 @@ class SchemaBase(object):
         # derived classes:
         # - a single arg with no kwds, for, e.g. {'type': 'string'}
         # - zero args with zero or more kwds for {'type': 'object'}
-        assert len(args) == (0 if kwds else 1)
+        if kwds:
+            assert len(args) == 0
+        else:
+            assert len(args) in [0, 1]
 
         # use object.__setattr__ because we override setattr below.
         object.__setattr__(self, '_args', args)
@@ -138,7 +141,7 @@ class SchemaBase(object):
 
         if self._args and not self._kwds:
             result = _todict(self._args[0])
-        elif self._kwds and not self._args:
+        elif not self._args:
             result = _todict({k: v for k, v in self._kwds.items()
                               if k not in ignore})
         else:

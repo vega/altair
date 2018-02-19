@@ -46,9 +46,27 @@ class {classname}Value(core.{basename}):
 
 
 def copy_schemapi_util():
+    # Copy the schemapi utility file
     source_path = abspath(join(dirname(__file__), 'schemapi', 'schemapi.py'))
     destination_path = abspath(join(dirname(__file__), '..', 'altair',
                                     'utils', 'schemapi.py'))
+    print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
+
+    content = ["# The contents of this file are automatically written by\n",
+               "# tools/generate_schema_wrapper.py. Do not modify directly\n"
+               "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
+
+    with open(source_path, 'r') as f:
+        content += f.readlines()
+
+    with open(destination_path, 'w') as f:
+        f.writelines(content)
+        
+    # Copy the schemapi test file
+    source_path = abspath(join(dirname(__file__), 'schemapi',
+                               'tests', 'test_schemapi.py'))
+    destination_path = abspath(join(dirname(__file__), '..', 'altair',
+                                    'utils', 'tests', 'test_schemapi.py'))
     print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
 
     content = ["# The contents of this file are automatically written by\n",

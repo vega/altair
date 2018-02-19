@@ -1,5 +1,5 @@
 # The contents of this file are automatically generated
-# 2018-02-18 21:30:42
+# 2018-02-19 12:07:26
 
 from . import core
 from altair.utils.schemapi import Undefined
