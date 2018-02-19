@@ -34,17 +34,18 @@ def schemaclass(*args, init_func=True, docstring=True, property_map=True):
             warnings.warn("class is not an instance of SchemaBase.")
 
         name = cls.__name__
-        schema = SchemaInfo(cls)
 
         if init_func and '__init__' not in cls.__dict__:
-            init_code = codegen.init_code(name, schema.schema)
+            init_code = codegen.init_code(name, schema=cls._schema,
+                                          rootschema=cls._rootschema)
             globals_ = {name: cls, 'Undefined': Undefined}
             locals_ = {}
             exec(init_code, globals_, locals_)
             setattr(cls, '__init__', locals_['__init__'])
 
         if docstring and not cls.__doc__:
-            setattr(cls, '__doc__', codegen.docstring(name, schema.schema))
+            setattr(cls, '__doc__', codegen.docstring(name, schema=cls._schema,
+                                                      rootschema=cls._rootschema))
         return cls
 
     if len(args) == 0:

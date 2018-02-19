@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly
-# 2018-02-18 06:49:20
+# 2018-02-18 21:30:42
 import collections
 import json
 
@@ -54,7 +54,7 @@ class SchemaBase(object):
         """
         def _deep_copy(obj, ignore=()):
             if isinstance(obj, SchemaBase):
-                args = tuple(_deep_copy(args) for arg in obj._args)
+                args = tuple(_deep_copy(arg) for arg in obj._args)
                 kwds = {k: (_deep_copy(v, ignore=ignore)
                             if k not in ignore else v)
                         for k, v in obj._kwds.items()}
@@ -64,7 +64,7 @@ class SchemaBase(object):
             elif isinstance(obj, dict):
                 return {k: (_deep_copy(v, ignore=ignore)
                             if k not in ignore else v)
-                        for k, v in val.items()}
+                        for k, v in obj.items()}
             else:
                 return obj
         if deep:
@@ -143,7 +143,7 @@ class SchemaBase(object):
                               if k not in ignore})
         else:
             raise ValueError("{0} instance has both a value and properties : "
-                             "cannot serialize to dict")
+                             "cannot serialize to dict".format(self.__class__))
         if validate:
             self.validate(result)
         return result
