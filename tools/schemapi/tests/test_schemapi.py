@@ -2,7 +2,7 @@ import jsonschema
 import pytest
 
 from .. import SchemaBase, schemaclass, Undefined
-from ..core import UndefinedType
+from ..schemapi import UndefinedType
 
 
 @schemaclass
@@ -204,3 +204,39 @@ def test_invalid_properties():
 
 def test_undefined_singleton():
     assert Undefined is UndefinedType()
+
+
+def test_copy():
+    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
+       'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
+       'd': ['x', 'y', 'z']}
+
+    myschema = MySchema.from_dict(dct)
+
+    # Make sure copy is deep
+    copy = myschema.copy(deep=True)
+    copy['a']['foo'] = 'new value'
+    copy['b'] = ['A', 'B', 'C']
+    copy['c'] = 164
+    assert myschema.to_dict() == dct
+
+    # If we ignore a value, changing the copy changes the original
+    copy = myschema.copy(deep=True, ignore=['a'])
+    copy['a']['foo'] = 'new value'
+    copy['b'] = ['A', 'B', 'C']
+    copy['c'] = 164
+    mydct = myschema.to_dict()
+    assert mydct['a']['foo'] == 'new value'
+    assert mydct['b'][0] == dct['b'][0]
+    assert mydct['c'] == dct['c']
+
+    # If copy is not deep, then changing copy below top level changes original
+    copy = myschema.copy(deep=False)
+    copy['a']['foo'] = 'baz'
+    copy['b'] = ['A', 'B', 'C']
+    copy['c'] = 164
+    mydct = myschema.to_dict()
+    assert mydct['a']['foo'] == 'baz'
+    assert mydct['b'] == dct['b']
+    assert mydct['c'] == dct['c']
+    

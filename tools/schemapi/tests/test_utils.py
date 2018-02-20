@@ -1,7 +1,7 @@
 import pytest
 
 from ..utils import resolve_references, get_valid_identifier
-from ..core import _FromDict
+from ..schemapi import _FromDict
 
 
 @pytest.fixture

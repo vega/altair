@@ -68,80 +68,106 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
                                     width=width, height=height, **kwargs)
 
-    @use_signature(core.MarkConfig)
-    def mark_area(self, *args, **kwargs):
-        self.mark = 'area'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_area(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='area', **kwargs)
+        else:
+            copy.mark = 'area'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_bar(self, *args, **kwargs):
-        self.mark = 'bar'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_bar(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='bar', **kwargs)
+        else:
+            copy.mark = 'bar'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_line(self, *args, **kwargs):
-        self.mark = 'line'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_line(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='line', **kwargs)
+        else:
+            copy.mark = 'line'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_point(self, *args, **kwargs):
-        self.mark = 'point'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_point(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='point', **kwargs)
+        else:
+            copy.mark = 'point'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_text(self, *args, **kwargs):
-        self.mark = 'text'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_text(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='text', **kwargs)
+        else:
+            copy.mark = 'text'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_tick(self, *args, **kwargs):
-        self.mark = 'tick'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_tick(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='tick', **kwargs)
+        else:
+            copy.mark = 'tick'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_rect(self, *args, **kwargs):
-        self.mark = 'rect'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_rect(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='rect', **kwargs)
+        else:
+            copy.mark = 'rect'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_rule(self, *args, **kwargs):
-        self.mark = 'rule'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_rule(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='rule', **kwargs)
+        else:
+            copy.mark = 'rule'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_circle(self, *args, **kwargs):
-        self.mark = 'circle'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_circle(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='circle', **kwargs)
+        else:
+            copy.mark = 'circle'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_square(self, *args, **kwargs):
-        self.mark = 'square'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_square(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='square', **kwargs)
+        else:
+            copy.mark = 'square'
+        return copy
 
-    @use_signature(core.MarkConfig)
-    def mark_geoshape(self, *args, **kwargs):
-        self.mark = 'geoshape'
-        self.configure_mark(*args, **kwargs)
-        return self
+    @use_signature(core.MarkDef)
+    def mark_geoshape(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        if kwargs:
+            copy.mark = core.MarkDef(type='geoshape', **kwargs)
+        else:
+            copy.mark = 'geoshape'
+        return copy
 
-    def configure_mark(self, *args, **kwargs):
-        if args or kwargs:
-            if self.config is Undefined:
-                self.config = core.Config()
-            self.config.mark = core.MarkConfig(*args, **kwargs)
-        return self
-
-    # TODO: add hooks for more configure functions
+    # TODO: add configure_* methods
 
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
@@ -163,9 +189,22 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                 # Don't validate now, because field will be computed
                 # as part of the to_dict() call.
                 kwargs[prop] = cls.from_dict(field, validate=False)
-        # TODO: update nested values rather than overwriting them
-        self.encoding = core.EncodingWithFacet(**kwargs)
-        return self
+        copy = self.copy(deep=True, ignore=['data'])
+
+        # get a copy of the dict representation of the previous encoding
+        encoding = copy.encoding
+        if encoding is Undefined:
+            encoding = {}
+        elif isinstance(encoding, dict):
+            pass
+        else:
+            encoding = {k: v for k, v in encoding._kwds.items()
+                        if v is not Undefined}
+
+        # update with the new encodings, and apply them to the copy
+        encoding.update(kwargs)
+        copy.encoding = core.EncodingWithFacet(**encoding)
+        return copy
 
     def interactive(self, name='grid', bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -181,10 +220,12 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
             encodings.append('x')
         if bind_y:
             encodings.append('y')
-        self.selection = {name: {'bind': 'scales',
+        copy = self.copy(deep=True, ignore=['data'])
+        # TODO: don't overwrite previous selections?
+        copy.selection = {name: {'bind': 'scales',
                                  'type': 'interval',
                                  'encodings': encodings}}
-        return self
+        return copy
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
@@ -203,6 +244,7 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         super(VConcatChart, self).__init__(vconcat=vconcat, **kwargs)
 
     # TODO: think about the most useful class API here
+
 
 class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
     def __init__(self, layer, **kwargs):
