@@ -4,6 +4,7 @@ Utility routines
 import re
 import warnings
 
+import six
 import pandas as pd
 import numpy as np
 
@@ -11,6 +12,8 @@ try:
     from pandas.api.types import infer_dtype
 except ImportError: # Pandas before 0.20.0
     from pandas.lib import infer_dtype
+
+from .schemapi import SchemaBase, Undefined
 
 
 TYPECODE_MAP = {'ordinal': 'O',
@@ -264,3 +267,31 @@ def use_signature(Obj):
         f.__doc__ += '\n'.join(doclines[1:])
         return f
     return decorate
+
+
+def update_subtraits(obj, attrs, **kwargs):
+    """Recursively update sub-traits without overwriting other traits"""
+    # TODO: infer keywords from args
+    if not kwargs:
+        return obj
+
+    # obj can be a SchemaBase object or a dict
+    if obj is Undefined:
+        obj = dct = {}
+    elif isinstance(obj, SchemaBase):
+        dct = obj._kwds
+    else:
+        dct = obj
+
+    if isinstance(attrs, six.string_types):
+        attrs = (attrs,)
+
+    if len(attrs) == 0:
+        dct.update(kwargs)
+    else:
+        attr = attrs[0]
+        trait = dct.get(attr, Undefined)
+        if trait is Undefined:
+            trait = dct[attr] = {}
+        dct[attr] = update_subtraits(trait, attrs[1:], **kwargs)
+    return obj

@@ -11,7 +11,8 @@ from .schema import *  # TODO: expliticly import all names
 from .schema import core, channels, Undefined
 
 from .data import data_transformers, pipe
-from ...utils import infer_vegalite_type, parse_shorthand_plus_data, use_signature
+from ...utils import (infer_vegalite_type, parse_shorthand_plus_data,
+                      use_signature, update_subtraits)
 from .display import renderers
 
 
@@ -22,34 +23,6 @@ def _get_channels_mapping():
         if isinstance(cls, type) and issubclass(cls, SchemaBase):
             mapping[cls] = attr.lower()
     return mapping
-
-
-def update_subtraits(obj, attrs, **kwargs):
-    """Recursively update sub-traits without overwriting other traits"""
-    # TODO: infer keywords from args
-    if not kwargs:
-        return obj
-
-    # obj can be a SchemaBase object or a dict
-    if obj is Undefined:
-        obj = dct = {}
-    elif isinstance(obj, SchemaBase):
-        dct = obj._kwds
-    else:
-        dct = obj
-
-    if isinstance(attrs, six.string_types):
-        attrs = (attrs,)
-
-    if len(attrs) == 0:
-        dct.update(kwargs)
-    else:
-        attr = attrs[0]
-        trait = dct.get(attr, Undefined)
-        if trait is Undefined:
-            trait = dct[attr] = {}
-        dct[attr] = update_subtraits(trait, attrs[1:], **kwargs)
-    return obj
 
 
 #*************************************************************************
@@ -519,8 +492,20 @@ class Chart(TopLevelMixin, ExtendedUnitSpec):
         return update_subtraits(self, ('config', 'mark'), **kwargs)
 
     @use_signature(Encoding)
-    def encode(self, **kwargs):
+    def encode(self, *args, **kwargs):
         """Define the encoding for the Chart."""
+        if args:
+            mapping = _get_channels_mapping()
+            for arg in args:
+                encoding = mapping.get(type(arg), None)
+                if encoding is None:
+                    raise NotImplementedError("non-keyword arg of type {0}"
+                                              "".format(type(arg)))
+                if encoding in kwargs:
+                    raise ValueError("encode: encoding {0} specified twice"
+                                     "".format(encoding))
+                kwargs[encoding] = arg
+
         for prop, field in list(kwargs.items()):
             if not isinstance(field, SchemaBase):
                 cls = getattr(channels, prop.title())
