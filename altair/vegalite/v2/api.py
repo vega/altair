@@ -45,7 +45,7 @@ class TopLevelMixin(object):
     def __add__(self, other):
         return LayerChart([self, other])
 
-    def __sub__(self, other):
+    def __and__(self, other):
         return VConcatChart([self, other])
 
     def __or__(self, other):
