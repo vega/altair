@@ -1,5 +1,5 @@
 # The contents of this file are automatically generated
-# at time 2018-02-19 12:07:26
+# at time 2018-02-20 10:30:19
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
