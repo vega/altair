@@ -57,10 +57,6 @@ class TopLevelMixin(object):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
 
-    def display(self):
-        from vega3 import VegaLite
-        return VegaLite(self.to_dict())
-
 
 class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
