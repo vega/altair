@@ -61,7 +61,7 @@ def copy_schemapi_util():
 
     with open(destination_path, 'w') as f:
         f.writelines(content)
-        
+
     # Copy the schemapi test file
     source_path = abspath(join(dirname(__file__), 'schemapi',
                                'tests', 'test_schemapi.py'))
@@ -101,7 +101,8 @@ def generate_schema_wrapper(schema_file):
     contents.append('')  # end with newline
     return '\n'.join(contents)
 
-def generate_vegalite_channel_wrappers(schemafile, imports=None):
+def generate_vegalite_channel_wrappers(schemafile, imports=None,
+                                       encoding_def='Encoding'):
     # TODO: generate __all__ for top of file
     with open(schemafile) as f:
         schema = json.load(f)
@@ -114,7 +115,7 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None):
     contents.extend(imports)
     contents.append('')
 
-    encoding = SchemaInfo(schema['definitions']['EncodingWithFacet'],
+    encoding = SchemaInfo(schema['definitions'][encoding_def],
                           rootschema=schema)
 
     for prop, propschema in encoding.properties.items():
@@ -142,31 +143,32 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None):
 def main():
     copy_schemapi_util()
 
-    for library in ['vegalite']:
-        for version in ['v2']:
-            path = abspath(join(dirname(__file__), '..',
-                                'altair', library, version))
-            schemafile = join(path, 'vega-lite-schema.json')
+    encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
 
-            # Generate __init__.py file
-            outfile = join(path, 'schema', '__init__.py')
-            print("Writing {0}".format(outfile))
-            with open(outfile, 'w') as f:
-                f.write("from .core import *\nfrom .channels import *")
+    for version in ['v1', 'v2']:
+        path = abspath(join(dirname(__file__), '..',
+                            'altair', 'vegalite', version))
+        schemafile = join(path, 'vega-lite-schema.json')
 
-            # Generate the core schema wrappers
-            outfile = join(path, 'schema', 'core.py')
-            print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
-            file_contents = generate_schema_wrapper(schemafile)
-            with open(outfile, 'w') as f:
-                f.write(file_contents)
+        # Generate __init__.py file
+        outfile = join(path, 'schema', '__init__.py')
+        print("Writing {0}".format(outfile))
+        with open(outfile, 'w') as f:
+            f.write("from .core import *\nfrom .channels import *")
 
-            # Generate the channel wrappers
-            outfile = join(path, 'schema', 'channels.py')
-            print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
-            code = generate_vegalite_channel_wrappers(schemafile)
-            with open(outfile, 'w') as f:
-                f.write(code)
+        # Generate the core schema wrappers
+        outfile = join(path, 'schema', 'core.py')
+        print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+        file_contents = generate_schema_wrapper(schemafile)
+        with open(outfile, 'w') as f:
+            f.write(file_contents)
+
+        # Generate the channel wrappers
+        outfile = join(path, 'schema', 'channels.py')
+        print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+        code = generate_vegalite_channel_wrappers(schemafile, encoding_def=encoding_defs[version])
+        with open(outfile, 'w') as f:
+            f.write(code)
 
 
 if __name__ == '__main__':

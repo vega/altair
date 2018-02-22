@@ -1,3 +1,9 @@
+from .api import *
+
+from ...datasets import (
+    list_datasets,
+    load_dataset
+)
 
 from .display import vegalite, VegaLite, renderers
 
@@ -7,6 +13,3 @@ from .data import (
     default_data_transformer,
     data_transformers
 )
-
-
-from .schema.channels import *

@@ -3,9 +3,9 @@ import six
 import pandas as pd
 
 from .schema import *
+from .schema import core, channels, Undefined
 
 from .data import data_transformers, pipe
-from .schema import core, channels, Undefined
 from ...utils import infer_vegalite_type, parse_shorthand_plus_data, use_signature
 from .display import renderers
 
