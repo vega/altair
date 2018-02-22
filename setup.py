@@ -97,7 +97,8 @@ AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@gmail.com"
 URL                 = 'http://altair-viz.github.io'
 DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
-INSTALL_REQUIRES    = ['ipython',
+INSTALL_REQUIRES    = ['entrypoints',
+                       'ipython',
                        'jsonschema',
                        'numpy',
                        'pandas',

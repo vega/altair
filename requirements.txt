@@ -1,3 +1,4 @@
+entrypoints
 ipython
 jsonschema
 numpy
