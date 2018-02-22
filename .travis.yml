@@ -14,4 +14,4 @@ install:
   - python setup.py install
 
 script:
-  python -m pytest altair --doctest-modules;
+  python -m pytest altair
