@@ -1,6 +1,6 @@
 import json
 
-from .. import urls
+from . import urls
 
 
 def to_html(json_dict,

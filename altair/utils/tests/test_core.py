@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from ..traitlet_utils import parse_shorthand, construct_shorthand
+from .. import parse_shorthand
 
 
 def test_parse_shorthand():
@@ -42,13 +42,3 @@ def test_parse_shorthand():
     # check parsing in presence of strange characters
     check('average(a b:(c\nd):Q', aggregate='average',
           field='a b:(c\nd', type='quantitative')
-
-
-def test_shorthand_roundtrip():
-    def check(**kwargs):
-        assert parse_shorthand(construct_shorthand(**kwargs)) == kwargs
-
-    check(field='foo')
-    check(field='foo', aggregate='average')
-    check(field='foo', type='quantitative')
-    check(field='foo', aggregate='average', type='quantitative')
