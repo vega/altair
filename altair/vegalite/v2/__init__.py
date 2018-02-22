@@ -1,5 +1,7 @@
 from .api import *
 
+from . import examples
+
 from ...datasets import (
     list_datasets,
     load_dataset
