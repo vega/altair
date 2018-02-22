@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-22 11:15
+# 2018-02-22 15:42
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -501,7 +501,7 @@ class DataFormat(SchemaBase):
     ----------
     type : DataFormatType
         Type of input data: `"json"`, `"csv"`, `"tsv"`.  The default format type is determined by the extension of the file url.  If no extension is detected, `"json"` will be used by default.
-    parse : None
+    parse : any
         A collection of parsing instructions can be used to define the data types of string-valued attributes in the JSON file. Each instruction is a name-value pair, where the name is the name of the attribute, and the value is the desired data type (one of `"number"`, `"boolean"` or `"date"`). For example, `"parse": {"modified_on":"date"}` ensures that the `modified_on` value in each row of the input data is parsed as a Date value. (See Datalib's [`dl.read.types` method](https://github.com/vega/datalib/wiki/Import#dl_read_types) for more information.)
     property : string
         JSON only) The JSON property containing the desired data.  This parameter can be used when the loaded JSON file may have surrounding structure or meta-data.  For example `"property": "values.features"` is equivalent to retrieving `json.values.features`  from the loaded JSON object.
@@ -1015,7 +1015,7 @@ class AxisConfig(SchemaBase):
         Max length for axis title if the title is automatically generated from the field's description. By default, this is automatically based on cell size and characterWidth property.
     characterWidth : float
         Character width for automatically determining title max length.
-    properties : None
+    properties : any
         Optional mark property definitions for custom axis styling.
     """
     _schema = {'$ref': '#/definitions/AxisConfig'}
@@ -1077,7 +1077,7 @@ class LegendConfig(SchemaBase):
         The font size of the legend title.
     titleFontWeight : string
         The font weight of the legend title.
-    properties : None
+    properties : any
         Optional mark property definitions for custom legend styling.
     """
     _schema = {'$ref': '#/definitions/LegendConfig'}

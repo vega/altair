@@ -190,7 +190,7 @@ class SchemaInfo(object):
             return "anyOf({0})".format(', '.join(options))
         elif self.type in _simple_types:
             return _simple_types[self.type]
-        elif self.type == '':
+        elif not self.type:
             return 'any'
 
     @property

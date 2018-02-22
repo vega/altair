@@ -17,7 +17,7 @@ import json
 def load_schema():
     """Load the json schema associated with this module's functions"""
     directory = os.path.dirname(__file__)
-    with open(os.path.join(directory, '..', 'vega-lite-schema.json')) as f:
+    with open(os.path.join(directory, '..', '{schemafile}')) as f:
         return json.load(f)
 '''
 
@@ -80,13 +80,13 @@ def copy_schemapi_util():
             dest.writelines(source.readlines())
 
 
-def generate_schema_wrapper(schema_file):
+def generate_vegalite_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
     with open(schema_file) as f:
         rootschema = json.load(f)
     contents = [HEADER,
                 "from altair.utils.schemapi import SchemaBase, Undefined",
-                LOAD_SCHEMA]
+                LOAD_SCHEMA.format(schemafile='vega-lite-schema.json')]
     contents.append(schema_class('Root', schema=rootschema,
                                  schemarepr=CodeSnippet('load_schema()')))
     for name in rootschema['definitions']:
@@ -99,6 +99,29 @@ def generate_schema_wrapper(schema_file):
                                      rootschemarepr=CodeSnippet("Root._schema")))
     contents.append('')  # end with newline
     return '\n'.join(contents)
+
+
+def generate_vega_schema_wrapper(schema_file):
+    """Generate a schema wrapper at the given path."""
+    with open(schema_file) as f:
+        rootschema = json.load(f)
+    contents = [HEADER,
+                "from altair.utils.schemapi import SchemaBase, Undefined",
+                LOAD_SCHEMA.format(schemafile='vega-schema.json')]
+    contents.append(schema_class('Root', schema=rootschema,
+                                 schemarepr=CodeSnippet('load_schema()')))
+    for deflist in ['defs', 'refs']:
+        for name in rootschema[deflist]:
+            defschema = {'$ref': '#/{0}/{1}'.format(deflist, name)}
+            defschema_repr = {'$ref': '#/{0}/{1}'.format(deflist,name)}
+            contents.append(schema_class(get_valid_identifier(name),
+                                         schema=defschema, schemarepr=defschema_repr,
+                                         rootschema=rootschema,
+                                         rootschemarepr=CodeSnippet("Root._schema")))
+    contents.append('')  # end with newline
+    return '\n'.join(contents)
+
+
 
 def generate_vegalite_channel_wrappers(schemafile, imports=None,
                                        encoding_def='Encoding'):
@@ -138,9 +161,7 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
 # TODO: generate useful docstrings & simple unit tests
 
 
-def main():
-    copy_schemapi_util()
-
+def vegalite_main():
     encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
 
     for version in ['v1', 'v2']:
@@ -157,7 +178,7 @@ def main():
         # Generate the core schema wrappers
         outfile = join(path, 'schema', 'core.py')
         print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
-        file_contents = generate_schema_wrapper(schemafile)
+        file_contents = generate_vegalite_schema_wrapper(schemafile)
         with open(outfile, 'w') as f:
             f.write(file_contents)
 
@@ -169,5 +190,27 @@ def main():
             f.write(code)
 
 
+def vega_main():
+    for version in ['v2', 'v3']:
+        path = abspath(join(dirname(__file__), '..',
+                            'altair', 'vega', version))
+        schemafile = join(path, 'vega-schema.json')
+
+        # Generate __init__.py file
+        outfile = join(path, 'schema', '__init__.py')
+        print("Writing {0}".format(outfile))
+        with open(outfile, 'w') as f:
+            f.write("from .core import *")
+
+        # Generate the core schema wrappers
+        outfile = join(path, 'schema', 'core.py')
+        print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+        file_contents = generate_vega_schema_wrapper(schemafile)
+        with open(outfile, 'w') as f:
+            f.write(file_contents)
+
+
 if __name__ == '__main__':
-    main()
+    copy_schemapi_util()
+    vegalite_main()
+    vega_main()
