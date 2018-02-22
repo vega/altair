@@ -45,47 +45,46 @@ class {classname}Value(core.{basename}):
 '''
 
 
+HEADER = """\
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
+# {0}
+""".format(datetime.now().strftime('%Y-%m-%d %H:%M'))
+
+
 def copy_schemapi_util():
-    # Copy the schemapi utility file
+    """
+    Copy the schemapi utility and its test file into altair/utils/
+    """
+    # copy the schemapi utility file
     source_path = abspath(join(dirname(__file__), 'schemapi', 'schemapi.py'))
     destination_path = abspath(join(dirname(__file__), '..', 'altair',
                                     'utils', 'schemapi.py'))
+
     print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
-
-    content = ["# The contents of this file are automatically written by\n",
-               "# tools/generate_schema_wrapper.py. Do not modify directly\n"
-               "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
-
-    with open(source_path, 'r') as f:
-        content += f.readlines()
-
-    with open(destination_path, 'w') as f:
-        f.writelines(content)
+    with open(source_path, 'r') as source:
+        with open(destination_path, 'w') as dest:
+            dest.write(HEADER)
+            dest.writelines(source.readlines())
 
     # Copy the schemapi test file
     source_path = abspath(join(dirname(__file__), 'schemapi',
                                'tests', 'test_schemapi.py'))
     destination_path = abspath(join(dirname(__file__), '..', 'altair',
                                     'utils', 'tests', 'test_schemapi.py'))
+
     print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
-
-    content = ["# The contents of this file are automatically written by\n",
-               "# tools/generate_schema_wrapper.py. Do not modify directly\n"
-               "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
-
-    with open(source_path, 'r') as f:
-        content += f.readlines()
-
-    with open(destination_path, 'w') as f:
-        f.writelines(content)
+    with open(source_path, 'r') as source:
+        with open(destination_path, 'w') as dest:
+            dest.write(HEADER)
+            dest.writelines(source.readlines())
 
 
 def generate_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
     with open(schema_file) as f:
         rootschema = json.load(f)
-    contents = ["# The contents of this file are automatically generated",
-                "# at time {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+    contents = [HEADER,
                 "from altair.utils.schemapi import SchemaBase, Undefined",
                 LOAD_SCHEMA]
     contents.append(schema_class('Root', schema=rootschema,
@@ -110,8 +109,7 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
         imports = ["from . import core",
                    "from altair.utils.schemapi import Undefined",
                    "from altair.utils import parse_shorthand, parse_shorthand_plus_data"]
-    contents = ["# The contents of this file are automatically generated",
-                "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
+    contents = [HEADER]
     contents.extend(imports)
     contents.append('')
 
