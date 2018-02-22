@@ -85,28 +85,27 @@ DESCRIPTION         = "Altair: A declarative statistical visualization library f
 NAME                = "altair"
 PACKAGES            = find_packages()
 PACKAGE_DATA        = {'altair': [
-                                  'datasets/*.json',
                                   'expr/*.json',
                                   'vega/v2/*.json',
                                   'vega/v3/*.json',
-                                  'vegalite/v1/schema/*.json',
+                                  'vegalite/v1/*.json',
                                   'vegalite/v2/*.json'
                                   ]
                       }
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
-AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu"
+AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@gmail.com"
 URL                 = 'http://altair-viz.github.io'
 DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
-INSTALL_REQUIRES    = ['traitlets>=4.3.1',
+INSTALL_REQUIRES    = ['entrypoints',
                        'ipython',
-                       'pandas',
-                       'vega==0.4.4',
-                       'mypy',
-                       'mypy_extensions',
                        'jsonschema',
-                       'toolz'
-                       ]
+                       'numpy',
+                       'pandas',
+                       'pytest',
+                       'six',
+                       'toolz',
+                       'vega_datasets']
 VERSION             = version('altair/__init__.py')
 
 
