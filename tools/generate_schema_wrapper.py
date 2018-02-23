@@ -82,6 +82,7 @@ def copy_schemapi_util():
 
 def generate_vegalite_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
+    # TODO: generate simple tests for each wrapper
     with open(schema_file) as f:
         rootschema = json.load(f)
     contents = [HEADER,
@@ -103,6 +104,7 @@ def generate_vegalite_schema_wrapper(schema_file):
 
 def generate_vega_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
+    # TODO: generate simple tests for each wrapper
     with open(schema_file) as f:
         rootschema = json.load(f)
     contents = [HEADER,
@@ -120,7 +122,6 @@ def generate_vega_schema_wrapper(schema_file):
                                          rootschemarepr=CodeSnippet("Root._schema")))
     contents.append('')  # end with newline
     return '\n'.join(contents)
-
 
 
 def generate_vegalite_channel_wrappers(schemafile, imports=None,
@@ -156,9 +157,6 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
             contents.append(template.format(classname=classname,
                                             basename=basename))
     return '\n'.join(contents)
-
-
-# TODO: generate useful docstrings & simple unit tests
 
 
 def vegalite_main():

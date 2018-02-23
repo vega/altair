@@ -67,6 +67,7 @@ def docstring(classname, schema, rootschema=None, indent=4):
     # TODO: add a general description at the top, derived from the schema.
     #       for example, a non-object definition should list valid type, enum
     #       values, etc.
+    # TODO: use _get_args here for more information on allOf objects
     info = SchemaInfo(schema, rootschema)
     doc = ["{0} schema wrapper".format(classname)]
     if info.description:
@@ -89,33 +90,65 @@ def __init__({arglist}):
 """.lstrip()
 
 
+# TODO: create func that gets list of args, required kwds, non-required kwds,
+#       and optional kwds. Use this to recursively build-up keyword lists for
+#       anyOf/allOf.
+
+
+def _get_args(info):
+    """Return the list of args & kwds for building the __init__ function"""
+    # TODO: - set additional properties correctly
+    #       - handle patternProperties etc.
+    required = set()
+    kwds = set()
+
+    # TODO: specialize for anyOf/oneOf?
+
+    if info.is_allOf():
+        # recursively call function on all children
+        arginfo = [_get_args(child) for child in info.allOf]
+        nonkeyword = all(args[0] for args in arginfo)
+        required = set.union(set(), *(args[1] for args in arginfo))
+        kwds = set.union(set(), *(args[2] for args in arginfo))
+        additional = all(args[3] for args in arginfo)
+    elif info.is_empty() or info.is_compound():
+        nonkeyword = True
+        additional = True
+    elif info.is_value():
+        nonkeyword = True
+        additional=False
+    elif info.is_object():
+        required = {p for p in info.required if is_valid_identifier(p)}
+        kwds = {p for p in info.properties if is_valid_identifier(p)}
+        kwds -= required
+        nonkeyword = False
+        additional = True
+    else:
+        raise ValueError("Schema object not understood")
+
+    return (nonkeyword, required, kwds, additional)
+
+
 def init_code(classname, schema, rootschema=None, indent=0):
     """Return code suitablde for the __init__ function of a Schema class"""
     info = SchemaInfo(schema, rootschema=rootschema)
+    nonkeyword, required, kwds, additional =_get_args(info)
 
     args = ['self']
     super_args = []
 
-    if info.is_empty() or info.is_compound():
-        args.extend(['*args', '**kwds'])
-        super_args.extend(['*args', '**kwds'])
-    elif info.is_value():
-        args.extend(['*args'])
-        super_args.extend(['*args'])
-    elif info.is_object():
-        required = {p for p in info.required if is_valid_identifier(p)}
-        props = {p for p in info.properties if is_valid_identifier(p)}
-        props -= required
+    if nonkeyword:
+        args.append('*args')
+        super_args.append('*args')
 
-        args.extend('{0}=Undefined'.format(p)
-                    for p in sorted(required) + sorted(props))
+    args.extend('{0}=Undefined'.format(p)
+                for p in sorted(required) + sorted(kwds))
+    super_args.extend('{0}={0}'.format(p)
+                      for p in sorted(required) + sorted(kwds))
+
+    if additional:
         args.append('**kwds')
-
-        super_args.extend('{0}={0}'.format(p)
-                          for p in sorted(required) + sorted(props))
         super_args.append('**kwds')
-    else:
-        raise ValueError("Schema object not understood")
 
     code = INIT_DEF.format(classname=classname,
                            arglist=', '.join(args),

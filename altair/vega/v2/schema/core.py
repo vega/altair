@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-22 15:42
+# 2018-02-23 07:04
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -19,8 +19,8 @@ class Root(SchemaBase):
     _schema = load_schema()
     _rootschema = _schema
 
-    def __init__(self, *args, **kwds):
-        super(Root, self).__init__(*args, **kwds)
+    def __init__(self, axes=Undefined, background=Undefined, data=Undefined, height=Undefined, legends=Undefined, marks=Undefined, padding=Undefined, predicates=Undefined, scales=Undefined, scene=Undefined, signals=Undefined, viewport=Undefined, width=Undefined, **kwds):
+        super(Root, self).__init__(axes=axes, background=background, data=data, height=height, legends=legends, marks=marks, padding=padding, predicates=predicates, scales=scales, scene=scene, signals=signals, viewport=viewport, width=width, **kwds)
     
 
 
@@ -91,8 +91,8 @@ class data(SchemaBase):
     _schema = {'$ref': '#/defs/data'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(data, self).__init__(*args, **kwds)
+    def __init__(self, name=Undefined, format=Undefined, modify=Undefined, transform=Undefined, **kwds):
+        super(data, self).__init__(name=name, format=format, modify=modify, transform=transform, **kwds)
     
 
 
@@ -193,8 +193,8 @@ class groupMark(SchemaBase):
     _schema = {'$ref': '#/defs/groupMark'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(groupMark, self).__init__(*args, **kwds)
+    def __init__(self, type=Undefined, axes=Undefined, delay=Undefined, ease=Undefined, interactive=Undefined, key=Undefined, legends=Undefined, marks=Undefined, name=Undefined, properties=Undefined, scales=Undefined, scene=Undefined, **kwds):
+        super(groupMark, self).__init__(type=type, axes=axes, delay=delay, ease=ease, interactive=interactive, key=key, legends=legends, marks=marks, name=name, properties=properties, scales=scales, scene=scene, **kwds)
     
 
 
@@ -203,8 +203,8 @@ class visualMark(SchemaBase):
     _schema = {'$ref': '#/defs/visualMark'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(visualMark, self).__init__(*args, **kwds)
+    def __init__(self, type=Undefined, delay=Undefined, ease=Undefined, interactive=Undefined, key=Undefined, name=Undefined, properties=Undefined, **kwds):
+        super(visualMark, self).__init__(type=type, delay=delay, ease=ease, interactive=interactive, key=key, name=name, properties=properties, **kwds)
     
 
 
@@ -377,8 +377,8 @@ class spec(SchemaBase):
     _schema = {'$ref': '#/defs/spec'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(spec, self).__init__(*args, **kwds)
+    def __init__(self, axes=Undefined, background=Undefined, data=Undefined, height=Undefined, legends=Undefined, marks=Undefined, padding=Undefined, predicates=Undefined, scales=Undefined, scene=Undefined, signals=Undefined, viewport=Undefined, width=Undefined, **kwds):
+        super(spec, self).__init__(axes=axes, background=background, data=data, height=height, legends=legends, marks=marks, padding=padding, predicates=predicates, scales=scales, scene=scene, signals=signals, viewport=viewport, width=width, **kwds)
     
 
 
@@ -1075,8 +1075,8 @@ class scale(SchemaBase):
     _schema = {'$ref': '#/defs/scale'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(scale, self).__init__(*args, **kwds)
+    def __init__(self, name=Undefined, domain=Undefined, domainMax=Undefined, domainMin=Undefined, rangeMax=Undefined, rangeMin=Undefined, reverse=Undefined, round=Undefined, type=Undefined, **kwds):
+        super(scale, self).__init__(name=name, domain=domain, domainMax=domainMax, domainMin=domainMin, rangeMax=rangeMax, rangeMin=rangeMin, reverse=reverse, round=round, type=type, **kwds)
     
 
 

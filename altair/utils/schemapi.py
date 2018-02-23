@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-22 15:42
+# 2018-02-23 07:04
 import collections
 import json
 
@@ -160,8 +160,7 @@ class SchemaBase(object):
         dct : dictionary
             The dict from which to construct the class
         validate : boolean
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the input against the schema.
 
         Returns
         -------
@@ -183,7 +182,7 @@ class SchemaBase(object):
     def validate(cls, instance, schema=None):
         """
         Validate the instance against the class schema in the context of the
-        roootschema.
+        rootschema.
         """
         if schema is None:
             schema = cls._schema

@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-22 15:42
+# 2018-02-23 07:04
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -19,8 +19,8 @@ class Root(SchemaBase):
     _schema = load_schema()
     _rootschema = _schema
 
-    def __init__(self, *args, **kwds):
-        super(Root, self).__init__(*args, **kwds)
+    def __init__(self, autosize=Undefined, axes=Undefined, background=Undefined, config=Undefined, data=Undefined, description=Undefined, encode=Undefined, height=Undefined, layout=Undefined, legends=Undefined, marks=Undefined, padding=Undefined, projections=Undefined, scales=Undefined, signals=Undefined, title=Undefined, usermeta=Undefined, width=Undefined, **kwds):
+        super(Root, self).__init__(autosize=autosize, axes=axes, background=background, config=config, data=data, description=description, encode=encode, height=height, layout=layout, legends=legends, marks=marks, padding=padding, projections=projections, scales=scales, signals=signals, title=title, usermeta=usermeta, width=width, **kwds)
     
 
 
@@ -121,8 +121,8 @@ class data(SchemaBase):
     _schema = {'$ref': '#/defs/data'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(data, self).__init__(*args, **kwds)
+    def __init__(self, name=Undefined, format=Undefined, on=Undefined, transform=Undefined, **kwds):
+        super(data, self).__init__(name=name, format=format, on=on, transform=transform, **kwds)
     
 
 
@@ -375,8 +375,8 @@ class markGroup(SchemaBase):
     _schema = {'$ref': '#/defs/markGroup'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(markGroup, self).__init__(*args, **kwds)
+    def __init__(self, type=Undefined, axes=Undefined, clip=Undefined, data=Undefined, encode=Undefined, interactive=Undefined, key=Undefined, layout=Undefined, legends=Undefined, marks=Undefined, name=Undefined, on=Undefined, projections=Undefined, role=Undefined, scales=Undefined, signals=Undefined, sort=Undefined, style=Undefined, title=Undefined, transform=Undefined, **kwds):
+        super(markGroup, self).__init__(type=type, axes=axes, clip=clip, data=data, encode=encode, interactive=interactive, key=key, layout=layout, legends=legends, marks=marks, name=name, on=on, projections=projections, role=role, scales=scales, signals=signals, sort=sort, style=style, title=title, transform=transform, **kwds)
     
 
 
@@ -385,8 +385,8 @@ class markVisual(SchemaBase):
     _schema = {'$ref': '#/defs/markVisual'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(markVisual, self).__init__(*args, **kwds)
+    def __init__(self, type=Undefined, clip=Undefined, encode=Undefined, interactive=Undefined, key=Undefined, name=Undefined, on=Undefined, role=Undefined, sort=Undefined, style=Undefined, transform=Undefined, **kwds):
+        super(markVisual, self).__init__(type=type, clip=clip, encode=encode, interactive=interactive, key=key, name=name, on=on, role=role, sort=sort, style=style, transform=transform, **kwds)
     
 
 
@@ -487,8 +487,8 @@ class scale(SchemaBase):
     _schema = {'$ref': '#/defs/scale'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(scale, self).__init__(*args, **kwds)
+    def __init__(self, name=Undefined, domain=Undefined, domainMax=Undefined, domainMid=Undefined, domainMin=Undefined, domainRaw=Undefined, reverse=Undefined, round=Undefined, type=Undefined, **kwds):
+        super(scale, self).__init__(name=name, domain=domain, domainMax=domainMax, domainMid=domainMid, domainMin=domainMin, domainRaw=domainRaw, reverse=reverse, round=round, type=type, **kwds)
     
 
 
@@ -647,8 +647,8 @@ class stream(SchemaBase):
     _schema = {'$ref': '#/defs/stream'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(stream, self).__init__(*args, **kwds)
+    def __init__(self, between=Undefined, consume=Undefined, debounce=Undefined, filter=Undefined, markname=Undefined, marktype=Undefined, throttle=Undefined, **kwds):
+        super(stream, self).__init__(between=between, consume=consume, debounce=debounce, filter=filter, markname=markname, marktype=marktype, throttle=throttle, **kwds)
     
 
 

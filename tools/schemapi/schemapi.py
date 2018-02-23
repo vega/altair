@@ -157,8 +157,7 @@ class SchemaBase(object):
         dct : dictionary
             The dict from which to construct the class
         validate : boolean
-            If True (default), then validate the output dictionary
-            against the schema.
+            If True (default), then validate the input against the schema.
 
         Returns
         -------
@@ -180,7 +179,7 @@ class SchemaBase(object):
     def validate(cls, instance, schema=None):
         """
         Validate the instance against the class schema in the context of the
-        roootschema.
+        rootschema.
         """
         if schema is None:
             schema = cls._schema
