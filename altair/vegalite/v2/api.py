@@ -56,23 +56,29 @@ class SelectionMapping(SchemaBase):
         else:
             return NotImplemented
 
-def selection(name, selection):
+def selection(name=None, **kwds):
     """Create a named selection.
 
     Parameters
     ----------
-    name : string
-        The name of the selection. The name should be unique among all
-        selections used within the chart.
-    selection : SelectionDef
-        a valid SelectionDef mapping
+    name : string (optional)
+        The name of the selection. If not specified, a unique name will be
+        created.
+    **kwds :
+        additional keywords will be used to construct a SelectionDef instance
+        that controls the selection.
 
     Returns
     -------
     selection: SelectionMapping
         The SelectionMapping object that can be used in chart creation.
     """
-    return SelectionMapping(**{name: selection})
+    if name is None:
+        name = "selector{0:02d}".format(selection.counter)
+        selection.counter += 1
+    return SelectionMapping(**{name: SelectionDef(**kwds)})
+
+selection.counter = 1
 
 
 class TopLevelMixin(object):
