@@ -7,7 +7,7 @@ This example shows how to set an axis to show as a percent.
 import altair as alt
 from vega_datasets import data
 
-source = data.jobs.dataframe()
+source = data.jobs()
 
 base = source[source['job'] == 'Accountant / Auditor']
     
