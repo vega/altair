@@ -16,6 +16,9 @@ from ...utils import (infer_vegalite_type, parse_shorthand_plus_data,
 from .display import renderers
 
 
+SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v1.json"
+
+
 def _get_channels_mapping():
     mapping = {}
     for attr in dir(channels):
@@ -80,8 +83,6 @@ def _get_channels_mapping():
 
 class TopLevelMixin(object):
     def _prepare_data(self):
-        # TODO: it's a bit weird that to_dict, via _prepare_data,
-        #       modifies the object. Should we create a copy first?
         if isinstance(self.data, (dict, core.Data)):
             pass
         elif isinstance(self.data, pd.DataFrame):
@@ -90,11 +91,25 @@ class TopLevelMixin(object):
             self.data = core.Data(url=self.data)
 
     def to_dict(self, *args, **kwargs):
+        # TODO: it's a bit weird that to_dict modifies the object.
+        #       Should we create a copy first?
         original_data = getattr(self, 'data', Undefined)
         self._prepare_data()
+        # We make use of two context markers:
+        # - 'data' points to the data that should be referenced for column type
+        #   inference.
+        # - 'toplevel' is a boolean flag that is assumed to be true; if it's
+        #   true then a "$schema" arg is added to the dict.
+
         context = kwargs.get('context', {})
         if 'data' not in context and original_data is not Undefined:
             context['data'] = original_data
+        if context.get('top_level', True):
+            # since this is top-level we add $schema if it's missing
+            if '$schema' not in self._kwds:
+                self._kwds['$schema'] = SCHEMA_URL
+            # subschemas below this one are not top-level
+            context['top_level'] = False
         kwargs['context'] = context
         return super(TopLevelMixin, self).to_dict(*args, **kwargs)
 
