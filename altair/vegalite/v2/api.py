@@ -19,6 +19,55 @@ def _get_channels_mapping():
     return mapping
 
 
+# -------------------------------------------------------------------------
+# Tools for working with selections
+class SelectionMapping(SchemaBase):
+    """A mapping of selection names to selection definitions"""
+    _schema = {
+        'type': 'object',
+        'additionalPropeties': {'$ref': '#/definitions/SelectionDef'}
+    }
+    _rootschema = Root._schema
+
+    def ref(self, name=None):
+        if name is None and len(self._kwds) == 1:
+            name = list(self._kwds.keys())[0]
+        assert name in self._kwds
+        return {'selection': name}
+
+    def __add__(self, other):
+        if isinstance(other, SelectionMapping):
+            copy = self.copy()
+            copy._kwds.update(other._kwds)
+            return copy
+        else:
+            return NotImplemented
+
+    def __iadd__(self, other):
+        if isinstance(other, SelectionMapping):
+            self._kwds.update(**other._kwds)
+        else:
+            return NotImplemented
+
+def selection(name, selection):
+    """Create a named selection.
+
+    Parameters
+    ----------
+    name : string
+        The name of the selection. The name should be unique among all
+        selections used within the chart.
+    selection : SelectionDef
+        a valid SelectionDef mapping
+
+    Returns
+    -------
+    selection: SelectionMapping
+        The SelectionMapping object that can be used in chart creation.
+    """
+    return SelectionMapping(**{name: selection})
+
+
 class TopLevelMixin(object):
     def _prepare_data(self):
         # TODO: it's a bit weird that to_dict, via _prepare_data,

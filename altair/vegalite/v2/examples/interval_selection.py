@@ -1,0 +1,28 @@
+"""
+Interval Selection Example
+==========================
+
+This is an example of creating a stacked chart for which the domain of the
+top chart can be selected by interacting with the bottom chart.
+"""
+
+import altair as alt
+from vega_datasets import data
+sp500 = data.sp500()
+
+brush = alt.selection('brush', {"type": "interval", "encodings": ['x']})
+
+upper = alt.Chart().mark_area().encode(
+    x=alt.X('date', scale={'domain': brush.ref()}),
+    y='price'
+).properties(
+    width=600,
+    height=200
+)
+
+lower = upper.properties(
+    selection=brush,
+    height=60
+)
+
+chart = alt.VConcatChart([upper, lower], data=sp500)
