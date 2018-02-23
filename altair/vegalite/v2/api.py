@@ -40,7 +40,32 @@ class SelectionMapping(SchemaBase):
         if name not in self._kwds:
             raise ValueError("'{0}' is not a valid selection name "
                              "in this mapping".format(name))
-        return {'selection': name}
+        return {"selection": "name"}
+
+    def condition(self, if_true, if_false, name=None):
+        if name is None and len(self._kwds) == 1:
+            name = list(self._kwds.keys())[0]
+        if name not in self._kwds:
+            raise ValueError("'{0}' is not a valid selection name "
+                             "in this mapping".format(name))
+
+        if isinstance(if_true, SchemaBase):
+            condition = if_true.copy()
+            condition.selection = name
+        elif isinstance(if_true, six.string_types):
+            condition = dict(selection=name, field=if_true)
+        else:
+            condition = dict(selection=name, **if_true)
+
+        if isinstance(if_false, SchemaBase):
+            selection = if_false.copy()
+            selection['condition'] = condition
+        elif isinstance(if_false, six.string_types):
+            selection = dict(condition=condition, field=if_false)
+        else:
+            selection = dict(condition=condition, **if_false)
+
+        return selection
 
     def __add__(self, other):
         if isinstance(other, SelectionMapping):
@@ -55,6 +80,7 @@ class SelectionMapping(SchemaBase):
             self._kwds.update(other._kwds)
         else:
             return NotImplemented
+
 
 def selection(name=None, **kwds):
     """Create a named selection.
@@ -74,7 +100,7 @@ def selection(name=None, **kwds):
         The SelectionMapping object that can be used in chart creation.
     """
     if name is None:
-        name = "selector{0:02d}".format(selection.counter)
+        name = "selector{0:03d}".format(selection.counter)
         selection.counter += 1
     return SelectionMapping(**{name: SelectionDef(**kwds)})
 
@@ -241,12 +267,25 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                                      "".format(encoding))
                 kwargs[encoding] = arg
 
+        def wrap_in_channel_class(obj, prop):
+            clsname = prop.title()
+            if isinstance(obj, SchemaBase):
+                return obj
+
+            if isinstance(obj, six.string_types):
+                pass
+            elif 'values' in obj:
+                clsname += 'Values'
+            cls = getattr(channels, clsname)
+
+            # Do not validate now, because it will be validated later
+            return cls.from_dict(obj, validate=False)
+
         for prop, field in list(kwargs.items()):
-            if not isinstance(field, SchemaBase):
-                cls = getattr(channels, prop.title())
-                # Don't validate now, because field will be computed
-                # as part of the to_dict() call.
-                kwargs[prop] = cls.from_dict(field, validate=False)
+            kwargs[prop] = field = wrap_in_channel_class(field, prop)
+            if getattr(field, 'condition', Undefined) is not Undefined:
+                field['condition'] = wrap_in_channel_class(field['condition'], prop)
+
         copy = self.copy(deep=True, ignore=['data'])
 
         # get a copy of the dict representation of the previous encoding

@@ -10,7 +10,7 @@ import altair as alt
 from vega_datasets import data
 sp500 = data.sp500()
 
-brush = alt.selection(type=interval, encodings=['x'])
+brush = alt.selection(type='interval', encodings=['x'])
 
 upper = alt.Chart().mark_area().encode(
     x=alt.X('date', scale={'domain': brush.ref()}),
