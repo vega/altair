@@ -1,7 +1,7 @@
 """
 Line Chart with Percent axis
 -----------------------
-This example shows how to set an axis to show as a percent.
+This example shows how to set an axis as a percent.
 """
 
 import altair as alt
