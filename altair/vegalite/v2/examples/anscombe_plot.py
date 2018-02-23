@@ -14,4 +14,6 @@ chart = alt.Chart(anscombe).mark_circle().encode(
     x = alt.X('X', scale = alt.Scale(zero=False)), 
     y = alt.Y('Y', scale = alt.Scale(zero=False)), 
     column = 'Series'
+).properties(
+    width=150, height=150
 )
