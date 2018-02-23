@@ -1,3 +1,9 @@
+"""
+Line Chart with Percent axis
+-----------------------
+This example shows how to set an axis to show as a percent.
+"""
+
 import altair as alt
 from vega_datasets import data
 
