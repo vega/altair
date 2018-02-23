@@ -30,9 +30,16 @@ class SelectionMapping(SchemaBase):
     _rootschema = Root._schema
 
     def ref(self, name=None):
+        """Return a named selection reference.
+
+        If the mapping contains only one selection, then the name need not
+        be specified.
+        """
         if name is None and len(self._kwds) == 1:
             name = list(self._kwds.keys())[0]
-        assert name in self._kwds
+        if name not in self._kwds:
+            raise ValueError("'{0}' is not a valid selection name "
+                             "in this mapping".format(name))
         return {'selection': name}
 
     def __add__(self, other):
@@ -45,7 +52,7 @@ class SelectionMapping(SchemaBase):
 
     def __iadd__(self, other):
         if isinstance(other, SelectionMapping):
-            self._kwds.update(**other._kwds)
+            self._kwds.update(other._kwds)
         else:
             return NotImplemented
 
