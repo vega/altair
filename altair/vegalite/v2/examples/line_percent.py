@@ -1,11 +1,24 @@
+"""
+LayerChart with Bar and Tick
+-----------------------
+This example shows how to layer two charts on top of one another.
+"""
+
 import altair as alt
-from vega_datasets import data
+import pandas as pd
 
-source = data.jobs.dataframe()
+data = {'project': ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+       'score': [25, 57, 23, 19, 8, 47, 8],
+       'goal': [25, 47, 30, 27, 38, 19,4]}
 
-base = source[source['job'] == 'Accountant / Auditor']
-    
-chart = alt.Chart(base).mark_line().encode(
-    x='year:T',
-    y=alt.Y('perc', axis=alt.Axis(format='%')),
-    color='sex')
+source = pd.DataFrame(data)
+
+a = alt.Chart(source).mark_bar().encode(
+    x='project',
+    y='score')
+
+b = alt.Chart(source).mark_tick(color='red').encode(
+    x='project',
+    y='goal')
+
+chart = alt.LayerChart(layer=[a, b])
