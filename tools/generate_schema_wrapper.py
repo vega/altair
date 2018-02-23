@@ -17,7 +17,7 @@ import json
 def load_schema():
     """Load the json schema associated with this module's functions"""
     directory = os.path.dirname(__file__)
-    with open(os.path.join(directory, '..', 'vega-lite-schema.json')) as f:
+    with open(os.path.join(directory, '..', '{schemafile}')) as f:
         return json.load(f)
 '''
 
@@ -45,49 +45,48 @@ class {classname}Value(core.{basename}):
 '''
 
 
+HEADER = """\
+# The contents of this file are automatically written by
+# tools/generate_schema_wrapper.py. Do not modify directly.
+# {0}
+""".format(datetime.now().strftime('%Y-%m-%d %H:%M'))
+
+
 def copy_schemapi_util():
-    # Copy the schemapi utility file
+    """
+    Copy the schemapi utility and its test file into altair/utils/
+    """
+    # copy the schemapi utility file
     source_path = abspath(join(dirname(__file__), 'schemapi', 'schemapi.py'))
     destination_path = abspath(join(dirname(__file__), '..', 'altair',
                                     'utils', 'schemapi.py'))
+
     print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
-
-    content = ["# The contents of this file are automatically written by\n",
-               "# tools/generate_schema_wrapper.py. Do not modify directly\n"
-               "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
-
-    with open(source_path, 'r') as f:
-        content += f.readlines()
-
-    with open(destination_path, 'w') as f:
-        f.writelines(content)
+    with open(source_path, 'r') as source:
+        with open(destination_path, 'w') as dest:
+            dest.write(HEADER)
+            dest.writelines(source.readlines())
 
     # Copy the schemapi test file
     source_path = abspath(join(dirname(__file__), 'schemapi',
                                'tests', 'test_schemapi.py'))
     destination_path = abspath(join(dirname(__file__), '..', 'altair',
                                     'utils', 'tests', 'test_schemapi.py'))
+
     print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
-
-    content = ["# The contents of this file are automatically written by\n",
-               "# tools/generate_schema_wrapper.py. Do not modify directly\n"
-               "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
-
-    with open(source_path, 'r') as f:
-        content += f.readlines()
-
-    with open(destination_path, 'w') as f:
-        f.writelines(content)
+    with open(source_path, 'r') as source:
+        with open(destination_path, 'w') as dest:
+            dest.write(HEADER)
+            dest.writelines(source.readlines())
 
 
-def generate_schema_wrapper(schema_file):
+def generate_vegalite_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
     with open(schema_file) as f:
         rootschema = json.load(f)
-    contents = ["# The contents of this file are automatically generated",
-                "# at time {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')),
+    contents = [HEADER,
                 "from altair.utils.schemapi import SchemaBase, Undefined",
-                LOAD_SCHEMA]
+                LOAD_SCHEMA.format(schemafile='vega-lite-schema.json')]
     contents.append(schema_class('Root', schema=rootschema,
                                  schemarepr=CodeSnippet('load_schema()')))
     for name in rootschema['definitions']:
@@ -101,6 +100,29 @@ def generate_schema_wrapper(schema_file):
     contents.append('')  # end with newline
     return '\n'.join(contents)
 
+
+def generate_vega_schema_wrapper(schema_file):
+    """Generate a schema wrapper at the given path."""
+    with open(schema_file) as f:
+        rootschema = json.load(f)
+    contents = [HEADER,
+                "from altair.utils.schemapi import SchemaBase, Undefined",
+                LOAD_SCHEMA.format(schemafile='vega-schema.json')]
+    contents.append(schema_class('Root', schema=rootschema,
+                                 schemarepr=CodeSnippet('load_schema()')))
+    for deflist in ['defs', 'refs']:
+        for name in rootschema[deflist]:
+            defschema = {'$ref': '#/{0}/{1}'.format(deflist, name)}
+            defschema_repr = {'$ref': '#/{0}/{1}'.format(deflist,name)}
+            contents.append(schema_class(get_valid_identifier(name),
+                                         schema=defschema, schemarepr=defschema_repr,
+                                         rootschema=rootschema,
+                                         rootschemarepr=CodeSnippet("Root._schema")))
+    contents.append('')  # end with newline
+    return '\n'.join(contents)
+
+
+
 def generate_vegalite_channel_wrappers(schemafile, imports=None,
                                        encoding_def='Encoding'):
     # TODO: generate __all__ for top of file
@@ -110,8 +132,7 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
         imports = ["from . import core",
                    "from altair.utils.schemapi import Undefined",
                    "from altair.utils import parse_shorthand, parse_shorthand_plus_data"]
-    contents = ["# The contents of this file are automatically generated",
-                "# {0}\n".format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))]
+    contents = [HEADER]
     contents.extend(imports)
     contents.append('')
 
@@ -140,9 +161,7 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
 # TODO: generate useful docstrings & simple unit tests
 
 
-def main():
-    copy_schemapi_util()
-
+def vegalite_main():
     encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
 
     for version in ['v1', 'v2']:
@@ -159,7 +178,7 @@ def main():
         # Generate the core schema wrappers
         outfile = join(path, 'schema', 'core.py')
         print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
-        file_contents = generate_schema_wrapper(schemafile)
+        file_contents = generate_vegalite_schema_wrapper(schemafile)
         with open(outfile, 'w') as f:
             f.write(file_contents)
 
@@ -171,5 +190,27 @@ def main():
             f.write(code)
 
 
+def vega_main():
+    for version in ['v2', 'v3']:
+        path = abspath(join(dirname(__file__), '..',
+                            'altair', 'vega', version))
+        schemafile = join(path, 'vega-schema.json')
+
+        # Generate __init__.py file
+        outfile = join(path, 'schema', '__init__.py')
+        print("Writing {0}".format(outfile))
+        with open(outfile, 'w') as f:
+            f.write("from .core import *")
+
+        # Generate the core schema wrappers
+        outfile = join(path, 'schema', 'core.py')
+        print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+        file_contents = generate_vega_schema_wrapper(schemafile)
+        with open(outfile, 'w') as f:
+            f.write(file_contents)
+
+
 if __name__ == '__main__':
-    main()
+    copy_schemapi_util()
+    vegalite_main()
+    vega_main()
