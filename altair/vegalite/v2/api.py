@@ -223,6 +223,12 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                                  'encodings': encodings}}
         return copy
 
+    def properties(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        for key, val in kwargs.items():
+            setattr(copy, key, val)
+        return copy
+
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     def __init__(self, hconcat, **kwargs):
