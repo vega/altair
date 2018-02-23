@@ -7,7 +7,7 @@ from ...datasets import (
     load_dataset
 )
 
-from .display import vegalite, VegaLite, renderers
+from .display import VegaLite, renderers
 
 from .data import (
     pipe, curry, limit_rows,

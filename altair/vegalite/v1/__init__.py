@@ -7,7 +7,7 @@ from ...datasets import (
 
 from .. import expr
 
-from .display import vegalite, VegaLite, renderers
+from .display import VegaLite, renderers
 
 from .data import (
     pipe, curry, limit_rows,
