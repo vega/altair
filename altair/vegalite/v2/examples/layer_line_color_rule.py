@@ -13,7 +13,7 @@ line = alt.Chart(stocks).mark_line().encode(
     x = 'date', 
     y = 'price', 
     color = 'symbol'
-).interactive()
+).properties(width=800).interactive()
 
 rule = alt.Chart(stocks).mark_rule().encode(
     y = alt.Y('average(price)', ),
