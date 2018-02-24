@@ -21,5 +21,4 @@ b = alt.Chart(source).mark_tick(color='red').encode(
     x='project',
     y='goal')
 
-chart = a + b
-chart.config = {'tick': {'thickness': 2, 'bandSize': 50}}
+chart = alt.layer(a, b, config={'tick': {'thickness': 2, 'bandSize': 50}})

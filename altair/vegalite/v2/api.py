@@ -249,24 +249,39 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     def __init__(self, hconcat, **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
-        super(HConcatChart, self).__init__(hconcat=hconcat, **kwargs)
+        super(HConcatChart, self).__init__(hconcat=list(hconcat), **kwargs)
 
     # TODO: think about the most useful class API here
+
+
+def hconcat(*charts, **kwargs):
+    """Concatenate charts horizontally"""
+    return HConcatChart(charts, **kwargs)
 
 
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     def __init__(self, vconcat, **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
-        super(VConcatChart, self).__init__(vconcat=vconcat, **kwargs)
+        super(VConcatChart, self).__init__(vconcat=list(vconcat), **kwargs)
 
     # TODO: think about the most useful class API here
+
+
+def vconcat(*charts, **kwargs):
+    """Concatenate charts vertically"""
+    return VConcatChart(charts, **kwargs)
 
 
 class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
     def __init__(self, layer, **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
-        super(LayerChart, self).__init__(layer=layer, **kwargs)
+        super(LayerChart, self).__init__(layer=list(layer), **kwargs)
 
     # TODO: think about the most useful class API here
+
+
+def layer(*charts, **kwargs):
+    """layer multiple charts"""
+    return LayerChart(charts, **kwargs)
