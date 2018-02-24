@@ -18,6 +18,6 @@ line = alt.Chart(stocks).mark_line().encode(
 rule = alt.Chart(stocks).mark_rule().encode(
     y = alt.Y('average(price)', ),
     color='symbol'
-)
+).encode(size=alt.SizeValue(2))
 
 chart = (line + rule)
