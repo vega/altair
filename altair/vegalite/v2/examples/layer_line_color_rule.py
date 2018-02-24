@@ -13,7 +13,7 @@ line = alt.Chart(stocks).mark_line().encode(
     x = 'date', 
     y = 'price', 
     color = 'symbol'
-)
+).interactive()
 
 rule = alt.Chart(stocks).mark_rule().encode(
     y = alt.Y('average(price)', ),
@@ -21,5 +21,3 @@ rule = alt.Chart(stocks).mark_rule().encode(
 )
 
 chart = (line + rule)
-#chart.config = {'rule': {'size': 20}}
-#chart.interactive()
