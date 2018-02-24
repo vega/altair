@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-23 07:04
+# 2018-02-23 20:22
 
 from . import core
 from altair.utils.schemapi import Undefined

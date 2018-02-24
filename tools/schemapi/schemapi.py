@@ -74,10 +74,11 @@ class SchemaBase(object):
 
     def __getattr__(self, item):
         # reminder: getattr is called after the normal lookups
-        try:
+        if item in self._kwds:
             return self._kwds[item]
-        except KeyError:
-            return super(SchemaBase, self).__getattr__(self, item)
+        else:
+            raise AttributeError("'{0}' object has no attribute '{1}'"
+                                 "".format(self.__class__.__name__, item))
 
     def __setattr__(self, item , val):
         self._kwds[item] = val
