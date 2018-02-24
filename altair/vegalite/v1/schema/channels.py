@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-23 20:22
+# 2018-02-23 21:09
 
 from . import core
 from altair.utils.schemapi import Undefined
@@ -8,9 +8,33 @@ from altair.utils import parse_shorthand, parse_shorthand_plus_data
 
 
 class Row(core.PositionChannelDef):
-    """Row channel"""
-    def __init__(self, field, **kwargs):
-        super(Row, self).__init__(field=field, **kwargs)
+    """Row schema wrapper
+    
+    Attributes
+    ----------
+    axis : Axis
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Row, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -23,9 +47,33 @@ class Row(core.PositionChannelDef):
 
 
 class Column(core.PositionChannelDef):
-    """Column channel"""
-    def __init__(self, field, **kwargs):
-        super(Column, self).__init__(field=field, **kwargs)
+    """Column schema wrapper
+    
+    Attributes
+    ----------
+    axis : Axis
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Column, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -38,9 +86,33 @@ class Column(core.PositionChannelDef):
 
 
 class X(core.PositionChannelDef):
-    """X channel"""
-    def __init__(self, field, **kwargs):
-        super(X, self).__init__(field=field, **kwargs)
+    """X schema wrapper
+    
+    Attributes
+    ----------
+    axis : Axis
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(X, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -53,9 +125,33 @@ class X(core.PositionChannelDef):
 
 
 class Y(core.PositionChannelDef):
-    """Y channel"""
-    def __init__(self, field, **kwargs):
-        super(Y, self).__init__(field=field, **kwargs)
+    """Y schema wrapper
+    
+    Attributes
+    ----------
+    axis : Axis
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Y, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -68,9 +164,27 @@ class Y(core.PositionChannelDef):
 
 
 class X2(core.FieldDef):
-    """X2 channel"""
-    def __init__(self, field, **kwargs):
-        super(X2, self).__init__(field=field, **kwargs)
+    """X2 schema wrapper
+    
+    Attributes
+    ----------
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(X2, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -83,9 +197,27 @@ class X2(core.FieldDef):
 
 
 class Y2(core.FieldDef):
-    """Y2 channel"""
-    def __init__(self, field, **kwargs):
-        super(Y2, self).__init__(field=field, **kwargs)
+    """Y2 schema wrapper
+    
+    Attributes
+    ----------
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Y2, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -98,9 +230,33 @@ class Y2(core.FieldDef):
 
 
 class Color(core.ChannelDefWithLegend):
-    """Color channel"""
-    def __init__(self, field, **kwargs):
-        super(Color, self).__init__(field=field, **kwargs)
+    """Color schema wrapper
+    
+    Attributes
+    ----------
+    legend : Legend
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Color, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -113,9 +269,33 @@ class Color(core.ChannelDefWithLegend):
 
 
 class Opacity(core.ChannelDefWithLegend):
-    """Opacity channel"""
-    def __init__(self, field, **kwargs):
-        super(Opacity, self).__init__(field=field, **kwargs)
+    """Opacity schema wrapper
+    
+    Attributes
+    ----------
+    legend : Legend
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Opacity, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -128,9 +308,33 @@ class Opacity(core.ChannelDefWithLegend):
 
 
 class Size(core.ChannelDefWithLegend):
-    """Size channel"""
-    def __init__(self, field, **kwargs):
-        super(Size, self).__init__(field=field, **kwargs)
+    """Size schema wrapper
+    
+    Attributes
+    ----------
+    legend : Legend
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Size, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -143,9 +347,33 @@ class Size(core.ChannelDefWithLegend):
 
 
 class Shape(core.ChannelDefWithLegend):
-    """Shape channel"""
-    def __init__(self, field, **kwargs):
-        super(Shape, self).__init__(field=field, **kwargs)
+    """Shape schema wrapper
+    
+    Attributes
+    ----------
+    legend : Legend
+        
+    scale : Scale
+        
+    sort : anyOf(SortOrder, SortField)
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Shape, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend, scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -158,9 +386,27 @@ class Shape(core.ChannelDefWithLegend):
 
 
 class Detail(core.FieldDef):
-    """Detail channel"""
-    def __init__(self, field, **kwargs):
-        super(Detail, self).__init__(field=field, **kwargs)
+    """Detail schema wrapper
+    
+    Attributes
+    ----------
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Detail, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -173,9 +419,27 @@ class Detail(core.FieldDef):
 
 
 class Text(core.FieldDef):
-    """Text channel"""
-    def __init__(self, field, **kwargs):
-        super(Text, self).__init__(field=field, **kwargs)
+    """Text schema wrapper
+    
+    Attributes
+    ----------
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Text, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -188,9 +452,27 @@ class Text(core.FieldDef):
 
 
 class Label(core.FieldDef):
-    """Label channel"""
-    def __init__(self, field, **kwargs):
-        super(Label, self).__init__(field=field, **kwargs)
+    """Label schema wrapper
+    
+    Attributes
+    ----------
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Label, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -203,9 +485,29 @@ class Label(core.FieldDef):
 
 
 class Path(core.OrderChannelDef):
-    """Path channel"""
-    def __init__(self, field, **kwargs):
-        super(Path, self).__init__(field=field, **kwargs)
+    """Path schema wrapper
+    
+    Attributes
+    ----------
+    sort : SortOrder
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Path, self).__init__(field=field, aggregate=aggregate, bin=bin, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)
@@ -218,9 +520,29 @@ class Path(core.OrderChannelDef):
 
 
 class Order(core.OrderChannelDef):
-    """Order channel"""
-    def __init__(self, field, **kwargs):
-        super(Order, self).__init__(field=field, **kwargs)
+    """Order schema wrapper
+    
+    Attributes
+    ----------
+    sort : SortOrder
+        
+    field : string
+        Name of the field from which to pull a data value.
+    type : Type
+        The encoded field's type of measurement. This can be either a full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case insensitive.
+    value : anyOf(string, float, boolean)
+        A constant value in visual domain.
+    timeUnit : TimeUnit
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+    bin : anyOf(Bin, boolean)
+        Flag for binning a `quantitative` field, or a bin property object  for binning parameters.
+    aggregate : AggregateOp
+        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).
+    title : string
+        Title for axis or legend.
+    """
+    def __init__(self, field, aggregate=Undefined, bin=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Order, self).__init__(field=field, aggregate=aggregate, bin=bin, sort=sort, timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=[], context={}):
         type_ = getattr(self, 'type', Undefined)

@@ -6,6 +6,7 @@ from os.path import abspath, join, dirname
 
 # import schemapi from here
 sys.path.insert(0, abspath(dirname(__file__)))
+from schemapi import codegen
 from schemapi.codegen import schema_class, CodeSnippet
 from schemapi.utils import get_valid_identifier, SchemaInfo
 
@@ -23,9 +24,8 @@ def load_schema():
 
 FIELD_TEMPLATE = '''
 class {classname}(core.{basename}):
-    """{classname} channel"""
-    def __init__(self, field, **kwargs):
-        super({classname}, self).__init__(field=field, **kwargs)
+    """{docstring}"""
+    {init_code}
 
     def to_dict(self, validate=True, ignore=[], context={{}}):
         type_ = getattr(self, 'type', Undefined)
@@ -38,10 +38,9 @@ class {classname}(core.{basename}):
 '''
 
 VALUE_TEMPLATE = '''
-class {classname}Value(core.{basename}):
-    """{classname} channel"""
-    def __init__(self, value, *args, **kwargs):
-        super({classname}Value, self).__init__(value=value, *args, **kwargs)
+class {classname}(core.{basename}):
+    """{docstring}"""
+    {init_code}
 '''
 
 
@@ -148,14 +147,26 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
         else:
             raise ValueError("either $ref or anyOf expected")
         for definition in definitions:
+            defschema = {'$ref': definition}
             basename = definition.split('/')[-1]
             classname = prop.title()
+
             if 'Value' in basename:
                 template = VALUE_TEMPLATE
+                classname += 'Value'
+                nodefault = ['value']
             else:
                 template = FIELD_TEMPLATE
+                nodefault = ['field']
+            docstring = codegen.docstring(classname=classname, schema=defschema,
+                                          rootschema=schema, indent=4)
+            init_code = codegen.init_code(classname=classname, schema=defschema,
+                                          rootschema=schema, indent=4,
+                                          nodefault=nodefault).rstrip()
             contents.append(template.format(classname=classname,
-                                            basename=basename))
+                                            basename=basename,
+                                            docstring=docstring,
+                                            init_code=init_code))
     return '\n'.join(contents)
 
 

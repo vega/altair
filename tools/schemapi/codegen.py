@@ -129,22 +129,28 @@ def _get_args(info):
     return (nonkeyword, required, kwds, additional)
 
 
-def init_code(classname, schema, rootschema=None, indent=0):
+def init_code(classname, schema, rootschema=None, indent=0, nodefault=()):
     """Return code suitablde for the __init__ function of a Schema class"""
     info = SchemaInfo(schema, rootschema=rootschema)
     nonkeyword, required, kwds, additional =_get_args(info)
 
+    nodefault=set(nodefault)
+    required -= nodefault
+    kwds -= nodefault
+
     args = ['self']
     super_args = []
 
-    if nonkeyword:
+    if nodefault:
+        args.extend(sorted(nodefault))
+    elif nonkeyword:
         args.append('*args')
         super_args.append('*args')
 
     args.extend('{0}=Undefined'.format(p)
                 for p in sorted(required) + sorted(kwds))
     super_args.extend('{0}={0}'.format(p)
-                      for p in sorted(required) + sorted(kwds))
+                      for p in sorted(nodefault) + sorted(required) + sorted(kwds))
 
     if additional:
         args.append('**kwds')
