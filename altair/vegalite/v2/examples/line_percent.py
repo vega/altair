@@ -9,9 +9,15 @@ from vega_datasets import data
 
 source = data.jobs()
 
-base = source[source['job'] == 'Welder']
+source.year = source.year.astype(str)
+
+welders = source[source.job == 'Welder']
     
-chart = alt.Chart(base).mark_line().encode(
-    x='year:T',
+chart = alt.Chart(welders).mark_line().encode(
+    x=alt.X('year', timeUnit='year'),
     y=alt.Y('perc', axis=alt.Axis(format='%')),
-    color='sex')
+    color='sex',
+    detail='job'
+).properties(
+    title='Percent of work-force working as Welders'
+)
