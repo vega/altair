@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-23 21:09
+# 2018-02-24 07:05
 import jsonschema
 import pytest
 
@@ -233,3 +233,11 @@ def test_copy():
     assert mydct['a']['foo'] == 'baz'
     assert mydct['b'] == dct['b']
     assert mydct['c'] == dct['c']
+
+
+def test_attribute_error():
+    m = MySchema()
+    with pytest.raises(AttributeError) as err:
+        m.invalid_attribute
+    assert str(err.value) == ("'MySchema' object has no attribute "
+                              "'invalid_attribute'")
