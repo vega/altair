@@ -230,3 +230,11 @@ def test_copy():
     assert mydct['a']['foo'] == 'baz'
     assert mydct['b'] == dct['b']
     assert mydct['c'] == dct['c']
+
+
+def test_attribute_error():
+    m = MySchema()
+    with pytest.raises(AttributeError) as err:
+        m.invalid_attribute
+    assert str(err.value) == ("'MySchema' object has no attribute "
+                              "'invalid_attribute'")

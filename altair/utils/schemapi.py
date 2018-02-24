@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-23 21:09
+# 2018-02-24 07:05
 import collections
 import json
 
@@ -75,13 +75,16 @@ class SchemaBase(object):
         else:
             return self.__class__(*self._args, **self._kwds)
 
-    def __getattr__(self, item):
+    def __getattr__(self, attr):
         # reminder: getattr is called after the normal lookups
-        if item in self._kwds:
-            return self._kwds[item]
+        if attr in self._kwds:
+            return self._kwds[attr]
         else:
-            raise AttributeError("'{0}' object has no attribute '{1}'"
-                                 "".format(self.__class__.__name__, item))
+            try:
+                _getattr = super(SchemaBase, self).__getattr__
+            except AttributeError:
+                _getattr = super(SchemaBase, self).__getattribute__
+            return _getattr(attr)
 
     def __setattr__(self, item , val):
         self._kwds[item] = val
