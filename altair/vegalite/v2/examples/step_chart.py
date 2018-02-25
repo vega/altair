@@ -15,6 +15,3 @@ chart = alt.Chart(source).mark_line(interpolate = 'step-after').encode(
 )
 
 chart.transform = [{"filter": "datum.symbol==='GOOG'"}]
-
-
-chart
