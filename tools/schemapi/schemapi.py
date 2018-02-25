@@ -200,6 +200,9 @@ class SchemaBase(object):
             ref, schema = resolver.resolve(schema['$ref'])
         return schema
 
+    def __dir__(self):
+        return list(self._kwds.keys())
+
 
 class _FromDict(object):
     """Class used to construct SchemaBase class hierarchies from a dict

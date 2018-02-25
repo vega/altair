@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 07:05
+# 2018-02-24 20:07
 import collections
 import json
 
@@ -202,6 +202,9 @@ class SchemaBase(object):
         while '$ref' in schema:
             ref, schema = resolver.resolve(schema['$ref'])
         return schema
+
+    def __dir__(self):
+        return list(self._kwds.keys())
 
 
 class _FromDict(object):
