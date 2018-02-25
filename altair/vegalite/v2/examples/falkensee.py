@@ -80,4 +80,4 @@ recta = alt.Chart(source2).mark_rect().encode(
 
 
 
-chart = line + recta + point
+chart = recta + line + point
