@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:32
+# 2018-02-24 22:43
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -158,11 +158,12 @@ class Axis(SchemaBase):
     format : string
         The formatting pattern for labels. This is D3's [number format
         pattern](https://github.com/d3/d3-format#locale_format) for quantitative
-        fields and D3's [time format pattern](https://github.com/d3/d3-time-
-        format#locale_format) for time field.  See the [format
-        documentation](format.html) for more information.  __Default value:__
-        derived from [numberFormat](config.html#format) config for quantitative
-        fields and from [timeFormat](config.html#format) config for temporal fields.
+        fields and D3's [time format
+        pattern](https://github.com/d3/d3-time-format#locale_format) for time field.
+        See the [format documentation](format.html) for more information.  __Default
+        value:__  derived from [numberFormat](config.html#format) config for
+        quantitative fields and from [timeFormat](config.html#format) config for
+        temporal fields.
     grid : boolean
         A boolean flag indicating if grid lines should be included as part of the
         axis  __Default value:__ `true` for [continuous
@@ -547,10 +548,11 @@ class BarConfig(SchemaBase):
         intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
         loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
         the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. - `"cardinal-
-        closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`: equivalent
-        to basis, except the tension parameter is used to straighten the spline. -
-        `"monotone"`: cubic interpolation that preserves monotonicity in y.
+        the start or end, but will intersect other control points. -
+        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
+        equivalent to basis, except the tension parameter is used to straighten the
+        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
+        y.
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no
         limit). The text value will be automatically truncated if the rendered size
@@ -648,8 +650,7 @@ class BasicType(SchemaBase):
 
 
 class BinParams(SchemaBase):
-    """BinParams schema wrapper
-    
+    """
     Binning properties or boolean flag for determining whether to bin data or not.
     
     Attributes
@@ -673,8 +674,8 @@ class BinParams(SchemaBase):
     minstep : float
         A minimum allowable step size (particularly useful for integer values).
     nice : boolean
-        If true (the default), attempts to make the bin boundaries use human-
-        friendly boundaries, such as multiples of ten.
+        If true (the default), attempts to make the bin boundaries use
+        human-friendly boundaries, such as multiples of ten.
     step : float
         An exact step size to use between bins.  __Note:__ If provided, options such
         as maxbins will be ignored.
@@ -786,26 +787,25 @@ class CompositeUnitSpec(SchemaBase):
         is `"fit"` or its y-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For y-axis with a band or point scale: if
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For y-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the height is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `y` channel, the
-        `height` will be the value of `rangeStep`.  __Note__: For plots with [`row`
-        and `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the height of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `y` channel, the `height` will be the value of
+        `rangeStep`.  __Note__: For plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the height of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
         `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition object](https://vega.github.io/vega-
-        lite/docs/mark.html#mark-def).
+        `"text"`) or a [mark definition
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
@@ -826,24 +826,22 @@ class CompositeUnitSpec(SchemaBase):
         is `"fit"` or its x-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For x-axis with a band or point scale: if
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For x-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the width is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `x` channel, the
-        `width` will be the value of
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-
-        lite/docs/size.html#default-width-and-height) for `text` mark and the value
-        of `rangeStep` for other marks.  __Note:__ For plots with [`row` and
-        `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the width of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `x` channel, the `width` will be the value of
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
+        plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the width of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     """
     _schema = {'$ref': '#/definitions/CompositeUnitSpec'}
     _rootschema = Root._schema
@@ -913,8 +911,9 @@ class ConditionalPredicateFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -962,8 +961,9 @@ class ConditionalPredicateMarkPropFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1035,8 +1035,9 @@ class ConditionalPredicateTextFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1109,8 +1110,9 @@ class ConditionalSelectionFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1124,8 +1126,8 @@ class ConditionalSelectionFieldDef(SchemaBase):
         `field` is not required if `aggregate` is `count`.
     selection : SelectionOperand
         A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed selections](https://vega.github.io/vega-
-        lite/docs/selection.html#compose).
+        a series of [composed
+        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
         field. or [a temporal field that gets casted as
@@ -1162,8 +1164,9 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1188,8 +1191,8 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
     selection : SelectionOperand
         A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed selections](https://vega.github.io/vega-
-        lite/docs/selection.html#compose).
+        a series of [composed
+        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     sort : anyOf(SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include
         `"ascending"`, `"descending"` and `null` (no sorting). For fields with
@@ -1238,8 +1241,9 @@ class ConditionalSelectionTextFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1256,8 +1260,8 @@ class ConditionalSelectionTextFieldDef(SchemaBase):
         for a text field. If not defined, this will be determined automatically.
     selection : SelectionOperand
         A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed selections](https://vega.github.io/vega-
-        lite/docs/selection.html#compose).
+        a series of [composed
+        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
         field. or [a temporal field that gets casted as
@@ -1293,8 +1297,8 @@ class ConditionalSelectionValueDef(SchemaBase):
     ----------
     selection : SelectionOperand
         A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed selections](https://vega.github.io/vega-
-        lite/docs/selection.html#compose).
+        a series of [composed
+        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color,
         values between `0` to `1` for opacity).
@@ -1476,12 +1480,12 @@ class CsvDataFormat(SchemaBase):
         `"boolean"` or `"date"`). For example, `"parse": {"modified_on": "date"}`
         parses the `modified_on` field in each input record a Date value.  For
         `"date"`, we parse data based using Javascript's
-        [`Date.parse()`](https://developer.mozilla.org/en-
-        US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse). For Specific
-        date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`), using the
-        [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format).
-        UTC date format parsing is supported similarly (e.g., `{foo:
-        'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
+        [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).
+        For Specific date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`),
+        using the [d3-time-format
+        syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format
+        parsing is supported similarly (e.g., `{foo: 'utc:"%m%d%Y"'}`). See more
+        about [UTC time](timeunit.html#utc)
     type : string
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
         determined by the extension of the file URL. If no extension is detected,
@@ -1516,8 +1520,7 @@ class DataFormat(SchemaBase):
 
 
 class DateTime(SchemaBase):
-    """DateTime schema wrapper
-    
+    """
     Object for defining datetime in Vega-Lite Filter.
     If both month and quarter are provided, month has higher precedence.
     `day` cannot be combined with other date.
@@ -1722,8 +1725,9 @@ class FacetFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1782,9 +1786,9 @@ class FacetMapping(SchemaBase):
 
 
 class FieldDef(SchemaBase):
-    """FieldDef schema wrapper
-    
-    Definition object for a data field, its type and transformation of an encoding channel.
+    """
+    Definition object for a data field, its type and transformation of an encoding 
+    channel.
     
     Attributes
     ----------
@@ -1794,8 +1798,9 @@ class FieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1830,8 +1835,7 @@ class FieldDef(SchemaBase):
 
 
 class FieldDefWithCondition(SchemaBase):
-    """FieldDefWithCondition schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1847,8 +1851,9 @@ class FieldDefWithCondition(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -1890,8 +1895,7 @@ class FieldDefWithCondition(SchemaBase):
 
 
 class MarkPropFieldDefWithCondition(SchemaBase):
-    """MarkPropFieldDefWithCondition schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1907,8 +1911,9 @@ class MarkPropFieldDefWithCondition(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -1973,8 +1978,7 @@ class MarkPropFieldDefWithCondition(SchemaBase):
 
 
 class TextFieldDefWithCondition(SchemaBase):
-    """TextFieldDefWithCondition schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1990,8 +1994,9 @@ class TextFieldDefWithCondition(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -2112,12 +2117,13 @@ class FilterTransform(SchemaBase):
         The `filter` property must be one of the predicate definitions: (1) an
         [expression](https://vega.github.io/vega-lite/docs/types.html#expression)
         string, where `datum` can be used to refer to the current data object; (2)
-        one of the field predicates: [equal predicate](https://vega.github.io/vega-
-        lite/docs/filter.html#equal-predicate); [range predicate](filter.html#range-
-        predicate), [one-of predicate](https://vega.github.io/vega-
-        lite/docs/filter.html#one-of-predicate); (3) a [selection
-        predicate](https://vega.github.io/vega-lite/docs/filter.html#selection-
-        predicate); or (4) a logical operand that combines (1), (2), or (3).
+        one of the field predicates: [equal
+        predicate](https://vega.github.io/vega-lite/docs/filter.html#equal-predicate);
+        [range predicate](filter.html#range-predicate), [one-of
+        predicate](https://vega.github.io/vega-lite/docs/filter.html#one-of-predicate);
+        (3) a [selection
+        predicate](https://vega.github.io/vega-lite/docs/filter.html#selection-predicate);
+        or (4) a logical operand that combines (1), (2), or (3).
     """
     _schema = {'$ref': '#/definitions/FilterTransform'}
     _rootschema = Root._schema
@@ -2241,21 +2247,20 @@ class LayerSpec(SchemaBase):
         is `"fit"` or its y-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For y-axis with a band or point scale: if
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For y-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the height is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `y` channel, the
-        `height` will be the value of `rangeStep`.  __Note__: For plots with [`row`
-        and `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the height of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `y` channel, the `height` will be the value of
+        `rangeStep`.  __Note__: For plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the height of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     layer : list
         Layer or single view specifications to be layered.  __Note__: Specifications
         inside `layer` cannot use `row` and `column` channels as layering facet
@@ -2275,24 +2280,22 @@ class LayerSpec(SchemaBase):
         is `"fit"` or its x-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For x-axis with a band or point scale: if
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For x-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the width is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `x` channel, the
-        `width` will be the value of
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-
-        lite/docs/size.html#default-width-and-height) for `text` mark and the value
-        of `rangeStep` for other marks.  __Note:__ For plots with [`row` and
-        `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the width of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `x` channel, the `width` will be the value of
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
+        plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the width of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     """
     _schema = {'$ref': '#/definitions/LayerSpec'}
     _rootschema = Root._schema
@@ -2369,26 +2372,25 @@ class CompositeUnitSpecAlias(SchemaBase):
         is `"fit"` or its y-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For y-axis with a band or point scale: if
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For y-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the height is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `y` channel, the
-        `height` will be the value of `rangeStep`.  __Note__: For plots with [`row`
-        and `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the height of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `y` channel, the `height` will be the value of
+        `rangeStep`.  __Note__: For plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the height of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
         `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition object](https://vega.github.io/vega-
-        lite/docs/mark.html#mark-def).
+        `"text"`) or a [mark definition
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
@@ -2409,24 +2411,22 @@ class CompositeUnitSpecAlias(SchemaBase):
         is `"fit"` or its x-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For x-axis with a band or point scale: if
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For x-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the width is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `x` channel, the
-        `width` will be the value of
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-
-        lite/docs/size.html#default-width-and-height) for `text` mark and the value
-        of `rangeStep` for other marks.  __Note:__ For plots with [`row` and
-        `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the width of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `x` channel, the `width` will be the value of
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
+        plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the width of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     """
     _schema = {'$ref': '#/definitions/CompositeUnitSpecAlias'}
     _rootschema = Root._schema
@@ -2464,26 +2464,25 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
         is `"fit"` or its y-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For y-axis with a band or point scale: if
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For y-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the height is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `y` channel, the
-        `height` will be the value of `rangeStep`.  __Note__: For plots with [`row`
-        and `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the height of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `y` channel, the `height` will be the value of
+        `rangeStep`.  __Note__: For plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the height of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
         `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition object](https://vega.github.io/vega-
-        lite/docs/mark.html#mark-def).
+        `"text"`) or a [mark definition
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
@@ -2504,24 +2503,22 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
         is `"fit"` or its x-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For x-axis with a band or point scale: if
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For x-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the width is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `x` channel, the
-        `width` will be the value of
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-
-        lite/docs/size.html#default-width-and-height) for `text` mark and the value
-        of `rangeStep` for other marks.  __Note:__ For plots with [`row` and
-        `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the width of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `x` channel, the `width` will be the value of
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
+        plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the width of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     """
     _schema = {'$ref': '#/definitions/FacetedCompositeUnitSpecAlias'}
     _rootschema = Root._schema
@@ -2587,8 +2584,7 @@ class GeoType(SchemaBase):
 
 
 class Header(SchemaBase):
-    """Header schema wrapper
-    
+    """
     Headers of row / column channels for faceted plots.
     
     Attributes
@@ -2596,11 +2592,12 @@ class Header(SchemaBase):
     format : string
         The formatting pattern for labels. This is D3's [number format
         pattern](https://github.com/d3/d3-format#locale_format) for quantitative
-        fields and D3's [time format pattern](https://github.com/d3/d3-time-
-        format#locale_format) for time field.  See the [format
-        documentation](format.html) for more information.  __Default value:__
-        derived from [numberFormat](config.html#format) config for quantitative
-        fields and from [timeFormat](config.html#format) config for temporal fields.
+        fields and D3's [time format
+        pattern](https://github.com/d3/d3-time-format#locale_format) for time field.
+        See the [format documentation](format.html) for more information.  __Default
+        value:__  derived from [numberFormat](config.html#format) config for
+        quantitative fields and from [timeFormat](config.html#format) config for
+        temporal fields.
     labelAngle : float
         The rotation angle of the header labels.  __Default value:__ `0`.
     title : anyOf(string, None)
@@ -2699,12 +2696,12 @@ class IntervalSelection(SchemaBase):
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
     translate : anyOf(string, boolean)
-        When truthy, allows a user to interactively move an interval selection back-
-        and-forth. Can be `true`, `false` (to disable panning), or a [Vega event
-        stream definition](https://vega.github.io/vega/docs/event-streams/) which
-        must include a start and end event to trigger continuous panning.  __Default
-        value:__ `true`, which corresponds to `[mousedown, window:mouseup] >
-        window:mousemove!` which corresponds to clicks and dragging within an
+        When truthy, allows a user to interactively move an interval selection
+        back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega
+        event stream definition](https://vega.github.io/vega/docs/event-streams/)
+        which must include a start and end event to trigger continuous panning.
+        __Default value:__ `true`, which corresponds to `[mousedown, window:mouseup]
+        > window:mousemove!` which corresponds to clicks and dragging within an
         interval selection to reposition it.
     type : string
     zoom : anyOf(string, boolean)
@@ -2761,12 +2758,12 @@ class IntervalSelectionConfig(SchemaBase):
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
     translate : anyOf(string, boolean)
-        When truthy, allows a user to interactively move an interval selection back-
-        and-forth. Can be `true`, `false` (to disable panning), or a [Vega event
-        stream definition](https://vega.github.io/vega/docs/event-streams/) which
-        must include a start and end event to trigger continuous panning.  __Default
-        value:__ `true`, which corresponds to `[mousedown, window:mouseup] >
-        window:mousemove!` which corresponds to clicks and dragging within an
+        When truthy, allows a user to interactively move an interval selection
+        back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega
+        event stream definition](https://vega.github.io/vega/docs/event-streams/)
+        which must include a start and end event to trigger continuous panning.
+        __Default value:__ `true`, which corresponds to `[mousedown, window:mouseup]
+        > window:mousemove!` which corresponds to clicks and dragging within an
         interval selection to reposition it.
     zoom : anyOf(string, boolean)
         When truthy, allows a user to interactively resize an interval selection.
@@ -2803,12 +2800,12 @@ class JsonDataFormat(SchemaBase):
         `"boolean"` or `"date"`). For example, `"parse": {"modified_on": "date"}`
         parses the `modified_on` field in each input record a Date value.  For
         `"date"`, we parse data based using Javascript's
-        [`Date.parse()`](https://developer.mozilla.org/en-
-        US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse). For Specific
-        date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`), using the
-        [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format).
-        UTC date format parsing is supported similarly (e.g., `{foo:
-        'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
+        [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).
+        For Specific date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`),
+        using the [d3-time-format
+        syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format
+        parsing is supported similarly (e.g., `{foo: 'utc:"%m%d%Y"'}`). See more
+        about [UTC time](timeunit.html#utc)
     property : string
         The JSON property containing the desired data. This parameter can be used
         when the loaded JSON file may have surrounding structure or meta-data. For
@@ -2829,8 +2826,7 @@ class JsonDataFormat(SchemaBase):
 
 
 class Legend(SchemaBase):
-    """Legend schema wrapper
-    
+    """
     Properties of a legend or boolean flag for determining whether to show it.
     
     Attributes
@@ -2840,18 +2836,19 @@ class Legend(SchemaBase):
     format : string
         The formatting pattern for labels. This is D3's [number format
         pattern](https://github.com/d3/d3-format#locale_format) for quantitative
-        fields and D3's [time format pattern](https://github.com/d3/d3-time-
-        format#locale_format) for time field.  See the [format
-        documentation](format.html) for more information.  __Default value:__
-        derived from [numberFormat](config.html#format) config for quantitative
-        fields and from [timeFormat](config.html#format) config for temporal fields.
+        fields and D3's [time format
+        pattern](https://github.com/d3/d3-time-format#locale_format) for time field.
+        See the [format documentation](format.html) for more information.  __Default
+        value:__  derived from [numberFormat](config.html#format) config for
+        quantitative fields and from [timeFormat](config.html#format) config for
+        temporal fields.
     offset : float
         The offset, in pixels, by which to displace the legend from the edge of the
         enclosing group or data rectangle.  __Default value:__  `0`
     orient : LegendOrient
         The orientation of the legend, which determines how the legend is positioned
-        within the scene. One of "left", "right", "top-left", "top-right", "bottom-
-        left", "bottom-right", "none".  __Default value:__ `"right"`
+        within the scene. One of "left", "right", "top-left", "top-right",
+        "bottom-left", "bottom-right", "none".  __Default value:__ `"right"`
     padding : float
         The padding, in pixels, between the legend and axis.
     tickCount : float
@@ -2940,8 +2937,8 @@ class LegendConfig(SchemaBase):
         enclosing group or data rectangle.  __Default value:__  `0`
     orient : LegendOrient
         The orientation of the legend, which determines how the legend is positioned
-        within the scene. One of "left", "right", "top-left", "top-right", "bottom-
-        left", "bottom-right", "none".  __Default value:__ `"right"`
+        within the scene. One of "left", "right", "top-left", "top-right",
+        "bottom-left", "bottom-right", "none".  __Default value:__ `"right"`
     padding : float
         The padding, in pixels, between the legend and axis.
     shortTimeLabels : boolean
@@ -3242,8 +3239,7 @@ class LookupTransform(SchemaBase):
 
 
 class Mark(SchemaBase):
-    """Mark schema wrapper
-    
+    """
     All types of primitive marks.
     """
     _schema = {'$ref': '#/definitions/Mark'}
@@ -3315,10 +3311,11 @@ class MarkConfig(SchemaBase):
         intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
         loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
         the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. - `"cardinal-
-        closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`: equivalent
-        to basis, except the tension parameter is used to straighten the spline. -
-        `"monotone"`: cubic interpolation that preserves monotonicity in y.
+        the start or end, but will intersect other control points. -
+        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
+        equivalent to basis, except the tension parameter is used to straighten the
+        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
+        y.
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no
         limit). The text value will be automatically truncated if the rendered size
@@ -3465,10 +3462,11 @@ class MarkDef(SchemaBase):
         intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
         loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
         the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. - `"cardinal-
-        closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`: equivalent
-        to basis, except the tension parameter is used to straighten the spline. -
-        `"monotone"`: cubic interpolation that preserves monotonicity in y.
+        the start or end, but will intersect other control points. -
+        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
+        equivalent to basis, except the tension parameter is used to straighten the
+        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
+        y.
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no
         limit). The text value will be automatically truncated if the rendered size
@@ -3725,8 +3723,9 @@ class OrderFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -3799,8 +3798,9 @@ class PositionFieldDef(SchemaBase):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -3833,16 +3833,17 @@ class PositionFieldDef(SchemaBase):
         [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
         [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart). -
         `"normalize"` - stacking with normalized domain (for creating [normalized
-        stacked bar and area charts](https://vega.github.io/vega-
-        lite/docs/stack.html#normalized). <br/> -`"center"` - stacking with center
-        baseline (for [streamgraph](https://vega.github.io/vega-
-        lite/docs/stack.html#streamgraph)). - `null` - No-stacking. This will
-        produce layered [bar](https://vega.github.io/vega-
-        lite/docs/stack.html#layered-bar-chart) and area chart.  __Default value:__
-        `zero` for plots with all of the following conditions are true: (1) the mark
-        is `bar` or `area`; (2) the stacked measure channel (x or y) has a linear
-        scale; (3) At least one of non-position channels mapped to an unaggregated
-        field that is different from x and y.  Otherwise, `null` by default.
+        stacked bar and area
+        charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>
+        -`"center"` - stacking with center baseline (for
+        [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).
+        - `null` - No-stacking. This will produce layered
+        [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart)
+        and area chart.  __Default value:__ `zero` for plots with all of the
+        following conditions are true: (1) the mark is `bar` or `area`; (2) the
+        stacked measure channel (x or y) has a linear scale; (3) At least one of
+        non-position channels mapped to an unaggregated field that is different from
+        x and y.  Otherwise, `null` by default.
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
         field. or [a temporal field that gets casted as
@@ -3904,9 +3905,9 @@ class Projection(SchemaBase):
     precision : mapping
         Sets the threshold for the projection’s [adaptive
         resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in
-        pixels. This value corresponds to the [Douglas–Peucker distance](http://en.w
-        ikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm). If
-        precision is not specified, returns the projection’s current resampling
+        pixels. This value corresponds to the [Douglas–Peucker
+        distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
+        If precision is not specified, returns the projection’s current resampling
         precision which defaults to `√0.5 ≅ 0.70710…`.
     radius : float
     ratio : float
@@ -3921,8 +3922,8 @@ class Projection(SchemaBase):
         The cartographic projection to use. This value is case-insensitive, for
         example `"albers"` and `"Albers"` indicate the same projection type. You can
         find all valid projection types [in the
-        documentation](https://vega.github.io/vega-
-        lite/docs/projection.html#projection-types).  __Default value:__ `mercator`
+        documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
+        __Default value:__ `mercator`
     """
     _schema = {'$ref': '#/definitions/Projection'}
     _rootschema = Root._schema
@@ -3944,8 +3945,7 @@ class Projection(SchemaBase):
 
 
 class ProjectionConfig(SchemaBase):
-    """ProjectionConfig schema wrapper
-    
+    """
     Any property of Projection can be in config
     
     Attributes
@@ -3971,9 +3971,9 @@ class ProjectionConfig(SchemaBase):
     precision : mapping
         Sets the threshold for the projection’s [adaptive
         resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in
-        pixels. This value corresponds to the [Douglas–Peucker distance](http://en.w
-        ikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm). If
-        precision is not specified, returns the projection’s current resampling
+        pixels. This value corresponds to the [Douglas–Peucker
+        distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
+        If precision is not specified, returns the projection’s current resampling
         precision which defaults to `√0.5 ≅ 0.70710…`.
     radius : float
     ratio : float
@@ -3988,8 +3988,8 @@ class ProjectionConfig(SchemaBase):
         The cartographic projection to use. This value is case-insensitive, for
         example `"albers"` and `"Albers"` indicate the same projection type. You can
         find all valid projection types [in the
-        documentation](https://vega.github.io/vega-
-        lite/docs/projection.html#projection-types).  __Default value:__ `mercator`
+        documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
+        __Default value:__ `mercator`
     """
     _schema = {'$ref': '#/definitions/ProjectionConfig'}
     _rootschema = Root._schema
@@ -4079,8 +4079,7 @@ class Repeat(SchemaBase):
 
 
 class RepeatRef(SchemaBase):
-    """RepeatRef schema wrapper
-    
+    """
     Reference to a repeated value.
     
     Attributes
@@ -4096,9 +4095,10 @@ class RepeatRef(SchemaBase):
 
 
 class Resolve(SchemaBase):
-    """Resolve schema wrapper
-    
-    Defines how scales, axes, and legends from different specs should be combined. Resolve is a mapping from `scale`, `axis`, and `legend` to a mapping from channels to resolutions.
+    """
+    Defines how scales, axes, and legends from different specs should be combined. 
+    Resolve is a mapping from `scale`, `axis`, and `legend` to a mapping from 
+    channels to resolutions.
     
     Attributes
     ----------
@@ -4154,16 +4154,17 @@ class Scale(SchemaBase):
         The interpolation method for range values. By default, a general
         interpolator for numbers, dates, strings and colors (in RGB space) is used.
         For color ranges, this property allows interpolation in alternative color
-        spaces. Legal values include `rgb`, `hsl`, `hsl-long`, `lab`, `hcl`, `hcl-
-        long`, `cubehelix` and `cubehelix-long` ('-long' variants use longer paths
-        in polar coordinate spaces). If object-valued, this property accepts an
-        object with a string-valued _type_ property and an optional numeric _gamma_
-        property applicable to rgb and cubehelix interpolators. For more, see the
-        [d3-interpolate documentation](https://github.com/d3/d3-interpolate).
-        __Note:__ Sequential scales do not support `interpolate` as they have a
-        fixed interpolator.  Since Vega-Lite uses sequential scales for quantitative
-        fields by default, you have to set the scale `type` to other quantitative
-        scale type such as `"linear"` to customize `interpolate`.
+        spaces. Legal values include `rgb`, `hsl`, `hsl-long`, `lab`, `hcl`,
+        `hcl-long`, `cubehelix` and `cubehelix-long` ('-long' variants use longer
+        paths in polar coordinate spaces). If object-valued, this property accepts
+        an object with a string-valued _type_ property and an optional numeric
+        _gamma_ property applicable to rgb and cubehelix interpolators. For more,
+        see the [d3-interpolate
+        documentation](https://github.com/d3/d3-interpolate).  __Note:__ Sequential
+        scales do not support `interpolate` as they have a fixed interpolator.
+        Since Vega-Lite uses sequential scales for quantitative fields by default,
+        you have to set the scale `type` to other quantitative scale type such as
+        `"linear"` to customize `interpolate`.
     nice : anyOf(boolean, float, NiceTime, mapping)
         Extending the domain so that it starts and ends on nice round values. This
         method typically modifies the scale’s domain, and may only extend the bounds
@@ -4209,10 +4210,10 @@ class Scale(SchemaBase):
     range : anyOf(list, list, string)
         The range of the scale. One of:  - A string indicating a [pre-defined named
         scale range](scale.html#range-config) (e.g., example, `"symbol"`, or
-        `"diverging"`).  - For [continuous scales](scale.html#continuous), two-
-        element array indicating  minimum and maximum values, or an array with more
-        than two entries for specifying a [piecewise scale](scale.html#piecewise).
-        - For [discrete](scale.html#discrete) and
+        `"diverging"`).  - For [continuous scales](scale.html#continuous),
+        two-element array indicating  minimum and maximum values, or an array with
+        more than two entries for specifying a [piecewise
+        scale](scale.html#piecewise).  - For [discrete](scale.html#discrete) and
         [discretizing](scale.html#discretizing) scales, an array of desired output
         values.  __Notes:__  1) For [sequential](scale.html#sequential),
         [ordinal](scale.html#ordinal), and discretizing color scales, you can also
@@ -4257,10 +4258,10 @@ class Scale(SchemaBase):
         ([`"ordinal"`](scale.html#ordinal)) or continuous
         ([`"band"`](scale.html#band) and [`"point"`](scale.html#point)) output
         ranges.  3) [**Discretizing Scales**](scale.html#discretizing) -- mapping
-        continuous domains to discrete output ranges ([`"bin-
-        linear"`](scale.html#bin-linear) and [`"bin-ordinal"`](scale.html#bin-
-        ordinal)).  __Default value:__ please see the [scale type
-        table](scale.html#type).
+        continuous domains to discrete output ranges
+        ([`"bin-linear"`](scale.html#bin-linear) and
+        [`"bin-ordinal"`](scale.html#bin-ordinal)).  __Default value:__ please see
+        the [scale type table](scale.html#type).
     zero : boolean
         If `true`, ensures that a zero baseline value is included in the scale
         domain.  __Default value:__ `true` for x and y channels if the quantitative
@@ -4783,10 +4784,11 @@ class TextConfig(SchemaBase):
         intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
         loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
         the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. - `"cardinal-
-        closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`: equivalent
-        to basis, except the tension parameter is used to straighten the spline. -
-        `"monotone"`: cubic interpolation that preserves monotonicity in y.
+        the start or end, but will intersect other control points. -
+        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
+        equivalent to basis, except the tension parameter is used to straighten the
+        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
+        y.
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no
         limit). The text value will be automatically truncated if the rendered size
@@ -4936,10 +4938,11 @@ class TickConfig(SchemaBase):
         intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
         loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
         the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. - `"cardinal-
-        closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`: equivalent
-        to basis, except the tension parameter is used to straighten the spline. -
-        `"monotone"`: cubic interpolation that preserves monotonicity in y.
+        the start or end, but will intersect other control points. -
+        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
+        equivalent to basis, except the tension parameter is used to straighten the
+        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
+        y.
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no
         limit). The text value will be automatically truncated if the rendered size
@@ -5078,10 +5081,10 @@ class TitleParams(SchemaBase):
         `"end"`. For example, with an orientation of top these anchor positions map
         to a left-, center-, or right-aligned title.  __Default value:__ `"middle"`
         for [single](spec.html) and [layered](layer.html) views. `"start"` for other
-        composite views.  __Note:__ [For now](https://github.com/vega/vega-
-        lite/issues/2875), `anchor` is only customizable only for
-        [single](spec.html) and [layered](layer.html) views.  For other composite
-        views, `anchor` is always `"start"`.
+        composite views.  __Note:__ [For
+        now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only
+        customizable only for [single](spec.html) and [layered](layer.html) views.
+        For other composite views, `anchor` is always `"start"`.
     offset : float
         The orthogonal offset in pixels by which to displace the title from its
         position along the edge of the chart.
@@ -5139,26 +5142,25 @@ class TopLevelFacetedUnitSpec(SchemaBase):
         is `"fit"` or its y-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For y-axis with a band or point scale: if
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For y-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the height is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `y` channel, the
-        `height` will be the value of `rangeStep`.  __Note__: For plots with [`row`
-        and `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the height of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `y` channel, the `height` will be the value of
+        `rangeStep`.  __Note__: For plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the height of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
         `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition object](https://vega.github.io/vega-
-        lite/docs/mark.html#mark-def).
+        `"text"`) or a [mark definition
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     padding : Padding
@@ -5185,24 +5187,22 @@ class TopLevelFacetedUnitSpec(SchemaBase):
         is `"fit"` or its x-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For x-axis with a band or point scale: if
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For x-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the width is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `x` channel, the
-        `width` will be the value of
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-
-        lite/docs/size.html#default-width-and-height) for `text` mark and the value
-        of `rangeStep` for other marks.  __Note:__ For plots with [`row` and
-        `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the width of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `x` channel, the `width` will be the value of
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
+        plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the width of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     """
     _schema = {'$ref': '#/definitions/TopLevel<FacetedUnitSpec>'}
     _rootschema = Root._schema
@@ -5387,21 +5387,20 @@ class TopLevelLayerSpec(SchemaBase):
         is `"fit"` or its y-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For y-axis with a band or point scale: if
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For y-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the height is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the height will be the value of
-        [`config.view.height`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `y` channel, the
-        `height` will be the value of `rangeStep`.  __Note__: For plots with [`row`
-        and `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the height of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `y` channel, the `height` will be the value of
+        `rangeStep`.  __Note__: For plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the height of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     layer : list
         Layer or single view specifications to be layered.  __Note__: Specifications
         inside `layer` cannot use `row` and `column` channels as layering facet
@@ -5427,24 +5426,22 @@ class TopLevelLayerSpec(SchemaBase):
         is `"fit"` or its x-channel has a [continuous
         scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
         width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - For x-axis with a band or point scale: if
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - For x-axis with a band or point scale: if
         [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
         numeric value or unspecified, the width is [determined by the range step,
         paddings, and the cardinality of the field mapped to
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
         Otherwise, if the `rangeStep` is `null`, the width will be the value of
-        [`config.view.width`](https://vega.github.io/vega-
-        lite/docs/spec.html#config). - If no field is mapped to `x` channel, the
-        `width` will be the value of
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-
-        lite/docs/size.html#default-width-and-height) for `text` mark and the value
-        of `rangeStep` for other marks.  __Note:__ For plots with [`row` and
-        `column` channels](https://vega.github.io/vega-
-        lite/docs/encoding.html#facet), this represents the width of a single view.
-        __See also:__ The documentation for [width and
-        height](https://vega.github.io/vega-lite/docs/size.html) contains more
-        examples.
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
+        - If no field is mapped to `x` channel, the `width` will be the value of
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
+        plots with [`row` and `column`
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
+        represents the width of a single view.  __See also:__ The documentation for
+        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
+        more examples.
     """
     _schema = {'$ref': '#/definitions/TopLevel<LayerSpec>'}
     _rootschema = Root._schema
@@ -5627,12 +5624,12 @@ class TopoDataFormat(SchemaBase):
         `"boolean"` or `"date"`). For example, `"parse": {"modified_on": "date"}`
         parses the `modified_on` field in each input record a Date value.  For
         `"date"`, we parse data based using Javascript's
-        [`Date.parse()`](https://developer.mozilla.org/en-
-        US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse). For Specific
-        date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`), using the
-        [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format).
-        UTC date format parsing is supported similarly (e.g., `{foo:
-        'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
+        [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).
+        For Specific date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`),
+        using the [d3-time-format
+        syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format
+        parsing is supported similarly (e.g., `{foo: 'utc:"%m%d%Y"'}`). See more
+        about [UTC time](timeunit.html#utc)
     type : string
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
         determined by the extension of the file URL. If no extension is detected,
@@ -5659,8 +5656,7 @@ class Transform(SchemaBase):
 
 
 class Type(SchemaBase):
-    """Type schema wrapper
-    
+    """
     Constants and utilities for data type  
      Data type based on level of measurement 
     """
@@ -5712,8 +5708,7 @@ class UtcSingleTimeUnit(SchemaBase):
 
 
 class ValueDef(SchemaBase):
-    """ValueDef schema wrapper
-    
+    """
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -5731,8 +5726,7 @@ class ValueDef(SchemaBase):
 
 
 class ValueDefWithCondition(SchemaBase):
-    """ValueDefWithCondition schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -5757,8 +5751,7 @@ class ValueDefWithCondition(SchemaBase):
 
 
 class MarkPropValueDefWithCondition(SchemaBase):
-    """MarkPropValueDefWithCondition schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -5783,8 +5776,7 @@ class MarkPropValueDefWithCondition(SchemaBase):
 
 
 class TextValueDefWithCondition(SchemaBase):
-    """TextValueDefWithCondition schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -6087,10 +6079,11 @@ class VgMarkConfig(SchemaBase):
         intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
         loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
         the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. - `"cardinal-
-        closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`: equivalent
-        to basis, except the tension parameter is used to straighten the spline. -
-        `"monotone"`: cubic interpolation that preserves monotonicity in y.
+        the start or end, but will intersect other control points. -
+        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
+        equivalent to basis, except the tension parameter is used to straighten the
+        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
+        y.
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no
         limit). The text value will be automatically truncated if the rendered size
@@ -6268,10 +6261,10 @@ class VgTitleConfig(SchemaBase):
         `"end"`. For example, with an orientation of top these anchor positions map
         to a left-, center-, or right-aligned title.  __Default value:__ `"middle"`
         for [single](spec.html) and [layered](layer.html) views. `"start"` for other
-        composite views.  __Note:__ [For now](https://github.com/vega/vega-
-        lite/issues/2875), `anchor` is only customizable only for
-        [single](spec.html) and [layered](layer.html) views.  For other composite
-        views, `anchor` is always `"start"`.
+        composite views.  __Note:__ [For
+        now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only
+        customizable only for [single](spec.html) and [layered](layer.html) views.
+        For other composite views, `anchor` is always `"start"`.
     angle : float
         Angle in degrees of title text.
     baseline : VerticalAlign

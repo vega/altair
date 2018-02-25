@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:32
+# 2018-02-24 22:43
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -382,8 +382,7 @@ class streams(SchemaBase):
 
 
 class aggregateTransform(SchemaBase):
-    """aggregateTransform schema wrapper
-    
+    """
     Compute summary aggregate statistics
     
     Attributes
@@ -404,8 +403,7 @@ class aggregateTransform(SchemaBase):
 
 
 class binTransform(SchemaBase):
-    """binTransform schema wrapper
-    
+    """
     Bins values into quantitative bins (e.g., for a histogram).
     
     Attributes
@@ -448,8 +446,7 @@ class binTransform(SchemaBase):
 
 
 class crossTransform(SchemaBase):
-    """crossTransform schema wrapper
-    
+    """
     Compute the cross-product of two data sets.
     
     Attributes
@@ -508,9 +505,9 @@ class countpatternTransform(SchemaBase):
 
 
 class linkpathTransform(SchemaBase):
-    """linkpathTransform schema wrapper
-    
-    Computes a path definition for connecting nodes within a node-link network or tree diagram.
+    """
+    Computes a path definition for connecting nodes within a node-link network or 
+    tree diagram.
     
     Attributes
     ----------
@@ -545,8 +542,7 @@ class linkpathTransform(SchemaBase):
 
 
 class facetTransform(SchemaBase):
-    """facetTransform schema wrapper
-    
+    """
     A special aggregate transform that organizes a data set into groups or "facets".
     
     Attributes
@@ -569,8 +565,7 @@ class facetTransform(SchemaBase):
 
 
 class filterTransform(SchemaBase):
-    """filterTransform schema wrapper
-    
+    """
     Filters elements from a data set to remove unwanted items.
     
     Attributes
@@ -589,8 +584,7 @@ class filterTransform(SchemaBase):
 
 
 class foldTransform(SchemaBase):
-    """foldTransform schema wrapper
-    
+    """
     Collapse ("fold") one or more data properties into two properties.
     
     Attributes
@@ -610,8 +604,7 @@ class foldTransform(SchemaBase):
 
 
 class forceTransform(SchemaBase):
-    """forceTransform schema wrapper
-    
+    """
     Performs force-directed layout for network data.
     
     Attributes
@@ -675,8 +668,7 @@ class forceTransform(SchemaBase):
 
 
 class formulaTransform(SchemaBase):
-    """formulaTransform schema wrapper
-    
+    """
     Extends data elements with new values according to a calculation formula.
     
     Attributes
@@ -697,9 +689,9 @@ class formulaTransform(SchemaBase):
 
 
 class geoTransform(SchemaBase):
-    """geoTransform schema wrapper
-    
-    Performs a cartographic projection. Given longitude and latitude values, sets corresponding x and y properties for a mark.
+    """
+    Performs a cartographic projection. Given longitude and latitude values, sets 
+    corresponding x and y properties for a mark.
     
     Attributes
     ----------
@@ -744,8 +736,7 @@ class geoTransform(SchemaBase):
 
 
 class geopathTransform(SchemaBase):
-    """geopathTransform schema wrapper
-    
+    """
     Creates paths for geographic regions, such as countries, states and counties.
     
     Attributes
@@ -830,8 +821,7 @@ class hierarchyTransform(SchemaBase):
 
 
 class imputeTransform(SchemaBase):
-    """imputeTransform schema wrapper
-    
+    """
     Performs imputation of missing values.
     
     Attributes
@@ -860,8 +850,7 @@ class imputeTransform(SchemaBase):
 
 
 class lookupTransform(SchemaBase):
-    """lookupTransform schema wrapper
-    
+    """
     Extends a data set by looking up values in another data set.
     
     Attributes
@@ -890,8 +879,7 @@ class lookupTransform(SchemaBase):
 
 
 class pieTransform(SchemaBase):
-    """pieTransform schema wrapper
-    
+    """
     Computes a pie chart layout.
     
     Attributes
@@ -919,8 +907,7 @@ class pieTransform(SchemaBase):
 
 
 class rankTransform(SchemaBase):
-    """rankTransform schema wrapper
-    
+    """
     Computes ascending rank scores for data tuples.
     
     Attributes
@@ -946,8 +933,7 @@ class rankTransform(SchemaBase):
 
 
 class sortTransform(SchemaBase):
-    """sortTransform schema wrapper
-    
+    """
     Sorts the values of a data set.
     
     Attributes
@@ -965,9 +951,9 @@ class sortTransform(SchemaBase):
 
 
 class stackTransform(SchemaBase):
-    """stackTransform schema wrapper
-    
-    Computes layout values for stacked graphs, as in stacked bar charts or stream graphs.
+    """
+    Computes layout values for stacked graphs, as in stacked bar charts or stream 
+    graphs.
     
     Attributes
     ----------

@@ -74,13 +74,21 @@ def docstring(classname, schema, rootschema=None, indent=4):
     doc = ["{0} schema wrapper".format(classname)]
     if info.description:
         # TODO: wrap these description lines?
-        doc += [''] + info.description.splitlines()
+        wrapper = textwrap.TextWrapper(width=80,
+                                       break_long_words=False,
+                                       break_on_hyphens=False,
+                                       drop_whitespace=False)
+        doc = ['']
+        for line in info.description.splitlines():
+            doc.extend(wrapper.wrap(line))
     if info.properties:
         doc += ['',
                 'Attributes',
                 '----------']
         wrapper = textwrap.TextWrapper(width=80, initial_indent=4 * ' ',
-                                       subsequent_indent=4 * ' ')
+                                       subsequent_indent=4 * ' ',
+                                       break_long_words=False,
+                                       break_on_hyphens=False)
         for prop, propinfo in info.properties.items():
             doc += ["{0} : {1}".format(prop, propinfo.short_description)]
             doc += wrapper.wrap(propinfo.description)

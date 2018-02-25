@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:32
+# 2018-02-24 22:43
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -25,16 +25,10 @@ class Root(SchemaBase):
 
 
 class ExtendedUnitSpec(SchemaBase):
-    """ExtendedUnitSpec schema wrapper
-    
+    """
     Schema for a unit Vega-Lite specification, with the syntactic sugar extensions:
-    
     - `row` and `column` are included in the encoding.
-    
     - (Future) label, box plot
-    
-    
-    
     Note: the spec could contain facet.
     
     Attributes
@@ -207,14 +201,10 @@ class AxisOrient(SchemaBase):
 
 
 class DateTime(SchemaBase):
-    """DateTime schema wrapper
-    
+    """
     Object for defining datetime in Vega-Lite Filter.
-    
     If both month and quarter are provided, month has higher precedence.
-    
     `day` cannot be combined with other date.
-    
     We accept string for month and day names.
     
     Attributes
@@ -419,8 +409,7 @@ class TimeUnit(SchemaBase):
 
 
 class Bin(SchemaBase):
-    """Bin schema wrapper
-    
+    """
     Binning properties or boolean flag for determining whether to bin data or not.
     
     Attributes
@@ -765,8 +754,7 @@ class OneOfFilter(SchemaBase):
 
 
 class Formula(SchemaBase):
-    """Formula schema wrapper
-    
+    """
     Formula object for calculate.
     
     Attributes
@@ -914,8 +902,8 @@ class MarkConfig(SchemaBase):
         charts, this is always determined by the orientation of the stack;
         therefore explicitly specified value will be ignored.
     interpolate : Interpolate
-        The line interpolation method to use. One of linear, step-before, step-
-        after, basis, basis-open, cardinal, cardinal-open, monotone.
+        The line interpolation method to use. One of linear, step-before,
+        step-after, basis, basis-open, cardinal, cardinal-open, monotone.
     tension : float
         Depending on the interpolation type, sets the tension parameter.
     lineSize : float

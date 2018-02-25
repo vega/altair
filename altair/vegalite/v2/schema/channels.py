@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:32
+# 2018-02-24 22:43
 
 from . import core
 from altair.utils.schemapi import Undefined
@@ -8,8 +8,7 @@ from altair.utils import parse_shorthand, parse_shorthand_plus_data
 
 
 class Color(core.MarkPropFieldDefWithCondition):
-    """Color schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -25,8 +24,9 @@ class Color(core.MarkPropFieldDefWithCondition):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -91,8 +91,7 @@ class Color(core.MarkPropFieldDefWithCondition):
 
 
 class ColorValue(core.MarkPropValueDefWithCondition):
-    """ColorValue schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -122,8 +121,9 @@ class Column(core.FacetFieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -168,9 +168,9 @@ class Column(core.FacetFieldDef):
 
 
 class Detail(core.FieldDef):
-    """Detail schema wrapper
-    
-    Definition object for a data field, its type and transformation of an encoding channel.
+    """
+    Definition object for a data field, its type and transformation of an encoding 
+    channel.
     
     Attributes
     ----------
@@ -180,8 +180,9 @@ class Detail(core.FieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -221,8 +222,7 @@ class Detail(core.FieldDef):
 
 
 class Href(core.FieldDefWithCondition):
-    """Href schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -238,8 +238,9 @@ class Href(core.FieldDefWithCondition):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -285,8 +286,7 @@ class Href(core.FieldDefWithCondition):
 
 
 class HrefValue(core.ValueDefWithCondition):
-    """HrefValue schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -306,8 +306,7 @@ class HrefValue(core.ValueDefWithCondition):
 
 
 class Opacity(core.MarkPropFieldDefWithCondition):
-    """Opacity schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -323,8 +322,9 @@ class Opacity(core.MarkPropFieldDefWithCondition):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -389,8 +389,7 @@ class Opacity(core.MarkPropFieldDefWithCondition):
 
 
 class OpacityValue(core.MarkPropValueDefWithCondition):
-    """OpacityValue schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -420,8 +419,9 @@ class Order(core.OrderFieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -473,8 +473,9 @@ class Row(core.FacetFieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -519,8 +520,7 @@ class Row(core.FacetFieldDef):
 
 
 class Shape(core.MarkPropFieldDefWithCondition):
-    """Shape schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -536,8 +536,9 @@ class Shape(core.MarkPropFieldDefWithCondition):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -602,8 +603,7 @@ class Shape(core.MarkPropFieldDefWithCondition):
 
 
 class ShapeValue(core.MarkPropValueDefWithCondition):
-    """ShapeValue schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -623,8 +623,7 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
 
 
 class Size(core.MarkPropFieldDefWithCondition):
-    """Size schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -640,8 +639,9 @@ class Size(core.MarkPropFieldDefWithCondition):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -705,8 +705,7 @@ class Size(core.MarkPropFieldDefWithCondition):
 
 
 class SizeValue(core.MarkPropValueDefWithCondition):
-    """SizeValue schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -726,8 +725,7 @@ class SizeValue(core.MarkPropValueDefWithCondition):
 
 
 class Text(core.TextFieldDefWithCondition):
-    """Text schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -743,8 +741,9 @@ class Text(core.TextFieldDefWithCondition):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -793,8 +792,7 @@ class Text(core.TextFieldDefWithCondition):
 
 
 class TextValue(core.TextValueDefWithCondition):
-    """TextValue schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -814,8 +812,7 @@ class TextValue(core.TextValueDefWithCondition):
 
 
 class Tooltip(core.TextFieldDefWithCondition):
-    """Tooltip schema wrapper
-    
+    """
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -831,8 +828,9 @@ class Tooltip(core.TextFieldDefWithCondition):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
         One or more value definition(s) with a selection predicate.  __Note:__ A
         field definition's `condition` property can only contain [value
@@ -881,8 +879,7 @@ class Tooltip(core.TextFieldDefWithCondition):
 
 
 class TooltipValue(core.TextValueDefWithCondition):
-    """TooltipValue schema wrapper
-    
+    """
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -917,8 +914,9 @@ class X(core.PositionFieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -951,16 +949,17 @@ class X(core.PositionFieldDef):
         [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
         [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart). -
         `"normalize"` - stacking with normalized domain (for creating [normalized
-        stacked bar and area charts](https://vega.github.io/vega-
-        lite/docs/stack.html#normalized). <br/> -`"center"` - stacking with center
-        baseline (for [streamgraph](https://vega.github.io/vega-
-        lite/docs/stack.html#streamgraph)). - `null` - No-stacking. This will
-        produce layered [bar](https://vega.github.io/vega-
-        lite/docs/stack.html#layered-bar-chart) and area chart.  __Default value:__
-        `zero` for plots with all of the following conditions are true: (1) the mark
-        is `bar` or `area`; (2) the stacked measure channel (x or y) has a linear
-        scale; (3) At least one of non-position channels mapped to an unaggregated
-        field that is different from x and y.  Otherwise, `null` by default.
+        stacked bar and area
+        charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>
+        -`"center"` - stacking with center baseline (for
+        [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).
+        - `null` - No-stacking. This will produce layered
+        [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart)
+        and area chart.  __Default value:__ `zero` for plots with all of the
+        following conditions are true: (1) the mark is `bar` or `area`; (2) the
+        stacked measure channel (x or y) has a linear scale; (3) At least one of
+        non-position channels mapped to an unaggregated field that is different from
+        x and y.  Otherwise, `null` by default.
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
         field. or [a temporal field that gets casted as
@@ -991,8 +990,7 @@ class X(core.PositionFieldDef):
 
 
 class XValue(core.ValueDef):
-    """XValue schema wrapper
-    
+    """
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -1006,9 +1004,9 @@ class XValue(core.ValueDef):
 
 
 class X2(core.FieldDef):
-    """X2 schema wrapper
-    
-    Definition object for a data field, its type and transformation of an encoding channel.
+    """
+    Definition object for a data field, its type and transformation of an encoding 
+    channel.
     
     Attributes
     ----------
@@ -1018,8 +1016,9 @@ class X2(core.FieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1059,8 +1058,7 @@ class X2(core.FieldDef):
 
 
 class X2Value(core.ValueDef):
-    """X2Value schema wrapper
-    
+    """
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -1089,8 +1087,9 @@ class Y(core.PositionFieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1123,16 +1122,17 @@ class Y(core.PositionFieldDef):
         [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
         [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart). -
         `"normalize"` - stacking with normalized domain (for creating [normalized
-        stacked bar and area charts](https://vega.github.io/vega-
-        lite/docs/stack.html#normalized). <br/> -`"center"` - stacking with center
-        baseline (for [streamgraph](https://vega.github.io/vega-
-        lite/docs/stack.html#streamgraph)). - `null` - No-stacking. This will
-        produce layered [bar](https://vega.github.io/vega-
-        lite/docs/stack.html#layered-bar-chart) and area chart.  __Default value:__
-        `zero` for plots with all of the following conditions are true: (1) the mark
-        is `bar` or `area`; (2) the stacked measure channel (x or y) has a linear
-        scale; (3) At least one of non-position channels mapped to an unaggregated
-        field that is different from x and y.  Otherwise, `null` by default.
+        stacked bar and area
+        charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>
+        -`"center"` - stacking with center baseline (for
+        [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).
+        - `null` - No-stacking. This will produce layered
+        [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart)
+        and area chart.  __Default value:__ `zero` for plots with all of the
+        following conditions are true: (1) the mark is `bar` or `area`; (2) the
+        stacked measure channel (x or y) has a linear scale; (3) At least one of
+        non-position channels mapped to an unaggregated field that is different from
+        x and y.  Otherwise, `null` by default.
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
         field. or [a temporal field that gets casted as
@@ -1163,8 +1163,7 @@ class Y(core.PositionFieldDef):
 
 
 class YValue(core.ValueDef):
-    """YValue schema wrapper
-    
+    """
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -1178,9 +1177,9 @@ class YValue(core.ValueDef):
 
 
 class Y2(core.FieldDef):
-    """Y2 schema wrapper
-    
-    Definition object for a data field, its type and transformation of an encoding channel.
+    """
+    Definition object for a data field, its type and transformation of an encoding 
+    channel.
     
     Attributes
     ----------
@@ -1190,8 +1189,9 @@ class Y2(core.FieldDef):
     bin : anyOf(boolean, BinParams)
         A flag for binning a `quantitative` field, or [an object defining binning
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning parameters](https://vega.github.io/vega-
-        lite/docs/bin.html) will be applied.  __Default value:__ `false`
+        `true`, default [binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
+        __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which to pull a
         data value or an object defining iterated values from the
@@ -1231,8 +1231,7 @@ class Y2(core.FieldDef):
 
 
 class Y2Value(core.ValueDef):
-    """Y2Value schema wrapper
-    
+    """
     Definition object for a constant value of an encoding channel.
     
     Attributes
