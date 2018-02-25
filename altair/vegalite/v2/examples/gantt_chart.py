@@ -20,5 +20,4 @@ chart = alt.Chart(source).mark_bar().encode(
     x = 'start',
     x2 = 'end',
     y = 'task',
-)  
-chart
+)
