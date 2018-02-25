@@ -23,3 +23,4 @@ line = alt.Chart(source).mark_line(color = 'red').encode(
 
 
 chart = line + bar
+chart.resolve = {'scale': {'y': 'independent'}}
