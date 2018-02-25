@@ -2,7 +2,6 @@
 
 import keyword
 import re
-import textwrap
 
 import jsonschema
 import pkgutil

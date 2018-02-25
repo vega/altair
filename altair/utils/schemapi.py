@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 20:07
+# 2018-02-24 22:32
 import collections
 import json
 

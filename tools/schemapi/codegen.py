@@ -1,4 +1,6 @@
 """Code generation utilities"""
+import textwrap
+
 from .utils import SchemaInfo, is_valid_identifier
 
 
@@ -71,14 +73,17 @@ def docstring(classname, schema, rootschema=None, indent=4):
     info = SchemaInfo(schema, rootschema)
     doc = ["{0} schema wrapper".format(classname)]
     if info.description:
-        doc += ['', info.description]
+        # TODO: wrap these description lines?
+        doc += [''] + info.description.splitlines()
     if info.properties:
         doc += ['',
                 'Attributes',
                 '----------']
+        wrapper = textwrap.TextWrapper(width=80, initial_indent=4 * ' ',
+                                       subsequent_indent=4 * ' ')
         for prop, propinfo in info.properties.items():
-            doc += ["{0} : {1}".format(prop, propinfo.short_description),
-                    "    {0}".format(propinfo.description.replace('\n', ' '))]
+            doc += ["{0} : {1}".format(prop, propinfo.short_description)]
+            doc += wrapper.wrap(propinfo.description)
     if len(doc) > 1:
         doc += ['']
     return ("\n" + indent * " ").join(doc)
@@ -156,9 +161,23 @@ def init_code(classname, schema, rootschema=None, indent=0, nodefault=()):
         args.append('**kwds')
         super_args.append('**kwds')
 
+    arg_indent = ' ' * len('def __init__(')
+    arg_wrapper = textwrap.TextWrapper(width=80,
+                                       initial_indent=arg_indent,
+                                       subsequent_indent=arg_indent,
+                                       break_long_words=False)
+    arglist = '\n'.join(arg_wrapper.wrap(', '.join(args))).lstrip()
+
+    super_arg_indent = ' ' * len('    super({0}, self).__init__('.format(classname))
+    super_arg_wrapper = textwrap.TextWrapper(width=80,
+                                             initial_indent=super_arg_indent,
+                                             subsequent_indent=super_arg_indent,
+                                             break_long_words=False)
+    super_arglist = '\n'.join(super_arg_wrapper.wrap(', '.join(super_args))).lstrip()
+
     code = INIT_DEF.format(classname=classname,
-                           arglist=', '.join(args),
-                           super_arglist=', '.join(super_args))
+                           arglist=arglist,
+                           super_arglist=super_arglist)
     if indent:
         code = code.replace('\n', '\n' + indent * ' ')
     return code
