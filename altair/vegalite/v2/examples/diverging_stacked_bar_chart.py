@@ -337,23 +337,30 @@ data =     [
       }
     ]
 
-source = alt.pd.DataFrame(data)
 
-chart = alt.Chart(source).mark_bar().encode(
-    x = alt.X('percentage_start:Q'),
-    x2 = 'percentage_end:Q',
-    y = alt.Y('question:N', axis = alt.Axis(title = 'Question',
-                                           offset = 5,
-                                           ticks = False,
-                                           minExtent = 60,
-                                           domain = False)),
-    color = alt.Color('type:N',
-        legend=alt.Legend( title='Response'),
-        scale=alt.Scale(
+color_scale = alt.Scale(
             domain=["Strongly disagree",
             "Disagree",
             "Neither agree nor disagree",
             "Agree",
             "Strongly agree"],
             range=["#c30d24", "#f3a583", "#cccccc", "#94c6da", "#1770ab"]
-        ),))
+        )
+
+y_axis = alt.Axis(title = 'Question',
+                   offset = 5,
+                   ticks = False,
+                   minExtent = 60,
+                   domain = False)
+
+
+
+source = alt.pd.DataFrame(data)
+
+chart = alt.Chart(source).mark_bar().encode(
+    x = alt.X('percentage_start:Q'),
+    x2 = 'percentage_end:Q',
+    y = alt.Y('question:N', axis = y_axis),
+    color = alt.Color('type:N',
+        legend=alt.Legend( title='Response'),
+        scale = color_scale,))
