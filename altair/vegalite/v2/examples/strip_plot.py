@@ -1,7 +1,7 @@
 """
 Strip Plot
 -----------------
-This example shows the relationship between horsepower and the numbver of cylinders using tick marks..
+This example shows the relationship between horsepower and the numbver of cylinders using tick marks.
 """
 
 import altair as alt
