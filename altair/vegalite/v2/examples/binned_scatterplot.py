@@ -14,4 +14,3 @@ chart = alt.Chart(source).mark_circle().encode(
     y = alt.Y('Rotten_Tomatoes_Rating',  bin = alt.BinParams(maxbins=10)),
     size = 'count(IMDB_Rating)'
 )  
-chart
