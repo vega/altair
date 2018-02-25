@@ -22,5 +22,5 @@ line = alt.Chart(source).mark_line(color = 'red').encode(
     y = 'mean(temp_max)')
 
 
-chart = line + bar
+chart = bar + line
 chart.resolve = {'scale': {'y': 'independent'}}
