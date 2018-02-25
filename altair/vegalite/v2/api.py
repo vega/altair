@@ -43,8 +43,8 @@ class TopLevelMixin(object):
         #   inference.
         # - 'toplevel' is a boolean flag that is assumed to be true; if it's
         #   true then a "$schema" arg is added to the dict.
-        context = kwargs.get('context', {})
-        if 'data' not in context and original_data is not Undefined:
+        context = kwargs.get('context', {}).copy()
+        if original_data is not Undefined:
             context['data'] = original_data
         if context.get('top_level', True):
             # since this is top-level we add $schema if it's missing
