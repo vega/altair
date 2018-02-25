@@ -14,8 +14,7 @@ brush = alt.selection(type='interval', resolve='global')
 
 base = alt.Chart(cars).mark_point().encode(
     y='Miles_per_Gallon',
-    color=brush.condition('Origin',
-                          alt.ColorValue('gray'))
+    color=alt.condition(brush, 'Origin', alt.ColorValue('gray'))
 ).properties(
     selection=brush,
     width=300,

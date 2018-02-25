@@ -42,31 +42,6 @@ class SelectionMapping(SchemaBase):
                              "in this mapping".format(name))
         return {"selection": "name"}
 
-    def condition(self, if_true, if_false, name=None):
-        if name is None and len(self._kwds) == 1:
-            name = list(self._kwds.keys())[0]
-        if name not in self._kwds:
-            raise ValueError("'{0}' is not a valid selection name "
-                             "in this mapping".format(name))
-
-        if isinstance(if_true, SchemaBase):
-            condition = if_true.copy()
-            condition.selection = name
-        elif isinstance(if_true, six.string_types):
-            condition = dict(selection=name, field=if_true)
-        else:
-            condition = dict(selection=name, **if_true)
-
-        if isinstance(if_false, SchemaBase):
-            selection = if_false.copy()
-            selection['condition'] = condition
-        elif isinstance(if_false, six.string_types):
-            selection = dict(condition=condition, field=if_false)
-        else:
-            selection = dict(condition=condition, **if_false)
-
-        return selection
-
     def __add__(self, other):
         if isinstance(other, SelectionMapping):
             copy = self.copy()
@@ -106,6 +81,53 @@ def selection(name=None, **kwds):
 
 selection.counter = 1
 
+
+def condition(predicate, if_true, if_false):
+    """A conditional attribute or encoding
+
+    Parameters
+    ----------
+    predicate:
+        the selection predicate or test predicate for the condition
+    if_true:
+        the spec to use if the selection predicate is true
+    if_false:
+        the spec to use if the selection predicate is false
+
+    Returns
+    -------
+    spec: dict or SchemaBase
+        the spec that describes the condition
+    """
+    if isinstance(predicate, SelectionMapping):
+        if len(predicate._kwds) != 1:
+            raise NotImplementedError("multiple keys in SelectionMapping")
+        name = list(predicate._kwds.keys())[0]
+
+        if isinstance(if_true, SchemaBase):
+            condition = if_true.copy()
+            condition.selection = name
+        elif isinstance(if_true, six.string_types):
+            condition = dict(selection=name, field=if_true)
+        else:
+            condition = dict(selection=name, **if_true)
+
+        if isinstance(if_false, SchemaBase):
+            selection = if_false.copy()
+            selection['condition'] = condition
+        elif isinstance(if_false, six.string_types):
+            selection = dict(condition=condition, field=if_false)
+        else:
+            selection = dict(condition=condition, **if_false)
+
+        return selection
+    else:
+        raise NotImplementedError("condition predicate of type {0}"
+                                  "".format(type(predicate)))
+
+
+#--------------------------------------------------------------------
+# Top-level objects
 
 class TopLevelMixin(object):
     def _prepare_data(self):
