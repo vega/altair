@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from .. import parse_shorthand
+from .. import parse_shorthand, parse_shorthand_plus_data
 
 
 def test_parse_shorthand():
@@ -42,3 +42,18 @@ def test_parse_shorthand():
     # check parsing in presence of strange characters
     check('average(a b:(c\nd):Q', aggregate='average',
           field='a b:(c\nd', type='quantitative')
+
+
+def test_parse_shorthand_plus_data():
+    def check(s, data, **kwargs):
+        assert parse_shorthand_plus_data(s, data) == kwargs
+
+    data = pd.DataFrame({'x': [1, 2, 3, 4, 5],
+                         'y': ['A', 'B', 'C', 'D', 'E'],
+                         'z': pd.date_range('2018-01-01', periods=5, freq='D')})
+
+    check('x', data, field='x', type='quantitative')
+    check('y', data, field='y', type='nominal')
+    check('z', data, field='z', type='temporal')
+    check('count(x)', data, field='x', aggregate='count', type='quantitative')
+    check('mean(*)', data, field='*', aggregate='mean')

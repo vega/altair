@@ -190,21 +190,22 @@ def parse_shorthand(shorthand):
     units = dict(field='(?P<field>.*)',
                  type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
                  aggregate='(?P<aggregate>{0})'.format('|'.join(valid_aggregates)))
-    patterns = [r'{field}',
-                r'{field}:{type}',
+    patterns = [r'{aggregate}\({field}\):{type}',
                 r'{aggregate}\({field}\)',
-                r'{aggregate}\({field}\):{type}']
+                r'{field}:{type}',
+                r'{field}']
     regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
-               for p in patterns[::-1])
+               for p in patterns)
 
     # find matches depending on valid fields passed
     match = next(exp.match(shorthand).groupdict() for exp in regexps
                  if exp.match(shorthand))
 
-    # Use short form of the type expression
-    typ = match.get('type', None)
-    if typ:
-        match['type'] = INV_TYPECODE_MAP.get(typ, typ)
+    # Handle short form of the type expression
+    type_ = match.get('type', None)
+    if type_:
+        match['type'] = INV_TYPECODE_MAP.get(type_, type_)
+
     return match
 
 
@@ -243,7 +244,7 @@ def parse_shorthand_plus_data(shorthand, data):
     {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
     """
     attrs = parse_shorthand(shorthand)
-    if 'type' not in attrs:
+    if 'type' not in attrs and attrs['field'] != '*':
         if not isinstance(data, pd.DataFrame):
             raise ValueError("type must be specified unless data is provided "
                              "in the form of a dataframe.")
