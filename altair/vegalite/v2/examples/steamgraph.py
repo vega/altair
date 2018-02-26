@@ -13,6 +13,6 @@ source = data.unemployment_across_industries()
 chart = alt.Chart(source).mark_area().encode(
     x = alt.X('date:T', timeUnit = 'yearmonth',
               axis=alt.Axis(format='%Y', domain = False, tickSize = 0)),
-    y = alt.Y('sum(count)', stack = 'center'),
+    y = alt.Y('sum(count)', stack = 'center', axis = None),
     color = alt.Color('series', scale=alt.Scale(scheme='category20b'))
     ).interactive()
