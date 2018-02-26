@@ -1,7 +1,7 @@
 """
 Streamgraph
 -----------------
-This example shows the steamgraph from vega-lite examples.
+This example shows the streamgraph from vega-lite examples.
 """
 
 import altair as alt
