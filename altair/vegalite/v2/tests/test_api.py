@@ -64,3 +64,31 @@ def test_chart_infer_types():
     dct = chart.to_dict()
     assert dct['encoding']['x']['type'] == 'nominal'
     assert dct['encoding']['y']['type'] == 'ordinal'
+
+
+def test_chart_operations():
+    data = pd.DataFrame({'x': pd.date_range('2012', periods=10, freq='Y'),
+                         'y': range(10),
+                         'c': list('abcabcabca')})
+    chart1 = alt.Chart(data).mark_line().encode(x='x', y='y', color='c')
+    chart2 = chart1.mark_point()
+    chart3 = chart1.mark_circle()
+    chart4 = chart1.mark_square()
+
+    chart = chart1 + chart2 + chart3
+    assert isinstance(chart, alt.LayerChart)
+    assert len(chart.layer) == 3
+    chart += chart4
+    assert len(chart.layer) == 4
+
+    chart = chart1 | chart2 | chart3
+    assert isinstance(chart, alt.HConcatChart)
+    assert len(chart.hconcat) == 3
+    chart |= chart4
+    assert len(chart.hconcat) == 4
+
+    chart = chart1 & chart2 & chart3
+    assert isinstance(chart, alt.VConcatChart)
+    assert len(chart.vconcat) == 3
+    chart &= chart4
+    assert len(chart.vconcat) == 4

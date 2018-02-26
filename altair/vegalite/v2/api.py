@@ -246,10 +246,19 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
-    def __init__(self, hconcat, **kwargs):
+    def __init__(self, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
         super(HConcatChart, self).__init__(hconcat=list(hconcat), **kwargs)
+
+    def __ior__(self, other):
+        self.hconcat.append(other)
+        return self
+
+    def __or__(self, other):
+        copy = self.copy()
+        copy.hconcat.append(other)
+        return copy
 
     # TODO: think about the most useful class API here
 
@@ -260,10 +269,19 @@ def hconcat(*charts, **kwargs):
 
 
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
-    def __init__(self, vconcat, **kwargs):
+    def __init__(self, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
         super(VConcatChart, self).__init__(vconcat=list(vconcat), **kwargs)
+
+    def __iand__(self, other):
+        self.vconcat.append(other)
+        return self
+
+    def __and__(self, other):
+        copy = self.copy()
+        copy.vconcat.append(other)
+        return copy
 
     # TODO: think about the most useful class API here
 
@@ -274,10 +292,19 @@ def vconcat(*charts, **kwargs):
 
 
 class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
-    def __init__(self, layer, **kwargs):
+    def __init__(self, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
         super(LayerChart, self).__init__(layer=list(layer), **kwargs)
+
+    def __iadd__(self, other):
+        self.layer.append(other)
+        return self
+
+    def __add__(self, other):
+        copy = self.copy()
+        copy.layer.append(other)
+        return copy
 
     # TODO: think about the most useful class API here
 
