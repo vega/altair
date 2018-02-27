@@ -169,7 +169,10 @@ class TopLevelMixin(object):
             # since this is top-level we add $schema if it's missing
             if '$schema' not in dct:
                 dct['$schema'] = SCHEMA_URL
-            dct = update_nested(copy._default_spec_values, dct, copy=True)
+
+            # add default values if present
+            if copy._default_spec_values:
+                dct = update_nested(copy._default_spec_values, dct, copy=True)
         return dct
 
     # Layering and stacking
