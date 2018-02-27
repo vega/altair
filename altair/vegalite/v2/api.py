@@ -22,6 +22,116 @@ def _get_channels_mapping():
     return mapping
 
 
+# -------------------------------------------------------------------------
+# Tools for working with selections
+class SelectionMapping(SchemaBase):
+    """A mapping of selection names to selection definitions"""
+    _schema = {
+        'type': 'object',
+        'additionalPropeties': {'$ref': '#/definitions/SelectionDef'}
+    }
+    _rootschema = Root._schema
+
+    def ref(self, name=None):
+        """Return a named selection reference.
+
+        If the mapping contains only one selection, then the name need not
+        be specified.
+        """
+        if name is None and len(self._kwds) == 1:
+            name = list(self._kwds.keys())[0]
+        if name not in self._kwds:
+            raise ValueError("'{0}' is not a valid selection name "
+                             "in this mapping".format(name))
+        return {"selection": name}
+
+    def __add__(self, other):
+        if isinstance(other, SelectionMapping):
+            copy = self.copy()
+            copy._kwds.update(other._kwds)
+            return copy
+        else:
+            return NotImplemented
+
+    def __iadd__(self, other):
+        if isinstance(other, SelectionMapping):
+            self._kwds.update(other._kwds)
+        else:
+            return NotImplemented
+
+
+def selection(name=None, **kwds):
+    """Create a named selection.
+
+    Parameters
+    ----------
+    name : string (optional)
+        The name of the selection. If not specified, a unique name will be
+        created.
+    **kwds :
+        additional keywords will be used to construct a SelectionDef instance
+        that controls the selection.
+
+    Returns
+    -------
+    selection: SelectionMapping
+        The SelectionMapping object that can be used in chart creation.
+    """
+    if name is None:
+        name = "selector{0:03d}".format(selection.counter)
+        selection.counter += 1
+    return SelectionMapping(**{name: SelectionDef(**kwds)})
+
+selection.counter = 1
+
+
+def condition(predicate, if_true, if_false):
+    """A conditional attribute or encoding
+
+    Parameters
+    ----------
+    predicate:
+        the selection predicate or test predicate for the condition
+    if_true:
+        the spec to use if the selection predicate is true
+    if_false:
+        the spec to use if the selection predicate is false
+
+    Returns
+    -------
+    spec: dict or SchemaBase
+        the spec that describes the condition
+    """
+    if isinstance(predicate, SelectionMapping):
+        if len(predicate._kwds) != 1:
+            raise NotImplementedError("multiple keys in SelectionMapping")
+        name = list(predicate._kwds.keys())[0]
+
+        if isinstance(if_true, SchemaBase):
+            condition = if_true.copy()
+            condition.selection = name
+        elif isinstance(if_true, six.string_types):
+            condition = dict(selection=name, field=if_true)
+        else:
+            condition = dict(selection=name, **if_true)
+
+        if isinstance(if_false, SchemaBase):
+            selection = if_false.copy()
+            selection['condition'] = condition
+        elif isinstance(if_false, six.string_types):
+            selection = dict(condition=condition, field=if_false)
+        else:
+            selection = dict(condition=condition, **if_false)
+
+        return selection
+    else:
+        raise NotImplementedError("condition predicate of type {0}"
+                                  "".format(type(predicate)))
+
+
+#--------------------------------------------------------------------
+# Top-level objects
+
 class TopLevelMixin(object):
     def _prepare_data(self):
         if isinstance(self.data, (dict, core.Data, core.InlineData,
@@ -194,12 +304,25 @@ class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
                                      "".format(encoding))
                 kwargs[encoding] = arg
 
+        def wrap_in_channel_class(obj, prop):
+            clsname = prop.title()
+            if isinstance(obj, SchemaBase):
+                return obj
+
+            if isinstance(obj, six.string_types):
+                pass
+            elif 'values' in obj:
+                clsname += 'Values'
+            cls = getattr(channels, clsname)
+
+            # Do not validate now, because it will be validated later
+            return cls.from_dict(obj, validate=False)
+
         for prop, field in list(kwargs.items()):
-            if not isinstance(field, SchemaBase):
-                cls = getattr(channels, prop.title())
-                # Don't validate now, because field will be computed
-                # as part of the to_dict() call.
-                kwargs[prop] = cls.from_dict(field, validate=False)
+            kwargs[prop] = field = wrap_in_channel_class(field, prop)
+            if getattr(field, 'condition', Undefined) is not Undefined:
+                field['condition'] = wrap_in_channel_class(field['condition'], prop)
+
         copy = self.copy(deep=True, ignore=['data'])
 
         # get a copy of the dict representation of the previous encoding
