@@ -1,7 +1,7 @@
 """Code generation utilities"""
 import textwrap
 
-from .utils import SchemaInfo, is_valid_identifier
+from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
 
 
 class CodeSnippet(object):
@@ -72,40 +72,19 @@ def docstring(classname, schema, rootschema=None, indent=4):
     # TODO: use _get_args here for more information on allOf objects
     info = SchemaInfo(schema, rootschema)
     doc = ["{0} schema wrapper".format(classname)]
+
     if info.description:
-        # TODO: wrap these description lines?
-        wrapper = textwrap.TextWrapper(width=80,
-                                       break_long_words=False,
-                                       break_on_hyphens=False,
-                                       drop_whitespace=False)
-        doc = ['']
-        for line in info.description.splitlines():
-            doc.extend(wrapper.wrap(line))
+        doc += info.description.splitlines()
     if info.properties:
         doc += ['',
                 'Attributes',
                 '----------']
-        wrapper = textwrap.TextWrapper(width=80, initial_indent=4 * ' ',
-                                       subsequent_indent=4 * ' ',
-                                       break_long_words=False,
-                                       break_on_hyphens=False)
         for prop, propinfo in info.properties.items():
-            doc += ["{0} : {1}".format(prop, propinfo.short_description)]
-            doc += wrapper.wrap(propinfo.description)
+            doc += ["{0} : {1}".format(prop, propinfo.short_description),
+                    "    {0}".format(propinfo.description)]
     if len(doc) > 1:
         doc += ['']
-    return ("\n" + indent * " ").join(doc)
-
-
-INIT_DEF = """
-def __init__({arglist}):
-    super({classname}, self).__init__({super_arglist})
-""".lstrip()
-
-
-# TODO: create func that gets list of args, required kwds, non-required kwds,
-#       and optional kwds. Use this to recursively build-up keyword lists for
-#       anyOf/allOf.
+    return indent_docstring(doc, indent_level=indent, width=80, lstrip=True)
 
 
 def _get_args(info):
@@ -142,6 +121,12 @@ def _get_args(info):
     return (nonkeyword, required, kwds, additional)
 
 
+INIT_DEF = """
+def __init__({arglist}):
+    super({classname}, self).__init__({super_arglist})
+""".lstrip()
+
+
 def init_code(classname, schema, rootschema=None, indent=0, nodefault=()):
     """Return code suitablde for the __init__ function of a Schema class"""
     info = SchemaInfo(schema, rootschema=rootschema)
@@ -169,23 +154,12 @@ def init_code(classname, schema, rootschema=None, indent=0, nodefault=()):
         args.append('**kwds')
         super_args.append('**kwds')
 
-    arg_indent = ' ' * len('def __init__(')
-    arg_wrapper = textwrap.TextWrapper(width=80,
-                                       initial_indent=arg_indent,
-                                       subsequent_indent=arg_indent,
-                                       break_long_words=False)
-    arglist = '\n'.join(arg_wrapper.wrap(', '.join(args))).lstrip()
+    arg_indent_level = 9 + indent
+    super_arg_indent_level = 23 + len(classname) + indent
 
-    super_arg_indent = ' ' * len('    super({0}, self).__init__('.format(classname))
-    super_arg_wrapper = textwrap.TextWrapper(width=80,
-                                             initial_indent=super_arg_indent,
-                                             subsequent_indent=super_arg_indent,
-                                             break_long_words=False)
-    super_arglist = '\n'.join(super_arg_wrapper.wrap(', '.join(super_args))).lstrip()
-
-    code = INIT_DEF.format(classname=classname,
-                           arglist=arglist,
-                           super_arglist=super_arglist)
+    initfunc = INIT_DEF.format(classname=classname,
+                               arglist=indent_arglist(args, indent_level=arg_indent_level),
+                               super_arglist=indent_arglist(super_args, indent_level=super_arg_indent_level))
     if indent:
-        code = code.replace('\n', '\n' + indent * ' ')
-    return code
+        initfunc = ('\n' + indent * ' ').join(initfunc.splitlines())
+    return initfunc

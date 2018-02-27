@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:43
+# 2018-02-27 11:38
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -21,30 +21,39 @@ class Root(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Root, self).__init__(*args, **kwds)
-    
 
 
 class ExtendedUnitSpec(SchemaBase):
-    """
-    Schema for a unit Vega-Lite specification, with the syntactic sugar extensions:
+    """ExtendedUnitSpec schema wrapper
+    Schema for a unit Vega-Lite specification, with the syntactic sugar 
+    extensions:
+    
     - `row` and `column` are included in the encoding.
+    
     - (Future) label, box plot
+    
+    
+    
     Note: the spec could contain facet.
     
     Attributes
     ----------
     width : float
+    
     height : float
+    
     mark : Mark
-        The mark type.  One of `"bar"`, `"circle"`, `"square"`, `"tick"`, `"line"`,
-        `"area"`, `"point"`, `"rule"`, and `"text"`.
+        The mark type.  One of `"bar"`, `"circle"`, `"square"`, 
+        `"tick"`, `"line"`,  `"area"`, `"point"`, `"rule"`, and 
+        `"text"`.
     encoding : Encoding
-        A key-value mapping between encoding channels and definition of fields.
+        A key-value mapping between encoding channels and definition of 
+        fields.
     name : string
         Name of the visualization for later reference.
     description : string
-        An optional description of this mark for commenting purpose.  This property
-        has no effect on the output visualization.
+        An optional description of this mark for commenting purpose.  
+        This property has no effect on the output visualization.
     data : Data
         An object describing the data source
     transform : Transform
@@ -63,7 +72,6 @@ class ExtendedUnitSpec(SchemaBase):
                                                encoding=encoding, height=height,
                                                name=name, transform=transform,
                                                width=width, **kwds)
-    
 
 
 class Mark(SchemaBase):
@@ -73,7 +81,6 @@ class Mark(SchemaBase):
 
     def __init__(self, *args):
         super(Mark, self).__init__(*args)
-    
 
 
 class Encoding(SchemaBase):
@@ -86,40 +93,47 @@ class Encoding(SchemaBase):
     column : PositionChannelDef
         Horizontal facets for trellis plots.
     x : PositionChannelDef
-        X coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and
-        `tick`  (or to width and height for `bar` and `area` marks).
+        X coordinates for `point`, `circle`, `square`,  `line`, `rule`, 
+        `text`, and `tick`  (or to width and height for `bar` and `area`
+         marks).
     y : PositionChannelDef
-        Y coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and
-        `tick`  (or to width and height for `bar` and `area` marks).
+        Y coordinates for `point`, `circle`, `square`,  `line`, `rule`, 
+        `text`, and `tick`  (or to width and height for `bar` and `area`
+         marks).
     x2 : FieldDef
         X2 coordinates for ranged `bar`, `rule`, `area`
     y2 : FieldDef
         Y2 coordinates for ranged `bar`, `rule`, `area`
     color : ChannelDefWithLegend
-        Color of the marks – either fill or stroke color based on mark type.  (By
-        default, fill color for `area`, `bar`, `tick`, `text`, `circle`, and
-        `square` /  stroke color for `line` and `point`.)
+        Color of the marks – either fill or stroke color based on mark 
+        type.  (By default, fill color for `area`, `bar`, `tick`, 
+        `text`, `circle`, and `square` /  stroke color for `line` and 
+        `point`.)
     opacity : ChannelDefWithLegend
         Opacity of the marks – either can be a value or in a range.
     size : ChannelDefWithLegend
-        Size of the mark.  - For `point`, `square` and `circle`  – the symbol size,
-        or pixel area of the mark.  - For `bar` and `tick` – the bar and tick's
-        size.  - For `text` – the text's font size.  - Size is currently unsupported
-        for `line` and `area`.
+        Size of the mark.  - For `point`, `square` and `circle`  – the 
+        symbol size, or pixel area of the mark.  - For `bar` and `tick` 
+        – the bar and tick's size.  - For `text` – the text's font size.
+          - Size is currently unsupported for `line` and `area`.
     shape : ChannelDefWithLegend
-        The symbol's shape (only for `point` marks). The supported values are
-        `"circle"` (default), `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`,
-        or `"triangle-down"`, or else a custom SVG path string.
+        The symbol's shape (only for `point` marks). The supported 
+        values are  `"circle"` (default), `"square"`, `"cross"`, 
+        `"diamond"`, `"triangle-up"`,  or `"triangle-down"`, or else a 
+        custom SVG path string.
     detail : anyOf(FieldDef, list)
-        Additional levels of detail for grouping data in aggregate views and  in
-        line and area marks without mapping data to a specific visual channel.
+        Additional levels of detail for grouping data in aggregate views
+         and  in line and area marks without mapping data to a specific 
+        visual channel.
     text : FieldDef
         Text of the `text` mark.
     label : FieldDef
+    
     path : anyOf(OrderChannelDef, list)
         Order of data points in line marks.
     order : anyOf(OrderChannelDef, list)
-        Layer order for non-stacked marks, or stack order for stacked marks.
+        Layer order for non-stacked marks, or stack order for stacked 
+        marks.
     """
     _schema = {'$ref': '#/definitions/Encoding'}
     _rootschema = Root._schema
@@ -133,7 +147,6 @@ class Encoding(SchemaBase):
                                        label=label, opacity=opacity, order=order,
                                        path=path, row=row, shape=shape, size=size,
                                        text=text, x=x, x2=x2, y=y, y2=y2, **kwds)
-    
 
 
 class PositionChannelDef(SchemaBase):
@@ -142,26 +155,30 @@ class PositionChannelDef(SchemaBase):
     Attributes
     ----------
     axis : Axis
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -177,7 +194,6 @@ class PositionChannelDef(SchemaBase):
                                                  sort=sort, timeUnit=timeUnit,
                                                  title=title, type=type,
                                                  value=value, **kwds)
-    
 
 
 class Axis(SchemaBase):
@@ -187,7 +203,6 @@ class Axis(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Axis, self).__init__(*args, **kwds)
-    
 
 
 class AxisOrient(SchemaBase):
@@ -197,14 +212,16 @@ class AxisOrient(SchemaBase):
 
     def __init__(self, *args):
         super(AxisOrient, self).__init__(*args)
-    
 
 
 class DateTime(SchemaBase):
-    """
+    """DateTime schema wrapper
     Object for defining datetime in Vega-Lite Filter.
+    
     If both month and quarter are provided, month has higher precedence.
+    
     `day` cannot be combined with other date.
+    
     We accept string for month and day names.
     
     Attributes
@@ -214,17 +231,19 @@ class DateTime(SchemaBase):
     quarter : float
         Integer value representing the quarter of the year (from 1-4).
     month : anyOf(string, float)
-        One of: (1) integer value representing the month from `1`-`12`. `1`
-        represents January;  (2) case-insensitive month name (e.g., `"January"`);
-        (3) case-insensitive, 3-character short month name (e.g., `"Jan"`).
+        One of: (1) integer value representing the month from `1`-`12`. 
+        `1` represents January;  (2) case-insensitive month name (e.g., 
+        `"January"`);  (3) case-insensitive, 3-character short month 
+        name (e.g., `"Jan"`).
     date : float
         Integer value representing the date from 1-31.
     day : anyOf(string, float)
-        Value representing the day of week.  This can be one of: (1) integer value
-        -- `1` represents Monday; (2) case-insensitive day name (e.g., `"Monday"`);
-        (3) case-insensitive, 3-character short day name (e.g., `"Mon"`).   <br/>
-        **Warning:** A DateTime definition object with `day`** should not be
-        combined with `year`, `quarter`, `month`, or `date`.
+        Value representing the day of week.  This can be one of: (1) 
+        integer value -- `1` represents Monday; (2) case-insensitive day
+         name (e.g., `"Monday"`);  (3) case-insensitive, 3-character 
+        short day name (e.g., `"Mon"`).   <br/> **Warning:** A DateTime 
+        definition object with `day`** should not be combined with 
+        `year`, `quarter`, `month`, or `date`.
     hours : float
         Integer value representing the hour of day from 0-23.
     minutes : float
@@ -244,7 +263,6 @@ class DateTime(SchemaBase):
                                        milliseconds=milliseconds, minutes=minutes,
                                        month=month, quarter=quarter,
                                        seconds=seconds, year=year, **kwds)
-    
 
 
 class Scale(SchemaBase):
@@ -253,57 +271,65 @@ class Scale(SchemaBase):
     Attributes
     ----------
     type : ScaleType
+    
     domain : anyOf(list, list, list)
-        The domain of the scale, representing the set of data values. For
-        quantitative data, this can take the form of a two-element array with
-        minimum and maximum values. For ordinal/categorical data, this may be an
-        array of valid input values.
+        The domain of the scale, representing the set of data values. 
+        For quantitative data, this can take the form of a two-element 
+        array with minimum and maximum values. For ordinal/categorical 
+        data, this may be an array of valid input values.
     range : anyOf(list, list, string)
-        The range of the scale, representing the set of visual values. For numeric
-        values, the range can take the form of a two-element array with minimum and
-        maximum values. For ordinal or quantized data, the range may by an array of
-        desired output values, which are mapped to elements in the specified domain.
-        For ordinal scales only, the range can be defined using a DataRef: the range
-        values are then drawn dynamically from a backing data set.
+        The range of the scale, representing the set of visual values. 
+        For numeric values, the range can take the form of a two-element
+         array with minimum and maximum values. For ordinal or quantized
+         data, the range may by an array of desired output values, which
+         are mapped to elements in the specified domain. For ordinal 
+        scales only, the range can be defined using a DataRef: the range
+         values are then drawn dynamically from a backing data set.
     round : boolean
-        If true, rounds numeric output values to integers. This can be helpful for
-        snapping to the pixel grid.
+        If true, rounds numeric output values to integers. This can be 
+        helpful for snapping to the pixel grid.
     bandSize : anyOf(BandSize, float)
+    
     padding : float
-        Applies spacing among ordinal elements in the scale range. The actual effect
-        depends on how the scale is configured. If the __points__ parameter is
-        `true`, the padding value is interpreted as a multiple of the spacing
-        between points. A reasonable value is 1.0, such that the first and last
-        point will be offset from the minimum and maximum value by half the distance
-        between points. Otherwise, padding is typically in the range [0, 1] and
-        corresponds to the fraction of space in the range interval to allocate to
-        padding. A value of 0.5 means that the range band width will be equal to the
-        padding width. For more, see the [D3 ordinal scale
+        Applies spacing among ordinal elements in the scale range. The 
+        actual effect depends on how the scale is configured. If the 
+        __points__ parameter is `true`, the padding value is interpreted
+         as a multiple of the spacing between points. A reasonable value
+         is 1.0, such that the first and last point will be offset from 
+        the minimum and maximum value by half the distance between 
+        points. Otherwise, padding is typically in the range [0, 1] and 
+        corresponds to the fraction of space in the range interval to 
+        allocate to padding. A value of 0.5 means that the range band 
+        width will be equal to the padding width. For more, see the [D3 
+        ordinal scale 
         documentation](https://github.com/mbostock/d3/wiki/Ordinal-Scales).
     clamp : boolean
-        If true, values that exceed the data domain are clamped to either the
-        minimum or maximum range value
+        If true, values that exceed the data domain are clamped to 
+        either the minimum or maximum range value
     nice : anyOf(NiceTime, boolean)
-        If specified, modifies the scale domain to use a more human-friendly value
-        range. If specified as a true boolean, modifies the scale domain to use a
-        more human-friendly number range (e.g., 7 instead of 6.96). If specified as
-        a string, modifies the scale domain to use a more human-friendly value
-        range. For time and utc scale types only, the nice value should be a string
-        indicating the desired time interval.
+        If specified, modifies the scale domain to use a more 
+        human-friendly value range. If specified as a true boolean, 
+        modifies the scale domain to use a more human-friendly number 
+        range (e.g., 7 instead of 6.96). If specified as a string, 
+        modifies the scale domain to use a more human-friendly value 
+        range. For time and utc scale types only, the nice value should 
+        be a string indicating the desired time interval.
     exponent : float
-        Sets the exponent of the scale transformation. For pow scale types only,
-        otherwise ignored.
+        Sets the exponent of the scale transformation. For pow scale 
+        types only, otherwise ignored.
     zero : boolean
-        If `true`, ensures that a zero baseline value is included in the scale
-        domain.  Default value: `true` for `x` and `y` channel if the quantitative
-        field is not binned  and no custom `domain` is provided; `false` otherwise.
+        If `true`, ensures that a zero baseline value is included in the
+         scale domain.  Default value: `true` for `x` and `y` channel if
+         the quantitative field is not binned  and no custom `domain` is
+         provided; `false` otherwise.
     useRawDomain : boolean
-        Uses the source data range as scale domain instead of aggregated data for
-        aggregate axis.  This property only works with aggregate functions that
-        produce values within the raw data domain (`"mean"`, `"average"`, `"stdev"`,
-        `"stdevp"`, `"median"`, `"q1"`, `"q3"`, `"min"`, `"max"`). For other
-        aggregations that produce values outside of the raw data domain (e.g.
-        `"count"`, `"sum"`), this property is ignored.
+        Uses the source data range as scale domain instead of aggregated
+         data for aggregate axis.  This property only works with 
+        aggregate functions that produce values within the raw data 
+        domain (`"mean"`, `"average"`, `"stdev"`, `"stdevp"`, 
+        `"median"`, `"q1"`, `"q3"`, `"min"`, `"max"`). For other 
+        aggregations that produce values outside of the raw data domain 
+        (e.g. `"count"`, `"sum"`), this property is ignored.
     """
     _schema = {'$ref': '#/definitions/Scale'}
     _rootschema = Root._schema
@@ -316,7 +342,6 @@ class Scale(SchemaBase):
                                     exponent=exponent, nice=nice, padding=padding,
                                     range=range, round=round, type=type,
                                     useRawDomain=useRawDomain, zero=zero, **kwds)
-    
 
 
 class ScaleType(SchemaBase):
@@ -326,7 +351,6 @@ class ScaleType(SchemaBase):
 
     def __init__(self, *args):
         super(ScaleType, self).__init__(*args)
-    
 
 
 class BandSize(SchemaBase):
@@ -336,7 +360,6 @@ class BandSize(SchemaBase):
 
     def __init__(self, *args):
         super(BandSize, self).__init__(*args)
-    
 
 
 class NiceTime(SchemaBase):
@@ -346,7 +369,6 @@ class NiceTime(SchemaBase):
 
     def __init__(self, *args):
         super(NiceTime, self).__init__(*args)
-    
 
 
 class SortOrder(SchemaBase):
@@ -356,7 +378,6 @@ class SortOrder(SchemaBase):
 
     def __init__(self, *args):
         super(SortOrder, self).__init__(*args)
-    
 
 
 class SortField(SchemaBase):
@@ -369,13 +390,13 @@ class SortField(SchemaBase):
     op : AggregateOp
         The sort aggregation operator
     order : SortOrder
+    
     """
     _schema = {'$ref': '#/definitions/SortField'}
     _rootschema = Root._schema
 
     def __init__(self, field=Undefined, op=Undefined, order=Undefined, **kwds):
         super(SortField, self).__init__(field=field, op=op, order=order, **kwds)
-    
 
 
 class AggregateOp(SchemaBase):
@@ -385,7 +406,6 @@ class AggregateOp(SchemaBase):
 
     def __init__(self, *args):
         super(AggregateOp, self).__init__(*args)
-    
 
 
 class Type(SchemaBase):
@@ -395,7 +415,6 @@ class Type(SchemaBase):
 
     def __init__(self, *args):
         super(Type, self).__init__(*args)
-    
 
 
 class TimeUnit(SchemaBase):
@@ -405,36 +424,39 @@ class TimeUnit(SchemaBase):
 
     def __init__(self, *args):
         super(TimeUnit, self).__init__(*args)
-    
 
 
 class Bin(SchemaBase):
-    """
-    Binning properties or boolean flag for determining whether to bin data or not.
+    """Bin schema wrapper
+    Binning properties or boolean flag for determining whether to bin data 
+    or not.
     
     Attributes
     ----------
     min : float
-        The minimum bin value to consider. If unspecified, the minimum value of the
-        specified field is used.
+        The minimum bin value to consider. If unspecified, the minimum 
+        value of the specified field is used.
     max : float
-        The maximum bin value to consider. If unspecified, the maximum value of the
-        specified field is used.
+        The maximum bin value to consider. If unspecified, the maximum 
+        value of the specified field is used.
     base : float
-        The number base to use for automatic bin determination (default is base 10).
+        The number base to use for automatic bin determination (default 
+        is base 10).
     step : float
-        An exact step size to use between bins. If provided, options such as maxbins
-        will be ignored.
+        An exact step size to use between bins. If provided, options 
+        such as maxbins will be ignored.
     steps : list
         An array of allowable step sizes to choose from.
     minstep : float
-        A minimum allowable step size (particularly useful for integer values).
+        A minimum allowable step size (particularly useful for integer 
+        values).
     div : list
-        Scale factors indicating allowable subdivisions. The default value is [5,
-        2], which indicates that for base 10 numbers (the default base), the method
-        may consider dividing bin sizes by 5 and/or 2. For example, for an initial
-        step size of 10, the method can check if bin sizes of 2 (= 10/5), 5 (=
-        10/2), or 1 (= 10/(5*2)) might also satisfy the given constraints.
+        Scale factors indicating allowable subdivisions. The default 
+        value is [5, 2], which indicates that for base 10 numbers (the 
+        default base), the method may consider dividing bin sizes by 5 
+        and/or 2. For example, for an initial step size of 10, the 
+        method can check if bin sizes of 2 (= 10/5), 5 (= 10/2), or 1 (=
+         10/(5*2)) might also satisfy the given constraints.
     maxbins : float
         Maximum number of bins.
     """
@@ -447,7 +469,6 @@ class Bin(SchemaBase):
         super(Bin, self).__init__(base=base, div=div, max=max, maxbins=maxbins,
                                   min=min, minstep=minstep, step=step, steps=steps,
                                   **kwds)
-    
 
 
 class FieldDef(SchemaBase):
@@ -458,21 +479,22 @@ class FieldDef(SchemaBase):
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -485,7 +507,6 @@ class FieldDef(SchemaBase):
         super(FieldDef, self).__init__(aggregate=aggregate, bin=bin, field=field,
                                        timeUnit=timeUnit, title=title, type=type,
                                        value=value, **kwds)
-    
 
 
 class ChannelDefWithLegend(SchemaBase):
@@ -494,26 +515,30 @@ class ChannelDefWithLegend(SchemaBase):
     Attributes
     ----------
     legend : Legend
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -529,7 +554,6 @@ class ChannelDefWithLegend(SchemaBase):
                                                    scale=scale, sort=sort,
                                                    timeUnit=timeUnit, title=title,
                                                    type=type, value=value, **kwds)
-    
 
 
 class Legend(SchemaBase):
@@ -539,7 +563,6 @@ class Legend(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Legend, self).__init__(*args, **kwds)
-    
 
 
 class OrderChannelDef(SchemaBase):
@@ -548,24 +571,26 @@ class OrderChannelDef(SchemaBase):
     Attributes
     ----------
     sort : SortOrder
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -579,7 +604,6 @@ class OrderChannelDef(SchemaBase):
                                               field=field, sort=sort,
                                               timeUnit=timeUnit, title=title,
                                               type=type, value=value, **kwds)
-    
 
 
 class Data(SchemaBase):
@@ -590,8 +614,8 @@ class Data(SchemaBase):
     format : DataFormat
         An object that specifies the format for the data file or values.
     url : string
-        A URL from which to load the data set. Use the format.type property  to
-        ensure the loaded data is correctly parsed.
+        A URL from which to load the data set. Use the format.type 
+        property  to ensure the loaded data is correctly parsed.
     values : list
         Pass array of objects instead of a url to a file.
     """
@@ -600,7 +624,6 @@ class Data(SchemaBase):
 
     def __init__(self, format=Undefined, url=Undefined, values=Undefined, **kwds):
         super(Data, self).__init__(format=format, url=url, values=values, **kwds)
-    
 
 
 class DataFormat(SchemaBase):
@@ -609,37 +632,42 @@ class DataFormat(SchemaBase):
     Attributes
     ----------
     type : DataFormatType
-        Type of input data: `"json"`, `"csv"`, `"tsv"`.  The default format type is
-        determined by the extension of the file url.  If no extension is detected,
-        `"json"` will be used by default.
+        Type of input data: `"json"`, `"csv"`, `"tsv"`.  The default 
+        format type is determined by the extension of the file url.  If 
+        no extension is detected, `"json"` will be used by default.
     parse : any
-        A collection of parsing instructions can be used to define the data types of
-        string-valued attributes in the JSON file. Each instruction is a name-value
-        pair, where the name is the name of the attribute, and the value is the
-        desired data type (one of `"number"`, `"boolean"` or `"date"`). For example,
-        `"parse": {"modified_on":"date"}` ensures that the `modified_on` value in
-        each row of the input data is parsed as a Date value. (See Datalib's
-        [`dl.read.types`
-        method](https://github.com/vega/datalib/wiki/Import#dl_read_types) for more
-        information.)
+        A collection of parsing instructions can be used to define the 
+        data types of string-valued attributes in the JSON file. Each 
+        instruction is a name-value pair, where the name is the name of 
+        the attribute, and the value is the desired data type (one of 
+        `"number"`, `"boolean"` or `"date"`). For example, `"parse": 
+        {"modified_on":"date"}` ensures that the `modified_on` value in 
+        each row of the input data is parsed as a Date value. (See 
+        Datalib's [`dl.read.types` 
+        method](https://github.com/vega/datalib/wiki/Import#dl_read_types)
+         for more information.)
     property : string
-        JSON only) The JSON property containing the desired data.  This parameter
-        can be used when the loaded JSON file may have surrounding structure or
-        meta-data.  For example `"property": "values.features"` is equivalent to
-        retrieving `json.values.features`  from the loaded JSON object.
+        JSON only) The JSON property containing the desired data.  This 
+        parameter can be used when the loaded JSON file may have 
+        surrounding structure or meta-data.  For example `"property": 
+        "values.features"` is equivalent to retrieving 
+        `json.values.features`  from the loaded JSON object.
     feature : string
-        The name of the TopoJSON object set to convert to a GeoJSON feature
-        collection.  For example, in a map of the world, there may be an object set
-        named `"countries"`.  Using the feature property, we can extract this set
-        and generate a GeoJSON feature object for each country.
+        The name of the TopoJSON object set to convert to a GeoJSON 
+        feature collection.  For example, in a map of the world, there 
+        may be an object set named `"countries"`.  Using the feature 
+        property, we can extract this set and generate a GeoJSON feature
+         object for each country.
     mesh : string
-        The name of the TopoJSON object set to convert to a mesh.  Similar to the
-        `feature` option, `mesh` extracts a named TopoJSON object set.  Unlike the
-        `feature` option, the corresponding geo data is returned as a single,
-        unified mesh instance, not as individual GeoJSON features.  Extracting a
-        mesh is useful for more efficiently drawing borders or other geographic
-        elements that you do not need to associate with specific regions such as
-        individual countries, states or counties.
+        The name of the TopoJSON object set to convert to a mesh.  
+        Similar to the `feature` option, `mesh` extracts a named 
+        TopoJSON object set.  Unlike the `feature` option, the 
+        corresponding geo data is returned as a single, unified mesh 
+        instance, not as individual GeoJSON features.  Extracting a mesh
+         is useful for more efficiently drawing borders or other 
+        geographic elements that you do not need to associate with 
+        specific regions such as individual countries, states or 
+        counties.
     """
     _schema = {'$ref': '#/definitions/DataFormat'}
     _rootschema = Root._schema
@@ -648,7 +676,6 @@ class DataFormat(SchemaBase):
                  property=Undefined, type=Undefined, **kwds):
         super(DataFormat, self).__init__(feature=feature, mesh=mesh, parse=parse,
                                          property=property, type=type, **kwds)
-    
 
 
 class DataFormatType(SchemaBase):
@@ -658,7 +685,6 @@ class DataFormatType(SchemaBase):
 
     def __init__(self, *args):
         super(DataFormatType, self).__init__(*args)
-    
 
 
 class Transform(SchemaBase):
@@ -667,16 +693,16 @@ class Transform(SchemaBase):
     Attributes
     ----------
     filter : anyOf(EqualFilter, RangeFilter, OneOfFilter, list, string)
-        A string containing the filter Vega expression. Use `datum` to refer to the
-        current data object.
+        A string containing the filter Vega expression. Use `datum` to 
+        refer to the current data object.
     filterInvalid : boolean
-        Whether to filter invalid values (`null` and `NaN`) from the data. By
-        default (`undefined`), only quantitative and temporal fields are filtered.
-        If set to `true`, all data items with null values are filtered. If `false`,
-        all data items are included.
+        Whether to filter invalid values (`null` and `NaN`) from the 
+        data. By default (`undefined`), only quantitative and temporal 
+        fields are filtered. If set to `true`, all data items with null 
+        values are filtered. If `false`, all data items are included.
     calculate : list
-        Calculate new field(s) using the provided expresssion(s). Calculation are
-        applied before filter.
+        Calculate new field(s) using the provided expresssion(s). 
+        Calculation are applied before filter.
     """
     _schema = {'$ref': '#/definitions/Transform'}
     _rootschema = Root._schema
@@ -685,7 +711,6 @@ class Transform(SchemaBase):
                  filterInvalid=Undefined, **kwds):
         super(Transform, self).__init__(calculate=calculate, filter=filter,
                                         filterInvalid=filterInvalid, **kwds)
-    
 
 
 class EqualFilter(SchemaBase):
@@ -706,7 +731,6 @@ class EqualFilter(SchemaBase):
     def __init__(self, equal=Undefined, field=Undefined, timeUnit=Undefined, **kwds):
         super(EqualFilter, self).__init__(equal=equal, field=field,
                                           timeUnit=timeUnit, **kwds)
-    
 
 
 class RangeFilter(SchemaBase):
@@ -719,8 +743,8 @@ class RangeFilter(SchemaBase):
     field : string
         Field to be filtered
     range : list
-        Array of inclusive minimum and maximum values  for a field value of a data
-        item to be included in the filtered data.
+        Array of inclusive minimum and maximum values  for a field value
+         of a data item to be included in the filtered data.
     """
     _schema = {'$ref': '#/definitions/RangeFilter'}
     _rootschema = Root._schema
@@ -728,7 +752,6 @@ class RangeFilter(SchemaBase):
     def __init__(self, field=Undefined, range=Undefined, timeUnit=Undefined, **kwds):
         super(RangeFilter, self).__init__(field=field, range=range,
                                           timeUnit=timeUnit, **kwds)
-    
 
 
 class OneOfFilter(SchemaBase):
@@ -741,8 +764,8 @@ class OneOfFilter(SchemaBase):
     field : string
         Field to be filtered
     oneOf : list
-        A set of values that the `field`'s value should be a member of,  for a data
-        item included in the filtered data.
+        A set of values that the `field`'s value should be a member of,
+          for a data item included in the filtered data.
     """
     _schema = {'$ref': '#/definitions/OneOfFilter'}
     _rootschema = Root._schema
@@ -750,11 +773,10 @@ class OneOfFilter(SchemaBase):
     def __init__(self, field=Undefined, oneOf=Undefined, timeUnit=Undefined, **kwds):
         super(OneOfFilter, self).__init__(field=field, oneOf=oneOf,
                                           timeUnit=timeUnit, **kwds)
-    
 
 
 class Formula(SchemaBase):
-    """
+    """Formula schema wrapper
     Formula object for calculate.
     
     Attributes
@@ -762,15 +784,14 @@ class Formula(SchemaBase):
     field : string
         The field in which to store the computed formula value.
     expr : string
-        A string containing an expression for the formula. Use the variable `datum`
-        to to refer to the current data object.
+        A string containing an expression for the formula. Use the 
+        variable `datum` to to refer to the current data object.
     """
     _schema = {'$ref': '#/definitions/Formula'}
     _rootschema = Root._schema
 
     def __init__(self, expr=Undefined, field=Undefined, **kwds):
         super(Formula, self).__init__(expr=expr, field=field, **kwds)
-    
 
 
 class Config(SchemaBase):
@@ -779,17 +800,17 @@ class Config(SchemaBase):
     Attributes
     ----------
     viewport : float
-        The width and height of the on-screen viewport, in pixels. If necessary,
-        clipping and scrolling will be applied.
+        The width and height of the on-screen viewport, in pixels. If 
+        necessary, clipping and scrolling will be applied.
     background : string
-        CSS color property to use as background of visualization. Default is
-        `"transparent"`.
+        CSS color property to use as background of visualization. 
+        Default is `"transparent"`.
     numberFormat : string
-        D3 Number format for axis labels and text tables. For example "s" for SI
-        units.
+        D3 Number format for axis labels and text tables. For example 
+        "s" for SI units.
     timeFormat : string
-        Default datetime format for axis and legend labels. The format can be set
-        directly on each axis and legend.
+        Default datetime format for axis and legend labels. The format 
+        can be set directly on each axis and legend.
     countTitle : string
         Default axis and legend title for count fields.
     cell : CellConfig
@@ -820,7 +841,6 @@ class Config(SchemaBase):
                                      numberFormat=numberFormat, overlay=overlay,
                                      scale=scale, timeFormat=timeFormat,
                                      viewport=viewport, **kwds)
-    
 
 
 class CellConfig(SchemaBase):
@@ -829,8 +849,11 @@ class CellConfig(SchemaBase):
     Attributes
     ----------
     width : float
+    
     height : float
+    
     clip : boolean
+    
     fill : string
         The fill color.
     fillOpacity : float
@@ -842,11 +865,11 @@ class CellConfig(SchemaBase):
     strokeWidth : float
         The stroke width, in pixels.
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     """
     _schema = {'$ref': '#/definitions/CellConfig'}
     _rootschema = Root._schema
@@ -862,7 +885,6 @@ class CellConfig(SchemaBase):
                                          strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, width=width,
                                          **kwds)
-    
 
 
 class MarkConfig(SchemaBase):
@@ -871,39 +893,51 @@ class MarkConfig(SchemaBase):
     Attributes
     ----------
     filled : boolean
-        Whether the shape\'s color should be used as fill color instead of stroke
-        color.  This is only applicable for "bar", "point", and "area".  All marks
-        except "point" marks are filled by default.  See Mark Documentation
-        (http://vega.github.io/vega-lite/docs/marks.html)  for usage example.
+        Whether the shape\'s color should be used as fill color instead 
+        of stroke color.  This is only applicable for "bar", "point", 
+        and "area".  All marks except "point" marks are filled by 
+        default.  See Mark Documentation 
+        (http://vega.github.io/vega-lite/docs/marks.html)  for usage 
+        example.
     color : string
         Default color.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color
+        Default Fill Color.  This has higher precedence than 
+        config.color
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color
+        Default Stroke Color.  This has higher precedence than 
+        config.color
     opacity : float
+    
     fillOpacity : float
+    
     strokeOpacity : float
+    
     strokeWidth : float
+    
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     stacked : StackOffset
+    
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts.  The
-        value is either horizontal (default) or vertical.  - For bar, rule and tick,
-        this determines whether the size of the bar and tick  should be applied to x
-        or y dimension.  - For area, this property determines the orient property of
-        the Vega output.  - For line, this property determines the sort order of the
-        points in the line  if `config.sortLineBy` is not specified.  For stacked
-        charts, this is always determined by the orientation of the stack;
-        therefore explicitly specified value will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line 
+        charts.  The value is either horizontal (default) or vertical.  
+        - For bar, rule and tick, this determines whether the size of 
+        the bar and tick  should be applied to x or y dimension.  - For 
+        area, this property determines the orient property of the Vega 
+        output.  - For line, this property determines the sort order of 
+        the points in the line  if `config.sortLineBy` is not specified.
+          For stacked charts, this is always determined by the 
+        orientation of the stack;  therefore explicitly specified value 
+        will be ignored.
     interpolate : Interpolate
-        The line interpolation method to use. One of linear, step-before,
-        step-after, basis, basis-open, cardinal, cardinal-open, monotone.
+        The line interpolation method to use. One of linear, 
+        step-before, step-after, basis, basis-open, cardinal, 
+        cardinal-open, monotone.
     tension : float
         Depending on the interpolation type, sets the tension parameter.
     lineSize : float
@@ -911,40 +945,45 @@ class MarkConfig(SchemaBase):
     ruleSize : float
         Size of rule mark.
     barSize : float
-        The size of the bars.  If unspecified, the default size is  `bandSize-1`,
-        which provides 1 pixel offset between bars.
+        The size of the bars.  If unspecified, the default size is  
+        `bandSize-1`,  which provides 1 pixel offset between bars.
     barThinSize : float
         The size of the bars on continuous scales.
     shape : anyOf(Shape, string)
-        The symbol shape to use. One of circle (default), square, cross, diamond,
-        triangle-up, or triangle-down, or a custom SVG path.
+        The symbol shape to use. One of circle (default), square, cross,
+         diamond, triangle-up, or triangle-down, or a custom SVG path.
     size : float
-        The pixel area each the point. For example: in the case of circles, the
-        radius is determined in part by the square root of the size value.
+        The pixel area each the point. For example: in the case of 
+        circles, the radius is determined in part by the square root of 
+        the size value.
     tickSize : float
         The width of the ticks.
     tickThickness : float
         Thickness of the tick mark.
     align : HorizontalAlign
-        The horizontal alignment of the text. One of left, right, center.
+        The horizontal alignment of the text. One of left, right, 
+        center.
     angle : float
         The rotation angle of the text, in degrees.
     baseline : VerticalAlign
         The vertical alignment of the text. One of top, middle, bottom.
     dx : float
-        The horizontal offset, in pixels, between the text label and its anchor
-        point. The offset is applied after rotation by the angle property.
+        The horizontal offset, in pixels, between the text label and its
+         anchor point. The offset is applied after rotation by the angle
+         property.
     dy : float
-        The vertical offset, in pixels, between the text label and its anchor point.
-        The offset is applied after rotation by the angle property.
+        The vertical offset, in pixels, between the text label and its 
+        anchor point. The offset is applied after rotation by the angle 
+        property.
     radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the x and y properties.
+        Polar coordinate radial offset, in pixels, of the text label 
+        from the origin determined by the x and y properties.
     theta : float
-        Polar coordinate angle, in radians, of the text label from the origin
-        determined by the x and y properties. Values for theta follow the same
-        convention of arc mark startAngle and endAngle properties: angles are
-        measured in radians, with 0 indicating "north".
+        Polar coordinate angle, in radians, of the text label from the 
+        origin determined by the x and y properties. Values for theta 
+        follow the same convention of arc mark startAngle and endAngle 
+        properties: angles are measured in radians, with 0 indicating 
+        "north".
     font : string
         The typeface to set the text in (e.g., Helvetica Neue).
     fontSize : float
@@ -954,8 +993,8 @@ class MarkConfig(SchemaBase):
     fontWeight : FontWeight
         The font weight (e.g., bold).
     format : string
-        The formatting pattern for text value. If not defined, this will be
-        determined automatically.
+        The formatting pattern for text value. If not defined, this will
+         be determined automatically.
     shortTimeLabels : boolean
         Whether month names and weekday names should be abbreviated.
     text : string
@@ -1000,7 +1039,6 @@ class MarkConfig(SchemaBase):
                                          strokeWidth=strokeWidth, tension=tension,
                                          text=text, theta=theta, tickSize=tickSize,
                                          tickThickness=tickThickness, **kwds)
-    
 
 
 class StackOffset(SchemaBase):
@@ -1010,7 +1048,6 @@ class StackOffset(SchemaBase):
 
     def __init__(self, *args):
         super(StackOffset, self).__init__(*args)
-    
 
 
 class Orient(SchemaBase):
@@ -1020,7 +1057,6 @@ class Orient(SchemaBase):
 
     def __init__(self, *args):
         super(Orient, self).__init__(*args)
-    
 
 
 class Interpolate(SchemaBase):
@@ -1030,7 +1066,6 @@ class Interpolate(SchemaBase):
 
     def __init__(self, *args):
         super(Interpolate, self).__init__(*args)
-    
 
 
 class Shape(SchemaBase):
@@ -1040,7 +1075,6 @@ class Shape(SchemaBase):
 
     def __init__(self, *args):
         super(Shape, self).__init__(*args)
-    
 
 
 class HorizontalAlign(SchemaBase):
@@ -1050,7 +1084,6 @@ class HorizontalAlign(SchemaBase):
 
     def __init__(self, *args):
         super(HorizontalAlign, self).__init__(*args)
-    
 
 
 class VerticalAlign(SchemaBase):
@@ -1060,7 +1093,6 @@ class VerticalAlign(SchemaBase):
 
     def __init__(self, *args):
         super(VerticalAlign, self).__init__(*args)
-    
 
 
 class FontStyle(SchemaBase):
@@ -1070,7 +1102,6 @@ class FontStyle(SchemaBase):
 
     def __init__(self, *args):
         super(FontStyle, self).__init__(*args)
-    
 
 
 class FontWeight(SchemaBase):
@@ -1080,7 +1111,6 @@ class FontWeight(SchemaBase):
 
     def __init__(self, *args):
         super(FontWeight, self).__init__(*args)
-    
 
 
 class OverlayConfig(SchemaBase):
@@ -1105,7 +1135,6 @@ class OverlayConfig(SchemaBase):
         super(OverlayConfig, self).__init__(area=area, line=line,
                                             lineStyle=lineStyle,
                                             pointStyle=pointStyle, **kwds)
-    
 
 
 class AreaOverlay(SchemaBase):
@@ -1115,7 +1144,6 @@ class AreaOverlay(SchemaBase):
 
     def __init__(self, *args):
         super(AreaOverlay, self).__init__(*args)
-    
 
 
 class ScaleConfig(SchemaBase):
@@ -1124,25 +1152,26 @@ class ScaleConfig(SchemaBase):
     Attributes
     ----------
     round : boolean
-        If true, rounds numeric output values to integers.  This can be helpful for
-        snapping to the pixel grid.  (Only available for `x`, `y`, `size`, `row`,
-        and `column` scales.)
+        If true, rounds numeric output values to integers.  This can be 
+        helpful for snapping to the pixel grid.  (Only available for 
+        `x`, `y`, `size`, `row`, and `column` scales.)
     textBandWidth : float
         Default band width for `x` ordinal scale when is mark is `text`.
     bandSize : anyOf(BandSize, float)
-        Default band size for (1) `y` ordinal scale,  and (2) `x` ordinal scale when
-        the mark is not `text`.
+        Default band size for (1) `y` ordinal scale,  and (2) `x` 
+        ordinal scale when the mark is not `text`.
     opacity : list
         Default range for opacity.
     padding : float
         Default padding for `x` and `y` ordinal scales.
     useRawDomain : boolean
-        Uses the source data range as scale domain instead of aggregated data for
-        aggregate axis.  This property only works with aggregate functions that
-        produce values within the raw data domain (`"mean"`, `"average"`, `"stdev"`,
-        `"stdevp"`, `"median"`, `"q1"`, `"q3"`, `"min"`, `"max"`). For other
-        aggregations that produce values outside of the raw data domain (e.g.
-        `"count"`, `"sum"`), this property is ignored.
+        Uses the source data range as scale domain instead of aggregated
+         data for aggregate axis.  This property only works with 
+        aggregate functions that produce values within the raw data 
+        domain (`"mean"`, `"average"`, `"stdev"`, `"stdevp"`, 
+        `"median"`, `"q1"`, `"q3"`, `"min"`, `"max"`). For other 
+        aggregations that produce values outside of the raw data domain 
+        (e.g. `"count"`, `"sum"`), this property is ignored.
     nominalColorRange : anyOf(list, string)
         Default range for nominal color scale
     sequentialColorRange : anyOf(list, string)
@@ -1182,7 +1211,6 @@ class ScaleConfig(SchemaBase):
                                           textBandWidth=textBandWidth,
                                           tickSizeRange=tickSizeRange,
                                           useRawDomain=useRawDomain, **kwds)
-    
 
 
 class AxisConfig(SchemaBase):
@@ -1193,22 +1221,23 @@ class AxisConfig(SchemaBase):
     axisWidth : float
         Width of the axis line
     layer : string
-        A string indicating if the axis (and any gridlines) should be placed above
-        or below the data marks.
+        A string indicating if the axis (and any gridlines) should be 
+        placed above or below the data marks.
     offset : float
-        The offset, in pixels, by which to displace the axis from the edge of the
-        enclosing group or data rectangle.
+        The offset, in pixels, by which to displace the axis from the 
+        edge of the enclosing group or data rectangle.
     axisColor : string
         Color of axis line.
     grid : boolean
-        A flag indicate if gridlines should be created in addition to ticks. If
-        `grid` is unspecified, the default value is `true` for ROW and COL. For X
-        and Y, the default value is `true` for quantitative and time fields and
-        `false` otherwise.
+        A flag indicate if gridlines should be created in addition to 
+        ticks. If `grid` is unspecified, the default value is `true` for
+         ROW and COL. For X and Y, the default value is `true` for 
+        quantitative and time fields and `false` otherwise.
     gridColor : string
         Color of gridlines.
     gridDash : list
-        The offset (in pixels) into which to begin drawing with the grid dash array.
+        The offset (in pixels) into which to begin drawing with the grid
+         dash array.
     gridOpacity : float
         The stroke opacity of grid (value between [0,1])
     gridWidth : float
@@ -1226,17 +1255,19 @@ class AxisConfig(SchemaBase):
     shortTimeLabels : boolean
         Whether month and day names should be abbreviated.
     subdivide : float
-        If provided, sets the number of minor ticks between major ticks (the value 9
-        results in decimal subdivision). Only applicable for axes visualizing
-        quantitative scales.
+        If provided, sets the number of minor ticks between major ticks 
+        (the value 9 results in decimal subdivision). Only applicable 
+        for axes visualizing quantitative scales.
     ticks : float
-        A desired number of ticks, for axes visualizing quantitative scales. The
-        resulting number may be different so that values are "nice" (multiples of 2,
-        5, 10) and lie within the underlying scale's range.
+        A desired number of ticks, for axes visualizing quantitative 
+        scales. The resulting number may be different so that values are
+         "nice" (multiples of 2, 5, 10) and lie within the underlying 
+        scale's range.
     tickColor : string
         The color of the axis's tick.
     tickLabelColor : string
-        The color of the tick label, can be in hex color code or regular color name.
+        The color of the tick label, can be in hex color code or regular
+         color name.
     tickLabelFont : string
         The font of the tick label.
     tickLabelFontSize : float
@@ -1254,7 +1285,8 @@ class AxisConfig(SchemaBase):
     tickWidth : float
         The width, in pixels, of ticks.
     titleColor : string
-        Color of the title, can be in hex color code or regular color name.
+        Color of the title, can be in hex color code or regular color 
+        name.
     titleFont : string
         Font of the title.
     titleFontSize : float
@@ -1264,9 +1296,9 @@ class AxisConfig(SchemaBase):
     titleOffset : float
         A title offset value for the axis.
     titleMaxLength : float
-        Max length for axis title if the title is automatically generated from the
-        field's description. By default, this is automatically based on cell size
-        and characterWidth property.
+        Max length for axis title if the title is automatically 
+        generated from the field's description. By default, this is 
+        automatically based on cell size and characterWidth property.
     characterWidth : float
         Character width for automatically determining title max length.
     properties : any
@@ -1315,7 +1347,6 @@ class AxisConfig(SchemaBase):
                                          titleFontWeight=titleFontWeight,
                                          titleMaxLength=titleMaxLength,
                                          titleOffset=titleOffset, **kwds)
-    
 
 
 class LegendConfig(SchemaBase):
@@ -1324,18 +1355,19 @@ class LegendConfig(SchemaBase):
     Attributes
     ----------
     orient : string
-        The orientation of the legend. One of "left" or "right". This determines how
-        the legend is positioned within the scene. The default is "right".
+        The orientation of the legend. One of "left" or "right". This 
+        determines how the legend is positioned within the scene. The 
+        default is "right".
     offset : float
-        The offset, in pixels, by which to displace the legend from the edge of the
-        enclosing group or data rectangle.
+        The offset, in pixels, by which to displace the legend from the 
+        edge of the enclosing group or data rectangle.
     padding : float
         The padding, in pixels, between the legend and axis.
     margin : float
         The margin around the legend, in pixels
     gradientStrokeColor : string
-        The color of the gradient stroke, can be in hex color code or regular color
-        name.
+        The color of the gradient stroke, can be in hex color code or 
+        regular color name.
     gradientStrokeWidth : float
         The width of the gradient stroke, in pixels.
     gradientHeight : float
@@ -1345,10 +1377,11 @@ class LegendConfig(SchemaBase):
     labelAlign : string
         The alignment of the legend label, can be left, middle or right.
     labelBaseline : string
-        The position of the baseline of legend label, can be top, middle or bottom.
+        The position of the baseline of legend label, can be top, middle
+         or bottom.
     labelColor : string
-        The color of the legend label, can be in hex color code or regular color
-        name.
+        The color of the legend label, can be in hex color code or 
+        regular color name.
     labelFont : string
         The font of the legend label.
     labelFontSize : float
@@ -1360,16 +1393,17 @@ class LegendConfig(SchemaBase):
     symbolColor : string
         The color of the legend symbol,
     symbolShape : string
-        The shape of the legend symbol, can be the 'circle', 'square', 'cross',
-        'diamond',  'triangle-up', 'triangle-down', or else a custom SVG path
-        string.
+        The shape of the legend symbol, can be the 'circle', 'square', 
+        'cross', 'diamond',  'triangle-up', 'triangle-down', or else a 
+        custom SVG path string.
     symbolSize : float
         The size of the legend symbol, in pixels.
     symbolStrokeWidth : float
         The width of the symbol's stroke.
     titleColor : string
-        Optional mark property definitions for custom legend styling.  The color of
-        the legend title, can be in hex color code or regular color name.
+        Optional mark property definitions for custom legend styling.  
+        The color of the legend title, can be in hex color code or 
+        regular color name.
     titleFont : string
         The font of the legend title.
     titleFontSize : float
@@ -1414,7 +1448,6 @@ class LegendConfig(SchemaBase):
                                            titleFont=titleFont,
                                            titleFontSize=titleFontSize,
                                            titleFontWeight=titleFontWeight, **kwds)
-    
 
 
 class FacetConfig(SchemaBase):
@@ -1438,7 +1471,6 @@ class FacetConfig(SchemaBase):
                  scale=Undefined, **kwds):
         super(FacetConfig, self).__init__(axis=axis, cell=cell, grid=grid,
                                           scale=scale, **kwds)
-    
 
 
 class FacetScaleConfig(SchemaBase):
@@ -1447,14 +1479,15 @@ class FacetScaleConfig(SchemaBase):
     Attributes
     ----------
     round : boolean
+    
     padding : float
+    
     """
     _schema = {'$ref': '#/definitions/FacetScaleConfig'}
     _rootschema = Root._schema
 
     def __init__(self, padding=Undefined, round=Undefined, **kwds):
         super(FacetScaleConfig, self).__init__(padding=padding, round=round, **kwds)
-    
 
 
 class FacetGridConfig(SchemaBase):
@@ -1463,8 +1496,11 @@ class FacetGridConfig(SchemaBase):
     Attributes
     ----------
     color : string
+    
     opacity : float
+    
     offset : float
+    
     """
     _schema = {'$ref': '#/definitions/FacetGridConfig'}
     _rootschema = Root._schema
@@ -1472,7 +1508,6 @@ class FacetGridConfig(SchemaBase):
     def __init__(self, color=Undefined, offset=Undefined, opacity=Undefined, **kwds):
         super(FacetGridConfig, self).__init__(color=color, offset=offset,
                                               opacity=opacity, **kwds)
-    
 
 
 class FacetSpec(SchemaBase):
@@ -1481,12 +1516,14 @@ class FacetSpec(SchemaBase):
     Attributes
     ----------
     facet : Facet
+    
     spec : anyOf(UnitSpec, LayerSpec)
+    
     name : string
         Name of the visualization for later reference.
     description : string
-        An optional description of this mark for commenting purpose.  This property
-        has no effect on the output visualization.
+        An optional description of this mark for commenting purpose.  
+        This property has no effect on the output visualization.
     data : Data
         An object describing the data source
     transform : Transform
@@ -1503,7 +1540,6 @@ class FacetSpec(SchemaBase):
         super(FacetSpec, self).__init__(facet=facet, spec=spec, config=config,
                                         data=data, description=description,
                                         name=name, transform=transform, **kwds)
-    
 
 
 class Facet(SchemaBase):
@@ -1512,14 +1548,15 @@ class Facet(SchemaBase):
     Attributes
     ----------
     row : PositionChannelDef
+    
     column : PositionChannelDef
+    
     """
     _schema = {'$ref': '#/definitions/Facet'}
     _rootschema = Root._schema
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(Facet, self).__init__(column=column, row=row, **kwds)
-    
 
 
 class UnitSpec(SchemaBase):
@@ -1528,17 +1565,21 @@ class UnitSpec(SchemaBase):
     Attributes
     ----------
     width : float
+    
     height : float
+    
     mark : Mark
-        The mark type.  One of `"bar"`, `"circle"`, `"square"`, `"tick"`, `"line"`,
-        `"area"`, `"point"`, `"rule"`, and `"text"`.
+        The mark type.  One of `"bar"`, `"circle"`, `"square"`, 
+        `"tick"`, `"line"`,  `"area"`, `"point"`, `"rule"`, and 
+        `"text"`.
     encoding : UnitEncoding
-        A key-value mapping between encoding channels and definition of fields.
+        A key-value mapping between encoding channels and definition of 
+        fields.
     name : string
         Name of the visualization for later reference.
     description : string
-        An optional description of this mark for commenting purpose.  This property
-        has no effect on the output visualization.
+        An optional description of this mark for commenting purpose.  
+        This property has no effect on the output visualization.
     data : Data
         An object describing the data source
     transform : Transform
@@ -1556,7 +1597,6 @@ class UnitSpec(SchemaBase):
                                        description=description, encoding=encoding,
                                        height=height, name=name,
                                        transform=transform, width=width, **kwds)
-    
 
 
 class UnitEncoding(SchemaBase):
@@ -1565,40 +1605,47 @@ class UnitEncoding(SchemaBase):
     Attributes
     ----------
     x : PositionChannelDef
-        X coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and
-        `tick`  (or to width and height for `bar` and `area` marks).
+        X coordinates for `point`, `circle`, `square`,  `line`, `rule`, 
+        `text`, and `tick`  (or to width and height for `bar` and `area`
+         marks).
     y : PositionChannelDef
-        Y coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and
-        `tick`  (or to width and height for `bar` and `area` marks).
+        Y coordinates for `point`, `circle`, `square`,  `line`, `rule`, 
+        `text`, and `tick`  (or to width and height for `bar` and `area`
+         marks).
     x2 : FieldDef
         X2 coordinates for ranged `bar`, `rule`, `area`
     y2 : FieldDef
         Y2 coordinates for ranged `bar`, `rule`, `area`
     color : ChannelDefWithLegend
-        Color of the marks – either fill or stroke color based on mark type.  (By
-        default, fill color for `area`, `bar`, `tick`, `text`, `circle`, and
-        `square` /  stroke color for `line` and `point`.)
+        Color of the marks – either fill or stroke color based on mark 
+        type.  (By default, fill color for `area`, `bar`, `tick`, 
+        `text`, `circle`, and `square` /  stroke color for `line` and 
+        `point`.)
     opacity : ChannelDefWithLegend
         Opacity of the marks – either can be a value or in a range.
     size : ChannelDefWithLegend
-        Size of the mark.  - For `point`, `square` and `circle`  – the symbol size,
-        or pixel area of the mark.  - For `bar` and `tick` – the bar and tick's
-        size.  - For `text` – the text's font size.  - Size is currently unsupported
-        for `line` and `area`.
+        Size of the mark.  - For `point`, `square` and `circle`  – the 
+        symbol size, or pixel area of the mark.  - For `bar` and `tick` 
+        – the bar and tick's size.  - For `text` – the text's font size.
+          - Size is currently unsupported for `line` and `area`.
     shape : ChannelDefWithLegend
-        The symbol's shape (only for `point` marks). The supported values are
-        `"circle"` (default), `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`,
-        or `"triangle-down"`, or else a custom SVG path string.
+        The symbol's shape (only for `point` marks). The supported 
+        values are  `"circle"` (default), `"square"`, `"cross"`, 
+        `"diamond"`, `"triangle-up"`,  or `"triangle-down"`, or else a 
+        custom SVG path string.
     detail : anyOf(FieldDef, list)
-        Additional levels of detail for grouping data in aggregate views and  in
-        line and area marks without mapping data to a specific visual channel.
+        Additional levels of detail for grouping data in aggregate views
+         and  in line and area marks without mapping data to a specific 
+        visual channel.
     text : FieldDef
         Text of the `text` mark.
     label : FieldDef
+    
     path : anyOf(OrderChannelDef, list)
         Order of data points in line marks.
     order : anyOf(OrderChannelDef, list)
-        Layer order for non-stacked marks, or stack order for stacked marks.
+        Layer order for non-stacked marks, or stack order for stacked 
+        marks.
     """
     _schema = {'$ref': '#/definitions/UnitEncoding'}
     _rootschema = Root._schema
@@ -1611,7 +1658,6 @@ class UnitEncoding(SchemaBase):
                                            opacity=opacity, order=order, path=path,
                                            shape=shape, size=size, text=text, x=x,
                                            x2=x2, y=y, y2=y2, **kwds)
-    
 
 
 class LayerSpec(SchemaBase):
@@ -1620,14 +1666,16 @@ class LayerSpec(SchemaBase):
     Attributes
     ----------
     width : float
+    
     height : float
+    
     layers : list
         Unit specs that will be layered.
     name : string
         Name of the visualization for later reference.
     description : string
-        An optional description of this mark for commenting purpose.  This property
-        has no effect on the output visualization.
+        An optional description of this mark for commenting purpose.  
+        This property has no effect on the output visualization.
     data : Data
         An object describing the data source
     transform : Transform
@@ -1645,5 +1693,4 @@ class LayerSpec(SchemaBase):
                                         description=description, height=height,
                                         name=name, transform=transform, width=width,
                                         **kwds)
-    
 

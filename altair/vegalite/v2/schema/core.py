@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:43
+# 2018-02-27 11:38
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -21,7 +21,6 @@ class Root(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Root, self).__init__(*args, **kwds)
-    
 
 
 class Aggregate(SchemaBase):
@@ -31,7 +30,6 @@ class Aggregate(SchemaBase):
 
     def __init__(self, *args):
         super(Aggregate, self).__init__(*args)
-    
 
 
 class AggregateOp(SchemaBase):
@@ -41,7 +39,6 @@ class AggregateOp(SchemaBase):
 
     def __init__(self, *args):
         super(AggregateOp, self).__init__(*args)
-    
 
 
 class AggregateTransform(SchemaBase):
@@ -52,8 +49,8 @@ class AggregateTransform(SchemaBase):
     aggregate : list
         Array of objects that define fields to aggregate.
     groupby : list
-        The data fields to group by. If not specified, a single group containing all
-        data objects will be used.
+        The data fields to group by. If not specified, a single group 
+        containing all data objects will be used.
     """
     _schema = {'$ref': '#/definitions/AggregateTransform'}
     _rootschema = Root._schema
@@ -61,7 +58,6 @@ class AggregateTransform(SchemaBase):
     def __init__(self, aggregate=Undefined, groupby=Undefined, **kwds):
         super(AggregateTransform, self).__init__(aggregate=aggregate,
                                                  groupby=groupby, **kwds)
-    
 
 
 class AggregatedFieldDef(SchemaBase):
@@ -74,17 +70,16 @@ class AggregatedFieldDef(SchemaBase):
     field : string
         The data field for which to compute aggregate function.
     op : AggregateOp
-        The aggregation operations to apply to the fields, such as sum, average or
-        count. See the [full list of supported aggregation
-        operations](https://vega.github.io/vega-lite/docs/aggregate.html#ops) for
-        more information.
+        The aggregation operations to apply to the fields, such as sum, 
+        average or count. See the [full list of supported aggregation 
+        operations](https://vega.github.io/vega-lite/docs/aggregate.html#ops)
+         for more information.
     """
     _schema = {'$ref': '#/definitions/AggregatedFieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, field=Undefined, op=Undefined, **kwds):
         super(AggregatedFieldDef, self).__init__(field=field, op=op, **kwds)
-    
 
 
 class Anchor(SchemaBase):
@@ -94,7 +89,6 @@ class Anchor(SchemaBase):
 
     def __init__(self, *args):
         super(Anchor, self).__init__(*args)
-    
 
 
 class AnyMark(SchemaBase):
@@ -104,7 +98,6 @@ class AnyMark(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(AnyMark, self).__init__(*args, **kwds)
-    
 
 
 class AutoSizeParams(SchemaBase):
@@ -113,20 +106,23 @@ class AutoSizeParams(SchemaBase):
     Attributes
     ----------
     contains : string
-        Determines how size calculation should be performed, one of `"content"` or
-        `"padding"`. The default setting (`"content"`) interprets the width and
-        height settings as the data rectangle (plotting) dimensions, to which
-        padding is then added. In contrast, the `"padding"` setting includes the
-        padding within the view size calculations, such that the width and height
-        settings indicate the **total** intended size of the view.  __Default
-        value__: `"content"`
+        Determines how size calculation should be performed, one of 
+        `"content"` or `"padding"`. The default setting (`"content"`) 
+        interprets the width and height settings as the data rectangle 
+        (plotting) dimensions, to which padding is then added. In 
+        contrast, the `"padding"` setting includes the padding within 
+        the view size calculations, such that the width and height 
+        settings indicate the **total** intended size of the view.  
+        __Default value__: `"content"`
     resize : boolean
-        A boolean flag indicating if autosize layout should be re-calculated on
-        every view update.  __Default value__: `false`
+        A boolean flag indicating if autosize layout should be 
+        re-calculated on every view update.  __Default value__: `false`
     type : AutosizeType
-        The sizing format type. One of `"pad"`, `"fit"` or `"none"`. See the
-        [autosize type](https://vega.github.io/vega-lite/docs/size.html#autosize)
-        documentation for descriptions of each.  __Default value__: `"pad"`
+        The sizing format type. One of `"pad"`, `"fit"` or `"none"`. See
+         the [autosize 
+        type](https://vega.github.io/vega-lite/docs/size.html#autosize) 
+        documentation for descriptions of each.  __Default value__: 
+        `"pad"`
     """
     _schema = {'$ref': '#/definitions/AutoSizeParams'}
     _rootschema = Root._schema
@@ -134,7 +130,6 @@ class AutoSizeParams(SchemaBase):
     def __init__(self, contains=Undefined, resize=Undefined, type=Undefined, **kwds):
         super(AutoSizeParams, self).__init__(contains=contains, resize=resize,
                                              type=type, **kwds)
-    
 
 
 class AutosizeType(SchemaBase):
@@ -144,7 +139,6 @@ class AutosizeType(SchemaBase):
 
     def __init__(self, *args):
         super(AutosizeType, self).__init__(*args)
-    
 
 
 class Axis(SchemaBase):
@@ -153,110 +147,124 @@ class Axis(SchemaBase):
     Attributes
     ----------
     domain : boolean
-        A boolean flag indicating if the domain (the axis baseline) should be
-        included as part of the axis.  __Default value:__ `true`
+        A boolean flag indicating if the domain (the axis baseline) 
+        should be included as part of the axis.  __Default value:__ 
+        `true`
     format : string
-        The formatting pattern for labels. This is D3's [number format
-        pattern](https://github.com/d3/d3-format#locale_format) for quantitative
-        fields and D3's [time format
-        pattern](https://github.com/d3/d3-time-format#locale_format) for time field.
-        See the [format documentation](format.html) for more information.  __Default
-        value:__  derived from [numberFormat](config.html#format) config for
-        quantitative fields and from [timeFormat](config.html#format) config for
+        The formatting pattern for labels. This is D3's [number format 
+        pattern](https://github.com/d3/d3-format#locale_format) for 
+        quantitative fields and D3's [time format 
+        pattern](https://github.com/d3/d3-time-format#locale_format) for
+         time field.  See the [format documentation](format.html) for 
+        more information.  __Default value:__  derived from 
+        [numberFormat](config.html#format) config for quantitative 
+        fields and from [timeFormat](config.html#format) config for 
         temporal fields.
     grid : boolean
-        A boolean flag indicating if grid lines should be included as part of the
-        axis  __Default value:__ `true` for [continuous
-        scales](scale.html#continuous) that are not binned; otherwise, `false`.
+        A boolean flag indicating if grid lines should be included as 
+        part of the axis  __Default value:__ `true` for [continuous 
+        scales](scale.html#continuous) that are not binned; otherwise, 
+        `false`.
     labelAngle : float
-        The rotation angle of the axis labels.  __Default value:__ `-90` for nominal
-        and ordinal fields; `0` otherwise.
+        The rotation angle of the axis labels.  __Default value:__ `-90`
+         for nominal and ordinal fields; `0` otherwise.
     labelBound : anyOf(boolean, float)
-        Indicates if labels should be hidden if they exceed the axis range. If
-        `false `(the default) no bounds overlap analysis is performed. If `true`,
-        labels will be hidden if they exceed the axis range by more than 1 pixel. If
-        this property is a number, it specifies the pixel tolerance: the maximum
-        amount by which a label bounding box may exceed the axis range.  __Default
+        Indicates if labels should be hidden if they exceed the axis 
+        range. If `false `(the default) no bounds overlap analysis is 
+        performed. If `true`, labels will be hidden if they exceed the 
+        axis range by more than 1 pixel. If this property is a number, 
+        it specifies the pixel tolerance: the maximum amount by which a 
+        label bounding box may exceed the axis range.  __Default 
         value:__ `false`.
     labelFlush : anyOf(boolean, float)
-        Indicates if the first and last axis labels should be aligned flush with the
-        scale range. Flush alignment for a horizontal axis will left-align the first
-        label and right-align the last label. For vertical axes, bottom and top text
-        baselines are applied instead. If this property is a number, it also
-        indicates the number of pixels by which to offset the first and last labels;
-        for example, a value of 2 will flush-align the first and last labels and
-        also push them 2 pixels outward from the center of the axis. The additional
-        adjustment can sometimes help the labels better visually group with
-        corresponding axis ticks.  __Default value:__ `true` for axis of a
-        continuous x-scale. Otherwise, `false`.
+        Indicates if the first and last axis labels should be aligned 
+        flush with the scale range. Flush alignment for a horizontal 
+        axis will left-align the first label and right-align the last 
+        label. For vertical axes, bottom and top text baselines are 
+        applied instead. If this property is a number, it also indicates
+         the number of pixels by which to offset the first and last 
+        labels; for example, a value of 2 will flush-align the first and
+         last labels and also push them 2 pixels outward from the center
+         of the axis. The additional adjustment can sometimes help the 
+        labels better visually group with corresponding axis ticks.  
+        __Default value:__ `true` for axis of a continuous x-scale. 
+        Otherwise, `false`.
     labelOverlap : anyOf(boolean, string, string)
-        The strategy to use for resolving overlap of axis labels. If `false` (the
-        default), no overlap reduction is attempted. If set to `true` or `"parity"`,
-        a strategy of removing every other label is used (this works well for
-        standard linear axes). If set to `"greedy"`, a linear scan of the labels is
-        performed, removing any labels that overlaps with the last visible label
-        (this often works better for log-scaled axes).  __Default value:__ `true`
-        for non-nominal fields with non-log scales; `"greedy"` for log scales;
-        otherwise `false`.
+        The strategy to use for resolving overlap of axis labels. If 
+        `false` (the default), no overlap reduction is attempted. If set
+         to `true` or `"parity"`, a strategy of removing every other 
+        label is used (this works well for standard linear axes). If set
+         to `"greedy"`, a linear scan of the labels is performed, 
+        removing any labels that overlaps with the last visible label 
+        (this often works better for log-scaled axes).  __Default 
+        value:__ `true` for non-nominal fields with non-log scales; 
+        `"greedy"` for log scales; otherwise `false`.
     labelPadding : float
         The padding, in pixels, between axis and text labels.
     labels : boolean
-        A boolean flag indicating if labels should be included as part of the axis.
-        __Default value:__  `true`.
+        A boolean flag indicating if labels should be included as part 
+        of the axis.  __Default value:__  `true`.
     maxExtent : float
-        The maximum extent in pixels that axis ticks and labels should use. This
-        determines a maximum offset value for axis titles.  __Default value:__
-        `undefined`.
+        The maximum extent in pixels that axis ticks and labels should 
+        use. This determines a maximum offset value for axis titles.  
+        __Default value:__ `undefined`.
     minExtent : float
-        The minimum extent in pixels that axis ticks and labels should use. This
-        determines a minimum offset value for axis titles.  __Default value:__ `30`
-        for y-axis; `undefined` for x-axis.
+        The minimum extent in pixels that axis ticks and labels should 
+        use. This determines a minimum offset value for axis titles.  
+        __Default value:__ `30` for y-axis; `undefined` for x-axis.
     offset : float
-        The offset, in pixels, by which to displace the axis from the edge of the
-        enclosing group or data rectangle.  __Default value:__ derived from the
-        [axis config](config.html#facet-scale-config)'s `offset` (`0` by default)
+        The offset, in pixels, by which to displace the axis from the 
+        edge of the enclosing group or data rectangle.  __Default 
+        value:__ derived from the [axis 
+        config](config.html#facet-scale-config)'s `offset` (`0` by 
+        default)
     orient : AxisOrient
-        The orientation of the axis. One of `"top"`, `"bottom"`, `"left"` or
-        `"right"`. The orientation can be used to further specialize the axis type
-        (e.g., a y axis oriented for the right edge of the chart).  __Default
-        value:__ `"bottom"` for x-axes and `"left"` for y-axes.
+        The orientation of the axis. One of `"top"`, `"bottom"`, 
+        `"left"` or `"right"`. The orientation can be used to further 
+        specialize the axis type (e.g., a y axis oriented for the right 
+        edge of the chart).  __Default value:__ `"bottom"` for x-axes 
+        and `"left"` for y-axes.
     position : float
-        The anchor position of the axis in pixels. For x-axis with top or bottom
-        orientation, this sets the axis group x coordinate. For y-axis with left or
-        right orientation, this sets the axis group y coordinate.  __Default
-        value__: `0`
+        The anchor position of the axis in pixels. For x-axis with top 
+        or bottom orientation, this sets the axis group x coordinate. 
+        For y-axis with left or right orientation, this sets the axis 
+        group y coordinate.  __Default value__: `0`
     tickCount : float
-        A desired number of ticks, for axes visualizing quantitative scales. The
-        resulting number may be different so that values are "nice" (multiples of 2,
-        5, 10) and lie within the underlying scale's range.
+        A desired number of ticks, for axes visualizing quantitative 
+        scales. The resulting number may be different so that values are
+         "nice" (multiples of 2, 5, 10) and lie within the underlying 
+        scale's range.
     tickSize : float
         The size in pixels of axis ticks.
     ticks : boolean
-        Boolean value that determines whether the axis should include ticks.
+        Boolean value that determines whether the axis should include 
+        ticks.
     title : anyOf(string, None)
-        A title for the field. If `null`, the title will be removed.  __Default
-        value:__  derived from the field's name and transformation function
-        (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate
-        function, the function is displayed as a part of the title (e.g., `"Sum of
-        Profit"`). If the field is binned or has a time unit applied, the applied
-        function will be denoted in parentheses (e.g., `"Profit (binned)"`,
-        `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
-        field name.  __Note__: You can customize the default field title format by
-        providing the [`fieldTitle` property in the [config](config.html) or
-        [`fieldTitle` function via the `compile` function's
-        options](compile.html#field-title).
+        A title for the field. If `null`, the title will be removed.  
+        __Default value:__  derived from the field's name and 
+        transformation function (`aggregate`, `bin` and `timeUnit`).  If
+         the field has an aggregate function, the function is displayed 
+        as a part of the title (e.g., `"Sum of Profit"`). If the field 
+        is binned or has a time unit applied, the applied function will 
+        be denoted in parentheses (e.g., `"Profit (binned)"`, 
+        `"Transaction Date (year-month)"`).  Otherwise, the title is 
+        simply the field name.  __Note__: You can customize the default 
+        field title format by providing the [`fieldTitle` property in 
+        the [config](config.html) or [`fieldTitle` function via the 
+        `compile` function's options](compile.html#field-title).
     titleMaxLength : float
-        Max length for axis title if the title is automatically generated from the
-        field's description.
+        Max length for axis title if the title is automatically 
+        generated from the field's description.
     titlePadding : float
         The padding, in pixels, between title and axis.
     values : anyOf(list, list)
         Explicitly set the visible axis tick values.
     zindex : float
-        A non-positive integer indicating z-index of the axis. If zindex is 0, axes
-        should be drawn behind all chart elements. To put them in front, use
-        `"zindex = 1"`.  __Default value:__ `1` (in front of the marks) for actual
-        axis and `0` (behind the marks) for grids.
+        A non-positive integer indicating z-index of the axis. If zindex
+         is 0, axes should be drawn behind all chart elements. To put 
+        them in front, use `"zindex = 1"`.  __Default value:__ `1` (in 
+        front of the marks) for actual axis and `0` (behind the marks) 
+        for grids.
     """
     _schema = {'$ref': '#/definitions/Axis'}
     _rootschema = Root._schema
@@ -280,7 +288,6 @@ class Axis(SchemaBase):
                                    titleMaxLength=titleMaxLength,
                                    titlePadding=titlePadding, values=values,
                                    zindex=zindex, **kwds)
-    
 
 
 class AxisConfig(SchemaBase):
@@ -289,53 +296,62 @@ class AxisConfig(SchemaBase):
     Attributes
     ----------
     bandPosition : float
-        An interpolation fraction indicating where, for `band` scales, axis ticks
-        should be positioned. A value of `0` places ticks at the left edge of their
-        bands. A value of `0.5` places ticks in the middle of their bands.
+        An interpolation fraction indicating where, for `band` scales, 
+        axis ticks should be positioned. A value of `0` places ticks at 
+        the left edge of their bands. A value of `0.5` places ticks in 
+        the middle of their bands.
     domain : boolean
-        A boolean flag indicating if the domain (the axis baseline) should be
-        included as part of the axis.  __Default value:__ `true`
+        A boolean flag indicating if the domain (the axis baseline) 
+        should be included as part of the axis.  __Default value:__ 
+        `true`
     domainColor : string
-        Color of axis domain line.  __Default value:__  (none, using Vega default).
+        Color of axis domain line.  __Default value:__  (none, using 
+        Vega default).
     domainWidth : float
-        Stroke width of axis domain line  __Default value:__  (none, using Vega
-        default).
+        Stroke width of axis domain line  __Default value:__  (none, 
+        using Vega default).
     grid : boolean
-        A boolean flag indicating if grid lines should be included as part of the
-        axis  __Default value:__ `true` for [continuous
-        scales](scale.html#continuous) that are not binned; otherwise, `false`.
+        A boolean flag indicating if grid lines should be included as 
+        part of the axis  __Default value:__ `true` for [continuous 
+        scales](scale.html#continuous) that are not binned; otherwise, 
+        `false`.
     gridColor : string
         Color of gridlines.
     gridDash : list
-        The offset (in pixels) into which to begin drawing with the grid dash array.
+        The offset (in pixels) into which to begin drawing with the grid
+         dash array.
     gridOpacity : float
-        The stroke opacity of grid (value between [0,1])  __Default value:__ (`1` by
-        default)
+        The stroke opacity of grid (value between [0,1])  __Default 
+        value:__ (`1` by default)
     gridWidth : float
         The grid width, in pixels.
     labelAngle : float
-        The rotation angle of the axis labels.  __Default value:__ `-90` for nominal
-        and ordinal fields; `0` otherwise.
+        The rotation angle of the axis labels.  __Default value:__ `-90`
+         for nominal and ordinal fields; `0` otherwise.
     labelBound : anyOf(boolean, float)
-        Indicates if labels should be hidden if they exceed the axis range. If
-        `false `(the default) no bounds overlap analysis is performed. If `true`,
-        labels will be hidden if they exceed the axis range by more than 1 pixel. If
-        this property is a number, it specifies the pixel tolerance: the maximum
-        amount by which a label bounding box may exceed the axis range.  __Default
+        Indicates if labels should be hidden if they exceed the axis 
+        range. If `false `(the default) no bounds overlap analysis is 
+        performed. If `true`, labels will be hidden if they exceed the 
+        axis range by more than 1 pixel. If this property is a number, 
+        it specifies the pixel tolerance: the maximum amount by which a 
+        label bounding box may exceed the axis range.  __Default 
         value:__ `false`.
     labelColor : string
-        The color of the tick label, can be in hex color code or regular color name.
+        The color of the tick label, can be in hex color code or regular
+         color name.
     labelFlush : anyOf(boolean, float)
-        Indicates if the first and last axis labels should be aligned flush with the
-        scale range. Flush alignment for a horizontal axis will left-align the first
-        label and right-align the last label. For vertical axes, bottom and top text
-        baselines are applied instead. If this property is a number, it also
-        indicates the number of pixels by which to offset the first and last labels;
-        for example, a value of 2 will flush-align the first and last labels and
-        also push them 2 pixels outward from the center of the axis. The additional
-        adjustment can sometimes help the labels better visually group with
-        corresponding axis ticks.  __Default value:__ `true` for axis of a
-        continuous x-scale. Otherwise, `false`.
+        Indicates if the first and last axis labels should be aligned 
+        flush with the scale range. Flush alignment for a horizontal 
+        axis will left-align the first label and right-align the last 
+        label. For vertical axes, bottom and top text baselines are 
+        applied instead. If this property is a number, it also indicates
+         the number of pixels by which to offset the first and last 
+        labels; for example, a value of 2 will flush-align the first and
+         last labels and also push them 2 pixels outward from the center
+         of the axis. The additional adjustment can sometimes help the 
+        labels better visually group with corresponding axis ticks.  
+        __Default value:__ `true` for axis of a continuous x-scale. 
+        Otherwise, `false`.
     labelFont : string
         The font of the tick label.
     labelFontSize : float
@@ -343,41 +359,43 @@ class AxisConfig(SchemaBase):
     labelLimit : float
         Maximum allowed pixel width of axis tick labels.
     labelOverlap : anyOf(boolean, string, string)
-        The strategy to use for resolving overlap of axis labels. If `false` (the
-        default), no overlap reduction is attempted. If set to `true` or `"parity"`,
-        a strategy of removing every other label is used (this works well for
-        standard linear axes). If set to `"greedy"`, a linear scan of the labels is
-        performed, removing any labels that overlaps with the last visible label
-        (this often works better for log-scaled axes).  __Default value:__ `true`
-        for non-nominal fields with non-log scales; `"greedy"` for log scales;
-        otherwise `false`.
+        The strategy to use for resolving overlap of axis labels. If 
+        `false` (the default), no overlap reduction is attempted. If set
+         to `true` or `"parity"`, a strategy of removing every other 
+        label is used (this works well for standard linear axes). If set
+         to `"greedy"`, a linear scan of the labels is performed, 
+        removing any labels that overlaps with the last visible label 
+        (this often works better for log-scaled axes).  __Default 
+        value:__ `true` for non-nominal fields with non-log scales; 
+        `"greedy"` for log scales; otherwise `false`.
     labelPadding : float
         The padding, in pixels, between axis and text labels.
     labels : boolean
-        A boolean flag indicating if labels should be included as part of the axis.
-        __Default value:__  `true`.
+        A boolean flag indicating if labels should be included as part 
+        of the axis.  __Default value:__  `true`.
     maxExtent : float
-        The maximum extent in pixels that axis ticks and labels should use. This
-        determines a maximum offset value for axis titles.  __Default value:__
-        `undefined`.
+        The maximum extent in pixels that axis ticks and labels should 
+        use. This determines a maximum offset value for axis titles.  
+        __Default value:__ `undefined`.
     minExtent : float
-        The minimum extent in pixels that axis ticks and labels should use. This
-        determines a minimum offset value for axis titles.  __Default value:__ `30`
-        for y-axis; `undefined` for x-axis.
+        The minimum extent in pixels that axis ticks and labels should 
+        use. This determines a minimum offset value for axis titles.  
+        __Default value:__ `30` for y-axis; `undefined` for x-axis.
     shortTimeLabels : boolean
-        Whether month names and weekday names should be abbreviated.  __Default
-        value:__  `false`
+        Whether month names and weekday names should be abbreviated.  
+        __Default value:__  `false`
     tickColor : string
         The color of the axis's tick.
     tickRound : boolean
-        Boolean flag indicating if pixel position values should be rounded to the
-        nearest integer.
+        Boolean flag indicating if pixel position values should be 
+        rounded to the nearest integer.
     tickSize : float
         The size in pixels of axis ticks.
     tickWidth : float
         The width, in pixels, of ticks.
     ticks : boolean
-        Boolean value that determines whether the axis should include ticks.
+        Boolean value that determines whether the axis should include 
+        ticks.
     titleAlign : string
         Horizontal text alignment of axis titles.
     titleAngle : float
@@ -385,7 +403,8 @@ class AxisConfig(SchemaBase):
     titleBaseline : string
         Vertical text baseline for axis titles.
     titleColor : string
-        Color of the title, can be in hex color code or regular color name.
+        Color of the title, can be in hex color code or regular color 
+        name.
     titleFont : string
         Font of the title. (e.g., `"Helvetica Neue"`).
     titleFontSize : float
@@ -395,8 +414,8 @@ class AxisConfig(SchemaBase):
     titleLimit : float
         Maximum allowed pixel width of axis titles.
     titleMaxLength : float
-        Max length for axis title if the title is automatically generated from the
-        field's description.
+        Max length for axis title if the title is automatically 
+        generated from the field's description.
     titlePadding : float
         The padding, in pixels, between title and axis.
     titleX : float
@@ -449,7 +468,6 @@ class AxisConfig(SchemaBase):
                                          titleMaxLength=titleMaxLength,
                                          titlePadding=titlePadding, titleX=titleX,
                                          titleY=titleY, **kwds)
-    
 
 
 class AxisOrient(SchemaBase):
@@ -459,7 +477,6 @@ class AxisOrient(SchemaBase):
 
     def __init__(self, *args):
         super(AxisOrient, self).__init__(*args)
-    
 
 
 class AxisResolveMap(SchemaBase):
@@ -468,14 +485,15 @@ class AxisResolveMap(SchemaBase):
     Attributes
     ----------
     x : ResolveMode
+    
     y : ResolveMode
+    
     """
     _schema = {'$ref': '#/definitions/AxisResolveMap'}
     _rootschema = Root._schema
 
     def __init__(self, x=Undefined, y=Undefined, **kwds):
         super(AxisResolveMap, self).__init__(x=x, y=y, **kwds)
-    
 
 
 class BarConfig(SchemaBase):
@@ -484,47 +502,52 @@ class BarConfig(SchemaBase):
     Attributes
     ----------
     align : HorizontalAlign
-        The horizontal alignment of the text. One of `"left"`, `"right"`,
-        `"center"`.
+        The horizontal alignment of the text. One of `"left"`, 
+        `"right"`, `"center"`.
     angle : float
         The rotation angle of the text, in degrees.
     baseline : VerticalAlign
-        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
-        __Default value:__ `"middle"`
+        The vertical alignment of the text. One of `"top"`, `"middle"`, 
+        `"bottom"`.  __Default value:__ `"middle"`
     binSpacing : float
-        Offset between bar for binned field.  Ideal value for this is either 0
-        (Preferred by statisticians) or 1 (Vega-Lite Default, D3 example style).
-        __Default value:__ `1`
+        Offset between bar for binned field.  Ideal value for this is 
+        either 0 (Preferred by statisticians) or 1 (Vega-Lite Default, 
+        D3 example style).  __Default value:__ `1`
     color : string
-        Default color.  Note that `fill` and `stroke` have higher precedence than
-        `color` and will override `color`.  __Default value:__ <span style="color:
-        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used
-        in a [style config](mark.html#style-config).
+        Default color.  Note that `fill` and `stroke` have higher 
+        precedence than `color` and will override `color`.  __Default 
+        value:__ <span style="color: #4682b4;">&#9632;</span> 
+        `"#4682b4"`  __Note:__ This property cannot be used in a [style 
+        config](mark.html#style-config).
     continuousBandSize : float
-        The default size of the bars on continuous scales.  __Default value:__ `5`
+        The default size of the bars on continuous scales.  __Default 
+        value:__ `5`
     cursor : string
-        The mouse cursor used over the mark. Any valid [CSS cursor
-        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be
-        used.
+        The mouse cursor used over the mark. Any valid [CSS cursor 
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+         can be used.
     discreteBandSize : float
-        The size of the bars.  If unspecified, the default size is  `bandSize-1`,
-        which provides 1 pixel offset between bars.
+        The size of the bars.  If unspecified, the default size is  
+        `bandSize-1`, which provides 1 pixel offset between bars.
     dx : float
-        The horizontal offset, in pixels, between the text label and its anchor
-        point. The offset is applied after rotation by the _angle_ property.
+        The horizontal offset, in pixels, between the text label and its
+         anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     dy : float
-        The vertical offset, in pixels, between the text label and its anchor point.
-        The offset is applied after rotation by the _angle_ property.
+        The vertical offset, in pixels, between the text label and its 
+        anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
-        value:__ (None)
+        Default Fill Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
     filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke
-        color.  __Default value:__ `true` for all marks except `point` and `false`
-        for `point`.  __Applicable for:__ `bar`, `point`, `circle`, `square`, and
-        `area` marks.  __Note:__ This property cannot be used in a [style
+        Whether the mark's color should be used as fill color instead of
+         stroke color.  __Default value:__ `true` for all marks except 
+        `point` and `false` for `point`.  __Applicable for:__ `bar`, 
+        `point`, `circle`, `square`, and `area` marks.  __Note:__ This 
+        property cannot be used in a [style 
         config](mark.html#style-config).
     font : string
         The typeface to set the text in (e.g., `"Helvetica Neue"`).
@@ -535,75 +558,82 @@ class BarConfig(SchemaBase):
     fontWeight : anyOf(FontWeight, FontWeightNumber)
         The font weight (e.g., `"bold"`).
     href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+        A URL to load upon mouse click. If defined, the mark acts as a 
+        hyperlink.
     interpolate : Interpolate
-        The line interpolation method to use for line and area marks. One of the
-        following: - `"linear"`: piecewise linear segments, as in a polyline. -
-        `"linear-closed"`: close the linear segments to form a polygon. - `"step"`:
-        alternate between horizontal and vertical segments, as in a step function. -
-        `"step-before"`: alternate between vertical and horizontal segments, as in a
-        step function. - `"step-after"`: alternate between horizontal and vertical
-        segments, as in a step function. - `"basis"`: a B-spline, with control point
-        duplication on the ends. - `"basis-open"`: an open B-spline; may not
-        intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
-        loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
-        the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. -
-        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
-        equivalent to basis, except the tension parameter is used to straighten the
-        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
-        y.
+        The line interpolation method to use for line and area marks. 
+        One of the following: - `"linear"`: piecewise linear segments, 
+        as in a polyline. - `"linear-closed"`: close the linear segments
+         to form a polygon. - `"step"`: alternate between horizontal and
+         vertical segments, as in a step function. - `"step-before"`: 
+        alternate between vertical and horizontal segments, as in a step
+         function. - `"step-after"`: alternate between horizontal and 
+        vertical segments, as in a step function. - `"basis"`: a 
+        B-spline, with control point duplication on the ends. - 
+        `"basis-open"`: an open B-spline; may not intersect the start or
+         end. - `"basis-closed"`: a closed B-spline, as in a loop. - 
+        `"cardinal"`: a Cardinal spline, with control point duplication 
+        on the ends. - `"cardinal-open"`: an open Cardinal spline; may 
+        not intersect the start or end, but will intersect other control
+         points. - `"cardinal-closed"`: a closed Cardinal spline, as in 
+        a loop. - `"bundle"`: equivalent to basis, except the tension 
+        parameter is used to straighten the spline. - `"monotone"`: 
+        cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no
-        limit). The text value will be automatically truncated if the rendered size
-        exceeds the limit.
+        The maximum length of the text mark in pixels (default 0, 
+        indicating no limit). The text value will be automatically 
+        truncated if the rendered size exceeds the limit.
     opacity : float
-        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
-        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or
-        layered `bar` charts and `1` otherwise.
+        The overall opacity (value between [0,1]).  __Default value:__ 
+        `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or
+         `square` marks or layered `bar` charts and `1` otherwise.
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value
-        is either horizontal (default) or vertical. - For bar, rule and tick, this
-        determines whether the size of the bar and tick should be applied to x or y
-        dimension. - For area, this property determines the orient property of the
-        Vega output. - For line, this property determines the sort order of the
-        points in the line if `config.sortLineBy` is not specified. For stacked
-        charts, this is always determined by the orientation of the stack; therefore
-        explicitly specified value will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line 
+        charts. The value is either horizontal (default) or vertical. - 
+        For bar, rule and tick, this determines whether the size of the 
+        bar and tick should be applied to x or y dimension. - For area, 
+        this property determines the orient property of the Vega output.
+         - For line, this property determines the sort order of the 
+        points in the line if `config.sortLineBy` is not specified. For 
+        stacked charts, this is always determined by the orientation of 
+        the stack; therefore explicitly specified value will be ignored.
     radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the `x` and `y` properties.
+        Polar coordinate radial offset, in pixels, of the text label 
+        from the origin determined by the `x` and `y` properties.
     shape : string
-        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom
-        SVG path.  __Default value:__ `"circle"`
+        The default symbol shape to use. One of: `"circle"` (default), 
+        `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or a custom SVG path.  __Default value:__ 
+        `"circle"`
     size : float
-        The pixel area each the point/circle/square. For example: in the case of
-        circles, the radius is determined in part by the square root of the size
-        value.  __Default value:__ `30`
+        The pixel area each the point/circle/square. For example: in the
+         case of circles, the radius is determined in part by the square
+         root of the size value.  __Default value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color
-        __Default value:__ (None)
+        Default Stroke Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+        The stroke opacity (value between [0,1]).  __Default value:__ 
+        `1`
     strokeWidth : float
         The stroke width, in pixels.
     tension : float
-        Depending on the interpolation type, sets the tension parameter (for line
-        and area marks).
+        Depending on the interpolation type, sets the tension parameter 
+        (for line and area marks).
     text : string
         Placeholder text if the `text` channel is not specified
     theta : float
-        Polar coordinate angle, in radians, of the text label from the origin
-        determined by the `x` and `y` properties. Values for `theta` follow the same
-        convention of `arc` mark `startAngle` and `endAngle` properties: angles are
-        measured in radians, with `0` indicating "north".
+        Polar coordinate angle, in radians, of the text label from the 
+        origin determined by the `x` and `y` properties. Values for 
+        `theta` follow the same convention of `arc` mark `startAngle` 
+        and `endAngle` properties: angles are measured in radians, with 
+        `0` indicating "north".
     """
     _schema = {'$ref': '#/definitions/BarConfig'}
     _rootschema = Root._schema
@@ -636,7 +666,6 @@ class BarConfig(SchemaBase):
                                         strokeOpacity=strokeOpacity,
                                         strokeWidth=strokeWidth, tension=tension,
                                         text=text, theta=theta, **kwds)
-    
 
 
 class BasicType(SchemaBase):
@@ -646,39 +675,41 @@ class BasicType(SchemaBase):
 
     def __init__(self, *args):
         super(BasicType, self).__init__(*args)
-    
 
 
 class BinParams(SchemaBase):
-    """
-    Binning properties or boolean flag for determining whether to bin data or not.
+    """BinParams schema wrapper
+    Binning properties or boolean flag for determining whether to bin data 
+    or not.
     
     Attributes
     ----------
     base : float
-        The number base to use for automatic bin determination (default is base 10).
-        __Default value:__ `10`
+        The number base to use for automatic bin determination (default 
+        is base 10).  __Default value:__ `10`
     divide : list
-        Scale factors indicating allowable subdivisions. The default value is [5,
-        2], which indicates that for base 10 numbers (the default base), the method
-        may consider dividing bin sizes by 5 and/or 2. For example, for an initial
-        step size of 10, the method can check if bin sizes of 2 (= 10/5), 5 (=
-        10/2), or 1 (= 10/(5*2)) might also satisfy the given constraints.
-        __Default value:__ `[5, 2]`
+        Scale factors indicating allowable subdivisions. The default 
+        value is [5, 2], which indicates that for base 10 numbers (the 
+        default base), the method may consider dividing bin sizes by 5 
+        and/or 2. For example, for an initial step size of 10, the 
+        method can check if bin sizes of 2 (= 10/5), 5 (= 10/2), or 1 (=
+         10/(5*2)) might also satisfy the given constraints.  __Default 
+        value:__ `[5, 2]`
     extent : list
-        A two-element (`[min, max]`) array indicating the range of desired bin
-        values.
+        A two-element (`[min, max]`) array indicating the range of 
+        desired bin values.
     maxbins : float
-        Maximum number of bins.  __Default value:__ `6` for `row`, `column` and
-        `shape` channels; `10` for other channels
+        Maximum number of bins.  __Default value:__ `6` for `row`, 
+        `column` and `shape` channels; `10` for other channels
     minstep : float
-        A minimum allowable step size (particularly useful for integer values).
+        A minimum allowable step size (particularly useful for integer 
+        values).
     nice : boolean
-        If true (the default), attempts to make the bin boundaries use
+        If true (the default), attempts to make the bin boundaries use 
         human-friendly boundaries, such as multiples of ten.
     step : float
-        An exact step size to use between bins.  __Note:__ If provided, options such
-        as maxbins will be ignored.
+        An exact step size to use between bins.  __Note:__ If provided, 
+        options such as maxbins will be ignored.
     steps : list
         An array of allowable step sizes to choose from.
     """
@@ -691,7 +722,6 @@ class BinParams(SchemaBase):
         super(BinParams, self).__init__(base=base, divide=divide, extent=extent,
                                         maxbins=maxbins, minstep=minstep, nice=nice,
                                         step=step, steps=steps, **kwds)
-    
 
 
 class BinTransform(SchemaBase):
@@ -700,10 +730,11 @@ class BinTransform(SchemaBase):
     Attributes
     ----------
     as : string
-        The output fields at which to write the start and end bin values.
+        The output fields at which to write the start and end bin 
+        values.
     bin : anyOf(boolean, BinParams)
-        An object indicating bin properties, or simply `true` for using default bin
-        parameters.
+        An object indicating bin properties, or simply `true` for using 
+        default bin parameters.
     field : string
         The data field to bin.
     """
@@ -712,7 +743,6 @@ class BinTransform(SchemaBase):
 
     def __init__(self, bin=Undefined, field=Undefined, **kwds):
         super(BinTransform, self).__init__(bin=bin, field=field, **kwds)
-    
 
 
 class BrushConfig(SchemaBase):
@@ -721,19 +751,23 @@ class BrushConfig(SchemaBase):
     Attributes
     ----------
     fill : string
-        The fill color of the interval mark.  __Default value:__ `#333333`
+        The fill color of the interval mark.  __Default value:__ 
+        `#333333`
     fillOpacity : float
-        The fill opacity of the interval mark (a value between 0 and 1).  __Default
-        value:__ `0.125`
+        The fill opacity of the interval mark (a value between 0 and 1).
+          __Default value:__ `0.125`
     stroke : string
-        The stroke color of the interval mark.  __Default value:__ `#ffffff`
+        The stroke color of the interval mark.  __Default value:__ 
+        `#ffffff`
     strokeDash : list
-        An array of alternating stroke and space lengths, for creating dashed or
-        dotted lines.
+        An array of alternating stroke and space lengths, for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) with which to begin drawing the stroke dash array.
+        The offset (in pixels) with which to begin drawing the stroke 
+        dash array.
     strokeOpacity : float
-        The stroke opacity of the interval mark (a value between 0 and 1).
+        The stroke opacity of the interval mark (a value between 0 and 
+        1).
     strokeWidth : float
         The stroke width of the interval mark.
     """
@@ -748,7 +782,6 @@ class BrushConfig(SchemaBase):
                                           strokeDashOffset=strokeDashOffset,
                                           strokeOpacity=strokeOpacity,
                                           strokeWidth=strokeWidth, **kwds)
-    
 
 
 class CalculateTransform(SchemaBase):
@@ -759,15 +792,16 @@ class CalculateTransform(SchemaBase):
     as : string
         The field for storing the computed formula value.
     calculate : string
-        A [expression](https://vega.github.io/vega-lite/docs/types.html#expression)
-        string. Use the variable `datum` to refer to the current data object.
+        A 
+        [expression](https://vega.github.io/vega-lite/docs/types.html#expression)
+         string. Use the variable `datum` to refer to the current data 
+        object.
     """
     _schema = {'$ref': '#/definitions/CalculateTransform'}
     _rootschema = Root._schema
 
     def __init__(self, calculate=Undefined, **kwds):
         super(CalculateTransform, self).__init__(calculate=calculate, **kwds)
-    
 
 
 class CompositeUnitSpec(SchemaBase):
@@ -780,68 +814,79 @@ class CompositeUnitSpec(SchemaBase):
     description : string
         Description of this mark for commenting purpose.
     encoding : Encoding
-        A key-value mapping between encoding channels and definition of fields.
+        A key-value mapping between encoding channels and definition of 
+        fields.
     height : float
         The height of a visualization.  __Default value:__ - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its y-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        height will be the value of
+         
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the height will be the value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For y-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the height is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the height is [determined by
+         the range step, paddings, and the cardinality of the field 
+        mapped to 
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the height will be the value of
+         Otherwise, if the `rangeStep` is `null`, the height will be the
+         value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `y` channel, the `height` will be the value of
-        `rangeStep`.  __Note__: For plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the height of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         - If no field is mapped to `y` channel, the `height` will be 
+        the value of `rangeStep`.  __Note__: For plots with [`row` and 
+        `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the height of a single view.  __See also:__ The
+         documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
-        `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
         object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
-        An object defining properties of geographic projection.  Works with
-        `"geoshape"` marks and `"point"` or `"line"` marks that have a channel (one
-        or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or
-        `"longitude"`.
+        An object defining properties of geographic projection.  Works 
+        with `"geoshape"` marks and `"point"` or `"line"` marks that 
+        have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
+        with type `"latitude"`, or `"longitude"`.
     selection : mapping
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     width : float
-        The width of a visualization.  __Default value:__ This will be determined by
-        the following rules:  - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its x-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        width will be the value of
+        The width of a visualization.  __Default value:__ This will be 
+        determined by the following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the width will be the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For x-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the width is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the width is [determined by 
+        the range step, paddings, and the cardinality of the field 
+        mapped to 
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the width will be the value of
+           Otherwise, if the `rangeStep` is `null`, the width will be 
+        the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `x` channel, the `width` will be the value of
+         - If no field is mapped to `x` channel, the `width` will be the
+         value of 
         [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
-        plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the width of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         for `text` mark and the value of `rangeStep` for other marks.  
+        __Note:__ For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the width of a single view.  __See also:__ The 
+        documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     """
     _schema = {'$ref': '#/definitions/CompositeUnitSpec'}
     _rootschema = Root._schema
@@ -857,7 +902,6 @@ class CompositeUnitSpec(SchemaBase):
                                                 selection=selection, title=title,
                                                 transform=transform, width=width,
                                                 **kwds)
-    
 
 
 class ConditionalFieldDef(SchemaBase):
@@ -867,7 +911,6 @@ class ConditionalFieldDef(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(ConditionalFieldDef, self).__init__(*args, **kwds)
-    
 
 
 class ConditionalMarkPropFieldDef(SchemaBase):
@@ -877,7 +920,6 @@ class ConditionalMarkPropFieldDef(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(ConditionalMarkPropFieldDef, self).__init__(*args, **kwds)
-    
 
 
 class ConditionalTextFieldDef(SchemaBase):
@@ -887,7 +929,6 @@ class ConditionalTextFieldDef(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(ConditionalTextFieldDef, self).__init__(*args, **kwds)
-    
 
 
 class ConditionalValueDef(SchemaBase):
@@ -897,7 +938,6 @@ class ConditionalValueDef(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDef, self).__init__(*args, **kwds)
-    
 
 
 class ConditionalPredicateFieldDef(SchemaBase):
@@ -906,37 +946,43 @@ class ConditionalPredicateFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     test : LogicalOperand<Predicate>
+    
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<FieldDef>'}
     _rootschema = Root._schema
@@ -947,7 +993,6 @@ class ConditionalPredicateFieldDef(SchemaBase):
                                                            aggregate=aggregate,
                                                            bin=bin, field=field,
                                                            timeUnit=timeUnit, **kwds)
-    
 
 
 class ConditionalPredicateMarkPropFieldDef(SchemaBase):
@@ -956,54 +1001,64 @@ class ConditionalPredicateMarkPropFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If `null`, the legend for the
-        encoding channel will be removed.  __Default value:__ If undefined, default
-        [legend properties](https://vega.github.io/vega-lite/docs/legend.html) are
-        applied.
+        An object defining properties of the legend. If `null`, the 
+        legend for the encoding channel will be removed.  __Default 
+        value:__ If undefined, default [legend 
+        properties](https://vega.github.io/vega-lite/docs/legend.html) 
+        are applied.
     scale : Scale
-        An object defining properties of the channel's scale, which is the function
-        that transforms values in the data domain (numbers, dates, strings, etc) to
-        visual values (pixels, colors, sizes) of the encoding channels.  __Default
-        value:__ If undefined, default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
+        An object defining properties of the channel's scale, which is 
+        the function that transforms values in the data domain (numbers,
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
+        are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values include
-        `"ascending"`, `"descending"` and `null` (no sorting). For fields with
-        discrete domains, `sort` can also be a [sort field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
-        __Default value:__ `"ascending"`
+          __Default value:__ `"ascending"`
     test : LogicalOperand<Predicate>
+    
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef>'}
     _rootschema = Root._schema
@@ -1021,7 +1076,6 @@ class ConditionalPredicateMarkPropFieldDef(SchemaBase):
                                                                    sort=sort,
                                                                    timeUnit=timeUnit,
                                                                    **kwds)
-    
 
 
 class ConditionalPredicateTextFieldDef(SchemaBase):
@@ -1030,40 +1084,48 @@ class ConditionalPredicateTextFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     format : string
-        The [formatting pattern](https://vega.github.io/vega-lite/docs/format.html)
-        for a text field. If not defined, this will be determined automatically.
+        The [formatting 
+        pattern](https://vega.github.io/vega-lite/docs/format.html) for 
+        a text field. If not defined, this will be determined 
+        automatically.
     test : LogicalOperand<Predicate>
+    
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<TextFieldDef>'}
     _rootschema = Root._schema
@@ -1077,7 +1139,6 @@ class ConditionalPredicateTextFieldDef(SchemaBase):
                                                                format=format,
                                                                timeUnit=timeUnit,
                                                                **kwds)
-    
 
 
 class ConditionalPredicateValueDef(SchemaBase):
@@ -1086,9 +1147,10 @@ class ConditionalPredicateValueDef(SchemaBase):
     Attributes
     ----------
     test : LogicalOperand<Predicate>
+    
     value : anyOf(float, string, boolean)
-        A constant value in visual domain (e.g., `"red"` / "#0099ff" for color,
-        values between `0` to `1` for opacity).
+        A constant value in visual domain (e.g., `"red"` / "#0099ff" for
+         color, values between `0` to `1` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef>'}
     _rootschema = Root._schema
@@ -1096,7 +1158,6 @@ class ConditionalPredicateValueDef(SchemaBase):
     def __init__(self, test=Undefined, value=Undefined, **kwds):
         super(ConditionalPredicateValueDef, self).__init__(test=test, value=value,
                                                            **kwds)
-    
 
 
 class ConditionalSelectionFieldDef(SchemaBase):
@@ -1105,40 +1166,46 @@ class ConditionalSelectionFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     selection : SelectionOperand
-        A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed
+        A [selection 
+        name](https://vega.github.io/vega-lite/docs/selection.html), or 
+        a series of [composed 
         selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<FieldDef>'}
     _rootschema = Root._schema
@@ -1150,7 +1217,6 @@ class ConditionalSelectionFieldDef(SchemaBase):
                                                            aggregate=aggregate,
                                                            bin=bin, field=field,
                                                            timeUnit=timeUnit, **kwds)
-    
 
 
 class ConditionalSelectionMarkPropFieldDef(SchemaBase):
@@ -1159,57 +1225,67 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If `null`, the legend for the
-        encoding channel will be removed.  __Default value:__ If undefined, default
-        [legend properties](https://vega.github.io/vega-lite/docs/legend.html) are
-        applied.
+        An object defining properties of the legend. If `null`, the 
+        legend for the encoding channel will be removed.  __Default 
+        value:__ If undefined, default [legend 
+        properties](https://vega.github.io/vega-lite/docs/legend.html) 
+        are applied.
     scale : Scale
-        An object defining properties of the channel's scale, which is the function
-        that transforms values in the data domain (numbers, dates, strings, etc) to
-        visual values (pixels, colors, sizes) of the encoding channels.  __Default
-        value:__ If undefined, default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
+        An object defining properties of the channel's scale, which is 
+        the function that transforms values in the data domain (numbers,
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
+        are applied.
     selection : SelectionOperand
-        A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed
+        A [selection 
+        name](https://vega.github.io/vega-lite/docs/selection.html), or 
+        a series of [composed 
         selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values include
-        `"ascending"`, `"descending"` and `null` (no sorting). For fields with
-        discrete domains, `sort` can also be a [sort field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
-        __Default value:__ `"ascending"`
+          __Default value:__ `"ascending"`
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef>'}
     _rootschema = Root._schema
@@ -1227,7 +1303,6 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
                                                                    sort=sort,
                                                                    timeUnit=timeUnit,
                                                                    **kwds)
-    
 
 
 class ConditionalSelectionTextFieldDef(SchemaBase):
@@ -1236,43 +1311,51 @@ class ConditionalSelectionTextFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     format : string
-        The [formatting pattern](https://vega.github.io/vega-lite/docs/format.html)
-        for a text field. If not defined, this will be determined automatically.
+        The [formatting 
+        pattern](https://vega.github.io/vega-lite/docs/format.html) for 
+        a text field. If not defined, this will be determined 
+        automatically.
     selection : SelectionOperand
-        A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed
+        A [selection 
+        name](https://vega.github.io/vega-lite/docs/selection.html), or 
+        a series of [composed 
         selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<TextFieldDef>'}
     _rootschema = Root._schema
@@ -1287,7 +1370,6 @@ class ConditionalSelectionTextFieldDef(SchemaBase):
                                                                format=format,
                                                                timeUnit=timeUnit,
                                                                **kwds)
-    
 
 
 class ConditionalSelectionValueDef(SchemaBase):
@@ -1296,12 +1378,13 @@ class ConditionalSelectionValueDef(SchemaBase):
     Attributes
     ----------
     selection : SelectionOperand
-        A [selection name](https://vega.github.io/vega-lite/docs/selection.html), or
-        a series of [composed
+        A [selection 
+        name](https://vega.github.io/vega-lite/docs/selection.html), or 
+        a series of [composed 
         selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     value : anyOf(float, string, boolean)
-        A constant value in visual domain (e.g., `"red"` / "#0099ff" for color,
-        values between `0` to `1` for opacity).
+        A constant value in visual domain (e.g., `"red"` / "#0099ff" for
+         color, values between `0` to `1` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<ValueDef>'}
     _rootschema = Root._schema
@@ -1309,7 +1392,6 @@ class ConditionalSelectionValueDef(SchemaBase):
     def __init__(self, selection=Undefined, value=Undefined, **kwds):
         super(ConditionalSelectionValueDef, self).__init__(selection=selection,
                                                            value=value, **kwds)
-    
 
 
 class Config(SchemaBase):
@@ -1318,25 +1400,30 @@ class Config(SchemaBase):
     Attributes
     ----------
     area : MarkConfig
-        Area-Specific Config
+        Area-Specific Config 
     autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be
-        one of `"pad"`, `"fit"` or `"none"`. Object values can additionally specify
-        parameters for content sizing and automatic resizing. `"fit"` is only
-        supported for single and layered views that don't use `rangeStep`.
-        __Default value__: `pad`
+        Sets how the visualization size should be determined. If a 
+        string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
+        values can additionally specify parameters for content sizing 
+        and automatic resizing. `"fit"` is only supported for single and
+         layered views that don't use `rangeStep`.  __Default value__: 
+        `pad`
     axis : AxisConfig
-        Axis configuration, which determines default properties for all `x` and `y`
-        [axes](axis.html). For a full list of axis configuration options, please see
-        the [corresponding section of the axis documentation](axis.html#config).
+        Axis configuration, which determines default properties for all 
+        `x` and `y` [axes](axis.html). For a full list of axis 
+        configuration options, please see the [corresponding section of 
+        the axis documentation](axis.html#config).
     axisBand : VgAxisConfig
         Specific axis config for axes with "band" scales.
     axisBottom : VgAxisConfig
-        Specific axis config for x-axis along the bottom edge of the chart.
+        Specific axis config for x-axis along the bottom edge of the 
+        chart.
     axisLeft : VgAxisConfig
-        Specific axis config for y-axis along the left edge of the chart.
+        Specific axis config for y-axis along the left edge of the 
+        chart.
     axisRight : VgAxisConfig
-        Specific axis config for y-axis along the right edge of the chart.
+        Specific axis config for y-axis along the right edge of the 
+        chart.
     axisTop : VgAxisConfig
         Specific axis config for x-axis along the top edge of the chart.
     axisX : VgAxisConfig
@@ -1344,95 +1431,104 @@ class Config(SchemaBase):
     axisY : VgAxisConfig
         Y-axis specific config.
     background : string
-        CSS color property to use as the background of visualization.  __Default
-        value:__ none (transparent)
+        CSS color property to use as the background of visualization.  
+        __Default value:__ none (transparent)
     bar : BarConfig
-        Bar-Specific Config
+        Bar-Specific Config 
     circle : MarkConfig
-        Circle-Specific Config
+        Circle-Specific Config 
     countTitle : string
-        Default axis and legend title for count fields.  __Default value:__ `'Number
-        of Records'`.
+        Default axis and legend title for count fields.  __Default 
+        value:__ `'Number of Records'`.
     fieldTitle : string
-        Defines how Vega-Lite generates title for fields.  There are three possible
-        styles: - `"verbal"` (Default) - displays function in a verbal style (e.g.,
-        "Sum of field", "Year-month of date", "field (binned)"). - `"function"` -
-        displays function using parentheses and capitalized texts (e.g.,
-        "SUM(field)", "YEARMONTH(date)", "BIN(field)"). - `"plain"` - displays only
-        the field name without functions (e.g., "field", "date", "field").
+        Defines how Vega-Lite generates title for fields.  There are 
+        three possible styles: - `"verbal"` (Default) - displays 
+        function in a verbal style (e.g., "Sum of field", "Year-month of
+         date", "field (binned)"). - `"function"` - displays function 
+        using parentheses and capitalized texts (e.g., "SUM(field)", 
+        "YEARMONTH(date)", "BIN(field)"). - `"plain"` - displays only 
+        the field name without functions (e.g., "field", "date", 
+        "field").
     geoshape : MarkConfig
-        Geoshape-Specific Config
+        Geoshape-Specific Config 
     invalidValues : anyOf(string, None)
-        Defines how Vega-Lite should handle invalid values (`null` and `NaN`). - If
-        set to `"filter"` (default), all data items with null values are filtered. -
-        If `null`, all data items are included. In this case, invalid values will be
-        interpreted as zeroes.
+        Defines how Vega-Lite should handle invalid values (`null` and 
+        `NaN`). - If set to `"filter"` (default), all data items with 
+        null values are filtered. - If `null`, all data items are 
+        included. In this case, invalid values will be interpreted as 
+        zeroes.
     legend : LegendConfig
-        Legend configuration, which determines default properties for all
-        [legends](legend.html). For a full list of legend configuration options,
-        please see the [corresponding section of in the legend
-        documentation](legend.html#config).
+        Legend configuration, which determines default properties for 
+        all [legends](legend.html). For a full list of legend 
+        configuration options, please see the [corresponding section of 
+        in the legend documentation](legend.html#config).
     line : MarkConfig
-        Line-Specific Config
+        Line-Specific Config 
     mark : MarkConfig
-        Mark Config
+        Mark Config 
     numberFormat : string
-        D3 Number format for axis labels and text tables. For example "s" for SI
-        units. Use [D3's number format
+        D3 Number format for axis labels and text tables. For example 
+        "s" for SI units. Use [D3's number format 
         pattern](https://github.com/d3/d3-format#locale_format).
     padding : Padding
-        The default visualization padding, in pixels, from the edge of the
-        visualization canvas to the data rectangle.  If a number, specifies padding
-        for all sides. If an object, the value should have the format `{"left": 5,
-        "top": 5, "right": 5, "bottom": 5}` to specify padding for each side of the
-        visualization.  __Default value__: `5`
+        The default visualization padding, in pixels, from the edge of 
+        the visualization canvas to the data rectangle.  If a number, 
+        specifies padding for all sides. If an object, the value should 
+        have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
+         to specify padding for each side of the visualization.  
+        __Default value__: `5`
     point : MarkConfig
-        Point-Specific Config
+        Point-Specific Config 
     projection : ProjectionConfig
-        Projection configuration, which determines default properties for all
-        [projections](projection.html). For a full list of projection configuration
-        options, please see the [corresponding section of the projection
+        Projection configuration, which determines default properties 
+        for all [projections](projection.html). For a full list of 
+        projection configuration options, please see the [corresponding 
+        section of the projection 
         documentation](projection.html#config).
     range : RangeConfig
-        An object hash that defines default range arrays or schemes for using with
-        scales. For a full list of scale range configuration options, please see the
-        [corresponding section of the scale documentation](scale.html#config).
+        An object hash that defines default range arrays or schemes for 
+        using with scales. For a full list of scale range configuration 
+        options, please see the [corresponding section of the scale 
+        documentation](scale.html#config).
     rect : MarkConfig
-        Rect-Specific Config
+        Rect-Specific Config 
     rule : MarkConfig
-        Rule-Specific Config
+        Rule-Specific Config 
     scale : ScaleConfig
-        Scale configuration determines default properties for all
-        [scales](scale.html). For a full list of scale configuration options, please
-        see the [corresponding section of the scale
+        Scale configuration determines default properties for all 
+        [scales](scale.html). For a full list of scale configuration 
+        options, please see the [corresponding section of the scale 
         documentation](scale.html#config).
     selection : SelectionConfig
-        An object hash for defining default properties for each type of selections.
+        An object hash for defining default properties for each type of 
+        selections. 
     square : MarkConfig
-        Square-Specific Config
+        Square-Specific Config 
     stack : StackOffset
-        Default stack offset for stackable mark.
+        Default stack offset for stackable mark. 
     style : StyleConfigIndex
-        An object hash that defines key-value mappings to determine default
-        properties for marks with a given [style](mark.html#mark-def).  The keys
-        represent styles names; the value are valid [mark configuration
-        objects](mark.html#config).
+        An object hash that defines key-value mappings to determine 
+        default properties for marks with a given 
+        [style](mark.html#mark-def).  The keys represent styles names; 
+        the value are valid [mark configuration 
+        objects](mark.html#config).  
     text : TextConfig
-        Text-Specific Config
+        Text-Specific Config 
     tick : TickConfig
-        Tick-Specific Config
+        Tick-Specific Config 
     timeFormat : string
-        Default datetime format for axis and legend labels. The format can be set
-        directly on each axis and legend. Use [D3's time format
-        pattern](https://github.com/d3/d3-time-format#locale_format).  __Default
-        value:__ `'%b %d, %Y'`.
+        Default datetime format for axis and legend labels. The format 
+        can be set directly on each axis and legend. Use [D3's time 
+        format 
+        pattern](https://github.com/d3/d3-time-format#locale_format).  
+        __Default value:__ `'%b %d, %Y'`.
     title : VgTitleConfig
         Title configuration, which determines default properties for all
-        [titles](title.html). For a full list of title configuration options, please
-        see the [corresponding section of the title
+         [titles](title.html). For a full list of title configuration 
+        options, please see the [corresponding section of the title 
         documentation](title.html#config).
     view : ViewConfig
-        Default properties for [single view plots](spec.html#single).
+        Default properties for [single view plots](spec.html#single). 
     """
     _schema = {'$ref': '#/definitions/Config'}
     _rootschema = Root._schema
@@ -1464,7 +1560,6 @@ class Config(SchemaBase):
                                      stack=stack, style=style, text=text, tick=tick,
                                      timeFormat=timeFormat, title=title, view=view,
                                      **kwds)
-    
 
 
 class CsvDataFormat(SchemaBase):
@@ -1473,30 +1568,30 @@ class CsvDataFormat(SchemaBase):
     Attributes
     ----------
     parse : anyOf(string, mapping)
-        If set to auto (the default), perform automatic type inference to determine
-        the desired data types. Alternatively, a parsing directive object can be
-        provided for explicit data types. Each property of the object corresponds to
-        a field name, and the value to the desired data type (one of `"number"`,
-        `"boolean"` or `"date"`). For example, `"parse": {"modified_on": "date"}`
-        parses the `modified_on` field in each input record a Date value.  For
-        `"date"`, we parse data based using Javascript's
+        If set to auto (the default), perform automatic type inference 
+        to determine the desired data types. Alternatively, a parsing 
+        directive object can be provided for explicit data types. Each 
+        property of the object corresponds to a field name, and the 
+        value to the desired data type (one of `"number"`, `"boolean"` 
+        or `"date"`). For example, `"parse": {"modified_on": "date"}` 
+        parses the `modified_on` field in each input record a Date 
+        value.  For `"date"`, we parse data based using Javascript's 
         [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).
-        For Specific date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`),
-        using the [d3-time-format
-        syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format
-        parsing is supported similarly (e.g., `{foo: 'utc:"%m%d%Y"'}`). See more
-        about [UTC time](timeunit.html#utc)
+         For Specific date formats can be provided (e.g., `{foo: 
+        'date:"%m%d%Y"'}`), using the [d3-time-format 
+        syntax](https://github.com/d3/d3-time-format#locale_format). UTC
+         date format parsing is supported similarly (e.g., `{foo: 
+        'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
     type : string
-        Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
-        determined by the extension of the file URL. If no extension is detected,
-        `"json"` will be used by default.
+        Type of input data: `"json"`, `"csv"`, `"tsv"`. The default 
+        format type is determined by the extension of the file URL. If 
+        no extension is detected, `"json"` will be used by default.
     """
     _schema = {'$ref': '#/definitions/CsvDataFormat'}
     _rootschema = Root._schema
 
     def __init__(self, parse=Undefined, type=Undefined, **kwds):
         super(CsvDataFormat, self).__init__(parse=parse, type=type, **kwds)
-    
 
 
 class Data(SchemaBase):
@@ -1506,7 +1601,6 @@ class Data(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Data, self).__init__(*args, **kwds)
-    
 
 
 class DataFormat(SchemaBase):
@@ -1516,11 +1610,10 @@ class DataFormat(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(DataFormat, self).__init__(*args, **kwds)
-    
 
 
 class DateTime(SchemaBase):
-    """
+    """DateTime schema wrapper
     Object for defining datetime in Vega-Lite Filter.
     If both month and quarter are provided, month has higher precedence.
     `day` cannot be combined with other date.
@@ -1531,11 +1624,12 @@ class DateTime(SchemaBase):
     date : float
         Integer value representing the date from 1-31.
     day : anyOf(Day, string)
-        Value representing the day of a week.  This can be one of: (1) integer value
-        -- `1` represents Monday; (2) case-insensitive day name (e.g., `"Monday"`);
-        (3) case-insensitive, 3-character short day name (e.g., `"Mon"`).   <br/>
-        **Warning:** A DateTime definition object with `day`** should not be
-        combined with `year`, `quarter`, `month`, or `date`.
+        Value representing the day of a week.  This can be one of: (1) 
+        integer value -- `1` represents Monday; (2) case-insensitive day
+         name (e.g., `"Monday"`);  (3) case-insensitive, 3-character 
+        short day name (e.g., `"Mon"`).   <br/> **Warning:** A DateTime 
+        definition object with `day`** should not be combined with 
+        `year`, `quarter`, `month`, or `date`.
     hours : float
         Integer value representing the hour of a day from 0-23.
     milliseconds : float
@@ -1543,16 +1637,18 @@ class DateTime(SchemaBase):
     minutes : float
         Integer value representing the minute segment of time from 0-59.
     month : anyOf(Month, string)
-        One of: (1) integer value representing the month from `1`-`12`. `1`
-        represents January;  (2) case-insensitive month name (e.g., `"January"`);
-        (3) case-insensitive, 3-character short month name (e.g., `"Jan"`).
+        One of: (1) integer value representing the month from `1`-`12`. 
+        `1` represents January;  (2) case-insensitive month name (e.g., 
+        `"January"`);  (3) case-insensitive, 3-character short month 
+        name (e.g., `"Jan"`). 
     quarter : float
         Integer value representing the quarter of the year (from 1-4).
     seconds : float
-        Integer value representing the second segment (0-59) of a time value
+        Integer value representing the second segment (0-59) of a time 
+        value
     utc : boolean
-        A boolean flag indicating if date time is in utc time. If false, the date
-        time is in local time
+        A boolean flag indicating if date time is in utc time. If false,
+         the date time is in local time
     year : float
         Integer value representing the year.
     """
@@ -1567,7 +1663,6 @@ class DateTime(SchemaBase):
                                        milliseconds=milliseconds, minutes=minutes,
                                        month=month, quarter=quarter,
                                        seconds=seconds, utc=utc, year=year, **kwds)
-    
 
 
 class Day(SchemaBase):
@@ -1577,7 +1672,6 @@ class Day(SchemaBase):
 
     def __init__(self, *args):
         super(Day, self).__init__(*args)
-    
 
 
 class Encoding(SchemaBase):
@@ -1585,50 +1679,63 @@ class Encoding(SchemaBase):
     
     Attributes
     ----------
-    color : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Color of the marks – either fill or stroke color based on mark type. By
-        default, `color` represents fill color for `"area"`, `"bar"`, `"tick"`,
-        `"text"`, `"circle"`, and `"square"` / stroke color for `"line"` and
-        `"point"`.  __Default value:__ If undefined, the default color depends on
-        [mark config](config.html#mark)'s `color` property.  _Note:_ See the scale
-        documentation for more information about customizing [color
-        scheme](scale.html#scheme).
+    color : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        Color of the marks – either fill or stroke color based on mark 
+        type. By default, `color` represents fill color for `"area"`, 
+        `"bar"`, `"tick"`, `"text"`, `"circle"`, and `"square"` / stroke
+         color for `"line"` and `"point"`.  __Default value:__ If 
+        undefined, the default color depends on [mark 
+        config](config.html#mark)'s `color` property.  _Note:_ See the 
+        scale documentation for more information about customizing 
+        [color scheme](scale.html#scheme).
     detail : anyOf(FieldDef, list)
-        Additional levels of detail for grouping data in aggregate views and in line
-        and area marks without mapping data to a specific visual channel.
+        Additional levels of detail for grouping data in aggregate views
+         and in line and area marks without mapping data to a specific 
+        visual channel.
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
-    opacity : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Opacity of the marks – either can be a value or a range.  __Default value:__
-        If undefined, the default opacity depends on [mark
-        config](config.html#mark)'s `opacity` property.
+    opacity : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        Opacity of the marks – either can be a value or a range.  
+        __Default value:__ If undefined, the default opacity depends on 
+        [mark config](config.html#mark)'s `opacity` property.
     order : anyOf(OrderFieldDef, list)
-        Stack order for stacked marks or order of data points in line marks for
-        connected scatter plots.  __Note__: In aggregate plots, `order` field should
-        be `aggregate`d to avoid creating additional aggregation grouping.
-    shape : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        For `point` marks the supported values are `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or else a
-        custom SVG path string. For `geoshape` marks it should be a field definition
-        of the geojson data  __Default value:__ If undefined, the default shape
-        depends on [mark config](config.html#point-config)'s `shape` property.
-    size : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Size of the mark. - For `"point"`, `"square"` and `"circle"`, – the symbol
-        size, or pixel area of the mark. - For `"bar"` and `"tick"` – the bar and
-        tick's size. - For `"text"` – the text's font size. - Size is currently
-        unsupported for `"line"`, `"area"`, and `"rect"`.
+        Stack order for stacked marks or order of data points in line 
+        marks for connected scatter plots.  __Note__: In aggregate 
+        plots, `order` field should be `aggregate`d to avoid creating 
+        additional aggregation grouping.
+    shape : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        For `point` marks the supported values are `"circle"` (default),
+         `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or else a custom SVG path string. For 
+        `geoshape` marks it should be a field definition of the geojson 
+        data  __Default value:__ If undefined, the default shape depends
+         on [mark config](config.html#point-config)'s `shape` property.
+    size : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        Size of the mark. - For `"point"`, `"square"` and `"circle"`, – 
+        the symbol size, or pixel area of the mark. - For `"bar"` and 
+        `"tick"` – the bar and tick's size. - For `"text"` – the text's 
+        font size. - Size is currently unsupported for `"line"`, 
+        `"area"`, and `"rect"`.
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the `text` mark.
     tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         The tooltip text to show upon mouse hover.
     x : anyOf(PositionFieldDef, ValueDef)
-        X coordinates of the marks, or width of horizontal `"bar"` and `"area"`.
+        X coordinates of the marks, or width of horizontal `"bar"` and 
+        `"area"`.
     x2 : anyOf(FieldDef, ValueDef)
-        X2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        X2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  
+        `"rule"`.
     y : anyOf(PositionFieldDef, ValueDef)
-        Y coordinates of the marks, or height of vertical `"bar"` and `"area"`.
+        Y coordinates of the marks, or height of vertical `"bar"` and 
+        `"area"`.
     y2 : anyOf(FieldDef, ValueDef)
-        Y2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        Y2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  
+        `"rule"`.
     """
     _schema = {'$ref': '#/definitions/Encoding'}
     _rootschema = Root._schema
@@ -1641,7 +1748,6 @@ class Encoding(SchemaBase):
                                        opacity=opacity, order=order, shape=shape,
                                        size=size, text=text, tooltip=tooltip, x=x,
                                        x2=x2, y=y, y2=y2, **kwds)
-    
 
 
 class EncodingWithFacet(SchemaBase):
@@ -1649,54 +1755,67 @@ class EncodingWithFacet(SchemaBase):
     
     Attributes
     ----------
-    color : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Color of the marks – either fill or stroke color based on mark type. By
-        default, `color` represents fill color for `"area"`, `"bar"`, `"tick"`,
-        `"text"`, `"circle"`, and `"square"` / stroke color for `"line"` and
-        `"point"`.  __Default value:__ If undefined, the default color depends on
-        [mark config](config.html#mark)'s `color` property.  _Note:_ See the scale
-        documentation for more information about customizing [color
-        scheme](scale.html#scheme).
+    color : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        Color of the marks – either fill or stroke color based on mark 
+        type. By default, `color` represents fill color for `"area"`, 
+        `"bar"`, `"tick"`, `"text"`, `"circle"`, and `"square"` / stroke
+         color for `"line"` and `"point"`.  __Default value:__ If 
+        undefined, the default color depends on [mark 
+        config](config.html#mark)'s `color` property.  _Note:_ See the 
+        scale documentation for more information about customizing 
+        [color scheme](scale.html#scheme).
     column : FacetFieldDef
         Horizontal facets for trellis plots.
     detail : anyOf(FieldDef, list)
-        Additional levels of detail for grouping data in aggregate views and in line
-        and area marks without mapping data to a specific visual channel.
+        Additional levels of detail for grouping data in aggregate views
+         and in line and area marks without mapping data to a specific 
+        visual channel.
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
-    opacity : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Opacity of the marks – either can be a value or a range.  __Default value:__
-        If undefined, the default opacity depends on [mark
-        config](config.html#mark)'s `opacity` property.
+    opacity : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        Opacity of the marks – either can be a value or a range.  
+        __Default value:__ If undefined, the default opacity depends on 
+        [mark config](config.html#mark)'s `opacity` property.
     order : anyOf(OrderFieldDef, list)
-        Stack order for stacked marks or order of data points in line marks for
-        connected scatter plots.  __Note__: In aggregate plots, `order` field should
-        be `aggregate`d to avoid creating additional aggregation grouping.
+        Stack order for stacked marks or order of data points in line 
+        marks for connected scatter plots.  __Note__: In aggregate 
+        plots, `order` field should be `aggregate`d to avoid creating 
+        additional aggregation grouping.
     row : FacetFieldDef
         Vertical facets for trellis plots.
-    shape : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        For `point` marks the supported values are `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or else a
-        custom SVG path string. For `geoshape` marks it should be a field definition
-        of the geojson data  __Default value:__ If undefined, the default shape
-        depends on [mark config](config.html#point-config)'s `shape` property.
-    size : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Size of the mark. - For `"point"`, `"square"` and `"circle"`, – the symbol
-        size, or pixel area of the mark. - For `"bar"` and `"tick"` – the bar and
-        tick's size. - For `"text"` – the text's font size. - Size is currently
-        unsupported for `"line"`, `"area"`, and `"rect"`.
+    shape : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        For `point` marks the supported values are `"circle"` (default),
+         `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or else a custom SVG path string. For 
+        `geoshape` marks it should be a field definition of the geojson 
+        data  __Default value:__ If undefined, the default shape depends
+         on [mark config](config.html#point-config)'s `shape` property.
+    size : anyOf(MarkPropFieldDefWithCondition, 
+    MarkPropValueDefWithCondition)
+        Size of the mark. - For `"point"`, `"square"` and `"circle"`, – 
+        the symbol size, or pixel area of the mark. - For `"bar"` and 
+        `"tick"` – the bar and tick's size. - For `"text"` – the text's 
+        font size. - Size is currently unsupported for `"line"`, 
+        `"area"`, and `"rect"`.
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the `text` mark.
     tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         The tooltip text to show upon mouse hover.
     x : anyOf(PositionFieldDef, ValueDef)
-        X coordinates of the marks, or width of horizontal `"bar"` and `"area"`.
+        X coordinates of the marks, or width of horizontal `"bar"` and 
+        `"area"`.
     x2 : anyOf(FieldDef, ValueDef)
-        X2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        X2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  
+        `"rule"`.
     y : anyOf(PositionFieldDef, ValueDef)
-        Y coordinates of the marks, or height of vertical `"bar"` and `"area"`.
+        Y coordinates of the marks, or height of vertical `"bar"` and 
+        `"area"`.
     y2 : anyOf(FieldDef, ValueDef)
-        Y2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        Y2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  
+        `"rule"`.
     """
     _schema = {'$ref': '#/definitions/EncodingWithFacet'}
     _rootschema = Root._schema
@@ -1711,7 +1830,6 @@ class EncodingWithFacet(SchemaBase):
                                                 row=row, shape=shape, size=size,
                                                 text=text, tooltip=tooltip, x=x,
                                                 x2=x2, y=y, y2=y2, **kwds)
-    
 
 
 class FacetFieldDef(SchemaBase):
@@ -1720,40 +1838,46 @@ class FacetFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     header : Header
         An object defining properties of a facet's header.
     sort : SortOrder
-        Sort order for a facet field. This can be `"ascending"`, `"descending"`.
+        Sort order for a facet field. This can be `"ascending"`, 
+        `"descending"`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/FacetFieldDef'}
     _rootschema = Root._schema
@@ -1764,7 +1888,6 @@ class FacetFieldDef(SchemaBase):
         super(FacetFieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin,
                                             field=field, header=header, sort=sort,
                                             timeUnit=timeUnit, **kwds)
-    
 
 
 class FacetMapping(SchemaBase):
@@ -1782,47 +1905,51 @@ class FacetMapping(SchemaBase):
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(FacetMapping, self).__init__(column=column, row=row, **kwds)
-    
 
 
 class FieldDef(SchemaBase):
-    """
-    Definition object for a data field, its type and transformation of an encoding 
-    channel.
+    """FieldDef schema wrapper
+    Definition object for a data field, its type and transformation of an 
+    encoding channel.
     
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/FieldDef'}
     _rootschema = Root._schema
@@ -1831,11 +1958,10 @@ class FieldDef(SchemaBase):
                  field=Undefined, timeUnit=Undefined, **kwds):
         super(FieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin,
                                        field=field, timeUnit=timeUnit, **kwds)
-    
 
 
 class FieldDefWithCondition(SchemaBase):
-    """
+    """FieldDefWithCondition schema wrapper
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1846,41 +1972,48 @@ class FieldDefWithCondition(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.  __Note:__ A
-        field definition's `condition` property can only contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-        since Vega-Lite only allows at most one encoded field per encoding channel.
+         since Vega-Lite only allows at most one encoded field per 
+        encoding channel.
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition'}
     _rootschema = Root._schema
@@ -1891,11 +2024,10 @@ class FieldDefWithCondition(SchemaBase):
                                                     bin=bin, condition=condition,
                                                     field=field, timeUnit=timeUnit,
                                                     **kwds)
-    
 
 
 class MarkPropFieldDefWithCondition(SchemaBase):
-    """
+    """MarkPropFieldDefWithCondition schema wrapper
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1906,58 +2038,69 @@ class MarkPropFieldDefWithCondition(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.  __Note:__ A
-        field definition's `condition` property can only contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-        since Vega-Lite only allows at most one encoded field per encoding channel.
+         since Vega-Lite only allows at most one encoded field per 
+        encoding channel.
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If `null`, the legend for the
-        encoding channel will be removed.  __Default value:__ If undefined, default
-        [legend properties](https://vega.github.io/vega-lite/docs/legend.html) are
-        applied.
+        An object defining properties of the legend. If `null`, the 
+        legend for the encoding channel will be removed.  __Default 
+        value:__ If undefined, default [legend 
+        properties](https://vega.github.io/vega-lite/docs/legend.html) 
+        are applied.
     scale : Scale
-        An object defining properties of the channel's scale, which is the function
-        that transforms values in the data domain (numbers, dates, strings, etc) to
-        visual values (pixels, colors, sizes) of the encoding channels.  __Default
-        value:__ If undefined, default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
+        An object defining properties of the channel's scale, which is 
+        the function that transforms values in the data domain (numbers,
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
+        are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values include
-        `"ascending"`, `"descending"` and `null` (no sorting). For fields with
-        discrete domains, `sort` can also be a [sort field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
-        __Default value:__ `"ascending"`
+          __Default value:__ `"ascending"`
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/MarkPropFieldDefWithCondition'}
     _rootschema = Root._schema
@@ -1974,11 +2117,10 @@ class MarkPropFieldDefWithCondition(SchemaBase):
                                                             scale=scale, sort=sort,
                                                             timeUnit=timeUnit,
                                                             **kwds)
-    
 
 
 class TextFieldDefWithCondition(SchemaBase):
-    """
+    """TextFieldDefWithCondition schema wrapper
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1989,44 +2131,53 @@ class TextFieldDefWithCondition(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.  __Note:__ A
-        field definition's `condition` property can only contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-        since Vega-Lite only allows at most one encoded field per encoding channel.
+         since Vega-Lite only allows at most one encoded field per 
+        encoding channel.
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     format : string
-        The [formatting pattern](https://vega.github.io/vega-lite/docs/format.html)
-        for a text field. If not defined, this will be determined automatically.
+        The [formatting 
+        pattern](https://vega.github.io/vega-lite/docs/format.html) for 
+        a text field. If not defined, this will be determined 
+        automatically.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/TextFieldDefWithCondition'}
     _rootschema = Root._schema
@@ -2040,7 +2191,6 @@ class TextFieldDefWithCondition(SchemaBase):
                                                         condition=condition,
                                                         field=field, format=format,
                                                         timeUnit=timeUnit, **kwds)
-    
 
 
 class FieldEqualPredicate(SchemaBase):
@@ -2061,7 +2211,6 @@ class FieldEqualPredicate(SchemaBase):
     def __init__(self, equal=Undefined, field=Undefined, timeUnit=Undefined, **kwds):
         super(FieldEqualPredicate, self).__init__(equal=equal, field=field,
                                                   timeUnit=timeUnit, **kwds)
-    
 
 
 class FieldOneOfPredicate(SchemaBase):
@@ -2072,8 +2221,8 @@ class FieldOneOfPredicate(SchemaBase):
     field : string
         Field to be filtered
     oneOf : anyOf(list, list, list, list)
-        A set of values that the `field`'s value should be a member of, for a data
-        item included in the filtered data.
+        A set of values that the `field`'s value should be a member of, 
+        for a data item included in the filtered data.
     timeUnit : TimeUnit
         time unit for the field to be filtered.
     """
@@ -2083,7 +2232,6 @@ class FieldOneOfPredicate(SchemaBase):
     def __init__(self, field=Undefined, oneOf=Undefined, timeUnit=Undefined, **kwds):
         super(FieldOneOfPredicate, self).__init__(field=field, oneOf=oneOf,
                                                   timeUnit=timeUnit, **kwds)
-    
 
 
 class FieldRangePredicate(SchemaBase):
@@ -2094,8 +2242,8 @@ class FieldRangePredicate(SchemaBase):
     field : string
         Field to be filtered
     range : list
-        An array of inclusive minimum and maximum values for a field value of a data
-        item to be included in the filtered data.
+        An array of inclusive minimum and maximum values for a field 
+        value of a data item to be included in the filtered data.
     timeUnit : TimeUnit
         time unit for the field to be filtered.
     """
@@ -2105,7 +2253,6 @@ class FieldRangePredicate(SchemaBase):
     def __init__(self, field=Undefined, range=Undefined, timeUnit=Undefined, **kwds):
         super(FieldRangePredicate, self).__init__(field=field, range=range,
                                                   timeUnit=timeUnit, **kwds)
-    
 
 
 class FilterTransform(SchemaBase):
@@ -2114,23 +2261,23 @@ class FilterTransform(SchemaBase):
     Attributes
     ----------
     filter : LogicalOperand<Predicate>
-        The `filter` property must be one of the predicate definitions: (1) an
+        The `filter` property must be one of the predicate definitions: 
+        (1) an 
         [expression](https://vega.github.io/vega-lite/docs/types.html#expression)
-        string, where `datum` can be used to refer to the current data object; (2)
-        one of the field predicates: [equal
+         string, where `datum` can be used to refer to the current data 
+        object; (2) one of the field predicates: [equal 
         predicate](https://vega.github.io/vega-lite/docs/filter.html#equal-predicate);
-        [range predicate](filter.html#range-predicate), [one-of
+         [range predicate](filter.html#range-predicate), [one-of 
         predicate](https://vega.github.io/vega-lite/docs/filter.html#one-of-predicate);
-        (3) a [selection
+         (3) a [selection 
         predicate](https://vega.github.io/vega-lite/docs/filter.html#selection-predicate);
-        or (4) a logical operand that combines (1), (2), or (3).
+         or (4) a logical operand that combines (1), (2), or (3).
     """
     _schema = {'$ref': '#/definitions/FilterTransform'}
     _rootschema = Root._schema
 
     def __init__(self, filter=Undefined, **kwds):
         super(FilterTransform, self).__init__(filter=filter, **kwds)
-    
 
 
 class FontStyle(SchemaBase):
@@ -2140,7 +2287,6 @@ class FontStyle(SchemaBase):
 
     def __init__(self, *args):
         super(FontStyle, self).__init__(*args)
-    
 
 
 class FontWeight(SchemaBase):
@@ -2150,7 +2296,6 @@ class FontWeight(SchemaBase):
 
     def __init__(self, *args):
         super(FontWeight, self).__init__(*args)
-    
 
 
 class FontWeightNumber(SchemaBase):
@@ -2160,7 +2305,6 @@ class FontWeightNumber(SchemaBase):
 
     def __init__(self, *args):
         super(FontWeightNumber, self).__init__(*args)
-    
 
 
 class FacetSpec(SchemaBase):
@@ -2173,8 +2317,8 @@ class FacetSpec(SchemaBase):
     description : string
         Description of this mark for commenting purpose.
     facet : FacetMapping
-        An object that describes mappings between `row` and `column` channels and
-        their field definitions.
+        An object that describes mappings between `row` and `column` 
+        channels and their field definitions.
     name : string
         Name of the visualization for later reference.
     resolve : Resolve
@@ -2184,7 +2328,8 @@ class FacetSpec(SchemaBase):
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     """
     _schema = {'$ref': '#/definitions/FacetSpec'}
     _rootschema = Root._schema
@@ -2196,7 +2341,6 @@ class FacetSpec(SchemaBase):
                                         description=description, name=name,
                                         resolve=resolve, title=title,
                                         transform=transform, **kwds)
-    
 
 
 class HConcatSpec(SchemaBase):
@@ -2213,11 +2357,13 @@ class HConcatSpec(SchemaBase):
     name : string
         Name of the visualization for later reference.
     resolve : Resolve
-        Scale, axis, and legend resolutions for horizontally concatenated charts.
+        Scale, axis, and legend resolutions for horizontally 
+        concatenated charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     """
     _schema = {'$ref': '#/definitions/HConcatSpec'}
     _rootschema = Root._schema
@@ -2229,7 +2375,6 @@ class HConcatSpec(SchemaBase):
                                           description=description, name=name,
                                           resolve=resolve, title=title,
                                           transform=transform, **kwds)
-    
 
 
 class LayerSpec(SchemaBase):
@@ -2243,28 +2388,33 @@ class LayerSpec(SchemaBase):
         Description of this mark for commenting purpose.
     height : float
         The height of a visualization.  __Default value:__ - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its y-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        height will be the value of
+         
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the height will be the value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For y-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the height is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the height is [determined by
+         the range step, paddings, and the cardinality of the field 
+        mapped to 
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the height will be the value of
+         Otherwise, if the `rangeStep` is `null`, the height will be the
+         value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `y` channel, the `height` will be the value of
-        `rangeStep`.  __Note__: For plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the height of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         - If no field is mapped to `y` channel, the `height` will be 
+        the value of `rangeStep`.  __Note__: For plots with [`row` and 
+        `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the height of a single view.  __See also:__ The
+         documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     layer : list
-        Layer or single view specifications to be layered.  __Note__: Specifications
-        inside `layer` cannot use `row` and `column` channels as layering facet
-        specifications is not allowed.
+        Layer or single view specifications to be layered.  __Note__: 
+        Specifications inside `layer` cannot use `row` and `column` 
+        channels as layering facet specifications is not allowed.
     name : string
         Name of the visualization for later reference.
     resolve : Resolve
@@ -2272,30 +2422,35 @@ class LayerSpec(SchemaBase):
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     width : float
-        The width of a visualization.  __Default value:__ This will be determined by
-        the following rules:  - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its x-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        width will be the value of
+        The width of a visualization.  __Default value:__ This will be 
+        determined by the following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the width will be the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For x-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the width is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the width is [determined by 
+        the range step, paddings, and the cardinality of the field 
+        mapped to 
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the width will be the value of
+           Otherwise, if the `rangeStep` is `null`, the width will be 
+        the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `x` channel, the `width` will be the value of
+         - If no field is mapped to `x` channel, the `width` will be the
+         value of 
         [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
-        plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the width of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         for `text` mark and the value of `rangeStep` for other marks.  
+        __Note:__ For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the width of a single view.  __See also:__ The 
+        documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     """
     _schema = {'$ref': '#/definitions/LayerSpec'}
     _rootschema = Root._schema
@@ -2307,7 +2462,6 @@ class LayerSpec(SchemaBase):
                                         description=description, height=height,
                                         name=name, resolve=resolve, title=title,
                                         transform=transform, width=width, **kwds)
-    
 
 
 class RepeatSpec(SchemaBase):
@@ -2322,15 +2476,17 @@ class RepeatSpec(SchemaBase):
     name : string
         Name of the visualization for later reference.
     repeat : Repeat
-        An object that describes what fields should be repeated into views that are
-        laid out as a `row` or `column`.
+        An object that describes what fields should be repeated into 
+        views that are laid out as a `row` or `column`.
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
     spec : Spec
+    
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     """
     _schema = {'$ref': '#/definitions/RepeatSpec'}
     _rootschema = Root._schema
@@ -2342,7 +2498,6 @@ class RepeatSpec(SchemaBase):
                                          description=description, name=name,
                                          resolve=resolve, title=title,
                                          transform=transform, **kwds)
-    
 
 
 class Spec(SchemaBase):
@@ -2352,7 +2507,6 @@ class Spec(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Spec, self).__init__(*args, **kwds)
-    
 
 
 class CompositeUnitSpecAlias(SchemaBase):
@@ -2365,68 +2519,79 @@ class CompositeUnitSpecAlias(SchemaBase):
     description : string
         Description of this mark for commenting purpose.
     encoding : Encoding
-        A key-value mapping between encoding channels and definition of fields.
+        A key-value mapping between encoding channels and definition of 
+        fields.
     height : float
         The height of a visualization.  __Default value:__ - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its y-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        height will be the value of
+         
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the height will be the value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For y-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the height is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the height is [determined by
+         the range step, paddings, and the cardinality of the field 
+        mapped to 
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the height will be the value of
+         Otherwise, if the `rangeStep` is `null`, the height will be the
+         value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `y` channel, the `height` will be the value of
-        `rangeStep`.  __Note__: For plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the height of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         - If no field is mapped to `y` channel, the `height` will be 
+        the value of `rangeStep`.  __Note__: For plots with [`row` and 
+        `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the height of a single view.  __See also:__ The
+         documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
-        `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
         object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
-        An object defining properties of geographic projection.  Works with
-        `"geoshape"` marks and `"point"` or `"line"` marks that have a channel (one
-        or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or
-        `"longitude"`.
+        An object defining properties of geographic projection.  Works 
+        with `"geoshape"` marks and `"point"` or `"line"` marks that 
+        have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
+        with type `"latitude"`, or `"longitude"`.
     selection : mapping
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     width : float
-        The width of a visualization.  __Default value:__ This will be determined by
-        the following rules:  - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its x-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        width will be the value of
+        The width of a visualization.  __Default value:__ This will be 
+        determined by the following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the width will be the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For x-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the width is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the width is [determined by 
+        the range step, paddings, and the cardinality of the field 
+        mapped to 
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the width will be the value of
+           Otherwise, if the `rangeStep` is `null`, the width will be 
+        the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `x` channel, the `width` will be the value of
+         - If no field is mapped to `x` channel, the `width` will be the
+         value of 
         [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
-        plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the width of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         for `text` mark and the value of `rangeStep` for other marks.  
+        __Note:__ For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the width of a single view.  __See also:__ The 
+        documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     """
     _schema = {'$ref': '#/definitions/CompositeUnitSpecAlias'}
     _rootschema = Root._schema
@@ -2444,7 +2609,6 @@ class CompositeUnitSpecAlias(SchemaBase):
                                                      title=title,
                                                      transform=transform,
                                                      width=width, **kwds)
-    
 
 
 class FacetedCompositeUnitSpecAlias(SchemaBase):
@@ -2457,68 +2621,79 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
     description : string
         Description of this mark for commenting purpose.
     encoding : EncodingWithFacet
-        A key-value mapping between encoding channels and definition of fields.
+        A key-value mapping between encoding channels and definition of 
+        fields.
     height : float
         The height of a visualization.  __Default value:__ - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its y-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        height will be the value of
+         
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the height will be the value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For y-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the height is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the height is [determined by
+         the range step, paddings, and the cardinality of the field 
+        mapped to 
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the height will be the value of
+         Otherwise, if the `rangeStep` is `null`, the height will be the
+         value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `y` channel, the `height` will be the value of
-        `rangeStep`.  __Note__: For plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the height of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         - If no field is mapped to `y` channel, the `height` will be 
+        the value of `rangeStep`.  __Note__: For plots with [`row` and 
+        `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the height of a single view.  __See also:__ The
+         documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
-        `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
         object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
-        An object defining properties of geographic projection.  Works with
-        `"geoshape"` marks and `"point"` or `"line"` marks that have a channel (one
-        or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or
-        `"longitude"`.
+        An object defining properties of geographic projection.  Works 
+        with `"geoshape"` marks and `"point"` or `"line"` marks that 
+        have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
+        with type `"latitude"`, or `"longitude"`.
     selection : mapping
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     width : float
-        The width of a visualization.  __Default value:__ This will be determined by
-        the following rules:  - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its x-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        width will be the value of
+        The width of a visualization.  __Default value:__ This will be 
+        determined by the following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the width will be the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For x-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the width is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the width is [determined by 
+        the range step, paddings, and the cardinality of the field 
+        mapped to 
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the width will be the value of
+           Otherwise, if the `rangeStep` is `null`, the width will be 
+        the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `x` channel, the `width` will be the value of
+         - If no field is mapped to `x` channel, the `width` will be the
+         value of 
         [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
-        plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the width of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         for `text` mark and the value of `rangeStep` for other marks.  
+        __Note:__ For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the width of a single view.  __See also:__ The 
+        documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     """
     _schema = {'$ref': '#/definitions/FacetedCompositeUnitSpecAlias'}
     _rootschema = Root._schema
@@ -2537,7 +2712,6 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
                                                             title=title,
                                                             transform=transform,
                                                             width=width, **kwds)
-    
 
 
 class VConcatSpec(SchemaBase):
@@ -2552,13 +2726,16 @@ class VConcatSpec(SchemaBase):
     name : string
         Name of the visualization for later reference.
     resolve : Resolve
-        Scale, axis, and legend resolutions for vertically concatenated charts.
+        Scale, axis, and legend resolutions for vertically concatenated 
+        charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     vconcat : list
-        A list of views that should be concatenated and put into a column.
+        A list of views that should be concatenated and put into a 
+        column.
     """
     _schema = {'$ref': '#/definitions/VConcatSpec'}
     _rootschema = Root._schema
@@ -2570,7 +2747,6 @@ class VConcatSpec(SchemaBase):
                                           description=description, name=name,
                                           resolve=resolve, title=title,
                                           transform=transform, **kwds)
-    
 
 
 class GeoType(SchemaBase):
@@ -2580,38 +2756,40 @@ class GeoType(SchemaBase):
 
     def __init__(self, *args):
         super(GeoType, self).__init__(*args)
-    
 
 
 class Header(SchemaBase):
-    """
+    """Header schema wrapper
     Headers of row / column channels for faceted plots.
     
     Attributes
     ----------
     format : string
-        The formatting pattern for labels. This is D3's [number format
-        pattern](https://github.com/d3/d3-format#locale_format) for quantitative
-        fields and D3's [time format
-        pattern](https://github.com/d3/d3-time-format#locale_format) for time field.
-        See the [format documentation](format.html) for more information.  __Default
-        value:__  derived from [numberFormat](config.html#format) config for
-        quantitative fields and from [timeFormat](config.html#format) config for
+        The formatting pattern for labels. This is D3's [number format 
+        pattern](https://github.com/d3/d3-format#locale_format) for 
+        quantitative fields and D3's [time format 
+        pattern](https://github.com/d3/d3-time-format#locale_format) for
+         time field.  See the [format documentation](format.html) for 
+        more information.  __Default value:__  derived from 
+        [numberFormat](config.html#format) config for quantitative 
+        fields and from [timeFormat](config.html#format) config for 
         temporal fields.
     labelAngle : float
-        The rotation angle of the header labels.  __Default value:__ `0`.
+        The rotation angle of the header labels.  __Default value:__ 
+        `0`.
     title : anyOf(string, None)
-        A title for the field. If `null`, the title will be removed.  __Default
-        value:__  derived from the field's name and transformation function
-        (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate
-        function, the function is displayed as a part of the title (e.g., `"Sum of
-        Profit"`). If the field is binned or has a time unit applied, the applied
-        function will be denoted in parentheses (e.g., `"Profit (binned)"`,
-        `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
-        field name.  __Note__: You can customize the default field title format by
-        providing the [`fieldTitle` property in the [config](config.html) or
-        [`fieldTitle` function via the `compile` function's
-        options](compile.html#field-title).
+        A title for the field. If `null`, the title will be removed.  
+        __Default value:__  derived from the field's name and 
+        transformation function (`aggregate`, `bin` and `timeUnit`).  If
+         the field has an aggregate function, the function is displayed 
+        as a part of the title (e.g., `"Sum of Profit"`). If the field 
+        is binned or has a time unit applied, the applied function will 
+        be denoted in parentheses (e.g., `"Profit (binned)"`, 
+        `"Transaction Date (year-month)"`).  Otherwise, the title is 
+        simply the field name.  __Note__: You can customize the default 
+        field title format by providing the [`fieldTitle` property in 
+        the [config](config.html) or [`fieldTitle` function via the 
+        `compile` function's options](compile.html#field-title).
     """
     _schema = {'$ref': '#/definitions/Header'}
     _rootschema = Root._schema
@@ -2620,7 +2798,6 @@ class Header(SchemaBase):
                  **kwds):
         super(Header, self).__init__(format=format, labelAngle=labelAngle,
                                      title=title, **kwds)
-    
 
 
 class HorizontalAlign(SchemaBase):
@@ -2630,7 +2807,6 @@ class HorizontalAlign(SchemaBase):
 
     def __init__(self, *args):
         super(HorizontalAlign, self).__init__(*args)
-    
 
 
 class InlineData(SchemaBase):
@@ -2641,17 +2817,16 @@ class InlineData(SchemaBase):
     format : DataFormat
         An object that specifies the format for parsing the data values.
     values : anyOf(list, list, list, list, string, mapping)
-        The full data set, included inline. This can be an array of objects or
-        primitive values or a string. Arrays of primitive values are ingested as
-        objects with a `data` property. Strings are parsed according to the
-        specified format type.
+        The full data set, included inline. This can be an array of 
+        objects or primitive values or a string. Arrays of primitive 
+        values are ingested as objects with a `data` property. Strings 
+        are parsed according to the specified format type.
     """
     _schema = {'$ref': '#/definitions/InlineData'}
     _rootschema = Root._schema
 
     def __init__(self, values=Undefined, format=Undefined, **kwds):
         super(InlineData, self).__init__(values=values, format=format, **kwds)
-    
 
 
 class Interpolate(SchemaBase):
@@ -2661,7 +2836,6 @@ class Interpolate(SchemaBase):
 
     def __init__(self, *args):
         super(Interpolate, self).__init__(*args)
-    
 
 
 class IntervalSelection(SchemaBase):
@@ -2670,46 +2844,52 @@ class IntervalSelection(SchemaBase):
     Attributes
     ----------
     bind : string
-        Establishes a two-way binding between the interval selection and the scales
-        used within the same view. This allows a user to interactively pan and zoom
-        the view.
+        Establishes a two-way binding between the interval selection and
+         the scales used within the same view. This allows a user to 
+        interactively pan and zoom the view.
     empty : string
-        By default, all data values are considered to lie within an empty selection.
-        When set to `none`, empty selections contain no data values.
+        By default, all data values are considered to lie within an 
+        empty selection. When set to `none`, empty selections contain no
+         data values.
     encodings : list
-        An array of encoding channels. The corresponding data field values must
-        match for a data tuple to fall within the selection.
+        An array of encoding channels. The corresponding data field 
+        values must match for a data tuple to fall within the selection.
     fields : list
-        An array of field names whose values must match for a data tuple to fall
-        within the selection.
+        An array of field names whose values must match for a data tuple
+         to fall within the selection.
     mark : BrushConfig
-        An interval selection also adds a rectangle mark to depict the extents of
-        the interval. The `mark` property can be used to customize the appearance of
-        the mark.
+        An interval selection also adds a rectangle mark to depict the 
+        extents of the interval. The `mark` property can be used to 
+        customize the appearance of the mark.
     on : VgEventStream
-        A [Vega event stream](https://vega.github.io/vega/docs/event-streams/)
-        (object or selector) that triggers the selection. For interval selections,
-        the event stream must specify a [start and
+        A [Vega event 
+        stream](https://vega.github.io/vega/docs/event-streams/) (object
+         or selector) that triggers the selection. For interval 
+        selections, the event stream must specify a [start and 
         end](https://vega.github.io/vega/docs/event-streams/#between-filters).
     resolve : SelectionResolution
-        With layered and multi-view displays, a strategy that determines how
-        selections' data queries are resolved when applied in a filter transform,
-        conditional encoding rule, or scale domain.
+        With layered and multi-view displays, a strategy that determines
+         how selections' data queries are resolved when applied in a 
+        filter transform, conditional encoding rule, or scale domain.
     translate : anyOf(string, boolean)
-        When truthy, allows a user to interactively move an interval selection
-        back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega
-        event stream definition](https://vega.github.io/vega/docs/event-streams/)
-        which must include a start and end event to trigger continuous panning.
-        __Default value:__ `true`, which corresponds to `[mousedown, window:mouseup]
-        > window:mousemove!` which corresponds to clicks and dragging within an
-        interval selection to reposition it.
+        When truthy, allows a user to interactively move an interval 
+        selection back-and-forth. Can be `true`, `false` (to disable 
+        panning), or a [Vega event stream 
+        definition](https://vega.github.io/vega/docs/event-streams/) 
+        which must include a start and end event to trigger continuous 
+        panning.  __Default value:__ `true`, which corresponds to 
+        `[mousedown, window:mouseup] > window:mousemove!` which 
+        corresponds to clicks and dragging within an interval selection 
+        to reposition it.
     type : string
+    
     zoom : anyOf(string, boolean)
-        When truthy, allows a user to interactively resize an interval selection.
-        Can be `true`, `false` (to disable zooming), or a [Vega event stream
-        definition](https://vega.github.io/vega/docs/event-streams/). Currently,
-        only `wheel` events are supported.   __Default value:__ `true`, which
-        corresponds to `wheel!`.
+        When truthy, allows a user to interactively resize an interval 
+        selection. Can be `true`, `false` (to disable zooming), or a 
+        [Vega event stream 
+        definition](https://vega.github.io/vega/docs/event-streams/). 
+        Currently, only `wheel` events are supported.   __Default 
+        value:__ `true`, which corresponds to `wheel!`.
     """
     _schema = {'$ref': '#/definitions/IntervalSelection'}
     _rootschema = Root._schema
@@ -2723,7 +2903,6 @@ class IntervalSelection(SchemaBase):
                                                 mark=mark, on=on, resolve=resolve,
                                                 translate=translate, zoom=zoom,
                                                 **kwds)
-    
 
 
 class IntervalSelectionConfig(SchemaBase):
@@ -2732,45 +2911,50 @@ class IntervalSelectionConfig(SchemaBase):
     Attributes
     ----------
     bind : string
-        Establishes a two-way binding between the interval selection and the scales
-        used within the same view. This allows a user to interactively pan and zoom
-        the view.
+        Establishes a two-way binding between the interval selection and
+         the scales used within the same view. This allows a user to 
+        interactively pan and zoom the view.
     empty : string
-        By default, all data values are considered to lie within an empty selection.
-        When set to `none`, empty selections contain no data values.
+        By default, all data values are considered to lie within an 
+        empty selection. When set to `none`, empty selections contain no
+         data values.
     encodings : list
-        An array of encoding channels. The corresponding data field values must
-        match for a data tuple to fall within the selection.
+        An array of encoding channels. The corresponding data field 
+        values must match for a data tuple to fall within the selection.
     fields : list
-        An array of field names whose values must match for a data tuple to fall
-        within the selection.
+        An array of field names whose values must match for a data tuple
+         to fall within the selection.
     mark : BrushConfig
-        An interval selection also adds a rectangle mark to depict the extents of
-        the interval. The `mark` property can be used to customize the appearance of
-        the mark.
+        An interval selection also adds a rectangle mark to depict the 
+        extents of the interval. The `mark` property can be used to 
+        customize the appearance of the mark.
     on : VgEventStream
-        A [Vega event stream](https://vega.github.io/vega/docs/event-streams/)
-        (object or selector) that triggers the selection. For interval selections,
-        the event stream must specify a [start and
+        A [Vega event 
+        stream](https://vega.github.io/vega/docs/event-streams/) (object
+         or selector) that triggers the selection. For interval 
+        selections, the event stream must specify a [start and 
         end](https://vega.github.io/vega/docs/event-streams/#between-filters).
     resolve : SelectionResolution
-        With layered and multi-view displays, a strategy that determines how
-        selections' data queries are resolved when applied in a filter transform,
-        conditional encoding rule, or scale domain.
+        With layered and multi-view displays, a strategy that determines
+         how selections' data queries are resolved when applied in a 
+        filter transform, conditional encoding rule, or scale domain.
     translate : anyOf(string, boolean)
-        When truthy, allows a user to interactively move an interval selection
-        back-and-forth. Can be `true`, `false` (to disable panning), or a [Vega
-        event stream definition](https://vega.github.io/vega/docs/event-streams/)
-        which must include a start and end event to trigger continuous panning.
-        __Default value:__ `true`, which corresponds to `[mousedown, window:mouseup]
-        > window:mousemove!` which corresponds to clicks and dragging within an
-        interval selection to reposition it.
+        When truthy, allows a user to interactively move an interval 
+        selection back-and-forth. Can be `true`, `false` (to disable 
+        panning), or a [Vega event stream 
+        definition](https://vega.github.io/vega/docs/event-streams/) 
+        which must include a start and end event to trigger continuous 
+        panning.  __Default value:__ `true`, which corresponds to 
+        `[mousedown, window:mouseup] > window:mousemove!` which 
+        corresponds to clicks and dragging within an interval selection 
+        to reposition it.
     zoom : anyOf(string, boolean)
-        When truthy, allows a user to interactively resize an interval selection.
-        Can be `true`, `false` (to disable zooming), or a [Vega event stream
-        definition](https://vega.github.io/vega/docs/event-streams/). Currently,
-        only `wheel` events are supported.   __Default value:__ `true`, which
-        corresponds to `wheel!`.
+        When truthy, allows a user to interactively resize an interval 
+        selection. Can be `true`, `false` (to disable zooming), or a 
+        [Vega event stream 
+        definition](https://vega.github.io/vega/docs/event-streams/). 
+        Currently, only `wheel` events are supported.   __Default 
+        value:__ `true`, which corresponds to `wheel!`.
     """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
     _rootschema = Root._schema
@@ -2784,7 +2968,6 @@ class IntervalSelectionConfig(SchemaBase):
                                                       on=on, resolve=resolve,
                                                       translate=translate,
                                                       zoom=zoom, **kwds)
-    
 
 
 class JsonDataFormat(SchemaBase):
@@ -2793,28 +2976,30 @@ class JsonDataFormat(SchemaBase):
     Attributes
     ----------
     parse : anyOf(string, mapping)
-        If set to auto (the default), perform automatic type inference to determine
-        the desired data types. Alternatively, a parsing directive object can be
-        provided for explicit data types. Each property of the object corresponds to
-        a field name, and the value to the desired data type (one of `"number"`,
-        `"boolean"` or `"date"`). For example, `"parse": {"modified_on": "date"}`
-        parses the `modified_on` field in each input record a Date value.  For
-        `"date"`, we parse data based using Javascript's
+        If set to auto (the default), perform automatic type inference 
+        to determine the desired data types. Alternatively, a parsing 
+        directive object can be provided for explicit data types. Each 
+        property of the object corresponds to a field name, and the 
+        value to the desired data type (one of `"number"`, `"boolean"` 
+        or `"date"`). For example, `"parse": {"modified_on": "date"}` 
+        parses the `modified_on` field in each input record a Date 
+        value.  For `"date"`, we parse data based using Javascript's 
         [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).
-        For Specific date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`),
-        using the [d3-time-format
-        syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format
-        parsing is supported similarly (e.g., `{foo: 'utc:"%m%d%Y"'}`). See more
-        about [UTC time](timeunit.html#utc)
+         For Specific date formats can be provided (e.g., `{foo: 
+        'date:"%m%d%Y"'}`), using the [d3-time-format 
+        syntax](https://github.com/d3/d3-time-format#locale_format). UTC
+         date format parsing is supported similarly (e.g., `{foo: 
+        'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
     property : string
-        The JSON property containing the desired data. This parameter can be used
-        when the loaded JSON file may have surrounding structure or meta-data. For
-        example `"property": "values.features"` is equivalent to retrieving
+        The JSON property containing the desired data. This parameter 
+        can be used when the loaded JSON file may have surrounding 
+        structure or meta-data. For example `"property": 
+        "values.features"` is equivalent to retrieving 
         `json.values.features` from the loaded JSON object.
     type : string
-        Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
-        determined by the extension of the file URL. If no extension is detected,
-        `"json"` will be used by default.
+        Type of input data: `"json"`, `"csv"`, `"tsv"`. The default 
+        format type is determined by the extension of the file URL. If 
+        no extension is detected, `"json"` will be used by default.
     """
     _schema = {'$ref': '#/definitions/JsonDataFormat'}
     _rootschema = Root._schema
@@ -2822,60 +3007,64 @@ class JsonDataFormat(SchemaBase):
     def __init__(self, parse=Undefined, property=Undefined, type=Undefined, **kwds):
         super(JsonDataFormat, self).__init__(parse=parse, property=property,
                                              type=type, **kwds)
-    
 
 
 class Legend(SchemaBase):
-    """
-    Properties of a legend or boolean flag for determining whether to show it.
+    """Legend schema wrapper
+    Properties of a legend or boolean flag for determining whether to show 
+    it.
     
     Attributes
     ----------
     entryPadding : float
         Padding (in pixels) between legend entries in a symbol legend.
     format : string
-        The formatting pattern for labels. This is D3's [number format
-        pattern](https://github.com/d3/d3-format#locale_format) for quantitative
-        fields and D3's [time format
-        pattern](https://github.com/d3/d3-time-format#locale_format) for time field.
-        See the [format documentation](format.html) for more information.  __Default
-        value:__  derived from [numberFormat](config.html#format) config for
-        quantitative fields and from [timeFormat](config.html#format) config for
+        The formatting pattern for labels. This is D3's [number format 
+        pattern](https://github.com/d3/d3-format#locale_format) for 
+        quantitative fields and D3's [time format 
+        pattern](https://github.com/d3/d3-time-format#locale_format) for
+         time field.  See the [format documentation](format.html) for 
+        more information.  __Default value:__  derived from 
+        [numberFormat](config.html#format) config for quantitative 
+        fields and from [timeFormat](config.html#format) config for 
         temporal fields.
     offset : float
-        The offset, in pixels, by which to displace the legend from the edge of the
-        enclosing group or data rectangle.  __Default value:__  `0`
+        The offset, in pixels, by which to displace the legend from the 
+        edge of the enclosing group or data rectangle.  __Default 
+        value:__  `0`
     orient : LegendOrient
-        The orientation of the legend, which determines how the legend is positioned
-        within the scene. One of "left", "right", "top-left", "top-right",
-        "bottom-left", "bottom-right", "none".  __Default value:__ `"right"`
+        The orientation of the legend, which determines how the legend 
+        is positioned within the scene. One of "left", "right", 
+        "top-left", "top-right", "bottom-left", "bottom-right", "none".
+          __Default value:__ `"right"`
     padding : float
         The padding, in pixels, between the legend and axis.
     tickCount : float
         The desired number of tick values for quantitative legends.
     title : anyOf(string, None)
-        A title for the field. If `null`, the title will be removed.  __Default
-        value:__  derived from the field's name and transformation function
-        (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate
-        function, the function is displayed as a part of the title (e.g., `"Sum of
-        Profit"`). If the field is binned or has a time unit applied, the applied
-        function will be denoted in parentheses (e.g., `"Profit (binned)"`,
-        `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
-        field name.  __Note__: You can customize the default field title format by
-        providing the [`fieldTitle` property in the [config](config.html) or
-        [`fieldTitle` function via the `compile` function's
-        options](compile.html#field-title).
+        A title for the field. If `null`, the title will be removed.  
+        __Default value:__  derived from the field's name and 
+        transformation function (`aggregate`, `bin` and `timeUnit`).  If
+         the field has an aggregate function, the function is displayed 
+        as a part of the title (e.g., `"Sum of Profit"`). If the field 
+        is binned or has a time unit applied, the applied function will 
+        be denoted in parentheses (e.g., `"Profit (binned)"`, 
+        `"Transaction Date (year-month)"`).  Otherwise, the title is 
+        simply the field name.  __Note__: You can customize the default 
+        field title format by providing the [`fieldTitle` property in 
+        the [config](config.html) or [`fieldTitle` function via the 
+        `compile` function's options](compile.html#field-title).
     type : string
-        The type of the legend. Use `"symbol"` to create a discrete legend and
-        `"gradient"` for a continuous color gradient.  __Default value:__
-        `"gradient"` for non-binned quantitative fields and temporal fields;
-        `"symbol"` otherwise.
+        The type of the legend. Use `"symbol"` to create a discrete 
+        legend and `"gradient"` for a continuous color gradient.  
+        __Default value:__ `"gradient"` for non-binned quantitative 
+        fields and temporal fields; `"symbol"` otherwise.
     values : anyOf(list, list, list)
         Explicitly set the visible legend values.
     zindex : float
-        A non-positive integer indicating z-index of the legend. If zindex is 0,
-        legend should be drawn behind all chart elements. To put them in front, use
-        zindex = 1.
+        A non-positive integer indicating z-index of the legend. If 
+        zindex is 0, legend should be drawn behind all chart elements. 
+        To put them in front, use zindex = 1.
     """
     _schema = {'$ref': '#/definitions/Legend'}
     _rootschema = Root._schema
@@ -2888,7 +3077,6 @@ class Legend(SchemaBase):
                                      offset=offset, orient=orient, padding=padding,
                                      tickCount=tickCount, title=title, type=type,
                                      values=values, zindex=zindex, **kwds)
-    
 
 
 class LegendConfig(SchemaBase):
@@ -2907,12 +3095,13 @@ class LegendConfig(SchemaBase):
     gradientLabelBaseline : string
         Text baseline for color ramp gradient labels.
     gradientLabelLimit : float
-        The maximum allowed length in pixels of color ramp gradient labels.
+        The maximum allowed length in pixels of color ramp gradient 
+        labels.
     gradientLabelOffset : float
         Vertical offset in pixels for color ramp gradient labels.
     gradientStrokeColor : string
-        The color of the gradient stroke, can be in hex color code or regular color
-        name.
+        The color of the gradient stroke, can be in hex color code or 
+        regular color name.
     gradientStrokeWidth : float
         The width of the gradient stroke, in pixels.
     gradientWidth : float
@@ -2920,10 +3109,11 @@ class LegendConfig(SchemaBase):
     labelAlign : string
         The alignment of the legend label, can be left, middle or right.
     labelBaseline : string
-        The position of the baseline of legend label, can be top, middle or bottom.
+        The position of the baseline of legend label, can be top, middle
+         or bottom.
     labelColor : string
-        The color of the legend label, can be in hex color code or regular color
-        name.
+        The color of the legend label, can be in hex color code or 
+        regular color name.
     labelFont : string
         The font of the legend label.
     labelFontSize : float
@@ -2933,17 +3123,19 @@ class LegendConfig(SchemaBase):
     labelOffset : float
         The offset of the legend label.
     offset : float
-        The offset, in pixels, by which to displace the legend from the edge of the
-        enclosing group or data rectangle.  __Default value:__  `0`
+        The offset, in pixels, by which to displace the legend from the 
+        edge of the enclosing group or data rectangle.  __Default 
+        value:__  `0`
     orient : LegendOrient
-        The orientation of the legend, which determines how the legend is positioned
-        within the scene. One of "left", "right", "top-left", "top-right",
-        "bottom-left", "bottom-right", "none".  __Default value:__ `"right"`
+        The orientation of the legend, which determines how the legend 
+        is positioned within the scene. One of "left", "right", 
+        "top-left", "top-right", "bottom-left", "bottom-right", "none".
+          __Default value:__ `"right"`
     padding : float
         The padding, in pixels, between the legend and axis.
     shortTimeLabels : boolean
-        Whether month names and weekday names should be abbreviated.  __Default
-        value:__  `false`
+        Whether month names and weekday names should be abbreviated.  
+        __Default value:__  `false`
     strokeColor : string
         Border stroke color for the full legend.
     strokeDash : list
@@ -2963,8 +3155,8 @@ class LegendConfig(SchemaBase):
     titleBaseline : string
         Vertical text baseline for legend titles.
     titleColor : string
-        The color of the legend title, can be in hex color code or regular color
-        name.
+        The color of the legend title, can be in hex color code or 
+        regular color name.
     titleFont : string
         The font of the legend title.
     titleFontSize : float
@@ -3029,7 +3221,6 @@ class LegendConfig(SchemaBase):
                                            titleFontWeight=titleFontWeight,
                                            titleLimit=titleLimit,
                                            titlePadding=titlePadding, **kwds)
-    
 
 
 class LegendOrient(SchemaBase):
@@ -3039,7 +3230,6 @@ class LegendOrient(SchemaBase):
 
     def __init__(self, *args):
         super(LegendOrient, self).__init__(*args)
-    
 
 
 class LegendResolveMap(SchemaBase):
@@ -3048,9 +3238,13 @@ class LegendResolveMap(SchemaBase):
     Attributes
     ----------
     color : ResolveMode
+    
     opacity : ResolveMode
+    
     shape : ResolveMode
+    
     size : ResolveMode
+    
     """
     _schema = {'$ref': '#/definitions/LegendResolveMap'}
     _rootschema = Root._schema
@@ -3059,7 +3253,6 @@ class LegendResolveMap(SchemaBase):
                  size=Undefined, **kwds):
         super(LegendResolveMap, self).__init__(color=color, opacity=opacity,
                                                shape=shape, size=size, **kwds)
-    
 
 
 class LocalMultiTimeUnit(SchemaBase):
@@ -3069,7 +3262,6 @@ class LocalMultiTimeUnit(SchemaBase):
 
     def __init__(self, *args):
         super(LocalMultiTimeUnit, self).__init__(*args)
-    
 
 
 class LocalSingleTimeUnit(SchemaBase):
@@ -3079,7 +3271,6 @@ class LocalSingleTimeUnit(SchemaBase):
 
     def __init__(self, *args):
         super(LocalSingleTimeUnit, self).__init__(*args)
-    
 
 
 class LogicalAndPredicate(SchemaBase):
@@ -3088,13 +3279,13 @@ class LogicalAndPredicate(SchemaBase):
     Attributes
     ----------
     and : list
+    
     """
     _schema = {'$ref': '#/definitions/LogicalAnd<Predicate>'}
     _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(LogicalAndPredicate, self).__init__(**kwds)
-    
 
 
 class SelectionAnd(SchemaBase):
@@ -3103,13 +3294,13 @@ class SelectionAnd(SchemaBase):
     Attributes
     ----------
     and : list
+    
     """
     _schema = {'$ref': '#/definitions/SelectionAnd'}
     _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionAnd, self).__init__(**kwds)
-    
 
 
 class LogicalNotPredicate(SchemaBase):
@@ -3118,13 +3309,13 @@ class LogicalNotPredicate(SchemaBase):
     Attributes
     ----------
     not : LogicalOperand<Predicate>
+    
     """
     _schema = {'$ref': '#/definitions/LogicalNot<Predicate>'}
     _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(LogicalNotPredicate, self).__init__(**kwds)
-    
 
 
 class SelectionNot(SchemaBase):
@@ -3133,13 +3324,13 @@ class SelectionNot(SchemaBase):
     Attributes
     ----------
     not : SelectionOperand
+    
     """
     _schema = {'$ref': '#/definitions/SelectionNot'}
     _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionNot, self).__init__(**kwds)
-    
 
 
 class LogicalOperandPredicate(SchemaBase):
@@ -3149,7 +3340,6 @@ class LogicalOperandPredicate(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(LogicalOperandPredicate, self).__init__(*args, **kwds)
-    
 
 
 class SelectionOperand(SchemaBase):
@@ -3159,7 +3349,6 @@ class SelectionOperand(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(SelectionOperand, self).__init__(*args, **kwds)
-    
 
 
 class LogicalOrPredicate(SchemaBase):
@@ -3168,13 +3357,13 @@ class LogicalOrPredicate(SchemaBase):
     Attributes
     ----------
     or : list
+    
     """
     _schema = {'$ref': '#/definitions/LogicalOr<Predicate>'}
     _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(LogicalOrPredicate, self).__init__(**kwds)
-    
 
 
 class SelectionOr(SchemaBase):
@@ -3183,13 +3372,13 @@ class SelectionOr(SchemaBase):
     Attributes
     ----------
     or : list
+    
     """
     _schema = {'$ref': '#/definitions/SelectionOr'}
     _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionOr, self).__init__(**kwds)
-    
 
 
 class LookupData(SchemaBase):
@@ -3200,8 +3389,8 @@ class LookupData(SchemaBase):
     data : Data
         Secondary data source to lookup in.
     fields : list
-        Fields in foreign data to lookup. If not specified, the entire object is
-        queried.
+        Fields in foreign data to lookup. If not specified, the entire 
+        object is queried.
     key : string
         Key in data to lookup.
     """
@@ -3210,7 +3399,6 @@ class LookupData(SchemaBase):
 
     def __init__(self, data=Undefined, key=Undefined, fields=Undefined, **kwds):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
-    
 
 
 class LookupTransform(SchemaBase):
@@ -3219,12 +3407,14 @@ class LookupTransform(SchemaBase):
     Attributes
     ----------
     as : anyOf(string, list)
-        The field or fields for storing the computed formula value. If `from.fields`
-        is specified, the transform will use the same names for `as`. If
-        `from.fields` is not specified, `as` has to be a string and we put the whole
-        object into the data under the specified name.
+        The field or fields for storing the computed formula value. If 
+        `from.fields` is specified, the transform will use the same 
+        names for `as`. If `from.fields` is not specified, `as` has to 
+        be a string and we put the whole object into the data under the 
+        specified name.
     default : string
-        The default value to use if lookup fails.  __Default value:__ `null`
+        The default value to use if lookup fails.  __Default value:__ 
+        `null`
     from : LookupData
         Secondary data reference.
     lookup : string
@@ -3235,11 +3425,10 @@ class LookupTransform(SchemaBase):
 
     def __init__(self, lookup=Undefined, default=Undefined, **kwds):
         super(LookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
-    
 
 
 class Mark(SchemaBase):
-    """
+    """Mark schema wrapper
     All types of primitive marks.
     """
     _schema = {'$ref': '#/definitions/Mark'}
@@ -3247,7 +3436,6 @@ class Mark(SchemaBase):
 
     def __init__(self, *args):
         super(Mark, self).__init__(*args)
-    
 
 
 class MarkConfig(SchemaBase):
@@ -3256,38 +3444,42 @@ class MarkConfig(SchemaBase):
     Attributes
     ----------
     align : HorizontalAlign
-        The horizontal alignment of the text. One of `"left"`, `"right"`,
-        `"center"`.
+        The horizontal alignment of the text. One of `"left"`, 
+        `"right"`, `"center"`.
     angle : float
         The rotation angle of the text, in degrees.
     baseline : VerticalAlign
-        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
-        __Default value:__ `"middle"`
+        The vertical alignment of the text. One of `"top"`, `"middle"`, 
+        `"bottom"`.  __Default value:__ `"middle"`
     color : string
-        Default color.  Note that `fill` and `stroke` have higher precedence than
-        `color` and will override `color`.  __Default value:__ <span style="color:
-        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used
-        in a [style config](mark.html#style-config).
+        Default color.  Note that `fill` and `stroke` have higher 
+        precedence than `color` and will override `color`.  __Default 
+        value:__ <span style="color: #4682b4;">&#9632;</span> 
+        `"#4682b4"`  __Note:__ This property cannot be used in a [style 
+        config](mark.html#style-config).
     cursor : string
-        The mouse cursor used over the mark. Any valid [CSS cursor
-        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be
-        used.
+        The mouse cursor used over the mark. Any valid [CSS cursor 
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+         can be used.
     dx : float
-        The horizontal offset, in pixels, between the text label and its anchor
-        point. The offset is applied after rotation by the _angle_ property.
+        The horizontal offset, in pixels, between the text label and its
+         anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     dy : float
-        The vertical offset, in pixels, between the text label and its anchor point.
-        The offset is applied after rotation by the _angle_ property.
+        The vertical offset, in pixels, between the text label and its 
+        anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
-        value:__ (None)
+        Default Fill Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
     filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke
-        color.  __Default value:__ `true` for all marks except `point` and `false`
-        for `point`.  __Applicable for:__ `bar`, `point`, `circle`, `square`, and
-        `area` marks.  __Note:__ This property cannot be used in a [style
+        Whether the mark's color should be used as fill color instead of
+         stroke color.  __Default value:__ `true` for all marks except 
+        `point` and `false` for `point`.  __Applicable for:__ `bar`, 
+        `point`, `circle`, `square`, and `area` marks.  __Note:__ This 
+        property cannot be used in a [style 
         config](mark.html#style-config).
     font : string
         The typeface to set the text in (e.g., `"Helvetica Neue"`).
@@ -3298,75 +3490,82 @@ class MarkConfig(SchemaBase):
     fontWeight : anyOf(FontWeight, FontWeightNumber)
         The font weight (e.g., `"bold"`).
     href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+        A URL to load upon mouse click. If defined, the mark acts as a 
+        hyperlink.
     interpolate : Interpolate
-        The line interpolation method to use for line and area marks. One of the
-        following: - `"linear"`: piecewise linear segments, as in a polyline. -
-        `"linear-closed"`: close the linear segments to form a polygon. - `"step"`:
-        alternate between horizontal and vertical segments, as in a step function. -
-        `"step-before"`: alternate between vertical and horizontal segments, as in a
-        step function. - `"step-after"`: alternate between horizontal and vertical
-        segments, as in a step function. - `"basis"`: a B-spline, with control point
-        duplication on the ends. - `"basis-open"`: an open B-spline; may not
-        intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
-        loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
-        the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. -
-        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
-        equivalent to basis, except the tension parameter is used to straighten the
-        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
-        y.
+        The line interpolation method to use for line and area marks. 
+        One of the following: - `"linear"`: piecewise linear segments, 
+        as in a polyline. - `"linear-closed"`: close the linear segments
+         to form a polygon. - `"step"`: alternate between horizontal and
+         vertical segments, as in a step function. - `"step-before"`: 
+        alternate between vertical and horizontal segments, as in a step
+         function. - `"step-after"`: alternate between horizontal and 
+        vertical segments, as in a step function. - `"basis"`: a 
+        B-spline, with control point duplication on the ends. - 
+        `"basis-open"`: an open B-spline; may not intersect the start or
+         end. - `"basis-closed"`: a closed B-spline, as in a loop. - 
+        `"cardinal"`: a Cardinal spline, with control point duplication 
+        on the ends. - `"cardinal-open"`: an open Cardinal spline; may 
+        not intersect the start or end, but will intersect other control
+         points. - `"cardinal-closed"`: a closed Cardinal spline, as in 
+        a loop. - `"bundle"`: equivalent to basis, except the tension 
+        parameter is used to straighten the spline. - `"monotone"`: 
+        cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no
-        limit). The text value will be automatically truncated if the rendered size
-        exceeds the limit.
+        The maximum length of the text mark in pixels (default 0, 
+        indicating no limit). The text value will be automatically 
+        truncated if the rendered size exceeds the limit.
     opacity : float
-        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
-        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or
-        layered `bar` charts and `1` otherwise.
+        The overall opacity (value between [0,1]).  __Default value:__ 
+        `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or
+         `square` marks or layered `bar` charts and `1` otherwise.
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value
-        is either horizontal (default) or vertical. - For bar, rule and tick, this
-        determines whether the size of the bar and tick should be applied to x or y
-        dimension. - For area, this property determines the orient property of the
-        Vega output. - For line, this property determines the sort order of the
-        points in the line if `config.sortLineBy` is not specified. For stacked
-        charts, this is always determined by the orientation of the stack; therefore
-        explicitly specified value will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line 
+        charts. The value is either horizontal (default) or vertical. - 
+        For bar, rule and tick, this determines whether the size of the 
+        bar and tick should be applied to x or y dimension. - For area, 
+        this property determines the orient property of the Vega output.
+         - For line, this property determines the sort order of the 
+        points in the line if `config.sortLineBy` is not specified. For 
+        stacked charts, this is always determined by the orientation of 
+        the stack; therefore explicitly specified value will be ignored.
     radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the `x` and `y` properties.
+        Polar coordinate radial offset, in pixels, of the text label 
+        from the origin determined by the `x` and `y` properties.
     shape : string
-        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom
-        SVG path.  __Default value:__ `"circle"`
+        The default symbol shape to use. One of: `"circle"` (default), 
+        `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or a custom SVG path.  __Default value:__ 
+        `"circle"`
     size : float
-        The pixel area each the point/circle/square. For example: in the case of
-        circles, the radius is determined in part by the square root of the size
-        value.  __Default value:__ `30`
+        The pixel area each the point/circle/square. For example: in the
+         case of circles, the radius is determined in part by the square
+         root of the size value.  __Default value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color
-        __Default value:__ (None)
+        Default Stroke Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+        The stroke opacity (value between [0,1]).  __Default value:__ 
+        `1`
     strokeWidth : float
         The stroke width, in pixels.
     tension : float
-        Depending on the interpolation type, sets the tension parameter (for line
-        and area marks).
+        Depending on the interpolation type, sets the tension parameter 
+        (for line and area marks).
     text : string
         Placeholder text if the `text` channel is not specified
     theta : float
-        Polar coordinate angle, in radians, of the text label from the origin
-        determined by the `x` and `y` properties. Values for `theta` follow the same
-        convention of `arc` mark `startAngle` and `endAngle` properties: angles are
-        measured in radians, with `0` indicating "north".
+        Polar coordinate angle, in radians, of the text label from the 
+        origin determined by the `x` and `y` properties. Values for 
+        `theta` follow the same convention of `arc` mark `startAngle` 
+        and `endAngle` properties: angles are measured in radians, with 
+        `0` indicating "north".
     """
     _schema = {'$ref': '#/definitions/MarkConfig'}
     _rootschema = Root._schema
@@ -3396,7 +3595,6 @@ class MarkConfig(SchemaBase):
                                          strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, tension=tension,
                                          text=text, theta=theta, **kwds)
-    
 
 
 class MarkDef(SchemaBase):
@@ -3405,40 +3603,45 @@ class MarkDef(SchemaBase):
     Attributes
     ----------
     align : HorizontalAlign
-        The horizontal alignment of the text. One of `"left"`, `"right"`,
-        `"center"`.
+        The horizontal alignment of the text. One of `"left"`, 
+        `"right"`, `"center"`.
     angle : float
         The rotation angle of the text, in degrees.
     baseline : VerticalAlign
-        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
-        __Default value:__ `"middle"`
+        The vertical alignment of the text. One of `"top"`, `"middle"`, 
+        `"bottom"`.  __Default value:__ `"middle"`
     clip : boolean
-        Whether a mark be clipped to the enclosing group’s width and height.
+        Whether a mark be clipped to the enclosing group’s width and 
+        height.
     color : string
-        Default color.  Note that `fill` and `stroke` have higher precedence than
-        `color` and will override `color`.  __Default value:__ <span style="color:
-        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used
-        in a [style config](mark.html#style-config).
+        Default color.  Note that `fill` and `stroke` have higher 
+        precedence than `color` and will override `color`.  __Default 
+        value:__ <span style="color: #4682b4;">&#9632;</span> 
+        `"#4682b4"`  __Note:__ This property cannot be used in a [style 
+        config](mark.html#style-config).
     cursor : string
-        The mouse cursor used over the mark. Any valid [CSS cursor
-        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be
-        used.
+        The mouse cursor used over the mark. Any valid [CSS cursor 
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+         can be used.
     dx : float
-        The horizontal offset, in pixels, between the text label and its anchor
-        point. The offset is applied after rotation by the _angle_ property.
+        The horizontal offset, in pixels, between the text label and its
+         anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     dy : float
-        The vertical offset, in pixels, between the text label and its anchor point.
-        The offset is applied after rotation by the _angle_ property.
+        The vertical offset, in pixels, between the text label and its 
+        anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
-        value:__ (None)
+        Default Fill Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
     filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke
-        color.  __Default value:__ `true` for all marks except `point` and `false`
-        for `point`.  __Applicable for:__ `bar`, `point`, `circle`, `square`, and
-        `area` marks.  __Note:__ This property cannot be used in a [style
+        Whether the mark's color should be used as fill color instead of
+         stroke color.  __Default value:__ `true` for all marks except 
+        `point` and `false` for `point`.  __Applicable for:__ `bar`, 
+        `point`, `circle`, `square`, and `area` marks.  __Note:__ This 
+        property cannot be used in a [style 
         config](mark.html#style-config).
     font : string
         The typeface to set the text in (e.g., `"Helvetica Neue"`).
@@ -3449,89 +3652,100 @@ class MarkDef(SchemaBase):
     fontWeight : anyOf(FontWeight, FontWeightNumber)
         The font weight (e.g., `"bold"`).
     href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+        A URL to load upon mouse click. If defined, the mark acts as a 
+        hyperlink.
     interpolate : Interpolate
-        The line interpolation method to use for line and area marks. One of the
-        following: - `"linear"`: piecewise linear segments, as in a polyline. -
-        `"linear-closed"`: close the linear segments to form a polygon. - `"step"`:
-        alternate between horizontal and vertical segments, as in a step function. -
-        `"step-before"`: alternate between vertical and horizontal segments, as in a
-        step function. - `"step-after"`: alternate between horizontal and vertical
-        segments, as in a step function. - `"basis"`: a B-spline, with control point
-        duplication on the ends. - `"basis-open"`: an open B-spline; may not
-        intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
-        loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
-        the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. -
-        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
-        equivalent to basis, except the tension parameter is used to straighten the
-        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
-        y.
+        The line interpolation method to use for line and area marks. 
+        One of the following: - `"linear"`: piecewise linear segments, 
+        as in a polyline. - `"linear-closed"`: close the linear segments
+         to form a polygon. - `"step"`: alternate between horizontal and
+         vertical segments, as in a step function. - `"step-before"`: 
+        alternate between vertical and horizontal segments, as in a step
+         function. - `"step-after"`: alternate between horizontal and 
+        vertical segments, as in a step function. - `"basis"`: a 
+        B-spline, with control point duplication on the ends. - 
+        `"basis-open"`: an open B-spline; may not intersect the start or
+         end. - `"basis-closed"`: a closed B-spline, as in a loop. - 
+        `"cardinal"`: a Cardinal spline, with control point duplication 
+        on the ends. - `"cardinal-open"`: an open Cardinal spline; may 
+        not intersect the start or end, but will intersect other control
+         points. - `"cardinal-closed"`: a closed Cardinal spline, as in 
+        a loop. - `"bundle"`: equivalent to basis, except the tension 
+        parameter is used to straighten the spline. - `"monotone"`: 
+        cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no
-        limit). The text value will be automatically truncated if the rendered size
-        exceeds the limit.
+        The maximum length of the text mark in pixels (default 0, 
+        indicating no limit). The text value will be automatically 
+        truncated if the rendered size exceeds the limit.
     opacity : float
-        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
-        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or
-        layered `bar` charts and `1` otherwise.
+        The overall opacity (value between [0,1]).  __Default value:__ 
+        `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or
+         `square` marks or layered `bar` charts and `1` otherwise.
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value
-        is either horizontal (default) or vertical. - For bar, rule and tick, this
-        determines whether the size of the bar and tick should be applied to x or y
-        dimension. - For area, this property determines the orient property of the
-        Vega output. - For line, this property determines the sort order of the
-        points in the line if `config.sortLineBy` is not specified. For stacked
-        charts, this is always determined by the orientation of the stack; therefore
-        explicitly specified value will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line 
+        charts. The value is either horizontal (default) or vertical. - 
+        For bar, rule and tick, this determines whether the size of the 
+        bar and tick should be applied to x or y dimension. - For area, 
+        this property determines the orient property of the Vega output.
+         - For line, this property determines the sort order of the 
+        points in the line if `config.sortLineBy` is not specified. For 
+        stacked charts, this is always determined by the orientation of 
+        the stack; therefore explicitly specified value will be ignored.
     radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the `x` and `y` properties.
+        Polar coordinate radial offset, in pixels, of the text label 
+        from the origin determined by the `x` and `y` properties.
     shape : string
-        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom
-        SVG path.  __Default value:__ `"circle"`
+        The default symbol shape to use. One of: `"circle"` (default), 
+        `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or a custom SVG path.  __Default value:__ 
+        `"circle"`
     size : float
-        The pixel area each the point/circle/square. For example: in the case of
-        circles, the radius is determined in part by the square root of the size
-        value.  __Default value:__ `30`
+        The pixel area each the point/circle/square. For example: in the
+         case of circles, the radius is determined in part by the square
+         root of the size value.  __Default value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color
-        __Default value:__ (None)
+        Default Stroke Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+        The stroke opacity (value between [0,1]).  __Default value:__ 
+        `1`
     strokeWidth : float
         The stroke width, in pixels.
     style : anyOf(string, list)
-        A string or array of strings indicating the name of custom styles to apply
-        to the mark. A style is a named collection of mark property defaults defined
-        within the [style configuration](mark.html#style-config). If style is an
-        array, later styles will override earlier styles. Any [mark
-        properties](encoding.html#mark-prop) explicitly defined within the
-        `encoding` will override a style default.  __Default value:__ The mark's
-        name.  For example, a bar mark will have style `"bar"` by default. __Note:__
-        Any specified style will augment the default style. For example, a bar mark
-        with `"style": "foo"` will receive from `config.style.bar` and
-        `config.style.foo` (the specified style `"foo"` has higher precedence).
+        A string or array of strings indicating the name of custom 
+        styles to apply to the mark. A style is a named collection of 
+        mark property defaults defined within the [style 
+        configuration](mark.html#style-config). If style is an array, 
+        later styles will override earlier styles. Any [mark 
+        properties](encoding.html#mark-prop) explicitly defined within 
+        the `encoding` will override a style default.  __Default 
+        value:__ The mark's name.  For example, a bar mark will have 
+        style `"bar"` by default. __Note:__ Any specified style will 
+        augment the default style. For example, a bar mark with 
+        `"style": "foo"` will receive from `config.style.bar` and 
+        `config.style.foo` (the specified style `"foo"` has higher 
+        precedence).
     tension : float
-        Depending on the interpolation type, sets the tension parameter (for line
-        and area marks).
+        Depending on the interpolation type, sets the tension parameter 
+        (for line and area marks).
     text : string
         Placeholder text if the `text` channel is not specified
     theta : float
-        Polar coordinate angle, in radians, of the text label from the origin
-        determined by the `x` and `y` properties. Values for `theta` follow the same
-        convention of `arc` mark `startAngle` and `endAngle` properties: angles are
-        measured in radians, with `0` indicating "north".
+        Polar coordinate angle, in radians, of the text label from the 
+        origin determined by the `x` and `y` properties. Values for 
+        `theta` follow the same convention of `arc` mark `startAngle` 
+        and `endAngle` properties: angles are measured in radians, with 
+        `0` indicating "north".
     type : Mark
-        The mark type. One of `"bar"`, `"circle"`, `"square"`, `"tick"`, `"line"`,
-        `"area"`, `"point"`, `"geoshape"`, `"rule"`, and `"text"`.
+        The mark type. One of `"bar"`, `"circle"`, `"square"`, `"tick"`,
+         `"line"`, `"area"`, `"point"`, `"geoshape"`, `"rule"`, and 
+        `"text"`.
     """
     _schema = {'$ref': '#/definitions/MarkDef'}
     _rootschema = Root._schema
@@ -3562,7 +3776,6 @@ class MarkDef(SchemaBase):
                                       strokeWidth=strokeWidth, style=style,
                                       tension=tension, text=text, theta=theta,
                                       **kwds)
-    
 
 
 class Month(SchemaBase):
@@ -3572,7 +3785,6 @@ class Month(SchemaBase):
 
     def __init__(self, *args):
         super(Month, self).__init__(*args)
-    
 
 
 class MultiSelection(SchemaBase):
@@ -3581,36 +3793,41 @@ class MultiSelection(SchemaBase):
     Attributes
     ----------
     empty : string
-        By default, all data values are considered to lie within an empty selection.
-        When set to `none`, empty selections contain no data values.
+        By default, all data values are considered to lie within an 
+        empty selection. When set to `none`, empty selections contain no
+         data values.
     encodings : list
-        An array of encoding channels. The corresponding data field values must
-        match for a data tuple to fall within the selection.
+        An array of encoding channels. The corresponding data field 
+        values must match for a data tuple to fall within the selection.
     fields : list
-        An array of field names whose values must match for a data tuple to fall
-        within the selection.
+        An array of field names whose values must match for a data tuple
+         to fall within the selection.
     nearest : boolean
-        When true, an invisible voronoi diagram is computed to accelerate discrete
-        selection. The data value _nearest_ the mouse cursor is added to the
-        selection.  See the [nearest transform](nearest.html) documentation for more
-        information.
+        When true, an invisible voronoi diagram is computed to 
+        accelerate discrete selection. The data value _nearest_ the 
+        mouse cursor is added to the selection.  See the [nearest 
+        transform](nearest.html) documentation for more information.
     on : VgEventStream
-        A [Vega event stream](https://vega.github.io/vega/docs/event-streams/)
-        (object or selector) that triggers the selection. For interval selections,
-        the event stream must specify a [start and
+        A [Vega event 
+        stream](https://vega.github.io/vega/docs/event-streams/) (object
+         or selector) that triggers the selection. For interval 
+        selections, the event stream must specify a [start and 
         end](https://vega.github.io/vega/docs/event-streams/#between-filters).
     resolve : SelectionResolution
-        With layered and multi-view displays, a strategy that determines how
-        selections' data queries are resolved when applied in a filter transform,
-        conditional encoding rule, or scale domain.
+        With layered and multi-view displays, a strategy that determines
+         how selections' data queries are resolved when applied in a 
+        filter transform, conditional encoding rule, or scale domain.
     toggle : anyOf(string, boolean)
-        Controls whether data values should be toggled or only ever inserted into
-        multi selections. Can be `true`, `false` (for insertion only), or a [Vega
-        expression](https://vega.github.io/vega/docs/expressions/).  __Default
-        value:__ `true`, which corresponds to `event.shiftKey` (i.e., data values
-        are toggled when a user interacts with the shift-key pressed).  See the
-        [toggle transform](toggle.html) documentation for more information.
+        Controls whether data values should be toggled or only ever 
+        inserted into multi selections. Can be `true`, `false` (for 
+        insertion only), or a [Vega 
+        expression](https://vega.github.io/vega/docs/expressions/).  
+        __Default value:__ `true`, which corresponds to `event.shiftKey`
+         (i.e., data values are toggled when a user interacts with the 
+        shift-key pressed).  See the [toggle transform](toggle.html) 
+        documentation for more information.
     type : string
+    
     """
     _schema = {'$ref': '#/definitions/MultiSelection'}
     _rootschema = Root._schema
@@ -3622,7 +3839,6 @@ class MultiSelection(SchemaBase):
                                              encodings=encodings, fields=fields,
                                              nearest=nearest, on=on,
                                              resolve=resolve, toggle=toggle, **kwds)
-    
 
 
 class MultiSelectionConfig(SchemaBase):
@@ -3631,35 +3847,39 @@ class MultiSelectionConfig(SchemaBase):
     Attributes
     ----------
     empty : string
-        By default, all data values are considered to lie within an empty selection.
-        When set to `none`, empty selections contain no data values.
+        By default, all data values are considered to lie within an 
+        empty selection. When set to `none`, empty selections contain no
+         data values.
     encodings : list
-        An array of encoding channels. The corresponding data field values must
-        match for a data tuple to fall within the selection.
+        An array of encoding channels. The corresponding data field 
+        values must match for a data tuple to fall within the selection.
     fields : list
-        An array of field names whose values must match for a data tuple to fall
-        within the selection.
+        An array of field names whose values must match for a data tuple
+         to fall within the selection.
     nearest : boolean
-        When true, an invisible voronoi diagram is computed to accelerate discrete
-        selection. The data value _nearest_ the mouse cursor is added to the
-        selection.  See the [nearest transform](nearest.html) documentation for more
-        information.
+        When true, an invisible voronoi diagram is computed to 
+        accelerate discrete selection. The data value _nearest_ the 
+        mouse cursor is added to the selection.  See the [nearest 
+        transform](nearest.html) documentation for more information.
     on : VgEventStream
-        A [Vega event stream](https://vega.github.io/vega/docs/event-streams/)
-        (object or selector) that triggers the selection. For interval selections,
-        the event stream must specify a [start and
+        A [Vega event 
+        stream](https://vega.github.io/vega/docs/event-streams/) (object
+         or selector) that triggers the selection. For interval 
+        selections, the event stream must specify a [start and 
         end](https://vega.github.io/vega/docs/event-streams/#between-filters).
     resolve : SelectionResolution
-        With layered and multi-view displays, a strategy that determines how
-        selections' data queries are resolved when applied in a filter transform,
-        conditional encoding rule, or scale domain.
+        With layered and multi-view displays, a strategy that determines
+         how selections' data queries are resolved when applied in a 
+        filter transform, conditional encoding rule, or scale domain.
     toggle : anyOf(string, boolean)
-        Controls whether data values should be toggled or only ever inserted into
-        multi selections. Can be `true`, `false` (for insertion only), or a [Vega
-        expression](https://vega.github.io/vega/docs/expressions/).  __Default
-        value:__ `true`, which corresponds to `event.shiftKey` (i.e., data values
-        are toggled when a user interacts with the shift-key pressed).  See the
-        [toggle transform](toggle.html) documentation for more information.
+        Controls whether data values should be toggled or only ever 
+        inserted into multi selections. Can be `true`, `false` (for 
+        insertion only), or a [Vega 
+        expression](https://vega.github.io/vega/docs/expressions/).  
+        __Default value:__ `true`, which corresponds to `event.shiftKey`
+         (i.e., data values are toggled when a user interacts with the 
+        shift-key pressed).  See the [toggle transform](toggle.html) 
+        documentation for more information.
     """
     _schema = {'$ref': '#/definitions/MultiSelectionConfig'}
     _rootschema = Root._schema
@@ -3671,7 +3891,6 @@ class MultiSelectionConfig(SchemaBase):
                                                    fields=fields, nearest=nearest,
                                                    on=on, resolve=resolve,
                                                    toggle=toggle, **kwds)
-    
 
 
 class MultiTimeUnit(SchemaBase):
@@ -3681,7 +3900,6 @@ class MultiTimeUnit(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(MultiTimeUnit, self).__init__(*args, **kwds)
-    
 
 
 class NamedData(SchemaBase):
@@ -3699,7 +3917,6 @@ class NamedData(SchemaBase):
 
     def __init__(self, name=Undefined, format=Undefined, **kwds):
         super(NamedData, self).__init__(name=name, format=format, **kwds)
-    
 
 
 class NiceTime(SchemaBase):
@@ -3709,7 +3926,6 @@ class NiceTime(SchemaBase):
 
     def __init__(self, *args):
         super(NiceTime, self).__init__(*args)
-    
 
 
 class OrderFieldDef(SchemaBase):
@@ -3718,38 +3934,44 @@ class OrderFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     sort : SortOrder
-        The sort order. One of `"ascending"` (default) or `"descending"`.
+        The sort order. One of `"ascending"` (default) or 
+        `"descending"`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/OrderFieldDef'}
     _rootschema = Root._schema
@@ -3759,7 +3981,6 @@ class OrderFieldDef(SchemaBase):
         super(OrderFieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin,
                                             field=field, sort=sort,
                                             timeUnit=timeUnit, **kwds)
-    
 
 
 class Orient(SchemaBase):
@@ -3769,7 +3990,6 @@ class Orient(SchemaBase):
 
     def __init__(self, *args):
         super(Orient, self).__init__(*args)
-    
 
 
 class Padding(SchemaBase):
@@ -3779,7 +3999,6 @@ class Padding(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Padding, self).__init__(*args, **kwds)
-    
 
 
 class PositionFieldDef(SchemaBase):
@@ -3788,73 +4007,84 @@ class PositionFieldDef(SchemaBase):
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).  __Default value:__ `undefined` (None)
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
+        `undefined` (None)
     axis : anyOf(Axis, None)
-        An object defining properties of axis's gridlines, ticks and labels. If
-        `null`, the axis for the encoding channel will be removed.  __Default
-        value:__ If undefined, default [axis
-        properties](https://vega.github.io/vega-lite/docs/axis.html) are applied.
+        An object defining properties of axis's gridlines, ticks and 
+        labels. If `null`, the axis for the encoding channel will be 
+        removed.  __Default value:__ If undefined, default [axis 
+        properties](https://vega.github.io/vega-lite/docs/axis.html) are
+         applied.
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object defining binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If
-        `true`, default [binning
-        parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.
-        __Default value:__ `false`
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
+         If `true`, default [binning 
+        parameters](https://vega.github.io/vega-lite/docs/bin.html) will
+         be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
-        __Required.__ A string defining the name of the field from which to pull a
-        data value or an object defining iterated values from the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.
-        __Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested
-        objects (e.g., `"field": "foo.bar"` and `"field": "foo['bar']"`). If field
-        names contain dots or brackets but are not nested, you can use `\\` to
-        escape dots and brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more
-        details about escaping in the [field
-        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__
-        `field` is not required if `aggregate` is `count`.
+        __Required.__ A string defining the name of the field from which
+         to pull a data value or an object defining iterated values from
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
+        be used to access nested objects (e.g., `"field": "foo.bar"` and
+         `"field": "foo['bar']"`). If field names contain dots or 
+        brackets but are not nested, you can use `\\` to escape dots and
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
+        documentation](https://vega.github.io/vega-lite/docs/field.html).
+          __Note:__ `field` is not required if `aggregate` is `count`.
     scale : Scale
-        An object defining properties of the channel's scale, which is the function
-        that transforms values in the data domain (numbers, dates, strings, etc) to
-        visual values (pixels, colors, sizes) of the encoding channels.  __Default
-        value:__ If undefined, default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
+        An object defining properties of the channel's scale, which is 
+        the function that transforms values in the data domain (numbers,
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
+        are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values include
-        `"ascending"`, `"descending"` and `null` (no sorting). For fields with
-        discrete domains, `sort` can also be a [sort field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
-        __Default value:__ `"ascending"`
+          __Default value:__ `"ascending"`
     stack : anyOf(StackOffset, None)
-        Type of stacking offset if the field should be stacked. `stack` is only
-        applicable for `x` and `y` channels with continuous domains. For example,
-        `stack` of `y` can be used to customize stacking for a vertical bar chart.
-        `stack` can be one of the following values: - `"zero"`: stacking with
-        baseline offset at zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
-        [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart). -
-        `"normalize"` - stacking with normalized domain (for creating [normalized
-        stacked bar and area
-        charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>
-        -`"center"` - stacking with center baseline (for
+        Type of stacking offset if the field should be stacked. `stack` 
+        is only applicable for `x` and `y` channels with continuous 
+        domains. For example, `stack` of `y` can be used to customize 
+        stacking for a vertical bar chart.  `stack` can be one of the 
+        following values: - `"zero"`: stacking with baseline offset at 
+        zero value of the scale (for creating typical stacked 
+        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and 
+        [area](https://vega.github.io/vega-lite/docs/stack.html#area) 
+        chart). - `"normalize"` - stacking with normalized domain (for 
+        creating [normalized stacked bar and area 
+        charts](https://vega.github.io/vega-lite/docs/stack.html#normalized).
+         <br/> -`"center"` - stacking with center baseline (for 
         [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).
-        - `null` - No-stacking. This will produce layered
+         - `null` - No-stacking. This will produce layered 
         [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart)
-        and area chart.  __Default value:__ `zero` for plots with all of the
-        following conditions are true: (1) the mark is `bar` or `area`; (2) the
-        stacked measure channel (x or y) has a linear scale; (3) At least one of
-        non-position channels mapped to an unaggregated field that is different from
-        x and y.  Otherwise, `null` by default.
+         and area chart.  __Default value:__ `zero` for plots with all 
+        of the following conditions are true: (1) the mark is `bar` or 
+        `area`; (2) the stacked measure channel (x or y) has a linear 
+        scale; (3) At least one of non-position channels mapped to an 
+        unaggregated field that is different from x and y.  Otherwise, 
+        `null` by default.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal
-        field. or [a temporal field that gets casted as
-        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default
-        value:__ `undefined` (None)
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
+          __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is
-        applied.
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     """
     _schema = {'$ref': '#/definitions/PositionFieldDef'}
     _rootschema = Root._schema
@@ -3866,7 +4096,6 @@ class PositionFieldDef(SchemaBase):
                                                axis=axis, bin=bin, field=field,
                                                scale=scale, sort=sort, stack=stack,
                                                timeUnit=timeUnit, **kwds)
-    
 
 
 class Predicate(SchemaBase):
@@ -3876,7 +4105,6 @@ class Predicate(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Predicate, self).__init__(*args, **kwds)
-    
 
 
 class Projection(SchemaBase):
@@ -3885,45 +4113,59 @@ class Projection(SchemaBase):
     Attributes
     ----------
     center : list
-        Sets the projection’s center to the specified center, a two-element array of
-        longitude and latitude in degrees.  __Default value:__ `[0, 0]`
+        Sets the projection’s center to the specified center, a 
+        two-element array of longitude and latitude in degrees.  
+        __Default value:__ `[0, 0]`
     clipAngle : float
-        Sets the projection’s clipping circle radius to the specified angle in
-        degrees. If `null`, switches to
-        [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting rather than
-        small-circle clipping.
+        Sets the projection’s clipping circle radius to the specified 
+        angle in degrees. If `null`, switches to 
+        [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting 
+        rather than small-circle clipping.
     clipExtent : list
-        Sets the projection’s viewport clip extent to the specified bounds in
-        pixels. The extent bounds are specified as an array `[[x0, y0], [x1, y1]]`,
-        where `x0` is the left-side of the viewport, `y0` is the top, `x1` is the
-        right and `y1` is the bottom. If `null`, no viewport clipping is performed.
+        Sets the projection’s viewport clip extent to the specified 
+        bounds in pixels. The extent bounds are specified as an array 
+        `[[x0, y0], [x1, y1]]`, where `x0` is the left-side of the 
+        viewport, `y0` is the top, `x1` is the right and `y1` is the 
+        bottom. If `null`, no viewport clipping is performed.
     coefficient : float
+    
     distance : float
+    
     fraction : float
+    
     lobes : float
+    
     parallel : float
+    
     precision : mapping
-        Sets the threshold for the projection’s [adaptive
-        resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in
-        pixels. This value corresponds to the [Douglas–Peucker
+        Sets the threshold for the projection’s [adaptive 
+        resampling](http://bl.ocks.org/mbostock/3795544) to the 
+        specified value in pixels. This value corresponds to the 
+        [Douglas–Peucker 
         distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
-        If precision is not specified, returns the projection’s current resampling
-        precision which defaults to `√0.5 ≅ 0.70710…`.
+         If precision is not specified, returns the projection’s current
+         resampling precision which defaults to `√0.5 ≅ 0.70710…`.
     radius : float
+    
     ratio : float
+    
     rotate : list
-        Sets the projection’s three-axis rotation to the specified angles, which
-        must be a two- or three-element array of numbers [`lambda`, `phi`, `gamma`]
-        specifying the rotation angles in degrees about each spherical axis. (These
-        correspond to yaw, pitch and roll.)  __Default value:__ `[0, 0, 0]`
+        Sets the projection’s three-axis rotation to the specified 
+        angles, which must be a two- or three-element array of numbers 
+        [`lambda`, `phi`, `gamma`] specifying the rotation angles in 
+        degrees about each spherical axis. (These correspond to yaw, 
+        pitch and roll.)  __Default value:__ `[0, 0, 0]`
     spacing : float
+    
     tilt : float
+    
     type : ProjectionType
-        The cartographic projection to use. This value is case-insensitive, for
-        example `"albers"` and `"Albers"` indicate the same projection type. You can
-        find all valid projection types [in the
+        The cartographic projection to use. This value is 
+        case-insensitive, for example `"albers"` and `"Albers"` indicate
+         the same projection type. You can find all valid projection 
+        types [in the 
         documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
-        __Default value:__ `mercator`
+          __Default value:__ `mercator`
     """
     _schema = {'$ref': '#/definitions/Projection'}
     _rootschema = Root._schema
@@ -3941,55 +4183,68 @@ class Projection(SchemaBase):
                                          radius=radius, ratio=ratio, rotate=rotate,
                                          spacing=spacing, tilt=tilt, type=type,
                                          **kwds)
-    
 
 
 class ProjectionConfig(SchemaBase):
-    """
+    """ProjectionConfig schema wrapper
     Any property of Projection can be in config
     
     Attributes
     ----------
     center : list
-        Sets the projection’s center to the specified center, a two-element array of
-        longitude and latitude in degrees.  __Default value:__ `[0, 0]`
+        Sets the projection’s center to the specified center, a 
+        two-element array of longitude and latitude in degrees.  
+        __Default value:__ `[0, 0]`
     clipAngle : float
-        Sets the projection’s clipping circle radius to the specified angle in
-        degrees. If `null`, switches to
-        [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting rather than
-        small-circle clipping.
+        Sets the projection’s clipping circle radius to the specified 
+        angle in degrees. If `null`, switches to 
+        [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting 
+        rather than small-circle clipping.
     clipExtent : list
-        Sets the projection’s viewport clip extent to the specified bounds in
-        pixels. The extent bounds are specified as an array `[[x0, y0], [x1, y1]]`,
-        where `x0` is the left-side of the viewport, `y0` is the top, `x1` is the
-        right and `y1` is the bottom. If `null`, no viewport clipping is performed.
+        Sets the projection’s viewport clip extent to the specified 
+        bounds in pixels. The extent bounds are specified as an array 
+        `[[x0, y0], [x1, y1]]`, where `x0` is the left-side of the 
+        viewport, `y0` is the top, `x1` is the right and `y1` is the 
+        bottom. If `null`, no viewport clipping is performed.
     coefficient : float
+    
     distance : float
+    
     fraction : float
+    
     lobes : float
+    
     parallel : float
+    
     precision : mapping
-        Sets the threshold for the projection’s [adaptive
-        resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in
-        pixels. This value corresponds to the [Douglas–Peucker
+        Sets the threshold for the projection’s [adaptive 
+        resampling](http://bl.ocks.org/mbostock/3795544) to the 
+        specified value in pixels. This value corresponds to the 
+        [Douglas–Peucker 
         distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
-        If precision is not specified, returns the projection’s current resampling
-        precision which defaults to `√0.5 ≅ 0.70710…`.
+         If precision is not specified, returns the projection’s current
+         resampling precision which defaults to `√0.5 ≅ 0.70710…`.
     radius : float
+    
     ratio : float
+    
     rotate : list
-        Sets the projection’s three-axis rotation to the specified angles, which
-        must be a two- or three-element array of numbers [`lambda`, `phi`, `gamma`]
-        specifying the rotation angles in degrees about each spherical axis. (These
-        correspond to yaw, pitch and roll.)  __Default value:__ `[0, 0, 0]`
+        Sets the projection’s three-axis rotation to the specified 
+        angles, which must be a two- or three-element array of numbers 
+        [`lambda`, `phi`, `gamma`] specifying the rotation angles in 
+        degrees about each spherical axis. (These correspond to yaw, 
+        pitch and roll.)  __Default value:__ `[0, 0, 0]`
     spacing : float
+    
     tilt : float
+    
     type : ProjectionType
-        The cartographic projection to use. This value is case-insensitive, for
-        example `"albers"` and `"Albers"` indicate the same projection type. You can
-        find all valid projection types [in the
+        The cartographic projection to use. This value is 
+        case-insensitive, for example `"albers"` and `"Albers"` indicate
+         the same projection type. You can find all valid projection 
+        types [in the 
         documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
-        __Default value:__ `mercator`
+          __Default value:__ `mercator`
     """
     _schema = {'$ref': '#/definitions/ProjectionConfig'}
     _rootschema = Root._schema
@@ -4008,7 +4263,6 @@ class ProjectionConfig(SchemaBase):
                                                ratio=ratio, rotate=rotate,
                                                spacing=spacing, tilt=tilt,
                                                type=type, **kwds)
-    
 
 
 class ProjectionType(SchemaBase):
@@ -4018,7 +4272,6 @@ class ProjectionType(SchemaBase):
 
     def __init__(self, *args):
         super(ProjectionType, self).__init__(*args)
-    
 
 
 class RangeConfig(SchemaBase):
@@ -4047,7 +4300,6 @@ class RangeConfig(SchemaBase):
         super(RangeConfig, self).__init__(category=category, diverging=diverging,
                                           heatmap=heatmap, ordinal=ordinal,
                                           ramp=ramp, symbol=symbol, **kwds)
-    
 
 
 class RangeConfigValue(SchemaBase):
@@ -4057,7 +4309,6 @@ class RangeConfigValue(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(RangeConfigValue, self).__init__(*args, **kwds)
-    
 
 
 class Repeat(SchemaBase):
@@ -4075,43 +4326,44 @@ class Repeat(SchemaBase):
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(Repeat, self).__init__(column=column, row=row, **kwds)
-    
 
 
 class RepeatRef(SchemaBase):
-    """
+    """RepeatRef schema wrapper
     Reference to a repeated value.
     
     Attributes
     ----------
     repeat : string
+    
     """
     _schema = {'$ref': '#/definitions/RepeatRef'}
     _rootschema = Root._schema
 
     def __init__(self, repeat=Undefined, **kwds):
         super(RepeatRef, self).__init__(repeat=repeat, **kwds)
-    
 
 
 class Resolve(SchemaBase):
-    """
-    Defines how scales, axes, and legends from different specs should be combined. 
-    Resolve is a mapping from `scale`, `axis`, and `legend` to a mapping from 
-    channels to resolutions.
+    """Resolve schema wrapper
+    Defines how scales, axes, and legends from different specs should be 
+    combined. Resolve is a mapping from `scale`, `axis`, and `legend` to a 
+    mapping from channels to resolutions.
     
     Attributes
     ----------
     axis : AxisResolveMap
+    
     legend : LegendResolveMap
+    
     scale : ScaleResolveMap
+    
     """
     _schema = {'$ref': '#/definitions/Resolve'}
     _rootschema = Root._schema
 
     def __init__(self, axis=Undefined, legend=Undefined, scale=Undefined, **kwds):
         super(Resolve, self).__init__(axis=axis, legend=legend, scale=scale, **kwds)
-    
 
 
 class ResolveMode(SchemaBase):
@@ -4121,7 +4373,6 @@ class ResolveMode(SchemaBase):
 
     def __init__(self, *args):
         super(ResolveMode, self).__init__(*args)
-    
 
 
 class Scale(SchemaBase):
@@ -4132,141 +4383,164 @@ class Scale(SchemaBase):
     base : float
         The logarithm base of the `log` scale (default `10`).
     clamp : boolean
-        If `true`, values that exceed the data domain are clamped to either the
-        minimum or maximum range value  __Default value:__ derived from the [scale
-        config](config.html#scale-config)'s `clamp` (`true` by default).
+        If `true`, values that exceed the data domain are clamped to 
+        either the minimum or maximum range value  __Default value:__ 
+        derived from the [scale config](config.html#scale-config)'s 
+        `clamp` (`true` by default).
     domain : anyOf(list, list, list, list, string, SelectionDomain)
-        Customized domain values.  For _quantitative_ fields, `domain` can take the
-        form of a two-element array with minimum and maximum values.  [Piecewise
-        scales](scale.html#piecewise) can be created by providing a `domain` with
-        more than two entries. If the input field is aggregated, `domain` can also
-        be a string value `"unaggregated"`, indicating that the domain should
-        include the raw data values prior to the aggregation.  For _temporal_
-        fields, `domain` can be a two-element array minimum and maximum values, in
-        the form of either timestamps or the [DateTime definition
-        objects](types.html#datetime).  For _ordinal_ and _nominal_ fields, `domain`
-        can be an array that lists valid input values.  The `selection` property can
-        be used to [interactively determine](selection.html#scale-domains) the scale
-        domain.
+        Customized domain values.  For _quantitative_ fields, `domain` 
+        can take the form of a two-element array with minimum and 
+        maximum values.  [Piecewise scales](scale.html#piecewise) can be
+         created by providing a `domain` with more than two entries. If 
+        the input field is aggregated, `domain` can also be a string 
+        value `"unaggregated"`, indicating that the domain should 
+        include the raw data values prior to the aggregation.  For 
+        _temporal_ fields, `domain` can be a two-element array minimum 
+        and maximum values, in the form of either timestamps or the 
+        [DateTime definition objects](types.html#datetime).  For 
+        _ordinal_ and _nominal_ fields, `domain` can be an array that 
+        lists valid input values.  The `selection` property can be used 
+        to [interactively determine](selection.html#scale-domains) the 
+        scale domain.
     exponent : float
         The exponent of the `pow` scale.
     interpolate : anyOf(ScaleInterpolate, ScaleInterpolateParams)
         The interpolation method for range values. By default, a general
-        interpolator for numbers, dates, strings and colors (in RGB space) is used.
-        For color ranges, this property allows interpolation in alternative color
-        spaces. Legal values include `rgb`, `hsl`, `hsl-long`, `lab`, `hcl`,
-        `hcl-long`, `cubehelix` and `cubehelix-long` ('-long' variants use longer
-        paths in polar coordinate spaces). If object-valued, this property accepts
-        an object with a string-valued _type_ property and an optional numeric
-        _gamma_ property applicable to rgb and cubehelix interpolators. For more,
-        see the [d3-interpolate
-        documentation](https://github.com/d3/d3-interpolate).  __Note:__ Sequential
-        scales do not support `interpolate` as they have a fixed interpolator.
-        Since Vega-Lite uses sequential scales for quantitative fields by default,
-        you have to set the scale `type` to other quantitative scale type such as
-        `"linear"` to customize `interpolate`.
+         interpolator for numbers, dates, strings and colors (in RGB 
+        space) is used. For color ranges, this property allows 
+        interpolation in alternative color spaces. Legal values include 
+        `rgb`, `hsl`, `hsl-long`, `lab`, `hcl`, `hcl-long`, `cubehelix` 
+        and `cubehelix-long` ('-long' variants use longer paths in polar
+         coordinate spaces). If object-valued, this property accepts an 
+        object with a string-valued _type_ property and an optional 
+        numeric _gamma_ property applicable to rgb and cubehelix 
+        interpolators. For more, see the [d3-interpolate 
+        documentation](https://github.com/d3/d3-interpolate).  __Note:__
+         Sequential scales do not support `interpolate` as they have a 
+        fixed interpolator.  Since Vega-Lite uses sequential scales for 
+        quantitative fields by default, you have to set the scale `type`
+         to other quantitative scale type such as `"linear"` to 
+        customize `interpolate`.
     nice : anyOf(boolean, float, NiceTime, mapping)
-        Extending the domain so that it starts and ends on nice round values. This
-        method typically modifies the scale’s domain, and may only extend the bounds
-        to the nearest round value. Nicing is useful if the domain is computed from
-        data and may be irregular. For example, for a domain of _[0.201479…,
-        0.996679…]_, a nice domain might be _[0.2, 1.0]_.  For quantitative scales
-        such as linear, `nice` can be either a boolean flag or a number. If `nice`
-        is a number, it will represent a desired tick count. This allows greater
-        control over the step size used to extend the bounds, guaranteeing that the
-        returned ticks will exactly cover the domain.  For temporal fields with time
-        and utc scales, the `nice` value can be a string indicating the desired time
-        interval. Legal values are `"millisecond"`, `"second"`, `"minute"`,
-        `"hour"`, `"day"`, `"week"`, `"month"`, and `"year"`. Alternatively, `time`
-        and `utc` scales can accept an object-valued interval specifier of the form
-        `{"interval": "month", "step": 3}`, which includes a desired number of
-        interval steps. Here, the domain would snap to quarter (Jan, Apr, Jul, Oct)
-        boundaries.  __Default value:__ `true` for unbinned _quantitative_ fields;
-        `false` otherwise.
+        Extending the domain so that it starts and ends on nice round 
+        values. This method typically modifies the scale’s domain, and 
+        may only extend the bounds to the nearest round value. Nicing is
+         useful if the domain is computed from data and may be 
+        irregular. For example, for a domain of _[0.201479…, 
+        0.996679…]_, a nice domain might be _[0.2, 1.0]_.  For 
+        quantitative scales such as linear, `nice` can be either a 
+        boolean flag or a number. If `nice` is a number, it will 
+        represent a desired tick count. This allows greater control over
+         the step size used to extend the bounds, guaranteeing that the 
+        returned ticks will exactly cover the domain.  For temporal 
+        fields with time and utc scales, the `nice` value can be a 
+        string indicating the desired time interval. Legal values are 
+        `"millisecond"`, `"second"`, `"minute"`, `"hour"`, `"day"`, 
+        `"week"`, `"month"`, and `"year"`. Alternatively, `time` and 
+        `utc` scales can accept an object-valued interval specifier of 
+        the form `{"interval": "month", "step": 3}`, which includes a 
+        desired number of interval steps. Here, the domain would snap to
+         quarter (Jan, Apr, Jul, Oct) boundaries.  __Default value:__ 
+        `true` for unbinned _quantitative_ fields; `false` otherwise.
     padding : float
-        For _[continuous](scale.html#continuous)_ scales, expands the scale domain
-        to accommodate the specified number of pixels on each of the scale range.
-        The scale range must represent pixels for this parameter to function as
-        intended. Padding adjustment is performed prior to all other adjustments,
-        including the effects of the zero, nice, domainMin, and domainMax
-        properties.  For _[band](scale.html#band)_ scales, shortcut for setting
-        `paddingInner` and `paddingOuter` to the same value.  For
-        _[point](scale.html#point)_ scales, alias for `paddingOuter`.  __Default
-        value:__ For _continuous_ scales, derived from the [scale
-        config](scale.html#config)'s `continuousPadding`. For _band and point_
-        scales, see `paddingInner` and `paddingOuter`.
+        For _[continuous](scale.html#continuous)_ scales, expands the 
+        scale domain to accommodate the specified number of pixels on 
+        each of the scale range. The scale range must represent pixels 
+        for this parameter to function as intended. Padding adjustment 
+        is performed prior to all other adjustments, including the 
+        effects of the zero, nice, domainMin, and domainMax properties.
+          For _[band](scale.html#band)_ scales, shortcut for setting 
+        `paddingInner` and `paddingOuter` to the same value.  For 
+        _[point](scale.html#point)_ scales, alias for `paddingOuter`.  
+        __Default value:__ For _continuous_ scales, derived from the 
+        [scale config](scale.html#config)'s `continuousPadding`. For 
+        _band and point_ scales, see `paddingInner` and `paddingOuter`.
     paddingInner : float
-        The inner padding (spacing) within each band step of band scales, as a
-        fraction of the step size. This value must lie in the range [0,1].  For
-        point scale, this property is invalid as point scales do not have internal
-        band widths (only step sizes between bands).  __Default value:__ derived
-        from the [scale config](scale.html#config)'s `bandPaddingInner`.
+        The inner padding (spacing) within each band step of band 
+        scales, as a fraction of the step size. This value must lie in 
+        the range [0,1].  For point scale, this property is invalid as 
+        point scales do not have internal band widths (only step sizes 
+        between bands).  __Default value:__ derived from the [scale 
+        config](scale.html#config)'s `bandPaddingInner`.
     paddingOuter : float
-        The outer padding (spacing) at the ends of the range of band and point
-        scales, as a fraction of the step size. This value must lie in the range
-        [0,1].  __Default value:__ derived from the [scale
-        config](scale.html#config)'s `bandPaddingOuter` for band scales and
-        `pointPadding` for point scales.
+        The outer padding (spacing) at the ends of the range of band and
+         point scales, as a fraction of the step size. This value must 
+        lie in the range [0,1].  __Default value:__ derived from the 
+        [scale config](scale.html#config)'s `bandPaddingOuter` for band 
+        scales and `pointPadding` for point scales.
     range : anyOf(list, list, string)
-        The range of the scale. One of:  - A string indicating a [pre-defined named
-        scale range](scale.html#range-config) (e.g., example, `"symbol"`, or
-        `"diverging"`).  - For [continuous scales](scale.html#continuous),
-        two-element array indicating  minimum and maximum values, or an array with
-        more than two entries for specifying a [piecewise
-        scale](scale.html#piecewise).  - For [discrete](scale.html#discrete) and
-        [discretizing](scale.html#discretizing) scales, an array of desired output
-        values.  __Notes:__  1) For [sequential](scale.html#sequential),
-        [ordinal](scale.html#ordinal), and discretizing color scales, you can also
-        specify a color [`scheme`](scale.html#scheme) instead of `range`.  2) Any
-        directly specified `range` for `x` and `y` channels will be ignored. Range
-        can be customized via the view's corresponding [size](size.html) (`width`
-        and `height`) or via [range steps and paddings properties](#range-step) for
-        [band](#band) and [point](#point) scales.
+        The range of the scale. One of:  - A string indicating a 
+        [pre-defined named scale range](scale.html#range-config) (e.g., 
+        example, `"symbol"`, or `"diverging"`).  - For [continuous 
+        scales](scale.html#continuous), two-element array indicating  
+        minimum and maximum values, or an array with more than two 
+        entries for specifying a [piecewise 
+        scale](scale.html#piecewise).  - For 
+        [discrete](scale.html#discrete) and 
+        [discretizing](scale.html#discretizing) scales, an array of 
+        desired output values.  __Notes:__  1) For 
+        [sequential](scale.html#sequential), 
+        [ordinal](scale.html#ordinal), and discretizing color scales, 
+        you can also specify a color [`scheme`](scale.html#scheme) 
+        instead of `range`.  2) Any directly specified `range` for `x` 
+        and `y` channels will be ignored. Range can be customized via 
+        the view's corresponding [size](size.html) (`width` and 
+        `height`) or via [range steps and paddings 
+        properties](#range-step) for [band](#band) and [point](#point) 
+        scales.
     rangeStep : anyOf(float, None)
-        The distance between the starts of adjacent bands or points in
-        [band](scale.html#band) and [point](scale.html#point) scales.  If
-        `rangeStep` is `null` or if the view contains the scale's corresponding
-        [size](size.html) (`width` for `x` scales and `height` for `y` scales),
-        `rangeStep` will be automatically determined to fit the size of the view.
-        __Default value:__  derived the [scale config](config.html#scale-config)'s
-        `textXRangeStep` (`90` by default) for x-scales of `text` marks and
-        `rangeStep` (`21` by default) for x-scales of other marks and y-scales.
-        __Warning__: If `rangeStep` is `null` and the cardinality of the scale's
-        domain is higher than `width` or `height`, the rangeStep might become less
-        than one pixel and the mark might not appear correctly.
+        The distance between the starts of adjacent bands or points in 
+        [band](scale.html#band) and [point](scale.html#point) scales.  
+        If `rangeStep` is `null` or if the view contains the scale's 
+        corresponding [size](size.html) (`width` for `x` scales and 
+        `height` for `y` scales), `rangeStep` will be automatically 
+        determined to fit the size of the view.  __Default value:__  
+        derived the [scale config](config.html#scale-config)'s 
+        `textXRangeStep` (`90` by default) for x-scales of `text` marks 
+        and `rangeStep` (`21` by default) for x-scales of other marks 
+        and y-scales.  __Warning__: If `rangeStep` is `null` and the 
+        cardinality of the scale's domain is higher than `width` or 
+        `height`, the rangeStep might become less than one pixel and the
+         mark might not appear correctly.
     round : boolean
-        If `true`, rounds numeric output values to integers. This can be helpful for
-        snapping to the pixel grid.  __Default value:__ `false`.
+        If `true`, rounds numeric output values to integers. This can be
+         helpful for snapping to the pixel grid.  __Default value:__ 
+        `false`.
     scheme : anyOf(string, SchemeParams)
-        A string indicating a color [scheme](scale.html#scheme) name (e.g.,
-        `"category10"` or `"viridis"`) or a [scheme parameter
-        object](scale.html#scheme-params).  Discrete color schemes may be used with
-        [discrete](scale.html#discrete) or [discretizing](scale.html#discretizing)
-        scales. Continuous color schemes are intended for use with
-        [sequential](scales.html#sequential) scales.  For the full list of supported
-        scheme, please refer to the [Vega
-        Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference.
+        A string indicating a color [scheme](scale.html#scheme) name 
+        (e.g., `"category10"` or `"viridis"`) or a [scheme parameter 
+        object](scale.html#scheme-params).  Discrete color schemes may 
+        be used with [discrete](scale.html#discrete) or 
+        [discretizing](scale.html#discretizing) scales. Continuous color
+         schemes are intended for use with 
+        [sequential](scales.html#sequential) scales.  For the full list 
+        of supported scheme, please refer to the [Vega 
+        Scheme](https://vega.github.io/vega/docs/schemes/#reference) 
+        reference.
     type : ScaleType
-        The type of scale.  Vega-Lite supports the following categories of scale
-        types:  1) [**Continuous Scales**](scale.html#continuous) -- mapping
-        continuous domains to continuous output ranges
-        ([`"linear"`](scale.html#linear), [`"pow"`](scale.html#pow),
-        [`"sqrt"`](scale.html#sqrt), [`"log"`](scale.html#log),
-        [`"time"`](scale.html#time), [`"utc"`](scale.html#utc),
-        [`"sequential"`](scale.html#sequential)).  2) [**Discrete
-        Scales**](scale.html#discrete) -- mapping discrete domains to discrete
-        ([`"ordinal"`](scale.html#ordinal)) or continuous
-        ([`"band"`](scale.html#band) and [`"point"`](scale.html#point)) output
-        ranges.  3) [**Discretizing Scales**](scale.html#discretizing) -- mapping
-        continuous domains to discrete output ranges
-        ([`"bin-linear"`](scale.html#bin-linear) and
-        [`"bin-ordinal"`](scale.html#bin-ordinal)).  __Default value:__ please see
-        the [scale type table](scale.html#type).
+        The type of scale.  Vega-Lite supports the following categories 
+        of scale types:  1) [**Continuous 
+        Scales**](scale.html#continuous) -- mapping continuous domains 
+        to continuous output ranges ([`"linear"`](scale.html#linear), 
+        [`"pow"`](scale.html#pow), [`"sqrt"`](scale.html#sqrt), 
+        [`"log"`](scale.html#log), [`"time"`](scale.html#time), 
+        [`"utc"`](scale.html#utc), 
+        [`"sequential"`](scale.html#sequential)).  2) [**Discrete 
+        Scales**](scale.html#discrete) -- mapping discrete domains to 
+        discrete ([`"ordinal"`](scale.html#ordinal)) or continuous 
+        ([`"band"`](scale.html#band) and [`"point"`](scale.html#point)) 
+        output ranges.  3) [**Discretizing 
+        Scales**](scale.html#discretizing) -- mapping continuous domains
+         to discrete output ranges 
+        ([`"bin-linear"`](scale.html#bin-linear) and 
+        [`"bin-ordinal"`](scale.html#bin-ordinal)).  __Default value:__ 
+        please see the [scale type table](scale.html#type).
     zero : boolean
-        If `true`, ensures that a zero baseline value is included in the scale
-        domain.  __Default value:__ `true` for x and y channels if the quantitative
-        field is not binned and no custom `domain` is provided; `false` otherwise.
-        __Note:__ Log, time, and utc scales do not support `zero`.
+        If `true`, ensures that a zero baseline value is included in the
+         scale domain.  __Default value:__ `true` for x and y channels 
+        if the quantitative field is not binned and no custom `domain` 
+        is provided; `false` otherwise.  __Note:__ Log, time, and utc 
+        scales do not support `zero`.
     """
     _schema = {'$ref': '#/definitions/Scale'}
     _rootschema = Root._schema
@@ -4283,7 +4557,6 @@ class Scale(SchemaBase):
                                     paddingOuter=paddingOuter, range=range,
                                     rangeStep=rangeStep, round=round, scheme=scheme,
                                     type=type, zero=zero, **kwds)
-    
 
 
 class ScaleConfig(SchemaBase):
@@ -4292,70 +4565,74 @@ class ScaleConfig(SchemaBase):
     Attributes
     ----------
     bandPaddingInner : float
-        Default inner padding for `x` and `y` band-ordinal scales.  __Default
-        value:__ `0.1`
+        Default inner padding for `x` and `y` band-ordinal scales.  
+        __Default value:__ `0.1`
     bandPaddingOuter : float
-        Default outer padding for `x` and `y` band-ordinal scales. If not specified,
-        by default, band scale's paddingOuter is paddingInner/2.
+        Default outer padding for `x` and `y` band-ordinal scales. If 
+        not specified, by default, band scale's paddingOuter is 
+        paddingInner/2.
     clamp : boolean
-        If true, values that exceed the data domain are clamped to either the
-        minimum or maximum range value
+        If true, values that exceed the data domain are clamped to 
+        either the minimum or maximum range value
     continuousPadding : float
-        Default padding for continuous scales.  __Default:__ `5` for continuous
-        x-scale of a vertical bar and continuous y-scale of a horizontal bar.; `0`
-        otherwise.
+        Default padding for continuous scales.  __Default:__ `5` for 
+        continuous x-scale of a vertical bar and continuous y-scale of a
+         horizontal bar.; `0` otherwise.
     maxBandSize : float
-        The default max value for mapping quantitative fields to bar's
-        size/bandSize.  If undefined (default), we will use the scale's `rangeStep`
-        - 1.
+        The default max value for mapping quantitative fields to bar's 
+        size/bandSize.  If undefined (default), we will use the scale's 
+        `rangeStep` - 1.
     maxFontSize : float
-        The default max value for mapping quantitative fields to text's
+        The default max value for mapping quantitative fields to text's 
         size/fontSize.  __Default value:__ `40`
     maxOpacity : float
-        Default max opacity for mapping a field to opacity.  __Default value:__
-        `0.8`
+        Default max opacity for mapping a field to opacity.  __Default 
+        value:__ `0.8`
     maxSize : float
         Default max value for point size scale.
     maxStrokeWidth : float
-        Default max strokeWidth for strokeWidth  (or rule/line's size) scale.
-        __Default value:__ `4`
+        Default max strokeWidth for strokeWidth  (or rule/line's size) 
+        scale.  __Default value:__ `4`
     minBandSize : float
-        The default min value for mapping quantitative fields to bar and tick's
-        size/bandSize scale with zero=false.  __Default value:__ `2`
+        The default min value for mapping quantitative fields to bar and
+         tick's size/bandSize scale with zero=false.  __Default value:__
+         `2`
     minFontSize : float
-        The default min value for mapping quantitative fields to tick's
+        The default min value for mapping quantitative fields to tick's 
         size/fontSize scale with zero=false  __Default value:__ `8`
     minOpacity : float
-        Default minimum opacity for mapping a field to opacity.  __Default value:__
-        `0.3`
+        Default minimum opacity for mapping a field to opacity.  
+        __Default value:__ `0.3`
     minSize : float
-        Default minimum value for point size scale with zero=false.  __Default
-        value:__ `9`
+        Default minimum value for point size scale with zero=false.  
+        __Default value:__ `9`
     minStrokeWidth : float
-        Default minimum strokeWidth for strokeWidth (or rule/line's size) scale with
-        zero=false.  __Default value:__ `1`
+        Default minimum strokeWidth for strokeWidth (or rule/line's 
+        size) scale with zero=false.  __Default value:__ `1`
     pointPadding : float
-        Default outer padding for `x` and `y` point-ordinal scales.  __Default
-        value:__ `0.5`
+        Default outer padding for `x` and `y` point-ordinal scales.  
+        __Default value:__ `0.5`
     rangeStep : anyOf(float, None)
-        Default range step for band and point scales of (1) the `y` channel and (2)
-        the `x` channel when the mark is not `text`.  __Default value:__ `21`
+        Default range step for band and point scales of (1) the `y` 
+        channel and (2) the `x` channel when the mark is not `text`.  
+        __Default value:__ `21`
     round : boolean
-        If true, rounds numeric output values to integers. This can be helpful for
-        snapping to the pixel grid. (Only available for `x`, `y`, and `size`
-        scales.)
+        If true, rounds numeric output values to integers. This can be 
+        helpful for snapping to the pixel grid. (Only available for `x`,
+         `y`, and `size` scales.)
     textXRangeStep : float
-        Default range step for `x` band and point scales of text marks.  __Default
-        value:__ `90`
+        Default range step for `x` band and point scales of text marks.
+          __Default value:__ `90`
     useUnaggregatedDomain : boolean
-        Use the source data range before aggregation as scale domain instead of
-        aggregated data for aggregate axis.  This is equivalent to setting `domain`
-        to `"unaggregate"` for aggregated _quantitative_ fields by default.  This
-        property only works with aggregate functions that produce values within the
-        raw data domain (`"mean"`, `"average"`, `"median"`, `"q1"`, `"q3"`, `"min"`,
-        `"max"`). For other aggregations that produce values outside of the raw data
-        domain (e.g. `"count"`, `"sum"`), this property is ignored.  __Default
-        value:__ `false`
+        Use the source data range before aggregation as scale domain 
+        instead of aggregated data for aggregate axis.  This is 
+        equivalent to setting `domain` to `"unaggregate"` for aggregated
+         _quantitative_ fields by default.  This property only works 
+        with aggregate functions that produce values within the raw data
+         domain (`"mean"`, `"average"`, `"median"`, `"q1"`, `"q3"`, 
+        `"min"`, `"max"`). For other aggregations that produce values 
+        outside of the raw data domain (e.g. `"count"`, `"sum"`), this 
+        property is ignored.  __Default value:__ `false`
     """
     _schema = {'$ref': '#/definitions/ScaleConfig'}
     _rootschema = Root._schema
@@ -4385,7 +4662,6 @@ class ScaleConfig(SchemaBase):
                                           textXRangeStep=textXRangeStep,
                                           useUnaggregatedDomain=useUnaggregatedDomain,
                                           **kwds)
-    
 
 
 class ScaleInterpolate(SchemaBase):
@@ -4395,7 +4671,6 @@ class ScaleInterpolate(SchemaBase):
 
     def __init__(self, *args):
         super(ScaleInterpolate, self).__init__(*args)
-    
 
 
 class ScaleInterpolateParams(SchemaBase):
@@ -4404,14 +4679,15 @@ class ScaleInterpolateParams(SchemaBase):
     Attributes
     ----------
     gamma : float
+    
     type : string
+    
     """
     _schema = {'$ref': '#/definitions/ScaleInterpolateParams'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, gamma=Undefined, **kwds):
         super(ScaleInterpolateParams, self).__init__(type=type, gamma=gamma, **kwds)
-    
 
 
 class ScaleResolveMap(SchemaBase):
@@ -4420,11 +4696,17 @@ class ScaleResolveMap(SchemaBase):
     Attributes
     ----------
     color : ResolveMode
+    
     opacity : ResolveMode
+    
     shape : ResolveMode
+    
     size : ResolveMode
+    
     x : ResolveMode
+    
     y : ResolveMode
+    
     """
     _schema = {'$ref': '#/definitions/ScaleResolveMap'}
     _rootschema = Root._schema
@@ -4434,7 +4716,6 @@ class ScaleResolveMap(SchemaBase):
         super(ScaleResolveMap, self).__init__(color=color, opacity=opacity,
                                               shape=shape, size=size, x=x, y=y,
                                               **kwds)
-    
 
 
 class ScaleType(SchemaBase):
@@ -4444,7 +4725,6 @@ class ScaleType(SchemaBase):
 
     def __init__(self, *args):
         super(ScaleType, self).__init__(*args)
-    
 
 
 class SchemeParams(SchemaBase):
@@ -4453,13 +4733,15 @@ class SchemeParams(SchemaBase):
     Attributes
     ----------
     extent : list
-        For sequential and diverging schemes only, determines the extent of the
-        color range to use. For example `[0.2, 1]` will rescale the color scheme
-        such that color values in the range _[0, 0.2)_ are excluded from the scheme.
+        For sequential and diverging schemes only, determines the extent
+         of the color range to use. For example `[0.2, 1]` will rescale 
+        the color scheme such that color values in the range _[0, 0.2)_ 
+        are excluded from the scheme.
     name : string
-        A color scheme name for sequential/ordinal scales (e.g., `"category10"` or
-        `"viridis"`).  For the full list of supported scheme, please refer to the
-        [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference)
+        A color scheme name for sequential/ordinal scales (e.g., 
+        `"category10"` or `"viridis"`).  For the full list of supported 
+        scheme, please refer to the [Vega 
+        Scheme](https://vega.github.io/vega/docs/schemes/#reference) 
         reference.
     """
     _schema = {'$ref': '#/definitions/SchemeParams'}
@@ -4467,7 +4749,6 @@ class SchemeParams(SchemaBase):
 
     def __init__(self, name=Undefined, extent=Undefined, **kwds):
         super(SchemeParams, self).__init__(name=name, extent=extent, **kwds)
-    
 
 
 class SelectionConfig(SchemaBase):
@@ -4476,22 +4757,24 @@ class SelectionConfig(SchemaBase):
     Attributes
     ----------
     interval : IntervalSelectionConfig
-        The default definition for an [`interval`](selection.html#type) selection.
-        All properties and transformations for an interval selection definition
-        (except `type`) may be specified here.  For instance, setting `interval` to
-        `{"translate": false}` disables the ability to move interval selections by
-        default.
+        The default definition for an [`interval`](selection.html#type) 
+        selection. All properties and transformations for an interval 
+        selection definition (except `type`) may be specified here.  For
+         instance, setting `interval` to `{"translate": false}` disables
+         the ability to move interval selections by default.
     multi : MultiSelectionConfig
-        The default definition for a [`multi`](selection.html#type) selection. All
-        properties and transformations for a multi selection definition (except
-        `type`) may be specified here.  For instance, setting `multi` to `{"toggle":
-        "event.altKey"}` adds additional values to multi selections when clicking
-        with the alt-key pressed by default.
+        The default definition for a [`multi`](selection.html#type) 
+        selection. All properties and transformations for a multi 
+        selection definition (except `type`) may be specified here.  For
+         instance, setting `multi` to `{"toggle": "event.altKey"}` adds 
+        additional values to multi selections when clicking with the 
+        alt-key pressed by default.
     single : SingleSelectionConfig
-        The default definition for a [`single`](selection.html#type) selection. All
-        properties and transformations   for a single selection definition (except
-        `type`) may be specified here.  For instance, setting `single` to `{"on":
-        "dblclick"}` populates single selections on double-click by default.
+        The default definition for a [`single`](selection.html#type) 
+        selection. All properties and transformations   for a single 
+        selection definition (except `type`) may be specified here.  For
+         instance, setting `single` to `{"on": "dblclick"}` populates 
+        single selections on double-click by default.
     """
     _schema = {'$ref': '#/definitions/SelectionConfig'}
     _rootschema = Root._schema
@@ -4499,7 +4782,6 @@ class SelectionConfig(SchemaBase):
     def __init__(self, interval=Undefined, multi=Undefined, single=Undefined, **kwds):
         super(SelectionConfig, self).__init__(interval=interval, multi=multi,
                                               single=single, **kwds)
-    
 
 
 class SelectionDef(SchemaBase):
@@ -4509,7 +4791,6 @@ class SelectionDef(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(SelectionDef, self).__init__(*args, **kwds)
-    
 
 
 class SelectionDomain(SchemaBase):
@@ -4519,7 +4800,6 @@ class SelectionDomain(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(SelectionDomain, self).__init__(*args, **kwds)
-    
 
 
 class SelectionPredicate(SchemaBase):
@@ -4535,7 +4815,6 @@ class SelectionPredicate(SchemaBase):
 
     def __init__(self, selection=Undefined, **kwds):
         super(SelectionPredicate, self).__init__(selection=selection, **kwds)
-    
 
 
 class SelectionResolution(SchemaBase):
@@ -4545,7 +4824,6 @@ class SelectionResolution(SchemaBase):
 
     def __init__(self, *args):
         super(SelectionResolution, self).__init__(*args)
-    
 
 
 class SingleDefChannel(SchemaBase):
@@ -4555,7 +4833,6 @@ class SingleDefChannel(SchemaBase):
 
     def __init__(self, *args):
         super(SingleDefChannel, self).__init__(*args)
-    
 
 
 class SingleSelection(SchemaBase):
@@ -4564,36 +4841,40 @@ class SingleSelection(SchemaBase):
     Attributes
     ----------
     bind : anyOf(VgBinding, mapping)
-        Establish a two-way binding between a single selection and input elements
-        (also known as dynamic query widgets). A binding takes the form of Vega's
-        [input element binding
-        definition](https://vega.github.io/vega/docs/signals/#bind) or can be a
-        mapping between projected field/encodings and binding definitions.  See the
-        [bind transform](bind.html) documentation for more information.
+        Establish a two-way binding between a single selection and input
+         elements (also known as dynamic query widgets). A binding takes
+         the form of Vega's [input element binding 
+        definition](https://vega.github.io/vega/docs/signals/#bind) or 
+        can be a mapping between projected field/encodings and binding 
+        definitions.  See the [bind transform](bind.html) documentation 
+        for more information.
     empty : string
-        By default, all data values are considered to lie within an empty selection.
-        When set to `none`, empty selections contain no data values.
+        By default, all data values are considered to lie within an 
+        empty selection. When set to `none`, empty selections contain no
+         data values.
     encodings : list
-        An array of encoding channels. The corresponding data field values must
-        match for a data tuple to fall within the selection.
+        An array of encoding channels. The corresponding data field 
+        values must match for a data tuple to fall within the selection.
     fields : list
-        An array of field names whose values must match for a data tuple to fall
-        within the selection.
+        An array of field names whose values must match for a data tuple
+         to fall within the selection.
     nearest : boolean
-        When true, an invisible voronoi diagram is computed to accelerate discrete
-        selection. The data value _nearest_ the mouse cursor is added to the
-        selection.  See the [nearest transform](nearest.html) documentation for more
-        information.
+        When true, an invisible voronoi diagram is computed to 
+        accelerate discrete selection. The data value _nearest_ the 
+        mouse cursor is added to the selection.  See the [nearest 
+        transform](nearest.html) documentation for more information.
     on : VgEventStream
-        A [Vega event stream](https://vega.github.io/vega/docs/event-streams/)
-        (object or selector) that triggers the selection. For interval selections,
-        the event stream must specify a [start and
+        A [Vega event 
+        stream](https://vega.github.io/vega/docs/event-streams/) (object
+         or selector) that triggers the selection. For interval 
+        selections, the event stream must specify a [start and 
         end](https://vega.github.io/vega/docs/event-streams/#between-filters).
     resolve : SelectionResolution
-        With layered and multi-view displays, a strategy that determines how
-        selections' data queries are resolved when applied in a filter transform,
-        conditional encoding rule, or scale domain.
+        With layered and multi-view displays, a strategy that determines
+         how selections' data queries are resolved when applied in a 
+        filter transform, conditional encoding rule, or scale domain.
     type : string
+    
     """
     _schema = {'$ref': '#/definitions/SingleSelection'}
     _rootschema = Root._schema
@@ -4605,7 +4886,6 @@ class SingleSelection(SchemaBase):
                                               encodings=encodings, fields=fields,
                                               nearest=nearest, on=on,
                                               resolve=resolve, **kwds)
-    
 
 
 class SingleSelectionConfig(SchemaBase):
@@ -4614,35 +4894,38 @@ class SingleSelectionConfig(SchemaBase):
     Attributes
     ----------
     bind : anyOf(VgBinding, mapping)
-        Establish a two-way binding between a single selection and input elements
-        (also known as dynamic query widgets). A binding takes the form of Vega's
-        [input element binding
-        definition](https://vega.github.io/vega/docs/signals/#bind) or can be a
-        mapping between projected field/encodings and binding definitions.  See the
-        [bind transform](bind.html) documentation for more information.
+        Establish a two-way binding between a single selection and input
+         elements (also known as dynamic query widgets). A binding takes
+         the form of Vega's [input element binding 
+        definition](https://vega.github.io/vega/docs/signals/#bind) or 
+        can be a mapping between projected field/encodings and binding 
+        definitions.  See the [bind transform](bind.html) documentation 
+        for more information.
     empty : string
-        By default, all data values are considered to lie within an empty selection.
-        When set to `none`, empty selections contain no data values.
+        By default, all data values are considered to lie within an 
+        empty selection. When set to `none`, empty selections contain no
+         data values.
     encodings : list
-        An array of encoding channels. The corresponding data field values must
-        match for a data tuple to fall within the selection.
+        An array of encoding channels. The corresponding data field 
+        values must match for a data tuple to fall within the selection.
     fields : list
-        An array of field names whose values must match for a data tuple to fall
-        within the selection.
+        An array of field names whose values must match for a data tuple
+         to fall within the selection.
     nearest : boolean
-        When true, an invisible voronoi diagram is computed to accelerate discrete
-        selection. The data value _nearest_ the mouse cursor is added to the
-        selection.  See the [nearest transform](nearest.html) documentation for more
-        information.
+        When true, an invisible voronoi diagram is computed to 
+        accelerate discrete selection. The data value _nearest_ the 
+        mouse cursor is added to the selection.  See the [nearest 
+        transform](nearest.html) documentation for more information.
     on : VgEventStream
-        A [Vega event stream](https://vega.github.io/vega/docs/event-streams/)
-        (object or selector) that triggers the selection. For interval selections,
-        the event stream must specify a [start and
+        A [Vega event 
+        stream](https://vega.github.io/vega/docs/event-streams/) (object
+         or selector) that triggers the selection. For interval 
+        selections, the event stream must specify a [start and 
         end](https://vega.github.io/vega/docs/event-streams/#between-filters).
     resolve : SelectionResolution
-        With layered and multi-view displays, a strategy that determines how
-        selections' data queries are resolved when applied in a filter transform,
-        conditional encoding rule, or scale domain.
+        With layered and multi-view displays, a strategy that determines
+         how selections' data queries are resolved when applied in a 
+        filter transform, conditional encoding rule, or scale domain.
     """
     _schema = {'$ref': '#/definitions/SingleSelectionConfig'}
     _rootschema = Root._schema
@@ -4654,7 +4937,6 @@ class SingleSelectionConfig(SchemaBase):
                                                     encodings=encodings,
                                                     fields=fields, nearest=nearest,
                                                     on=on, resolve=resolve, **kwds)
-    
 
 
 class SingleTimeUnit(SchemaBase):
@@ -4664,7 +4946,6 @@ class SingleTimeUnit(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(SingleTimeUnit, self).__init__(*args, **kwds)
-    
 
 
 class SortField(SchemaBase):
@@ -4673,24 +4954,26 @@ class SortField(SchemaBase):
     Attributes
     ----------
     field : anyOf(string, RepeatRef)
-        The data [field](field.html) to sort by.  __Default value:__ If unspecified,
-        defaults to the field specified in the outer data reference.
+        The data [field](field.html) to sort by.  __Default value:__ If 
+        unspecified, defaults to the field specified in the outer data 
+        reference.
     op : AggregateOp
-        An [aggregate operation](aggregate.html#ops) to perform on the field prior
-        to sorting (e.g., `"count"`, `"mean"` and `"median"`). This property is
-        required in cases where the sort field and the data reference field do not
-        match. The input data objects will be aggregated, grouped by the encoded
-        data field.  For a full list of operations, please see the documentation for
+        An [aggregate operation](aggregate.html#ops) to perform on the 
+        field prior to sorting (e.g., `"count"`, `"mean"` and 
+        `"median"`). This property is required in cases where the sort 
+        field and the data reference field do not match. The input data 
+        objects will be aggregated, grouped by the encoded data field.  
+        For a full list of operations, please see the documentation for 
         [aggregate](aggregate.html#ops).
     order : SortOrder
-        The sort order. One of `"ascending"` (default) or `"descending"`.
+        The sort order. One of `"ascending"` (default) or 
+        `"descending"`.
     """
     _schema = {'$ref': '#/definitions/SortField'}
     _rootschema = Root._schema
 
     def __init__(self, op=Undefined, field=Undefined, order=Undefined, **kwds):
         super(SortField, self).__init__(op=op, field=field, order=order, **kwds)
-    
 
 
 class SortOrder(SchemaBase):
@@ -4700,7 +4983,6 @@ class SortOrder(SchemaBase):
 
     def __init__(self, *args):
         super(SortOrder, self).__init__(*args)
-    
 
 
 class StackOffset(SchemaBase):
@@ -4710,7 +4992,6 @@ class StackOffset(SchemaBase):
 
     def __init__(self, *args):
         super(StackOffset, self).__init__(*args)
-    
 
 
 class StyleConfigIndex(SchemaBase):
@@ -4720,7 +5001,6 @@ class StyleConfigIndex(SchemaBase):
 
     def __init__(self, **kwds):
         super(StyleConfigIndex, self).__init__(**kwds)
-    
 
 
 class TextConfig(SchemaBase):
@@ -4729,38 +5009,42 @@ class TextConfig(SchemaBase):
     Attributes
     ----------
     align : HorizontalAlign
-        The horizontal alignment of the text. One of `"left"`, `"right"`,
-        `"center"`.
+        The horizontal alignment of the text. One of `"left"`, 
+        `"right"`, `"center"`.
     angle : float
         The rotation angle of the text, in degrees.
     baseline : VerticalAlign
-        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
-        __Default value:__ `"middle"`
+        The vertical alignment of the text. One of `"top"`, `"middle"`, 
+        `"bottom"`.  __Default value:__ `"middle"`
     color : string
-        Default color.  Note that `fill` and `stroke` have higher precedence than
-        `color` and will override `color`.  __Default value:__ <span style="color:
-        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used
-        in a [style config](mark.html#style-config).
+        Default color.  Note that `fill` and `stroke` have higher 
+        precedence than `color` and will override `color`.  __Default 
+        value:__ <span style="color: #4682b4;">&#9632;</span> 
+        `"#4682b4"`  __Note:__ This property cannot be used in a [style 
+        config](mark.html#style-config).
     cursor : string
-        The mouse cursor used over the mark. Any valid [CSS cursor
-        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be
-        used.
+        The mouse cursor used over the mark. Any valid [CSS cursor 
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+         can be used.
     dx : float
-        The horizontal offset, in pixels, between the text label and its anchor
-        point. The offset is applied after rotation by the _angle_ property.
+        The horizontal offset, in pixels, between the text label and its
+         anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     dy : float
-        The vertical offset, in pixels, between the text label and its anchor point.
-        The offset is applied after rotation by the _angle_ property.
+        The vertical offset, in pixels, between the text label and its 
+        anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
-        value:__ (None)
+        Default Fill Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
     filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke
-        color.  __Default value:__ `true` for all marks except `point` and `false`
-        for `point`.  __Applicable for:__ `bar`, `point`, `circle`, `square`, and
-        `area` marks.  __Note:__ This property cannot be used in a [style
+        Whether the mark's color should be used as fill color instead of
+         stroke color.  __Default value:__ `true` for all marks except 
+        `point` and `false` for `point`.  __Applicable for:__ `bar`, 
+        `point`, `circle`, `square`, and `area` marks.  __Note:__ This 
+        property cannot be used in a [style 
         config](mark.html#style-config).
     font : string
         The typeface to set the text in (e.g., `"Helvetica Neue"`).
@@ -4771,77 +5055,84 @@ class TextConfig(SchemaBase):
     fontWeight : anyOf(FontWeight, FontWeightNumber)
         The font weight (e.g., `"bold"`).
     href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+        A URL to load upon mouse click. If defined, the mark acts as a 
+        hyperlink.
     interpolate : Interpolate
-        The line interpolation method to use for line and area marks. One of the
-        following: - `"linear"`: piecewise linear segments, as in a polyline. -
-        `"linear-closed"`: close the linear segments to form a polygon. - `"step"`:
-        alternate between horizontal and vertical segments, as in a step function. -
-        `"step-before"`: alternate between vertical and horizontal segments, as in a
-        step function. - `"step-after"`: alternate between horizontal and vertical
-        segments, as in a step function. - `"basis"`: a B-spline, with control point
-        duplication on the ends. - `"basis-open"`: an open B-spline; may not
-        intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
-        loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
-        the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. -
-        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
-        equivalent to basis, except the tension parameter is used to straighten the
-        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
-        y.
+        The line interpolation method to use for line and area marks. 
+        One of the following: - `"linear"`: piecewise linear segments, 
+        as in a polyline. - `"linear-closed"`: close the linear segments
+         to form a polygon. - `"step"`: alternate between horizontal and
+         vertical segments, as in a step function. - `"step-before"`: 
+        alternate between vertical and horizontal segments, as in a step
+         function. - `"step-after"`: alternate between horizontal and 
+        vertical segments, as in a step function. - `"basis"`: a 
+        B-spline, with control point duplication on the ends. - 
+        `"basis-open"`: an open B-spline; may not intersect the start or
+         end. - `"basis-closed"`: a closed B-spline, as in a loop. - 
+        `"cardinal"`: a Cardinal spline, with control point duplication 
+        on the ends. - `"cardinal-open"`: an open Cardinal spline; may 
+        not intersect the start or end, but will intersect other control
+         points. - `"cardinal-closed"`: a closed Cardinal spline, as in 
+        a loop. - `"bundle"`: equivalent to basis, except the tension 
+        parameter is used to straighten the spline. - `"monotone"`: 
+        cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no
-        limit). The text value will be automatically truncated if the rendered size
-        exceeds the limit.
+        The maximum length of the text mark in pixels (default 0, 
+        indicating no limit). The text value will be automatically 
+        truncated if the rendered size exceeds the limit.
     opacity : float
-        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
-        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or
-        layered `bar` charts and `1` otherwise.
+        The overall opacity (value between [0,1]).  __Default value:__ 
+        `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or
+         `square` marks or layered `bar` charts and `1` otherwise.
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value
-        is either horizontal (default) or vertical. - For bar, rule and tick, this
-        determines whether the size of the bar and tick should be applied to x or y
-        dimension. - For area, this property determines the orient property of the
-        Vega output. - For line, this property determines the sort order of the
-        points in the line if `config.sortLineBy` is not specified. For stacked
-        charts, this is always determined by the orientation of the stack; therefore
-        explicitly specified value will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line 
+        charts. The value is either horizontal (default) or vertical. - 
+        For bar, rule and tick, this determines whether the size of the 
+        bar and tick should be applied to x or y dimension. - For area, 
+        this property determines the orient property of the Vega output.
+         - For line, this property determines the sort order of the 
+        points in the line if `config.sortLineBy` is not specified. For 
+        stacked charts, this is always determined by the orientation of 
+        the stack; therefore explicitly specified value will be ignored.
     radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the `x` and `y` properties.
+        Polar coordinate radial offset, in pixels, of the text label 
+        from the origin determined by the `x` and `y` properties.
     shape : string
-        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom
-        SVG path.  __Default value:__ `"circle"`
+        The default symbol shape to use. One of: `"circle"` (default), 
+        `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or a custom SVG path.  __Default value:__ 
+        `"circle"`
     shortTimeLabels : boolean
         Whether month names and weekday names should be abbreviated.
     size : float
-        The pixel area each the point/circle/square. For example: in the case of
-        circles, the radius is determined in part by the square root of the size
-        value.  __Default value:__ `30`
+        The pixel area each the point/circle/square. For example: in the
+         case of circles, the radius is determined in part by the square
+         root of the size value.  __Default value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color
-        __Default value:__ (None)
+        Default Stroke Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+        The stroke opacity (value between [0,1]).  __Default value:__ 
+        `1`
     strokeWidth : float
         The stroke width, in pixels.
     tension : float
-        Depending on the interpolation type, sets the tension parameter (for line
-        and area marks).
+        Depending on the interpolation type, sets the tension parameter 
+        (for line and area marks).
     text : string
         Placeholder text if the `text` channel is not specified
     theta : float
-        Polar coordinate angle, in radians, of the text label from the origin
-        determined by the `x` and `y` properties. Values for `theta` follow the same
-        convention of `arc` mark `startAngle` and `endAngle` properties: angles are
-        measured in radians, with `0` indicating "north".
+        Polar coordinate angle, in radians, of the text label from the 
+        origin determined by the `x` and `y` properties. Values for 
+        `theta` follow the same convention of `arc` mark `startAngle` 
+        and `endAngle` properties: angles are measured in radians, with 
+        `0` indicating "north".
     """
     _schema = {'$ref': '#/definitions/TextConfig'}
     _rootschema = Root._schema
@@ -4872,7 +5163,6 @@ class TextConfig(SchemaBase):
                                          strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, tension=tension,
                                          text=text, theta=theta, **kwds)
-    
 
 
 class TickConfig(SchemaBase):
@@ -4881,40 +5171,44 @@ class TickConfig(SchemaBase):
     Attributes
     ----------
     align : HorizontalAlign
-        The horizontal alignment of the text. One of `"left"`, `"right"`,
-        `"center"`.
+        The horizontal alignment of the text. One of `"left"`, 
+        `"right"`, `"center"`.
     angle : float
         The rotation angle of the text, in degrees.
     bandSize : float
         The width of the ticks.  __Default value:__  2/3 of rangeStep.
     baseline : VerticalAlign
-        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
-        __Default value:__ `"middle"`
+        The vertical alignment of the text. One of `"top"`, `"middle"`, 
+        `"bottom"`.  __Default value:__ `"middle"`
     color : string
-        Default color.  Note that `fill` and `stroke` have higher precedence than
-        `color` and will override `color`.  __Default value:__ <span style="color:
-        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used
-        in a [style config](mark.html#style-config).
+        Default color.  Note that `fill` and `stroke` have higher 
+        precedence than `color` and will override `color`.  __Default 
+        value:__ <span style="color: #4682b4;">&#9632;</span> 
+        `"#4682b4"`  __Note:__ This property cannot be used in a [style 
+        config](mark.html#style-config).
     cursor : string
-        The mouse cursor used over the mark. Any valid [CSS cursor
-        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be
-        used.
+        The mouse cursor used over the mark. Any valid [CSS cursor 
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+         can be used.
     dx : float
-        The horizontal offset, in pixels, between the text label and its anchor
-        point. The offset is applied after rotation by the _angle_ property.
+        The horizontal offset, in pixels, between the text label and its
+         anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     dy : float
-        The vertical offset, in pixels, between the text label and its anchor point.
-        The offset is applied after rotation by the _angle_ property.
+        The vertical offset, in pixels, between the text label and its 
+        anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
-        value:__ (None)
+        Default Fill Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
     filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke
-        color.  __Default value:__ `true` for all marks except `point` and `false`
-        for `point`.  __Applicable for:__ `bar`, `point`, `circle`, `square`, and
-        `area` marks.  __Note:__ This property cannot be used in a [style
+        Whether the mark's color should be used as fill color instead of
+         stroke color.  __Default value:__ `true` for all marks except 
+        `point` and `false` for `point`.  __Applicable for:__ `bar`, 
+        `point`, `circle`, `square`, and `area` marks.  __Note:__ This 
+        property cannot be used in a [style 
         config](mark.html#style-config).
     font : string
         The typeface to set the text in (e.g., `"Helvetica Neue"`).
@@ -4925,75 +5219,82 @@ class TickConfig(SchemaBase):
     fontWeight : anyOf(FontWeight, FontWeightNumber)
         The font weight (e.g., `"bold"`).
     href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+        A URL to load upon mouse click. If defined, the mark acts as a 
+        hyperlink.
     interpolate : Interpolate
-        The line interpolation method to use for line and area marks. One of the
-        following: - `"linear"`: piecewise linear segments, as in a polyline. -
-        `"linear-closed"`: close the linear segments to form a polygon. - `"step"`:
-        alternate between horizontal and vertical segments, as in a step function. -
-        `"step-before"`: alternate between vertical and horizontal segments, as in a
-        step function. - `"step-after"`: alternate between horizontal and vertical
-        segments, as in a step function. - `"basis"`: a B-spline, with control point
-        duplication on the ends. - `"basis-open"`: an open B-spline; may not
-        intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
-        loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
-        the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. -
-        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
-        equivalent to basis, except the tension parameter is used to straighten the
-        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
-        y.
+        The line interpolation method to use for line and area marks. 
+        One of the following: - `"linear"`: piecewise linear segments, 
+        as in a polyline. - `"linear-closed"`: close the linear segments
+         to form a polygon. - `"step"`: alternate between horizontal and
+         vertical segments, as in a step function. - `"step-before"`: 
+        alternate between vertical and horizontal segments, as in a step
+         function. - `"step-after"`: alternate between horizontal and 
+        vertical segments, as in a step function. - `"basis"`: a 
+        B-spline, with control point duplication on the ends. - 
+        `"basis-open"`: an open B-spline; may not intersect the start or
+         end. - `"basis-closed"`: a closed B-spline, as in a loop. - 
+        `"cardinal"`: a Cardinal spline, with control point duplication 
+        on the ends. - `"cardinal-open"`: an open Cardinal spline; may 
+        not intersect the start or end, but will intersect other control
+         points. - `"cardinal-closed"`: a closed Cardinal spline, as in 
+        a loop. - `"bundle"`: equivalent to basis, except the tension 
+        parameter is used to straighten the spline. - `"monotone"`: 
+        cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no
-        limit). The text value will be automatically truncated if the rendered size
-        exceeds the limit.
+        The maximum length of the text mark in pixels (default 0, 
+        indicating no limit). The text value will be automatically 
+        truncated if the rendered size exceeds the limit.
     opacity : float
-        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
-        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or
-        layered `bar` charts and `1` otherwise.
+        The overall opacity (value between [0,1]).  __Default value:__ 
+        `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or
+         `square` marks or layered `bar` charts and `1` otherwise.
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value
-        is either horizontal (default) or vertical. - For bar, rule and tick, this
-        determines whether the size of the bar and tick should be applied to x or y
-        dimension. - For area, this property determines the orient property of the
-        Vega output. - For line, this property determines the sort order of the
-        points in the line if `config.sortLineBy` is not specified. For stacked
-        charts, this is always determined by the orientation of the stack; therefore
-        explicitly specified value will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line 
+        charts. The value is either horizontal (default) or vertical. - 
+        For bar, rule and tick, this determines whether the size of the 
+        bar and tick should be applied to x or y dimension. - For area, 
+        this property determines the orient property of the Vega output.
+         - For line, this property determines the sort order of the 
+        points in the line if `config.sortLineBy` is not specified. For 
+        stacked charts, this is always determined by the orientation of 
+        the stack; therefore explicitly specified value will be ignored.
     radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the `x` and `y` properties.
+        Polar coordinate radial offset, in pixels, of the text label 
+        from the origin determined by the `x` and `y` properties.
     shape : string
-        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom
-        SVG path.  __Default value:__ `"circle"`
+        The default symbol shape to use. One of: `"circle"` (default), 
+        `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or a custom SVG path.  __Default value:__ 
+        `"circle"`
     size : float
-        The pixel area each the point/circle/square. For example: in the case of
-        circles, the radius is determined in part by the square root of the size
-        value.  __Default value:__ `30`
+        The pixel area each the point/circle/square. For example: in the
+         case of circles, the radius is determined in part by the square
+         root of the size value.  __Default value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color
-        __Default value:__ (None)
+        Default Stroke Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+        The stroke opacity (value between [0,1]).  __Default value:__ 
+        `1`
     strokeWidth : float
         The stroke width, in pixels.
     tension : float
-        Depending on the interpolation type, sets the tension parameter (for line
-        and area marks).
+        Depending on the interpolation type, sets the tension parameter 
+        (for line and area marks).
     text : string
         Placeholder text if the `text` channel is not specified
     theta : float
-        Polar coordinate angle, in radians, of the text label from the origin
-        determined by the `x` and `y` properties. Values for `theta` follow the same
-        convention of `arc` mark `startAngle` and `endAngle` properties: angles are
-        measured in radians, with `0` indicating "north".
+        Polar coordinate angle, in radians, of the text label from the 
+        origin determined by the `x` and `y` properties. Values for 
+        `theta` follow the same convention of `arc` mark `startAngle` 
+        and `endAngle` properties: angles are measured in radians, with 
+        `0` indicating "north".
     thickness : float
         Thickness of the tick mark.  __Default value:__  `1`
     """
@@ -5027,7 +5328,6 @@ class TickConfig(SchemaBase):
                                          strokeWidth=strokeWidth, tension=tension,
                                          text=text, theta=theta,
                                          thickness=thickness, **kwds)
-    
 
 
 class TimeUnit(SchemaBase):
@@ -5037,7 +5337,6 @@ class TimeUnit(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(TimeUnit, self).__init__(*args, **kwds)
-    
 
 
 class TimeUnitTransform(SchemaBase):
@@ -5058,7 +5357,6 @@ class TimeUnitTransform(SchemaBase):
     def __init__(self, field=Undefined, timeUnit=Undefined, **kwds):
         super(TimeUnitTransform, self).__init__(field=field, timeUnit=timeUnit,
                                                 **kwds)
-    
 
 
 class TitleOrient(SchemaBase):
@@ -5068,7 +5366,6 @@ class TitleOrient(SchemaBase):
 
     def __init__(self, *args):
         super(TitleOrient, self).__init__(*args)
-    
 
 
 class TitleParams(SchemaBase):
@@ -5077,23 +5374,25 @@ class TitleParams(SchemaBase):
     Attributes
     ----------
     anchor : Anchor
-        The anchor position for placing the title. One of `"start"`, `"middle"`, or
-        `"end"`. For example, with an orientation of top these anchor positions map
-        to a left-, center-, or right-aligned title.  __Default value:__ `"middle"`
-        for [single](spec.html) and [layered](layer.html) views. `"start"` for other
-        composite views.  __Note:__ [For
-        now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only
-        customizable only for [single](spec.html) and [layered](layer.html) views.
-        For other composite views, `anchor` is always `"start"`.
+        The anchor position for placing the title. One of `"start"`, 
+        `"middle"`, or `"end"`. For example, with an orientation of top 
+        these anchor positions map to a left-, center-, or right-aligned
+         title.  __Default value:__ `"middle"` for [single](spec.html) 
+        and [layered](layer.html) views. `"start"` for other composite 
+        views.  __Note:__ [For 
+        now](https://github.com/vega/vega-lite/issues/2875), `anchor` is
+         only customizable only for [single](spec.html) and 
+        [layered](layer.html) views.  For other composite views, 
+        `anchor` is always `"start"`.
     offset : float
-        The orthogonal offset in pixels by which to displace the title from its
-        position along the edge of the chart.
+        The orthogonal offset in pixels by which to displace the title 
+        from its position along the edge of the chart.
     orient : TitleOrient
-        The orientation of the title relative to the chart. One of `"top"` (the
-        default), `"bottom"`, `"left"`, or `"right"`.
+        The orientation of the title relative to the chart. One of 
+        `"top"` (the default), `"bottom"`, `"left"`, or `"right"`.
     style : anyOf(string, list)
-        A [mark style property](config.html#style) to apply to the title text mark.
-        __Default value:__ `"group-title"`.
+        A [mark style property](config.html#style) to apply to the title
+         text mark.  __Default value:__ `"group-title"`.
     text : string
         The title text.
     """
@@ -5104,7 +5403,6 @@ class TitleParams(SchemaBase):
                  orient=Undefined, style=Undefined, **kwds):
         super(TitleParams, self).__init__(text=text, anchor=anchor, offset=offset,
                                           orient=orient, style=style, **kwds)
-    
 
 
 class TopLevelFacetedUnitSpec(SchemaBase):
@@ -5113,96 +5411,109 @@ class TopLevelFacetedUnitSpec(SchemaBase):
     Attributes
     ----------
     $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema`
-        property allows automatic validation and autocomplete in editors that
-        support JSON schema.
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
+        specification. Unless you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
+        `$schema` property allows automatic validation and autocomplete 
+        in editors that support JSON schema.
     autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be
-        one of `"pad"`, `"fit"` or `"none"`. Object values can additionally specify
-        parameters for content sizing and automatic resizing. `"fit"` is only
-        supported for single and layered views that don't use `rangeStep`.
-        __Default value__: `pad`
+        Sets how the visualization size should be determined. If a 
+        string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
+        values can additionally specify parameters for content sizing 
+        and automatic resizing. `"fit"` is only supported for single and
+         layered views that don't use `rangeStep`.  __Default value__: 
+        `pad`
     background : string
-        CSS color property to use as the background of visualization.  __Default
-        value:__ none (transparent)
+        CSS color property to use as the background of visualization.  
+        __Default value:__ none (transparent)
     config : Config
-        Vega-Lite configuration object.  This property can only be defined at the
-        top-level of a specification.
+        Vega-Lite configuration object.  This property can only be 
+        defined at the top-level of a specification.
     data : Data
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
     encoding : EncodingWithFacet
-        A key-value mapping between encoding channels and definition of fields.
+        A key-value mapping between encoding channels and definition of 
+        fields.
     height : float
         The height of a visualization.  __Default value:__ - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its y-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        height will be the value of
+         
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the height will be the value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For y-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the height is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the height is [determined by
+         the range step, paddings, and the cardinality of the field 
+        mapped to 
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the height will be the value of
+         Otherwise, if the `rangeStep` is `null`, the height will be the
+         value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `y` channel, the `height` will be the value of
-        `rangeStep`.  __Note__: For plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the height of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         - If no field is mapped to `y` channel, the `height` will be 
+        the value of `rangeStep`.  __Note__: For plots with [`row` and 
+        `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the height of a single view.  __See also:__ The
+         documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`,
-        `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and
-        `"text"`) or a [mark definition
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
         object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     padding : Padding
-        The default visualization padding, in pixels, from the edge of the
-        visualization canvas to the data rectangle.  If a number, specifies padding
-        for all sides. If an object, the value should have the format `{"left": 5,
-        "top": 5, "right": 5, "bottom": 5}` to specify padding for each side of the
-        visualization.  __Default value__: `5`
+        The default visualization padding, in pixels, from the edge of 
+        the visualization canvas to the data rectangle.  If a number, 
+        specifies padding for all sides. If an object, the value should 
+        have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
+         to specify padding for each side of the visualization.  
+        __Default value__: `5`
     projection : Projection
-        An object defining properties of geographic projection.  Works with
-        `"geoshape"` marks and `"point"` or `"line"` marks that have a channel (one
-        or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or
-        `"longitude"`.
+        An object defining properties of geographic projection.  Works 
+        with `"geoshape"` marks and `"point"` or `"line"` marks that 
+        have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
+        with type `"latitude"`, or `"longitude"`.
     selection : mapping
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     width : float
-        The width of a visualization.  __Default value:__ This will be determined by
-        the following rules:  - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its x-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        width will be the value of
+        The width of a visualization.  __Default value:__ This will be 
+        determined by the following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the width will be the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For x-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the width is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the width is [determined by 
+        the range step, paddings, and the cardinality of the field 
+        mapped to 
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the width will be the value of
+           Otherwise, if the `rangeStep` is `null`, the width will be 
+        the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `x` channel, the `width` will be the value of
+         - If no field is mapped to `x` channel, the `width` will be the
+         value of 
         [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
-        plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the width of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         for `text` mark and the value of `rangeStep` for other marks.  
+        __Note:__ For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the width of a single view.  __See also:__ The 
+        documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     """
     _schema = {'$ref': '#/definitions/TopLevel<FacetedUnitSpec>'}
     _rootschema = Root._schema
@@ -5224,7 +5535,6 @@ class TopLevelFacetedUnitSpec(SchemaBase):
                                                       title=title,
                                                       transform=transform,
                                                       width=width, **kwds)
-    
 
 
 class TopLevelFacetSpec(SchemaBase):
@@ -5233,38 +5543,40 @@ class TopLevelFacetSpec(SchemaBase):
     Attributes
     ----------
     $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema`
-        property allows automatic validation and autocomplete in editors that
-        support JSON schema.
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
+        specification. Unless you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
+        `$schema` property allows automatic validation and autocomplete 
+        in editors that support JSON schema.
     autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be
-        one of `"pad"`, `"fit"` or `"none"`. Object values can additionally specify
-        parameters for content sizing and automatic resizing. `"fit"` is only
-        supported for single and layered views that don't use `rangeStep`.
-        __Default value__: `pad`
+        Sets how the visualization size should be determined. If a 
+        string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
+        values can additionally specify parameters for content sizing 
+        and automatic resizing. `"fit"` is only supported for single and
+         layered views that don't use `rangeStep`.  __Default value__: 
+        `pad`
     background : string
-        CSS color property to use as the background of visualization.  __Default
-        value:__ none (transparent)
+        CSS color property to use as the background of visualization.  
+        __Default value:__ none (transparent)
     config : Config
-        Vega-Lite configuration object.  This property can only be defined at the
-        top-level of a specification.
+        Vega-Lite configuration object.  This property can only be 
+        defined at the top-level of a specification.
     data : Data
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
     facet : FacetMapping
-        An object that describes mappings between `row` and `column` channels and
-        their field definitions.
+        An object that describes mappings between `row` and `column` 
+        channels and their field definitions.
     name : string
         Name of the visualization for later reference.
     padding : Padding
-        The default visualization padding, in pixels, from the edge of the
-        visualization canvas to the data rectangle.  If a number, specifies padding
-        for all sides. If an object, the value should have the format `{"left": 5,
-        "top": 5, "right": 5, "bottom": 5}` to specify padding for each side of the
-        visualization.  __Default value__: `5`
+        The default visualization padding, in pixels, from the edge of 
+        the visualization canvas to the data rectangle.  If a number, 
+        specifies padding for all sides. If an object, the value should 
+        have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
+         to specify padding for each side of the visualization.  
+        __Default value__: `5`
     resolve : Resolve
         Scale, axis, and legend resolutions for facets.
     spec : anyOf(LayerSpec, CompositeUnitSpec)
@@ -5272,7 +5584,8 @@ class TopLevelFacetSpec(SchemaBase):
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     """
     _schema = {'$ref': '#/definitions/TopLevel<FacetSpec>'}
     _rootschema = Root._schema
@@ -5289,7 +5602,6 @@ class TopLevelFacetSpec(SchemaBase):
                                                 padding=padding, resolve=resolve,
                                                 title=title, transform=transform,
                                                 **kwds)
-    
 
 
 class TopLevelHConcatSpec(SchemaBase):
@@ -5298,23 +5610,24 @@ class TopLevelHConcatSpec(SchemaBase):
     Attributes
     ----------
     $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema`
-        property allows automatic validation and autocomplete in editors that
-        support JSON schema.
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
+        specification. Unless you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
+        `$schema` property allows automatic validation and autocomplete 
+        in editors that support JSON schema.
     autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be
-        one of `"pad"`, `"fit"` or `"none"`. Object values can additionally specify
-        parameters for content sizing and automatic resizing. `"fit"` is only
-        supported for single and layered views that don't use `rangeStep`.
-        __Default value__: `pad`
+        Sets how the visualization size should be determined. If a 
+        string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
+        values can additionally specify parameters for content sizing 
+        and automatic resizing. `"fit"` is only supported for single and
+         layered views that don't use `rangeStep`.  __Default value__: 
+        `pad`
     background : string
-        CSS color property to use as the background of visualization.  __Default
-        value:__ none (transparent)
+        CSS color property to use as the background of visualization.  
+        __Default value:__ none (transparent)
     config : Config
-        Vega-Lite configuration object.  This property can only be defined at the
-        top-level of a specification.
+        Vega-Lite configuration object.  This property can only be 
+        defined at the top-level of a specification.
     data : Data
         An object describing the data source
     description : string
@@ -5324,17 +5637,20 @@ class TopLevelHConcatSpec(SchemaBase):
     name : string
         Name of the visualization for later reference.
     padding : Padding
-        The default visualization padding, in pixels, from the edge of the
-        visualization canvas to the data rectangle.  If a number, specifies padding
-        for all sides. If an object, the value should have the format `{"left": 5,
-        "top": 5, "right": 5, "bottom": 5}` to specify padding for each side of the
-        visualization.  __Default value__: `5`
+        The default visualization padding, in pixels, from the edge of 
+        the visualization canvas to the data rectangle.  If a number, 
+        specifies padding for all sides. If an object, the value should 
+        have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
+         to specify padding for each side of the visualization.  
+        __Default value__: `5`
     resolve : Resolve
-        Scale, axis, and legend resolutions for horizontally concatenated charts.
+        Scale, axis, and legend resolutions for horizontally 
+        concatenated charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     """
     _schema = {'$ref': '#/definitions/TopLevel<HConcatSpec>'}
     _rootschema = Root._schema
@@ -5351,7 +5667,6 @@ class TopLevelHConcatSpec(SchemaBase):
                                                   name=name, padding=padding,
                                                   resolve=resolve, title=title,
                                                   transform=transform, **kwds)
-    
 
 
 class TopLevelLayerSpec(SchemaBase):
@@ -5360,88 +5675,100 @@ class TopLevelLayerSpec(SchemaBase):
     Attributes
     ----------
     $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema`
-        property allows automatic validation and autocomplete in editors that
-        support JSON schema.
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
+        specification. Unless you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
+        `$schema` property allows automatic validation and autocomplete 
+        in editors that support JSON schema.
     autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be
-        one of `"pad"`, `"fit"` or `"none"`. Object values can additionally specify
-        parameters for content sizing and automatic resizing. `"fit"` is only
-        supported for single and layered views that don't use `rangeStep`.
-        __Default value__: `pad`
+        Sets how the visualization size should be determined. If a 
+        string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
+        values can additionally specify parameters for content sizing 
+        and automatic resizing. `"fit"` is only supported for single and
+         layered views that don't use `rangeStep`.  __Default value__: 
+        `pad`
     background : string
-        CSS color property to use as the background of visualization.  __Default
-        value:__ none (transparent)
+        CSS color property to use as the background of visualization.  
+        __Default value:__ none (transparent)
     config : Config
-        Vega-Lite configuration object.  This property can only be defined at the
-        top-level of a specification.
+        Vega-Lite configuration object.  This property can only be 
+        defined at the top-level of a specification.
     data : Data
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
     height : float
         The height of a visualization.  __Default value:__ - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its y-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        height will be the value of
+         
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the height will be the value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For y-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the height is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the height is [determined by
+         the range step, paddings, and the cardinality of the field 
+        mapped to 
         y-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the height will be the value of
+         Otherwise, if the `rangeStep` is `null`, the height will be the
+         value of 
         [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `y` channel, the `height` will be the value of
-        `rangeStep`.  __Note__: For plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the height of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         - If no field is mapped to `y` channel, the `height` will be 
+        the value of `rangeStep`.  __Note__: For plots with [`row` and 
+        `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the height of a single view.  __See also:__ The
+         documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     layer : list
-        Layer or single view specifications to be layered.  __Note__: Specifications
-        inside `layer` cannot use `row` and `column` channels as layering facet
-        specifications is not allowed.
+        Layer or single view specifications to be layered.  __Note__: 
+        Specifications inside `layer` cannot use `row` and `column` 
+        channels as layering facet specifications is not allowed.
     name : string
         Name of the visualization for later reference.
     padding : Padding
-        The default visualization padding, in pixels, from the edge of the
-        visualization canvas to the data rectangle.  If a number, specifies padding
-        for all sides. If an object, the value should have the format `{"left": 5,
-        "top": 5, "right": 5, "bottom": 5}` to specify padding for each side of the
-        visualization.  __Default value__: `5`
+        The default visualization padding, in pixels, from the edge of 
+        the visualization canvas to the data rectangle.  If a number, 
+        specifies padding for all sides. If an object, the value should 
+        have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
+         to specify padding for each side of the visualization.  
+        __Default value__: `5`
     resolve : Resolve
         Scale, axis, and legend resolutions for layers.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     width : float
-        The width of a visualization.  __Default value:__ This will be determined by
-        the following rules:  - If a view's
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type
-        is `"fit"` or its x-channel has a [continuous
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the
-        width will be the value of
+        The width of a visualization.  __Default value:__ This will be 
+        determined by the following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize)
+         type is `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous),
+         the width will be the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - For x-axis with a band or point scale: if
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a
-        numeric value or unspecified, the width is [determined by the range step,
-        paddings, and the cardinality of the field mapped to
+         - For x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band)
+         is a numeric value or unspecified, the width is [determined by 
+        the range step, paddings, and the cardinality of the field 
+        mapped to 
         x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).
-        Otherwise, if the `rangeStep` is `null`, the width will be the value of
+           Otherwise, if the `rangeStep` is `null`, the width will be 
+        the value of 
         [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).
-        - If no field is mapped to `x` channel, the `width` will be the value of
+         - If no field is mapped to `x` channel, the `width` will be the
+         value of 
         [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-        for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For
-        plots with [`row` and `column`
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
-        represents the width of a single view.  __See also:__ The documentation for
-        [width and height](https://vega.github.io/vega-lite/docs/size.html) contains
-        more examples.
+         for `text` mark and the value of `rangeStep` for other marks.  
+        __Note:__ For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet),
+         this represents the width of a single view.  __See also:__ The 
+        documentation for [width and 
+        height](https://vega.github.io/vega-lite/docs/size.html) 
+        contains more examples.
     """
     _schema = {'$ref': '#/definitions/TopLevel<LayerSpec>'}
     _rootschema = Root._schema
@@ -5459,7 +5786,6 @@ class TopLevelLayerSpec(SchemaBase):
                                                 padding=padding, resolve=resolve,
                                                 title=title, transform=transform,
                                                 width=width, **kwds)
-    
 
 
 class TopLevelRepeatSpec(SchemaBase):
@@ -5468,23 +5794,24 @@ class TopLevelRepeatSpec(SchemaBase):
     Attributes
     ----------
     $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema`
-        property allows automatic validation and autocomplete in editors that
-        support JSON schema.
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
+        specification. Unless you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
+        `$schema` property allows automatic validation and autocomplete 
+        in editors that support JSON schema.
     autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be
-        one of `"pad"`, `"fit"` or `"none"`. Object values can additionally specify
-        parameters for content sizing and automatic resizing. `"fit"` is only
-        supported for single and layered views that don't use `rangeStep`.
-        __Default value__: `pad`
+        Sets how the visualization size should be determined. If a 
+        string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
+        values can additionally specify parameters for content sizing 
+        and automatic resizing. `"fit"` is only supported for single and
+         layered views that don't use `rangeStep`.  __Default value__: 
+        `pad`
     background : string
-        CSS color property to use as the background of visualization.  __Default
-        value:__ none (transparent)
+        CSS color property to use as the background of visualization.  
+        __Default value:__ none (transparent)
     config : Config
-        Vega-Lite configuration object.  This property can only be defined at the
-        top-level of a specification.
+        Vega-Lite configuration object.  This property can only be 
+        defined at the top-level of a specification.
     data : Data
         An object describing the data source
     description : string
@@ -5492,21 +5819,24 @@ class TopLevelRepeatSpec(SchemaBase):
     name : string
         Name of the visualization for later reference.
     padding : Padding
-        The default visualization padding, in pixels, from the edge of the
-        visualization canvas to the data rectangle.  If a number, specifies padding
-        for all sides. If an object, the value should have the format `{"left": 5,
-        "top": 5, "right": 5, "bottom": 5}` to specify padding for each side of the
-        visualization.  __Default value__: `5`
+        The default visualization padding, in pixels, from the edge of 
+        the visualization canvas to the data rectangle.  If a number, 
+        specifies padding for all sides. If an object, the value should 
+        have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
+         to specify padding for each side of the visualization.  
+        __Default value__: `5`
     repeat : Repeat
-        An object that describes what fields should be repeated into views that are
-        laid out as a `row` or `column`.
+        An object that describes what fields should be repeated into 
+        views that are laid out as a `row` or `column`.
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
     spec : Spec
+    
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     """
     _schema = {'$ref': '#/definitions/TopLevel<RepeatSpec>'}
     _rootschema = Root._schema
@@ -5523,7 +5853,6 @@ class TopLevelRepeatSpec(SchemaBase):
                                                  padding=padding, resolve=resolve,
                                                  title=title, transform=transform,
                                                  **kwds)
-    
 
 
 class TopLevelVConcatSpec(SchemaBase):
@@ -5532,23 +5861,24 @@ class TopLevelVConcatSpec(SchemaBase):
     Attributes
     ----------
     $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema`
-        property allows automatic validation and autocomplete in editors that
-        support JSON schema.
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
+        specification. Unless you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
+        `$schema` property allows automatic validation and autocomplete 
+        in editors that support JSON schema.
     autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be
-        one of `"pad"`, `"fit"` or `"none"`. Object values can additionally specify
-        parameters for content sizing and automatic resizing. `"fit"` is only
-        supported for single and layered views that don't use `rangeStep`.
-        __Default value__: `pad`
+        Sets how the visualization size should be determined. If a 
+        string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
+        values can additionally specify parameters for content sizing 
+        and automatic resizing. `"fit"` is only supported for single and
+         layered views that don't use `rangeStep`.  __Default value__: 
+        `pad`
     background : string
-        CSS color property to use as the background of visualization.  __Default
-        value:__ none (transparent)
+        CSS color property to use as the background of visualization.  
+        __Default value:__ none (transparent)
     config : Config
-        Vega-Lite configuration object.  This property can only be defined at the
-        top-level of a specification.
+        Vega-Lite configuration object.  This property can only be 
+        defined at the top-level of a specification.
     data : Data
         An object describing the data source
     description : string
@@ -5556,19 +5886,23 @@ class TopLevelVConcatSpec(SchemaBase):
     name : string
         Name of the visualization for later reference.
     padding : Padding
-        The default visualization padding, in pixels, from the edge of the
-        visualization canvas to the data rectangle.  If a number, specifies padding
-        for all sides. If an object, the value should have the format `{"left": 5,
-        "top": 5, "right": 5, "bottom": 5}` to specify padding for each side of the
-        visualization.  __Default value__: `5`
+        The default visualization padding, in pixels, from the edge of 
+        the visualization canvas to the data rectangle.  If a number, 
+        specifies padding for all sides. If an object, the value should 
+        have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
+         to specify padding for each side of the visualization.  
+        __Default value__: `5`
     resolve : Resolve
-        Scale, axis, and legend resolutions for vertically concatenated charts.
+        Scale, axis, and legend resolutions for vertically concatenated 
+        charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : list
-        An array of data transformations such as filter and new field calculation.
+        An array of data transformations such as filter and new field 
+        calculation.
     vconcat : list
-        A list of views that should be concatenated and put into a column.
+        A list of views that should be concatenated and put into a 
+        column.
     """
     _schema = {'$ref': '#/definitions/TopLevel<VConcatSpec>'}
     _rootschema = Root._schema
@@ -5585,7 +5919,6 @@ class TopLevelVConcatSpec(SchemaBase):
                                                   name=name, padding=padding,
                                                   resolve=resolve, title=title,
                                                   transform=transform, **kwds)
-    
 
 
 class TopLevelExtendedSpec(SchemaBase):
@@ -5595,7 +5928,6 @@ class TopLevelExtendedSpec(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(TopLevelExtendedSpec, self).__init__(*args, **kwds)
-    
 
 
 class TopoDataFormat(SchemaBase):
@@ -5604,36 +5936,39 @@ class TopoDataFormat(SchemaBase):
     Attributes
     ----------
     feature : string
-        The name of the TopoJSON object set to convert to a GeoJSON feature
-        collection. For example, in a map of the world, there may be an object set
-        named `"countries"`. Using the feature property, we can extract this set and
-        generate a GeoJSON feature object for each country.
+        The name of the TopoJSON object set to convert to a GeoJSON 
+        feature collection. For example, in a map of the world, there 
+        may be an object set named `"countries"`. Using the feature 
+        property, we can extract this set and generate a GeoJSON feature
+         object for each country.
     mesh : string
-        The name of the TopoJSON object set to convert to mesh. Similar to the
-        `feature` option, `mesh` extracts a named TopoJSON object set.   Unlike the
-        `feature` option, the corresponding geo data is returned as a single,
-        unified mesh instance, not as individual GeoJSON features. Extracting a mesh
-        is useful for more efficiently drawing borders or other geographic elements
-        that you do not need to associate with specific regions such as individual
-        countries, states or counties.
+        The name of the TopoJSON object set to convert to mesh. Similar 
+        to the `feature` option, `mesh` extracts a named TopoJSON object
+         set.   Unlike the `feature` option, the corresponding geo data 
+        is returned as a single, unified mesh instance, not as 
+        individual GeoJSON features. Extracting a mesh is useful for 
+        more efficiently drawing borders or other geographic elements 
+        that you do not need to associate with specific regions such as 
+        individual countries, states or counties.
     parse : anyOf(string, mapping)
-        If set to auto (the default), perform automatic type inference to determine
-        the desired data types. Alternatively, a parsing directive object can be
-        provided for explicit data types. Each property of the object corresponds to
-        a field name, and the value to the desired data type (one of `"number"`,
-        `"boolean"` or `"date"`). For example, `"parse": {"modified_on": "date"}`
-        parses the `modified_on` field in each input record a Date value.  For
-        `"date"`, we parse data based using Javascript's
+        If set to auto (the default), perform automatic type inference 
+        to determine the desired data types. Alternatively, a parsing 
+        directive object can be provided for explicit data types. Each 
+        property of the object corresponds to a field name, and the 
+        value to the desired data type (one of `"number"`, `"boolean"` 
+        or `"date"`). For example, `"parse": {"modified_on": "date"}` 
+        parses the `modified_on` field in each input record a Date 
+        value.  For `"date"`, we parse data based using Javascript's 
         [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).
-        For Specific date formats can be provided (e.g., `{foo: 'date:"%m%d%Y"'}`),
-        using the [d3-time-format
-        syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format
-        parsing is supported similarly (e.g., `{foo: 'utc:"%m%d%Y"'}`). See more
-        about [UTC time](timeunit.html#utc)
+         For Specific date formats can be provided (e.g., `{foo: 
+        'date:"%m%d%Y"'}`), using the [d3-time-format 
+        syntax](https://github.com/d3/d3-time-format#locale_format). UTC
+         date format parsing is supported similarly (e.g., `{foo: 
+        'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
     type : string
-        Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
-        determined by the extension of the file URL. If no extension is detected,
-        `"json"` will be used by default.
+        Type of input data: `"json"`, `"csv"`, `"tsv"`. The default 
+        format type is determined by the extension of the file URL. If 
+        no extension is detected, `"json"` will be used by default.
     """
     _schema = {'$ref': '#/definitions/TopoDataFormat'}
     _rootschema = Root._schema
@@ -5642,7 +5977,6 @@ class TopoDataFormat(SchemaBase):
                  type=Undefined, **kwds):
         super(TopoDataFormat, self).__init__(feature=feature, mesh=mesh,
                                              parse=parse, type=type, **kwds)
-    
 
 
 class Transform(SchemaBase):
@@ -5652,11 +5986,10 @@ class Transform(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Transform, self).__init__(*args, **kwds)
-    
 
 
 class Type(SchemaBase):
-    """
+    """Type schema wrapper
     Constants and utilities for data type  
      Data type based on level of measurement 
     """
@@ -5665,7 +5998,6 @@ class Type(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(Type, self).__init__(*args, **kwds)
-    
 
 
 class UrlData(SchemaBase):
@@ -5676,15 +6008,14 @@ class UrlData(SchemaBase):
     format : DataFormat
         An object that specifies the format for parsing the data file.
     url : string
-        An URL from which to load the data set. Use the `format.type` property to
-        ensure the loaded data is correctly parsed.
+        An URL from which to load the data set. Use the `format.type` 
+        property to ensure the loaded data is correctly parsed.
     """
     _schema = {'$ref': '#/definitions/UrlData'}
     _rootschema = Root._schema
 
     def __init__(self, url=Undefined, format=Undefined, **kwds):
         super(UrlData, self).__init__(url=url, format=format, **kwds)
-    
 
 
 class UtcMultiTimeUnit(SchemaBase):
@@ -5694,7 +6025,6 @@ class UtcMultiTimeUnit(SchemaBase):
 
     def __init__(self, *args):
         super(UtcMultiTimeUnit, self).__init__(*args)
-    
 
 
 class UtcSingleTimeUnit(SchemaBase):
@@ -5704,29 +6034,27 @@ class UtcSingleTimeUnit(SchemaBase):
 
     def __init__(self, *args):
         super(UtcSingleTimeUnit, self).__init__(*args)
-    
 
 
 class ValueDef(SchemaBase):
-    """
+    """ValueDef schema wrapper
     Definition object for a constant value of an encoding channel.
     
     Attributes
     ----------
     value : anyOf(float, string, boolean)
-        A constant value in visual domain (e.g., `"red"` / "#0099ff" for color,
-        values between `0` to `1` for opacity).
+        A constant value in visual domain (e.g., `"red"` / "#0099ff" for
+         color, values between `0` to `1` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDef'}
     _rootschema = Root._schema
 
     def __init__(self, value=Undefined, **kwds):
         super(ValueDef, self).__init__(value=value, **kwds)
-    
 
 
 class ValueDefWithCondition(SchemaBase):
-    """
+    """ValueDefWithCondition schema wrapper
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -5736,8 +6064,8 @@ class ValueDefWithCondition(SchemaBase):
     Attributes
     ----------
     condition : anyOf(Conditional<FieldDef>, Conditional<ValueDef>, list)
-        A field definition or one or more value definition(s) with a selection
-        predicate.
+        A field definition or one or more value definition(s) with a 
+        selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
@@ -5747,11 +6075,10 @@ class ValueDefWithCondition(SchemaBase):
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(ValueDefWithCondition, self).__init__(condition=condition,
                                                     value=value, **kwds)
-    
 
 
 class MarkPropValueDefWithCondition(SchemaBase):
-    """
+    """MarkPropValueDefWithCondition schema wrapper
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -5760,9 +6087,10 @@ class MarkPropValueDefWithCondition(SchemaBase):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, list)
-        A field definition or one or more value definition(s) with a selection
-        predicate.
+    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
+    list)
+        A field definition or one or more value definition(s) with a 
+        selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
@@ -5772,11 +6100,10 @@ class MarkPropValueDefWithCondition(SchemaBase):
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(MarkPropValueDefWithCondition, self).__init__(condition=condition,
                                                             value=value, **kwds)
-    
 
 
 class TextValueDefWithCondition(SchemaBase):
-    """
+    """TextValueDefWithCondition schema wrapper
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -5785,9 +6112,10 @@ class TextValueDefWithCondition(SchemaBase):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>, list)
-        A field definition or one or more value definition(s) with a selection
-        predicate.
+    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>, 
+    list)
+        A field definition or one or more value definition(s) with a 
+        selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
@@ -5797,7 +6125,6 @@ class TextValueDefWithCondition(SchemaBase):
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(TextValueDefWithCondition, self).__init__(condition=condition,
                                                         value=value, **kwds)
-    
 
 
 class VerticalAlign(SchemaBase):
@@ -5807,7 +6134,6 @@ class VerticalAlign(SchemaBase):
 
     def __init__(self, *args):
         super(VerticalAlign, self).__init__(*args)
-    
 
 
 class VgAxisConfig(SchemaBase):
@@ -5816,53 +6142,62 @@ class VgAxisConfig(SchemaBase):
     Attributes
     ----------
     bandPosition : float
-        An interpolation fraction indicating where, for `band` scales, axis ticks
-        should be positioned. A value of `0` places ticks at the left edge of their
-        bands. A value of `0.5` places ticks in the middle of their bands.
+        An interpolation fraction indicating where, for `band` scales, 
+        axis ticks should be positioned. A value of `0` places ticks at 
+        the left edge of their bands. A value of `0.5` places ticks in 
+        the middle of their bands.
     domain : boolean
-        A boolean flag indicating if the domain (the axis baseline) should be
-        included as part of the axis.  __Default value:__ `true`
+        A boolean flag indicating if the domain (the axis baseline) 
+        should be included as part of the axis.  __Default value:__ 
+        `true`
     domainColor : string
-        Color of axis domain line.  __Default value:__  (none, using Vega default).
+        Color of axis domain line.  __Default value:__  (none, using 
+        Vega default).
     domainWidth : float
-        Stroke width of axis domain line  __Default value:__  (none, using Vega
-        default).
+        Stroke width of axis domain line  __Default value:__  (none, 
+        using Vega default).
     grid : boolean
-        A boolean flag indicating if grid lines should be included as part of the
-        axis  __Default value:__ `true` for [continuous
-        scales](scale.html#continuous) that are not binned; otherwise, `false`.
+        A boolean flag indicating if grid lines should be included as 
+        part of the axis  __Default value:__ `true` for [continuous 
+        scales](scale.html#continuous) that are not binned; otherwise, 
+        `false`.
     gridColor : string
         Color of gridlines.
     gridDash : list
-        The offset (in pixels) into which to begin drawing with the grid dash array.
+        The offset (in pixels) into which to begin drawing with the grid
+         dash array.
     gridOpacity : float
-        The stroke opacity of grid (value between [0,1])  __Default value:__ (`1` by
-        default)
+        The stroke opacity of grid (value between [0,1])  __Default 
+        value:__ (`1` by default)
     gridWidth : float
         The grid width, in pixels.
     labelAngle : float
-        The rotation angle of the axis labels.  __Default value:__ `-90` for nominal
-        and ordinal fields; `0` otherwise.
+        The rotation angle of the axis labels.  __Default value:__ `-90`
+         for nominal and ordinal fields; `0` otherwise.
     labelBound : anyOf(boolean, float)
-        Indicates if labels should be hidden if they exceed the axis range. If
-        `false `(the default) no bounds overlap analysis is performed. If `true`,
-        labels will be hidden if they exceed the axis range by more than 1 pixel. If
-        this property is a number, it specifies the pixel tolerance: the maximum
-        amount by which a label bounding box may exceed the axis range.  __Default
+        Indicates if labels should be hidden if they exceed the axis 
+        range. If `false `(the default) no bounds overlap analysis is 
+        performed. If `true`, labels will be hidden if they exceed the 
+        axis range by more than 1 pixel. If this property is a number, 
+        it specifies the pixel tolerance: the maximum amount by which a 
+        label bounding box may exceed the axis range.  __Default 
         value:__ `false`.
     labelColor : string
-        The color of the tick label, can be in hex color code or regular color name.
+        The color of the tick label, can be in hex color code or regular
+         color name.
     labelFlush : anyOf(boolean, float)
-        Indicates if the first and last axis labels should be aligned flush with the
-        scale range. Flush alignment for a horizontal axis will left-align the first
-        label and right-align the last label. For vertical axes, bottom and top text
-        baselines are applied instead. If this property is a number, it also
-        indicates the number of pixels by which to offset the first and last labels;
-        for example, a value of 2 will flush-align the first and last labels and
-        also push them 2 pixels outward from the center of the axis. The additional
-        adjustment can sometimes help the labels better visually group with
-        corresponding axis ticks.  __Default value:__ `true` for axis of a
-        continuous x-scale. Otherwise, `false`.
+        Indicates if the first and last axis labels should be aligned 
+        flush with the scale range. Flush alignment for a horizontal 
+        axis will left-align the first label and right-align the last 
+        label. For vertical axes, bottom and top text baselines are 
+        applied instead. If this property is a number, it also indicates
+         the number of pixels by which to offset the first and last 
+        labels; for example, a value of 2 will flush-align the first and
+         last labels and also push them 2 pixels outward from the center
+         of the axis. The additional adjustment can sometimes help the 
+        labels better visually group with corresponding axis ticks.  
+        __Default value:__ `true` for axis of a continuous x-scale. 
+        Otherwise, `false`.
     labelFont : string
         The font of the tick label.
     labelFontSize : float
@@ -5870,38 +6205,40 @@ class VgAxisConfig(SchemaBase):
     labelLimit : float
         Maximum allowed pixel width of axis tick labels.
     labelOverlap : anyOf(boolean, string, string)
-        The strategy to use for resolving overlap of axis labels. If `false` (the
-        default), no overlap reduction is attempted. If set to `true` or `"parity"`,
-        a strategy of removing every other label is used (this works well for
-        standard linear axes). If set to `"greedy"`, a linear scan of the labels is
-        performed, removing any labels that overlaps with the last visible label
-        (this often works better for log-scaled axes).  __Default value:__ `true`
-        for non-nominal fields with non-log scales; `"greedy"` for log scales;
-        otherwise `false`.
+        The strategy to use for resolving overlap of axis labels. If 
+        `false` (the default), no overlap reduction is attempted. If set
+         to `true` or `"parity"`, a strategy of removing every other 
+        label is used (this works well for standard linear axes). If set
+         to `"greedy"`, a linear scan of the labels is performed, 
+        removing any labels that overlaps with the last visible label 
+        (this often works better for log-scaled axes).  __Default 
+        value:__ `true` for non-nominal fields with non-log scales; 
+        `"greedy"` for log scales; otherwise `false`.
     labelPadding : float
         The padding, in pixels, between axis and text labels.
     labels : boolean
-        A boolean flag indicating if labels should be included as part of the axis.
-        __Default value:__  `true`.
+        A boolean flag indicating if labels should be included as part 
+        of the axis.  __Default value:__  `true`.
     maxExtent : float
-        The maximum extent in pixels that axis ticks and labels should use. This
-        determines a maximum offset value for axis titles.  __Default value:__
-        `undefined`.
+        The maximum extent in pixels that axis ticks and labels should 
+        use. This determines a maximum offset value for axis titles.  
+        __Default value:__ `undefined`.
     minExtent : float
-        The minimum extent in pixels that axis ticks and labels should use. This
-        determines a minimum offset value for axis titles.  __Default value:__ `30`
-        for y-axis; `undefined` for x-axis.
+        The minimum extent in pixels that axis ticks and labels should 
+        use. This determines a minimum offset value for axis titles.  
+        __Default value:__ `30` for y-axis; `undefined` for x-axis.
     tickColor : string
         The color of the axis's tick.
     tickRound : boolean
-        Boolean flag indicating if pixel position values should be rounded to the
-        nearest integer.
+        Boolean flag indicating if pixel position values should be 
+        rounded to the nearest integer.
     tickSize : float
         The size in pixels of axis ticks.
     tickWidth : float
         The width, in pixels, of ticks.
     ticks : boolean
-        Boolean value that determines whether the axis should include ticks.
+        Boolean value that determines whether the axis should include 
+        ticks.
     titleAlign : string
         Horizontal text alignment of axis titles.
     titleAngle : float
@@ -5909,7 +6246,8 @@ class VgAxisConfig(SchemaBase):
     titleBaseline : string
         Vertical text baseline for axis titles.
     titleColor : string
-        Color of the title, can be in hex color code or regular color name.
+        Color of the title, can be in hex color code or regular color 
+        name.
     titleFont : string
         Font of the title. (e.g., `"Helvetica Neue"`).
     titleFontSize : float
@@ -5919,8 +6257,8 @@ class VgAxisConfig(SchemaBase):
     titleLimit : float
         Maximum allowed pixel width of axis titles.
     titleMaxLength : float
-        Max length for axis title if the title is automatically generated from the
-        field's description.
+        Max length for axis title if the title is automatically 
+        generated from the field's description.
     titlePadding : float
         The padding, in pixels, between title and axis.
     titleX : float
@@ -5974,7 +6312,6 @@ class VgAxisConfig(SchemaBase):
                                            titleMaxLength=titleMaxLength,
                                            titlePadding=titlePadding, titleX=titleX,
                                            titleY=titleY, **kwds)
-    
 
 
 class VgBinding(SchemaBase):
@@ -5984,7 +6321,6 @@ class VgBinding(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(VgBinding, self).__init__(*args, **kwds)
-    
 
 
 class VgCheckboxBinding(SchemaBase):
@@ -5993,14 +6329,15 @@ class VgCheckboxBinding(SchemaBase):
     Attributes
     ----------
     element : string
+    
     input : string
+    
     """
     _schema = {'$ref': '#/definitions/VgCheckboxBinding'}
     _rootschema = Root._schema
 
     def __init__(self, input=Undefined, element=Undefined, **kwds):
         super(VgCheckboxBinding, self).__init__(input=input, element=element, **kwds)
-    
 
 
 class VgEventStream(SchemaBase):
@@ -6010,7 +6347,6 @@ class VgEventStream(SchemaBase):
 
     def __init__(self, **kwds):
         super(VgEventStream, self).__init__(**kwds)
-    
 
 
 class VgGenericBinding(SchemaBase):
@@ -6019,14 +6355,15 @@ class VgGenericBinding(SchemaBase):
     Attributes
     ----------
     element : string
+    
     input : string
+    
     """
     _schema = {'$ref': '#/definitions/VgGenericBinding'}
     _rootschema = Root._schema
 
     def __init__(self, input=Undefined, element=Undefined, **kwds):
         super(VgGenericBinding, self).__init__(input=input, element=element, **kwds)
-    
 
 
 class VgMarkConfig(SchemaBase):
@@ -6035,26 +6372,28 @@ class VgMarkConfig(SchemaBase):
     Attributes
     ----------
     align : HorizontalAlign
-        The horizontal alignment of the text. One of `"left"`, `"right"`,
-        `"center"`.
+        The horizontal alignment of the text. One of `"left"`, 
+        `"right"`, `"center"`.
     angle : float
         The rotation angle of the text, in degrees.
     baseline : VerticalAlign
-        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
-        __Default value:__ `"middle"`
+        The vertical alignment of the text. One of `"top"`, `"middle"`, 
+        `"bottom"`.  __Default value:__ `"middle"`
     cursor : string
-        The mouse cursor used over the mark. Any valid [CSS cursor
-        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be
-        used.
+        The mouse cursor used over the mark. Any valid [CSS cursor 
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
+         can be used.
     dx : float
-        The horizontal offset, in pixels, between the text label and its anchor
-        point. The offset is applied after rotation by the _angle_ property.
+        The horizontal offset, in pixels, between the text label and its
+         anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     dy : float
-        The vertical offset, in pixels, between the text label and its anchor point.
-        The offset is applied after rotation by the _angle_ property.
+        The vertical offset, in pixels, between the text label and its 
+        anchor point. The offset is applied after rotation by the 
+        _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
-        value:__ (None)
+        Default Fill Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
     font : string
@@ -6066,75 +6405,82 @@ class VgMarkConfig(SchemaBase):
     fontWeight : anyOf(FontWeight, FontWeightNumber)
         The font weight (e.g., `"bold"`).
     href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+        A URL to load upon mouse click. If defined, the mark acts as a 
+        hyperlink.
     interpolate : Interpolate
-        The line interpolation method to use for line and area marks. One of the
-        following: - `"linear"`: piecewise linear segments, as in a polyline. -
-        `"linear-closed"`: close the linear segments to form a polygon. - `"step"`:
-        alternate between horizontal and vertical segments, as in a step function. -
-        `"step-before"`: alternate between vertical and horizontal segments, as in a
-        step function. - `"step-after"`: alternate between horizontal and vertical
-        segments, as in a step function. - `"basis"`: a B-spline, with control point
-        duplication on the ends. - `"basis-open"`: an open B-spline; may not
-        intersect the start or end. - `"basis-closed"`: a closed B-spline, as in a
-        loop. - `"cardinal"`: a Cardinal spline, with control point duplication on
-        the ends. - `"cardinal-open"`: an open Cardinal spline; may not intersect
-        the start or end, but will intersect other control points. -
-        `"cardinal-closed"`: a closed Cardinal spline, as in a loop. - `"bundle"`:
-        equivalent to basis, except the tension parameter is used to straighten the
-        spline. - `"monotone"`: cubic interpolation that preserves monotonicity in
-        y.
+        The line interpolation method to use for line and area marks. 
+        One of the following: - `"linear"`: piecewise linear segments, 
+        as in a polyline. - `"linear-closed"`: close the linear segments
+         to form a polygon. - `"step"`: alternate between horizontal and
+         vertical segments, as in a step function. - `"step-before"`: 
+        alternate between vertical and horizontal segments, as in a step
+         function. - `"step-after"`: alternate between horizontal and 
+        vertical segments, as in a step function. - `"basis"`: a 
+        B-spline, with control point duplication on the ends. - 
+        `"basis-open"`: an open B-spline; may not intersect the start or
+         end. - `"basis-closed"`: a closed B-spline, as in a loop. - 
+        `"cardinal"`: a Cardinal spline, with control point duplication 
+        on the ends. - `"cardinal-open"`: an open Cardinal spline; may 
+        not intersect the start or end, but will intersect other control
+         points. - `"cardinal-closed"`: a closed Cardinal spline, as in 
+        a loop. - `"bundle"`: equivalent to basis, except the tension 
+        parameter is used to straighten the spline. - `"monotone"`: 
+        cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no
-        limit). The text value will be automatically truncated if the rendered size
-        exceeds the limit.
+        The maximum length of the text mark in pixels (default 0, 
+        indicating no limit). The text value will be automatically 
+        truncated if the rendered size exceeds the limit.
     opacity : float
-        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
-        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or
-        layered `bar` charts and `1` otherwise.
+        The overall opacity (value between [0,1]).  __Default value:__ 
+        `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or
+         `square` marks or layered `bar` charts and `1` otherwise.
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value
-        is either horizontal (default) or vertical. - For bar, rule and tick, this
-        determines whether the size of the bar and tick should be applied to x or y
-        dimension. - For area, this property determines the orient property of the
-        Vega output. - For line, this property determines the sort order of the
-        points in the line if `config.sortLineBy` is not specified. For stacked
-        charts, this is always determined by the orientation of the stack; therefore
-        explicitly specified value will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line 
+        charts. The value is either horizontal (default) or vertical. - 
+        For bar, rule and tick, this determines whether the size of the 
+        bar and tick should be applied to x or y dimension. - For area, 
+        this property determines the orient property of the Vega output.
+         - For line, this property determines the sort order of the 
+        points in the line if `config.sortLineBy` is not specified. For 
+        stacked charts, this is always determined by the orientation of 
+        the stack; therefore explicitly specified value will be ignored.
     radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the `x` and `y` properties.
+        Polar coordinate radial offset, in pixels, of the text label 
+        from the origin determined by the `x` and `y` properties.
     shape : string
-        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
-        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom
-        SVG path.  __Default value:__ `"circle"`
+        The default symbol shape to use. One of: `"circle"` (default), 
+        `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`, or 
+        `"triangle-down"`, or a custom SVG path.  __Default value:__ 
+        `"circle"`
     size : float
-        The pixel area each the point/circle/square. For example: in the case of
-        circles, the radius is determined in part by the square root of the size
-        value.  __Default value:__ `30`
+        The pixel area each the point/circle/square. For example: in the
+         case of circles, the radius is determined in part by the square
+         root of the size value.  __Default value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color
-        __Default value:__ (None)
+        Default Stroke Color.  This has higher precedence than 
+        config.color  __Default value:__ (None)
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+        The stroke opacity (value between [0,1]).  __Default value:__ 
+        `1`
     strokeWidth : float
         The stroke width, in pixels.
     tension : float
-        Depending on the interpolation type, sets the tension parameter (for line
-        and area marks).
+        Depending on the interpolation type, sets the tension parameter 
+        (for line and area marks).
     text : string
         Placeholder text if the `text` channel is not specified
     theta : float
-        Polar coordinate angle, in radians, of the text label from the origin
-        determined by the `x` and `y` properties. Values for `theta` follow the same
-        convention of `arc` mark `startAngle` and `endAngle` properties: angles are
-        measured in radians, with `0` indicating "north".
+        Polar coordinate angle, in radians, of the text label from the 
+        origin determined by the `x` and `y` properties. Values for 
+        `theta` follow the same convention of `arc` mark `startAngle` 
+        and `endAngle` properties: angles are measured in radians, with 
+        `0` indicating "north".
     """
     _schema = {'$ref': '#/definitions/VgMarkConfig'}
     _rootschema = Root._schema
@@ -6163,7 +6509,6 @@ class VgMarkConfig(SchemaBase):
                                            strokeOpacity=strokeOpacity,
                                            strokeWidth=strokeWidth, tension=tension,
                                            text=text, theta=theta, **kwds)
-    
 
 
 class VgProjectionType(SchemaBase):
@@ -6173,7 +6518,6 @@ class VgProjectionType(SchemaBase):
 
     def __init__(self, *args):
         super(VgProjectionType, self).__init__(*args)
-    
 
 
 class VgRadioBinding(SchemaBase):
@@ -6182,8 +6526,11 @@ class VgRadioBinding(SchemaBase):
     Attributes
     ----------
     element : string
+    
     input : string
+    
     options : list
+    
     """
     _schema = {'$ref': '#/definitions/VgRadioBinding'}
     _rootschema = Root._schema
@@ -6191,7 +6538,6 @@ class VgRadioBinding(SchemaBase):
     def __init__(self, input=Undefined, options=Undefined, element=Undefined, **kwds):
         super(VgRadioBinding, self).__init__(input=input, options=options,
                                              element=element, **kwds)
-    
 
 
 class VgRangeBinding(SchemaBase):
@@ -6200,10 +6546,15 @@ class VgRangeBinding(SchemaBase):
     Attributes
     ----------
     element : string
+    
     input : string
+    
     max : float
+    
     min : float
+    
     step : float
+    
     """
     _schema = {'$ref': '#/definitions/VgRangeBinding'}
     _rootschema = Root._schema
@@ -6212,7 +6563,6 @@ class VgRangeBinding(SchemaBase):
                  min=Undefined, step=Undefined, **kwds):
         super(VgRangeBinding, self).__init__(input=input, element=element, max=max,
                                              min=min, step=step, **kwds)
-    
 
 
 class VgScheme(SchemaBase):
@@ -6221,8 +6571,11 @@ class VgScheme(SchemaBase):
     Attributes
     ----------
     count : float
+    
     extent : list
+    
     scheme : string
+    
     """
     _schema = {'$ref': '#/definitions/VgScheme'}
     _rootschema = Root._schema
@@ -6230,7 +6583,6 @@ class VgScheme(SchemaBase):
     def __init__(self, scheme=Undefined, count=Undefined, extent=Undefined, **kwds):
         super(VgScheme, self).__init__(scheme=scheme, count=count, extent=extent,
                                        **kwds)
-    
 
 
 class VgSelectBinding(SchemaBase):
@@ -6239,8 +6591,11 @@ class VgSelectBinding(SchemaBase):
     Attributes
     ----------
     element : string
+    
     input : string
+    
     options : list
+    
     """
     _schema = {'$ref': '#/definitions/VgSelectBinding'}
     _rootschema = Root._schema
@@ -6248,7 +6603,6 @@ class VgSelectBinding(SchemaBase):
     def __init__(self, input=Undefined, options=Undefined, element=Undefined, **kwds):
         super(VgSelectBinding, self).__init__(input=input, options=options,
                                               element=element, **kwds)
-    
 
 
 class VgTitleConfig(SchemaBase):
@@ -6257,14 +6611,16 @@ class VgTitleConfig(SchemaBase):
     Attributes
     ----------
     anchor : Anchor
-        The anchor position for placing the title. One of `"start"`, `"middle"`, or
-        `"end"`. For example, with an orientation of top these anchor positions map
-        to a left-, center-, or right-aligned title.  __Default value:__ `"middle"`
-        for [single](spec.html) and [layered](layer.html) views. `"start"` for other
-        composite views.  __Note:__ [For
-        now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only
-        customizable only for [single](spec.html) and [layered](layer.html) views.
-        For other composite views, `anchor` is always `"start"`.
+        The anchor position for placing the title. One of `"start"`, 
+        `"middle"`, or `"end"`. For example, with an orientation of top 
+        these anchor positions map to a left-, center-, or right-aligned
+         title.  __Default value:__ `"middle"` for [single](spec.html) 
+        and [layered](layer.html) views. `"start"` for other composite 
+        views.  __Note:__ [For 
+        now](https://github.com/vega/vega-lite/issues/2875), `anchor` is
+         only customizable only for [single](spec.html) and 
+        [layered](layer.html) views.  For other composite views, 
+        `anchor` is always `"start"`.
     angle : float
         Angle in degrees of title text.
     baseline : VerticalAlign
@@ -6296,7 +6652,6 @@ class VgTitleConfig(SchemaBase):
                                             font=font, fontSize=fontSize,
                                             fontWeight=fontWeight, limit=limit,
                                             offset=offset, orient=orient, **kwds)
-    
 
 
 class ViewConfig(SchemaBase):
@@ -6309,27 +6664,30 @@ class ViewConfig(SchemaBase):
     fill : string
         The fill color.  __Default value:__ (none)
     fillOpacity : float
-        The fill opacity (value between [0,1]).  __Default value:__ (none)
+        The fill opacity (value between [0,1]).  __Default value:__ 
+        (none)
     height : float
-        The default height of the single plot or each plot in a trellis plot when
-        the visualization has a continuous (non-ordinal) y-scale with `rangeStep` =
-        `null`.  __Default value:__ `200`
+        The default height of the single plot or each plot in a trellis 
+        plot when the visualization has a continuous (non-ordinal) 
+        y-scale with `rangeStep` = `null`.  __Default value:__ `200`
     stroke : string
         The stroke color.  __Default value:__ (none)
     strokeDash : list
-        An array of alternating stroke, space lengths for creating dashed or dotted
-        lines.  __Default value:__ (none)
+        An array of alternating stroke, space lengths for creating 
+        dashed or dotted lines.  __Default value:__ (none)
     strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash
-        array.  __Default value:__ (none)
+        The offset (in pixels) into which to begin drawing with the 
+        stroke dash array.  __Default value:__ (none)
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  __Default value:__ (none)
+        The stroke opacity (value between [0,1]).  __Default value:__ 
+        (none)
     strokeWidth : float
         The stroke width, in pixels.  __Default value:__ (none)
     width : float
-        The default width of the single plot or each plot in a trellis plot when the
-        visualization has a continuous (non-ordinal) x-scale or ordinal x-scale with
-        `rangeStep` = `null`.  __Default value:__ `200`
+        The default width of the single plot or each plot in a trellis 
+        plot when the visualization has a continuous (non-ordinal) 
+        x-scale or ordinal x-scale with `rangeStep` = `null`.  __Default
+         value:__ `200`
     """
     _schema = {'$ref': '#/definitions/ViewConfig'}
     _rootschema = Root._schema
@@ -6345,5 +6703,4 @@ class ViewConfig(SchemaBase):
                                          strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, width=width,
                                          **kwds)
-    
 

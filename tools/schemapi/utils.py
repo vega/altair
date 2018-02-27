@@ -1,11 +1,12 @@
 """Utilities for working with schemas"""
 
+import json
 import keyword
+import pkgutil
 import re
+import textwrap
 
 import jsonschema
-import pkgutil
-import json
 
 
 EXCLUDE_KEYS = ('definitions', 'title', 'description', '$schema', 'id')
@@ -330,3 +331,39 @@ class SchemaInfo(object):
         """
         pairs = [(prop, get_valid_identifier(prop)) for prop in self.properties]
         return {prop: val for prop, val in pairs if prop != val}
+
+
+def indent_arglist(args, indent_level, width=80, lstrip=True):
+    """Indent an argument list for use in generated code"""
+    wrapper = textwrap.TextWrapper(width=80,
+                                   initial_indent=indent_level * ' ',
+                                   subsequent_indent=indent_level * ' ',
+                                   break_long_words=False)
+    wrapped = '\n'.join(wrapper.wrap(', '.join(args)))
+    if lstrip:
+        wrapped = wrapped.lstrip()
+    return wrapped
+
+
+def indent_docstring(lines, indent_level, width=80, lstrip=True):
+    """Indent a docstring for use in generated code"""
+    final_lines = []
+
+    for line in lines:
+        stripped = line.lstrip()
+        if stripped:
+            leading_space = len(line) - len(stripped)
+            indent = indent_level + leading_space
+            wrapper = textwrap.TextWrapper(width=width - indent,
+                                           initial_indent=indent * ' ',
+                                           subsequent_indent=indent * ' ',
+                                           break_long_words=False,
+                                           break_on_hyphens=False,
+                                           drop_whitespace=False)
+            final_lines.extend(wrapper.wrap(stripped))
+        else:
+            final_lines.append(indent_level * ' ')
+    wrapped = '\n'.join(final_lines)
+    if lstrip:
+        wrapped = wrapped.lstrip()
+    return wrapped

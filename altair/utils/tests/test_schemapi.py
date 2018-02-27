@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:43
+# 2018-02-27 11:38
 import jsonschema
 import pytest
 

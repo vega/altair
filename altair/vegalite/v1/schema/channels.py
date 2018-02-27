@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:43
+# 2018-02-27 11:38
 
 from . import core
 from altair.utils.schemapi import Undefined
@@ -13,26 +13,30 @@ class Row(core.PositionChannelDef):
     Attributes
     ----------
     axis : Axis
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -60,26 +64,30 @@ class Column(core.PositionChannelDef):
     Attributes
     ----------
     axis : Axis
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -107,26 +115,30 @@ class X(core.PositionChannelDef):
     Attributes
     ----------
     axis : Axis
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -153,26 +165,30 @@ class Y(core.PositionChannelDef):
     Attributes
     ----------
     axis : Axis
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -201,21 +217,22 @@ class X2(core.FieldDef):
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -244,21 +261,22 @@ class Y2(core.FieldDef):
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -285,26 +303,30 @@ class Color(core.ChannelDefWithLegend):
     Attributes
     ----------
     legend : Legend
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -332,26 +354,30 @@ class Opacity(core.ChannelDefWithLegend):
     Attributes
     ----------
     legend : Legend
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -379,26 +405,30 @@ class Size(core.ChannelDefWithLegend):
     Attributes
     ----------
     legend : Legend
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -426,26 +456,30 @@ class Shape(core.ChannelDefWithLegend):
     Attributes
     ----------
     legend : Legend
+    
     scale : Scale
+    
     sort : anyOf(SortOrder, SortField)
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -475,21 +509,22 @@ class Detail(core.FieldDef):
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -518,21 +553,22 @@ class Text(core.FieldDef):
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -561,21 +597,22 @@ class Label(core.FieldDef):
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -602,24 +639,26 @@ class Path(core.OrderChannelDef):
     Attributes
     ----------
     sort : SortOrder
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """
@@ -646,24 +685,26 @@ class Order(core.OrderChannelDef):
     Attributes
     ----------
     sort : SortOrder
+    
     field : string
         Name of the field from which to pull a data value.
     type : Type
-        The encoded field's type of measurement. This can be either a full type
-        name (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an
-        initial character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a 
+        full type  name (`"quantitative"`, `"temporal"`, `"ordinal"`,  
+        and `"nominal"`)  or an initial character of the type name 
+        (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case 
+        insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`,
-        `hour`).
+        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, 
+        `month`, `hour`).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for
-        binning parameters.
+        Flag for binning a `quantitative` field, or a bin property 
+        object  for binning parameters.
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`,
-        `max`, `count`).
+        Aggregation function for the field  (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).
     title : string
         Title for axis or legend.
     """

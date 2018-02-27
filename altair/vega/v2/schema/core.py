@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-24 22:43
+# 2018-02-27 11:38
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -29,7 +29,6 @@ class Root(SchemaBase):
                                    padding=padding, predicates=predicates,
                                    scales=scales, scene=scene, signals=signals,
                                    viewport=viewport, width=width, **kwds)
-    
 
 
 class axis(SchemaBase):
@@ -38,24 +37,43 @@ class axis(SchemaBase):
     Attributes
     ----------
     type : any
+    
     scale : string
+    
     orient : any
+    
     title : string
+    
     titleOffset : float
+    
     format : string
+    
     formatType : any
+    
     ticks : float
+    
     values : list
+    
     subdivide : float
+    
     tickPadding : float
+    
     tickSize : float
+    
     tickSizeMajor : float
+    
     tickSizeMinor : float
+    
     tickSizeEnd : float
+    
     offset : oneOf(float, mapping)
+    
     layer : any
+    
     grid : boolean
+    
     properties : mapping
+    
     """
     _schema = {'$ref': '#/defs/axis'}
     _rootschema = Root._schema
@@ -77,7 +95,6 @@ class axis(SchemaBase):
                                    tickSizeMinor=tickSizeMinor, ticks=ticks,
                                    title=title, titleOffset=titleOffset,
                                    values=values, **kwds)
-    
 
 
 class background(SchemaBase):
@@ -87,7 +104,6 @@ class background(SchemaBase):
 
     def __init__(self, *args):
         super(background, self).__init__(*args)
-    
 
 
 class data(SchemaBase):
@@ -99,7 +115,6 @@ class data(SchemaBase):
                  transform=Undefined, **kwds):
         super(data, self).__init__(name=name, format=format, modify=modify,
                                    transform=transform, **kwds)
-    
 
 
 class legend(SchemaBase):
@@ -108,24 +123,35 @@ class legend(SchemaBase):
     Attributes
     ----------
     size : string
+    
     shape : string
+    
     fill : string
+    
     stroke : string
+    
     opacity : string
+    
     orient : any
+    
     offset : float
+    
     title : string
+    
     values : list
+    
     format : string
+    
     formatType : any
+    
     properties : mapping
+    
     """
     _schema = {'$ref': '#/defs/legend'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(legend, self).__init__(*args, **kwds)
-    
 
 
 class mark(SchemaBase):
@@ -134,13 +160,21 @@ class mark(SchemaBase):
     Attributes
     ----------
     name : string
+    
     key : string
+    
     type : any
+    
     from : mapping
+    
     delay : numberValue
+    
     ease : any
+    
     interactive : boolean
+    
     properties : anyOf(any, any)
+    
     """
     _schema = {'$ref': '#/defs/mark'}
     _rootschema = Root._schema
@@ -151,7 +185,6 @@ class mark(SchemaBase):
         super(mark, self).__init__(type=type, delay=delay, ease=ease,
                                    interactive=interactive, key=key, name=name,
                                    properties=properties, **kwds)
-    
 
 
 class container(SchemaBase):
@@ -160,10 +193,15 @@ class container(SchemaBase):
     Attributes
     ----------
     scene : mapping
+    
     scales : list
+    
     axes : list
+    
     legends : list
+    
     marks : list
+    
     """
     _schema = {'$ref': '#/defs/container'}
     _rootschema = Root._schema
@@ -172,7 +210,6 @@ class container(SchemaBase):
                  scales=Undefined, scene=Undefined, **kwds):
         super(container, self).__init__(axes=axes, legends=legends, marks=marks,
                                         scales=scales, scene=scene, **kwds)
-    
 
 
 class groupMark(SchemaBase):
@@ -189,7 +226,6 @@ class groupMark(SchemaBase):
                                         legends=legends, marks=marks, name=name,
                                         properties=properties, scales=scales,
                                         scene=scene, **kwds)
-    
 
 
 class visualMark(SchemaBase):
@@ -203,7 +239,6 @@ class visualMark(SchemaBase):
         super(visualMark, self).__init__(type=type, delay=delay, ease=ease,
                                          interactive=interactive, key=key,
                                          name=name, properties=properties, **kwds)
-    
 
 
 class modify(SchemaBase):
@@ -213,7 +248,6 @@ class modify(SchemaBase):
 
     def __init__(self, *args):
         super(modify, self).__init__(*args)
-    
 
 
 class padding(SchemaBase):
@@ -223,7 +257,6 @@ class padding(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(padding, self).__init__(*args, **kwds)
-    
 
 
 class predicate(SchemaBase):
@@ -233,7 +266,6 @@ class predicate(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(predicate, self).__init__(*args, **kwds)
-    
 
 
 class rule(SchemaBase):
@@ -243,7 +275,6 @@ class rule(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(rule, self).__init__(*args, **kwds)
-    
 
 
 class propset(SchemaBase):
@@ -252,46 +283,92 @@ class propset(SchemaBase):
     Attributes
     ----------
     x : numberValue
+    
     x2 : numberValue
+    
     xc : numberValue
+    
     width : numberValue
+    
     y : numberValue
+    
     y2 : numberValue
+    
     yc : numberValue
+    
     height : numberValue
+    
     opacity : numberValue
+    
     fill : colorValue
+    
     fillOpacity : numberValue
+    
     stroke : colorValue
+    
     strokeWidth : numberValue
+    
     strokeOpacity : numberValue
+    
     strokeDash : arrayValue
+    
     strokeDashOffset : numberValue
+    
     cursor : stringValue
+    
     clip : booleanValue
+    
     size : numberValue
-    shape : anyOf(oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, any, any, any))), stringValue)
+    
+    shape : anyOf(oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, 
+    any, any, any))), stringValue)
+    
     path : stringValue
+    
     innerRadius : numberValue
+    
     outerRadius : numberValue
+    
     startAngle : numberValue
+    
     endAngle : numberValue
-    interpolate : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, any, any, any)))
+    
+    interpolate : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, 
+    any, any, any)))
+    
     tension : numberValue
-    orient : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, any, any, any)))
+    
+    orient : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, any, 
+    any, any)))
+    
     url : stringValue
-    align : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, any, any, any)))
-    baseline : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, any, any, any)))
+    
+    align : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, any, 
+    any, any)))
+    
+    baseline : oneOf(mapping, list, allOf(stringModifiers, oneOf(signal, 
+    any, any, any)))
+    
     text : stringValue
+    
     dx : numberValue
+    
     dy : numberValue
+    
     radius : numberValue
+    
     theta : numberValue
+    
     angle : numberValue
+    
     font : stringValue
+    
     fontSize : numberValue
+    
     fontWeight : stringValue
+    
     fontStyle : stringValue
+    
     """
     _schema = {'$ref': '#/defs/propset'}
     _rootschema = Root._schema
@@ -326,7 +403,6 @@ class propset(SchemaBase):
                                       strokeWidth=strokeWidth, tension=tension,
                                       text=text, theta=theta, url=url, width=width,
                                       x=x, x2=x2, xc=xc, y=y, y2=y2, yc=yc, **kwds)
-    
 
 
 class signal(SchemaBase):
@@ -334,14 +410,18 @@ class signal(SchemaBase):
     
     Attributes
     ----------
-    name : not SchemaInfo({
-  
-})
+    name : not SchemaInfo({    })
+    
     init : any
+    
     verbose : boolean
+    
     expr : string
+    
     scale : scopedScale
+    
     streams : streams
+    
     """
     _schema = {'$ref': '#/defs/signal'}
     _rootschema = Root._schema
@@ -350,7 +430,6 @@ class signal(SchemaBase):
                  scale=Undefined, streams=Undefined, verbose=Undefined, **kwds):
         super(signal, self).__init__(name=name, expr=expr, init=init, scale=scale,
                                      streams=streams, verbose=verbose, **kwds)
-    
 
 
 class spec(SchemaBase):
@@ -368,7 +447,6 @@ class spec(SchemaBase):
                                    padding=padding, predicates=predicates,
                                    scales=scales, scene=scene, signals=signals,
                                    viewport=viewport, width=width, **kwds)
-    
 
 
 class streams(SchemaBase):
@@ -378,19 +456,20 @@ class streams(SchemaBase):
 
     def __init__(self, *args):
         super(streams, self).__init__(*args)
-    
 
 
 class aggregateTransform(SchemaBase):
-    """
+    """aggregateTransform schema wrapper
     Compute summary aggregate statistics
     
     Attributes
     ----------
     type : any
+    
     groupby : list
         A list of fields to split the data into groups.
     summarize : oneOf(mapping, list)
+    
     """
     _schema = {'$ref': '#/defs/aggregateTransform'}
     _rootschema = Root._schema
@@ -399,16 +478,16 @@ class aggregateTransform(SchemaBase):
                  **kwds):
         super(aggregateTransform, self).__init__(type=type, groupby=groupby,
                                                  summarize=summarize, **kwds)
-    
 
 
 class binTransform(SchemaBase):
-    """
+    """binTransform schema wrapper
     Bins values into quantitative bins (e.g., for a histogram).
     
     Attributes
     ----------
     type : any
+    
     field : oneOf(string, signal)
         The name of the field to bin values from.
     min : oneOf(float, signal)
@@ -420,12 +499,13 @@ class binTransform(SchemaBase):
     maxbins : oneOf(float, signal)
         The maximum number of allowable bins.
     step : oneOf(float, signal)
-        An exact step size to use between bins. If provided, options such as maxbins
-        will be ignored.
+        An exact step size to use between bins. If provided, options 
+        such as maxbins will be ignored.
     steps : oneOf(list, signal)
         An array of allowable step sizes to choose from.
     minstep : oneOf(float, signal)
-        A minimum allowable step size (particularly useful for integer values).
+        A minimum allowable step size (particularly useful for integer 
+        values).
     div : oneOf(list, signal)
         An array of scale factors indicating allowable subdivisions.
     output : mapping
@@ -442,26 +522,26 @@ class binTransform(SchemaBase):
                                            div=div, max=max, maxbins=maxbins,
                                            min=min, minstep=minstep, output=output,
                                            step=step, steps=steps, **kwds)
-    
 
 
 class crossTransform(SchemaBase):
-    """
+    """crossTransform schema wrapper
     Compute the cross-product of two data sets.
     
     Attributes
     ----------
     type : any
+    
     with : string
-        The name of the secondary data set to cross with the primary data. If
-        unspecified, the primary data is crossed with itself.
+        The name of the secondary data set to cross with the primary 
+        data. If unspecified, the primary data is crossed with itself.
     diagonal : oneOf(boolean, signal)
-        If false, items along the "diagonal" of the cross-product (those elements
-        with the same index in their respective array) will not be included in the
-        output.
+        If false, items along the "diagonal" of the cross-product (those
+         elements with the same index in their respective array) will 
+        not be included in the output.
     filter : string
-        A string containing an expression (in JavaScript syntax) to filter the
-        resulting data elements.
+        A string containing an expression (in JavaScript syntax) to 
+        filter the resulting data elements.
     output : mapping
         Rename the output data fields
     """
@@ -472,7 +552,6 @@ class crossTransform(SchemaBase):
                  output=Undefined, **kwds):
         super(crossTransform, self).__init__(type=type, diagonal=diagonal,
                                              filter=filter, output=output, **kwds)
-    
 
 
 class countpatternTransform(SchemaBase):
@@ -481,6 +560,7 @@ class countpatternTransform(SchemaBase):
     Attributes
     ----------
     type : any
+    
     field : oneOf(string, signal)
         The field containing the text to analyze.
     pattern : oneOf(string, signal)
@@ -501,25 +581,29 @@ class countpatternTransform(SchemaBase):
                                                     field=field, output=output,
                                                     pattern=pattern,
                                                     stopwords=stopwords, **kwds)
-    
 
 
 class linkpathTransform(SchemaBase):
-    """
-    Computes a path definition for connecting nodes within a node-link network or 
-    tree diagram.
+    """linkpathTransform schema wrapper
+    Computes a path definition for connecting nodes within a node-link 
+    network or tree diagram.
     
     Attributes
     ----------
     type : any
+    
     sourceX : oneOf(string, signal)
-        The data field that references the source x-coordinate for this link.
+        The data field that references the source x-coordinate for this 
+        link.
     sourceY : oneOf(string, signal)
-        The data field that references the source y-coordinate for this link.
+        The data field that references the source y-coordinate for this 
+        link.
     targetX : oneOf(string, signal)
-        The data field that references the target x-coordinate for this link.
+        The data field that references the target x-coordinate for this 
+        link.
     targetY : oneOf(string, signal)
-        The data field that references the target y-coordinate for this link.
+        The data field that references the target y-coordinate for this 
+        link.
     tension : oneOf(float, signal)
         A tension parameter for the "tightness" of "curve"-shaped links.
     shape : oneOf(any, signal)
@@ -538,20 +622,23 @@ class linkpathTransform(SchemaBase):
                                                 sourceY=sourceY, targetX=targetX,
                                                 targetY=targetY, tension=tension,
                                                 **kwds)
-    
 
 
 class facetTransform(SchemaBase):
-    """
-    A special aggregate transform that organizes a data set into groups or "facets".
+    """facetTransform schema wrapper
+    A special aggregate transform that organizes a data set into groups or 
+    "facets".
     
     Attributes
     ----------
     type : any
+    
     groupby : list
         A list of fields to split the data into groups.
     summarize : oneOf(mapping, list)
+    
     transform : transform
+    
     """
     _schema = {'$ref': '#/defs/facetTransform'}
     _rootschema = Root._schema
@@ -561,36 +648,37 @@ class facetTransform(SchemaBase):
         super(facetTransform, self).__init__(type=type, groupby=groupby,
                                              summarize=summarize,
                                              transform=transform, **kwds)
-    
 
 
 class filterTransform(SchemaBase):
-    """
+    """filterTransform schema wrapper
     Filters elements from a data set to remove unwanted items.
     
     Attributes
     ----------
     type : any
+    
     test : string
-        A string containing an expression (in JavaScript syntax) for the filter
-        predicate.
+        A string containing an expression (in JavaScript syntax) for the
+         filter predicate.
     """
     _schema = {'$ref': '#/defs/filterTransform'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, **kwds):
         super(filterTransform, self).__init__(test=test, type=type, **kwds)
-    
 
 
 class foldTransform(SchemaBase):
-    """
+    """foldTransform schema wrapper
     Collapse ("fold") one or more data properties into two properties.
     
     Attributes
     ----------
     type : any
+    
     fields : oneOf(list, signal)
+    
     output : mapping
         Rename the output data fields
     """
@@ -600,16 +688,16 @@ class foldTransform(SchemaBase):
     def __init__(self, fields=Undefined, type=Undefined, output=Undefined, **kwds):
         super(foldTransform, self).__init__(fields=fields, type=type, output=output,
                                             **kwds)
-    
 
 
 class forceTransform(SchemaBase):
-    """
+    """forceTransform schema wrapper
     Performs force-directed layout for network data.
     
     Attributes
     ----------
     type : any
+    
     size : oneOf(list, signal)
         The dimensions [width, height] of this force layout.
     links : string
@@ -627,20 +715,21 @@ class forceTransform(SchemaBase):
     friction : oneOf(float, signal)
         The strength of the friction force used to stabilize the layout.
     theta : oneOf(float, signal)
-        The theta parameter for the Barnes-Hut algorithm, which is used to compute
-        charge forces between nodes.
+        The theta parameter for the Barnes-Hut algorithm, which is used 
+        to compute charge forces between nodes.
     gravity : oneOf(float, signal)
-        The strength of the pseudo-gravity force that pulls nodes towards the center
-        of the layout area.
+        The strength of the pseudo-gravity force that pulls nodes 
+        towards the center of the layout area.
     alpha : oneOf(float, signal)
-        A "temperature" parameter that determines how much node positions are
-        adjusted at each step.
+        A "temperature" parameter that determines how much node 
+        positions are adjusted at each step.
     interactive : oneOf(boolean, signal)
         Enables an interactive force-directed layout.
     active : signal
         A signal representing the active node.
     fixed : string
-        The name of a datasource containing the IDs of nodes with fixed positions.
+        The name of a datasource containing the IDs of nodes with fixed 
+        positions.
     output : mapping
         Rename the output data fields
     """
@@ -664,20 +753,22 @@ class forceTransform(SchemaBase):
                                              linkStrength=linkStrength,
                                              output=output, size=size, theta=theta,
                                              **kwds)
-    
 
 
 class formulaTransform(SchemaBase):
-    """
-    Extends data elements with new values according to a calculation formula.
+    """formulaTransform schema wrapper
+    Extends data elements with new values according to a calculation 
+    formula.
     
     Attributes
     ----------
     type : any
+    
     field : string
         The property name in which to store the computed formula value.
     expr : string
-        A string containing an expression (in JavaScript syntax) for the formula.
+        A string containing an expression (in JavaScript syntax) for the
+         formula.
     """
     _schema = {'$ref': '#/defs/formulaTransform'}
     _rootschema = Root._schema
@@ -685,17 +776,17 @@ class formulaTransform(SchemaBase):
     def __init__(self, expr=Undefined, field=Undefined, type=Undefined, **kwds):
         super(formulaTransform, self).__init__(expr=expr, field=field, type=type,
                                                **kwds)
-    
 
 
 class geoTransform(SchemaBase):
-    """
-    Performs a cartographic projection. Given longitude and latitude values, sets 
-    corresponding x and y properties for a mark.
+    """geoTransform schema wrapper
+    Performs a cartographic projection. Given longitude and latitude values,
+     sets corresponding x and y properties for a mark.
     
     Attributes
     ----------
     type : any
+    
     lon : oneOf(string, signal)
         The input longitude values.
     lat : oneOf(string, signal)
@@ -732,16 +823,17 @@ class geoTransform(SchemaBase):
                                            precision=precision,
                                            projection=projection, rotate=rotate,
                                            scale=scale, translate=translate, **kwds)
-    
 
 
 class geopathTransform(SchemaBase):
-    """
-    Creates paths for geographic regions, such as countries, states and counties.
+    """geopathTransform schema wrapper
+    Creates paths for geographic regions, such as countries, states and 
+    counties.
     
     Attributes
     ----------
     type : any
+    
     field : oneOf(string, signal)
         The data field containing GeoJSON Feature data.
     output : mapping
@@ -777,7 +869,6 @@ class geopathTransform(SchemaBase):
                                                projection=projection, rotate=rotate,
                                                scale=scale, translate=translate,
                                                **kwds)
-    
 
 
 class hierarchyTransform(SchemaBase):
@@ -786,6 +877,7 @@ class hierarchyTransform(SchemaBase):
     Attributes
     ----------
     type : any
+    
     sort : oneOf(list, signal)
         A list of fields to use as sort criteria for sibling nodes.
     children : oneOf(string, signal)
@@ -793,7 +885,8 @@ class hierarchyTransform(SchemaBase):
     parent : oneOf(string, signal)
         The data field for the parent node
     field : oneOf(string, signal)
-        The value for the area of each leaf-level node for partition layouts.
+        The value for the area of each leaf-level node for partition 
+        layouts.
     mode : oneOf(any, signal)
         The layout algorithm mode to use.
     orient : oneOf(any, signal)
@@ -801,7 +894,8 @@ class hierarchyTransform(SchemaBase):
     size : oneOf(list, signal)
         The dimensions of the tree layout
     nodesize : oneOf(list, signal)
-        Sets a fixed x,y size for each node (overrides the size parameter)
+        Sets a fixed x,y size for each node (overrides the size 
+        parameter)
     output : mapping
         Rename the output data fields
     """
@@ -817,16 +911,16 @@ class hierarchyTransform(SchemaBase):
                                                  nodesize=nodesize, orient=orient,
                                                  output=output, parent=parent,
                                                  size=size, sort=sort, **kwds)
-    
 
 
 class imputeTransform(SchemaBase):
-    """
+    """imputeTransform schema wrapper
     Performs imputation of missing values.
     
     Attributes
     ----------
     type : any
+    
     method : oneOf(any, signal)
         The imputation method to use.
     value : oneOf(float, string, boolean, None, signal)
@@ -846,23 +940,23 @@ class imputeTransform(SchemaBase):
         super(imputeTransform, self).__init__(field=field, groupby=groupby,
                                               orderby=orderby, type=type,
                                               method=method, value=value, **kwds)
-    
 
 
 class lookupTransform(SchemaBase):
-    """
+    """lookupTransform schema wrapper
     Extends a data set by looking up values in another data set.
     
     Attributes
     ----------
     type : any
+    
     on : string
         The name of the secondary data set on which to lookup values.
     onKey : oneOf(string, signal)
         The key field to lookup, or null for index-based lookup.
     keys : list
-        One or more fields in the primary data set to match against the secondary
-        data set.
+        One or more fields in the primary data set to match against the 
+        secondary data set.
     as : list
         The names of the fields in which to store looked-up values.
     default : any
@@ -875,21 +969,23 @@ class lookupTransform(SchemaBase):
                  default=Undefined, onKey=Undefined, **kwds):
         super(lookupTransform, self).__init__(keys=keys, on=on, type=type,
                                               default=default, onKey=onKey, **kwds)
-    
 
 
 class pieTransform(SchemaBase):
-    """
+    """pieTransform schema wrapper
     Computes a pie chart layout.
     
     Attributes
     ----------
     type : any
+    
     field : oneOf(string, signal)
-        The data values to encode as angular spans. If this property is omitted, all
-        pie slices will have equal spans.
+        The data values to encode as angular spans. If this property is 
+        omitted, all pie slices will have equal spans.
     startAngle : oneOf(float, signal)
+    
     endAngle : oneOf(float, signal)
+    
     sort : oneOf(boolean, signal)
          If true, will sort the data prior to computing angles.
     output : mapping
@@ -903,21 +999,22 @@ class pieTransform(SchemaBase):
         super(pieTransform, self).__init__(type=type, endAngle=endAngle,
                                            field=field, output=output, sort=sort,
                                            startAngle=startAngle, **kwds)
-    
 
 
 class rankTransform(SchemaBase):
-    """
+    """rankTransform schema wrapper
     Computes ascending rank scores for data tuples.
     
     Attributes
     ----------
     type : any
+    
     field : oneOf(string, signal)
-        A key field to used to rank tuples. If undefined, tuples will be ranked in
-        their observed order.
+        A key field to used to rank tuples. If undefined, tuples will be
+         ranked in their observed order.
     normalize : oneOf(boolean, signal)
-        If true, values of the output field will lie in the range [0, 1].
+        If true, values of the output field will lie in the range [0, 
+        1].
     output : mapping
         Rename the output data fields
     """
@@ -929,16 +1026,16 @@ class rankTransform(SchemaBase):
         super(rankTransform, self).__init__(type=type, field=field,
                                             normalize=normalize, output=output,
                                             **kwds)
-    
 
 
 class sortTransform(SchemaBase):
-    """
+    """sortTransform schema wrapper
     Sorts the values of a data set.
     
     Attributes
     ----------
     type : any
+    
     by : oneOf(string, list)
         A list of fields to use as sort criteria.
     """
@@ -947,17 +1044,17 @@ class sortTransform(SchemaBase):
 
     def __init__(self, by=Undefined, type=Undefined, **kwds):
         super(sortTransform, self).__init__(by=by, type=type, **kwds)
-    
 
 
 class stackTransform(SchemaBase):
-    """
-    Computes layout values for stacked graphs, as in stacked bar charts or stream 
-    graphs.
+    """stackTransform schema wrapper
+    Computes layout values for stacked graphs, as in stacked bar charts or 
+    stream graphs.
     
     Attributes
     ----------
     type : any
+    
     groupby : oneOf(list, signal)
         A list of fields to split the data into groups (stacks).
     sortby : oneOf(list, signal)
@@ -977,7 +1074,6 @@ class stackTransform(SchemaBase):
         super(stackTransform, self).__init__(field=field, groupby=groupby,
                                              type=type, offset=offset,
                                              output=output, sortby=sortby, **kwds)
-    
 
 
 class treeifyTransform(SchemaBase):
@@ -986,6 +1082,7 @@ class treeifyTransform(SchemaBase):
     Attributes
     ----------
     type : any
+    
     groupby : oneOf(list, signal)
         An ordered list of fields by which to group tuples into a tree.
     output : mapping
@@ -997,7 +1094,6 @@ class treeifyTransform(SchemaBase):
     def __init__(self, groupby=Undefined, type=Undefined, output=Undefined, **kwds):
         super(treeifyTransform, self).__init__(groupby=groupby, type=type,
                                                output=output, **kwds)
-    
 
 
 class treemapTransform(SchemaBase):
@@ -1006,6 +1102,7 @@ class treemapTransform(SchemaBase):
     Attributes
     ----------
     type : any
+    
     sort : oneOf(list, signal)
         A list of fields to use as sort criteria for sibling nodes.
     children : oneOf(string, signal)
@@ -1013,19 +1110,23 @@ class treemapTransform(SchemaBase):
     parent : oneOf(string, signal)
         The data field for the parent node
     field : oneOf(string, signal)
-        The values to use to determine the area of each leaf-level treemap cell.
+        The values to use to determine the area of each leaf-level 
+        treemap cell.
     mode : oneOf(any, signal)
         The treemap layout algorithm to use.
     size : oneOf(list, signal)
         The dimensions of the treemap layout
     round : oneOf(boolean, signal)
-        If true, treemap cell dimensions will be rounded to integer pixels.
+        If true, treemap cell dimensions will be rounded to integer 
+        pixels.
     sticky : oneOf(boolean, signal)
-        If true, repeated runs of the treemap will use cached partition boundaries.
+        If true, repeated runs of the treemap will use cached partition 
+        boundaries.
     ratio : oneOf(float, signal)
         The target aspect ratio for the layout to optimize.
     padding : oneOf(float, list, signal)
-        he padding (in pixels) to provide around internal nodes in the treemap.
+        he padding (in pixels) to provide around internal nodes in the 
+        treemap.
     output : mapping
         Rename the output data fields
     """
@@ -1042,7 +1143,6 @@ class treemapTransform(SchemaBase):
                                                parent=parent, ratio=ratio,
                                                round=round, size=size, sort=sort,
                                                sticky=sticky, **kwds)
-    
 
 
 class voronoiTransform(SchemaBase):
@@ -1051,6 +1151,7 @@ class voronoiTransform(SchemaBase):
     Attributes
     ----------
     type : any
+    
     clipExtent : oneOf(list, signal)
         The min and max points at which to clip the voronoi diagram.
     x : oneOf(string, signal)
@@ -1067,7 +1168,6 @@ class voronoiTransform(SchemaBase):
                  x=Undefined, y=Undefined, **kwds):
         super(voronoiTransform, self).__init__(type=type, clipExtent=clipExtent,
                                                output=output, x=x, y=y, **kwds)
-    
 
 
 class wordcloudTransform(SchemaBase):
@@ -1076,6 +1176,7 @@ class wordcloudTransform(SchemaBase):
     Attributes
     ----------
     type : any
+    
     size : oneOf(list, signal)
         The dimensions of the wordcloud layout
     font : oneOf(string, oneOf(any, any), signal)
@@ -1087,14 +1188,15 @@ class wordcloudTransform(SchemaBase):
     fontSize : oneOf(float, oneOf(any, any), string, signal)
         The font size to use for a word.
     fontScale : oneOf(None, list)
-        The minimum and maximum scaled font sizes, or null to prevent scaling.
+        The minimum and maximum scaled font sizes, or null to prevent 
+        scaling.
     rotate : oneOf(float, string, oneOf(any, any), signal)
         The field or number to set the roration angle (in degrees).
     text : oneOf(string, oneOf(any, any), signal)
         The field containing the text to use for each word.
     spiral : oneOf(any, oneOf(any, any), signal)
-        The type of spiral used for positioning words, either 'archimedean' or
-        'rectangular'.
+        The type of spiral used for positioning words, either 
+        'archimedean' or 'rectangular'.
     padding : oneOf(float, oneOf(any, any), signal)
         The padding around each word.
     output : mapping
@@ -1115,7 +1217,6 @@ class wordcloudTransform(SchemaBase):
                                                  output=output, padding=padding,
                                                  rotate=rotate, size=size,
                                                  spiral=spiral, text=text, **kwds)
-    
 
 
 class transform(SchemaBase):
@@ -1125,7 +1226,6 @@ class transform(SchemaBase):
 
     def __init__(self, *args):
         super(transform, self).__init__(*args)
-    
 
 
 class scale(SchemaBase):
@@ -1140,7 +1240,6 @@ class scale(SchemaBase):
                                     domainMin=domainMin, rangeMax=rangeMax,
                                     rangeMin=rangeMin, reverse=reverse, round=round,
                                     type=type, **kwds)
-    
 
 
 class operand(SchemaBase):
@@ -1150,7 +1249,6 @@ class operand(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(operand, self).__init__(*args, **kwds)
-    
 
 
 class field(SchemaBase):
@@ -1160,7 +1258,6 @@ class field(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(field, self).__init__(*args, **kwds)
-    
 
 
 class scale(SchemaBase):
@@ -1170,7 +1267,6 @@ class scale(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(scale, self).__init__(*args, **kwds)
-    
 
 
 class stringModifiers(SchemaBase):
@@ -1179,13 +1275,13 @@ class stringModifiers(SchemaBase):
     Attributes
     ----------
     scale : scale
+    
     """
     _schema = {'$ref': '#/refs/stringModifiers'}
     _rootschema = Root._schema
 
     def __init__(self, scale=Undefined, **kwds):
         super(stringModifiers, self).__init__(scale=scale, **kwds)
-    
 
 
 class numberModifiers(SchemaBase):
@@ -1194,8 +1290,11 @@ class numberModifiers(SchemaBase):
     Attributes
     ----------
     mult : float
+    
     offset : float
+    
     scale : scale
+    
     """
     _schema = {'$ref': '#/refs/numberModifiers'}
     _rootschema = Root._schema
@@ -1203,7 +1302,6 @@ class numberModifiers(SchemaBase):
     def __init__(self, mult=Undefined, offset=Undefined, scale=Undefined, **kwds):
         super(numberModifiers, self).__init__(mult=mult, offset=offset, scale=scale,
                                               **kwds)
-    
 
 
 class value(SchemaBase):
@@ -1213,7 +1311,6 @@ class value(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(value, self).__init__(*args, **kwds)
-    
 
 
 class numberValue(SchemaBase):
@@ -1223,7 +1320,6 @@ class numberValue(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(numberValue, self).__init__(*args, **kwds)
-    
 
 
 class stringValue(SchemaBase):
@@ -1233,7 +1329,6 @@ class stringValue(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(stringValue, self).__init__(*args, **kwds)
-    
 
 
 class booleanValue(SchemaBase):
@@ -1243,7 +1338,6 @@ class booleanValue(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(booleanValue, self).__init__(*args, **kwds)
-    
 
 
 class arrayValue(SchemaBase):
@@ -1253,7 +1347,6 @@ class arrayValue(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(arrayValue, self).__init__(*args, **kwds)
-    
 
 
 class colorValue(SchemaBase):
@@ -1263,7 +1356,6 @@ class colorValue(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(colorValue, self).__init__(*args, **kwds)
-    
 
 
 class signal(SchemaBase):
@@ -1272,13 +1364,13 @@ class signal(SchemaBase):
     Attributes
     ----------
     signal : string
+    
     """
     _schema = {'$ref': '#/refs/signal'}
     _rootschema = Root._schema
 
     def __init__(self, signal=Undefined, **kwds):
         super(signal, self).__init__(signal=signal, **kwds)
-    
 
 
 class scopedScale(SchemaBase):
@@ -1288,7 +1380,6 @@ class scopedScale(SchemaBase):
 
     def __init__(self, *args, **kwds):
         super(scopedScale, self).__init__(*args, **kwds)
-    
 
 
 class data(SchemaBase):
@@ -1297,13 +1388,15 @@ class data(SchemaBase):
     Attributes
     ----------
     data : oneOf(string, mapping)
+    
     field : oneOf(string, list, mapping, list)
+    
     sort : oneOf(boolean, mapping)
+    
     """
     _schema = {'$ref': '#/refs/data'}
     _rootschema = Root._schema
 
     def __init__(self, data=Undefined, field=Undefined, sort=Undefined, **kwds):
         super(data, self).__init__(data=data, field=field, sort=sort, **kwds)
-    
 
