@@ -8,13 +8,13 @@ top chart can be selected by interacting with the bottom chart.
 
 import altair as alt
 from vega_datasets import data
-sp500 = data.sp500()
+sp500 = data.sp500.url
 
 brush = alt.selection(type='interval', encodings=['x'])
 
 upper = alt.Chart().mark_area().encode(
-    x=alt.X('date', scale={'domain': brush.ref()}),
-    y='price'
+    x=alt.X('date:T', scale={'domain': brush.ref()}),
+    y='price:Q'
 ).properties(
     width=600,
     height=200

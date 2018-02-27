@@ -40,7 +40,7 @@ class SelectionMapping(SchemaBase):
         if name not in self._kwds:
             raise ValueError("'{0}' is not a valid selection name "
                              "in this mapping".format(name))
-        return {"selection": "name"}
+        return {"selection": name}
 
     def __add__(self, other):
         if isinstance(other, SelectionMapping):
