@@ -10,8 +10,7 @@ from vega_datasets import data
 states = alt.UrlData(data.us_10m.url,
                      format=alt.TopoDataFormat(type='topojson',
                                                feature='states'))
-zipcodes = data.zipcodes()
-zipcodes = zipcodes[5000:10000]
+zipcodes = data.zipcodes.url
 
 # US states background
 background = alt.Chart(states).mark_geoshape(
@@ -24,7 +23,7 @@ background = alt.Chart(states).mark_geoshape(
 )
 
 # Zip Codes labeled on background
-points = alt.Chart(zipcodes).mark_circle(size = 1).encode(
+points = alt.Chart(zipcodes).mark_circle(size = 2).encode(
     #alt.Text('city', type='nominal'),
     alt.X('longitude', type='longitude'),
     alt.Y('latitude', type='latitude'),
