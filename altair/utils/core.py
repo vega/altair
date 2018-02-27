@@ -21,7 +21,9 @@ from .schemapi import SchemaBase, Undefined
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',
                 'quantitative': 'Q',
-                'temporal': 'T'}
+                'temporal': 'T',
+                'latitude': 'lat',
+                'longitude': 'lon'}
 
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 

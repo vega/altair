@@ -24,8 +24,8 @@ background = alt.Chart(states).mark_geoshape(
 
 # airport positions on background
 points = alt.Chart(airports).mark_circle().encode(
-    alt.X('longitude', type='longitude'),
-    alt.Y('latitude', type='latitude'),
+    alt.X('longitude:lon'),
+    alt.Y('latitude:lat'),
     alt.SizeValue(10),
     alt.ColorValue('steelblue')
 )
