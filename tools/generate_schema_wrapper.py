@@ -208,13 +208,11 @@ def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
         def_args.append('**kwds')
         dict_args.append('**kwds')
 
-    code = [HEADER,
-            "from altair.utils.schemapi import Undefined",
-            "from . import core"
-            "",
-            "",
-            "class MarkMethodMixin(object):",
-            '    """A mixin that defines mark methods"""']
+    imports = ["from altair.utils.schemapi import Undefined",
+               "from . import core"]
+
+    code = ["class MarkMethodMixin(object):",
+            '    """A mixin class that defines mark methods"""']
 
     for mark in marks:
         # TODO: only include args relevant to given type?
@@ -223,7 +221,52 @@ def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
                                          dict_arglist=indent_arglist(dict_args, indent_level=16))
         code.append('\n    '.join(mark_method.splitlines()))
 
-    return '\n'.join(code)
+    return imports, '\n'.join(code)
+
+
+CONFIG_METHOD = """
+@use_signature(core.{classname})
+def {method}(self, *args, **kwargs):
+    copy = self.copy()
+    copy.config = core.{classname}(*args, **kwargs)
+    return copy
+"""
+
+CONFIG_PROP_METHOD = """
+@use_signature(core.{classname})
+def configure_{prop}(self, *args, **kwargs):
+    copy = self.copy(deep=False)
+    if copy.config is Undefined:
+        copy.config = core.Config()
+    else:
+        copy.config = copy.config.copy(deep=False)
+    copy.config["{prop}"] = core.{classname}(*args, **kwargs)
+    return copy
+"""
+
+
+def generate_vegalite_config_mixin(schemafile):
+    imports = ["from . import core",
+               "from altair.utils import use_signature"]
+    code = ["class ConfigMethodMixin(object):",
+            '    """A mixin class that defines config methods"""']
+    with open(schemafile) as f:
+        schema = json.load(f)
+    info = SchemaInfo({'$ref': '#/definitions/Config'},
+                      rootschema=schema)
+
+    # configure() method
+    method = CONFIG_METHOD.format(classname='Config', method='configure')
+    code.append('\n    '.join(method.splitlines()))
+
+    # configure_prop() methods
+    for prop, prop_info in info.properties.items():
+        classname = prop_info.refname
+        if classname:
+            method = CONFIG_PROP_METHOD.format(classname=classname,
+                                               prop=prop)
+            code.append('\n    '.join(method.splitlines()))
+    return imports, '\n'.join(code)
 
 
 def vegalite_main():
@@ -258,9 +301,16 @@ def vegalite_main():
             # generate the mark mixin
             outfile = join(path, 'schema', 'mixins.py')
             print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
-            mark_mixin = generate_vegalite_mark_mixin(schemafile)
+            mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile)
+            config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
+            imports = sorted(set(mark_imports + config_imports))
             with open(outfile, 'w') as f:
+                f.write(HEADER)
+                f.write('\n'.join(imports))
+                f.write('\n\n\n')
                 f.write(mark_mixin)
+                f.write('\n\n\n')
+                f.write(config_mixin)
 
 
 def vega_main():
