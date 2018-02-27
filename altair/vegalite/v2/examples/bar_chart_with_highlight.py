@@ -46,7 +46,7 @@ bar2.transform = [alt.FilterTransform("datum.Value >= 300"),
 rule = alt.Chart(source2).mark_rule().encode(
     y = 'ThresholdValue:Q')
 
-text = alt.Chart(source2).mark_text().encode(
+text = alt.Chart(source2).mark_text(align='left', dx=215, dy=-5).encode(
     y = alt.Y('ThresholdValue:Q', axis = alt.Axis(title = 'PM2.5 Value')),
     text = 'Threshold:O'
     )
