@@ -12,23 +12,14 @@ states = alt.UrlData(data.us_10m.url,
                                                feature='states'))
 zipcodes = data.zipcodes.url
 
-# US states background
-background = alt.Chart(states).mark_geoshape(
-    fill='white',
-    stroke='white'
-).properties(
-    projection={'type': 'albersUsa'},
-    width=800,
-    height=500
-)
-
-# Zip Codes labeled on background
-points = alt.Chart(zipcodes).mark_circle(size = 3).encode(
+chart = alt.Chart(zipcodes).mark_circle(size = 3).encode(
     #alt.Text('city', type='nominal'),
     alt.X('longitude', type='longitude'),
     alt.Y('latitude', type='latitude'),
     color = 'digit:N'
-)
+).properties(
+    projection={'type': 'albersUsa'},
+    width=800,
+    height=500)
 
-points.transform = [{"calculate": "substring(datum.zip_code, 0, 1)", "as": "digit"}]
-chart = background + points
+chart.transform = [{"calculate": "substring(datum.zip_code, 0, 1)", "as": "digit"}]
