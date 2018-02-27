@@ -8,7 +8,7 @@ from os.path import abspath, join, dirname
 sys.path.insert(0, abspath(dirname(__file__)))
 from schemapi import codegen
 from schemapi.codegen import schema_class, CodeSnippet
-from schemapi.utils import get_valid_identifier, SchemaInfo
+from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
 
 
 LOAD_SCHEMA = '''
@@ -170,6 +170,62 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
     return '\n'.join(contents)
 
 
+MARK_METHOD = '''
+def mark_{mark}({def_arglist}):
+    """Set the chart's mark to '{mark}'
+
+    For information on additional arguments, see ``alt.MarkDef``
+    """
+    kwds = dict({dict_arglist})
+    copy = self.copy(deep=True, ignore=['data'])
+    if any(val is not Undefined for val in kwds.values()):
+        copy.mark = core.MarkDef(type="{mark}", **kwds)
+    else:
+        copy.mark = "{mark}"
+    return copy
+'''
+
+
+def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
+                                 mark_def='MarkDef'):
+    with open(schemafile) as f:
+        schema = json.load(f)
+    marks = schema['definitions'][mark_enum]['enum']
+    info = SchemaInfo({'$ref': '#/definitions/' + mark_def},
+                      rootschema=schema)
+
+    # adapted from SchemaInfo.init_code
+    nonkeyword, required, kwds, additional = codegen._get_args(info)
+    required -= {'type'}
+    kwds -= {'type'}
+
+    def_args = ['self'] + ['{0}=Undefined'.format(p)
+                           for p in (sorted(required) + sorted(kwds))]
+    dict_args = ['{0}={0}'.format(p)
+                 for p in (sorted(required) + sorted(kwds))]
+
+    if additional:
+        def_args.append('**kwds')
+        dict_args.append('**kwds')
+
+    code = [HEADER,
+            "from altair.utils.schemapi import Undefined",
+            "from . import core"
+            "",
+            "",
+            "class MarkMethodMixin(object):",
+            '    """A mixin that defines mark methods"""']
+
+    for mark in marks:
+        # TODO: only include args relevant to given type?
+        mark_method = MARK_METHOD.format(mark=mark,
+                                         def_arglist=indent_arglist(def_args, indent_level=10 + len(mark)),
+                                         dict_arglist=indent_arglist(dict_args, indent_level=16))
+        code.append('\n    '.join(mark_method.splitlines()))
+
+    return '\n'.join(code)
+
+
 def vegalite_main():
     encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
 
@@ -197,6 +253,14 @@ def vegalite_main():
         code = generate_vegalite_channel_wrappers(schemafile, encoding_def=encoding_defs[version])
         with open(outfile, 'w') as f:
             f.write(code)
+
+        if version != 'v1':
+            # generate the mark mixin
+            outfile = join(path, 'schema', 'mixins.py')
+            print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+            mark_mixin = generate_vegalite_mark_mixin(schemafile)
+            with open(outfile, 'w') as f:
+                f.write(mark_mixin)
 
 
 def vega_main():

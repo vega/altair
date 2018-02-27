@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-27 11:38
+# 2018-02-27 12:09
 
 from . import core
 from altair.utils.schemapi import Undefined
@@ -15,71 +15,71 @@ class Color(core.MarkPropFieldDefWithCondition):
        field: ...,
        ...
     }
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.
-        __Note:__ A field definition's `condition` property can only
-        contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-         since Vega-Lite only allows at most one encoded field per
+         since Vega-Lite only allows at most one encoded field per 
         encoding channel.
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If `null`, the
-        legend for the encoding channel will be removed.  __Default
-        value:__ If undefined, default [legend
-        properties](https://vega.github.io/vega-lite/docs/legend.html)
+        An object defining properties of the legend. If `null`, the 
+        legend for the encoding channel will be removed.  __Default 
+        value:__ If undefined, default [legend 
+        properties](https://vega.github.io/vega-lite/docs/legend.html) 
         are applied.
     scale : Scale
-        An object defining properties of the channel's scale, which is
+        An object defining properties of the channel's scale, which is 
         the function that transforms values in the data domain (numbers,
-         dates, strings, etc) to visual values (pixels, colors, sizes)
-        of the encoding channels.  __Default value:__ If undefined,
-        default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html)
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
         are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values
-        include `"ascending"`, `"descending"` and `null` (no sorting).
-        For fields with discrete domains, `sort` can also be a [sort
-        field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
           __Default value:__ `"ascending"`
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -108,12 +108,12 @@ class ColorValue(core.MarkPropValueDefWithCondition):
        condition: {field: ...} | {value: ...},
        value: ...,
     }
-
+    
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>,
+    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
     list)
-        A field definition or one or more value definition(s) with a
+        A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
@@ -124,48 +124,48 @@ class ColorValue(core.MarkPropValueDefWithCondition):
 
 class Column(core.FacetFieldDef):
     """Column schema wrapper
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     header : Header
         An object defining properties of a facet's header.
     sort : SortOrder
-        Sort order for a facet field. This can be `"ascending"`,
+        Sort order for a facet field. This can be `"ascending"`, 
         `"descending"`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -187,45 +187,45 @@ class Column(core.FacetFieldDef):
 
 class Detail(core.FieldDef):
     """Detail schema wrapper
-    Definition object for a data field, its type and transformation of an
+    Definition object for a data field, its type and transformation of an 
     encoding channel.
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -252,50 +252,50 @@ class Href(core.FieldDefWithCondition):
        field: ...,
        ...
     }
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.
-        __Note:__ A field definition's `condition` property can only
-        contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-         since Vega-Lite only allows at most one encoded field per
+         since Vega-Lite only allows at most one encoded field per 
         encoding channel.
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -322,11 +322,11 @@ class HrefValue(core.ValueDefWithCondition):
        condition: {field: ...} | {value: ...},
        value: ...,
     }
-
+    
     Attributes
     ----------
     condition : anyOf(Conditional<FieldDef>, Conditional<ValueDef>, list)
-        A field definition or one or more value definition(s) with a
+        A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
@@ -343,71 +343,71 @@ class Opacity(core.MarkPropFieldDefWithCondition):
        field: ...,
        ...
     }
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.
-        __Note:__ A field definition's `condition` property can only
-        contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-         since Vega-Lite only allows at most one encoded field per
+         since Vega-Lite only allows at most one encoded field per 
         encoding channel.
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If `null`, the
-        legend for the encoding channel will be removed.  __Default
-        value:__ If undefined, default [legend
-        properties](https://vega.github.io/vega-lite/docs/legend.html)
+        An object defining properties of the legend. If `null`, the 
+        legend for the encoding channel will be removed.  __Default 
+        value:__ If undefined, default [legend 
+        properties](https://vega.github.io/vega-lite/docs/legend.html) 
         are applied.
     scale : Scale
-        An object defining properties of the channel's scale, which is
+        An object defining properties of the channel's scale, which is 
         the function that transforms values in the data domain (numbers,
-         dates, strings, etc) to visual values (pixels, colors, sizes)
-        of the encoding channels.  __Default value:__ If undefined,
-        default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html)
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
         are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values
-        include `"ascending"`, `"descending"` and `null` (no sorting).
-        For fields with discrete domains, `sort` can also be a [sort
-        field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
           __Default value:__ `"ascending"`
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -436,12 +436,12 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
        condition: {field: ...} | {value: ...},
        value: ...,
     }
-
+    
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>,
+    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
     list)
-        A field definition or one or more value definition(s) with a
+        A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
@@ -452,46 +452,46 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
 
 class Order(core.OrderFieldDef):
     """Order schema wrapper
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     sort : SortOrder
-        The sort order. One of `"ascending"` (default) or
+        The sort order. One of `"ascending"` (default) or 
         `"descending"`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -512,48 +512,48 @@ class Order(core.OrderFieldDef):
 
 class Row(core.FacetFieldDef):
     """Row schema wrapper
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     header : Header
         An object defining properties of a facet's header.
     sort : SortOrder
-        Sort order for a facet field. This can be `"ascending"`,
+        Sort order for a facet field. This can be `"ascending"`, 
         `"descending"`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -581,71 +581,71 @@ class Shape(core.MarkPropFieldDefWithCondition):
        field: ...,
        ...
     }
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.
-        __Note:__ A field definition's `condition` property can only
-        contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-         since Vega-Lite only allows at most one encoded field per
+         since Vega-Lite only allows at most one encoded field per 
         encoding channel.
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If `null`, the
-        legend for the encoding channel will be removed.  __Default
-        value:__ If undefined, default [legend
-        properties](https://vega.github.io/vega-lite/docs/legend.html)
+        An object defining properties of the legend. If `null`, the 
+        legend for the encoding channel will be removed.  __Default 
+        value:__ If undefined, default [legend 
+        properties](https://vega.github.io/vega-lite/docs/legend.html) 
         are applied.
     scale : Scale
-        An object defining properties of the channel's scale, which is
+        An object defining properties of the channel's scale, which is 
         the function that transforms values in the data domain (numbers,
-         dates, strings, etc) to visual values (pixels, colors, sizes)
-        of the encoding channels.  __Default value:__ If undefined,
-        default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html)
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
         are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values
-        include `"ascending"`, `"descending"` and `null` (no sorting).
-        For fields with discrete domains, `sort` can also be a [sort
-        field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
           __Default value:__ `"ascending"`
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -674,12 +674,12 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
        condition: {field: ...} | {value: ...},
        value: ...,
     }
-
+    
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>,
+    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
     list)
-        A field definition or one or more value definition(s) with a
+        A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
@@ -696,71 +696,71 @@ class Size(core.MarkPropFieldDefWithCondition):
        field: ...,
        ...
     }
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.
-        __Note:__ A field definition's `condition` property can only
-        contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-         since Vega-Lite only allows at most one encoded field per
+         since Vega-Lite only allows at most one encoded field per 
         encoding channel.
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If `null`, the
-        legend for the encoding channel will be removed.  __Default
-        value:__ If undefined, default [legend
-        properties](https://vega.github.io/vega-lite/docs/legend.html)
+        An object defining properties of the legend. If `null`, the 
+        legend for the encoding channel will be removed.  __Default 
+        value:__ If undefined, default [legend 
+        properties](https://vega.github.io/vega-lite/docs/legend.html) 
         are applied.
     scale : Scale
-        An object defining properties of the channel's scale, which is
+        An object defining properties of the channel's scale, which is 
         the function that transforms values in the data domain (numbers,
-         dates, strings, etc) to visual values (pixels, colors, sizes)
-        of the encoding channels.  __Default value:__ If undefined,
-        default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html)
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
         are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values
-        include `"ascending"`, `"descending"` and `null` (no sorting).
-        For fields with discrete domains, `sort` can also be a [sort
-        field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
           __Default value:__ `"ascending"`
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -788,12 +788,12 @@ class SizeValue(core.MarkPropValueDefWithCondition):
        condition: {field: ...} | {value: ...},
        value: ...,
     }
-
+    
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>,
+    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
     list)
-        A field definition or one or more value definition(s) with a
+        A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
@@ -810,55 +810,55 @@ class Text(core.TextFieldDefWithCondition):
        field: ...,
        ...
     }
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.
-        __Note:__ A field definition's `condition` property can only
-        contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-         since Vega-Lite only allows at most one encoded field per
+         since Vega-Lite only allows at most one encoded field per 
         encoding channel.
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     format : string
-        The [formatting
-        pattern](https://vega.github.io/vega-lite/docs/format.html) for
-        a text field. If not defined, this will be determined
+        The [formatting 
+        pattern](https://vega.github.io/vega-lite/docs/format.html) for 
+        a text field. If not defined, this will be determined 
         automatically.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -885,12 +885,12 @@ class TextValue(core.TextValueDefWithCondition):
        condition: {field: ...} | {value: ...},
        value: ...,
     }
-
+    
     Attributes
     ----------
-    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>,
+    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>, 
     list)
-        A field definition or one or more value definition(s) with a
+        A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
@@ -907,55 +907,55 @@ class Tooltip(core.TextFieldDefWithCondition):
        field: ...,
        ...
     }
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     condition : anyOf(Conditional<ValueDef>, list)
-        One or more value definition(s) with a selection predicate.
-        __Note:__ A field definition's `condition` property can only
-        contain [value
+        One or more value definition(s) with a selection predicate.  
+        __Note:__ A field definition's `condition` property can only 
+        contain [value 
         definitions](https://vega.github.io/vega-lite/docs/encoding.html#value-def)
-         since Vega-Lite only allows at most one encoded field per
+         since Vega-Lite only allows at most one encoded field per 
         encoding channel.
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     format : string
-        The [formatting
-        pattern](https://vega.github.io/vega-lite/docs/format.html) for
-        a text field. If not defined, this will be determined
+        The [formatting 
+        pattern](https://vega.github.io/vega-lite/docs/format.html) for 
+        a text field. If not defined, this will be determined 
         automatically.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -982,12 +982,12 @@ class TooltipValue(core.TextValueDefWithCondition):
        condition: {field: ...} | {value: ...},
        value: ...,
     }
-
+    
     Attributes
     ----------
-    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>,
+    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>, 
     list)
-        A field definition or one or more value definition(s) with a
+        A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
@@ -998,86 +998,86 @@ class TooltipValue(core.TextValueDefWithCondition):
 
 class X(core.PositionFieldDef):
     """X schema wrapper
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     axis : anyOf(Axis, None)
-        An object defining properties of axis's gridlines, ticks and
-        labels. If `null`, the axis for the encoding channel will be
-        removed.  __Default value:__ If undefined, default [axis
+        An object defining properties of axis's gridlines, ticks and 
+        labels. If `null`, the axis for the encoding channel will be 
+        removed.  __Default value:__ If undefined, default [axis 
         properties](https://vega.github.io/vega-lite/docs/axis.html) are
          applied.
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     scale : Scale
-        An object defining properties of the channel's scale, which is
+        An object defining properties of the channel's scale, which is 
         the function that transforms values in the data domain (numbers,
-         dates, strings, etc) to visual values (pixels, colors, sizes)
-        of the encoding channels.  __Default value:__ If undefined,
-        default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html)
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
         are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values
-        include `"ascending"`, `"descending"` and `null` (no sorting).
-        For fields with discrete domains, `sort` can also be a [sort
-        field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
           __Default value:__ `"ascending"`
     stack : anyOf(StackOffset, None)
-        Type of stacking offset if the field should be stacked. `stack`
-        is only applicable for `x` and `y` channels with continuous
-        domains. For example, `stack` of `y` can be used to customize
-        stacking for a vertical bar chart.  `stack` can be one of the
-        following values: - `"zero"`: stacking with baseline offset at
-        zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
-        [area](https://vega.github.io/vega-lite/docs/stack.html#area)
-        chart). - `"normalize"` - stacking with normalized domain (for
-        creating [normalized stacked bar and area
+        Type of stacking offset if the field should be stacked. `stack` 
+        is only applicable for `x` and `y` channels with continuous 
+        domains. For example, `stack` of `y` can be used to customize 
+        stacking for a vertical bar chart.  `stack` can be one of the 
+        following values: - `"zero"`: stacking with baseline offset at 
+        zero value of the scale (for creating typical stacked 
+        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and 
+        [area](https://vega.github.io/vega-lite/docs/stack.html#area) 
+        chart). - `"normalize"` - stacking with normalized domain (for 
+        creating [normalized stacked bar and area 
         charts](https://vega.github.io/vega-lite/docs/stack.html#normalized).
-         <br/> -`"center"` - stacking with center baseline (for
+         <br/> -`"center"` - stacking with center baseline (for 
         [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).
-         - `null` - No-stacking. This will produce layered
+         - `null` - No-stacking. This will produce layered 
         [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart)
-         and area chart.  __Default value:__ `zero` for plots with all
-        of the following conditions are true: (1) the mark is `bar` or
-        `area`; (2) the stacked measure channel (x or y) has a linear
-        scale; (3) At least one of non-position channels mapped to an
-        unaggregated field that is different from x and y.  Otherwise,
+         and area chart.  __Default value:__ `zero` for plots with all 
+        of the following conditions are true: (1) the mark is `bar` or 
+        `area`; (2) the stacked measure channel (x or y) has a linear 
+        scale; (3) At least one of non-position channels mapped to an 
+        unaggregated field that is different from x and y.  Otherwise, 
         `null` by default.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -1101,7 +1101,7 @@ class X(core.PositionFieldDef):
 class XValue(core.ValueDef):
     """XValue schema wrapper
     Definition object for a constant value of an encoding channel.
-
+    
     Attributes
     ----------
     value : anyOf(float, string, boolean)
@@ -1114,45 +1114,45 @@ class XValue(core.ValueDef):
 
 class X2(core.FieldDef):
     """X2 schema wrapper
-    Definition object for a data field, its type and transformation of an
+    Definition object for a data field, its type and transformation of an 
     encoding channel.
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -1174,7 +1174,7 @@ class X2(core.FieldDef):
 class X2Value(core.ValueDef):
     """X2Value schema wrapper
     Definition object for a constant value of an encoding channel.
-
+    
     Attributes
     ----------
     value : anyOf(float, string, boolean)
@@ -1187,86 +1187,86 @@ class X2Value(core.ValueDef):
 
 class Y(core.PositionFieldDef):
     """Y schema wrapper
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     axis : anyOf(Axis, None)
-        An object defining properties of axis's gridlines, ticks and
-        labels. If `null`, the axis for the encoding channel will be
-        removed.  __Default value:__ If undefined, default [axis
+        An object defining properties of axis's gridlines, ticks and 
+        labels. If `null`, the axis for the encoding channel will be 
+        removed.  __Default value:__ If undefined, default [axis 
         properties](https://vega.github.io/vega-lite/docs/axis.html) are
          applied.
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     scale : Scale
-        An object defining properties of the channel's scale, which is
+        An object defining properties of the channel's scale, which is 
         the function that transforms values in the data domain (numbers,
-         dates, strings, etc) to visual values (pixels, colors, sizes)
-        of the encoding channels.  __Default value:__ If undefined,
-        default [scale
-        properties](https://vega.github.io/vega-lite/docs/scale.html)
+         dates, strings, etc) to visual values (pixels, colors, sizes) 
+        of the encoding channels.  __Default value:__ If undefined, 
+        default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) 
         are applied.
     sort : anyOf(SortOrder, SortField, None)
-        Sort order for the encoded field. Supported `sort` values
-        include `"ascending"`, `"descending"` and `null` (no sorting).
-        For fields with discrete domains, `sort` can also be a [sort
-        field definition
+        Sort order for the encoded field. Supported `sort` values 
+        include `"ascending"`, `"descending"` and `null` (no sorting). 
+        For fields with discrete domains, `sort` can also be a [sort 
+        field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
           __Default value:__ `"ascending"`
     stack : anyOf(StackOffset, None)
-        Type of stacking offset if the field should be stacked. `stack`
-        is only applicable for `x` and `y` channels with continuous
-        domains. For example, `stack` of `y` can be used to customize
-        stacking for a vertical bar chart.  `stack` can be one of the
-        following values: - `"zero"`: stacking with baseline offset at
-        zero value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
-        [area](https://vega.github.io/vega-lite/docs/stack.html#area)
-        chart). - `"normalize"` - stacking with normalized domain (for
-        creating [normalized stacked bar and area
+        Type of stacking offset if the field should be stacked. `stack` 
+        is only applicable for `x` and `y` channels with continuous 
+        domains. For example, `stack` of `y` can be used to customize 
+        stacking for a vertical bar chart.  `stack` can be one of the 
+        following values: - `"zero"`: stacking with baseline offset at 
+        zero value of the scale (for creating typical stacked 
+        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and 
+        [area](https://vega.github.io/vega-lite/docs/stack.html#area) 
+        chart). - `"normalize"` - stacking with normalized domain (for 
+        creating [normalized stacked bar and area 
         charts](https://vega.github.io/vega-lite/docs/stack.html#normalized).
-         <br/> -`"center"` - stacking with center baseline (for
+         <br/> -`"center"` - stacking with center baseline (for 
         [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).
-         - `null` - No-stacking. This will produce layered
+         - `null` - No-stacking. This will produce layered 
         [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart)
-         and area chart.  __Default value:__ `zero` for plots with all
-        of the following conditions are true: (1) the mark is `bar` or
-        `area`; (2) the stacked measure channel (x or y) has a linear
-        scale; (3) At least one of non-position channels mapped to an
-        unaggregated field that is different from x and y.  Otherwise,
+         and area chart.  __Default value:__ `zero` for plots with all 
+        of the following conditions are true: (1) the mark is `bar` or 
+        `area`; (2) the stacked measure channel (x or y) has a linear 
+        scale; (3) At least one of non-position channels mapped to an 
+        unaggregated field that is different from x and y.  Otherwise, 
         `null` by default.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -1290,7 +1290,7 @@ class Y(core.PositionFieldDef):
 class YValue(core.ValueDef):
     """YValue schema wrapper
     Definition object for a constant value of an encoding channel.
-
+    
     Attributes
     ----------
     value : anyOf(float, string, boolean)
@@ -1303,45 +1303,45 @@ class YValue(core.ValueDef):
 
 class Y2(core.FieldDef):
     """Y2 schema wrapper
-    Definition object for a data field, its type and transformation of an
+    Definition object for a data field, its type and transformation of an 
     encoding channel.
-
+    
     Attributes
     ----------
     aggregate : Aggregate
-        Aggregation function for the field (e.g., `mean`, `sum`,
-        `median`, `min`, `max`, `count`).  __Default value:__
+        Aggregation function for the field (e.g., `mean`, `sum`, 
+        `median`, `min`, `max`, `count`).  __Default value:__ 
         `undefined` (None)
     bin : anyOf(boolean, BinParams)
-        A flag for binning a `quantitative` field, or [an object
-        defining binning
+        A flag for binning a `quantitative` field, or [an object 
+        defining binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html#params).
-         If `true`, default [binning
+         If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
     field : anyOf(string, RepeatRef)
         __Required.__ A string defining the name of the field from which
          to pull a data value or an object defining iterated values from
-         the
-        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html)
-        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can
+         the 
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) 
+        operator.  __Note:__ Dots (`.`) and brackets (`[` and `]`) can 
         be used to access nested objects (e.g., `"field": "foo.bar"` and
-         `"field": "foo['bar']"`). If field names contain dots or
+         `"field": "foo['bar']"`). If field names contain dots or 
         brackets but are not nested, you can use `\\` to escape dots and
-         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details
-        about escaping in the [field
+         brackets (e.g., `"a\\.b"` and `"a\\[0\\]"`). See more details 
+        about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
     timeUnit : TimeUnit
-        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a
-        temporal field. or [a temporal field that gets casted as
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
+        temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
     type : Type
-        The encoded field's type of measurement (`"quantitative"`,
+        The encoded field's type of measurement (`"quantitative"`, 
         `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a
-        [geographic
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
@@ -1363,7 +1363,7 @@ class Y2(core.FieldDef):
 class Y2Value(core.ValueDef):
     """Y2Value schema wrapper
     Definition object for a constant value of an encoding channel.
-
+    
     Attributes
     ----------
     value : anyOf(float, string, boolean)
