@@ -91,12 +91,13 @@ def condition(predicate, if_true, if_false):
 
     Parameters
     ----------
-    predicate:
-        the selection predicate or test predicate for the condition
+    predicate: SelectionMapping, LogicalOperandPredicate, or string
+        the selection predicate or test predicate for the condition.
+        if a string is passed, it will be treated as a test operand.
     if_true:
-        the spec to use if the selection predicate is true
+        the spec or object to use if the selection predicate is true
     if_false:
-        the spec to use if the selection predicate is false
+        the spec or object to use if the selection predicate is false
 
     Returns
     -------
@@ -106,28 +107,32 @@ def condition(predicate, if_true, if_false):
     if isinstance(predicate, SelectionMapping):
         if len(predicate._kwds) != 1:
             raise NotImplementedError("multiple keys in SelectionMapping")
-        name = list(predicate._kwds.keys())[0]
-
-        if isinstance(if_true, SchemaBase):
-            condition = if_true.copy()
-            condition.selection = name
-        elif isinstance(if_true, six.string_types):
-            condition = dict(selection=name, field=if_true)
-        else:
-            condition = dict(selection=name, **if_true)
-
-        if isinstance(if_false, SchemaBase):
-            selection = if_false.copy()
-            selection['condition'] = condition
-        elif isinstance(if_false, six.string_types):
-            selection = dict(condition=condition, field=if_false)
-        else:
-            selection = dict(condition=condition, **if_false)
-
-        return selection
+        prop = 'selection'
+        val = list(predicate._kwds.keys())[0]
+    elif isinstance(predicate, (LogicalOperandPredicate, six.string_types)):
+        prop = 'test'
+        val = predicate
     else:
         raise NotImplementedError("condition predicate of type {0}"
                                   "".format(type(predicate)))
+
+    if isinstance(if_true, SchemaBase):
+        condition = if_true.copy()
+        setattr(condition, prop, val)
+    elif isinstance(if_true, six.string_types):
+        condition = {prop: val, 'field': if_true}
+    else:
+        condition = dict({prop: val}, **if_true)
+
+    if isinstance(if_false, SchemaBase):
+        selection = if_false.copy()
+        selection.condition = condition
+    elif isinstance(if_false, six.string_types):
+        selection = dict(condition=condition, field=if_false)
+    else:
+        selection = dict(condition=condition, **if_false)
+
+    return selection
 
 
 #--------------------------------------------------------------------
