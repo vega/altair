@@ -197,6 +197,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
 
+    def add_transform(self, *transforms):
+        copy = self.copy()
+        if copy.transform is Undefined:
+            copy.transform = list(transforms)
+        else:
+            copy.transform.extend(transforms)
+        return copy
+
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,

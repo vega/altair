@@ -33,22 +33,27 @@ source2 = alt.pd.DataFrame(data2)
 
 bar1 = alt.Chart(source).mark_bar().encode(
     x = 'Day:O',
-    y = 'Value:Q')
+    y = 'Value:Q'
+)
 
 bar2 = alt.Chart(source).mark_bar(color = "#e45755").encode(
     x = 'Day:O',
     y = 'baseline:Q',
-    y2 = 'Value:Q')
-
-bar2.transform = [alt.FilterTransform("datum.Value >= 300"),
-          {"calculate": "300", "as": "baseline"}]
+    y2 = 'Value:Q'
+).add_transform(
+    alt.FilterTransform("datum.Value >= 300"),
+    {"calculate": "300", "as": "baseline"}
+)
 
 rule = alt.Chart(source2).mark_rule().encode(
-    y = 'ThresholdValue:Q')
+    y = 'ThresholdValue:Q'
+)
 
-text = alt.Chart(source2).mark_text(align='left', dx=215, dy=-5).encode(
+text = alt.Chart(source2).mark_text(
+    align='left', dx=215, dy=-5
+).encode(
     y = alt.Y('ThresholdValue:Q', axis = alt.Axis(title = 'PM2.5 Value')),
     text = 'Threshold:O'
-    )
+)
 
 chart = bar1 + text + bar2 + bar2 + rule
