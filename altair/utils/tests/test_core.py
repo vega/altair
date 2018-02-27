@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from .. import parse_shorthand, parse_shorthand_plus_data
+from .. import parse_shorthand, parse_shorthand_plus_data, update_nested
 
 
 def test_parse_shorthand():
@@ -57,3 +57,16 @@ def test_parse_shorthand_plus_data():
     check('z', data, field='z', type='temporal')
     check('count(x)', data, field='x', aggregate='count', type='quantitative')
     check('mean(*)', data, field='*', aggregate='mean')
+
+
+def test_update_nested():
+    original = {'x': {'b': {'foo': 2}, 'c': 4}}
+    update = {'x': {'b': {'foo': 5}, 'd': 6}, 'y': 40}
+
+    output = update_nested(original, update, copy=True)
+    assert output is not original
+    assert output == {'x': {'b': {'foo': 5}, 'c': 4, 'd': 6}, 'y': 40}
+
+    output2 = update_nested(original, update)
+    assert output2 is original
+    assert output == output2

@@ -6,7 +6,8 @@ from .schema import *
 from .schema import core, channels, Undefined
 
 from .data import data_transformers, pipe
-from ...utils import infer_vegalite_type, parse_shorthand_plus_data, use_signature
+from ...utils import (infer_vegalite_type, parse_shorthand_plus_data,
+                      use_signature, update_nested)
 from .display import renderers
 
 
@@ -133,6 +134,8 @@ def condition(predicate, if_true, if_false):
 # Top-level objects
 
 class TopLevelMixin(object):
+    _default_spec_values = {"config": {"view": {"width": 400, "height": 300}}}
+
     def _prepare_data(self):
         if isinstance(self.data, (dict, core.Data, core.InlineData,
                                   core.UrlData, core.NamedData)):
@@ -143,27 +146,31 @@ class TopLevelMixin(object):
             self.data = core.UrlData(self.data)
 
     def to_dict(self, *args, **kwargs):
-        # TODO: it's a bit weird that to_dict modifies the object.
-        #       Should we create a copy first?
-        original_data = getattr(self, 'data', Undefined)
-        self._prepare_data()
+        copy = self.copy()
+        original_data = getattr(copy, 'data', Undefined)
+        copy._prepare_data()
 
         # We make use of two context markers:
         # - 'data' points to the data that should be referenced for column type
         #   inference.
-        # - 'toplevel' is a boolean flag that is assumed to be true; if it's
+        # - 'top_level' is a boolean flag that is assumed to be true; if it's
         #   true then a "$schema" arg is added to the dict.
         context = kwargs.get('context', {}).copy()
+        is_top_level = context.get('top_level', True)
+
+        context['top_level'] = False
         if original_data is not Undefined:
             context['data'] = original_data
-        if context.get('top_level', True):
-            # since this is top-level we add $schema if it's missing
-            if '$schema' not in self._kwds:
-                self._kwds['$schema'] = SCHEMA_URL
-            # subschemas below this one are not top-level
-            context['top_level'] = False
         kwargs['context'] = context
-        return super(TopLevelMixin, self).to_dict(*args, **kwargs)
+
+        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
+
+        if is_top_level:
+            # since this is top-level we add $schema if it's missing
+            if '$schema' not in dct:
+                dct['$schema'] = SCHEMA_URL
+            dct = update_nested(copy._default_spec_values, dct, copy=True)
+        return dct
 
     # Layering and stacking
 
@@ -185,7 +192,7 @@ class TopLevelMixin(object):
 
 class Chart(TopLevelMixin, core.TopLevelFacetedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
-                 width=400, height=300, **kwargs):
+                 width=Undefined, height=Undefined, **kwargs):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
                                     width=width, height=height, **kwargs)
 
