@@ -10,7 +10,7 @@ from vega_datasets import data
 
 chart = alt.LayerChart(
     data=data.countries()
-).add_transform(
+).transform_data(
     {'filter':
         {"field": 'country',
          "oneOf": ["China", "India", "United States", "Indonesia", "Brazil"]}

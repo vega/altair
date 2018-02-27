@@ -23,6 +23,6 @@ chart = alt.Chart(source).mark_area().encode(
 ).properties(
     width=300,
     height=40
-).add_transform(
+).transform_data(
     {"filter": "datum.symbol !== 'GOOG'"}
 )

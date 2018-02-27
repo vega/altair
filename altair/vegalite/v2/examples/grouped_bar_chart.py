@@ -18,7 +18,7 @@ chart = alt.Chart(source).mark_bar(stroke = 'transparent').encode(
     stroke='transparent'
 ).configure_axis(
     domainWidth=1
-).add_transform(
+).transform_data(
     {"filter": "datum.year == 2000"},
     {"calculate": "datum.sex == 2 ? 'Female' : 'Male'", "as": "gender"}
 )

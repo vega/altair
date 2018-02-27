@@ -12,6 +12,6 @@ source = data.stocks()
 chart = alt.Chart(source).mark_line(interpolate='step-after').encode(
     x = 'date',
     y = 'price'
-).add_transform(
+).transform_data(
     {"filter": "datum.symbol==='GOOG'"}
 )

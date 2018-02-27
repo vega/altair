@@ -24,6 +24,6 @@ chart = alt.Chart(source).mark_circle(
 ).properties(
     width=600,
     height=400
-).add_transform(
+).transform_data(
     {"filter": "datum.Entity !== 'All natural disasters'"}
 )

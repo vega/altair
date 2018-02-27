@@ -197,7 +197,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
 
-    def add_transform(self, *transforms):
+    def transform_data(self, *transforms):
         copy = self.copy()
         if copy.transform is Undefined:
             copy.transform = list(transforms)

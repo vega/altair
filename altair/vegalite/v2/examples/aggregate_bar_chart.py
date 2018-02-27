@@ -12,4 +12,4 @@ source = data.population()
 chart = alt.Chart(source).mark_bar().encode(
     x = alt.X('sum(people):Q', axis = alt.Axis(title = 'population')),
     y = alt.Y('age:O', scale = alt.Scale(rangeStep = 17))
-).add_transform({"filter": "datum.year == 2000"})
+).transform_data({"filter": "datum.year == 2000"})
