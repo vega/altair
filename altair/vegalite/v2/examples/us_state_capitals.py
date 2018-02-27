@@ -1,7 +1,7 @@
 """
 U.S. state capitals overlayed on a map of the U.S
-================================================-
-This is a geographic visualization that shows US capitals
+================================================
+This is a layered geographic visualization that shows US capitals
 overlayed on a map.
 """
 
@@ -24,10 +24,10 @@ background = alt.Chart(states).mark_geoshape(
 )
 
 # State capitals labeled on background
-points = alt.Chart(capitals).mark_text().encode(
+points = alt.Chart(capitals).mark_text(dy=-5, align='right').encode(
     alt.Text('city', type='nominal'),
     alt.X('lon', type='longitude'),
     alt.Y('lat', type='latitude'),
 )
 
-chart = background + points
+chart = background + points + points.mark_point(color='black')
