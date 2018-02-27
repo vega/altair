@@ -3,6 +3,8 @@ Utility routines
 """
 import re
 import warnings
+import collections
+from copy import deepcopy
 
 import six
 import pandas as pd
@@ -296,3 +298,42 @@ def update_subtraits(obj, attrs, **kwargs):
             trait = dct[attr] = {}
         dct[attr] = update_subtraits(trait, attrs[1:], **kwargs)
     return obj
+
+
+def update_nested(original, update, copy=False):
+    """Update nested dictionaries
+
+    Parameters
+    ----------
+    original : dict
+        the original (nested) dictionary, which will be updated in-place
+    update : dict
+        the nested dictionary of updates
+    copy : bool, default False
+        if True, then copy the original dictionary rather than modifying it
+
+    Returns
+    -------
+    original : dict
+        a reference to the (modified) original dict
+
+    Examples
+    --------
+    >>> original = {'x': {'b': 2, 'c': 4}}
+    >>> update = {'x': {'b': 5, 'd': 6}, 'y': 40}
+    >>> update_nested(original, update)
+    >>> original
+    {'x': {'b': 5, 'c': 2, 'd': 6}, 'y': 40}
+    """
+    if copy:
+        original = deepcopy(original)
+    for key, val in update.items():
+        if isinstance(val, collections.Mapping):
+            orig_val = original.get(key, {})
+            if isinstance(orig_val, collections.Mapping):
+                original[key] = update_nested(orig_val, val)
+            else:
+                original[key] = val
+        else:
+            original[key] = val
+    return original
