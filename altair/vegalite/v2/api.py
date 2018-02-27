@@ -138,7 +138,7 @@ def condition(predicate, if_true, if_false):
 #--------------------------------------------------------------------
 # Top-level objects
 
-class TopLevelMixin(object):
+class TopLevelMixin(mixins.ConfigMethodMixin):
     _default_spec_values = {"config": {"view": {"width": 400, "height": 300}}}
 
     def _prepare_data(self):
