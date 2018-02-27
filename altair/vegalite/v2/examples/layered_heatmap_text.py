@@ -17,12 +17,14 @@ heatmap = alt.Chart(cars).mark_rect().encode(
 )
 
 text = alt.Chart(cars).mark_text(
-    color = 'white',
-    baseline = 'middle'
+    baseline='middle'
 ).encode(
     alt.X('Cylinders:O'),
     alt.Y('Origin:O'),
-    alt.Text('count(*):Q')
+    alt.Text('count(*):Q'),
+    color=alt.condition("datum['count_*'] > 100",
+                        alt.ColorValue('black'),
+                        alt.ColorValue('white'))
 )
 
 chart = heatmap + text
