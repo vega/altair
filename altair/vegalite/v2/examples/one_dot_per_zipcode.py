@@ -14,7 +14,7 @@ zipcodes = data.zipcodes.url
 
 # US states background
 background = alt.Chart(states).mark_geoshape(
-    fill='lightgray',
+    fill='white',
     stroke='white'
 ).properties(
     projection={'type': 'albersUsa'},
@@ -23,7 +23,7 @@ background = alt.Chart(states).mark_geoshape(
 )
 
 # Zip Codes labeled on background
-points = alt.Chart(zipcodes).mark_circle(size = 2).encode(
+points = alt.Chart(zipcodes).mark_circle(size = 3).encode(
     #alt.Text('city', type='nominal'),
     alt.X('longitude', type='longitude'),
     alt.Y('latitude', type='latitude'),
