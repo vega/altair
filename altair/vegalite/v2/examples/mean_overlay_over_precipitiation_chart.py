@@ -14,8 +14,7 @@ bar = alt.Chart(source).mark_bar().encode(
     x = alt.X('date:O', timeUnit = 'month'),
     y = alt.Y('mean(precipitation):Q'))
 
-rule = alt.Chart(source).mark_rule(color = 'red',
-                                  size = 3).encode(
-    y = 'mean(precipitation)')
-    #size = alt.Size(value = 3))
+rule = alt.Chart(source).mark_rule(color = 'red').encode(
+    y = 'mean(precipitation)',
+    size = alt.SizeValue(3))
 chart = bar + rule
