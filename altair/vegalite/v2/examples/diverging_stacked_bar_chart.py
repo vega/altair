@@ -5,7 +5,6 @@ This example shows a diverging stacked bar chart for sentiments towards a set of
 """
 
 import altair as alt
-from vega_datasets import data
 
 data =     [
       {

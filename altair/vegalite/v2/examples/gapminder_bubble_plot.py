@@ -7,10 +7,10 @@ This example shows how to make a bubble plot showing the correlation between hea
 import altair as alt
 from vega_datasets import data
 
-gapminder = data.gapminder_health_income()
+gapminder = data.gapminder_health_income.url
 
 chart = alt.Chart(gapminder).mark_circle().encode(
-    x = alt.X('income', scale = alt.Scale(type = 'log')), 
-    y = alt.Y('health', scale = alt.Scale(zero=False)), 
-    size = 'population'
+    x = alt.X('income:Q', scale = alt.Scale(type = 'log')), 
+    y = alt.Y('health:Q', scale = alt.Scale(zero=False)), 
+    size = 'population:Q'
 )
