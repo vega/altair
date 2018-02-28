@@ -10,12 +10,12 @@ from vega_datasets import data
 
 chart = alt.LayerChart(
     data=data.countries()
-).transform_data(
-    {'filter':
-        {"field": 'country',
-         "oneOf": ["China", "India", "United States", "Indonesia", "Brazil"]}
-    },
-    {'filter': {"field": 'year', "oneOf": [1955, 2000]}}
+).transform_filter(
+    filter={"field": 'country',
+            "oneOf": ["China", "India", "United States", "Indonesia", "Brazil"]}
+).transform_filter(
+    filter={'field': 'year',
+            "oneOf": [1955, 2000]}
 )
 
 # Add points for life expectancy in 1955 & 2000

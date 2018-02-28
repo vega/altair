@@ -17,6 +17,6 @@ chart = alt.Chart(zipcodes).mark_circle(size = 3).encode(
     projection={'type': 'albersUsa'},
     width=800,
     height=500
-).transform_data(
-    {"calculate": "substring(datum.zip_code, 0, 1)", "as": "digit"}
+).transform_calculate(
+    "digit", "substring(datum.zip_code, 0, 1)"
 )

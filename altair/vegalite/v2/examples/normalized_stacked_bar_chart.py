@@ -18,7 +18,8 @@ chart = alt.Chart(source).mark_bar().encode(
     color=alt.Color('gender:N',
         scale=alt.Scale(range=["#EA98D2", "#659CCA"])
     )
-).transform_data(
-    {"filter": "datum.year == 2000"},
-    {"calculate": "datum.sex == 2 ? 'Female' : 'Male'", "as": "gender"}
+).transform_filter(
+    "datum.year == 2000"
+).transform_calculate(
+    "gender", "datum.sex == 2 ? 'Female' : 'Male'"
 )

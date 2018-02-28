@@ -197,13 +197,40 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
 
-    def transform_data(self, *transforms):
+    def add_transform(self, *transforms):
         copy = self.copy()
         if copy.transform is Undefined:
             copy.transform = list(transforms)
         else:
             copy.transform.extend(transforms)
         return copy
+
+    @use_signature(AggregateTransform)
+    def transform_aggregate(self, *args, **kwargs):
+        return self.add_transform(AggregateTransform(*args, **kwargs))
+
+    @use_signature(BinTransform)
+    def transform_bin(self, *args, **kwargs):
+        return self.add_transform(BinTransform(*args, **kwargs))
+
+    @use_signature(CalculateTransform)
+    def transform_calculate(self, as_, calculate, **kwargs):
+        kwargs['as'] = as_
+        kwargs['calculate'] = calculate
+        return self.add_transform(CalculateTransform(**kwargs))
+
+    @use_signature(FilterTransform)
+    def transform_filter(self, filter, **kwargs):
+        kwargs['filter'] = filter
+        return self.add_transform(FilterTransform(**kwargs))
+
+    @use_signature(LookupTransform)
+    def transform_lookup(self, *args, **kwargs):
+        return self.add_transform(LookupTransform(*args, **kwargs))
+
+    @use_signature(TimeUnitTransform)
+    def transform_timeunit(self, *args, **kwargs):
+        return self.add_transform(TimeUnitTransform(*args, **kwargs))
 
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):

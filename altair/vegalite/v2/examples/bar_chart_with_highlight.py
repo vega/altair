@@ -40,9 +40,10 @@ bar2 = alt.Chart(source).mark_bar(color = "#e45755").encode(
     x = 'Day:O',
     y = 'baseline:Q',
     y2 = 'Value:Q'
-).transform_data(
-    alt.FilterTransform("datum.Value >= 300"),
-    {"calculate": "300", "as": "baseline"}
+).transform_filter(
+    "datum.Value >= 300"
+).transform_calculate(
+    "baseline", "300"
 )
 
 rule = alt.Chart(source2).mark_rule().encode(
