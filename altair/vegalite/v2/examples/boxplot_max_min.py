@@ -7,14 +7,15 @@ data from 2000.
 https://vega.github.io/vega-lite/examples/box-plot_minmax_2D_vertical_normalized.html
 """
 import altair as alt
+from vega_datasets import data
 
-population = alt.load_dataset('population')
+population = data.population.url
 
 # Define aggregate fields
-lower_box = 'q1(people)'
-lower_whisker = 'min(people)'
-upper_box = 'q3(people)'
-upper_whisker = 'max(people)'
+lower_box = 'q1(people):Q'
+lower_whisker = 'min(people):Q'
+upper_box = 'q3(people):Q'
+upper_whisker = 'max(people):Q'
 
 # Compose each layer individually
 lower_plot = alt.Chart(population).mark_rule().encode(
@@ -37,7 +38,7 @@ upper_plot = alt.Chart(population).mark_rule().encode(
 )
 
 middle_tick = alt.Chart(population).mark_tick(color='white', size=5.0).encode(
-    y='median(people)',
+    y='median(people):Q',
     x='age:O',
 )
 

@@ -7,18 +7,18 @@ This example shows a ranged dot plot that uses 'layer' to convey changing life e
 import altair as alt
 from vega_datasets import data
 
-source = data.countries()
+source = data.countries.url
 
 
 line = alt.Chart().mark_line(color='#db646f').encode(
-    x = 'life_expect',
-    y = 'country',
-    detail = 'country'
+    x = 'life_expect:Q',
+    y = 'country:N',
+    detail = 'country:N'
     ).interactive()
 
 point = alt.Chart().mark_point(size = 100, opacity = 1, filled = True).encode(
-    x = 'life_expect',
-    y = 'country',
+    x = 'life_expect:Q',
+    y = 'country:N',
     color=alt.Color('year:O',
         scale=alt.Scale(
             domain=['1955', '2000'],

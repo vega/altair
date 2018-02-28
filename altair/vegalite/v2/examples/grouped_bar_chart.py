@@ -7,7 +7,7 @@ This example shows a population broken out by gender and age for a specific year
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 chart = alt.Chart(source).mark_bar(stroke = 'transparent').encode(
     x = alt.X('gender:N', scale = alt.Scale(rangeStep = 12), axis = alt.Axis(title = '')),

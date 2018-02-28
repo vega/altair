@@ -7,7 +7,7 @@ This example is a bar chart showing the US population distribution of age groups
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 chart = alt.Chart(source).mark_bar().encode(
     x = alt.X('sum(people):Q', axis = alt.Axis(title = 'population')),
