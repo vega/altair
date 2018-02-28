@@ -51,4 +51,4 @@ text = alt.Chart(source2).mark_text(align='left', dx=215, dy=-5).encode(
     text = 'Threshold:O'
     )
 
-chart = bar1 + text + bar2 + bar2 + rule
+chart = bar1 + text + bar2 + rule
