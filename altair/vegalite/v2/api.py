@@ -230,6 +230,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
 
         def wrap_in_channel_class(obj, prop):
             clsname = prop.title()
+
             if isinstance(obj, SchemaBase):
                 return obj
 
@@ -296,14 +297,10 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         return copy
 
 
-def repeat_row():
-    """Tie a channel to the row within a RepeatChart"""
-    return core.RepeatRef(repeat='row')
-
-
-def repeat_column():
-    """Tie a channel to the column within a RepeatChart"""
-    return core.RepeatRef(repeat='column')
+def repeat(repeater):
+    """Tie a channel to the row or column within a repeated chart"""
+    assert repeater in ['row', 'column']
+    return core.RepeatRef(repeat=repeater)
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
