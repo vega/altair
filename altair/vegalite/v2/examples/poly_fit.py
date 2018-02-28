@@ -29,11 +29,11 @@ poly_data = pd.melt(poly_data,
                     value_vars=[str(deg) for deg in degree_list], 
                     var_name='degree', value_name='yfit')
 
-# Plot the data points
+# Plot the data points on an interactive axis
 points = alt.Chart(df).mark_circle(color='black').encode(
     x=alt.X('x', axis=alt.Axis(title='x')), 
     y=alt.Y('y', axis=alt.Axis(title='y')), 
-)
+).interactive()
 
 # Plot the best fit polynomials
 polynomial_fit = alt.Chart(poly_data).mark_line().encode(
