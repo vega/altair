@@ -1,7 +1,8 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-27 13:26
+# 2018-02-28 08:23
 
+import six
 from . import core
 from altair.utils.schemapi import Undefined
 from altair.utils import parse_shorthand, parse_shorthand_plus_data
@@ -91,14 +92,19 @@ class Color(core.MarkPropFieldDefWithCondition):
                                     scale=scale, sort=sort, timeUnit=timeUnit,
                                     **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Color, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Color, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class ColorValue(core.MarkPropValueDefWithCondition):
@@ -175,14 +181,19 @@ class Column(core.FacetFieldDef):
                                      bin=bin, header=header, sort=sort,
                                      timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Column, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Column, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class Detail(core.FieldDef):
@@ -234,14 +245,19 @@ class Detail(core.FieldDef):
         super(Detail, self).__init__(field=field, type=type, aggregate=aggregate,
                                      bin=bin, timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Detail, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Detail, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class Href(core.FieldDefWithCondition):
@@ -305,14 +321,19 @@ class Href(core.FieldDefWithCondition):
                                    bin=bin, condition=condition, timeUnit=timeUnit,
                                    **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Href, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Href, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class HrefValue(core.ValueDefWithCondition):
@@ -419,14 +440,19 @@ class Opacity(core.MarkPropFieldDefWithCondition):
                                       scale=scale, sort=sort, timeUnit=timeUnit,
                                       **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Opacity, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Opacity, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class OpacityValue(core.MarkPropValueDefWithCondition):
@@ -500,14 +526,19 @@ class Order(core.OrderFieldDef):
         super(Order, self).__init__(field=field, type=type, aggregate=aggregate,
                                     bin=bin, sort=sort, timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Order, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Order, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class Row(core.FacetFieldDef):
@@ -563,14 +594,19 @@ class Row(core.FacetFieldDef):
                                   bin=bin, header=header, sort=sort,
                                   timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Row, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Row, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class Shape(core.MarkPropFieldDefWithCondition):
@@ -657,14 +693,19 @@ class Shape(core.MarkPropFieldDefWithCondition):
                                     scale=scale, sort=sort, timeUnit=timeUnit,
                                     **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Shape, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Shape, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class ShapeValue(core.MarkPropValueDefWithCondition):
@@ -771,14 +812,19 @@ class Size(core.MarkPropFieldDefWithCondition):
                                    bin=bin, condition=condition, legend=legend,
                                    scale=scale, sort=sort, timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Size, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Size, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class SizeValue(core.MarkPropValueDefWithCondition):
@@ -868,14 +914,19 @@ class Text(core.TextFieldDefWithCondition):
                                    bin=bin, condition=condition, format=format,
                                    timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Text, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Text, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class TextValue(core.TextValueDefWithCondition):
@@ -965,14 +1016,19 @@ class Tooltip(core.TextFieldDefWithCondition):
                                       bin=bin, condition=condition, format=format,
                                       timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Tooltip, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Tooltip, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class TooltipValue(core.TextValueDefWithCondition):
@@ -1088,14 +1144,19 @@ class X(core.PositionFieldDef):
                                 axis=axis, bin=bin, scale=scale, sort=sort,
                                 stack=stack, timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(X, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(X, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class XValue(core.ValueDef):
@@ -1161,14 +1222,19 @@ class X2(core.FieldDef):
         super(X2, self).__init__(field=field, type=type, aggregate=aggregate,
                                  bin=bin, timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(X2, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(X2, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class X2Value(core.ValueDef):
@@ -1277,14 +1343,19 @@ class Y(core.PositionFieldDef):
                                 axis=axis, bin=bin, scale=scale, sort=sort,
                                 stack=stack, timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Y, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Y, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class YValue(core.ValueDef):
@@ -1350,14 +1421,19 @@ class Y2(core.FieldDef):
         super(Y2, self).__init__(field=field, type=type, aggregate=aggregate,
                                  bin=bin, timeUnit=timeUnit, **kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super(Y2, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super(Y2, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {})
 
 
 class Y2Value(core.ValueDef):

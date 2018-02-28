@@ -204,9 +204,6 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
                                     width=width, height=height, **kwargs)
 
-
-    # TODO: add configure_* methods
-
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
         if args:
@@ -283,6 +280,31 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         for key, val in kwargs.items():
             setattr(copy, key, val)
         return copy
+
+
+class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
+    def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
+        super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
+
+    def set_repeat(self, row=None, column=None):
+        copy = self.copy()
+        if copy.repeat is Undefined:
+            copy.repeat = core.Repeat()
+        if row is not None:
+            copy.repeat.row = row
+        if column is not None:
+            copy.repeat.column = column
+        return copy
+
+
+def repeat_row():
+    """Tie a channel to the row within a RepeatChart"""
+    return core.RepeatRef(repeat='row')
+
+
+def repeat_column():
+    """Tie a channel to the column within a RepeatChart"""
+    return core.RepeatRef(repeat='column')
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):

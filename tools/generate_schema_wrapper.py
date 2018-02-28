@@ -27,14 +27,19 @@ class {classname}(core.{basename}):
     """{docstring}"""
     {init_code}
 
-    def to_dict(self, validate=True, ignore=[], context={{}}):
+    def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
-        if type_ is Undefined and 'data' in context:
+        if not isinstance(self.field, six.string_types):
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {{}}
+        elif type_ is Undefined and 'data' in context:
             kwds = parse_shorthand_plus_data(self.field, context['data'])
         else:
             kwds = parse_shorthand(self.field)
         self._kwds.update(kwds)
-        return super({classname}, self).to_dict(validate=validate, ignore=ignore, context=context)
+        return super({classname}, self).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context or {{}})
 '''
 
 VALUE_TEMPLATE = '''
@@ -129,7 +134,8 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
     with open(schemafile) as f:
         schema = json.load(f)
     if imports is None:
-        imports = ["from . import core",
+        imports = ["import six",
+                   "from . import core",
                    "from altair.utils.schemapi import Undefined",
                    "from altair.utils import parse_shorthand, parse_shorthand_plus_data"]
     contents = [HEADER]
