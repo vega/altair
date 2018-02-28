@@ -197,6 +197,62 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
 
+    def add_transform(self, *transforms):
+        copy = self.copy()
+        if copy.transform is Undefined:
+            copy.transform = list(transforms)
+        else:
+            copy.transform.extend(transforms)
+        return copy
+
+    @use_signature(AggregateTransform)
+    def transform_aggregate(self, *args, **kwargs):
+        return self.add_transform(AggregateTransform(*args, **kwargs))
+
+    @use_signature(BinTransform)
+    def transform_bin(self, *args, **kwargs):
+        return self.add_transform(BinTransform(*args, **kwargs))
+
+    @use_signature(CalculateTransform)
+    def transform_calculate(self, as_, calculate, **kwargs):
+        kwargs['as'] = as_
+        kwargs['calculate'] = calculate
+        return self.add_transform(CalculateTransform(**kwargs))
+
+    @use_signature(FilterTransform)
+    def transform_filter(self, filter, **kwargs):
+        kwargs['filter'] = filter
+        return self.add_transform(FilterTransform(**kwargs))
+
+    @use_signature(LookupTransform)
+    def transform_lookup(self, *args, **kwargs):
+        return self.add_transform(LookupTransform(*args, **kwargs))
+
+    @use_signature(TimeUnitTransform)
+    def transform_timeunit(self, *args, **kwargs):
+        return self.add_transform(TimeUnitTransform(*args, **kwargs))
+
+    @use_signature(Resolve)
+    def set_resolve(self, **kwargs):
+        copy = self.copy()
+        if copy.resolve is Undefined:
+            copy.resolve = Resolve()
+        for key, val in kwargs.items():
+            copy.resolve[key] = val
+        return copy
+
+    @use_signature(AxisResolveMap)
+    def resolve_axis(self, *args, **kwargs):
+        return self.set_resolve(axis=AxisResolveMap(*args, **kwargs))
+
+    @use_signature(LegendResolveMap)
+    def resolve_legend(self, *args, **kwargs):
+        return self.set_resolve(legend=LegendResolveMap(*args, **kwargs))
+
+    @use_signature(ScaleResolveMap)
+    def resolve_scale(self, *args, **kwargs):
+        return self.set_resolve(scale=LegendResolveMap(*args, **kwargs))
+
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
