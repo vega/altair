@@ -15,9 +15,7 @@ chart = alt.Chart(data.cars.url).mark_circle().encode(
 ).properties(
     width=250,
     height=250
-).interactive()
-
-alt.RepeatChart(chart).set_repeat(
+).repeat(
     row=['Horsepower', 'Acceleration', 'Miles_per_Gallon'],
     column=['Miles_per_Gallon', 'Acceleration', 'Horsepower']
-)
+).interactive()

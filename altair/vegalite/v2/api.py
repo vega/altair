@@ -197,6 +197,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
 
+    def repeat(self, row=Undefined, column=Undefined, **kwargs):
+        repeat = core.Repeat(row=row, column=column)
+        return RepeatChart(spec=self, repeat=repeat, **kwargs)
+
+    def properties(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        for key, val in kwargs.items():
+            setattr(copy, key, val)
+        return copy
+
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
@@ -275,25 +285,14 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
                                  'encodings': encodings}}
         return copy
 
-    def properties(self, **kwargs):
-        copy = self.copy(deep=True, ignore=['data'])
-        for key, val in kwargs.items():
-            setattr(copy, key, val)
-        return copy
-
 
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
         super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
 
-    def set_repeat(self, row=None, column=None):
+    def interactive(self):
         copy = self.copy()
-        if copy.repeat is Undefined:
-            copy.repeat = core.Repeat()
-        if row is not None:
-            copy.repeat.row = row
-        if column is not None:
-            copy.repeat.column = column
+        copy.spec = copy.spec.interactive()
         return copy
 
 
