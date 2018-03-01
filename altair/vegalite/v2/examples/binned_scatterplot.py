@@ -7,7 +7,7 @@ This example shows how to make a binned scatterplot.
 import altair as alt
 from vega_datasets import data
 
-source = data.movies()
+source = data.movies.url
 
 chart = alt.Chart(source).mark_circle().encode(
     x = alt.X('IMDB_Rating:Q',  bin = alt.BinParams(maxbins=10)),
