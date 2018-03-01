@@ -29,6 +29,7 @@ class {classname}(core.{basename}):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {{}}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {{}}
@@ -39,7 +40,7 @@ class {classname}(core.{basename}):
         self._kwds.update(kwds)
         return super({classname}, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {{}})
+                                                context=context)
 '''
 
 VALUE_TEMPLATE = '''

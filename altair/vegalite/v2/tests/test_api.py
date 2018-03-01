@@ -92,3 +92,25 @@ def test_chart_operations():
     assert len(chart.vconcat) == 3
     chart &= chart4
     assert len(chart.vconcat) == 4
+
+
+def test_selection_to_dict():
+    brush = alt.selection(type='interval')
+
+    # test some value selections
+    # Note: X and Y cannot have conditions
+    chart_values = alt.Chart('path/to/data.json').mark_point().encode(
+        color=alt.condition(brush, alt.ColorValue('red'), alt.ColorValue('blue')),
+        opacity=alt.condition(brush, alt.value(0.5), alt.value(1.0)),
+        text=alt.condition(brush, alt.TextValue('foo'), alt.value('bar'))
+    ).to_dict()
+
+    # test some field selections
+    # Note: X and Y cannot have conditions
+    # Conditions cannot both be fields
+    chart_fields = alt.Chart('path/to/data.json').mark_point().encode(
+        color=alt.condition(brush, alt.Color('col1:N'), alt.value('blue')),
+        opacity=alt.condition(brush, 'col1:N', alt.value(0.5)),
+        text=alt.condition(brush, alt.value('abc'), alt.Text('col2:N')),
+        size=alt.condition(brush, alt.value(20), 'col2:N')
+    ).to_dict()
