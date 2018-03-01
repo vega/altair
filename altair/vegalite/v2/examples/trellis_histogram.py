@@ -11,7 +11,7 @@ cars = alt.load_dataset('cars')
 chart = alt.Chart(cars).mark_bar().encode(
     x=alt.X("Horsepower",
             type="quantitative",
-            bin=alt.BinTransform(
+            bin=alt.BinParams(
                 maxbins=15
             )),
     y='count(*):Q',
