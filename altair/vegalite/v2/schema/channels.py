@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-03-01 10:48
+# 2018-03-01 12:54
 
 import six
 from . import core
@@ -84,6 +84,8 @@ class Color(core.MarkPropFieldDefWithCondition):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  condition=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, **kwds):
@@ -127,6 +129,24 @@ class ColorValue(core.MarkPropValueDefWithCondition):
     """
     def __init__(self, value, condition=Undefined, **kwds):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(ColorValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Column(core.FacetFieldDef):
@@ -176,6 +196,8 @@ class Column(core.FacetFieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
         super(Column, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -242,6 +264,8 @@ class Detail(core.FieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, **kwds):
         super(Detail, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -318,6 +342,8 @@ class Href(core.FieldDefWithCondition):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  condition=Undefined, timeUnit=Undefined, **kwds):
         super(Href, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -358,6 +384,24 @@ class HrefValue(core.ValueDefWithCondition):
     """
     def __init__(self, value, condition=Undefined, **kwds):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(HrefValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Opacity(core.MarkPropFieldDefWithCondition):
@@ -436,6 +480,8 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  condition=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, **kwds):
@@ -479,6 +525,24 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
     """
     def __init__(self, value, condition=Undefined, **kwds):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(OpacityValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Order(core.OrderFieldDef):
@@ -526,6 +590,8 @@ class Order(core.OrderFieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  sort=Undefined, timeUnit=Undefined, **kwds):
         super(Order, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -594,6 +660,8 @@ class Row(core.FacetFieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
         super(Row, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -692,6 +760,8 @@ class Shape(core.MarkPropFieldDefWithCondition):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  condition=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, **kwds):
@@ -735,6 +805,24 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
     """
     def __init__(self, value, condition=Undefined, **kwds):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(ShapeValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Size(core.MarkPropFieldDefWithCondition):
@@ -813,6 +901,8 @@ class Size(core.MarkPropFieldDefWithCondition):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  condition=Undefined, legend=Undefined, scale=Undefined,
                  sort=Undefined, timeUnit=Undefined, **kwds):
@@ -855,6 +945,24 @@ class SizeValue(core.MarkPropValueDefWithCondition):
     """
     def __init__(self, value, condition=Undefined, **kwds):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(SizeValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Text(core.TextFieldDefWithCondition):
@@ -917,6 +1025,8 @@ class Text(core.TextFieldDefWithCondition):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  condition=Undefined, format=Undefined, timeUnit=Undefined, **kwds):
         super(Text, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -958,6 +1068,24 @@ class TextValue(core.TextValueDefWithCondition):
     """
     def __init__(self, value, condition=Undefined, **kwds):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(TextValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Tooltip(core.TextFieldDefWithCondition):
@@ -1020,6 +1148,8 @@ class Tooltip(core.TextFieldDefWithCondition):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  condition=Undefined, format=Undefined, timeUnit=Undefined, **kwds):
         super(Tooltip, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -1061,6 +1191,24 @@ class TooltipValue(core.TextValueDefWithCondition):
     """
     def __init__(self, value, condition=Undefined, **kwds):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(TooltipValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class X(core.PositionFieldDef):
@@ -1148,6 +1296,8 @@ class X(core.PositionFieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, axis=Undefined,
                  bin=Undefined, scale=Undefined, sort=Undefined, stack=Undefined,
                  timeUnit=Undefined, **kwds):
@@ -1183,6 +1333,24 @@ class XValue(core.ValueDef):
     """
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(XValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class X2(core.FieldDef):
@@ -1229,6 +1397,8 @@ class X2(core.FieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, **kwds):
         super(X2, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -1262,6 +1432,24 @@ class X2Value(core.ValueDef):
     """
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(X2Value, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Y(core.PositionFieldDef):
@@ -1349,6 +1537,8 @@ class Y(core.PositionFieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, axis=Undefined,
                  bin=Undefined, scale=Undefined, sort=Undefined, stack=Undefined,
                  timeUnit=Undefined, **kwds):
@@ -1384,6 +1574,24 @@ class YValue(core.ValueDef):
     """
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(YValue, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 
 
 class Y2(core.FieldDef):
@@ -1430,6 +1638,8 @@ class Y2(core.FieldDef):
         projection](https://vega.github.io/vega-lite/docs/projection.html)
          is applied.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, **kwds):
         super(Y2, self).__init__(field=field, type=type, aggregate=aggregate,
@@ -1463,3 +1673,21 @@ class Y2Value(core.ValueDef):
     """
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(Y2Value, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)

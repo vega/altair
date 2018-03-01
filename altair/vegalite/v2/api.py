@@ -1,5 +1,5 @@
+import jsonschema
 import six
-
 import pandas as pd
 
 from .schema import *
@@ -147,6 +147,7 @@ def condition(predicate, if_true, if_false):
 
 class TopLevelMixin(mixins.ConfigMethodMixin):
     _default_spec_values = {"config": {"view": {"width": 400, "height": 300}}}
+    _class_is_valid_at_instantiation = False
 
     def _prepare_data(self):
         if isinstance(self.data, (dict, core.Data, core.InlineData,
@@ -268,7 +269,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     @use_signature(ScaleResolveMap)
     def resolve_scale(self, *args, **kwargs):
-        return self._set_resolve(scale=LegendResolveMap(*args, **kwargs))
+        return self._set_resolve(scale=ScaleResolveMap(*args, **kwargs))
+
+
+# Encoding will contain channel objects that aren't valid at instantiation
+core.EncodingWithFacet._class_is_valid_at_instantiation = False
 
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
@@ -304,17 +309,28 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
             if 'field' in obj:
                 obj = obj.copy()
                 obj.update(parse_shorthand(obj['field']))
+
             if 'value' in obj:
                 clsname += 'Value'
             cls = getattr(channels, clsname)
 
-            # Do not validate now, because it will be validated later
-            return cls.from_dict(obj, validate=False)
+            try:
+                # Don't force validation here; some objects won't be valid until
+                # they're created in the context of a chart.
+                return cls.from_dict(obj, validate=False)
+            except jsonschema.ValidationError:
+                # our attempts at finding the correct class have failed
+                return obj
 
         for prop, field in list(kwargs.items()):
-            kwargs[prop] = field = wrap_in_channel_class(field, prop)
-            if getattr(field, 'condition', Undefined) is not Undefined:
-                field['condition'] = wrap_in_channel_class(field['condition'], prop)
+            try:
+                condition = field['condition']
+            except (KeyError, TypeError):
+                pass
+            else:
+                if condition is not Undefined:
+                    field['condition'] = wrap_in_channel_class(condition, prop)
+            kwargs[prop] = wrap_in_channel_class(field, prop)
 
         copy = self.copy(deep=True, ignore=['data'])
 

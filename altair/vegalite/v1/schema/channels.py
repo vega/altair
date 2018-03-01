@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-03-01 10:48
+# 2018-03-01 12:54
 
 import six
 from . import core
@@ -41,6 +41,8 @@ class Row(core.PositionChannelDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -98,6 +100,8 @@ class Column(core.PositionChannelDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -155,6 +159,8 @@ class X(core.PositionChannelDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -211,6 +217,8 @@ class Y(core.PositionChannelDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -261,6 +269,8 @@ class X2(core.FieldDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined,
                  value=Undefined, **kwds):
@@ -311,6 +321,8 @@ class Y2(core.FieldDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined,
                  value=Undefined, **kwds):
@@ -367,6 +379,8 @@ class Color(core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -424,6 +438,8 @@ class Opacity(core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -481,6 +497,8 @@ class Size(core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -538,6 +556,8 @@ class Shape(core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined,
                  scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, value=Undefined, **kwds):
@@ -589,6 +609,8 @@ class Detail(core.FieldDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined,
                  value=Undefined, **kwds):
@@ -639,6 +661,8 @@ class Text(core.FieldDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined,
                  value=Undefined, **kwds):
@@ -689,6 +713,8 @@ class Label(core.FieldDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined,
                  value=Undefined, **kwds):
@@ -741,6 +767,8 @@ class Path(core.OrderChannelDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined, sort=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined,
                  value=Undefined, **kwds):
@@ -793,6 +821,8 @@ class Order(core.OrderChannelDef):
     title : string
         Title for axis or legend.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, field, aggregate=Undefined, bin=Undefined, sort=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined,
                  value=Undefined, **kwds):
