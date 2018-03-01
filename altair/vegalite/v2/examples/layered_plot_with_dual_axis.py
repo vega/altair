@@ -9,18 +9,21 @@ from vega_datasets import data
 
 source = data.seattle_weather()
 
-bar = alt.Chart(source).mark_bar().encode(
-    x = alt.X('date:O', axis = alt.Axis(format = '%b'), timeUnit = 'month',
-             scale = alt.Scale(zero=False)),
-    y = 'mean(precipitation)')
+base = alt.Chart(source).encode(
+    x=alt.X('date:O',
+        axis=alt.Axis(format='%b'),
+        timeUnit='month',
+        scale=alt.Scale(zero=False)
+    )
+)
+
+bar = base.mark_bar().encode(
+    y='mean(precipitation)'
+)
 
 
-line = alt.Chart(source).mark_line(color = 'red').encode(
-    x = alt.X('date:O', axis = alt.Axis(format = '%b'), timeUnit = 'month',
-             scale = alt.Scale(zero=False)),
-    #y = alt.Y('mean(temp_max)', resolveMode = 'independent'))
-    y = 'mean(temp_max)')
+line =  base.mark_line(color='red').encode(
+    y='mean(temp_max)',
+)
 
-
-chart = bar + line
-chart.resolve = {'scale': {'y': 'independent'}}
+chart = (bar + line).resolve_scale(y='independent')

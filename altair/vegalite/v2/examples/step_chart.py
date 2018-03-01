@@ -9,9 +9,7 @@ from vega_datasets import data
 
 source = data.stocks()
 
-chart = alt.Chart(source).mark_line(interpolate = 'step-after').encode(
+chart = alt.Chart(source).mark_line(interpolate='step-after').encode(
     x = 'date',
     y = 'price'
-)
-
-chart.transform = [{"filter": "datum.symbol==='GOOG'"}]
+).transform_filter("datum.symbol==='GOOG'")
