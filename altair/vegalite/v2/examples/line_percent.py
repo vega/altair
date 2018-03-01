@@ -15,6 +15,4 @@ chart = alt.Chart(source).mark_line().encode(
     color='sex:N'
 ).properties(
     title='Percent of work-force working as Welders'
-)
-
-chart.transform = [{"filter": {"field": "job", "equal": "Welder"}}]
+).transform_filter("datum.job === 'Welder'")
