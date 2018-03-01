@@ -197,15 +197,22 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Return a MIME bundle for display in Jupyter frontends."""
         return renderers.get()(self.to_dict())
 
+    def repeat(self, row=Undefined, column=Undefined, **kwargs):
+        repeat = core.Repeat(row=row, column=column)
+        return RepeatChart(spec=self, repeat=repeat, **kwargs)
+
+    def properties(self, **kwargs):
+        copy = self.copy(deep=True, ignore=['data'])
+        for key, val in kwargs.items():
+            setattr(copy, key, val)
+        return copy
+
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
                  width=Undefined, height=Undefined, **kwargs):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
                                     width=width, height=height, **kwargs)
-
-
-    # TODO: add configure_* methods
 
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
@@ -223,6 +230,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
 
         def wrap_in_channel_class(obj, prop):
             clsname = prop.title()
+
             if isinstance(obj, SchemaBase):
                 return obj
 
@@ -278,11 +286,21 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
                                  'encodings': encodings}}
         return copy
 
-    def properties(self, **kwargs):
-        copy = self.copy(deep=True, ignore=['data'])
-        for key, val in kwargs.items():
-            setattr(copy, key, val)
+
+class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
+    def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
+        super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
+
+    def interactive(self):
+        copy = self.copy()
+        copy.spec = copy.spec.interactive()
         return copy
+
+
+def repeat(repeater):
+    """Tie a channel to the row or column within a repeated chart"""
+    assert repeater in ['row', 'column']
+    return core.RepeatRef(repeat=repeater)
 
 
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
