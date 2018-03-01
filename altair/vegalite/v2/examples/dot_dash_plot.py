@@ -9,10 +9,14 @@ from vega_datasets import data
 
 cars = data.cars()
 
+brush = alt.selection(type='interval')
+
 points = alt.Chart(cars).mark_point().encode(
     x=alt.X('Miles_per_Gallon',axis=alt.Axis(title='')), 
     y=alt.Y('Horsepower',axis=alt.Axis(title='')), 
-    color='Origin'
+    color=alt.condition(brush, 'Origin', alt.ColorValue('grey'))
+).properties(
+    selection=brush
 )
 
 x_ticks = alt.Chart(cars).mark_tick().encode(
@@ -23,7 +27,9 @@ x_ticks = alt.Chart(cars).mark_tick().encode(
                                    domain=False, 
                                    ticks=False,
                                    title='')), 
-    color='Origin'
+    color=alt.condition(brush, 'Origin', alt.ColorValue('lightgrey'))
+).properties(
+    selection=brush
 )
 
 y_ticks = alt.Chart(cars).mark_tick().encode(
@@ -34,7 +40,9 @@ y_ticks = alt.Chart(cars).mark_tick().encode(
                                    domain=False, 
                                    ticks=False,
                                    title='')), 
-    color='Origin'
+    color=alt.condition(brush, 'Origin', alt.ColorValue('lightgrey'))
+).properties(
+    selection=brush
 )
 
 chart = alt.hconcat(y_ticks, alt.vconcat(points, x_ticks))
