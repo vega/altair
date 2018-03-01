@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-28 08:23
+# 2018-03-01 10:48
 
 import six
 from . import core
@@ -94,6 +94,7 @@ class Color(core.MarkPropFieldDefWithCondition):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -104,7 +105,7 @@ class Color(core.MarkPropFieldDefWithCondition):
         self._kwds.update(kwds)
         return super(Color, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class ColorValue(core.MarkPropValueDefWithCondition):
@@ -183,6 +184,7 @@ class Column(core.FacetFieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -193,7 +195,7 @@ class Column(core.FacetFieldDef):
         self._kwds.update(kwds)
         return super(Column, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Detail(core.FieldDef):
@@ -247,6 +249,7 @@ class Detail(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -257,7 +260,7 @@ class Detail(core.FieldDef):
         self._kwds.update(kwds)
         return super(Detail, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Href(core.FieldDefWithCondition):
@@ -323,6 +326,7 @@ class Href(core.FieldDefWithCondition):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -333,7 +337,7 @@ class Href(core.FieldDefWithCondition):
         self._kwds.update(kwds)
         return super(Href, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class HrefValue(core.ValueDefWithCondition):
@@ -442,6 +446,7 @@ class Opacity(core.MarkPropFieldDefWithCondition):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -452,7 +457,7 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         self._kwds.update(kwds)
         return super(Opacity, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class OpacityValue(core.MarkPropValueDefWithCondition):
@@ -528,6 +533,7 @@ class Order(core.OrderFieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -538,7 +544,7 @@ class Order(core.OrderFieldDef):
         self._kwds.update(kwds)
         return super(Order, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Row(core.FacetFieldDef):
@@ -596,6 +602,7 @@ class Row(core.FacetFieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -606,7 +613,7 @@ class Row(core.FacetFieldDef):
         self._kwds.update(kwds)
         return super(Row, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Shape(core.MarkPropFieldDefWithCondition):
@@ -695,6 +702,7 @@ class Shape(core.MarkPropFieldDefWithCondition):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -705,7 +713,7 @@ class Shape(core.MarkPropFieldDefWithCondition):
         self._kwds.update(kwds)
         return super(Shape, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class ShapeValue(core.MarkPropValueDefWithCondition):
@@ -814,6 +822,7 @@ class Size(core.MarkPropFieldDefWithCondition):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -824,7 +833,7 @@ class Size(core.MarkPropFieldDefWithCondition):
         self._kwds.update(kwds)
         return super(Size, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class SizeValue(core.MarkPropValueDefWithCondition):
@@ -916,6 +925,7 @@ class Text(core.TextFieldDefWithCondition):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -926,7 +936,7 @@ class Text(core.TextFieldDefWithCondition):
         self._kwds.update(kwds)
         return super(Text, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class TextValue(core.TextValueDefWithCondition):
@@ -1018,6 +1028,7 @@ class Tooltip(core.TextFieldDefWithCondition):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -1028,7 +1039,7 @@ class Tooltip(core.TextFieldDefWithCondition):
         self._kwds.update(kwds)
         return super(Tooltip, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class TooltipValue(core.TextValueDefWithCondition):
@@ -1146,6 +1157,7 @@ class X(core.PositionFieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -1156,7 +1168,7 @@ class X(core.PositionFieldDef):
         self._kwds.update(kwds)
         return super(X, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class XValue(core.ValueDef):
@@ -1224,6 +1236,7 @@ class X2(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -1234,7 +1247,7 @@ class X2(core.FieldDef):
         self._kwds.update(kwds)
         return super(X2, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class X2Value(core.ValueDef):
@@ -1345,6 +1358,7 @@ class Y(core.PositionFieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -1355,7 +1369,7 @@ class Y(core.PositionFieldDef):
         self._kwds.update(kwds)
         return super(Y, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class YValue(core.ValueDef):
@@ -1423,6 +1437,7 @@ class Y2(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -1433,7 +1448,7 @@ class Y2(core.FieldDef):
         self._kwds.update(kwds)
         return super(Y2, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Y2Value(core.ValueDef):

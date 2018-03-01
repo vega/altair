@@ -23,6 +23,11 @@ def _get_channels_mapping():
     return mapping
 
 
+def value(value, **kwargs):
+    """Specify a value for use in an encoding"""
+    return dict(value=value, **kwargs)
+
+
 # -------------------------------------------------------------------------
 # Tools for working with selections
 class SelectionMapping(SchemaBase):
@@ -117,14 +122,16 @@ def condition(predicate, if_true, if_false):
                                   "".format(type(predicate)))
 
     if isinstance(if_true, SchemaBase):
-        condition = if_true.copy()
-        setattr(condition, prop, val)
+        # convert to dict for now; the from_dict call below will wrap this
+        # dict in the appropriate schema
+        if_true = if_true.to_dict()
     elif isinstance(if_true, six.string_types):
-        condition = {prop: val, 'field': if_true}
-    else:
-        condition = dict({prop: val}, **if_true)
+        if_true = {'field': if_true}
+    condition = dict({prop: val}, **if_true)
 
     if isinstance(if_false, SchemaBase):
+        # For the selection, the channel definitions all allow selections
+        # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
         selection.condition = condition
     elif isinstance(if_false, six.string_types):
@@ -291,9 +298,14 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
                 return obj
 
             if isinstance(obj, six.string_types):
-                pass
-            elif 'values' in obj:
-                clsname += 'Values'
+                obj = {'field': obj}
+
+            # if obj is not a string or Schema, it must be a mapping
+            if 'field' in obj:
+                obj = obj.copy()
+                obj.update(parse_shorthand(obj['field']))
+            if 'value' in obj:
+                clsname += 'Value'
             cls = getattr(channels, clsname)
 
             # Do not validate now, because it will be validated later

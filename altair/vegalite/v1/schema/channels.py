@@ -1,6 +1,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-02-28 08:23
+# 2018-03-01 10:48
 
 import six
 from . import core
@@ -51,6 +51,7 @@ class Row(core.PositionChannelDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -61,7 +62,7 @@ class Row(core.PositionChannelDef):
         self._kwds.update(kwds)
         return super(Row, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Column(core.PositionChannelDef):
@@ -107,6 +108,7 @@ class Column(core.PositionChannelDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -117,7 +119,7 @@ class Column(core.PositionChannelDef):
         self._kwds.update(kwds)
         return super(Column, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class X(core.PositionChannelDef):
@@ -162,6 +164,7 @@ class X(core.PositionChannelDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -172,7 +175,7 @@ class X(core.PositionChannelDef):
         self._kwds.update(kwds)
         return super(X, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Y(core.PositionChannelDef):
@@ -217,6 +220,7 @@ class Y(core.PositionChannelDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -227,7 +231,7 @@ class Y(core.PositionChannelDef):
         self._kwds.update(kwds)
         return super(Y, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class X2(core.FieldDef):
@@ -266,6 +270,7 @@ class X2(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -276,7 +281,7 @@ class X2(core.FieldDef):
         self._kwds.update(kwds)
         return super(X2, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Y2(core.FieldDef):
@@ -315,6 +320,7 @@ class Y2(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -325,7 +331,7 @@ class Y2(core.FieldDef):
         self._kwds.update(kwds)
         return super(Y2, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Color(core.ChannelDefWithLegend):
@@ -371,6 +377,7 @@ class Color(core.ChannelDefWithLegend):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -381,7 +388,7 @@ class Color(core.ChannelDefWithLegend):
         self._kwds.update(kwds)
         return super(Color, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Opacity(core.ChannelDefWithLegend):
@@ -427,6 +434,7 @@ class Opacity(core.ChannelDefWithLegend):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -437,7 +445,7 @@ class Opacity(core.ChannelDefWithLegend):
         self._kwds.update(kwds)
         return super(Opacity, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Size(core.ChannelDefWithLegend):
@@ -483,6 +491,7 @@ class Size(core.ChannelDefWithLegend):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -493,7 +502,7 @@ class Size(core.ChannelDefWithLegend):
         self._kwds.update(kwds)
         return super(Size, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Shape(core.ChannelDefWithLegend):
@@ -539,6 +548,7 @@ class Shape(core.ChannelDefWithLegend):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -549,7 +559,7 @@ class Shape(core.ChannelDefWithLegend):
         self._kwds.update(kwds)
         return super(Shape, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Detail(core.FieldDef):
@@ -588,6 +598,7 @@ class Detail(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -598,7 +609,7 @@ class Detail(core.FieldDef):
         self._kwds.update(kwds)
         return super(Detail, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Text(core.FieldDef):
@@ -637,6 +648,7 @@ class Text(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -647,7 +659,7 @@ class Text(core.FieldDef):
         self._kwds.update(kwds)
         return super(Text, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Label(core.FieldDef):
@@ -686,6 +698,7 @@ class Label(core.FieldDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -696,7 +709,7 @@ class Label(core.FieldDef):
         self._kwds.update(kwds)
         return super(Label, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Path(core.OrderChannelDef):
@@ -737,6 +750,7 @@ class Path(core.OrderChannelDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -747,7 +761,7 @@ class Path(core.OrderChannelDef):
         self._kwds.update(kwds)
         return super(Path, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
 
 
 class Order(core.OrderChannelDef):
@@ -788,6 +802,7 @@ class Order(core.OrderChannelDef):
 
     def to_dict(self, validate=True, ignore=(), context=None):
         type_ = getattr(self, 'type', Undefined)
+        context = context or {}
         if not isinstance(self.field, six.string_types):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {}
@@ -798,4 +813,4 @@ class Order(core.OrderChannelDef):
         self._kwds.update(kwds)
         return super(Order, self).to_dict(validate=validate,
                                                 ignore=ignore,
-                                                context=context or {})
+                                                context=context)
