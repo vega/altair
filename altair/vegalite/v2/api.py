@@ -469,10 +469,28 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         return copy
 
 
+def _check_if_valid_subspec(spec, classname):
+    """Check if the spec is a valid sub-spec.
+
+    If it is not, then raise a ValueError
+    """
+    err = ('Objects with "{0}" cannot be used within {1}. Consider defining '
+           'the {0} attribute in the {1} object instead.')
+
+    for attr in ['autosize', 'background', 'config', 'padding']:
+        if isinstance(spec, SchemaBase):
+            val = getattr(spec, attr, Undefined)
+        else:
+            val = spec.get(attr, Undefined)
+        if val is not Undefined:
+            raise ValueError(err.format(attr, classname))
+
+
 @use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """Create a RepeatChart"""
     def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
+        _check_if_valid_subspec(spec, 'RepeatChart')
         super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
 
     def interactive(self):
@@ -521,14 +539,17 @@ def repeat(repeater):
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     def __init__(self, hconcat=(), **kwargs):
         # TODO: move common data to top level?
-        # TODO: check for conflicting interaction
+        for spec in hconcat:
+            _check_if_valid_subspec(spec, 'HConcatChart')
         super(HConcatChart, self).__init__(hconcat=list(hconcat), **kwargs)
 
     def __ior__(self, other):
+        _check_if_valid_subspec(other, 'HConcatChart')
         self.hconcat.append(other)
         return self
 
     def __or__(self, other):
+        _check_if_valid_subspec(other, 'HConcatChart')
         copy = self.copy()
         copy.hconcat.append(other)
         return copy
@@ -545,14 +566,17 @@ def hconcat(*charts, **kwargs):
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     def __init__(self, vconcat=(), **kwargs):
         # TODO: move common data to top level?
-        # TODO: check for conflicting interaction
+        for spec in vconcat:
+            _check_if_valid_subspec(spec, 'VConcatChart')
         super(VConcatChart, self).__init__(vconcat=list(vconcat), **kwargs)
 
     def __iand__(self, other):
+        _check_if_valid_subspec(other, 'VConcatChart')
         self.vconcat.append(other)
         return self
 
     def __and__(self, other):
+        _check_if_valid_subspec(other, 'VConcatChart')
         copy = self.copy()
         copy.vconcat.append(other)
         return copy
@@ -570,13 +594,17 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
     def __init__(self, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
+        for spec in layer:
+            _check_if_valid_subspec(spec, 'LayerChart')
         super(LayerChart, self).__init__(layer=list(layer), **kwargs)
 
     def __iadd__(self, other):
+        _check_if_valid_subspec(other, 'LayerChart')
         self.layer.append(other)
         return self
 
     def __add__(self, other):
+        _check_if_valid_subspec(other, 'LayerChart')
         copy = self.copy()
         copy.layer.append(other)
         return copy
