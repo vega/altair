@@ -2,11 +2,11 @@ import jsonschema
 import six
 import pandas as pd
 
-from .schema import *
 from .schema import core, channels, mixins, Undefined
 
 from .data import data_transformers, pipe
-from ...utils import (infer_vegalite_type, parse_shorthand_plus_data,
+from ...utils import (infer_vegalite_type, parse_shorthand,
+                      parse_shorthand_plus_data,
                       use_signature, update_nested)
 from .display import renderers
 
@@ -18,7 +18,7 @@ def _get_channels_mapping():
     mapping = {}
     for attr in dir(channels):
         cls = getattr(channels, attr)
-        if isinstance(cls, type) and issubclass(cls, SchemaBase):
+        if isinstance(cls, type) and issubclass(cls, core.SchemaBase):
             mapping[cls] = attr.replace('Value', '').lower()
     return mapping
 
@@ -30,13 +30,13 @@ def value(value, **kwargs):
 
 # -------------------------------------------------------------------------
 # Tools for working with selections
-class SelectionMapping(SchemaBase):
+class SelectionMapping(core.SchemaBase):
     """A mapping of selection names to selection definitions"""
     _schema = {
         'type': 'object',
         'additionalPropeties': {'$ref': '#/definitions/SelectionDef'}
     }
-    _rootschema = Root._schema
+    _rootschema = core.Root._schema
 
     def ref(self, name=None):
         """Return a named selection reference.
@@ -105,7 +105,7 @@ def selection(name=None, **kwds):
     if name is None:
         name = "selector{0:03d}".format(selection.counter)
         selection.counter += 1
-    return SelectionMapping(**{name: SelectionDef(**kwds)})
+    return SelectionMapping(**{name: core.SelectionDef(**kwds)})
 
 selection.counter = 1
 
@@ -146,7 +146,7 @@ def condition(predicate, if_true, if_false):
         raise NotImplementedError("condition predicate of type {0}"
                                   "".format(type(predicate)))
 
-    if isinstance(if_true, SchemaBase):
+    if isinstance(if_true, core.SchemaBase):
         # convert to dict for now; the from_dict call below will wrap this
         # dict in the appropriate schema
         if_true = if_true.to_dict()
@@ -154,7 +154,7 @@ def condition(predicate, if_true, if_false):
         if_true = {'field': if_true}
     condition.update(if_true)
 
-    if isinstance(if_false, SchemaBase):
+    if isinstance(if_false, core.SchemaBase):
         # For the selection, the channel definitions all allow selections
         # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
@@ -268,54 +268,54 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             copy.transform.extend(transforms)
         return copy
 
-    @use_signature(AggregateTransform)
+    @use_signature(core.AggregateTransform)
     def transform_aggregate(self, *args, **kwargs):
-        return self._add_transform(AggregateTransform(*args, **kwargs))
+        return self._add_transform(core.AggregateTransform(*args, **kwargs))
 
-    @use_signature(BinTransform)
+    @use_signature(core.BinTransform)
     def transform_bin(self, *args, **kwargs):
-        return self._add_transform(BinTransform(*args, **kwargs))
+        return self._add_transform(core.BinTransform(*args, **kwargs))
 
-    @use_signature(CalculateTransform)
+    @use_signature(core.CalculateTransform)
     def transform_calculate(self, as_, calculate, **kwargs):
         kwargs['as'] = as_
         kwargs['calculate'] = calculate
-        return self._add_transform(CalculateTransform(**kwargs))
+        return self._add_transform(core.CalculateTransform(**kwargs))
 
-    @use_signature(FilterTransform)
+    @use_signature(core.FilterTransform)
     def transform_filter(self, filter, **kwargs):
         kwargs['filter'] = filter
-        return self._add_transform(FilterTransform(**kwargs))
+        return self._add_transform(core.FilterTransform(**kwargs))
 
-    @use_signature(LookupTransform)
+    @use_signature(core.LookupTransform)
     def transform_lookup(self, *args, **kwargs):
-        return self._add_transform(LookupTransform(*args, **kwargs))
+        return self._add_transform(core.LookupTransform(*args, **kwargs))
 
-    @use_signature(TimeUnitTransform)
+    @use_signature(core.TimeUnitTransform)
     def transform_timeunit(self, *args, **kwargs):
-        return self._add_transform(TimeUnitTransform(*args, **kwargs))
+        return self._add_transform(core.TimeUnitTransform(*args, **kwargs))
 
-    @use_signature(Resolve)
+    @use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
         """Copy the chart and update the resolve property with kwargs"""
         copy = self.copy()
         if copy.resolve is Undefined:
-            copy.resolve = Resolve()
+            copy.resolve = core.Resolve()
         for key, val in kwargs.items():
             copy.resolve[key] = val
         return copy
 
-    @use_signature(AxisResolveMap)
+    @use_signature(core.AxisResolveMap)
     def resolve_axis(self, *args, **kwargs):
-        return self._set_resolve(axis=AxisResolveMap(*args, **kwargs))
+        return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
 
-    @use_signature(LegendResolveMap)
+    @use_signature(core.LegendResolveMap)
     def resolve_legend(self, *args, **kwargs):
-        return self._set_resolve(legend=LegendResolveMap(*args, **kwargs))
+        return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
 
-    @use_signature(ScaleResolveMap)
+    @use_signature(core.ScaleResolveMap)
     def resolve_scale(self, *args, **kwargs):
-        return self._set_resolve(scale=ScaleResolveMap(*args, **kwargs))
+        return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
 # Encoding will contain channel objects that aren't valid at instantiation
@@ -399,7 +399,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         def _wrap_in_channel_class(obj, prop):
             clsname = prop.title()
 
-            if isinstance(obj, SchemaBase):
+            if isinstance(obj, core.SchemaBase):
                 return obj
 
             if isinstance(obj, six.string_types):
@@ -492,7 +492,7 @@ def _check_if_valid_subspec(spec, classname):
            'the {0} attribute in the {1} object instead.')
 
     for attr in ['autosize', 'background', 'config', 'padding']:
-        if isinstance(spec, SchemaBase):
+        if isinstance(spec, core.SchemaBase):
             val = getattr(spec, attr, Undefined)
         else:
             val = spec.get(attr, Undefined)

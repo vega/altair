@@ -3,7 +3,7 @@
 import pytest
 import pandas as pd
 
-from altair.vegalite.v2 import api as alt
+import altair.vegalite.v2 as alt
 
 
 def test_chart_data_types():
