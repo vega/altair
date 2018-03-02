@@ -25,6 +25,8 @@ def load_schema():
 FIELD_TEMPLATE = '''
 class {classname}(core.{basename}):
     """{docstring}"""
+    _class_is_valid_at_instantiation = False
+
     {init_code}
 
     def to_dict(self, validate=True, ignore=(), context=None):
@@ -47,6 +49,24 @@ VALUE_TEMPLATE = '''
 class {classname}(core.{basename}):
     """{docstring}"""
     {init_code}
+
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {{}}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                if 'data' in context:
+                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
+                else:
+                    kwds = parse_shorthand(condition['field'])
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super({classname}, copy).to_dict(validate=validate,
+                                                ignore=ignore,
+                                                context=context)
 '''
 
 

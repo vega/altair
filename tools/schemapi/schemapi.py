@@ -1,7 +1,37 @@
 import collections
+import contextlib
 import json
 
 import jsonschema
+
+
+# If DEBUG_MODE is True, then schema objects are converted to dict and
+# validated at creation time. This slows things down, particularly for
+# larger specs, but leads to much more useful tracebacks for the user.
+# Individual schema classes can override this by setting the
+# class-level _class_is_valid_at_instantiation attribute to False
+DEBUG_MODE = True
+
+
+def enable_debug_mode():
+    global DEBUG_MODE
+    DEBUG_MODE = True
+
+
+def disable_debug_mode():
+    global DEBUG_MODE
+    DEBUG_MODE = True
+
+
+@contextlib.contextmanager
+def debug_mode(arg):
+    global DEBUG_MODE
+    original = DEBUG_MODE
+    DEBUG_MODE = arg
+    try:
+        yield
+    finally:
+        DEBUG_MODE = original
 
 
 class UndefinedType(object):
@@ -25,6 +55,7 @@ class SchemaBase(object):
     """
     _schema = {}
     _rootschema = None
+    _class_is_valid_at_instantiation = True
 
     def __init__(self, *args, **kwds):
         # Two valid options for initialization, which should be handled by
@@ -39,6 +70,9 @@ class SchemaBase(object):
         # use object.__setattr__ because we override setattr below.
         object.__setattr__(self, '_args', args)
         object.__setattr__(self, '_kwds', kwds)
+
+        if DEBUG_MODE and self._class_is_valid_at_instantiation:
+            dct = self.to_dict(validate=True)
 
     def copy(self, deep=True, ignore=()):
         """Return a copy of the object
@@ -58,7 +92,8 @@ class SchemaBase(object):
                 kwds = {k: (_deep_copy(v, ignore=ignore)
                             if k not in ignore else v)
                         for k, v in obj._kwds.items()}
-                return obj.__class__(*args, **kwds)
+                with debug_mode(False):
+                    return obj.__class__(*args, **kwds)
             elif isinstance(obj, list):
                 return [_deep_copy(v, ignore=ignore) for v in obj]
             elif isinstance(obj, dict):
@@ -70,7 +105,8 @@ class SchemaBase(object):
         if deep:
             return _deep_copy(self, ignore=ignore)
         else:
-            return self.__class__(*self._args, **self._kwds)
+            with debug_mode(False):
+                return self.__class__(*self._args, **self._kwds)
 
     def __getattr__(self, attr):
         # reminder: getattr is called after the normal lookups
@@ -128,9 +164,9 @@ class SchemaBase(object):
         jsonschema.ValidationError :
             if validate=True and the dict does not conform to the schema
         """
+        # TODO: add validate='once' and validate='deep'
         def _todict(val):
             if isinstance(val, SchemaBase):
-                # only validate at the top level
                 return val.to_dict(validate=False, context=context)
             elif isinstance(val, list):
                 return [_todict(v) for v in val]

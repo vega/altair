@@ -82,6 +82,8 @@ def _get_channels_mapping():
 #*************************************************************************
 
 class TopLevelMixin(object):
+    _class_is_valid_at_instantiation = False
+    
     def _prepare_data(self):
         if isinstance(self.data, (dict, core.Data)):
             pass

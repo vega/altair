@@ -115,6 +115,7 @@ def _get_args(info):
         kwds -= required
         nonkeyword = False
         additional = True
+        #additional = info.additionalProperties or info.patternProperties
     else:
         raise ValueError("Schema object not understood")
 
