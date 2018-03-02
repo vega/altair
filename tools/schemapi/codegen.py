@@ -88,7 +88,7 @@ def docstring(classname, schema, rootschema=None, indent=4):
                     "    {0}".format(propinfo.description)]
     if len(doc) > 1:
         doc += ['']
-    return indent_docstring(doc, indent_level=indent, width=80, lstrip=True)
+    return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
 
 def _get_args(info):

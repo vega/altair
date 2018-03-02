@@ -346,9 +346,9 @@ class SchemaInfo(object):
         return {prop: val for prop, val in pairs if prop != val}
 
 
-def indent_arglist(args, indent_level, width=80, lstrip=True):
+def indent_arglist(args, indent_level, width=100, lstrip=True):
     """Indent an argument list for use in generated code"""
-    wrapper = textwrap.TextWrapper(width=80,
+    wrapper = textwrap.TextWrapper(width=width,
                                    initial_indent=indent_level * ' ',
                                    subsequent_indent=indent_level * ' ',
                                    break_long_words=False)
@@ -358,7 +358,7 @@ def indent_arglist(args, indent_level, width=80, lstrip=True):
     return wrapped
 
 
-def indent_docstring(lines, indent_level, width=80, lstrip=True):
+def indent_docstring(lines, indent_level, width=100, lstrip=True):
     """Indent a docstring for use in generated code"""
     final_lines = []
 
