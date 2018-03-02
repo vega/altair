@@ -29,7 +29,7 @@ points = base.mark_circle().encode(
 )
 
 lines = base.mark_line().encode(
-    size=alt.condition(alt.not_(highlight), alt.value(1), alt.value(3))
+    size=alt.condition(~highlight, alt.value(1), alt.value(3))
 )
 
 chart = points + lines

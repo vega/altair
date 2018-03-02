@@ -51,6 +51,11 @@ class SelectionMapping(SchemaBase):
                              "in this mapping".format(name))
         return {"selection": name}
 
+    def _get_name(self):
+        if len(self._kwds) != 1:
+            raise ValueError("Selection Mapping has more than one name")
+        return next(iter(self._kwds))
+
     def __add__(self, other):
         if isinstance(other, SelectionMapping):
             copy = self.copy()
@@ -65,6 +70,19 @@ class SelectionMapping(SchemaBase):
             return self
         else:
             return NotImplemented
+
+    def __invert__(self):
+        return core.SelectionNot(**{'not': self._get_name()})
+
+    def __and__(self, other):
+        if isinstance(other, SelectionMapping):
+            other = other._get_name()
+        return core.SelectionAnd(**{'and': [self._get_name(), other]})
+
+    def __or__(self, other):
+        if isinstance(other, SelectionMapping):
+            other = other._get_name()
+        return core.SelectionAnd(**{'or': [self._get_name(), other]})
 
 
 def selection(name=None, **kwds):
@@ -110,14 +128,20 @@ def condition(predicate, if_true, if_false):
     spec: dict or SchemaBase
         the spec that describes the condition
     """
+    selection_predicates = (core.SelectionNot, core.SelectionOr,
+                            core.SelectionAnd, core.SelectionOperand)
+    test_predicates = (six.string_types, core.Predicate,
+                       core.LogicalOperandPredicate, core.LogicalNotPredicate,
+                       core.LogicalOrPredicate, core.LogicalAndPredicate)
+
     if isinstance(predicate, SelectionMapping):
-        if len(predicate._kwds) != 1:
-            raise NotImplementedError("multiple keys in SelectionMapping")
-        condition = {'selection': next(iter(predicate._kwds))}
-    elif isinstance(predicate, (LogicalOperandPredicate, six.string_types)):
+        condition = {'selection': predicate._get_name()}
+    elif isinstance(predicate, selection_predicates):
+        condition = {'selection': predicate}
+    elif isinstance(predicate, test_predicates):
         condition = {'test': predicate}
     elif isinstance(predicate, dict):
-        condition = predicate.copy()
+        condition = predicate
     else:
         raise NotImplementedError("condition predicate of type {0}"
                                   "".format(type(predicate)))
@@ -141,16 +165,6 @@ def condition(predicate, if_true, if_false):
         selection = dict(condition=condition, **if_false)
 
     return selection
-
-
-def not_(predicate):
-    """A Logical Not Predicate for Conditions"""
-    if isinstance(predicate, SelectionMapping):
-        assert len(predicate._kwds) == 1
-        return {'selection': {'not': next(iter(predicate._kwds))}}
-    else:
-        raise NotImplementedError("logical not predicate of type {0}"
-                                  "".format(type(predicate)))
 
 
 #--------------------------------------------------------------------
@@ -309,7 +323,7 @@ core.EncodingWithFacet._class_is_valid_at_instantiation = False
 
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
-    """Create an altair chart.
+    """Create a basic Altair/Vega-Lite chart.
 
     Although it is possible to set all Chart properties as constructor attributes,
     it is more idiomatic to use methods such as ``mark_point()``, ``encode()``,
@@ -488,7 +502,7 @@ def _check_if_valid_subspec(spec, classname):
 
 @use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
-    """Create a RepeatChart"""
+    """A chart repeated across rows and columns with small changes"""
     def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'RepeatChart')
         super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
@@ -537,6 +551,7 @@ def repeat(repeater):
 
 @use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
+    """A chart with horizontally-concatenated facets"""
     def __init__(self, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
@@ -559,11 +574,12 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
 
 def hconcat(*charts, **kwargs):
     """Concatenate charts horizontally"""
-    return HConcatChart(charts, **kwargs)
+    return HConcatChart(hconcat=charts, **kwargs)
 
 
 @use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
+    """A chart with vertically-concatenated facets"""
     def __init__(self, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
@@ -586,11 +602,12 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
 
 def vconcat(*charts, **kwargs):
     """Concatenate charts vertically"""
-    return VConcatChart(charts, **kwargs)
+    return VConcatChart(vconcat=charts, **kwargs)
 
 
 @use_signature(core.TopLevelLayerSpec)
 class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
+    """A Chart with layers within a single panel"""
     def __init__(self, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
@@ -614,4 +631,4 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
 
 def layer(*charts, **kwargs):
     """layer multiple charts"""
-    return LayerChart(charts, **kwargs)
+    return LayerChart(layer=charts, **kwargs)
