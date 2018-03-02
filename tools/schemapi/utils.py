@@ -158,7 +158,18 @@ class SchemaInfo(object):
         return "SchemaInfo({\n  " + '\n  '.join(keys) + "\n})"
 
     @property
+    def title(self):
+        if self.is_reference():
+            return get_valid_identifier(self.refname)
+        else:
+            return ''
+
+    @property
     def short_description(self):
+        return self.title or self.medium_description
+
+    @property
+    def medium_description(self):
         _simple_types = {'string': 'string',
                          'number': 'float',
                          'integer': 'integer',
@@ -167,9 +178,9 @@ class SchemaInfo(object):
                          'array': 'list',
                          'null': 'None'}
         if self.is_empty():
-            return 'any'
-        elif self.is_reference():
-            return self.refname
+            return 'any object'
+        elif self.is_enum():
+            return 'enum({0})'.format(', '.join(map(repr, self.enum)))
         elif self.is_anyOf():
             return 'anyOf({0})'.format(', '.join(s.short_description
                                                  for s in self.anyOf))
@@ -180,7 +191,7 @@ class SchemaInfo(object):
             return 'allOf({0})'.format(', '.join(s.short_description
                                                  for s in self.allOf))
         elif self.is_not():
-            return 'not {0}'.format(self.not_)
+            return 'not {0}'.format(self.not_.short_description)
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
@@ -188,15 +199,17 @@ class SchemaInfo(object):
                 subschema.schema['type'] = typ_
                 options.append(subschema.short_description)
             return "anyOf({0})".format(', '.join(options))
+        elif self.is_object():
+            return "Mapping(required=[{0}])".format(', '.join(self.required))
+        elif self.is_array():
+            return "List({0})".format(self.child(self.items).short_description)
         elif self.type in _simple_types:
             return _simple_types[self.type]
         elif not self.type:
+            import warnings
+            warnings.warn("no short_description for schema\n{0}"
+                          "".format(self.schema))
             return 'any'
-
-    @property
-    def medium_description(self):
-        # TODO
-        return 'A schema of type <type>'
 
     @property
     def long_description(self):

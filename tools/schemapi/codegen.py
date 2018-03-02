@@ -71,15 +71,19 @@ def docstring(classname, schema, rootschema=None, indent=4):
     #       values, etc.
     # TODO: use _get_args here for more information on allOf objects
     info = SchemaInfo(schema, rootschema)
-    doc = ["{0} schema wrapper".format(classname)]
-
+    doc = ["{0} schema wrapper".format(classname),
+           '',
+           info.medium_description]
     if info.description:
         doc += info.description.splitlines()
+
     if info.properties:
+        nonkeyword, required, kwds, additional = _get_args(info)
         doc += ['',
                 'Attributes',
                 '----------']
-        for prop, propinfo in info.properties.items():
+        for prop in sorted(required) + sorted(kwds):
+            propinfo = info.properties[prop]
             doc += ["{0} : {1}".format(prop, propinfo.short_description),
                     "    {0}".format(propinfo.description)]
     if len(doc) > 1:

@@ -73,8 +73,7 @@ class {classname}(core.{basename}):
 HEADER = """\
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# {0}
-""".format(datetime.now().strftime('%Y-%m-%d %H:%M'))
+"""#.format(datetime.now().strftime('%Y-%m-%d %H:%M'))
 
 
 def copy_schemapi_util():
