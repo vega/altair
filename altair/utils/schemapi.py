@@ -1,6 +1,5 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-03-01 12:54
 import collections
 import contextlib
 import json
