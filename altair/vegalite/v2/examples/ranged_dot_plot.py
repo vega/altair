@@ -18,6 +18,11 @@ chart = alt.LayerChart(
             "oneOf": [1955, 2000]}
 )
 
+chart += alt.Chart().mark_line(color='#db646f').encode(
+    x = 'life_expect:Q',
+    y = 'country:N',
+    detail = 'country:N'
+)
 # Add points for life expectancy in 1955 & 2000
 chart += alt.Chart().mark_point(
     size = 100,
@@ -32,10 +37,4 @@ chart += alt.Chart().mark_point(
             range=['#e6959c', '#911a24']
         )
     )
-)
-
-chart += alt.Chart().mark_line(color='#db646f').encode(
-    x = 'life_expect:Q',
-    y = 'country:N',
-    detail = 'country:N'
 ).interactive()
