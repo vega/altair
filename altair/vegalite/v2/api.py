@@ -112,11 +112,11 @@ def condition(predicate, if_true, if_false):
     if isinstance(predicate, SelectionMapping):
         if len(predicate._kwds) != 1:
             raise NotImplementedError("multiple keys in SelectionMapping")
-        prop = 'selection'
-        val = list(predicate._kwds.keys())[0]
+        condition = {'selection': next(iter(predicate._kwds))}
     elif isinstance(predicate, (LogicalOperandPredicate, six.string_types)):
-        prop = 'test'
-        val = predicate
+        condition = {'test': predicate}
+    elif isinstance(predicate, dict):
+        condition = predicate.copy()
     else:
         raise NotImplementedError("condition predicate of type {0}"
                                   "".format(type(predicate)))
@@ -127,7 +127,7 @@ def condition(predicate, if_true, if_false):
         if_true = if_true.to_dict()
     elif isinstance(if_true, six.string_types):
         if_true = {'field': if_true}
-    condition = dict({prop: val}, **if_true)
+    condition.update(if_true)
 
     if isinstance(if_false, SchemaBase):
         # For the selection, the channel definitions all allow selections
@@ -140,6 +140,16 @@ def condition(predicate, if_true, if_false):
         selection = dict(condition=condition, **if_false)
 
     return selection
+
+
+def not_(predicate):
+    """A Logical Not Predicate for Conditions"""
+    if isinstance(predicate, SelectionMapping):
+        assert len(predicate._kwds) == 1
+        return {'selection': {'not': next(iter(predicate._kwds))}}
+    else:
+        raise NotImplementedError("logical not predicate of type {0}"
+                                  "".format(type(predicate)))
 
 
 #--------------------------------------------------------------------
