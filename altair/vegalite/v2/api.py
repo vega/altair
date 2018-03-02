@@ -62,6 +62,7 @@ class SelectionMapping(SchemaBase):
     def __iadd__(self, other):
         if isinstance(other, SelectionMapping):
             self._kwds.update(other._kwds)
+            return self
         else:
             return NotImplemented
 
@@ -96,7 +97,7 @@ def condition(predicate, if_true, if_false):
 
     Parameters
     ----------
-    predicate: SelectionMapping, LogicalOperandPredicate, or string
+    predicate: SelectionMapping, LogicalOperandPredicate, dict, or string
         the selection predicate or test predicate for the condition.
         if a string is passed, it will be treated as a test operand.
     if_true:
@@ -156,6 +157,7 @@ def not_(predicate):
 # Top-level objects
 
 class TopLevelMixin(mixins.ConfigMethodMixin):
+    """Mixin for top-level chart objects such as Chart, LayeredChart, etc."""
     _default_spec_values = {"config": {"view": {"width": 400, "height": 300}}}
     _class_is_valid_at_instantiation = False
 
@@ -216,16 +218,35 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return renderers.get()(self.to_dict())
 
     def repeat(self, row=Undefined, column=Undefined, **kwargs):
+        """Return a RepeatChart built from the chart
+
+        Fields within the chart can be set to correspond to the row or
+        column using `alt.repeat('row')` and `alt.repeat('column')`.
+
+        Parameters
+        ----------
+        row : list
+            a list of data column names to be mapped to the row facet
+        column : list
+            a list of data column names to be mapped to the column facet
+
+        Returns
+        -------
+        chart : RepeatChart
+            a repeated chart.
+        """
         repeat = core.Repeat(row=row, column=column)
         return RepeatChart(spec=self, repeat=repeat, **kwargs)
 
     def properties(self, **kwargs):
+        """Set top-level properties of the Chart."""
         copy = self.copy(deep=True, ignore=['data'])
         for key, val in kwargs.items():
             setattr(copy, key, val)
         return copy
 
     def _add_transform(self, *transforms):
+        """Copy the chart and add specified transforms to chart.transform"""
         copy = self.copy()
         if copy.transform is Undefined:
             copy.transform = list(transforms)
@@ -262,6 +283,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     @use_signature(Resolve)
     def _set_resolve(self, **kwargs):
+        """Copy the chart and update the resolve property with kwargs"""
         copy = self.copy()
         if copy.resolve is Undefined:
             copy.resolve = Resolve()
@@ -287,11 +309,65 @@ core.EncodingWithFacet._class_is_valid_at_instantiation = False
 
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
+    """Create an altair chart.
+
+    Although it is possible to set all Chart properties as constructor attributes,
+    it is more idiomatic to use methods such as ``mark_point()``, ``encode()``,
+    ``transform_filter()``, ``properties()``, etc. See Altair's documentation
+    for details and examples: http://altair-viz.github.io/.
+
+    Attributes
+    ----------
+    data : Data
+        An object describing the data source
+    mark : AnyMark
+        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
+         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a
+         MarkDef object.
+    encoding : EncodingWithFacet
+        A key-value mapping between encoding channels and definition of fields.
+    autosize : anyOf(AutosizeType, AutoSizeParams)
+        Sets how the visualization size should be determined. If a string, should be one of
+        `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for
+        content sizing and automatic resizing. `"fit"` is only supported for single and
+        layered views that don't use `rangeStep`.  __Default value__: `pad`
+    background : string
+        CSS color property to use as the background of visualization.  __Default value:__
+        none (transparent)
+    config : Config
+        Vega-Lite configuration object.  This property can only be defined at the top-level
+        of a specification.
+    description : string
+        Description of this mark for commenting purpose.
+    height : float
+        The height of a visualization.
+    name : string
+        Name of the visualization for later reference.
+    padding : Padding
+        The default visualization padding, in pixels, from the edge of the visualization
+        canvas to the data rectangle.  If a number, specifies padding for all sides. If an
+        object, the value should have the format `{"left": 5, "top": 5, "right": 5,
+        "bottom": 5}` to specify padding for each side of the visualization.  __Default
+        value__: `5`
+    projection : Projection
+        An object defining properties of geographic projection.  Works with `"geoshape"`
+        marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`,
+        `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or `"longitude"`.
+    selection : Mapping(required=[])
+        A key-value mapping between selection names and definitions.
+    title : anyOf(string, TitleParams)
+        Title for the plot.
+    transform : List(Transform)
+        An array of data transformations such as filter and new field calculation.
+    width : float
+        The width of a visualization.
+    """
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
                  width=Undefined, height=Undefined, **kwargs):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
                                     width=width, height=height, **kwargs)
 
+    @use_signature(core.EncodingWithFacet)
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
         if args:
@@ -306,7 +382,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
                                      "".format(encoding))
                 kwargs[encoding] = arg
 
-        def wrap_in_channel_class(obj, prop):
+        def _wrap_in_channel_class(obj, prop):
             clsname = prop.title()
 
             if isinstance(obj, SchemaBase):
@@ -339,8 +415,8 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
                 pass
             else:
                 if condition is not Undefined:
-                    field['condition'] = wrap_in_channel_class(condition, prop)
-            kwargs[prop] = wrap_in_channel_class(field, prop)
+                    field['condition'] = _wrap_in_channel_class(condition, prop)
+            kwargs[prop] = _wrap_in_channel_class(field, prop)
 
         copy = self.copy(deep=True, ignore=['data'])
 
@@ -359,7 +435,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         copy.encoding = core.EncodingWithFacet(**encoding)
         return copy
 
-    def interactive(self, name='grid', bind_x=True, bind_y=True):
+    def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
         Parameters
@@ -367,6 +443,15 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         name : string
             The selection name to use for the axes scales. This name should be
             unique among all selections within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
         """
         encodings = []
         if bind_x:
@@ -374,29 +459,65 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         if bind_y:
             encodings.append('y')
         copy = self.copy(deep=True, ignore=['data'])
-        # TODO: don't overwrite previous selections?
-        copy.selection = {name: {'bind': 'scales',
-                                 'type': 'interval',
-                                 'encodings': encodings}}
+
+        if copy.selection is Undefined:
+            copy.selection = SelectionMapping()
+        if isinstance(copy.selection, dict):
+            copy.selection = SelectionMapping(**copy.selection)
+        copy.selection += selection(type='interval', bind='scales',
+                                    encodings=encodings)
         return copy
 
 
+@use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
+    """Create a RepeatChart"""
     def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
         super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
 
     def interactive(self):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The selection name to use for the axes scales. This name should be
+            unique among all selections within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+        """
         copy = self.copy()
         copy.spec = copy.spec.interactive()
         return copy
 
 
 def repeat(repeater):
-    """Tie a channel to the row or column within a repeated chart"""
+    """Tie a channel to the row or column within a repeated chart
+
+    The output of this should be passed to the ``field`` attribute of
+    a channel.
+
+    Parameters
+    ----------
+    repeater : {'row'|'column'}
+        The repeater to tie the field to.
+
+    Returns
+    -------
+    repeat : RepeatRef object
+    """
     assert repeater in ['row', 'column']
     return core.RepeatRef(repeat=repeater)
 
 
+@use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     def __init__(self, hconcat=(), **kwargs):
         # TODO: move common data to top level?
@@ -420,6 +541,7 @@ def hconcat(*charts, **kwargs):
     return HConcatChart(charts, **kwargs)
 
 
+@use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     def __init__(self, vconcat=(), **kwargs):
         # TODO: move common data to top level?
@@ -443,6 +565,7 @@ def vconcat(*charts, **kwargs):
     return VConcatChart(charts, **kwargs)
 
 
+@use_signature(core.TopLevelLayerSpec)
 class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
     def __init__(self, layer=(), **kwargs):
         # TODO: move common data to top level?
