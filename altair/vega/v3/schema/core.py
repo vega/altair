@@ -1,6 +1,5 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-03-01 12:54
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -15,7 +14,10 @@ def load_schema():
 
 
 class Root(SchemaBase):
-    """Root schema wrapper"""
+    """Root schema wrapper
+    
+    allOf(scope, Mapping(required=[]))
+    """
     _schema = load_schema()
     _rootschema = _schema
 
@@ -36,7 +38,10 @@ class Root(SchemaBase):
 
 
 class autosize(SchemaBase):
-    """autosize schema wrapper"""
+    """autosize schema wrapper
+    
+    oneOf(enum('pad', 'fit', 'none'), Mapping(required=[type]))
+    """
     _schema = {'$ref': '#/defs/autosize'}
     _rootschema = Root._schema
 
@@ -47,55 +52,57 @@ class autosize(SchemaBase):
 class axis(SchemaBase):
     """axis schema wrapper
     
+    Mapping(required=[orient, scale])
+    
     Attributes
     ----------
-    orient : any
+    orient : enum('top', 'bottom', 'left', 'right')
     
     scale : string
     
-    title : stringOrSignal
-    
-    zindex : float
-    
-    ticks : boolean
-    
-    labels : boolean
-    
     domain : boolean
+    
+    encode : Mapping(required=[])
+    
+    format : stringOrSignal
     
     grid : boolean
     
     gridScale : string
     
-    tickSize : float
-    
-    labelPadding : float
+    labelBound : oneOf(boolean, float)
     
     labelFlush : oneOf(boolean, float)
     
     labelFlushOffset : float
     
-    labelOverlap : oneOf(boolean, string)
+    labelOverlap : oneOf(boolean, enum('parity', 'greedy'))
     
-    labelBound : oneOf(boolean, float)
+    labelPadding : float
     
-    tickCount : tickCount
+    labels : boolean
     
-    format : stringOrSignal
+    maxExtent : oneOf(float, numberValue)
     
-    values : oneOf(list, signal)
+    minExtent : oneOf(float, numberValue)
     
     offset : oneOf(float, numberValue)
     
     position : oneOf(float, numberValue)
     
+    tickCount : tickCount
+    
+    tickSize : float
+    
+    ticks : boolean
+    
+    title : stringOrSignal
+    
     titlePadding : oneOf(float, numberValue)
     
-    minExtent : oneOf(float, numberValue)
+    values : oneOf(List(Mapping(required=[])), signal)
     
-    maxExtent : oneOf(float, numberValue)
-    
-    encode : mapping
+    zindex : float
     
     """
     _schema = {'$ref': '#/defs/axis'}
@@ -126,7 +133,10 @@ class axis(SchemaBase):
 
 
 class background(SchemaBase):
-    """background schema wrapper"""
+    """background schema wrapper
+    
+    string
+    """
     _schema = {'$ref': '#/defs/background'}
     _rootschema = Root._schema
 
@@ -135,7 +145,11 @@ class background(SchemaBase):
 
 
 class bind(SchemaBase):
-    """bind schema wrapper"""
+    """bind schema wrapper
+    
+    oneOf(Mapping(required=[input]), Mapping(required=[input, options]), 
+    Mapping(required=[input]), Mapping(required=[]))
+    """
     _schema = {'$ref': '#/defs/bind'}
     _rootschema = Root._schema
 
@@ -144,7 +158,12 @@ class bind(SchemaBase):
 
 
 class data(SchemaBase):
-    """data schema wrapper"""
+    """data schema wrapper
+    
+    allOf(Mapping(required=[name]), anyOf(Mapping(required=[name]), 
+    oneOf(Mapping(required=[source]), Mapping(required=[values]), 
+    Mapping(required=[url]))))
+    """
     _schema = {'$ref': '#/defs/data'}
     _rootschema = Root._schema
 
@@ -156,6 +175,8 @@ class data(SchemaBase):
 
 class rule(SchemaBase):
     """rule schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -172,98 +193,121 @@ class rule(SchemaBase):
 class encodeEntry(SchemaBase):
     """encodeEntry schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
+    align : oneOf(List(allOf(rule, allOf(stringModifiers, 
+    anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))), allOf(stringModifiers, 
+    anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    
+    angle : numberValue
+    
+    baseline : oneOf(List(allOf(rule, allOf(stringModifiers, 
+    anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))), allOf(stringModifiers, 
+    anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    
+    clip : booleanValue
+    
+    cursor : stringValue
+    
+    dir : stringValue
+    
+    dx : numberValue
+    
+    dy : numberValue
+    
+    ellipsis : stringValue
+    
+    endAngle : numberValue
+    
+    fill : colorValue
+    
+    fillOpacity : numberValue
+    
+    font : stringValue
+    
+    fontSize : numberValue
+    
+    fontStyle : stringValue
+    
+    fontWeight : nullableStringValue
+    
+    height : numberValue
+    
+    innerRadius : numberValue
+    
+    interpolate : stringValue
+    
+    limit : numberValue
+    
+    opacity : numberValue
+    
+    orient : oneOf(List(allOf(rule, allOf(stringModifiers, 
+    anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))), allOf(stringModifiers, 
+    anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    
+    outerRadius : numberValue
+    
+    path : stringValue
+    
+    radius : numberValue
+    
+    shape : anyOf(string, stringValue)
+    
+    size : numberValue
+    
+    startAngle : numberValue
+    
+    stroke : colorValue
+    
+    strokeDash : arrayValue
+    
+    strokeDashOffset : numberValue
+    
+    strokeOpacity : numberValue
+    
+    strokeWidth : numberValue
+    
+    tension : numberValue
+    
+    text : stringValue
+    
+    theta : numberValue
+    
+    url : stringValue
+    
+    width : numberValue
+    
     x : numberValue
     
     x2 : numberValue
     
     xc : numberValue
     
-    width : numberValue
-    
     y : numberValue
     
     y2 : numberValue
     
     yc : numberValue
-    
-    height : numberValue
-    
-    opacity : numberValue
-    
-    fill : colorValue
-    
-    fillOpacity : numberValue
-    
-    stroke : colorValue
-    
-    strokeWidth : numberValue
-    
-    strokeOpacity : numberValue
-    
-    strokeDash : arrayValue
-    
-    strokeDashOffset : numberValue
-    
-    cursor : stringValue
-    
-    clip : booleanValue
-    
-    size : numberValue
-    
-    shape : anyOf(string, stringValue)
-    
-    path : stringValue
-    
-    innerRadius : numberValue
-    
-    outerRadius : numberValue
-    
-    startAngle : numberValue
-    
-    endAngle : numberValue
-    
-    interpolate : stringValue
-    
-    tension : numberValue
-    
-    orient : oneOf(list, allOf(stringModifiers, anyOf(oneOf(signal, any, 
-    any, any), any, any, any)))
-    
-    url : stringValue
-    
-    align : oneOf(list, allOf(stringModifiers, anyOf(oneOf(signal, any, any,
-     any), any, any, any)))
-    
-    baseline : oneOf(list, allOf(stringModifiers, anyOf(oneOf(signal, any, 
-    any, any), any, any, any)))
-    
-    text : stringValue
-    
-    dir : stringValue
-    
-    ellipsis : stringValue
-    
-    limit : numberValue
-    
-    dx : numberValue
-    
-    dy : numberValue
-    
-    radius : numberValue
-    
-    theta : numberValue
-    
-    angle : numberValue
-    
-    font : stringValue
-    
-    fontSize : numberValue
-    
-    fontWeight : nullableStringValue
-    
-    fontStyle : stringValue
     
     """
     _schema = {'$ref': '#/defs/encodeEntry'}
@@ -307,7 +351,10 @@ class encodeEntry(SchemaBase):
 
 
 class encode(SchemaBase):
-    """encode schema wrapper"""
+    """encode schema wrapper
+    
+    Mapping(required=[])
+    """
     _schema = {'$ref': '#/defs/encode'}
     _rootschema = Root._schema
 
@@ -316,7 +363,10 @@ class encode(SchemaBase):
 
 
 class layout(SchemaBase):
-    """layout schema wrapper"""
+    """layout schema wrapper
+    
+    oneOf(Mapping(required=[]), signal)
+    """
     _schema = {'$ref': '#/defs/layout'}
     _rootschema = Root._schema
 
@@ -327,11 +377,13 @@ class layout(SchemaBase):
 class guideEncode(SchemaBase):
     """guideEncode schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    name : string
-    
     interactive : boolean
+    
+    name : string
     
     style : style
     
@@ -348,44 +400,12 @@ class guideEncode(SchemaBase):
 class legend(SchemaBase):
     """legend schema wrapper
     
+    anyOf(Mapping(required=[size]), Mapping(required=[shape]), 
+    Mapping(required=[fill]), Mapping(required=[stroke]), 
+    Mapping(required=[opacity]), Mapping(required=[strokeDash]))
+    
     Attributes
     ----------
-    size : string
-    
-    shape : string
-    
-    fill : string
-    
-    stroke : string
-    
-    opacity : string
-    
-    strokeDash : string
-    
-    type : any
-    
-    orient : any
-    
-    title : stringOrSignal
-    
-    zindex : float
-    
-    offset : oneOf(float, numberValue)
-    
-    padding : oneOf(float, numberValue)
-    
-    titlePadding : oneOf(float, numberValue)
-    
-    entryPadding : oneOf(float, numberValue)
-    
-    tickCount : tickCount
-    
-    format : stringOrSignal
-    
-    values : oneOf(list, signal)
-    
-    encode : mapping
-    
     """
     _schema = {'$ref': '#/defs/legend'}
     _rootschema = Root._schema
@@ -397,29 +417,31 @@ class legend(SchemaBase):
 class mark(SchemaBase):
     """mark schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
     type : marktype
     
-    role : string
-    
-    name : string
-    
-    style : style
-    
-    key : string
-    
     clip : boolean
-    
-    sort : compare
-    
-    interactive : boolean
     
     encode : encode
     
-    transform : list
+    interactive : boolean
+    
+    key : string
+    
+    name : string
     
     on : onMarkTrigger
+    
+    role : string
+    
+    sort : compare
+    
+    style : style
+    
+    transform : List(transformMark)
     
     """
     _schema = {'$ref': '#/defs/mark'}
@@ -436,7 +458,10 @@ class mark(SchemaBase):
 
 
 class markGroup(SchemaBase):
-    """markGroup schema wrapper"""
+    """markGroup schema wrapper
+    
+    allOf(Mapping(required=[type]), mark, scope, Mapping(required=[]))
+    """
     _schema = {'$ref': '#/defs/markGroup'}
     _rootschema = Root._schema
 
@@ -458,7 +483,10 @@ class markGroup(SchemaBase):
 
 
 class markVisual(SchemaBase):
-    """markVisual schema wrapper"""
+    """markVisual schema wrapper
+    
+    allOf(not Mapping(required=[]), mark, Mapping(required=[]))
+    """
     _schema = {'$ref': '#/defs/markVisual'}
     _rootschema = Root._schema
 
@@ -473,7 +501,10 @@ class markVisual(SchemaBase):
 
 
 class listener(SchemaBase):
-    """listener schema wrapper"""
+    """listener schema wrapper
+    
+    oneOf(signal, Mapping(required=[scale]), stream)
+    """
     _schema = {'$ref': '#/defs/listener'}
     _rootschema = Root._schema
 
@@ -482,7 +513,11 @@ class listener(SchemaBase):
 
 
 class onEvents(SchemaBase):
-    """onEvents schema wrapper"""
+    """onEvents schema wrapper
+    
+    List(allOf(Mapping(required=[events]), oneOf(Mapping(required=[encode]),
+     Mapping(required=[update]))))
+    """
     _schema = {'$ref': '#/defs/onEvents'}
     _rootschema = Root._schema
 
@@ -491,7 +526,10 @@ class onEvents(SchemaBase):
 
 
 class onTrigger(SchemaBase):
-    """onTrigger schema wrapper"""
+    """onTrigger schema wrapper
+    
+    List(Mapping(required=[trigger]))
+    """
     _schema = {'$ref': '#/defs/onTrigger'}
     _rootschema = Root._schema
 
@@ -500,7 +538,10 @@ class onTrigger(SchemaBase):
 
 
 class onMarkTrigger(SchemaBase):
-    """onMarkTrigger schema wrapper"""
+    """onMarkTrigger schema wrapper
+    
+    List(Mapping(required=[trigger]))
+    """
     _schema = {'$ref': '#/defs/onMarkTrigger'}
     _rootschema = Root._schema
 
@@ -509,7 +550,10 @@ class onMarkTrigger(SchemaBase):
 
 
 class padding(SchemaBase):
-    """padding schema wrapper"""
+    """padding schema wrapper
+    
+    oneOf(float, Mapping(required=[]))
+    """
     _schema = {'$ref': '#/defs/padding'}
     _rootschema = Root._schema
 
@@ -520,35 +564,37 @@ class padding(SchemaBase):
 class projection(SchemaBase):
     """projection schema wrapper
     
+    Mapping(required=[name, type])
+    
     Attributes
     ----------
     name : string
     
     type : stringOrSignal
     
+    center : oneOf(signal, List(numberOrSignal))
+    
     clipAngle : numberOrSignal
     
-    clipExtent : oneOf(signal, list)
+    clipExtent : oneOf(signal, List(oneOf(signal, List(numberOrSignal))))
     
-    scale : numberOrSignal
+    extent : oneOf(signal, List(oneOf(signal, List(numberOrSignal))))
     
-    translate : oneOf(signal, list)
+    fit : oneOf(Mapping(required=[]), List(Mapping(required=[])))
     
-    center : oneOf(signal, list)
-    
-    rotate : oneOf(signal, list)
-    
-    parallels : oneOf(signal, list)
-    
-    precision : numberOrSignal
+    parallels : oneOf(signal, List(numberOrSignal))
     
     pointRadius : numberOrSignal
     
-    fit : oneOf(mapping, list)
+    precision : numberOrSignal
     
-    extent : oneOf(signal, list)
+    rotate : oneOf(signal, List(numberOrSignal))
     
-    size : oneOf(signal, list)
+    scale : numberOrSignal
+    
+    size : oneOf(signal, List(numberOrSignal))
+    
+    translate : oneOf(signal, List(numberOrSignal))
     
     """
     _schema = {'$ref': '#/defs/projection'}
@@ -570,7 +616,15 @@ class projection(SchemaBase):
 
 
 class scale(SchemaBase):
-    """scale schema wrapper"""
+    """scale schema wrapper
+    
+    allOf(Mapping(required=[name]), oneOf(Mapping(required=[type]), 
+    Mapping(required=[type]), Mapping(required=[type]), 
+    Mapping(required=[type, range]), Mapping(required=[type]), 
+    Mapping(required=[type]), Mapping(required=[type]), not 
+    Mapping(required=[]), Mapping(required=[type]), 
+    Mapping(required=[type]), Mapping(required=[type])))
+    """
     _schema = {'$ref': '#/defs/scale'}
     _rootschema = Root._schema
 
@@ -586,27 +640,29 @@ class scale(SchemaBase):
 class scope(SchemaBase):
     """scope schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
+    axes : List(axis)
+    
+    data : List(data)
+    
     encode : encode
     
     layout : layout
     
-    signals : list
+    legends : List(legend)
     
-    data : list
+    marks : List(oneOf(markGroup, markVisual))
     
-    scales : list
+    projections : List(projection)
     
-    projections : list
+    scales : List(scale)
     
-    axes : list
-    
-    legends : list
+    signals : List(signal)
     
     title : title
-    
-    marks : list
     
     """
     _schema = {'$ref': '#/defs/scope'}
@@ -623,7 +679,10 @@ class scope(SchemaBase):
 
 
 class signal(SchemaBase):
-    """signal schema wrapper"""
+    """signal schema wrapper
+    
+    oneOf(signalPush, signalNew)
+    """
     _schema = {'$ref': '#/defs/signal'}
     _rootschema = Root._schema
 
@@ -632,7 +691,10 @@ class signal(SchemaBase):
 
 
 class signalName(SchemaBase):
-    """signalName schema wrapper"""
+    """signalName schema wrapper
+    
+    not Mapping(required=[])
+    """
     _schema = {'$ref': '#/defs/signalName'}
     _rootschema = Root._schema
 
@@ -643,21 +705,23 @@ class signalName(SchemaBase):
 class signalNew(SchemaBase):
     """signalNew schema wrapper
     
+    Mapping(required=[name])
+    
     Attributes
     ----------
     name : signalName
     
+    bind : bind
+    
     description : string
     
-    value : any
+    on : onEvents
     
     react : boolean
     
     update : exprString
     
-    on : onEvents
-    
-    bind : bind
+    value : Mapping(required=[])
     
     """
     _schema = {'$ref': '#/defs/signalNew'}
@@ -674,11 +738,13 @@ class signalNew(SchemaBase):
 class signalPush(SchemaBase):
     """signalPush schema wrapper
     
+    Mapping(required=[name, push])
+    
     Attributes
     ----------
     name : signalName
     
-    push : any
+    push : enum('outer')
     
     description : string
     
@@ -697,21 +763,23 @@ class signalPush(SchemaBase):
 class streamParams(SchemaBase):
     """streamParams schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    between : list
+    between : List(stream)
     
-    marktype : string
-    
-    markname : string
-    
-    filter : oneOf(exprString, list)
-    
-    throttle : float
+    consume : boolean
     
     debounce : float
     
-    consume : boolean
+    filter : oneOf(exprString, List(exprString))
+    
+    markname : string
+    
+    marktype : string
+    
+    throttle : float
     
     """
     _schema = {'$ref': '#/defs/streamParams'}
@@ -729,11 +797,13 @@ class streamParams(SchemaBase):
 class streamEvents(SchemaBase):
     """streamEvents schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    source : string
-    
     type : string
+    
+    source : string
     
     """
     _schema = {'$ref': '#/defs/streamEvents'}
@@ -744,7 +814,11 @@ class streamEvents(SchemaBase):
 
 
 class stream(SchemaBase):
-    """stream schema wrapper"""
+    """stream schema wrapper
+    
+    allOf(streamParams, oneOf(streamEvents, Mapping(required=[stream]), 
+    Mapping(required=[merge])))
+    """
     _schema = {'$ref': '#/defs/stream'}
     _rootschema = Root._schema
 
@@ -758,7 +832,10 @@ class stream(SchemaBase):
 
 
 class titleEncode(SchemaBase):
-    """titleEncode schema wrapper"""
+    """titleEncode schema wrapper
+    
+    Mapping(required=[])
+    """
     _schema = {'$ref': '#/defs/titleEncode'}
     _rootschema = Root._schema
 
@@ -767,7 +844,10 @@ class titleEncode(SchemaBase):
 
 
 class title(SchemaBase):
-    """title schema wrapper"""
+    """title schema wrapper
+    
+    oneOf(string, Mapping(required=[text]))
+    """
     _schema = {'$ref': '#/defs/title'}
     _rootschema = Root._schema
 
@@ -776,7 +856,20 @@ class title(SchemaBase):
 
 
 class transform(SchemaBase):
-    """transform schema wrapper"""
+    """transform schema wrapper
+    
+    oneOf(aggregateTransform, binTransform, collectTransform, 
+    countpatternTransform, crossTransform, densityTransform, 
+    extentTransform, filterTransform, foldTransform, formulaTransform, 
+    imputeTransform, joinaggregateTransform, lookupTransform, 
+    projectTransform, sampleTransform, sequenceTransform, windowTransform, 
+    identifierTransform, linkpathTransform, pieTransform, stackTransform, 
+    contourTransform, geojsonTransform, geopathTransform, geopointTransform,
+     geoshapeTransform, graticuleTransform, forceTransform, nestTransform, 
+    packTransform, partitionTransform, stratifyTransform, treeTransform, 
+    treelinksTransform, treemapTransform, voronoiTransform, 
+    wordcloudTransform, crossfilterTransform, resolvefilterTransform)
+    """
     _schema = {'$ref': '#/defs/transform'}
     _rootschema = Root._schema
 
@@ -785,7 +878,16 @@ class transform(SchemaBase):
 
 
 class transformMark(SchemaBase):
-    """transformMark schema wrapper"""
+    """transformMark schema wrapper
+    
+    oneOf(binTransform, collectTransform, extentTransform, formulaTransform,
+     joinaggregateTransform, lookupTransform, windowTransform, 
+    identifierTransform, linkpathTransform, pieTransform, stackTransform, 
+    geojsonTransform, geopathTransform, geopointTransform, 
+    geoshapeTransform, forceTransform, packTransform, partitionTransform, 
+    stratifyTransform, treeTransform, treemapTransform, voronoiTransform, 
+    wordcloudTransform, crossfilterTransform, resolvefilterTransform)
+    """
     _schema = {'$ref': '#/defs/transformMark'}
     _rootschema = Root._schema
 
@@ -796,25 +898,28 @@ class transformMark(SchemaBase):
 class aggregateTransform(SchemaBase):
     """aggregateTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
-    groupby : oneOf(list, signal)
-    
-    ops : oneOf(list, signal)
-    
-    fields : oneOf(list, signal)
-    
-    as : oneOf(list, signal)
-    
-    drop : anyOf(boolean, signal)
+    type : enum('aggregate')
     
     cross : anyOf(boolean, signal)
     
+    drop : anyOf(boolean, signal)
+    
+    fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
+    
+    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
     key : oneOf(scaleField, paramField, expr)
+    
+    ops : oneOf(List(anyOf(enum('values', 'count', 'missing', 'valid', 
+    'sum', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 
+    'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 
+    'argmax', 'min', 'max'), signal)), signal)
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/aggregateTransform'}
@@ -832,35 +937,35 @@ class aggregateTransform(SchemaBase):
 class binTransform(SchemaBase):
     """binTransform schema wrapper
     
+    Mapping(required=[type, field, extent])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    extent : oneOf(List(anyOf(float, signal)), signal)
     
     field : oneOf(scaleField, paramField, expr)
     
-    anchor : anyOf(float, signal)
+    type : enum('bin')
     
-    maxbins : anyOf(float, signal)
+    anchor : anyOf(float, signal)
     
     base : anyOf(float, signal)
     
-    divide : oneOf(list, signal)
+    divide : oneOf(List(anyOf(float, signal)), signal)
     
-    extent : oneOf(list, signal)
-    
-    step : anyOf(float, signal)
-    
-    steps : oneOf(list, signal)
+    maxbins : anyOf(float, signal)
     
     minstep : anyOf(float, signal)
     
-    nice : anyOf(boolean, signal)
-    
     name : anyOf(string, signal)
     
-    as : oneOf(list, signal)
+    nice : anyOf(boolean, signal)
+    
+    signal : string
+    
+    step : anyOf(float, signal)
+    
+    steps : oneOf(List(anyOf(float, signal)), signal)
     
     """
     _schema = {'$ref': '#/defs/binTransform'}
@@ -881,9 +986,11 @@ class binTransform(SchemaBase):
 class collectTransform(SchemaBase):
     """collectTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('collect')
     
     signal : string
     
@@ -901,21 +1008,21 @@ class collectTransform(SchemaBase):
 class countpatternTransform(SchemaBase):
     """countpatternTransform schema wrapper
     
+    Mapping(required=[type, field])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
     field : oneOf(scaleField, paramField, expr)
     
-    case : anyOf(any, signal)
+    type : enum('countpattern')
+    
+    case : anyOf(enum('upper', 'lower', 'mixed'), signal)
     
     pattern : anyOf(string, signal)
     
-    stopwords : anyOf(string, signal)
+    signal : string
     
-    as : oneOf(list, signal)
+    stopwords : anyOf(string, signal)
     
     """
     _schema = {'$ref': '#/defs/countpatternTransform'}
@@ -932,15 +1039,15 @@ class countpatternTransform(SchemaBase):
 class crossTransform(SchemaBase):
     """crossTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('cross')
     
     filter : exprString
     
-    as : oneOf(list, signal)
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/crossTransform'}
@@ -954,21 +1061,23 @@ class crossTransform(SchemaBase):
 class densityTransform(SchemaBase):
     """densityTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('density')
     
-    signal : string
+    distribution : oneOf(Mapping(required=[function]), 
+    Mapping(required=[function]), Mapping(required=[function, field]), 
+    Mapping(required=[function]))
     
-    extent : oneOf(list, signal)
-    
-    steps : anyOf(float, signal)
+    extent : oneOf(List(anyOf(float, signal)), signal)
     
     method : anyOf(string, signal)
     
-    distribution : oneOf(mapping, mapping, mapping, mapping)
+    signal : string
     
-    as : oneOf(list, signal)
+    steps : anyOf(float, signal)
     
     """
     _schema = {'$ref': '#/defs/densityTransform'}
@@ -984,13 +1093,15 @@ class densityTransform(SchemaBase):
 class extentTransform(SchemaBase):
     """extentTransform schema wrapper
     
+    Mapping(required=[type, field])
+    
     Attributes
     ----------
-    type : any
+    field : oneOf(scaleField, paramField, expr)
+    
+    type : enum('extent')
     
     signal : string
-    
-    field : oneOf(scaleField, paramField, expr)
     
     """
     _schema = {'$ref': '#/defs/extentTransform'}
@@ -1004,13 +1115,15 @@ class extentTransform(SchemaBase):
 class filterTransform(SchemaBase):
     """filterTransform schema wrapper
     
+    Mapping(required=[type, expr])
+    
     Attributes
     ----------
-    type : any
+    expr : exprString
+    
+    type : enum('filter')
     
     signal : string
-    
-    expr : exprString
     
     """
     _schema = {'$ref': '#/defs/filterTransform'}
@@ -1024,15 +1137,15 @@ class filterTransform(SchemaBase):
 class foldTransform(SchemaBase):
     """foldTransform schema wrapper
     
+    Mapping(required=[type, fields])
+    
     Attributes
     ----------
-    type : any
+    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
+    type : enum('fold')
     
     signal : string
-    
-    fields : oneOf(list, signal)
-    
-    as : oneOf(list, signal)
     
     """
     _schema = {'$ref': '#/defs/foldTransform'}
@@ -1046,17 +1159,17 @@ class foldTransform(SchemaBase):
 class formulaTransform(SchemaBase):
     """formulaTransform schema wrapper
     
+    Mapping(required=[type, expr, as])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
     expr : exprString
     
-    as : anyOf(string, signal)
+    type : enum('formula')
     
     initonly : anyOf(boolean, signal)
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/formulaTransform'}
@@ -1072,23 +1185,25 @@ class formulaTransform(SchemaBase):
 class imputeTransform(SchemaBase):
     """imputeTransform schema wrapper
     
+    Mapping(required=[type, field, key])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
     field : oneOf(scaleField, paramField, expr)
     
     key : oneOf(scaleField, paramField, expr)
     
-    keyvals : oneOf(list, signal)
+    type : enum('impute')
     
-    groupby : oneOf(list, signal)
+    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
     
-    method : anyOf(any, signal)
+    keyvals : oneOf(List(Mapping(required=[])), signal)
     
-    value : any
+    method : anyOf(enum('value', 'mean', 'median', 'max', 'min'), signal)
+    
+    signal : string
+    
+    value : Mapping(required=[])
     
     """
     _schema = {'$ref': '#/defs/imputeTransform'}
@@ -1106,21 +1221,24 @@ class imputeTransform(SchemaBase):
 class joinaggregateTransform(SchemaBase):
     """joinaggregateTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('joinaggregate')
     
-    signal : string
+    fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
     
-    groupby : oneOf(list, signal)
-    
-    fields : oneOf(list, signal)
-    
-    ops : oneOf(list, signal)
-    
-    as : oneOf(list, signal)
+    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
     
     key : oneOf(scaleField, paramField, expr)
+    
+    ops : oneOf(List(anyOf(enum('values', 'count', 'missing', 'valid', 
+    'sum', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 
+    'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 
+    'argmax', 'min', 'max'), signal)), signal)
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/joinaggregateTransform'}
@@ -1136,23 +1254,21 @@ class joinaggregateTransform(SchemaBase):
 class lookupTransform(SchemaBase):
     """lookupTransform schema wrapper
     
+    Mapping(required=[type, from, key, fields])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
-    from : string
+    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
     
     key : oneOf(scaleField, paramField, expr)
     
-    values : oneOf(list, signal)
+    type : enum('lookup')
     
-    fields : oneOf(list, signal)
+    default : Mapping(required=[])
     
-    as : oneOf(list, signal)
+    signal : string
     
-    default : any
+    values : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
     
     """
     _schema = {'$ref': '#/defs/lookupTransform'}
@@ -1168,15 +1284,15 @@ class lookupTransform(SchemaBase):
 class projectTransform(SchemaBase):
     """projectTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('project')
+    
+    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
     
     signal : string
-    
-    fields : oneOf(list, signal)
-    
-    as : oneOf(list, signal)
     
     """
     _schema = {'$ref': '#/defs/projectTransform'}
@@ -1190,9 +1306,11 @@ class projectTransform(SchemaBase):
 class sampleTransform(SchemaBase):
     """sampleTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('sample')
     
     signal : string
     
@@ -1210,15 +1328,17 @@ class sampleTransform(SchemaBase):
 class sequenceTransform(SchemaBase):
     """sequenceTransform schema wrapper
     
+    Mapping(required=[type, start, stop])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
     start : anyOf(float, signal)
     
     stop : anyOf(float, signal)
+    
+    type : enum('sequence')
+    
+    signal : string
     
     step : anyOf(float, signal)
     
@@ -1235,27 +1355,32 @@ class sequenceTransform(SchemaBase):
 class windowTransform(SchemaBase):
     """windowTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('window')
+    
+    fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
+    
+    frame : oneOf(List(anyOf(float, signal, None)), signal)
+    
+    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
+    ignorePeers : anyOf(boolean, signal)
+    
+    ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 
+    'percent_rank', 'cume_dist', 'ntile', 'lag', 'lead', 'first_value', 
+    'last_value', 'nth_value', 'values', 'count', 'missing', 'valid', 'sum',
+     'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 
+    'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 
+    'argmax', 'min', 'max'), signal)), signal)
+    
+    params : oneOf(List(anyOf(float, signal, None)), signal)
     
     signal : string
     
     sort : compare
-    
-    groupby : oneOf(list, signal)
-    
-    ops : oneOf(list, signal)
-    
-    params : oneOf(list, signal)
-    
-    fields : oneOf(list, signal)
-    
-    as : oneOf(list, signal)
-    
-    frame : oneOf(list, signal)
-    
-    ignorePeers : anyOf(boolean, signal)
     
     """
     _schema = {'$ref': '#/defs/windowTransform'}
@@ -1274,13 +1399,13 @@ class windowTransform(SchemaBase):
 class identifierTransform(SchemaBase):
     """identifierTransform schema wrapper
     
+    Mapping(required=[type, as])
+    
     Attributes
     ----------
-    type : any
+    type : enum('identifier')
     
     signal : string
-    
-    as : anyOf(string, signal)
     
     """
     _schema = {'$ref': '#/defs/identifierTransform'}
@@ -1293,9 +1418,16 @@ class identifierTransform(SchemaBase):
 class linkpathTransform(SchemaBase):
     """linkpathTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('linkpath')
+    
+    orient : anyOf(enum('horizontal', 'vertical', 'radial'), signal)
+    
+    shape : anyOf(enum('line', 'arc', 'curve', 'diagonal', 'orthogonal'), 
+    signal)
     
     signal : string
     
@@ -1306,12 +1438,6 @@ class linkpathTransform(SchemaBase):
     targetX : oneOf(scaleField, paramField, expr)
     
     targetY : oneOf(scaleField, paramField, expr)
-    
-    orient : anyOf(any, signal)
-    
-    shape : anyOf(any, signal)
-    
-    as : anyOf(string, signal)
     
     """
     _schema = {'$ref': '#/defs/linkpathTransform'}
@@ -1330,21 +1456,21 @@ class linkpathTransform(SchemaBase):
 class pieTransform(SchemaBase):
     """pieTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
-    field : oneOf(scaleField, paramField, expr)
-    
-    startAngle : anyOf(float, signal)
+    type : enum('pie')
     
     endAngle : anyOf(float, signal)
     
+    field : oneOf(scaleField, paramField, expr)
+    
+    signal : string
+    
     sort : anyOf(boolean, signal)
     
-    as : oneOf(list, signal)
+    startAngle : anyOf(float, signal)
     
     """
     _schema = {'$ref': '#/defs/pieTransform'}
@@ -1360,21 +1486,21 @@ class pieTransform(SchemaBase):
 class stackTransform(SchemaBase):
     """stackTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('stack')
     
     field : oneOf(scaleField, paramField, expr)
     
-    groupby : oneOf(list, signal)
+    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
+    offset : anyOf(enum('zero', 'center', 'normalize'), signal)
+    
+    signal : string
     
     sort : compare
-    
-    offset : anyOf(any, signal)
-    
-    as : oneOf(list, signal)
     
     """
     _schema = {'$ref': '#/defs/stackTransform'}
@@ -1390,29 +1516,31 @@ class stackTransform(SchemaBase):
 class contourTransform(SchemaBase):
     """contourTransform schema wrapper
     
+    Mapping(required=[type, size])
+    
     Attributes
     ----------
-    type : any
+    size : oneOf(List(anyOf(float, signal)), signal)
     
-    signal : string
-    
-    size : oneOf(list, signal)
-    
-    values : oneOf(list, signal)
-    
-    x : oneOf(scaleField, paramField, expr)
-    
-    y : oneOf(scaleField, paramField, expr)
-    
-    cellSize : anyOf(float, signal)
+    type : enum('contour')
     
     bandwidth : anyOf(float, signal)
+    
+    cellSize : anyOf(float, signal)
     
     count : anyOf(float, signal)
     
     nice : anyOf(float, signal)
     
-    thresholds : oneOf(list, signal)
+    signal : string
+    
+    thresholds : oneOf(List(anyOf(float, signal)), signal)
+    
+    values : oneOf(List(anyOf(float, signal)), signal)
+    
+    x : oneOf(scaleField, paramField, expr)
+    
+    y : oneOf(scaleField, paramField, expr)
     
     """
     _schema = {'$ref': '#/defs/contourTransform'}
@@ -1433,15 +1561,17 @@ class contourTransform(SchemaBase):
 class geojsonTransform(SchemaBase):
     """geojsonTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('geojson')
     
-    signal : string
-    
-    fields : oneOf(list, signal)
+    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
     
     geojson : oneOf(scaleField, paramField, expr)
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/geojsonTransform'}
@@ -1457,17 +1587,17 @@ class geojsonTransform(SchemaBase):
 class geopathTransform(SchemaBase):
     """geopathTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
-    projection : string
+    type : enum('geopath')
     
     field : oneOf(scaleField, paramField, expr)
     
-    as : anyOf(string, signal)
+    projection : string
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/geopathTransform'}
@@ -1483,17 +1613,17 @@ class geopathTransform(SchemaBase):
 class geopointTransform(SchemaBase):
     """geopointTransform schema wrapper
     
+    Mapping(required=[type, projection, fields])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
     
     projection : string
     
-    fields : oneOf(list, signal)
+    type : enum('geopoint')
     
-    as : oneOf(list, signal)
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/geopointTransform'}
@@ -1509,17 +1639,17 @@ class geopointTransform(SchemaBase):
 class geoshapeTransform(SchemaBase):
     """geoshapeTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
-    projection : string
+    type : enum('geoshape')
     
     field : oneOf(scaleField, paramField, expr)
     
-    as : anyOf(string, signal)
+    projection : string
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/geoshapeTransform'}
@@ -1535,25 +1665,27 @@ class geoshapeTransform(SchemaBase):
 class graticuleTransform(SchemaBase):
     """graticuleTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('graticule')
+    
+    extent : oneOf(List(Mapping(required=[])), signal)
+    
+    extentMajor : oneOf(List(Mapping(required=[])), signal)
+    
+    extentMinor : oneOf(List(Mapping(required=[])), signal)
+    
+    precision : anyOf(float, signal)
     
     signal : string
     
-    extent : oneOf(list, signal)
+    step : oneOf(List(anyOf(float, signal)), signal)
     
-    extentMajor : oneOf(list, signal)
+    stepMajor : oneOf(List(anyOf(float, signal)), signal)
     
-    extentMinor : oneOf(list, signal)
-    
-    step : oneOf(list, signal)
-    
-    stepMajor : oneOf(list, signal)
-    
-    stepMinor : oneOf(list, signal)
-    
-    precision : anyOf(float, signal)
+    stepMinor : oneOf(List(anyOf(float, signal)), signal)
     
     """
     _schema = {'$ref': '#/defs/graticuleTransform'}
@@ -1573,17 +1705,11 @@ class graticuleTransform(SchemaBase):
 class forceTransform(SchemaBase):
     """forceTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
-    static : anyOf(boolean, signal)
-    
-    restart : anyOf(boolean, signal)
-    
-    iterations : anyOf(float, signal)
+    type : enum('force')
     
     alpha : anyOf(float, signal)
     
@@ -1591,11 +1717,20 @@ class forceTransform(SchemaBase):
     
     alphaTarget : anyOf(float, signal)
     
+    forces : List(oneOf(Mapping(required=[force]), 
+    Mapping(required=[force]), Mapping(required=[force]), 
+    Mapping(required=[force]), Mapping(required=[force]), 
+    Mapping(required=[force])))
+    
+    iterations : anyOf(float, signal)
+    
+    restart : anyOf(boolean, signal)
+    
+    signal : string
+    
+    static : anyOf(boolean, signal)
+    
     velocityDecay : anyOf(float, signal)
-    
-    forces : list
-    
-    as : oneOf(list, signal)
     
     """
     _schema = {'$ref': '#/defs/forceTransform'}
@@ -1616,17 +1751,19 @@ class forceTransform(SchemaBase):
 class nestTransform(SchemaBase):
     """nestTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
+    type : enum('nest')
     
-    signal : string
-    
-    keys : oneOf(list, signal)
+    generate : anyOf(boolean, signal)
     
     key : oneOf(scaleField, paramField, expr)
     
-    generate : anyOf(boolean, signal)
+    keys : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/nestTransform'}
@@ -1641,23 +1778,23 @@ class nestTransform(SchemaBase):
 class packTransform(SchemaBase):
     """packTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('pack')
     
     field : oneOf(scaleField, paramField, expr)
-    
-    sort : compare
     
     padding : anyOf(float, signal)
     
     radius : oneOf(scaleField, paramField, expr)
     
-    size : oneOf(list, signal)
+    signal : string
     
-    as : oneOf(list, signal)
+    size : oneOf(List(anyOf(float, signal)), signal)
+    
+    sort : compare
     
     """
     _schema = {'$ref': '#/defs/packTransform'}
@@ -1674,23 +1811,23 @@ class packTransform(SchemaBase):
 class partitionTransform(SchemaBase):
     """partitionTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('partition')
     
     field : oneOf(scaleField, paramField, expr)
-    
-    sort : compare
     
     padding : anyOf(float, signal)
     
     round : anyOf(boolean, signal)
     
-    size : oneOf(list, signal)
+    signal : string
     
-    as : oneOf(list, signal)
+    size : oneOf(List(anyOf(float, signal)), signal)
+    
+    sort : compare
     
     """
     _schema = {'$ref': '#/defs/partitionTransform'}
@@ -1708,15 +1845,17 @@ class partitionTransform(SchemaBase):
 class stratifyTransform(SchemaBase):
     """stratifyTransform schema wrapper
     
+    Mapping(required=[type, key, parentKey])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
     key : oneOf(scaleField, paramField, expr)
     
     parentKey : oneOf(scaleField, paramField, expr)
+    
+    type : enum('stratify')
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/stratifyTransform'}
@@ -1731,23 +1870,23 @@ class stratifyTransform(SchemaBase):
 class treeTransform(SchemaBase):
     """treeTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('tree')
     
     field : oneOf(scaleField, paramField, expr)
     
+    method : anyOf(enum('tidy', 'cluster'), signal)
+    
+    nodeSize : oneOf(List(anyOf(float, signal)), signal)
+    
+    signal : string
+    
+    size : oneOf(List(anyOf(float, signal)), signal)
+    
     sort : compare
-    
-    method : anyOf(any, signal)
-    
-    size : oneOf(list, signal)
-    
-    nodeSize : oneOf(list, signal)
-    
-    as : oneOf(list, signal)
     
     """
     _schema = {'$ref': '#/defs/treeTransform'}
@@ -1764,13 +1903,15 @@ class treeTransform(SchemaBase):
 class treelinksTransform(SchemaBase):
     """treelinksTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('treelinks')
     
     key : oneOf(scaleField, paramField, expr)
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/treelinksTransform'}
@@ -1784,39 +1925,40 @@ class treelinksTransform(SchemaBase):
 class treemapTransform(SchemaBase):
     """treemapTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('treemap')
     
     field : oneOf(scaleField, paramField, expr)
     
-    sort : compare
-    
-    method : anyOf(any, signal)
+    method : anyOf(enum('squarify', 'resquarify', 'binary', 'dice', 'slice',
+     'slicedice'), signal)
     
     padding : anyOf(float, signal)
     
+    paddingBottom : anyOf(float, signal)
+    
     paddingInner : anyOf(float, signal)
+    
+    paddingLeft : anyOf(float, signal)
     
     paddingOuter : anyOf(float, signal)
     
-    paddingTop : anyOf(float, signal)
-    
     paddingRight : anyOf(float, signal)
     
-    paddingBottom : anyOf(float, signal)
-    
-    paddingLeft : anyOf(float, signal)
+    paddingTop : anyOf(float, signal)
     
     ratio : anyOf(float, signal)
     
     round : anyOf(boolean, signal)
     
-    size : oneOf(list, signal)
+    signal : string
     
-    as : oneOf(list, signal)
+    size : oneOf(List(anyOf(float, signal)), signal)
+    
+    sort : compare
     
     """
     _schema = {'$ref': '#/defs/treemapTransform'}
@@ -1843,21 +1985,21 @@ class treemapTransform(SchemaBase):
 class voronoiTransform(SchemaBase):
     """voronoiTransform schema wrapper
     
+    Mapping(required=[type, x, y])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    type : enum('voronoi')
     
     x : oneOf(scaleField, paramField, expr)
     
     y : oneOf(scaleField, paramField, expr)
     
-    size : oneOf(list, signal)
+    extent : oneOf(List(Mapping(required=[])), signal)
     
-    extent : oneOf(list, signal)
+    signal : string
     
-    as : anyOf(string, signal)
+    size : oneOf(List(anyOf(float, signal)), signal)
     
     """
     _schema = {'$ref': '#/defs/voronoiTransform'}
@@ -1872,33 +2014,33 @@ class voronoiTransform(SchemaBase):
 class wordcloudTransform(SchemaBase):
     """wordcloudTransform schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
-    
-    size : oneOf(list, signal)
+    type : enum('wordcloud')
     
     font : anyOf(string, signal, expr, paramField)
+    
+    fontSize : anyOf(float, signal, expr, paramField)
+    
+    fontSizeRange : oneOf(List(anyOf(float, signal)), signal, None)
     
     fontStyle : anyOf(string, signal, expr, paramField)
     
     fontWeight : anyOf(string, signal, expr, paramField)
     
-    fontSize : anyOf(float, signal, expr, paramField)
-    
-    fontSizeRange : oneOf(list, signal, None)
+    padding : anyOf(float, signal, expr, paramField)
     
     rotate : anyOf(float, signal, expr, paramField)
     
-    text : oneOf(scaleField, paramField, expr)
+    signal : string
+    
+    size : oneOf(List(anyOf(float, signal)), signal)
     
     spiral : anyOf(string, signal)
     
-    padding : anyOf(float, signal, expr, paramField)
-    
-    as : oneOf(list, signal)
+    text : oneOf(scaleField, paramField, expr)
     
     """
     _schema = {'$ref': '#/defs/wordcloudTransform'}
@@ -1921,15 +2063,17 @@ class wordcloudTransform(SchemaBase):
 class crossfilterTransform(SchemaBase):
     """crossfilterTransform schema wrapper
     
+    Mapping(required=[type, fields, query])
+    
     Attributes
     ----------
-    type : any
+    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
+    query : oneOf(List(Mapping(required=[])), signal)
+    
+    type : enum('crossfilter')
     
     signal : string
-    
-    fields : oneOf(list, signal)
-    
-    query : oneOf(list, signal)
     
     """
     _schema = {'$ref': '#/defs/crossfilterTransform'}
@@ -1944,15 +2088,17 @@ class crossfilterTransform(SchemaBase):
 class resolvefilterTransform(SchemaBase):
     """resolvefilterTransform schema wrapper
     
+    Mapping(required=[type, ignore, filter])
+    
     Attributes
     ----------
-    type : any
-    
-    signal : string
+    filter : Mapping(required=[])
     
     ignore : anyOf(float, signal)
     
-    filter : any
+    type : enum('resolvefilter')
+    
+    signal : string
     
     """
     _schema = {'$ref': '#/defs/resolvefilterTransform'}
@@ -1966,7 +2112,11 @@ class resolvefilterTransform(SchemaBase):
 
 
 class tickCount(SchemaBase):
-    """tickCount schema wrapper"""
+    """tickCount schema wrapper
+    
+    oneOf(float, enum('millisecond', 'second', 'minute', 'hour', 'day', 
+    'week', 'month', 'year'), Mapping(required=[interval]), signal)
+    """
     _schema = {'$ref': '#/refs/tickCount'}
     _rootschema = Root._schema
 
@@ -1975,7 +2125,10 @@ class tickCount(SchemaBase):
 
 
 class element(SchemaBase):
-    """element schema wrapper"""
+    """element schema wrapper
+    
+    string
+    """
     _schema = {'$ref': '#/refs/element'}
     _rootschema = Root._schema
 
@@ -1985,6 +2138,8 @@ class element(SchemaBase):
 
 class paramField(SchemaBase):
     """paramField schema wrapper
+    
+    Mapping(required=[field])
     
     Attributes
     ----------
@@ -1999,7 +2154,11 @@ class paramField(SchemaBase):
 
 
 class field(SchemaBase):
-    """field schema wrapper"""
+    """field schema wrapper
+    
+    oneOf(string, oneOf(signal, Mapping(required=[datum]), 
+    Mapping(required=[group]), Mapping(required=[parent])))
+    """
     _schema = {'$ref': '#/refs/field'}
     _rootschema = Root._schema
 
@@ -2008,7 +2167,11 @@ class field(SchemaBase):
 
 
 class scale(SchemaBase):
-    """scale schema wrapper"""
+    """scale schema wrapper
+    
+    oneOf(string, oneOf(signal, Mapping(required=[datum]), 
+    Mapping(required=[group]), Mapping(required=[parent])))
+    """
     _schema = {'$ref': '#/refs/scale'}
     _rootschema = Root._schema
 
@@ -2018,6 +2181,8 @@ class scale(SchemaBase):
 
 class stringModifiers(SchemaBase):
     """stringModifiers schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -2034,9 +2199,15 @@ class stringModifiers(SchemaBase):
 class numberModifiers(SchemaBase):
     """numberModifiers schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
+    band : anyOf(float, boolean)
+    
     exponent : oneOf(float, numberValue)
+    
+    extra : boolean
     
     mult : oneOf(float, numberValue)
     
@@ -2045,10 +2216,6 @@ class numberModifiers(SchemaBase):
     round : boolean
     
     scale : scale
-    
-    band : anyOf(float, boolean)
-    
-    extra : boolean
     
     """
     _schema = {'$ref': '#/refs/numberModifiers'}
@@ -2063,7 +2230,17 @@ class numberModifiers(SchemaBase):
 
 
 class value(SchemaBase):
-    """value schema wrapper"""
+    """value schema wrapper
+    
+    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, 
+    Mapping(required=[value]), Mapping(required=[field]), 
+    Mapping(required=[range])), Mapping(required=[scale, value]), 
+    Mapping(required=[scale, band]), Mapping(required=[offset]))))), 
+    allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    """
     _schema = {'$ref': '#/refs/value'}
     _rootschema = Root._schema
 
@@ -2072,7 +2249,17 @@ class value(SchemaBase):
 
 
 class numberValue(SchemaBase):
-    """numberValue schema wrapper"""
+    """numberValue schema wrapper
+    
+    oneOf(List(allOf(rule, allOf(numberModifiers, anyOf(oneOf(signal, 
+    Mapping(required=[value]), Mapping(required=[field]), 
+    Mapping(required=[range])), Mapping(required=[scale, value]), 
+    Mapping(required=[scale, band]), Mapping(required=[offset]))))), 
+    allOf(numberModifiers, anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    """
     _schema = {'$ref': '#/refs/numberValue'}
     _rootschema = Root._schema
 
@@ -2081,7 +2268,17 @@ class numberValue(SchemaBase):
 
 
 class stringValue(SchemaBase):
-    """stringValue schema wrapper"""
+    """stringValue schema wrapper
+    
+    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, 
+    Mapping(required=[value]), Mapping(required=[field]), 
+    Mapping(required=[range])), Mapping(required=[scale, value]), 
+    Mapping(required=[scale, band]), Mapping(required=[offset]))))), 
+    allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    """
     _schema = {'$ref': '#/refs/stringValue'}
     _rootschema = Root._schema
 
@@ -2090,7 +2287,17 @@ class stringValue(SchemaBase):
 
 
 class booleanValue(SchemaBase):
-    """booleanValue schema wrapper"""
+    """booleanValue schema wrapper
+    
+    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, 
+    Mapping(required=[value]), Mapping(required=[field]), 
+    Mapping(required=[range])), Mapping(required=[scale, value]), 
+    Mapping(required=[scale, band]), Mapping(required=[offset]))))), 
+    allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    """
     _schema = {'$ref': '#/refs/booleanValue'}
     _rootschema = Root._schema
 
@@ -2099,7 +2306,17 @@ class booleanValue(SchemaBase):
 
 
 class arrayValue(SchemaBase):
-    """arrayValue schema wrapper"""
+    """arrayValue schema wrapper
+    
+    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, 
+    Mapping(required=[value]), Mapping(required=[field]), 
+    Mapping(required=[range])), Mapping(required=[scale, value]), 
+    Mapping(required=[scale, band]), Mapping(required=[offset]))))), 
+    allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    """
     _schema = {'$ref': '#/refs/arrayValue'}
     _rootschema = Root._schema
 
@@ -2108,7 +2325,17 @@ class arrayValue(SchemaBase):
 
 
 class nullableStringValue(SchemaBase):
-    """nullableStringValue schema wrapper"""
+    """nullableStringValue schema wrapper
+    
+    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, 
+    Mapping(required=[value]), Mapping(required=[field]), 
+    Mapping(required=[range])), Mapping(required=[scale, value]), 
+    Mapping(required=[scale, band]), Mapping(required=[offset]))))), 
+    allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]), 
+    Mapping(required=[field]), Mapping(required=[range])), 
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]), 
+    Mapping(required=[offset]))))
+    """
     _schema = {'$ref': '#/refs/nullableStringValue'}
     _rootschema = Root._schema
 
@@ -2119,13 +2346,15 @@ class nullableStringValue(SchemaBase):
 class colorRGB(SchemaBase):
     """colorRGB schema wrapper
     
+    Mapping(required=[r, g, b])
+    
     Attributes
     ----------
-    r : numberValue
+    b : numberValue
     
     g : numberValue
     
-    b : numberValue
+    r : numberValue
     
     """
     _schema = {'$ref': '#/refs/colorRGB'}
@@ -2138,13 +2367,15 @@ class colorRGB(SchemaBase):
 class colorHSL(SchemaBase):
     """colorHSL schema wrapper
     
+    Mapping(required=[h, s, l])
+    
     Attributes
     ----------
     h : numberValue
     
-    s : numberValue
-    
     l : numberValue
+    
+    s : numberValue
     
     """
     _schema = {'$ref': '#/refs/colorHSL'}
@@ -2157,13 +2388,15 @@ class colorHSL(SchemaBase):
 class colorLAB(SchemaBase):
     """colorLAB schema wrapper
     
+    Mapping(required=[l, a, b])
+    
     Attributes
     ----------
-    l : numberValue
-    
     a : numberValue
     
     b : numberValue
+    
+    l : numberValue
     
     """
     _schema = {'$ref': '#/refs/colorLAB'}
@@ -2176,11 +2409,13 @@ class colorLAB(SchemaBase):
 class colorHCL(SchemaBase):
     """colorHCL schema wrapper
     
+    Mapping(required=[h, c, l])
+    
     Attributes
     ----------
-    h : numberValue
-    
     c : numberValue
+    
+    h : numberValue
     
     l : numberValue
     
@@ -2193,7 +2428,11 @@ class colorHCL(SchemaBase):
 
 
 class colorValue(SchemaBase):
-    """colorValue schema wrapper"""
+    """colorValue schema wrapper
+    
+    oneOf(nullableStringValue, Mapping(required=[gradient]), 
+    Mapping(required=[color]))
+    """
     _schema = {'$ref': '#/refs/colorValue'}
     _rootschema = Root._schema
 
@@ -2203,6 +2442,8 @@ class colorValue(SchemaBase):
 
 class expr(SchemaBase):
     """expr schema wrapper
+    
+    Mapping(required=[expr])
     
     Attributes
     ----------
@@ -2217,7 +2458,10 @@ class expr(SchemaBase):
 
 
 class exprString(SchemaBase):
-    """exprString schema wrapper"""
+    """exprString schema wrapper
+    
+    string
+    """
     _schema = {'$ref': '#/refs/exprString'}
     _rootschema = Root._schema
 
@@ -2226,7 +2470,10 @@ class exprString(SchemaBase):
 
 
 class compare(SchemaBase):
-    """compare schema wrapper"""
+    """compare schema wrapper
+    
+    oneOf(Mapping(required=[]), Mapping(required=[]))
+    """
     _schema = {'$ref': '#/refs/compare'}
     _rootschema = Root._schema
 
@@ -2236,6 +2483,8 @@ class compare(SchemaBase):
 
 class from_(SchemaBase):
     """from_ schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -2252,11 +2501,14 @@ class from_(SchemaBase):
 class facet(SchemaBase):
     """facet schema wrapper
     
+    Mapping(required=[facet])
+    
     Attributes
     ----------
-    data : string
+    facet : oneOf(Mapping(required=[name, data, field]), 
+    Mapping(required=[name, data, groupby]))
     
-    facet : oneOf(mapping, mapping)
+    data : string
     
     """
     _schema = {'$ref': '#/refs/facet'}
@@ -2267,7 +2519,10 @@ class facet(SchemaBase):
 
 
 class style(SchemaBase):
-    """style schema wrapper"""
+    """style schema wrapper
+    
+    oneOf(string, List(string))
+    """
     _schema = {'$ref': '#/refs/style'}
     _rootschema = Root._schema
 
@@ -2276,7 +2531,10 @@ class style(SchemaBase):
 
 
 class marktype(SchemaBase):
-    """marktype schema wrapper"""
+    """marktype schema wrapper
+    
+    string
+    """
     _schema = {'$ref': '#/refs/marktype'}
     _rootschema = Root._schema
 
@@ -2285,7 +2543,10 @@ class marktype(SchemaBase):
 
 
 class sortOrder(SchemaBase):
-    """sortOrder schema wrapper"""
+    """sortOrder schema wrapper
+    
+    oneOf(enum('ascending', 'descending'), signal)
+    """
     _schema = {'$ref': '#/refs/sortOrder'}
     _rootschema = Root._schema
 
@@ -2294,7 +2555,10 @@ class sortOrder(SchemaBase):
 
 
 class scaleField(SchemaBase):
-    """scaleField schema wrapper"""
+    """scaleField schema wrapper
+    
+    oneOf(string, signal)
+    """
     _schema = {'$ref': '#/refs/scaleField'}
     _rootschema = Root._schema
 
@@ -2303,7 +2567,10 @@ class scaleField(SchemaBase):
 
 
 class scaleInterpolate(SchemaBase):
-    """scaleInterpolate schema wrapper"""
+    """scaleInterpolate schema wrapper
+    
+    oneOf(string, signal, Mapping(required=[type]))
+    """
     _schema = {'$ref': '#/refs/scaleInterpolate'}
     _rootschema = Root._schema
 
@@ -2312,7 +2579,11 @@ class scaleInterpolate(SchemaBase):
 
 
 class scaleData(SchemaBase):
-    """scaleData schema wrapper"""
+    """scaleData schema wrapper
+    
+    oneOf(Mapping(required=[data, field]), Mapping(required=[data, fields]),
+     Mapping(required=[fields]))
+    """
     _schema = {'$ref': '#/refs/scaleData'}
     _rootschema = Root._schema
 
@@ -2321,7 +2592,10 @@ class scaleData(SchemaBase):
 
 
 class selector(SchemaBase):
-    """selector schema wrapper"""
+    """selector schema wrapper
+    
+    string
+    """
     _schema = {'$ref': '#/refs/selector'}
     _rootschema = Root._schema
 
@@ -2331,6 +2605,8 @@ class selector(SchemaBase):
 
 class signal(SchemaBase):
     """signal schema wrapper
+    
+    Mapping(required=[signal])
     
     Attributes
     ----------
@@ -2345,7 +2621,10 @@ class signal(SchemaBase):
 
 
 class booleanOrSignal(SchemaBase):
-    """booleanOrSignal schema wrapper"""
+    """booleanOrSignal schema wrapper
+    
+    oneOf(boolean, signal)
+    """
     _schema = {'$ref': '#/refs/booleanOrSignal'}
     _rootschema = Root._schema
 
@@ -2354,7 +2633,10 @@ class booleanOrSignal(SchemaBase):
 
 
 class numberOrSignal(SchemaBase):
-    """numberOrSignal schema wrapper"""
+    """numberOrSignal schema wrapper
+    
+    oneOf(float, signal)
+    """
     _schema = {'$ref': '#/refs/numberOrSignal'}
     _rootschema = Root._schema
 
@@ -2363,7 +2645,10 @@ class numberOrSignal(SchemaBase):
 
 
 class stringOrSignal(SchemaBase):
-    """stringOrSignal schema wrapper"""
+    """stringOrSignal schema wrapper
+    
+    oneOf(string, signal)
+    """
     _schema = {'$ref': '#/refs/stringOrSignal'}
     _rootschema = Root._schema
 

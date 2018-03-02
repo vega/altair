@@ -1,6 +1,5 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-03-01 12:54
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
@@ -15,7 +14,11 @@ def load_schema():
 
 
 class Root(SchemaBase):
-    """Root schema wrapper"""
+    """Root schema wrapper
+    
+    anyOf(TopLevelFacetedUnitSpec, TopLevelLayerSpec, TopLevelFacetSpec, 
+    TopLevelRepeatSpec, TopLevelVConcatSpec, TopLevelHConcatSpec)
+    """
     _schema = load_schema()
     _rootschema = _schema
 
@@ -24,7 +27,12 @@ class Root(SchemaBase):
 
 
 class Aggregate(SchemaBase):
-    """Aggregate schema wrapper"""
+    """Aggregate schema wrapper
+    
+    enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 
+    'median', 'min', 'missing', 'q1', 'q3', 'ci0', 'ci1', 'stdev', 'stdevp',
+     'sum', 'valid', 'values', 'variance', 'variancep')
+    """
     _schema = {'$ref': '#/definitions/Aggregate'}
     _rootschema = Root._schema
 
@@ -33,7 +41,12 @@ class Aggregate(SchemaBase):
 
 
 class AggregateOp(SchemaBase):
-    """AggregateOp schema wrapper"""
+    """AggregateOp schema wrapper
+    
+    enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 
+    'median', 'min', 'missing', 'q1', 'q3', 'ci0', 'ci1', 'stdev', 'stdevp',
+     'sum', 'valid', 'values', 'variance', 'variancep')
+    """
     _schema = {'$ref': '#/definitions/AggregateOp'}
     _rootschema = Root._schema
 
@@ -44,11 +57,13 @@ class AggregateOp(SchemaBase):
 class AggregateTransform(SchemaBase):
     """AggregateTransform schema wrapper
     
+    Mapping(required=[aggregate])
+    
     Attributes
     ----------
-    aggregate : list
+    aggregate : List(AggregatedFieldDef)
         Array of objects that define fields to aggregate.
-    groupby : list
+    groupby : List(string)
         The data fields to group by. If not specified, a single group 
         containing all data objects will be used.
     """
@@ -63,10 +78,10 @@ class AggregateTransform(SchemaBase):
 class AggregatedFieldDef(SchemaBase):
     """AggregatedFieldDef schema wrapper
     
+    Mapping(required=[op, field, as])
+    
     Attributes
     ----------
-    as : string
-        The output field names to use for each aggregated field.
     field : string
         The data field for which to compute aggregate function.
     op : AggregateOp
@@ -83,7 +98,10 @@ class AggregatedFieldDef(SchemaBase):
 
 
 class Anchor(SchemaBase):
-    """Anchor schema wrapper"""
+    """Anchor schema wrapper
+    
+    enum('start', 'middle', 'end')
+    """
     _schema = {'$ref': '#/definitions/Anchor'}
     _rootschema = Root._schema
 
@@ -92,7 +110,10 @@ class Anchor(SchemaBase):
 
 
 class AnyMark(SchemaBase):
-    """AnyMark schema wrapper"""
+    """AnyMark schema wrapper
+    
+    anyOf(Mark, MarkDef)
+    """
     _schema = {'$ref': '#/definitions/AnyMark'}
     _rootschema = Root._schema
 
@@ -103,9 +124,11 @@ class AnyMark(SchemaBase):
 class AutoSizeParams(SchemaBase):
     """AutoSizeParams schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    contains : string
+    contains : enum('content', 'padding')
         Determines how size calculation should be performed, one of 
         `"content"` or `"padding"`. The default setting (`"content"`) 
         interprets the width and height settings as the data rectangle 
@@ -133,7 +156,10 @@ class AutoSizeParams(SchemaBase):
 
 
 class AutosizeType(SchemaBase):
-    """AutosizeType schema wrapper"""
+    """AutosizeType schema wrapper
+    
+    enum('pad', 'fit', 'none')
+    """
     _schema = {'$ref': '#/definitions/AutosizeType'}
     _rootschema = Root._schema
 
@@ -143,6 +169,8 @@ class AutosizeType(SchemaBase):
 
 class Axis(SchemaBase):
     """Axis schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -189,7 +217,7 @@ class Axis(SchemaBase):
         labels better visually group with corresponding axis ticks.  
         __Default value:__ `true` for axis of a continuous x-scale. 
         Otherwise, `false`.
-    labelOverlap : anyOf(boolean, string, string)
+    labelOverlap : anyOf(boolean, enum('parity'), enum('greedy'))
         The strategy to use for resolving overlap of axis labels. If 
         `false` (the default), no overlap reduction is attempted. If set
          to `true` or `"parity"`, a strategy of removing every other 
@@ -257,7 +285,7 @@ class Axis(SchemaBase):
         generated from the field's description.
     titlePadding : float
         The padding, in pixels, between title and axis.
-    values : anyOf(list, list)
+    values : anyOf(List(float), List(DateTime))
         Explicitly set the visible axis tick values.
     zindex : float
         A non-positive integer indicating z-index of the axis. If zindex
@@ -293,6 +321,8 @@ class Axis(SchemaBase):
 class AxisConfig(SchemaBase):
     """AxisConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
     bandPosition : float
@@ -317,7 +347,7 @@ class AxisConfig(SchemaBase):
         `false`.
     gridColor : string
         Color of gridlines.
-    gridDash : list
+    gridDash : List(float)
         The offset (in pixels) into which to begin drawing with the grid
          dash array.
     gridOpacity : float
@@ -358,7 +388,7 @@ class AxisConfig(SchemaBase):
         The font size of the label, in pixels.
     labelLimit : float
         Maximum allowed pixel width of axis tick labels.
-    labelOverlap : anyOf(boolean, string, string)
+    labelOverlap : anyOf(boolean, enum('parity'), enum('greedy'))
         The strategy to use for resolving overlap of axis labels. If 
         `false` (the default), no overlap reduction is attempted. If set
          to `true` or `"parity"`, a strategy of removing every other 
@@ -471,7 +501,10 @@ class AxisConfig(SchemaBase):
 
 
 class AxisOrient(SchemaBase):
-    """AxisOrient schema wrapper"""
+    """AxisOrient schema wrapper
+    
+    enum('top', 'right', 'left', 'bottom')
+    """
     _schema = {'$ref': '#/definitions/AxisOrient'}
     _rootschema = Root._schema
 
@@ -481,6 +514,8 @@ class AxisOrient(SchemaBase):
 
 class AxisResolveMap(SchemaBase):
     """AxisResolveMap schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -498,6 +533,8 @@ class AxisResolveMap(SchemaBase):
 
 class BarConfig(SchemaBase):
     """BarConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -522,7 +559,13 @@ class BarConfig(SchemaBase):
     continuousBandSize : float
         The default size of the bars on continuous scales.  __Default 
         value:__ `5`
-    cursor : string
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 
+    'pointer', 'progress', 'wait', 'cell', 'crosshair', 'text', 
+    'vertical-text', 'alias', 'copy', 'move', 'no-drop', 'not-allowed', 
+    'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 
+    'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 
+    'nesw-resize', 'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 
+    'zoom-in', 'zoom-out', 'grab', 'grabbing')
         The mouse cursor used over the mark. Any valid [CSS cursor 
         type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
          can be used.
@@ -612,7 +655,7 @@ class BarConfig(SchemaBase):
     stroke : string
         Default Stroke Color.  This has higher precedence than 
         config.color  __Default value:__ (None)
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke, space lengths for creating 
         dashed or dotted lines.
     strokeDashOffset : float
@@ -669,7 +712,10 @@ class BarConfig(SchemaBase):
 
 
 class BasicType(SchemaBase):
-    """BasicType schema wrapper"""
+    """BasicType schema wrapper
+    
+    enum('quantitative', 'ordinal', 'temporal', 'nominal')
+    """
     _schema = {'$ref': '#/definitions/BasicType'}
     _rootschema = Root._schema
 
@@ -679,6 +725,8 @@ class BasicType(SchemaBase):
 
 class BinParams(SchemaBase):
     """BinParams schema wrapper
+    
+    Mapping(required=[])
     Binning properties or boolean flag for determining whether to bin data 
     or not.
     
@@ -687,7 +735,7 @@ class BinParams(SchemaBase):
     base : float
         The number base to use for automatic bin determination (default 
         is base 10).  __Default value:__ `10`
-    divide : list
+    divide : List(float)
         Scale factors indicating allowable subdivisions. The default 
         value is [5, 2], which indicates that for base 10 numbers (the 
         default base), the method may consider dividing bin sizes by 5 
@@ -695,7 +743,7 @@ class BinParams(SchemaBase):
         method can check if bin sizes of 2 (= 10/5), 5 (= 10/2), or 1 (=
          10/(5*2)) might also satisfy the given constraints.  __Default 
         value:__ `[5, 2]`
-    extent : list
+    extent : List(float)
         A two-element (`[min, max]`) array indicating the range of 
         desired bin values.
     maxbins : float
@@ -710,7 +758,7 @@ class BinParams(SchemaBase):
     step : float
         An exact step size to use between bins.  __Note:__ If provided, 
         options such as maxbins will be ignored.
-    steps : list
+    steps : List(float)
         An array of allowable step sizes to choose from.
     """
     _schema = {'$ref': '#/definitions/BinParams'}
@@ -727,11 +775,10 @@ class BinParams(SchemaBase):
 class BinTransform(SchemaBase):
     """BinTransform schema wrapper
     
+    Mapping(required=[bin, field, as])
+    
     Attributes
     ----------
-    as : string
-        The output fields at which to write the start and end bin 
-        values.
     bin : anyOf(boolean, BinParams)
         An object indicating bin properties, or simply `true` for using 
         default bin parameters.
@@ -748,6 +795,8 @@ class BinTransform(SchemaBase):
 class BrushConfig(SchemaBase):
     """BrushConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
     fill : string
@@ -759,7 +808,7 @@ class BrushConfig(SchemaBase):
     stroke : string
         The stroke color of the interval mark.  __Default value:__ 
         `#ffffff`
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke and space lengths, for creating 
         dashed or dotted lines.
     strokeDashOffset : float
@@ -787,10 +836,10 @@ class BrushConfig(SchemaBase):
 class CalculateTransform(SchemaBase):
     """CalculateTransform schema wrapper
     
+    Mapping(required=[calculate, as])
+    
     Attributes
     ----------
-    as : string
-        The field for storing the computed formula value.
     calculate : string
         A 
         [expression](https://vega.github.io/vega-lite/docs/types.html#expression)
@@ -807,8 +856,15 @@ class CalculateTransform(SchemaBase):
 class CompositeUnitSpec(SchemaBase):
     """CompositeUnitSpec schema wrapper
     
+    Mapping(required=[mark])
+    
     Attributes
     ----------
+    mark : AnyMark
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     data : Data
         An object describing the data source
     description : string
@@ -841,11 +897,6 @@ class CompositeUnitSpec(SchemaBase):
          documentation for [width and 
         height](https://vega.github.io/vega-lite/docs/size.html) 
         contains more examples.
-    mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, 
-        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
-         `"geoshape"`, and `"text"`) or a [mark definition 
-        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
@@ -853,11 +904,11 @@ class CompositeUnitSpec(SchemaBase):
         with `"geoshape"` marks and `"point"` or `"line"` marks that 
         have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
         with type `"latitude"`, or `"longitude"`.
-    selection : mapping
+    selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     width : float
@@ -905,7 +956,10 @@ class CompositeUnitSpec(SchemaBase):
 
 
 class ConditionalFieldDef(SchemaBase):
-    """ConditionalFieldDef schema wrapper"""
+    """ConditionalFieldDef schema wrapper
+    
+    anyOf(ConditionalPredicateFieldDef, ConditionalSelectionFieldDef)
+    """
     _schema = {'$ref': '#/definitions/Conditional<FieldDef>'}
     _rootschema = Root._schema
 
@@ -914,7 +968,11 @@ class ConditionalFieldDef(SchemaBase):
 
 
 class ConditionalMarkPropFieldDef(SchemaBase):
-    """ConditionalMarkPropFieldDef schema wrapper"""
+    """ConditionalMarkPropFieldDef schema wrapper
+    
+    anyOf(ConditionalPredicateMarkPropFieldDef, 
+    ConditionalSelectionMarkPropFieldDef)
+    """
     _schema = {'$ref': '#/definitions/Conditional<MarkPropFieldDef>'}
     _rootschema = Root._schema
 
@@ -923,7 +981,11 @@ class ConditionalMarkPropFieldDef(SchemaBase):
 
 
 class ConditionalTextFieldDef(SchemaBase):
-    """ConditionalTextFieldDef schema wrapper"""
+    """ConditionalTextFieldDef schema wrapper
+    
+    anyOf(ConditionalPredicateTextFieldDef, 
+    ConditionalSelectionTextFieldDef)
+    """
     _schema = {'$ref': '#/definitions/Conditional<TextFieldDef>'}
     _rootschema = Root._schema
 
@@ -932,7 +994,10 @@ class ConditionalTextFieldDef(SchemaBase):
 
 
 class ConditionalValueDef(SchemaBase):
-    """ConditionalValueDef schema wrapper"""
+    """ConditionalValueDef schema wrapper
+    
+    anyOf(ConditionalPredicateValueDef, ConditionalSelectionValueDef)
+    """
     _schema = {'$ref': '#/definitions/Conditional<ValueDef>'}
     _rootschema = Root._schema
 
@@ -943,8 +1008,19 @@ class ConditionalValueDef(SchemaBase):
 class ConditionalPredicateFieldDef(SchemaBase):
     """ConditionalPredicateFieldDef schema wrapper
     
+    Mapping(required=[test, type])
+    
     Attributes
     ----------
+    test : LogicalOperandPredicate
+    
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -969,20 +1045,11 @@ class ConditionalPredicateFieldDef(SchemaBase):
         about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
-    test : LogicalOperand<Predicate>
-    
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<FieldDef>'}
     _rootschema = Root._schema
@@ -998,8 +1065,19 @@ class ConditionalPredicateFieldDef(SchemaBase):
 class ConditionalPredicateMarkPropFieldDef(SchemaBase):
     """ConditionalPredicateMarkPropFieldDef schema wrapper
     
+    Mapping(required=[test, type])
+    
     Attributes
     ----------
+    test : LogicalOperandPredicate
+    
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1045,20 +1123,11 @@ class ConditionalPredicateMarkPropFieldDef(SchemaBase):
         field definition 
         object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).
           __Default value:__ `"ascending"`
-    test : LogicalOperand<Predicate>
-    
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef>'}
     _rootschema = Root._schema
@@ -1081,8 +1150,19 @@ class ConditionalPredicateMarkPropFieldDef(SchemaBase):
 class ConditionalPredicateTextFieldDef(SchemaBase):
     """ConditionalPredicateTextFieldDef schema wrapper
     
+    Mapping(required=[test, type])
+    
     Attributes
     ----------
+    test : LogicalOperandPredicate
+    
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1112,20 +1192,11 @@ class ConditionalPredicateTextFieldDef(SchemaBase):
         pattern](https://vega.github.io/vega-lite/docs/format.html) for 
         a text field. If not defined, this will be determined 
         automatically.
-    test : LogicalOperand<Predicate>
-    
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<TextFieldDef>'}
     _rootschema = Root._schema
@@ -1144,9 +1215,11 @@ class ConditionalPredicateTextFieldDef(SchemaBase):
 class ConditionalPredicateValueDef(SchemaBase):
     """ConditionalPredicateValueDef schema wrapper
     
+    Mapping(required=[test, value])
+    
     Attributes
     ----------
-    test : LogicalOperand<Predicate>
+    test : LogicalOperandPredicate
     
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for
@@ -1163,8 +1236,22 @@ class ConditionalPredicateValueDef(SchemaBase):
 class ConditionalSelectionFieldDef(SchemaBase):
     """ConditionalSelectionFieldDef schema wrapper
     
+    Mapping(required=[selection, type])
+    
     Attributes
     ----------
+    selection : SelectionOperand
+        A [selection 
+        name](https://vega.github.io/vega-lite/docs/selection.html), or 
+        a series of [composed 
+        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1189,23 +1276,11 @@ class ConditionalSelectionFieldDef(SchemaBase):
         about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).
           __Note:__ `field` is not required if `aggregate` is `count`.
-    selection : SelectionOperand
-        A [selection 
-        name](https://vega.github.io/vega-lite/docs/selection.html), or 
-        a series of [composed 
-        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<FieldDef>'}
     _rootschema = Root._schema
@@ -1222,8 +1297,22 @@ class ConditionalSelectionFieldDef(SchemaBase):
 class ConditionalSelectionMarkPropFieldDef(SchemaBase):
     """ConditionalSelectionMarkPropFieldDef schema wrapper
     
+    Mapping(required=[selection, type])
+    
     Attributes
     ----------
+    selection : SelectionOperand
+        A [selection 
+        name](https://vega.github.io/vega-lite/docs/selection.html), or 
+        a series of [composed 
+        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1262,11 +1351,6 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
         default [scale 
         properties](https://vega.github.io/vega-lite/docs/scale.html) 
         are applied.
-    selection : SelectionOperand
-        A [selection 
-        name](https://vega.github.io/vega-lite/docs/selection.html), or 
-        a series of [composed 
-        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     sort : anyOf(SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values 
         include `"ascending"`, `"descending"` and `null` (no sorting). 
@@ -1279,13 +1363,6 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef>'}
     _rootschema = Root._schema
@@ -1308,8 +1385,22 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
 class ConditionalSelectionTextFieldDef(SchemaBase):
     """ConditionalSelectionTextFieldDef schema wrapper
     
+    Mapping(required=[selection, type])
+    
     Attributes
     ----------
+    selection : SelectionOperand
+        A [selection 
+        name](https://vega.github.io/vega-lite/docs/selection.html), or 
+        a series of [composed 
+        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1339,23 +1430,11 @@ class ConditionalSelectionTextFieldDef(SchemaBase):
         pattern](https://vega.github.io/vega-lite/docs/format.html) for 
         a text field. If not defined, this will be determined 
         automatically.
-    selection : SelectionOperand
-        A [selection 
-        name](https://vega.github.io/vega-lite/docs/selection.html), or 
-        a series of [composed 
-        selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a 
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<TextFieldDef>'}
     _rootschema = Root._schema
@@ -1374,6 +1453,8 @@ class ConditionalSelectionTextFieldDef(SchemaBase):
 
 class ConditionalSelectionValueDef(SchemaBase):
     """ConditionalSelectionValueDef schema wrapper
+    
+    Mapping(required=[selection, value])
     
     Attributes
     ----------
@@ -1396,6 +1477,8 @@ class ConditionalSelectionValueDef(SchemaBase):
 
 class Config(SchemaBase):
     """Config schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -1440,7 +1523,7 @@ class Config(SchemaBase):
     countTitle : string
         Default axis and legend title for count fields.  __Default 
         value:__ `'Number of Records'`.
-    fieldTitle : string
+    fieldTitle : enum('verbal', 'functional', 'plain')
         Defines how Vega-Lite generates title for fields.  There are 
         three possible styles: - `"verbal"` (Default) - displays 
         function in a verbal style (e.g., "Sum of field", "Year-month of
@@ -1451,7 +1534,7 @@ class Config(SchemaBase):
         "field").
     geoshape : MarkConfig
         Geoshape-Specific Config 
-    invalidValues : anyOf(string, None)
+    invalidValues : enum('filter', None)
         Defines how Vega-Lite should handle invalid values (`null` and 
         `NaN`). - If set to `"filter"` (default), all data items with 
         null values are filtered. - If `null`, all data items are 
@@ -1565,9 +1648,11 @@ class Config(SchemaBase):
 class CsvDataFormat(SchemaBase):
     """CsvDataFormat schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    parse : anyOf(string, mapping)
+    parse : anyOf(enum('auto'), Mapping(required=[]))
         If set to auto (the default), perform automatic type inference 
         to determine the desired data types. Alternatively, a parsing 
         directive object can be provided for explicit data types. Each 
@@ -1582,7 +1667,7 @@ class CsvDataFormat(SchemaBase):
         syntax](https://github.com/d3/d3-time-format#locale_format). UTC
          date format parsing is supported similarly (e.g., `{foo: 
         'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
-    type : string
+    type : enum('csv', 'tsv')
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default 
         format type is determined by the extension of the file URL. If 
         no extension is detected, `"json"` will be used by default.
@@ -1595,7 +1680,10 @@ class CsvDataFormat(SchemaBase):
 
 
 class Data(SchemaBase):
-    """Data schema wrapper"""
+    """Data schema wrapper
+    
+    anyOf(UrlData, InlineData, NamedData)
+    """
     _schema = {'$ref': '#/definitions/Data'}
     _rootschema = Root._schema
 
@@ -1604,7 +1692,10 @@ class Data(SchemaBase):
 
 
 class DataFormat(SchemaBase):
-    """DataFormat schema wrapper"""
+    """DataFormat schema wrapper
+    
+    anyOf(CsvDataFormat, JsonDataFormat, TopoDataFormat)
+    """
     _schema = {'$ref': '#/definitions/DataFormat'}
     _rootschema = Root._schema
 
@@ -1614,6 +1705,8 @@ class DataFormat(SchemaBase):
 
 class DateTime(SchemaBase):
     """DateTime schema wrapper
+    
+    Mapping(required=[])
     Object for defining datetime in Vega-Lite Filter.
     If both month and quarter are provided, month has higher precedence.
     `day` cannot be combined with other date.
@@ -1666,7 +1759,10 @@ class DateTime(SchemaBase):
 
 
 class Day(SchemaBase):
-    """Day schema wrapper"""
+    """Day schema wrapper
+    
+    float
+    """
     _schema = {'$ref': '#/definitions/Day'}
     _rootschema = Root._schema
 
@@ -1676,6 +1772,8 @@ class Day(SchemaBase):
 
 class Encoding(SchemaBase):
     """Encoding schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -1689,7 +1787,7 @@ class Encoding(SchemaBase):
         config](config.html#mark)'s `color` property.  _Note:_ See the 
         scale documentation for more information about customizing 
         [color scheme](scale.html#scheme).
-    detail : anyOf(FieldDef, list)
+    detail : anyOf(FieldDef, List(FieldDef))
         Additional levels of detail for grouping data in aggregate views
          and in line and area marks without mapping data to a specific 
         visual channel.
@@ -1700,7 +1798,7 @@ class Encoding(SchemaBase):
         Opacity of the marks – either can be a value or a range.  
         __Default value:__ If undefined, the default opacity depends on 
         [mark config](config.html#mark)'s `opacity` property.
-    order : anyOf(OrderFieldDef, list)
+    order : anyOf(OrderFieldDef, List(OrderFieldDef))
         Stack order for stacked marks or order of data points in line 
         marks for connected scatter plots.  __Note__: In aggregate 
         plots, `order` field should be `aggregate`d to avoid creating 
@@ -1753,6 +1851,8 @@ class Encoding(SchemaBase):
 class EncodingWithFacet(SchemaBase):
     """EncodingWithFacet schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
     color : anyOf(MarkPropFieldDefWithCondition, 
@@ -1767,7 +1867,7 @@ class EncodingWithFacet(SchemaBase):
         [color scheme](scale.html#scheme).
     column : FacetFieldDef
         Horizontal facets for trellis plots.
-    detail : anyOf(FieldDef, list)
+    detail : anyOf(FieldDef, List(FieldDef))
         Additional levels of detail for grouping data in aggregate views
          and in line and area marks without mapping data to a specific 
         visual channel.
@@ -1778,7 +1878,7 @@ class EncodingWithFacet(SchemaBase):
         Opacity of the marks – either can be a value or a range.  
         __Default value:__ If undefined, the default opacity depends on 
         [mark config](config.html#mark)'s `opacity` property.
-    order : anyOf(OrderFieldDef, list)
+    order : anyOf(OrderFieldDef, List(OrderFieldDef))
         Stack order for stacked marks or order of data points in line 
         marks for connected scatter plots.  __Note__: In aggregate 
         plots, `order` field should be `aggregate`d to avoid creating 
@@ -1835,8 +1935,17 @@ class EncodingWithFacet(SchemaBase):
 class FacetFieldDef(SchemaBase):
     """FacetFieldDef schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1871,13 +1980,6 @@ class FacetFieldDef(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/FacetFieldDef'}
     _rootschema = Root._schema
@@ -1892,6 +1994,8 @@ class FacetFieldDef(SchemaBase):
 
 class FacetMapping(SchemaBase):
     """FacetMapping schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -1909,11 +2013,20 @@ class FacetMapping(SchemaBase):
 
 class FieldDef(SchemaBase):
     """FieldDef schema wrapper
+    
+    Mapping(required=[type])
     Definition object for a data field, its type and transformation of an 
     encoding channel.
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1943,13 +2056,6 @@ class FieldDef(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/FieldDef'}
     _rootschema = Root._schema
@@ -1962,6 +2068,8 @@ class FieldDef(SchemaBase):
 
 class FieldDefWithCondition(SchemaBase):
     """FieldDefWithCondition schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1971,6 +2079,13 @@ class FieldDefWithCondition(SchemaBase):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1982,7 +2097,7 @@ class FieldDefWithCondition(SchemaBase):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -2007,13 +2122,6 @@ class FieldDefWithCondition(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition'}
     _rootschema = Root._schema
@@ -2028,6 +2136,8 @@ class FieldDefWithCondition(SchemaBase):
 
 class MarkPropFieldDefWithCondition(SchemaBase):
     """MarkPropFieldDefWithCondition schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -2037,6 +2147,13 @@ class MarkPropFieldDefWithCondition(SchemaBase):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -2048,7 +2165,7 @@ class MarkPropFieldDefWithCondition(SchemaBase):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -2094,13 +2211,6 @@ class MarkPropFieldDefWithCondition(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/MarkPropFieldDefWithCondition'}
     _rootschema = Root._schema
@@ -2121,6 +2231,8 @@ class MarkPropFieldDefWithCondition(SchemaBase):
 
 class TextFieldDefWithCondition(SchemaBase):
     """TextFieldDefWithCondition schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -2130,6 +2242,13 @@ class TextFieldDefWithCondition(SchemaBase):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -2141,7 +2260,7 @@ class TextFieldDefWithCondition(SchemaBase):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -2171,13 +2290,6 @@ class TextFieldDefWithCondition(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/TextFieldDefWithCondition'}
     _rootschema = Root._schema
@@ -2195,6 +2307,8 @@ class TextFieldDefWithCondition(SchemaBase):
 
 class FieldEqualPredicate(SchemaBase):
     """FieldEqualPredicate schema wrapper
+    
+    Mapping(required=[field, equal])
     
     Attributes
     ----------
@@ -2216,11 +2330,13 @@ class FieldEqualPredicate(SchemaBase):
 class FieldOneOfPredicate(SchemaBase):
     """FieldOneOfPredicate schema wrapper
     
+    Mapping(required=[field, oneOf])
+    
     Attributes
     ----------
     field : string
         Field to be filtered
-    oneOf : anyOf(list, list, list, list)
+    oneOf : anyOf(List(string), List(float), List(boolean), List(DateTime))
         A set of values that the `field`'s value should be a member of, 
         for a data item included in the filtered data.
     timeUnit : TimeUnit
@@ -2237,11 +2353,13 @@ class FieldOneOfPredicate(SchemaBase):
 class FieldRangePredicate(SchemaBase):
     """FieldRangePredicate schema wrapper
     
+    Mapping(required=[field, range])
+    
     Attributes
     ----------
     field : string
         Field to be filtered
-    range : list
+    range : List(anyOf(float, DateTime, None))
         An array of inclusive minimum and maximum values for a field 
         value of a data item to be included in the filtered data.
     timeUnit : TimeUnit
@@ -2258,9 +2376,11 @@ class FieldRangePredicate(SchemaBase):
 class FilterTransform(SchemaBase):
     """FilterTransform schema wrapper
     
+    Mapping(required=[filter])
+    
     Attributes
     ----------
-    filter : LogicalOperand<Predicate>
+    filter : LogicalOperandPredicate
         The `filter` property must be one of the predicate definitions: 
         (1) an 
         [expression](https://vega.github.io/vega-lite/docs/types.html#expression)
@@ -2281,7 +2401,10 @@ class FilterTransform(SchemaBase):
 
 
 class FontStyle(SchemaBase):
-    """FontStyle schema wrapper"""
+    """FontStyle schema wrapper
+    
+    enum('normal', 'italic')
+    """
     _schema = {'$ref': '#/definitions/FontStyle'}
     _rootschema = Root._schema
 
@@ -2290,7 +2413,10 @@ class FontStyle(SchemaBase):
 
 
 class FontWeight(SchemaBase):
-    """FontWeight schema wrapper"""
+    """FontWeight schema wrapper
+    
+    enum('normal', 'bold')
+    """
     _schema = {'$ref': '#/definitions/FontWeight'}
     _rootschema = Root._schema
 
@@ -2299,7 +2425,10 @@ class FontWeight(SchemaBase):
 
 
 class FontWeightNumber(SchemaBase):
-    """FontWeightNumber schema wrapper"""
+    """FontWeightNumber schema wrapper
+    
+    float
+    """
     _schema = {'$ref': '#/definitions/FontWeightNumber'}
     _rootschema = Root._schema
 
@@ -2310,24 +2439,26 @@ class FontWeightNumber(SchemaBase):
 class FacetSpec(SchemaBase):
     """FacetSpec schema wrapper
     
+    Mapping(required=[facet, spec])
+    
     Attributes
     ----------
+    facet : FacetMapping
+        An object that describes mappings between `row` and `column` 
+        channels and their field definitions.
+    spec : anyOf(LayerSpec, CompositeUnitSpec)
+        A specification of the view that gets faceted.
     data : Data
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
-    facet : FacetMapping
-        An object that describes mappings between `row` and `column` 
-        channels and their field definitions.
     name : string
         Name of the visualization for later reference.
     resolve : Resolve
         Scale, axis, and legend resolutions for facets.
-    spec : anyOf(LayerSpec, CompositeUnitSpec)
-        A specification of the view that gets faceted.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     """
@@ -2346,14 +2477,16 @@ class FacetSpec(SchemaBase):
 class HConcatSpec(SchemaBase):
     """HConcatSpec schema wrapper
     
+    Mapping(required=[hconcat])
+    
     Attributes
     ----------
+    hconcat : List(Spec)
+        A list of views that should be concatenated and put into a row.
     data : Data
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
-    hconcat : list
-        A list of views that should be concatenated and put into a row.
     name : string
         Name of the visualization for later reference.
     resolve : Resolve
@@ -2361,7 +2494,7 @@ class HConcatSpec(SchemaBase):
         concatenated charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     """
@@ -2380,8 +2513,14 @@ class HConcatSpec(SchemaBase):
 class LayerSpec(SchemaBase):
     """LayerSpec schema wrapper
     
+    Mapping(required=[layer])
+    
     Attributes
     ----------
+    layer : List(anyOf(LayerSpec, CompositeUnitSpec))
+        Layer or single view specifications to be layered.  __Note__: 
+        Specifications inside `layer` cannot use `row` and `column` 
+        channels as layering facet specifications is not allowed.
     data : Data
         An object describing the data source
     description : string
@@ -2411,17 +2550,13 @@ class LayerSpec(SchemaBase):
          documentation for [width and 
         height](https://vega.github.io/vega-lite/docs/size.html) 
         contains more examples.
-    layer : list
-        Layer or single view specifications to be layered.  __Note__: 
-        Specifications inside `layer` cannot use `row` and `column` 
-        channels as layering facet specifications is not allowed.
     name : string
         Name of the visualization for later reference.
     resolve : Resolve
         Scale, axis, and legend resolutions for layers.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     width : float
@@ -2467,24 +2602,26 @@ class LayerSpec(SchemaBase):
 class RepeatSpec(SchemaBase):
     """RepeatSpec schema wrapper
     
+    Mapping(required=[repeat, spec])
+    
     Attributes
     ----------
+    repeat : Repeat
+        An object that describes what fields should be repeated into 
+        views that are laid out as a `row` or `column`.
+    spec : Spec
+    
     data : Data
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
     name : string
         Name of the visualization for later reference.
-    repeat : Repeat
-        An object that describes what fields should be repeated into 
-        views that are laid out as a `row` or `column`.
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
-    spec : Spec
-    
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     """
@@ -2501,7 +2638,11 @@ class RepeatSpec(SchemaBase):
 
 
 class Spec(SchemaBase):
-    """Spec schema wrapper"""
+    """Spec schema wrapper
+    
+    anyOf(CompositeUnitSpec, LayerSpec, FacetSpec, RepeatSpec, VConcatSpec, 
+    HConcatSpec)
+    """
     _schema = {'$ref': '#/definitions/Spec'}
     _rootschema = Root._schema
 
@@ -2512,8 +2653,15 @@ class Spec(SchemaBase):
 class CompositeUnitSpecAlias(SchemaBase):
     """CompositeUnitSpecAlias schema wrapper
     
+    Mapping(required=[mark])
+    
     Attributes
     ----------
+    mark : AnyMark
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     data : Data
         An object describing the data source
     description : string
@@ -2546,11 +2694,6 @@ class CompositeUnitSpecAlias(SchemaBase):
          documentation for [width and 
         height](https://vega.github.io/vega-lite/docs/size.html) 
         contains more examples.
-    mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, 
-        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
-         `"geoshape"`, and `"text"`) or a [mark definition 
-        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
@@ -2558,11 +2701,11 @@ class CompositeUnitSpecAlias(SchemaBase):
         with `"geoshape"` marks and `"point"` or `"line"` marks that 
         have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
         with type `"latitude"`, or `"longitude"`.
-    selection : mapping
+    selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     width : float
@@ -2614,8 +2757,15 @@ class CompositeUnitSpecAlias(SchemaBase):
 class FacetedCompositeUnitSpecAlias(SchemaBase):
     """FacetedCompositeUnitSpecAlias schema wrapper
     
+    Mapping(required=[mark])
+    
     Attributes
     ----------
+    mark : AnyMark
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     data : Data
         An object describing the data source
     description : string
@@ -2648,11 +2798,6 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
          documentation for [width and 
         height](https://vega.github.io/vega-lite/docs/size.html) 
         contains more examples.
-    mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, 
-        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
-         `"geoshape"`, and `"text"`) or a [mark definition 
-        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     projection : Projection
@@ -2660,11 +2805,11 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
         with `"geoshape"` marks and `"point"` or `"line"` marks that 
         have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
         with type `"latitude"`, or `"longitude"`.
-    selection : mapping
+    selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     width : float
@@ -2717,8 +2862,13 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
 class VConcatSpec(SchemaBase):
     """VConcatSpec schema wrapper
     
+    Mapping(required=[vconcat])
+    
     Attributes
     ----------
+    vconcat : List(Spec)
+        A list of views that should be concatenated and put into a 
+        column.
     data : Data
         An object describing the data source
     description : string
@@ -2730,12 +2880,9 @@ class VConcatSpec(SchemaBase):
         charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
-    vconcat : list
-        A list of views that should be concatenated and put into a 
-        column.
     """
     _schema = {'$ref': '#/definitions/VConcatSpec'}
     _rootschema = Root._schema
@@ -2750,7 +2897,10 @@ class VConcatSpec(SchemaBase):
 
 
 class GeoType(SchemaBase):
-    """GeoType schema wrapper"""
+    """GeoType schema wrapper
+    
+    enum('latitude', 'longitude', 'geojson')
+    """
     _schema = {'$ref': '#/definitions/GeoType'}
     _rootschema = Root._schema
 
@@ -2760,6 +2910,8 @@ class GeoType(SchemaBase):
 
 class Header(SchemaBase):
     """Header schema wrapper
+    
+    Mapping(required=[])
     Headers of row / column channels for faceted plots.
     
     Attributes
@@ -2801,7 +2953,10 @@ class Header(SchemaBase):
 
 
 class HorizontalAlign(SchemaBase):
-    """HorizontalAlign schema wrapper"""
+    """HorizontalAlign schema wrapper
+    
+    enum('left', 'right', 'center')
+    """
     _schema = {'$ref': '#/definitions/HorizontalAlign'}
     _rootschema = Root._schema
 
@@ -2812,15 +2967,18 @@ class HorizontalAlign(SchemaBase):
 class InlineData(SchemaBase):
     """InlineData schema wrapper
     
+    Mapping(required=[values])
+    
     Attributes
     ----------
-    format : DataFormat
-        An object that specifies the format for parsing the data values.
-    values : anyOf(list, list, list, list, string, mapping)
+    values : anyOf(List(float), List(string), List(boolean), 
+    List(Mapping(required=[])), string, Mapping(required=[]))
         The full data set, included inline. This can be an array of 
         objects or primitive values or a string. Arrays of primitive 
         values are ingested as objects with a `data` property. Strings 
         are parsed according to the specified format type.
+    format : DataFormat
+        An object that specifies the format for parsing the data values.
     """
     _schema = {'$ref': '#/definitions/InlineData'}
     _rootschema = Root._schema
@@ -2830,7 +2988,12 @@ class InlineData(SchemaBase):
 
 
 class Interpolate(SchemaBase):
-    """Interpolate schema wrapper"""
+    """Interpolate schema wrapper
+    
+    enum('linear', 'linear-closed', 'step', 'step-before', 'step-after', 
+    'basis', 'basis-open', 'basis-closed', 'cardinal', 'cardinal-open', 
+    'cardinal-closed', 'bundle', 'monotone')
+    """
     _schema = {'$ref': '#/definitions/Interpolate'}
     _rootschema = Root._schema
 
@@ -2841,20 +3004,24 @@ class Interpolate(SchemaBase):
 class IntervalSelection(SchemaBase):
     """IntervalSelection schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    bind : string
+    type : enum('interval')
+    
+    bind : enum('scales')
         Establishes a two-way binding between the interval selection and
          the scales used within the same view. This allows a user to 
         interactively pan and zoom the view.
-    empty : string
+    empty : enum('all', 'none')
         By default, all data values are considered to lie within an 
         empty selection. When set to `none`, empty selections contain no
          data values.
-    encodings : list
+    encodings : List(SingleDefChannel)
         An array of encoding channels. The corresponding data field 
         values must match for a data tuple to fall within the selection.
-    fields : list
+    fields : List(string)
         An array of field names whose values must match for a data tuple
          to fall within the selection.
     mark : BrushConfig
@@ -2881,8 +3048,6 @@ class IntervalSelection(SchemaBase):
         `[mousedown, window:mouseup] > window:mousemove!` which 
         corresponds to clicks and dragging within an interval selection 
         to reposition it.
-    type : string
-    
     zoom : anyOf(string, boolean)
         When truthy, allows a user to interactively resize an interval 
         selection. Can be `true`, `false` (to disable zooming), or a 
@@ -2908,20 +3073,22 @@ class IntervalSelection(SchemaBase):
 class IntervalSelectionConfig(SchemaBase):
     """IntervalSelectionConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    bind : string
+    bind : enum('scales')
         Establishes a two-way binding between the interval selection and
          the scales used within the same view. This allows a user to 
         interactively pan and zoom the view.
-    empty : string
+    empty : enum('all', 'none')
         By default, all data values are considered to lie within an 
         empty selection. When set to `none`, empty selections contain no
          data values.
-    encodings : list
+    encodings : List(SingleDefChannel)
         An array of encoding channels. The corresponding data field 
         values must match for a data tuple to fall within the selection.
-    fields : list
+    fields : List(string)
         An array of field names whose values must match for a data tuple
          to fall within the selection.
     mark : BrushConfig
@@ -2973,9 +3140,11 @@ class IntervalSelectionConfig(SchemaBase):
 class JsonDataFormat(SchemaBase):
     """JsonDataFormat schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    parse : anyOf(string, mapping)
+    parse : anyOf(enum('auto'), Mapping(required=[]))
         If set to auto (the default), perform automatic type inference 
         to determine the desired data types. Alternatively, a parsing 
         directive object can be provided for explicit data types. Each 
@@ -2996,7 +3165,7 @@ class JsonDataFormat(SchemaBase):
         structure or meta-data. For example `"property": 
         "values.features"` is equivalent to retrieving 
         `json.values.features` from the loaded JSON object.
-    type : string
+    type : enum('json')
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default 
         format type is determined by the extension of the file URL. If 
         no extension is detected, `"json"` will be used by default.
@@ -3011,6 +3180,8 @@ class JsonDataFormat(SchemaBase):
 
 class Legend(SchemaBase):
     """Legend schema wrapper
+    
+    Mapping(required=[])
     Properties of a legend or boolean flag for determining whether to show 
     it.
     
@@ -3054,12 +3225,12 @@ class Legend(SchemaBase):
         field title format by providing the [`fieldTitle` property in 
         the [config](config.html) or [`fieldTitle` function via the 
         `compile` function's options](compile.html#field-title).
-    type : string
+    type : enum('symbol', 'gradient')
         The type of the legend. Use `"symbol"` to create a discrete 
         legend and `"gradient"` for a continuous color gradient.  
         __Default value:__ `"gradient"` for non-binned quantitative 
         fields and temporal fields; `"symbol"` otherwise.
-    values : anyOf(list, list, list)
+    values : anyOf(List(float), List(string), List(DateTime))
         Explicitly set the visible legend values.
     zindex : float
         A non-positive integer indicating z-index of the legend. If 
@@ -3081,6 +3252,8 @@ class Legend(SchemaBase):
 
 class LegendConfig(SchemaBase):
     """LegendConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -3138,7 +3311,7 @@ class LegendConfig(SchemaBase):
         __Default value:__  `false`
     strokeColor : string
         Border stroke color for the full legend.
-    strokeDash : list
+    strokeDash : List(float)
         Border stroke dash pattern for the full legend.
     strokeWidth : float
         Border stroke width for the full legend.
@@ -3224,7 +3397,11 @@ class LegendConfig(SchemaBase):
 
 
 class LegendOrient(SchemaBase):
-    """LegendOrient schema wrapper"""
+    """LegendOrient schema wrapper
+    
+    enum('left', 'right', 'top-left', 'top-right', 'bottom-left', 
+    'bottom-right', 'none')
+    """
     _schema = {'$ref': '#/definitions/LegendOrient'}
     _rootschema = Root._schema
 
@@ -3234,6 +3411,8 @@ class LegendOrient(SchemaBase):
 
 class LegendResolveMap(SchemaBase):
     """LegendResolveMap schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -3256,7 +3435,14 @@ class LegendResolveMap(SchemaBase):
 
 
 class LocalMultiTimeUnit(SchemaBase):
-    """LocalMultiTimeUnit schema wrapper"""
+    """LocalMultiTimeUnit schema wrapper
+    
+    enum('yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 
+    'yearmonthdatehours', 'yearmonthdatehoursminutes', 
+    'yearmonthdatehoursminutesseconds', 'quartermonth', 'monthdate', 
+    'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 
+    'secondsmilliseconds')
+    """
     _schema = {'$ref': '#/definitions/LocalMultiTimeUnit'}
     _rootschema = Root._schema
 
@@ -3265,7 +3451,11 @@ class LocalMultiTimeUnit(SchemaBase):
 
 
 class LocalSingleTimeUnit(SchemaBase):
-    """LocalSingleTimeUnit schema wrapper"""
+    """LocalSingleTimeUnit schema wrapper
+    
+    enum('year', 'quarter', 'month', 'day', 'date', 'hours', 'minutes', 
+    'seconds', 'milliseconds')
+    """
     _schema = {'$ref': '#/definitions/LocalSingleTimeUnit'}
     _rootschema = Root._schema
 
@@ -3276,10 +3466,10 @@ class LocalSingleTimeUnit(SchemaBase):
 class LogicalAndPredicate(SchemaBase):
     """LogicalAndPredicate schema wrapper
     
+    Mapping(required=[and])
+    
     Attributes
     ----------
-    and : list
-    
     """
     _schema = {'$ref': '#/definitions/LogicalAnd<Predicate>'}
     _rootschema = Root._schema
@@ -3291,10 +3481,10 @@ class LogicalAndPredicate(SchemaBase):
 class SelectionAnd(SchemaBase):
     """SelectionAnd schema wrapper
     
+    Mapping(required=[and])
+    
     Attributes
     ----------
-    and : list
-    
     """
     _schema = {'$ref': '#/definitions/SelectionAnd'}
     _rootschema = Root._schema
@@ -3306,10 +3496,10 @@ class SelectionAnd(SchemaBase):
 class LogicalNotPredicate(SchemaBase):
     """LogicalNotPredicate schema wrapper
     
+    Mapping(required=[not])
+    
     Attributes
     ----------
-    not : LogicalOperand<Predicate>
-    
     """
     _schema = {'$ref': '#/definitions/LogicalNot<Predicate>'}
     _rootschema = Root._schema
@@ -3321,10 +3511,10 @@ class LogicalNotPredicate(SchemaBase):
 class SelectionNot(SchemaBase):
     """SelectionNot schema wrapper
     
+    Mapping(required=[not])
+    
     Attributes
     ----------
-    not : SelectionOperand
-    
     """
     _schema = {'$ref': '#/definitions/SelectionNot'}
     _rootschema = Root._schema
@@ -3334,7 +3524,11 @@ class SelectionNot(SchemaBase):
 
 
 class LogicalOperandPredicate(SchemaBase):
-    """LogicalOperandPredicate schema wrapper"""
+    """LogicalOperandPredicate schema wrapper
+    
+    anyOf(LogicalNotPredicate, LogicalAndPredicate, LogicalOrPredicate, 
+    Predicate)
+    """
     _schema = {'$ref': '#/definitions/LogicalOperand<Predicate>'}
     _rootschema = Root._schema
 
@@ -3343,7 +3537,10 @@ class LogicalOperandPredicate(SchemaBase):
 
 
 class SelectionOperand(SchemaBase):
-    """SelectionOperand schema wrapper"""
+    """SelectionOperand schema wrapper
+    
+    anyOf(SelectionNot, SelectionAnd, SelectionOr, string)
+    """
     _schema = {'$ref': '#/definitions/SelectionOperand'}
     _rootschema = Root._schema
 
@@ -3354,10 +3551,10 @@ class SelectionOperand(SchemaBase):
 class LogicalOrPredicate(SchemaBase):
     """LogicalOrPredicate schema wrapper
     
+    Mapping(required=[or])
+    
     Attributes
     ----------
-    or : list
-    
     """
     _schema = {'$ref': '#/definitions/LogicalOr<Predicate>'}
     _rootschema = Root._schema
@@ -3369,10 +3566,10 @@ class LogicalOrPredicate(SchemaBase):
 class SelectionOr(SchemaBase):
     """SelectionOr schema wrapper
     
+    Mapping(required=[or])
+    
     Attributes
     ----------
-    or : list
-    
     """
     _schema = {'$ref': '#/definitions/SelectionOr'}
     _rootschema = Root._schema
@@ -3384,15 +3581,17 @@ class SelectionOr(SchemaBase):
 class LookupData(SchemaBase):
     """LookupData schema wrapper
     
+    Mapping(required=[data, key])
+    
     Attributes
     ----------
     data : Data
         Secondary data source to lookup in.
-    fields : list
-        Fields in foreign data to lookup. If not specified, the entire 
-        object is queried.
     key : string
         Key in data to lookup.
+    fields : List(string)
+        Fields in foreign data to lookup. If not specified, the entire 
+        object is queried.
     """
     _schema = {'$ref': '#/definitions/LookupData'}
     _rootschema = Root._schema
@@ -3404,21 +3603,15 @@ class LookupData(SchemaBase):
 class LookupTransform(SchemaBase):
     """LookupTransform schema wrapper
     
+    Mapping(required=[lookup, from])
+    
     Attributes
     ----------
-    as : anyOf(string, list)
-        The field or fields for storing the computed formula value. If 
-        `from.fields` is specified, the transform will use the same 
-        names for `as`. If `from.fields` is not specified, `as` has to 
-        be a string and we put the whole object into the data under the 
-        specified name.
+    lookup : string
+        Key in primary data source.
     default : string
         The default value to use if lookup fails.  __Default value:__ 
         `null`
-    from : LookupData
-        Secondary data reference.
-    lookup : string
-        Key in primary data source.
     """
     _schema = {'$ref': '#/definitions/LookupTransform'}
     _rootschema = Root._schema
@@ -3429,6 +3622,9 @@ class LookupTransform(SchemaBase):
 
 class Mark(SchemaBase):
     """Mark schema wrapper
+    
+    enum('area', 'bar', 'line', 'point', 'text', 'tick', 'rect', 'rule', 
+    'circle', 'square', 'geoshape')
     All types of primitive marks.
     """
     _schema = {'$ref': '#/definitions/Mark'}
@@ -3440,6 +3636,8 @@ class Mark(SchemaBase):
 
 class MarkConfig(SchemaBase):
     """MarkConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -3457,7 +3655,13 @@ class MarkConfig(SchemaBase):
         value:__ <span style="color: #4682b4;">&#9632;</span> 
         `"#4682b4"`  __Note:__ This property cannot be used in a [style 
         config](mark.html#style-config).
-    cursor : string
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 
+    'pointer', 'progress', 'wait', 'cell', 'crosshair', 'text', 
+    'vertical-text', 'alias', 'copy', 'move', 'no-drop', 'not-allowed', 
+    'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 
+    'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 
+    'nesw-resize', 'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 
+    'zoom-in', 'zoom-out', 'grab', 'grabbing')
         The mouse cursor used over the mark. Any valid [CSS cursor 
         type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
          can be used.
@@ -3544,7 +3748,7 @@ class MarkConfig(SchemaBase):
     stroke : string
         Default Stroke Color.  This has higher precedence than 
         config.color  __Default value:__ (None)
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke, space lengths for creating 
         dashed or dotted lines.
     strokeDashOffset : float
@@ -3600,8 +3804,14 @@ class MarkConfig(SchemaBase):
 class MarkDef(SchemaBase):
     """MarkDef schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Mark
+        The mark type. One of `"bar"`, `"circle"`, `"square"`, `"tick"`,
+         `"line"`, `"area"`, `"point"`, `"geoshape"`, `"rule"`, and 
+        `"text"`.
     align : HorizontalAlign
         The horizontal alignment of the text. One of `"left"`, 
         `"right"`, `"center"`.
@@ -3619,7 +3829,13 @@ class MarkDef(SchemaBase):
         value:__ <span style="color: #4682b4;">&#9632;</span> 
         `"#4682b4"`  __Note:__ This property cannot be used in a [style 
         config](mark.html#style-config).
-    cursor : string
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 
+    'pointer', 'progress', 'wait', 'cell', 'crosshair', 'text', 
+    'vertical-text', 'alias', 'copy', 'move', 'no-drop', 'not-allowed', 
+    'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 
+    'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 
+    'nesw-resize', 'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 
+    'zoom-in', 'zoom-out', 'grab', 'grabbing')
         The mouse cursor used over the mark. Any valid [CSS cursor 
         type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
          can be used.
@@ -3706,7 +3922,7 @@ class MarkDef(SchemaBase):
     stroke : string
         Default Stroke Color.  This has higher precedence than 
         config.color  __Default value:__ (None)
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke, space lengths for creating 
         dashed or dotted lines.
     strokeDashOffset : float
@@ -3717,7 +3933,7 @@ class MarkDef(SchemaBase):
         `1`
     strokeWidth : float
         The stroke width, in pixels.
-    style : anyOf(string, list)
+    style : anyOf(string, List(string))
         A string or array of strings indicating the name of custom 
         styles to apply to the mark. A style is a named collection of 
         mark property defaults defined within the [style 
@@ -3742,10 +3958,6 @@ class MarkDef(SchemaBase):
         `theta` follow the same convention of `arc` mark `startAngle` 
         and `endAngle` properties: angles are measured in radians, with 
         `0` indicating "north".
-    type : Mark
-        The mark type. One of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, `"area"`, `"point"`, `"geoshape"`, `"rule"`, and 
-        `"text"`.
     """
     _schema = {'$ref': '#/definitions/MarkDef'}
     _rootschema = Root._schema
@@ -3779,7 +3991,10 @@ class MarkDef(SchemaBase):
 
 
 class Month(SchemaBase):
-    """Month schema wrapper"""
+    """Month schema wrapper
+    
+    float
+    """
     _schema = {'$ref': '#/definitions/Month'}
     _rootschema = Root._schema
 
@@ -3790,16 +4005,20 @@ class Month(SchemaBase):
 class MultiSelection(SchemaBase):
     """MultiSelection schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    empty : string
+    type : enum('multi')
+    
+    empty : enum('all', 'none')
         By default, all data values are considered to lie within an 
         empty selection. When set to `none`, empty selections contain no
          data values.
-    encodings : list
+    encodings : List(SingleDefChannel)
         An array of encoding channels. The corresponding data field 
         values must match for a data tuple to fall within the selection.
-    fields : list
+    fields : List(string)
         An array of field names whose values must match for a data tuple
          to fall within the selection.
     nearest : boolean
@@ -3826,8 +4045,6 @@ class MultiSelection(SchemaBase):
          (i.e., data values are toggled when a user interacts with the 
         shift-key pressed).  See the [toggle transform](toggle.html) 
         documentation for more information.
-    type : string
-    
     """
     _schema = {'$ref': '#/definitions/MultiSelection'}
     _rootschema = Root._schema
@@ -3844,16 +4061,18 @@ class MultiSelection(SchemaBase):
 class MultiSelectionConfig(SchemaBase):
     """MultiSelectionConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    empty : string
+    empty : enum('all', 'none')
         By default, all data values are considered to lie within an 
         empty selection. When set to `none`, empty selections contain no
          data values.
-    encodings : list
+    encodings : List(SingleDefChannel)
         An array of encoding channels. The corresponding data field 
         values must match for a data tuple to fall within the selection.
-    fields : list
+    fields : List(string)
         An array of field names whose values must match for a data tuple
          to fall within the selection.
     nearest : boolean
@@ -3894,7 +4113,10 @@ class MultiSelectionConfig(SchemaBase):
 
 
 class MultiTimeUnit(SchemaBase):
-    """MultiTimeUnit schema wrapper"""
+    """MultiTimeUnit schema wrapper
+    
+    anyOf(LocalMultiTimeUnit, UtcMultiTimeUnit)
+    """
     _schema = {'$ref': '#/definitions/MultiTimeUnit'}
     _rootschema = Root._schema
 
@@ -3905,12 +4127,14 @@ class MultiTimeUnit(SchemaBase):
 class NamedData(SchemaBase):
     """NamedData schema wrapper
     
+    Mapping(required=[name])
+    
     Attributes
     ----------
-    format : DataFormat
-        An object that specifies the format for parsing the data.
     name : string
         Provide a placeholder name and bind data at runtime.
+    format : DataFormat
+        An object that specifies the format for parsing the data.
     """
     _schema = {'$ref': '#/definitions/NamedData'}
     _rootschema = Root._schema
@@ -3920,7 +4144,10 @@ class NamedData(SchemaBase):
 
 
 class NiceTime(SchemaBase):
-    """NiceTime schema wrapper"""
+    """NiceTime schema wrapper
+    
+    enum('second', 'minute', 'hour', 'day', 'week', 'month', 'year')
+    """
     _schema = {'$ref': '#/definitions/NiceTime'}
     _rootschema = Root._schema
 
@@ -3931,8 +4158,17 @@ class NiceTime(SchemaBase):
 class OrderFieldDef(SchemaBase):
     """OrderFieldDef schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -3965,13 +4201,6 @@ class OrderFieldDef(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/OrderFieldDef'}
     _rootschema = Root._schema
@@ -3984,7 +4213,10 @@ class OrderFieldDef(SchemaBase):
 
 
 class Orient(SchemaBase):
-    """Orient schema wrapper"""
+    """Orient schema wrapper
+    
+    enum('horizontal', 'vertical')
+    """
     _schema = {'$ref': '#/definitions/Orient'}
     _rootschema = Root._schema
 
@@ -3993,7 +4225,10 @@ class Orient(SchemaBase):
 
 
 class Padding(SchemaBase):
-    """Padding schema wrapper"""
+    """Padding schema wrapper
+    
+    anyOf(float, Mapping(required=[]))
+    """
     _schema = {'$ref': '#/definitions/Padding'}
     _rootschema = Root._schema
 
@@ -4004,8 +4239,17 @@ class Padding(SchemaBase):
 class PositionFieldDef(SchemaBase):
     """PositionFieldDef schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -4078,13 +4322,6 @@ class PositionFieldDef(SchemaBase):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _schema = {'$ref': '#/definitions/PositionFieldDef'}
     _rootschema = Root._schema
@@ -4099,7 +4336,11 @@ class PositionFieldDef(SchemaBase):
 
 
 class Predicate(SchemaBase):
-    """Predicate schema wrapper"""
+    """Predicate schema wrapper
+    
+    anyOf(FieldEqualPredicate, FieldRangePredicate, FieldOneOfPredicate, 
+    SelectionPredicate, string)
+    """
     _schema = {'$ref': '#/definitions/Predicate'}
     _rootschema = Root._schema
 
@@ -4110,9 +4351,11 @@ class Predicate(SchemaBase):
 class Projection(SchemaBase):
     """Projection schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    center : list
+    center : List(float)
         Sets the projection’s center to the specified center, a 
         two-element array of longitude and latitude in degrees.  
         __Default value:__ `[0, 0]`
@@ -4121,7 +4364,7 @@ class Projection(SchemaBase):
         angle in degrees. If `null`, switches to 
         [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting 
         rather than small-circle clipping.
-    clipExtent : list
+    clipExtent : List(List(float))
         Sets the projection’s viewport clip extent to the specified 
         bounds in pixels. The extent bounds are specified as an array 
         `[[x0, y0], [x1, y1]]`, where `x0` is the left-side of the 
@@ -4137,7 +4380,7 @@ class Projection(SchemaBase):
     
     parallel : float
     
-    precision : mapping
+    precision : Mapping(required=[length])
         Sets the threshold for the projection’s [adaptive 
         resampling](http://bl.ocks.org/mbostock/3795544) to the 
         specified value in pixels. This value corresponds to the 
@@ -4149,7 +4392,7 @@ class Projection(SchemaBase):
     
     ratio : float
     
-    rotate : list
+    rotate : List(float)
         Sets the projection’s three-axis rotation to the specified 
         angles, which must be a two- or three-element array of numbers 
         [`lambda`, `phi`, `gamma`] specifying the rotation angles in 
@@ -4187,11 +4430,13 @@ class Projection(SchemaBase):
 
 class ProjectionConfig(SchemaBase):
     """ProjectionConfig schema wrapper
+    
+    Mapping(required=[])
     Any property of Projection can be in config
     
     Attributes
     ----------
-    center : list
+    center : List(float)
         Sets the projection’s center to the specified center, a 
         two-element array of longitude and latitude in degrees.  
         __Default value:__ `[0, 0]`
@@ -4200,7 +4445,7 @@ class ProjectionConfig(SchemaBase):
         angle in degrees. If `null`, switches to 
         [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting 
         rather than small-circle clipping.
-    clipExtent : list
+    clipExtent : List(List(float))
         Sets the projection’s viewport clip extent to the specified 
         bounds in pixels. The extent bounds are specified as an array 
         `[[x0, y0], [x1, y1]]`, where `x0` is the left-side of the 
@@ -4216,7 +4461,7 @@ class ProjectionConfig(SchemaBase):
     
     parallel : float
     
-    precision : mapping
+    precision : Mapping(required=[length])
         Sets the threshold for the projection’s [adaptive 
         resampling](http://bl.ocks.org/mbostock/3795544) to the 
         specified value in pixels. This value corresponds to the 
@@ -4228,7 +4473,7 @@ class ProjectionConfig(SchemaBase):
     
     ratio : float
     
-    rotate : list
+    rotate : List(float)
         Sets the projection’s three-axis rotation to the specified 
         angles, which must be a two- or three-element array of numbers 
         [`lambda`, `phi`, `gamma`] specifying the rotation angles in 
@@ -4266,7 +4511,13 @@ class ProjectionConfig(SchemaBase):
 
 
 class ProjectionType(SchemaBase):
-    """ProjectionType schema wrapper"""
+    """ProjectionType schema wrapper
+    
+    enum('albers', 'albersUsa', 'azimuthalEqualArea', 
+    'azimuthalEquidistant', 'conicConformal', 'conicEqualArea', 
+    'conicEquidistant', 'equirectangular', 'gnomonic', 'mercator', 
+    'orthographic', 'stereographic', 'transverseMercator')
+    """
     _schema = {'$ref': '#/definitions/ProjectionType'}
     _rootschema = Root._schema
 
@@ -4277,19 +4528,21 @@ class ProjectionType(SchemaBase):
 class RangeConfig(SchemaBase):
     """RangeConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    category : anyOf(list, VgScheme)
+    category : anyOf(List(string), VgScheme)
         Default range for _nominal_ (categorical) fields.
-    diverging : anyOf(list, VgScheme)
+    diverging : anyOf(List(string), VgScheme)
         Default range for diverging _quantitative_ fields.
-    heatmap : anyOf(list, VgScheme)
+    heatmap : anyOf(List(string), VgScheme)
         Default range for _quantitative_ heatmaps.
-    ordinal : anyOf(list, VgScheme)
+    ordinal : anyOf(List(string), VgScheme)
         Default range for _ordinal_ fields.
-    ramp : anyOf(list, VgScheme)
+    ramp : anyOf(List(string), VgScheme)
         Default range for _quantitative_ and _temporal_ fields.
-    symbol : list
+    symbol : List(string)
         Default range palette for the `shape` channel.
     """
     _schema = {'$ref': '#/definitions/RangeConfig'}
@@ -4303,7 +4556,10 @@ class RangeConfig(SchemaBase):
 
 
 class RangeConfigValue(SchemaBase):
-    """RangeConfigValue schema wrapper"""
+    """RangeConfigValue schema wrapper
+    
+    anyOf(List(anyOf(float, string)), VgScheme, Mapping(required=[step]))
+    """
     _schema = {'$ref': '#/definitions/RangeConfigValue'}
     _rootschema = Root._schema
 
@@ -4314,11 +4570,13 @@ class RangeConfigValue(SchemaBase):
 class Repeat(SchemaBase):
     """Repeat schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    column : list
+    column : List(string)
         Horizontal repeated views.
-    row : list
+    row : List(string)
         Vertical repeated views.
     """
     _schema = {'$ref': '#/definitions/Repeat'}
@@ -4330,11 +4588,13 @@ class Repeat(SchemaBase):
 
 class RepeatRef(SchemaBase):
     """RepeatRef schema wrapper
+    
+    Mapping(required=[repeat])
     Reference to a repeated value.
     
     Attributes
     ----------
-    repeat : string
+    repeat : enum('row', 'column')
     
     """
     _schema = {'$ref': '#/definitions/RepeatRef'}
@@ -4346,6 +4606,8 @@ class RepeatRef(SchemaBase):
 
 class Resolve(SchemaBase):
     """Resolve schema wrapper
+    
+    Mapping(required=[])
     Defines how scales, axes, and legends from different specs should be 
     combined. Resolve is a mapping from `scale`, `axis`, and `legend` to a 
     mapping from channels to resolutions.
@@ -4367,7 +4629,10 @@ class Resolve(SchemaBase):
 
 
 class ResolveMode(SchemaBase):
-    """ResolveMode schema wrapper"""
+    """ResolveMode schema wrapper
+    
+    enum('independent', 'shared')
+    """
     _schema = {'$ref': '#/definitions/ResolveMode'}
     _rootschema = Root._schema
 
@@ -4378,6 +4643,8 @@ class ResolveMode(SchemaBase):
 class Scale(SchemaBase):
     """Scale schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
     base : float
@@ -4387,7 +4654,8 @@ class Scale(SchemaBase):
         either the minimum or maximum range value  __Default value:__ 
         derived from the [scale config](config.html#scale-config)'s 
         `clamp` (`true` by default).
-    domain : anyOf(list, list, list, list, string, SelectionDomain)
+    domain : anyOf(List(float), List(string), List(boolean), List(DateTime),
+     enum('unaggregated'), SelectionDomain)
         Customized domain values.  For _quantitative_ fields, `domain` 
         can take the form of a two-element array with minimum and 
         maximum values.  [Piecewise scales](scale.html#piecewise) can be
@@ -4421,7 +4689,8 @@ class Scale(SchemaBase):
         quantitative fields by default, you have to set the scale `type`
          to other quantitative scale type such as `"linear"` to 
         customize `interpolate`.
-    nice : anyOf(boolean, float, NiceTime, mapping)
+    nice : anyOf(boolean, float, NiceTime, Mapping(required=[interval, 
+    step]))
         Extending the domain so that it starts and ends on nice round 
         values. This method typically modifies the scale’s domain, and 
         may only extend the bounds to the nearest round value. Nicing is
@@ -4468,7 +4737,7 @@ class Scale(SchemaBase):
         lie in the range [0,1].  __Default value:__ derived from the 
         [scale config](scale.html#config)'s `bandPaddingOuter` for band 
         scales and `pointPadding` for point scales.
-    range : anyOf(list, list, string)
+    range : anyOf(List(float), List(string), string)
         The range of the scale. One of:  - A string indicating a 
         [pre-defined named scale range](scale.html#range-config) (e.g., 
         example, `"symbol"`, or `"diverging"`).  - For [continuous 
@@ -4561,6 +4830,8 @@ class Scale(SchemaBase):
 
 class ScaleConfig(SchemaBase):
     """ScaleConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -4665,7 +4936,11 @@ class ScaleConfig(SchemaBase):
 
 
 class ScaleInterpolate(SchemaBase):
-    """ScaleInterpolate schema wrapper"""
+    """ScaleInterpolate schema wrapper
+    
+    enum('rgb', 'lab', 'hcl', 'hsl', 'hsl-long', 'hcl-long', 'cubehelix', 
+    'cubehelix-long')
+    """
     _schema = {'$ref': '#/definitions/ScaleInterpolate'}
     _rootschema = Root._schema
 
@@ -4676,11 +4951,13 @@ class ScaleInterpolate(SchemaBase):
 class ScaleInterpolateParams(SchemaBase):
     """ScaleInterpolateParams schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    gamma : float
+    type : enum('rgb', 'cubehelix', 'cubehelix-long')
     
-    type : string
+    gamma : float
     
     """
     _schema = {'$ref': '#/definitions/ScaleInterpolateParams'}
@@ -4692,6 +4969,8 @@ class ScaleInterpolateParams(SchemaBase):
 
 class ScaleResolveMap(SchemaBase):
     """ScaleResolveMap schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -4719,7 +4998,11 @@ class ScaleResolveMap(SchemaBase):
 
 
 class ScaleType(SchemaBase):
-    """ScaleType schema wrapper"""
+    """ScaleType schema wrapper
+    
+    enum('linear', 'bin-linear', 'log', 'pow', 'sqrt', 'time', 'utc', 
+    'sequential', 'ordinal', 'bin-ordinal', 'point', 'band')
+    """
     _schema = {'$ref': '#/definitions/ScaleType'}
     _rootschema = Root._schema
 
@@ -4730,19 +5013,21 @@ class ScaleType(SchemaBase):
 class SchemeParams(SchemaBase):
     """SchemeParams schema wrapper
     
+    Mapping(required=[name])
+    
     Attributes
     ----------
-    extent : list
-        For sequential and diverging schemes only, determines the extent
-         of the color range to use. For example `[0.2, 1]` will rescale 
-        the color scheme such that color values in the range _[0, 0.2)_ 
-        are excluded from the scheme.
     name : string
         A color scheme name for sequential/ordinal scales (e.g., 
         `"category10"` or `"viridis"`).  For the full list of supported 
         scheme, please refer to the [Vega 
         Scheme](https://vega.github.io/vega/docs/schemes/#reference) 
         reference.
+    extent : List(float)
+        For sequential and diverging schemes only, determines the extent
+         of the color range to use. For example `[0.2, 1]` will rescale 
+        the color scheme such that color values in the range _[0, 0.2)_ 
+        are excluded from the scheme.
     """
     _schema = {'$ref': '#/definitions/SchemeParams'}
     _rootschema = Root._schema
@@ -4753,6 +5038,8 @@ class SchemeParams(SchemaBase):
 
 class SelectionConfig(SchemaBase):
     """SelectionConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -4785,7 +5072,10 @@ class SelectionConfig(SchemaBase):
 
 
 class SelectionDef(SchemaBase):
-    """SelectionDef schema wrapper"""
+    """SelectionDef schema wrapper
+    
+    anyOf(SingleSelection, MultiSelection, IntervalSelection)
+    """
     _schema = {'$ref': '#/definitions/SelectionDef'}
     _rootschema = Root._schema
 
@@ -4794,7 +5084,10 @@ class SelectionDef(SchemaBase):
 
 
 class SelectionDomain(SchemaBase):
-    """SelectionDomain schema wrapper"""
+    """SelectionDomain schema wrapper
+    
+    anyOf(Mapping(required=[selection]), Mapping(required=[selection]))
+    """
     _schema = {'$ref': '#/definitions/SelectionDomain'}
     _rootschema = Root._schema
 
@@ -4804,6 +5097,8 @@ class SelectionDomain(SchemaBase):
 
 class SelectionPredicate(SchemaBase):
     """SelectionPredicate schema wrapper
+    
+    Mapping(required=[selection])
     
     Attributes
     ----------
@@ -4818,7 +5113,10 @@ class SelectionPredicate(SchemaBase):
 
 
 class SelectionResolution(SchemaBase):
-    """SelectionResolution schema wrapper"""
+    """SelectionResolution schema wrapper
+    
+    enum('global', 'union', 'intersect')
+    """
     _schema = {'$ref': '#/definitions/SelectionResolution'}
     _rootschema = Root._schema
 
@@ -4827,7 +5125,11 @@ class SelectionResolution(SchemaBase):
 
 
 class SingleDefChannel(SchemaBase):
-    """SingleDefChannel schema wrapper"""
+    """SingleDefChannel schema wrapper
+    
+    enum('x', 'y', 'x2', 'y2', 'row', 'column', 'size', 'shape', 'color', 
+    'opacity', 'text', 'tooltip', 'href')
+    """
     _schema = {'$ref': '#/definitions/SingleDefChannel'}
     _rootschema = Root._schema
 
@@ -4838,9 +5140,13 @@ class SingleDefChannel(SchemaBase):
 class SingleSelection(SchemaBase):
     """SingleSelection schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
-    bind : anyOf(VgBinding, mapping)
+    type : enum('single')
+    
+    bind : anyOf(VgBinding, Mapping(required=[]))
         Establish a two-way binding between a single selection and input
          elements (also known as dynamic query widgets). A binding takes
          the form of Vega's [input element binding 
@@ -4848,14 +5154,14 @@ class SingleSelection(SchemaBase):
         can be a mapping between projected field/encodings and binding 
         definitions.  See the [bind transform](bind.html) documentation 
         for more information.
-    empty : string
+    empty : enum('all', 'none')
         By default, all data values are considered to lie within an 
         empty selection. When set to `none`, empty selections contain no
          data values.
-    encodings : list
+    encodings : List(SingleDefChannel)
         An array of encoding channels. The corresponding data field 
         values must match for a data tuple to fall within the selection.
-    fields : list
+    fields : List(string)
         An array of field names whose values must match for a data tuple
          to fall within the selection.
     nearest : boolean
@@ -4873,8 +5179,6 @@ class SingleSelection(SchemaBase):
         With layered and multi-view displays, a strategy that determines
          how selections' data queries are resolved when applied in a 
         filter transform, conditional encoding rule, or scale domain.
-    type : string
-    
     """
     _schema = {'$ref': '#/definitions/SingleSelection'}
     _rootschema = Root._schema
@@ -4891,9 +5195,11 @@ class SingleSelection(SchemaBase):
 class SingleSelectionConfig(SchemaBase):
     """SingleSelectionConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
-    bind : anyOf(VgBinding, mapping)
+    bind : anyOf(VgBinding, Mapping(required=[]))
         Establish a two-way binding between a single selection and input
          elements (also known as dynamic query widgets). A binding takes
          the form of Vega's [input element binding 
@@ -4901,14 +5207,14 @@ class SingleSelectionConfig(SchemaBase):
         can be a mapping between projected field/encodings and binding 
         definitions.  See the [bind transform](bind.html) documentation 
         for more information.
-    empty : string
+    empty : enum('all', 'none')
         By default, all data values are considered to lie within an 
         empty selection. When set to `none`, empty selections contain no
          data values.
-    encodings : list
+    encodings : List(SingleDefChannel)
         An array of encoding channels. The corresponding data field 
         values must match for a data tuple to fall within the selection.
-    fields : list
+    fields : List(string)
         An array of field names whose values must match for a data tuple
          to fall within the selection.
     nearest : boolean
@@ -4940,7 +5246,10 @@ class SingleSelectionConfig(SchemaBase):
 
 
 class SingleTimeUnit(SchemaBase):
-    """SingleTimeUnit schema wrapper"""
+    """SingleTimeUnit schema wrapper
+    
+    anyOf(LocalSingleTimeUnit, UtcSingleTimeUnit)
+    """
     _schema = {'$ref': '#/definitions/SingleTimeUnit'}
     _rootschema = Root._schema
 
@@ -4951,12 +5260,10 @@ class SingleTimeUnit(SchemaBase):
 class SortField(SchemaBase):
     """SortField schema wrapper
     
+    Mapping(required=[op])
+    
     Attributes
     ----------
-    field : anyOf(string, RepeatRef)
-        The data [field](field.html) to sort by.  __Default value:__ If 
-        unspecified, defaults to the field specified in the outer data 
-        reference.
     op : AggregateOp
         An [aggregate operation](aggregate.html#ops) to perform on the 
         field prior to sorting (e.g., `"count"`, `"mean"` and 
@@ -4965,6 +5272,10 @@ class SortField(SchemaBase):
         objects will be aggregated, grouped by the encoded data field.  
         For a full list of operations, please see the documentation for 
         [aggregate](aggregate.html#ops).
+    field : anyOf(string, RepeatRef)
+        The data [field](field.html) to sort by.  __Default value:__ If 
+        unspecified, defaults to the field specified in the outer data 
+        reference.
     order : SortOrder
         The sort order. One of `"ascending"` (default) or 
         `"descending"`.
@@ -4977,7 +5288,10 @@ class SortField(SchemaBase):
 
 
 class SortOrder(SchemaBase):
-    """SortOrder schema wrapper"""
+    """SortOrder schema wrapper
+    
+    enum('ascending', 'descending', None)
+    """
     _schema = {'$ref': '#/definitions/SortOrder'}
     _rootschema = Root._schema
 
@@ -4986,7 +5300,10 @@ class SortOrder(SchemaBase):
 
 
 class StackOffset(SchemaBase):
-    """StackOffset schema wrapper"""
+    """StackOffset schema wrapper
+    
+    enum('zero', 'center', 'normalize')
+    """
     _schema = {'$ref': '#/definitions/StackOffset'}
     _rootschema = Root._schema
 
@@ -4995,7 +5312,10 @@ class StackOffset(SchemaBase):
 
 
 class StyleConfigIndex(SchemaBase):
-    """StyleConfigIndex schema wrapper"""
+    """StyleConfigIndex schema wrapper
+    
+    Mapping(required=[])
+    """
     _schema = {'$ref': '#/definitions/StyleConfigIndex'}
     _rootschema = Root._schema
 
@@ -5005,6 +5325,8 @@ class StyleConfigIndex(SchemaBase):
 
 class TextConfig(SchemaBase):
     """TextConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -5022,7 +5344,13 @@ class TextConfig(SchemaBase):
         value:__ <span style="color: #4682b4;">&#9632;</span> 
         `"#4682b4"`  __Note:__ This property cannot be used in a [style 
         config](mark.html#style-config).
-    cursor : string
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 
+    'pointer', 'progress', 'wait', 'cell', 'crosshair', 'text', 
+    'vertical-text', 'alias', 'copy', 'move', 'no-drop', 'not-allowed', 
+    'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 
+    'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 
+    'nesw-resize', 'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 
+    'zoom-in', 'zoom-out', 'grab', 'grabbing')
         The mouse cursor used over the mark. Any valid [CSS cursor 
         type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
          can be used.
@@ -5111,7 +5439,7 @@ class TextConfig(SchemaBase):
     stroke : string
         Default Stroke Color.  This has higher precedence than 
         config.color  __Default value:__ (None)
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke, space lengths for creating 
         dashed or dotted lines.
     strokeDashOffset : float
@@ -5168,6 +5496,8 @@ class TextConfig(SchemaBase):
 class TickConfig(SchemaBase):
     """TickConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
     align : HorizontalAlign
@@ -5186,7 +5516,13 @@ class TickConfig(SchemaBase):
         value:__ <span style="color: #4682b4;">&#9632;</span> 
         `"#4682b4"`  __Note:__ This property cannot be used in a [style 
         config](mark.html#style-config).
-    cursor : string
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 
+    'pointer', 'progress', 'wait', 'cell', 'crosshair', 'text', 
+    'vertical-text', 'alias', 'copy', 'move', 'no-drop', 'not-allowed', 
+    'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 
+    'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 
+    'nesw-resize', 'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 
+    'zoom-in', 'zoom-out', 'grab', 'grabbing')
         The mouse cursor used over the mark. Any valid [CSS cursor 
         type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
          can be used.
@@ -5273,7 +5609,7 @@ class TickConfig(SchemaBase):
     stroke : string
         Default Stroke Color.  This has higher precedence than 
         config.color  __Default value:__ (None)
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke, space lengths for creating 
         dashed or dotted lines.
     strokeDashOffset : float
@@ -5331,7 +5667,10 @@ class TickConfig(SchemaBase):
 
 
 class TimeUnit(SchemaBase):
-    """TimeUnit schema wrapper"""
+    """TimeUnit schema wrapper
+    
+    anyOf(SingleTimeUnit, MultiTimeUnit)
+    """
     _schema = {'$ref': '#/definitions/TimeUnit'}
     _rootschema = Root._schema
 
@@ -5342,10 +5681,10 @@ class TimeUnit(SchemaBase):
 class TimeUnitTransform(SchemaBase):
     """TimeUnitTransform schema wrapper
     
+    Mapping(required=[timeUnit, field, as])
+    
     Attributes
     ----------
-    as : string
-        The output field to write the timeUnit value.
     field : string
         The data field to apply time unit.
     timeUnit : TimeUnit
@@ -5360,7 +5699,10 @@ class TimeUnitTransform(SchemaBase):
 
 
 class TitleOrient(SchemaBase):
-    """TitleOrient schema wrapper"""
+    """TitleOrient schema wrapper
+    
+    enum('top', 'bottom', 'left', 'right')
+    """
     _schema = {'$ref': '#/definitions/TitleOrient'}
     _rootschema = Root._schema
 
@@ -5371,8 +5713,12 @@ class TitleOrient(SchemaBase):
 class TitleParams(SchemaBase):
     """TitleParams schema wrapper
     
+    Mapping(required=[text])
+    
     Attributes
     ----------
+    text : string
+        The title text.
     anchor : Anchor
         The anchor position for placing the title. One of `"start"`, 
         `"middle"`, or `"end"`. For example, with an orientation of top 
@@ -5390,11 +5736,9 @@ class TitleParams(SchemaBase):
     orient : TitleOrient
         The orientation of the title relative to the chart. One of 
         `"top"` (the default), `"bottom"`, `"left"`, or `"right"`.
-    style : anyOf(string, list)
+    style : anyOf(string, List(string))
         A [mark style property](config.html#style) to apply to the title
          text mark.  __Default value:__ `"group-title"`.
-    text : string
-        The title text.
     """
     _schema = {'$ref': '#/definitions/TitleParams'}
     _rootschema = Root._schema
@@ -5408,14 +5752,15 @@ class TitleParams(SchemaBase):
 class TopLevelFacetedUnitSpec(SchemaBase):
     """TopLevelFacetedUnitSpec schema wrapper
     
+    Mapping(required=[mark])
+    
     Attributes
     ----------
-    $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
-        specification. Unless you have a reason to change this, use 
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
-        `$schema` property allows automatic validation and autocomplete 
-        in editors that support JSON schema.
+    mark : AnyMark
+        A string describing the mark type (one of `"bar"`, `"circle"`, 
+        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
+         `"geoshape"`, and `"text"`) or a [mark definition 
+        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a 
         string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
@@ -5461,11 +5806,6 @@ class TopLevelFacetedUnitSpec(SchemaBase):
          documentation for [width and 
         height](https://vega.github.io/vega-lite/docs/size.html) 
         contains more examples.
-    mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, 
-        `"square"`, `"tick"`, `"line"`, * `"area"`, `"point"`, `"rule"`,
-         `"geoshape"`, and `"text"`) or a [mark definition 
-        object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     name : string
         Name of the visualization for later reference.
     padding : Padding
@@ -5480,11 +5820,11 @@ class TopLevelFacetedUnitSpec(SchemaBase):
         with `"geoshape"` marks and `"point"` or `"line"` marks that 
         have a channel (one or more of `"X"`, `"X2"`, `"Y"`, `"Y2"`) 
         with type `"latitude"`, or `"longitude"`.
-    selection : mapping
+    selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     width : float
@@ -5540,14 +5880,15 @@ class TopLevelFacetedUnitSpec(SchemaBase):
 class TopLevelFacetSpec(SchemaBase):
     """TopLevelFacetSpec schema wrapper
     
+    Mapping(required=[facet, spec])
+    
     Attributes
     ----------
-    $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
-        specification. Unless you have a reason to change this, use 
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
-        `$schema` property allows automatic validation and autocomplete 
-        in editors that support JSON schema.
+    facet : FacetMapping
+        An object that describes mappings between `row` and `column` 
+        channels and their field definitions.
+    spec : anyOf(LayerSpec, CompositeUnitSpec)
+        A specification of the view that gets faceted.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a 
         string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
@@ -5565,9 +5906,6 @@ class TopLevelFacetSpec(SchemaBase):
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
-    facet : FacetMapping
-        An object that describes mappings between `row` and `column` 
-        channels and their field definitions.
     name : string
         Name of the visualization for later reference.
     padding : Padding
@@ -5579,11 +5917,9 @@ class TopLevelFacetSpec(SchemaBase):
         __Default value__: `5`
     resolve : Resolve
         Scale, axis, and legend resolutions for facets.
-    spec : anyOf(LayerSpec, CompositeUnitSpec)
-        A specification of the view that gets faceted.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     """
@@ -5607,14 +5943,12 @@ class TopLevelFacetSpec(SchemaBase):
 class TopLevelHConcatSpec(SchemaBase):
     """TopLevelHConcatSpec schema wrapper
     
+    Mapping(required=[hconcat])
+    
     Attributes
     ----------
-    $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
-        specification. Unless you have a reason to change this, use 
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
-        `$schema` property allows automatic validation and autocomplete 
-        in editors that support JSON schema.
+    hconcat : List(Spec)
+        A list of views that should be concatenated and put into a row.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a 
         string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
@@ -5632,8 +5966,6 @@ class TopLevelHConcatSpec(SchemaBase):
         An object describing the data source
     description : string
         Description of this mark for commenting purpose.
-    hconcat : list
-        A list of views that should be concatenated and put into a row.
     name : string
         Name of the visualization for later reference.
     padding : Padding
@@ -5648,7 +5980,7 @@ class TopLevelHConcatSpec(SchemaBase):
         concatenated charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     """
@@ -5672,14 +6004,14 @@ class TopLevelHConcatSpec(SchemaBase):
 class TopLevelLayerSpec(SchemaBase):
     """TopLevelLayerSpec schema wrapper
     
+    Mapping(required=[layer])
+    
     Attributes
     ----------
-    $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
-        specification. Unless you have a reason to change this, use 
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
-        `$schema` property allows automatic validation and autocomplete 
-        in editors that support JSON schema.
+    layer : List(anyOf(LayerSpec, CompositeUnitSpec))
+        Layer or single view specifications to be layered.  __Note__: 
+        Specifications inside `layer` cannot use `row` and `column` 
+        channels as layering facet specifications is not allowed.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a 
         string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
@@ -5722,10 +6054,6 @@ class TopLevelLayerSpec(SchemaBase):
          documentation for [width and 
         height](https://vega.github.io/vega-lite/docs/size.html) 
         contains more examples.
-    layer : list
-        Layer or single view specifications to be layered.  __Note__: 
-        Specifications inside `layer` cannot use `row` and `column` 
-        channels as layering facet specifications is not allowed.
     name : string
         Name of the visualization for later reference.
     padding : Padding
@@ -5739,7 +6067,7 @@ class TopLevelLayerSpec(SchemaBase):
         Scale, axis, and legend resolutions for layers.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     width : float
@@ -5791,14 +6119,15 @@ class TopLevelLayerSpec(SchemaBase):
 class TopLevelRepeatSpec(SchemaBase):
     """TopLevelRepeatSpec schema wrapper
     
+    Mapping(required=[repeat, spec])
+    
     Attributes
     ----------
-    $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
-        specification. Unless you have a reason to change this, use 
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
-        `$schema` property allows automatic validation and autocomplete 
-        in editors that support JSON schema.
+    repeat : Repeat
+        An object that describes what fields should be repeated into 
+        views that are laid out as a `row` or `column`.
+    spec : Spec
+    
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a 
         string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
@@ -5825,16 +6154,11 @@ class TopLevelRepeatSpec(SchemaBase):
         have the format `{"left": 5, "top": 5, "right": 5, "bottom": 5}`
          to specify padding for each side of the visualization.  
         __Default value__: `5`
-    repeat : Repeat
-        An object that describes what fields should be repeated into 
-        views that are laid out as a `row` or `column`.
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
-    spec : Spec
-    
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
     """
@@ -5858,14 +6182,13 @@ class TopLevelRepeatSpec(SchemaBase):
 class TopLevelVConcatSpec(SchemaBase):
     """TopLevelVConcatSpec schema wrapper
     
+    Mapping(required=[vconcat])
+    
     Attributes
     ----------
-    $schema : string
-        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite 
-        specification. Unless you have a reason to change this, use 
-        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the 
-        `$schema` property allows automatic validation and autocomplete 
-        in editors that support JSON schema.
+    vconcat : List(Spec)
+        A list of views that should be concatenated and put into a 
+        column.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a 
         string, should be one of `"pad"`, `"fit"` or `"none"`. Object 
@@ -5897,12 +6220,9 @@ class TopLevelVConcatSpec(SchemaBase):
         charts.
     title : anyOf(string, TitleParams)
         Title for the plot.
-    transform : list
+    transform : List(Transform)
         An array of data transformations such as filter and new field 
         calculation.
-    vconcat : list
-        A list of views that should be concatenated and put into a 
-        column.
     """
     _schema = {'$ref': '#/definitions/TopLevel<VConcatSpec>'}
     _rootschema = Root._schema
@@ -5922,7 +6242,11 @@ class TopLevelVConcatSpec(SchemaBase):
 
 
 class TopLevelExtendedSpec(SchemaBase):
-    """TopLevelExtendedSpec schema wrapper"""
+    """TopLevelExtendedSpec schema wrapper
+    
+    anyOf(TopLevelFacetedUnitSpec, TopLevelLayerSpec, TopLevelFacetSpec, 
+    TopLevelRepeatSpec, TopLevelVConcatSpec, TopLevelHConcatSpec)
+    """
     _schema = {'$ref': '#/definitions/TopLevelExtendedSpec'}
     _rootschema = Root._schema
 
@@ -5932,6 +6256,8 @@ class TopLevelExtendedSpec(SchemaBase):
 
 class TopoDataFormat(SchemaBase):
     """TopoDataFormat schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -5950,7 +6276,7 @@ class TopoDataFormat(SchemaBase):
         more efficiently drawing borders or other geographic elements 
         that you do not need to associate with specific regions such as 
         individual countries, states or counties.
-    parse : anyOf(string, mapping)
+    parse : anyOf(enum('auto'), Mapping(required=[]))
         If set to auto (the default), perform automatic type inference 
         to determine the desired data types. Alternatively, a parsing 
         directive object can be provided for explicit data types. Each 
@@ -5965,7 +6291,7 @@ class TopoDataFormat(SchemaBase):
         syntax](https://github.com/d3/d3-time-format#locale_format). UTC
          date format parsing is supported similarly (e.g., `{foo: 
         'utc:"%m%d%Y"'}`). See more about [UTC time](timeunit.html#utc)
-    type : string
+    type : enum('topojson')
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default 
         format type is determined by the extension of the file URL. If 
         no extension is detected, `"json"` will be used by default.
@@ -5980,7 +6306,11 @@ class TopoDataFormat(SchemaBase):
 
 
 class Transform(SchemaBase):
-    """Transform schema wrapper"""
+    """Transform schema wrapper
+    
+    anyOf(FilterTransform, CalculateTransform, LookupTransform, 
+    BinTransform, TimeUnitTransform, AggregateTransform)
+    """
     _schema = {'$ref': '#/definitions/Transform'}
     _rootschema = Root._schema
 
@@ -5990,6 +6320,8 @@ class Transform(SchemaBase):
 
 class Type(SchemaBase):
     """Type schema wrapper
+    
+    anyOf(BasicType, GeoType)
     Constants and utilities for data type  
      Data type based on level of measurement 
     """
@@ -6003,13 +6335,15 @@ class Type(SchemaBase):
 class UrlData(SchemaBase):
     """UrlData schema wrapper
     
+    Mapping(required=[url])
+    
     Attributes
     ----------
-    format : DataFormat
-        An object that specifies the format for parsing the data file.
     url : string
         An URL from which to load the data set. Use the `format.type` 
         property to ensure the loaded data is correctly parsed.
+    format : DataFormat
+        An object that specifies the format for parsing the data file.
     """
     _schema = {'$ref': '#/definitions/UrlData'}
     _rootschema = Root._schema
@@ -6019,7 +6353,14 @@ class UrlData(SchemaBase):
 
 
 class UtcMultiTimeUnit(SchemaBase):
-    """UtcMultiTimeUnit schema wrapper"""
+    """UtcMultiTimeUnit schema wrapper
+    
+    enum('utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 
+    'utcyearmonthdate', 'utcyearmonthdatehours', 
+    'utcyearmonthdatehoursminutes', 'utcyearmonthdatehoursminutesseconds', 
+    'utcquartermonth', 'utcmonthdate', 'utchoursminutes', 
+    'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds')
+    """
     _schema = {'$ref': '#/definitions/UtcMultiTimeUnit'}
     _rootschema = Root._schema
 
@@ -6028,7 +6369,11 @@ class UtcMultiTimeUnit(SchemaBase):
 
 
 class UtcSingleTimeUnit(SchemaBase):
-    """UtcSingleTimeUnit schema wrapper"""
+    """UtcSingleTimeUnit schema wrapper
+    
+    enum('utcyear', 'utcquarter', 'utcmonth', 'utcday', 'utcdate', 
+    'utchours', 'utcminutes', 'utcseconds', 'utcmilliseconds')
+    """
     _schema = {'$ref': '#/definitions/UtcSingleTimeUnit'}
     _rootschema = Root._schema
 
@@ -6038,6 +6383,8 @@ class UtcSingleTimeUnit(SchemaBase):
 
 class ValueDef(SchemaBase):
     """ValueDef schema wrapper
+    
+    Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -6055,6 +6402,8 @@ class ValueDef(SchemaBase):
 
 class ValueDefWithCondition(SchemaBase):
     """ValueDefWithCondition schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -6063,7 +6412,8 @@ class ValueDefWithCondition(SchemaBase):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<FieldDef>, Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -6079,6 +6429,8 @@ class ValueDefWithCondition(SchemaBase):
 
 class MarkPropValueDefWithCondition(SchemaBase):
     """MarkPropValueDefWithCondition schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -6087,8 +6439,8 @@ class MarkPropValueDefWithCondition(SchemaBase):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -6104,6 +6456,8 @@ class MarkPropValueDefWithCondition(SchemaBase):
 
 class TextValueDefWithCondition(SchemaBase):
     """TextValueDefWithCondition schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -6112,8 +6466,8 @@ class TextValueDefWithCondition(SchemaBase):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalTextFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -6128,7 +6482,10 @@ class TextValueDefWithCondition(SchemaBase):
 
 
 class VerticalAlign(SchemaBase):
-    """VerticalAlign schema wrapper"""
+    """VerticalAlign schema wrapper
+    
+    enum('top', 'middle', 'bottom')
+    """
     _schema = {'$ref': '#/definitions/VerticalAlign'}
     _rootschema = Root._schema
 
@@ -6138,6 +6495,8 @@ class VerticalAlign(SchemaBase):
 
 class VgAxisConfig(SchemaBase):
     """VgAxisConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -6163,7 +6522,7 @@ class VgAxisConfig(SchemaBase):
         `false`.
     gridColor : string
         Color of gridlines.
-    gridDash : list
+    gridDash : List(float)
         The offset (in pixels) into which to begin drawing with the grid
          dash array.
     gridOpacity : float
@@ -6204,7 +6563,7 @@ class VgAxisConfig(SchemaBase):
         The font size of the label, in pixels.
     labelLimit : float
         Maximum allowed pixel width of axis tick labels.
-    labelOverlap : anyOf(boolean, string, string)
+    labelOverlap : anyOf(boolean, enum('parity'), enum('greedy'))
         The strategy to use for resolving overlap of axis labels. If 
         `false` (the default), no overlap reduction is attempted. If set
          to `true` or `"parity"`, a strategy of removing every other 
@@ -6315,7 +6674,11 @@ class VgAxisConfig(SchemaBase):
 
 
 class VgBinding(SchemaBase):
-    """VgBinding schema wrapper"""
+    """VgBinding schema wrapper
+    
+    anyOf(VgCheckboxBinding, VgRadioBinding, VgSelectBinding, 
+    VgRangeBinding, VgGenericBinding)
+    """
     _schema = {'$ref': '#/definitions/VgBinding'}
     _rootschema = Root._schema
 
@@ -6326,11 +6689,13 @@ class VgBinding(SchemaBase):
 class VgCheckboxBinding(SchemaBase):
     """VgCheckboxBinding schema wrapper
     
+    Mapping(required=[input])
+    
     Attributes
     ----------
-    element : string
+    input : enum('checkbox')
     
-    input : string
+    element : string
     
     """
     _schema = {'$ref': '#/definitions/VgCheckboxBinding'}
@@ -6341,7 +6706,10 @@ class VgCheckboxBinding(SchemaBase):
 
 
 class VgEventStream(SchemaBase):
-    """VgEventStream schema wrapper"""
+    """VgEventStream schema wrapper
+    
+    Mapping(required=[])
+    """
     _schema = {'$ref': '#/definitions/VgEventStream'}
     _rootschema = Root._schema
 
@@ -6352,11 +6720,13 @@ class VgEventStream(SchemaBase):
 class VgGenericBinding(SchemaBase):
     """VgGenericBinding schema wrapper
     
+    Mapping(required=[input])
+    
     Attributes
     ----------
-    element : string
-    
     input : string
+    
+    element : string
     
     """
     _schema = {'$ref': '#/definitions/VgGenericBinding'}
@@ -6369,6 +6739,8 @@ class VgGenericBinding(SchemaBase):
 class VgMarkConfig(SchemaBase):
     """VgMarkConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
     align : HorizontalAlign
@@ -6379,7 +6751,13 @@ class VgMarkConfig(SchemaBase):
     baseline : VerticalAlign
         The vertical alignment of the text. One of `"top"`, `"middle"`, 
         `"bottom"`.  __Default value:__ `"middle"`
-    cursor : string
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 
+    'pointer', 'progress', 'wait', 'cell', 'crosshair', 'text', 
+    'vertical-text', 'alias', 'copy', 'move', 'no-drop', 'not-allowed', 
+    'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 
+    'se-resize', 'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 
+    'nesw-resize', 'nwse-resize', 'col-resize', 'row-resize', 'all-scroll', 
+    'zoom-in', 'zoom-out', 'grab', 'grabbing')
         The mouse cursor used over the mark. Any valid [CSS cursor 
         type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values)
          can be used.
@@ -6459,7 +6837,7 @@ class VgMarkConfig(SchemaBase):
     stroke : string
         Default Stroke Color.  This has higher precedence than 
         config.color  __Default value:__ (None)
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke, space lengths for creating 
         dashed or dotted lines.
     strokeDashOffset : float
@@ -6512,7 +6890,13 @@ class VgMarkConfig(SchemaBase):
 
 
 class VgProjectionType(SchemaBase):
-    """VgProjectionType schema wrapper"""
+    """VgProjectionType schema wrapper
+    
+    enum('albers', 'albersUsa', 'azimuthalEqualArea', 
+    'azimuthalEquidistant', 'conicConformal', 'conicEqualArea', 
+    'conicEquidistant', 'equirectangular', 'gnomonic', 'mercator', 
+    'orthographic', 'stereographic', 'transverseMercator')
+    """
     _schema = {'$ref': '#/definitions/VgProjectionType'}
     _rootschema = Root._schema
 
@@ -6523,13 +6907,15 @@ class VgProjectionType(SchemaBase):
 class VgRadioBinding(SchemaBase):
     """VgRadioBinding schema wrapper
     
+    Mapping(required=[input, options])
+    
     Attributes
     ----------
+    input : enum('radio')
+    
+    options : List(string)
+    
     element : string
-    
-    input : string
-    
-    options : list
     
     """
     _schema = {'$ref': '#/definitions/VgRadioBinding'}
@@ -6543,11 +6929,13 @@ class VgRadioBinding(SchemaBase):
 class VgRangeBinding(SchemaBase):
     """VgRangeBinding schema wrapper
     
+    Mapping(required=[input])
+    
     Attributes
     ----------
-    element : string
+    input : enum('range')
     
-    input : string
+    element : string
     
     max : float
     
@@ -6568,13 +6956,15 @@ class VgRangeBinding(SchemaBase):
 class VgScheme(SchemaBase):
     """VgScheme schema wrapper
     
+    Mapping(required=[scheme])
+    
     Attributes
     ----------
+    scheme : string
+    
     count : float
     
-    extent : list
-    
-    scheme : string
+    extent : List(float)
     
     """
     _schema = {'$ref': '#/definitions/VgScheme'}
@@ -6588,13 +6978,15 @@ class VgScheme(SchemaBase):
 class VgSelectBinding(SchemaBase):
     """VgSelectBinding schema wrapper
     
+    Mapping(required=[input, options])
+    
     Attributes
     ----------
+    input : enum('select')
+    
+    options : List(string)
+    
     element : string
-    
-    input : string
-    
-    options : list
     
     """
     _schema = {'$ref': '#/definitions/VgSelectBinding'}
@@ -6607,6 +6999,8 @@ class VgSelectBinding(SchemaBase):
 
 class VgTitleConfig(SchemaBase):
     """VgTitleConfig schema wrapper
+    
+    Mapping(required=[])
     
     Attributes
     ----------
@@ -6657,6 +7051,8 @@ class VgTitleConfig(SchemaBase):
 class ViewConfig(SchemaBase):
     """ViewConfig schema wrapper
     
+    Mapping(required=[])
+    
     Attributes
     ----------
     clip : boolean
@@ -6672,7 +7068,7 @@ class ViewConfig(SchemaBase):
         y-scale with `rangeStep` = `null`.  __Default value:__ `200`
     stroke : string
         The stroke color.  __Default value:__ (none)
-    strokeDash : list
+    strokeDash : List(float)
         An array of alternating stroke, space lengths for creating 
         dashed or dotted lines.  __Default value:__ (none)
     strokeDashOffset : float

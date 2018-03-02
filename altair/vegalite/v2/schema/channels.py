@@ -1,6 +1,5 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-# 2018-03-01 12:54
 
 import six
 from . import core
@@ -10,6 +9,8 @@ from altair.utils import parse_shorthand, parse_shorthand_plus_data
 
 class Color(core.MarkPropFieldDefWithCondition):
     """Color schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -19,6 +20,13 @@ class Color(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -30,7 +38,7 @@ class Color(core.MarkPropFieldDefWithCondition):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -76,13 +84,6 @@ class Color(core.MarkPropFieldDefWithCondition):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -112,6 +113,8 @@ class Color(core.MarkPropFieldDefWithCondition):
 
 class ColorValue(core.MarkPropValueDefWithCondition):
     """ColorValue schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -120,8 +123,8 @@ class ColorValue(core.MarkPropValueDefWithCondition):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -152,8 +155,17 @@ class ColorValue(core.MarkPropValueDefWithCondition):
 class Column(core.FacetFieldDef):
     """Column schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -188,13 +200,6 @@ class Column(core.FacetFieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -222,11 +227,20 @@ class Column(core.FacetFieldDef):
 
 class Detail(core.FieldDef):
     """Detail schema wrapper
+    
+    Mapping(required=[type])
     Definition object for a data field, its type and transformation of an 
     encoding channel.
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -256,13 +270,6 @@ class Detail(core.FieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -289,6 +296,8 @@ class Detail(core.FieldDef):
 
 class Href(core.FieldDefWithCondition):
     """Href schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -298,6 +307,13 @@ class Href(core.FieldDefWithCondition):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -309,7 +325,7 @@ class Href(core.FieldDefWithCondition):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -334,13 +350,6 @@ class Href(core.FieldDefWithCondition):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -368,6 +377,8 @@ class Href(core.FieldDefWithCondition):
 
 class HrefValue(core.ValueDefWithCondition):
     """HrefValue schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -376,7 +387,8 @@ class HrefValue(core.ValueDefWithCondition):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<FieldDef>, Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -406,6 +418,8 @@ class HrefValue(core.ValueDefWithCondition):
 
 class Opacity(core.MarkPropFieldDefWithCondition):
     """Opacity schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -415,6 +429,13 @@ class Opacity(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -426,7 +447,7 @@ class Opacity(core.MarkPropFieldDefWithCondition):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -472,13 +493,6 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -508,6 +522,8 @@ class Opacity(core.MarkPropFieldDefWithCondition):
 
 class OpacityValue(core.MarkPropValueDefWithCondition):
     """OpacityValue schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -516,8 +532,8 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -548,8 +564,17 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
 class Order(core.OrderFieldDef):
     """Order schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -582,13 +607,6 @@ class Order(core.OrderFieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -616,8 +634,17 @@ class Order(core.OrderFieldDef):
 class Row(core.FacetFieldDef):
     """Row schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -652,13 +679,6 @@ class Row(core.FacetFieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -686,6 +706,8 @@ class Row(core.FacetFieldDef):
 
 class Shape(core.MarkPropFieldDefWithCondition):
     """Shape schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -695,6 +717,13 @@ class Shape(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -706,7 +735,7 @@ class Shape(core.MarkPropFieldDefWithCondition):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -752,13 +781,6 @@ class Shape(core.MarkPropFieldDefWithCondition):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -788,6 +810,8 @@ class Shape(core.MarkPropFieldDefWithCondition):
 
 class ShapeValue(core.MarkPropValueDefWithCondition):
     """ShapeValue schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -796,8 +820,8 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -827,6 +851,8 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
 
 class Size(core.MarkPropFieldDefWithCondition):
     """Size schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -836,6 +862,13 @@ class Size(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -847,7 +880,7 @@ class Size(core.MarkPropFieldDefWithCondition):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -893,13 +926,6 @@ class Size(core.MarkPropFieldDefWithCondition):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -928,6 +954,8 @@ class Size(core.MarkPropFieldDefWithCondition):
 
 class SizeValue(core.MarkPropValueDefWithCondition):
     """SizeValue schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -936,8 +964,8 @@ class SizeValue(core.MarkPropValueDefWithCondition):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<MarkPropFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -967,6 +995,8 @@ class SizeValue(core.MarkPropValueDefWithCondition):
 
 class Text(core.TextFieldDefWithCondition):
     """Text schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -976,6 +1006,13 @@ class Text(core.TextFieldDefWithCondition):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -987,7 +1024,7 @@ class Text(core.TextFieldDefWithCondition):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -1017,13 +1054,6 @@ class Text(core.TextFieldDefWithCondition):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1051,6 +1081,8 @@ class Text(core.TextFieldDefWithCondition):
 
 class TextValue(core.TextValueDefWithCondition):
     """TextValue schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -1059,8 +1091,8 @@ class TextValue(core.TextValueDefWithCondition):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalTextFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -1090,6 +1122,8 @@ class TextValue(core.TextValueDefWithCondition):
 
 class Tooltip(core.TextFieldDefWithCondition):
     """Tooltip schema wrapper
+    
+    Mapping(required=[type])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1099,6 +1133,13 @@ class Tooltip(core.TextFieldDefWithCondition):
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1110,7 +1151,7 @@ class Tooltip(core.TextFieldDefWithCondition):
          If `true`, default [binning 
         parameters](https://vega.github.io/vega-lite/docs/bin.html) will
          be applied.  __Default value:__ `false`
-    condition : anyOf(Conditional<ValueDef>, list)
+    condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
         One or more value definition(s) with a selection predicate.  
         __Note:__ A field definition's `condition` property can only 
         contain [value 
@@ -1140,13 +1181,6 @@ class Tooltip(core.TextFieldDefWithCondition):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1174,6 +1208,8 @@ class Tooltip(core.TextFieldDefWithCondition):
 
 class TooltipValue(core.TextValueDefWithCondition):
     """TooltipValue schema wrapper
+    
+    Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
     {
        condition: {field: ...} | {value: ...},
@@ -1182,8 +1218,8 @@ class TooltipValue(core.TextValueDefWithCondition):
     
     Attributes
     ----------
-    condition : anyOf(Conditional<TextFieldDef>, Conditional<ValueDef>, 
-    list)
+    condition : anyOf(ConditionalTextFieldDef, ConditionalValueDef, 
+    List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a 
         selection predicate.
     value : anyOf(float, string, boolean)
@@ -1214,8 +1250,17 @@ class TooltipValue(core.TextValueDefWithCondition):
 class X(core.PositionFieldDef):
     """X schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1288,13 +1333,6 @@ class X(core.PositionFieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1323,6 +1361,8 @@ class X(core.PositionFieldDef):
 
 class XValue(core.ValueDef):
     """XValue schema wrapper
+    
+    Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -1355,11 +1395,20 @@ class XValue(core.ValueDef):
 
 class X2(core.FieldDef):
     """X2 schema wrapper
+    
+    Mapping(required=[type])
     Definition object for a data field, its type and transformation of an 
     encoding channel.
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1389,13 +1438,6 @@ class X2(core.FieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1422,6 +1464,8 @@ class X2(core.FieldDef):
 
 class X2Value(core.ValueDef):
     """X2Value schema wrapper
+    
+    Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -1455,8 +1499,17 @@ class X2Value(core.ValueDef):
 class Y(core.PositionFieldDef):
     """Y schema wrapper
     
+    Mapping(required=[type])
+    
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1529,13 +1582,6 @@ class Y(core.PositionFieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1564,6 +1610,8 @@ class Y(core.PositionFieldDef):
 
 class YValue(core.ValueDef):
     """YValue schema wrapper
+    
+    Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
     
     Attributes
@@ -1596,11 +1644,20 @@ class YValue(core.ValueDef):
 
 class Y2(core.FieldDef):
     """Y2 schema wrapper
+    
+    Mapping(required=[type])
     Definition object for a data field, its type and transformation of an 
     encoding channel.
     
     Attributes
     ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, 
+        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
+         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
+        [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html)
+         is applied.
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, 
         `median`, `min`, `max`, `count`).  __Default value:__ 
@@ -1630,13 +1687,6 @@ class Y2(core.FieldDef):
         temporal field. or [a temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).
           __Default value:__ `undefined` (None)
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, 
-        `"temporal"`, `"ordinal"`, or `"nominal"`). It can also be a geo
-         type (`"latitude"`, `"longitude"`, and `"geojson"`) when a 
-        [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html)
-         is applied.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1663,6 +1713,8 @@ class Y2(core.FieldDef):
 
 class Y2Value(core.ValueDef):
     """Y2Value schema wrapper
+    
+    Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
     
     Attributes
