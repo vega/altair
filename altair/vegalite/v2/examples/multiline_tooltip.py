@@ -9,6 +9,7 @@ import altair as alt
 import pandas as pd
 import numpy as np
 
+np.random.seed(42)
 data = pd.DataFrame(np.cumsum(np.random.randn(100, 3), 0).round(2),
                     columns=['A', 'B', 'C'], index=pd.RangeIndex(100, name='x'))
 data = data.reset_index().melt('x', var_name='category', value_name='y')
