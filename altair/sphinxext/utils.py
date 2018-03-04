@@ -1,14 +1,53 @@
+import sys
 import ast
+from contextlib import contextmanager
 
 
-def exec_then_eval(code, namespace=None):
-    """Exec a code block & return evaluation of the last line"""
-    # TODO: make this less brittle.
+class _CatchDisplay(object):
+    """Class to temporarily catch sys.displayhook"""
+    def __init__(self):
+        self.output = None
+
+    def __enter__(self):
+        self.old_hook = sys.displayhook
+        sys.displayhook = self
+        return self
+
+    def __exit__(self, type, value, traceback):
+        sys.displayhook = self.old_hook
+        # Returning False will cause exceptions to propagate
+        return False
+
+    def __call__(self, output):
+        self.output = output
+
+
+def exec_then_eval(code, namespace=None, filename='<string>'):
+    """
+    Execute a multi-line block of code in the given namespace
+
+    If the final statement in the code is an expression, return
+    the result of the expression.
+    """
+    tree = ast.parse(code, filename='<ast>', mode='exec')
     if namespace is None:
-        namespace or {}
+        namespace = {}
+    catch_display = _CatchDisplay()
 
-    block = ast.parse(code, mode='exec')
-    last = ast.Expression(block.body.pop().value)
+    if isinstance(tree.body[-1], ast.Expr):
+        to_exec, to_eval = tree.body[:-1], tree.body[-1:]
+    else:
+        to_exec, to_eval = tree.body, []
 
-    exec(compile(block, '<string>', mode='exec'), namespace)
-    return eval(compile(last, '<string>', mode='eval'), namespace)
+    for node in to_exec:
+        compiled = compile(ast.Module([node]),
+                           filename=filename, mode='exec')
+        exec(compiled, namespace)
+
+    with catch_display:
+        for node in to_eval:
+            compiled = compile(ast.Interactive([node]),
+                               filename=filename, mode='single')
+            exec(compiled, namespace)
+
+    return catch_display.output
