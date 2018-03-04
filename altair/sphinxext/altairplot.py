@@ -195,30 +195,26 @@ class AltairPlotDirective(Directive):
 
 
 def html_visit_altair_plot(self, node):
-    # Execute the setup code, saving the global & local state
-    namespace = node['namespace']
-    output = node['output']
-
-    # Execute the plot code in this context, evaluating the last line
-    if output == 'none':
-        execfunc = exec
-    else:
-        execfunc = exec_then_eval
-
+    # Execute the code, saving output and namespace
     try:
-        chart = execfunc(node['code'], namespace)
+        chart = exec_then_eval(node['code'], node['namespace'])
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
                       "{2}: {3}".format(node['rst_source'], node['rst_lineno'],
                                         e.__class__.__name__, str(e)))
         raise nodes.SkipNode
 
+
+    output = node['output']
+
     if output == 'none':
-        pass  # no output
+        raise nodes.SkipNode
     elif output == 'repr':
-        raise NotImplementedError("repr output")
-    elif output == 'stdout':
-        raise NotImplementedError("stdout output")
+        if chart is None:
+            raise nodes.SkipNode
+        else:
+            rep = repr(chart)
+            node.extend([nodes.literal_block(rep, rep)])
     elif output == 'plot':
         if isinstance(chart, alt.TopLevelMixin):
             # Last line should be a chart; convert to spec dict
@@ -248,7 +244,7 @@ def html_visit_altair_plot(self, node):
             warnings.warn('altair-plot: {0}:{1} Malformed block. Last line of '
                           'code block should define a valid altair Chart object.'
                           ''.format(node['rst_source'], node['rst_lineno']))
-    raise nodes.SkipNode
+        raise nodes.SkipNode
 
 
 def generic_visit_altair_plot(self, node):
@@ -258,6 +254,10 @@ def generic_visit_altair_plot(self, node):
     else:
         self.body.append(_('[ graph ]'))
     raise nodes.SkipNode
+
+
+def depart_altair_plot(self, node):
+    return
 
 
 def builder_inited(app):
@@ -282,11 +282,11 @@ def setup(app):
     app.add_stylesheet('altair-plot.css')
 
     app.add_node(altair_plot,
-                 html=(html_visit_altair_plot, None),
-                 latex=(generic_visit_altair_plot, None),
-                 texinfo=(generic_visit_altair_plot, None),
-                 text=(generic_visit_altair_plot, None),
-                 man=(generic_visit_altair_plot, None))
+                 html=(html_visit_altair_plot, depart_altair_plot),
+                 latex=(generic_visit_altair_plot, depart_altair_plot),
+                 texinfo=(generic_visit_altair_plot, depart_altair_plot),
+                 text=(generic_visit_altair_plot, depart_altair_plot),
+                 man=(generic_visit_altair_plot, depart_altair_plot))
 
     app.connect('env-purge-doc', purge_altair_namespaces)
     app.connect('builder-inited', builder_inited)
