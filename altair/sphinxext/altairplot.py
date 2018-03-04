@@ -96,6 +96,7 @@ VGL_TEMPLATE = jinja2.Template("""
 class altair_plot(nodes.General, nodes.Element):
     pass
 
+
 def purge_altair_namespaces(app, env, docname):
     if not hasattr(env, '_altair_namespaces'):
         return
