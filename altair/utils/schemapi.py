@@ -3,8 +3,10 @@
 import collections
 import contextlib
 import json
+import textwrap
 
 import jsonschema
+import six
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -34,6 +36,35 @@ def debug_mode(arg):
         yield
     finally:
         DEBUG_MODE = original
+
+
+class SchemaValidationError(jsonschema.ValidationError):
+    """A wrapper for jsonschema.ValidationError with friendlier traceback"""
+    def __init__(self, obj, err):
+        super(SchemaValidationError, self).__init__(**err._contents())
+        self.obj = obj
+
+    def __unicode__(self):
+        cls = self.obj.__class__
+        schema_path = ['{0}.{1}'.format(cls.__module__,cls.__name__)]
+        schema_path.extend(self.schema_path)
+        schema_path = ' ->'.join(val for val in schema_path[:-1]
+                                if val not in ('properties',
+                                               'additionalProperties',
+                                               'patternProperties'))
+        return """Invalid specification
+
+        validator {1!r} in {0}
+
+        {2}
+        """.format(schema_path, self.validator, self.message)
+
+    if six.PY3:
+        __str__ = __unicode__
+    else:
+        def __str__(self):
+            return unicode(self).encode("utf-8")
+
 
 
 class UndefinedType(object):
@@ -146,9 +177,11 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        validate : boolean
+        validate : boolean or string
             If True (default), then validate the output dictionary
-            against the schema.
+            against the schema. If "deep" then recursively validate
+            all objects in the spec. This takes much more time, but
+            it results in friendlier tracebacks for large objects.
         ignore : list
             A list of keys to ignore. This will *not* passed to child to_dict
             function calls.
@@ -166,10 +199,11 @@ class SchemaBase(object):
         jsonschema.ValidationError :
             if validate=True and the dict does not conform to the schema
         """
-        # TODO: add validate='once' and validate='deep'
+        sub_validate = 'deep' if validate == 'deep' else False
+
         def _todict(val):
             if isinstance(val, SchemaBase):
-                return val.to_dict(validate=False, context=context)
+                return val.to_dict(validate=sub_validate, context=context)
             elif isinstance(val, list):
                 return [_todict(v) for v in val]
             elif isinstance(val, dict):
@@ -187,7 +221,10 @@ class SchemaBase(object):
             raise ValueError("{0} instance has both a value and properties : "
                              "cannot serialize to dict".format(self.__class__))
         if validate:
-            self.validate(result)
+            try:
+                self.validate(result)
+            except jsonschema.ValidationError as err:
+                raise SchemaValidationError(self, err)
         return result
 
     @classmethod

@@ -202,7 +202,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             context['data'] = original_data
         kwargs['context'] = context
 
-        dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
+        try:
+            dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
+        except jsonschema.ValidationError:
+            dct = None
+
+        # If we hit an error, then re-convert with validate='deep' to get
+        # a more useful traceback
+        if dct is None:
+            kwargs['validate'] = 'deep'
+            dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
 
         if is_top_level:
             # since this is top-level we add $schema if it's missing
@@ -412,7 +421,11 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
 
             if 'value' in obj:
                 clsname += 'Value'
-            cls = getattr(channels, clsname)
+
+            try:
+                cls = getattr(channels, clsname)
+            except AttributeError:
+                raise ValueError("Unrecognized encoding channel '{0}'".format(prop))
 
             try:
                 # Don't force validation here; some objects won't be valid until
