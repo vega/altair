@@ -54,7 +54,7 @@ class SchemaValidationError(jsonschema.ValidationError):
                                                'patternProperties'))
         return """Invalid specification
 
-        validator {1!r} in {0}
+        {0}, validating {1!r}
 
         {2}
         """.format(schema_path, self.validator, self.message)
