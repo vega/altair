@@ -25,15 +25,7 @@ def attempt_import(module, error_message):
     ------
     RuntimeError
     """
-    # Python 3.6+ raises a ModuleNotFoundError if import fails
-    # Previous python versions raise an ImportError instead
-    # Here we make ModuleNotFoundError = ImportError for older Python versions
-    try:
-        ModuleNotFoundError
-    except NameError:
-        ModuleNotFoundError = ImportError
-
     try:
         return importlib.import_module(module)
-    except ModuleNotFoundError:
+    except ImportError:
         raise RuntimeError(error_message)
