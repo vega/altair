@@ -1,3 +1,3 @@
 """Altair schema wrappers"""
 
-from .v1.schema import *
+from .v2.schema import *
