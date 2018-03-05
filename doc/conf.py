@@ -36,7 +36,8 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.githubpages',
     'numpydoc.numpydoc',
-    'altair.sphinxext.altairplot'
+    'altair.sphinxext.altairplot',
+    'altair.sphinxext.altairgallery'
 ]
 
 altair_plot_links = {'editor': True, 'source': False, 'export': False}
