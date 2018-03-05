@@ -41,17 +41,10 @@ The following examples are automatically generated from
 {% for char in group.grouper %}~{% endfor %}
 
 {% for example in group.list %}
-.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
-    :target: {{ example.name }}.html
-    :align: center
 
-    :ref:`gallery_{{ example.name }}`
+- :ref:`gallery_{{ example.name }}`
+
 {% endfor %}
-
-.. raw:: html
-
-   <div style='clear:left;'></div>
-
 {% endfor %}
 
 
@@ -116,11 +109,11 @@ def main(app):
         os.makedirs(target_dir)
 
     # Write the gallery index file
-    # with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
-    #     f.write(GALLERY_TEMPLATE.render(title=gallery_title,
-    #                                     examples=examples,
-    #                                     image_dir='/_images',
-    #                                     gallery_ref=gallery_ref))
+    with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
+        f.write(GALLERY_TEMPLATE.render(title=gallery_title,
+                                        examples=examples,
+                                        image_dir='/_images',
+                                        gallery_ref=gallery_ref))
 
     # Write the individual example files
     for prev_ex, example, next_ex in prev_this_next(examples):

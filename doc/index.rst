@@ -83,6 +83,8 @@ Documentation
 .. toctree::
    :maxdepth: 2
 
+   gallery/index
+
 Bug Reports & Questions
 -----------------------
 
