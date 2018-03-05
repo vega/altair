@@ -1,6 +1,6 @@
 """
 U.S. state capitals overlayed on a map of the U.S
-================================================
+-------------------------------------------------
 This is a layered geographic visualization that shows US capitals
 overlayed on a map.
 """

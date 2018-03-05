@@ -1,6 +1,6 @@
 """
 Table Bubble Plot (Github Punch Card)
------------------
+-------------------------------------
 This example shows github contributions by the day of week and hour of the day.
 """
 

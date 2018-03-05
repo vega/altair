@@ -1,7 +1,6 @@
-
 """
 Layered Bar Chart with Line as Mean
------------------------
+-----------------------------------
 This example shows mean overlay over precipitation chart.
 """
 

@@ -1,6 +1,6 @@
 """
 Interactive Colored Scatterplot
------------------
+-------------------------------
 This example shows how to make an interactive scatterplot.
 """
 

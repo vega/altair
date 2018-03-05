@@ -1,6 +1,6 @@
 """
 Becker's Barley Trellis Plot
------------------------
+----------------------------
 This example shows how to make a Trellis Plot with the barley dataset.
 """
 

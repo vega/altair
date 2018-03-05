@@ -1,6 +1,6 @@
 """
 Histogram with a Global Mean Overlay
------------------------
+------------------------------------
 This example shows a histogram with a global mean overlay.
 """
 

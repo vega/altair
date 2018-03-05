@@ -1,6 +1,6 @@
 """
 Layered Bar Chart
------------------------
+-----------------
 This example shows a bar chart showing the US population distribution of age groups and gender in 2000.
 """
 
