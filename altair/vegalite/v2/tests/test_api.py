@@ -132,7 +132,7 @@ def test_savechart(format):
     try:
         chart.savechart(out, format=format)
     except RuntimeError as err:
-        if format in ['png', 'svg'] and 'selenium' in str(err.value):
+        if format in ['png', 'svg'] and 'selenium' in str(err):
             pytest.skip("selenium installation required for png/svg export")
         else:
             raise
