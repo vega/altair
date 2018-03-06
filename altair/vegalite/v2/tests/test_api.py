@@ -1,5 +1,8 @@
 """Unit tests for altair API"""
 
+import io
+import json
+
 import pytest
 import pandas as pd
 
@@ -114,3 +117,32 @@ def test_selection_to_dict():
         text=alt.condition(brush, alt.value('abc'), alt.Text('col2:N')),
         size=alt.condition(brush, alt.value(20), 'col2:N')
     ).to_dict()
+
+
+@pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
+def test_savechart(format):
+    # smoketest for save-chart
+    from ..examples.bar import chart
+
+    if format in ['html', 'json']:
+        out = io.StringIO()
+    else:
+        out = io.BytesIO()
+
+    try:
+        chart.savechart(out, format=format)
+    except RuntimeError as err:
+        if format in ['png', 'svg'] and 'selenium' in str(err.value):
+            pytest.skip("selenium installation required for png/svg export")
+        else:
+            raise
+
+    out.seek(0)
+
+    if format == 'json':
+        spec = json.load(out)
+        assert '$schema' in spec
+
+    elif format == 'html':
+        content = out.read()
+        assert content.startswith('\n<!DOCTYPE html>')
