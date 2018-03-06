@@ -1,3 +1,5 @@
+import json
+
 import jsonschema
 import six
 import pandas as pd
@@ -7,7 +9,8 @@ from .schema import core, channels, mixins, Undefined
 from .data import data_transformers, pipe
 from ...utils import (infer_vegalite_type, parse_shorthand,
                       parse_shorthand_plus_data,
-                      use_signature, update_nested)
+                      use_signature, update_nested,
+                      save_spec, write_file_or_filename)
 from .display import renderers
 
 
@@ -195,9 +198,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # - 'top_level' is a boolean flag that is assumed to be true; if it's
         #   true then a "$schema" arg is added to the dict.
         context = kwargs.get('context', {}).copy()
-        is_top_level = context.get('top_level', True)
 
+        is_top_level = context.get('top_level', True)
         context['top_level'] = False
+
         if original_data is not Undefined:
             context['data'] = original_data
         kwargs['context'] = context
@@ -208,7 +212,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             dct = None
 
         # If we hit an error, then re-convert with validate='deep' to get
-        # a more useful traceback
+        # a more useful traceback. We don't do this by default because it's
+        # much slower in the case that there are no errors.
         if dct is None:
             kwargs['validate'] = 'deep'
             dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
@@ -222,6 +227,45 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             if copy._default_spec_values:
                 dct = update_nested(copy._default_spec_values, dct, copy=True)
         return dct
+
+    def savechart(self, fp, format=None, **kwargs):
+        """Save a chart to file in a variety of formats
+
+        Supported formats are json, html, png, svg
+
+        Parameters
+        ----------
+        fp : string filename or file-like object
+            file in which to write the chart.
+        format : string (optional)
+            the format to write: one of ['json', 'html', 'png', 'eps'].
+            If not specified, the format will be determined from the filename.
+        **kwargs :
+            Additional keyword arguments are passed to the output method
+            associated with the specified format.
+        """
+
+        if isinstance(fp, six.string_types):
+            format = fp.split('.')[-1]
+
+        if format is None:
+            raise ValueError("must specify file format: "
+                             "['png', 'eps', 'html', 'json']")
+        elif format == 'json':
+            write_file_or_filename(fp, self.to_json(**kwargs), mode='w')
+        elif format == 'html':
+            from .html import HTML_TEMPLATE
+            opt = dict(renderer=kwargs.pop('renderer', 'canvas'),
+                       actions=kwargs.pop('actions', False))
+            if opt['renderer'] not in ('canvas', 'svg'):
+                raise ValueError("renderer must be 'canvas' or 'svg'")
+            spec_html = HTML_TEMPLATE.format(spec=self.to_json(**kwargs),
+                                             opt=json.dumps(opt))
+            write_file_or_filename(fp, spec_html, mode='w')
+        elif format in ['png', 'svg']:
+            save_spec(self.to_dict(), fp, format=format, **kwargs)
+        else:
+            raise ValueError("unrecognized format: '{0}'".format(format))
 
     # Layering and stacking
 

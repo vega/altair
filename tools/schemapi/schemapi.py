@@ -1,7 +1,6 @@
 import collections
 import contextlib
 import json
-import textwrap
 
 import jsonschema
 import six
@@ -103,7 +102,7 @@ class SchemaBase(object):
         object.__setattr__(self, '_kwds', kwds)
 
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
-            dct = self.to_dict(validate=True)
+            _ = self.to_dict(validate=True)
 
     def copy(self, deep=True, ignore=()):
         """Return a copy of the object
@@ -225,6 +224,38 @@ class SchemaBase(object):
                 raise SchemaValidationError(self, err)
         return result
 
+    def to_json(self, validate=True, ignore=[], context={},
+                indent=2, sort_keys=True, **kwargs):
+        """Emit the JSON representation for this object as a string.
+
+        Parameters
+        ----------
+        validate : boolean or string
+            If True (default), then validate the output dictionary
+            against the schema. If "deep" then recursively validate
+            all objects in the spec. This takes much more time, but
+            it results in friendlier tracebacks for large objects.
+        ignore : list
+            A list of keys to ignore. This will *not* passed to child to_dict
+            function calls.
+        context : dict (optional)
+            A context dictionary that will be passed to all child to_dict
+            function calls
+        indent : integer, default 2
+            the number of spaces of indentation to use
+        sort_keys : boolean, default True
+            if True, sort keys in the output
+        **kwargs
+            Additional keyword arguments are passed to ``json.dumps()``
+
+        Returns
+        -------
+        spec : string
+            The JSON specification of the chart object.
+        """
+        dct = self.to_dict(validate=validate, ignore=ignore, context=context)
+        return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
+
     @classmethod
     def from_dict(cls, dct, validate=True):
         """Construct class from a dictionary representation
@@ -251,6 +282,26 @@ class SchemaBase(object):
         converter = _FromDict(SchemaBase.__subclasses__())
         return converter.from_dict(constructor=cls, root=cls,
                                    schema=cls._schema, dct=dct)
+    @classmethod
+    def from_json(cls, json_string, validate=True, **kwargs):
+        """Instantiate the object from a valid JSON string
+
+        Parameters
+        ----------
+        json_string : string
+            The string containing a valid JSON chart specification.
+        validate : boolean
+            If True (default), then validate the input against the schema.
+        **kwargs :
+            Additional keyword arguments are passed to json.loads
+
+        Returns
+        -------
+        chart : Chart object
+            The altair Chart object built from the specification.
+        """
+        dct = json.loads(json_string, **kwargs)
+        return cls.from_dict(dct, validate=validate)
 
     @classmethod
     def validate(cls, instance, schema=None):

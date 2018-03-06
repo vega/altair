@@ -339,3 +339,12 @@ def update_nested(original, update, copy=False):
         else:
             original[key] = val
     return original
+
+
+def write_file_or_filename(fp, content, mode='w'):
+    """Write content to fp, whether fp is a string or a file-like object"""
+    if isinstance(fp, six.string_types):
+        with open(fp, mode) as f:
+            f.write(content)
+    else:
+        fp.write(content)

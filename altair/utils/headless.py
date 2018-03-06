@@ -8,7 +8,10 @@ import json
 import os
 import tempfile
 
+import six
+
 from .importing import attempt_import
+from .core import write_file_or_filename
 
 
 HTML_TEMPLATE = """
@@ -27,54 +30,70 @@ HTML_TEMPLATE = """
 """
 
 EMBED_CODE = """
-vegaEmbed("#vis", {spec}).then(function(result) {{
+const spec = {spec};
+const opt = {opt};
+vegaEmbed("#vis", spec, opt).then(function(result) {{
     window.view = result.view;
 }}).catch(console.error);
 """
 
-CONVERT_CODE = """
-window.view.toCanvas().then(function(canvas) {
-    window.png_render = canvas.toDataURL('image/png');
-})
-"""
+CONVERT_CODE = {
+'png': """
+       window.view.toCanvas().then(function(canvas) {
+           window.image_render = canvas.toDataURL('image/png');
+       })
+       """,
+'svg': """
+       window.view.toSVG().then(function(render) {
+           window.image_render = render;
+       })
+       """}
 
 EXTRACT_CODE = """
-return window.png_render;
+return window.image_render;
 """
 
-def save_spec(spec, filename, format=None, mode='vega-lite'):
+def save_spec(spec, fp, mode=None, format=None):
     """Save a spec to file
 
     Parameters
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec
-    filename : string
-        the filename at which the result will be saved
+    fp : string or file-like object
+        the filename or file object at which the result will be saved
+    mode : string or None
+        The rendering mode ('vega' or 'vega-lite'). If None, the mode will be
+        inferred from the $schema attribute of the spec, or will default to
+        'vega' if $schema is not in the spec.
     format : string (optional)
         the file format to be saved. If not specified, it will be inferred
-        from the extension of filename
-    mode : string
-        Whether the spec is 'vega' or 'vega-lite'.
-        Currently only mode='vega-lite' is supported.
+        from the extension of filename.
 
     Note
     ----
     This requires the pillow, selenium, and chrome headless packages to be
     installed.
     """
-    # TODO: remove PIL dependency?
-    # TODO: use SVG renderer when it makes sense
-    # TODO: support mode='vega'
     # TODO: allow package versions to be specified
-    # TODO: detect local Jupyter caches of JS packages?
+    # TODO: detect & use local Jupyter caches of JS packages?
 
-    Image = attempt_import('PIL.Image',
-                           'save_spec requires the pillow package')
+    if format is None and isinstance(fp, six.string_types):
+        format = fp.split('.')[-1]
+
+    if format not in ['png', 'svg']:
+        raise NotImplementedError("save_spec only supports 'svg' and 'png'")
+
     webdriver = attempt_import('selenium.webdriver',
                                'save_spec requires the selenium package')
     Options = attempt_import('selenium.webdriver.chrome.options',
                              'save_spec requires the selenium package').Options
+
+    opt = {'renderer': 'canvas' if format == 'png' else 'svg'}
+    if mode is not None:
+        if mode not in ['vega', 'vega-lite']:
+            raise ValueError("mode must be 'vega' or 'vega-lite'")
+        opt['mode'] = mode
 
     try:
         chrome_options = Options()
@@ -85,17 +104,18 @@ def save_spec(spec, filename, format=None, mode='vega-lite'):
             with open(name, 'w') as f:
                 f.write(HTML_TEMPLATE)
             driver.get("file://" + name)
-            driver.execute_script(EMBED_CODE.format(spec=json.dumps(spec)))
-            driver.execute_script(CONVERT_CODE)
-            png_base64 = driver.execute_script(EXTRACT_CODE)
+            driver.execute_script(EMBED_CODE.format(spec=json.dumps(spec),
+                                                    opt=json.dumps(opt)))
+            driver.execute_script(CONVERT_CODE[format])
+            render = driver.execute_script(EXTRACT_CODE)
         finally:
             os.remove(name)
     finally:
         driver.close()
 
-    out = io.BytesIO()
-    metadata, image = png_base64.split(',')
-    base64.decode(io.BytesIO(image.encode()), out)
-    out.seek(0)
-    image = Image.open(out)
-    image.save(filename)
+    if format == 'png':
+        img_bytes = base64.decodebytes(render.split(',')[1].encode())
+        write_file_or_filename(fp, img_bytes, mode='wb')
+    else:
+        img_bytes = render.encode()
+        write_file_or_filename(fp, img_bytes, mode='wb')
