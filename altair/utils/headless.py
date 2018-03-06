@@ -8,6 +8,8 @@ import json
 import os
 import tempfile
 
+import six
+
 from .importing import attempt_import
 
 
@@ -42,21 +44,21 @@ EXTRACT_CODE = """
 return window.png_render;
 """
 
-def save_spec(spec, filename, format=None, mode='vega-lite'):
+def save_spec(spec, fp, mode='vega-lite', format=None):
     """Save a spec to file
 
     Parameters
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec
-    filename : string
-        the filename at which the result will be saved
-    format : string (optional)
-        the file format to be saved. If not specified, it will be inferred
-        from the extension of filename
+    fp : string or file-like object
+        the filename or file object at which the result will be saved
     mode : string
         Whether the spec is 'vega' or 'vega-lite'.
         Currently only mode='vega-lite' is supported.
+    format : string (optional)
+        the file format to be saved. If not specified, it will be inferred
+        from the extension of filename
 
     Note
     ----
@@ -67,7 +69,13 @@ def save_spec(spec, filename, format=None, mode='vega-lite'):
     # TODO: use SVG renderer when it makes sense
     # TODO: support mode='vega'
     # TODO: allow package versions to be specified
-    # TODO: detect local Jupyter caches of JS packages?
+    # TODO: detect & use local Jupyter caches of JS packages?
+
+    if format is None and isinstance(fp, six.string_types):
+        format = fp.split('.')[-1]
+
+    if format != 'png':
+        raise NotImplementedError("Only 'png' format is supported")
 
     Image = attempt_import('PIL.Image',
                            'save_spec requires the pillow package')
@@ -93,9 +101,10 @@ def save_spec(spec, filename, format=None, mode='vega-lite'):
     finally:
         driver.close()
 
-    out = io.BytesIO()
-    metadata, image = png_base64.split(',')
-    base64.decode(io.BytesIO(image.encode()), out)
-    out.seek(0)
-    image = Image.open(out)
-    image.save(filename)
+    png_bytes = base64.decodebytes(png_base64.split(',')[1].encode())
+
+    if isinstance(fp, six.string_types):
+        with open(fp, 'wb') as f:
+            f.write(png_bytes)
+    else:
+        fp.write(png_bytes)
