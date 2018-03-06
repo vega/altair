@@ -1,3 +1,5 @@
+import json
+
 import jsonschema
 import six
 import pandas as pd
@@ -8,7 +10,7 @@ from .data import data_transformers, pipe
 from ...utils import (infer_vegalite_type, parse_shorthand,
                       parse_shorthand_plus_data,
                       use_signature, update_nested,
-                      save_spec)
+                      save_spec, write_file_or_filename)
 from .display import renderers
 
 
@@ -250,17 +252,18 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             raise ValueError("must specify file format: "
                              "['png', 'eps', 'html', 'json']")
         elif format == 'json':
-            if hasattr(fp, 'write'):
-                f.write(self.to_json(**kwargs))
-            else:
-                with open(filename, 'w') as f:
-                    f.write(self.to_json(**kwargs))
+            write_file_or_filename(fp, self.to_json(**kwargs), mode='w')
         elif format == 'html':
-            raise NotImplementedError("html output")
-        elif format == 'png':
+            from .html import HTML_TEMPLATE
+            opt = dict(renderer=kwargs.pop('renderer', 'canvas'),
+                       actions=kwargs.pop('actions', False))
+            if opt['renderer'] not in ('canvas', 'svg'):
+                raise ValueError("renderer must be 'canvas' or 'svg'")
+            spec_html = HTML_TEMPLATE.format(spec=self.to_json(**kwargs),
+                                             opt=json.dumps(opt))
+            write_file_or_filename(fp, spec_html, mode='w')
+        elif format in ['png', 'svg']:
             save_spec(self.to_dict(), fp, format=format, **kwargs)
-        elif format == 'svg':
-            raise NotImplementedError('svg output')
         else:
             raise ValueError("unrecognized format: '{0}'".format(format))
 
