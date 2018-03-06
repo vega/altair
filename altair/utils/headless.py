@@ -99,14 +99,19 @@ def save_spec(spec, fp, mode=None, format=None):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         driver = webdriver.Chrome(chrome_options=chrome_options)
+        # TODO: figure out how to do with without time.sleep
+        import time
         try:
             fd, name = tempfile.mkstemp(suffix='.html', text=True)
             with open(name, 'w') as f:
                 f.write(HTML_TEMPLATE)
             driver.get("file://" + name)
+            time.sleep(1)
             driver.execute_script(EMBED_CODE.format(spec=json.dumps(spec),
                                                     opt=json.dumps(opt)))
+            time.sleep(1)
             driver.execute_script(CONVERT_CODE[format])
+            time.sleep(1)
             render = driver.execute_script(EXTRACT_CODE)
         finally:
             os.remove(name)

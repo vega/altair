@@ -1,3 +1,5 @@
+import hashlib
+import importlib
 import os
 import shutil
 import warnings
@@ -14,8 +16,11 @@ from docutils.statemachine import ViewList
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
 
-from .utils import get_docstring_and_rest, prev_this_next
+from .utils import get_docstring_and_rest, prev_this_next, create_thumbnail
 from altair.vegalite.v2.examples import iter_examples
+
+
+EXAMPLE_MODULE = 'altair.vegalite.v2.examples'
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""
@@ -41,12 +46,13 @@ The following examples are automatically generated from
 {% for char in group.grouper %}~{% endfor %}
 
 {% for example in group.list %}
+.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
+    :target: {{ example.name }}.html
+    :align: center
 
-- :ref:`gallery_{{ example.name }}`
-
+    :ref:`gallery_{{ example.name }}`
 {% endfor %}
 {% endfor %}
-
 
 .. toctree::
    :hidden:
@@ -75,6 +81,50 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 .. toctree::
    :hidden:
 """)
+
+
+def save_example_pngs(examples, image_dir, make_thumbnails=True):
+    """Save example pngs and (optionally) thumbnails"""
+    if not os.path.exists(image_dir):
+        os.makedirs(image_dir)
+
+    # store hashes so that we know whether images need to be generated
+    hash_file = os.path.join(image_dir, '_image_hashes.json')
+
+    if os.path.exists(hash_file):
+        with open(hash_file) as f:
+            hashes = json.load(f)
+    else:
+        hashes = {}
+
+    for example in examples:
+        filename = example['name'] + '.png'
+        image_file = os.path.join(image_dir, filename)
+
+        example_hash = hashlib.md5(example['code'].encode()).hexdigest()
+        hashes_match = (hashes.get(filename, '') == example_hash)
+        print('-> using cached {0}'.format(image_file))
+
+        if not hashes_match or not os.path.exists(image_file):
+            # the file changed or the image file does not exist. Generate it.
+            print('-> saving {0}'.format(image_file))
+            _globals = {}
+            exec(example['code'], _globals)
+            chart = _globals['chart']
+            chart.savechart(image_file)
+            hashes[filename] = example_hash
+
+            with open(hash_file, 'w') as f:
+                json.dump(hashes, f)
+
+        if make_thumbnails:
+            params = example.get('galleryParameters', {})
+            thumb_file = os.path.join(image_dir, example['name'] + '-thumb.png')
+            create_thumbnail(image_file, thumb_file, **params)
+
+    # Save hashes so we know whether we need to re-generate plots
+    with open(hash_file, 'w') as f:
+        json.dump(hashes, f)
 
 
 def populate_examples(**kwds):
@@ -114,6 +164,9 @@ def main(app):
                                         examples=examples,
                                         image_dir='/_images',
                                         gallery_ref=gallery_ref))
+
+    # save the images to file
+    save_example_pngs(examples, image_dir)
 
     # Write the individual example files
     for prev_ex, example, next_ex in prev_this_next(examples):

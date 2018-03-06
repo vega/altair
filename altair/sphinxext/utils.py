@@ -1,6 +1,21 @@
-import sys
+from __future__ import division
+
 import ast
+import hashlib
 import itertools
+import json
+import sys
+
+
+def create_thumbnail(image_filename, thumb_filename, window_size=(180, 180)):
+    """Create a thumbnailfor a filename"""
+    from PIL import Image
+    im = Image.open(image_filename)
+    box = [(im.size[0] - window_size[0]) // 2,
+           (im.size[1] - window_size[1]) // 2,
+           (im.size[0] + window_size[0]) // 2,
+           (im.size[1] + window_size[1]) // 2]
+    im.crop(box).save(thumb_filename)
 
 
 class _CatchDisplay(object):
@@ -182,3 +197,15 @@ def prev_this_next(it, sentinel=None):
     return zip(itertools.chain([sentinel], i1),
                i2,
                itertools.chain(i3, [sentinel]))
+
+
+def dict_hash(dct):
+    """Return a hash of the contents of a dictionary"""
+    serialized = json.dumps(dct, sort_keys=True)
+
+    try:
+        m = hashlib.md5(serialized)
+    except TypeError:
+        m = hashlib.md5(serialized.encode())
+
+    return m.hexdigest()
