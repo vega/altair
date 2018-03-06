@@ -2,6 +2,8 @@
 
 import io
 import json
+import os
+import tempfile
 
 import pytest
 import pandas as pd
@@ -121,21 +123,32 @@ def test_selection_to_dict():
 
 @pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
 def test_savechart(format):
-    # smoketest for save-chart
     from ..examples.bar import chart
 
     if format in ['html', 'json']:
         out = io.StringIO()
+        mode = 'r'
     else:
         out = io.BytesIO()
+        mode = 'rb'
+    fid, filename = tempfile.mkstemp(suffix='.' + format)
 
     try:
-        chart.savechart(out, format=format)
-    except RuntimeError as err:
-        if format in ['png', 'svg'] and 'selenium' in str(err):
-            pytest.skip("selenium installation required for png/svg export")
-        else:
-            raise
+        # selenium may not be installed; skip the test if we get a selenium error.
+        try:
+            chart.savechart(out, format=format)
+            chart.savechart(filename)
+        except RuntimeError as err:
+            if format in ['png', 'svg'] and 'selenium' in str(err):
+                pytest.skip("selenium installation required for png/svg export")
+            else:
+                raise
+
+        out.seek(0)
+        with open(filename, mode) as f:
+            assert f.read() == out.read()
+    finally:
+        os.remove(filename)
 
     out.seek(0)
 
