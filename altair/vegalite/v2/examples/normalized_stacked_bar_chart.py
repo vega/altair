@@ -1,6 +1,6 @@
 """
 Normalized Stacked Bar Chart
------------------------
+----------------------------
 This example shows how to make a normalized stacked bar chart.
 """
 

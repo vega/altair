@@ -19,7 +19,7 @@ import os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.insert(0, os.path.abspath('sphinxext'))
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- General configuration ------------------------------------------------
 
@@ -36,9 +36,8 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.githubpages',
     'numpydoc.numpydoc',
-    'altair_ext.altairplot',
-    'altair_ext.altairgallery',
-    'altair_ext.altair_autodoc',
+    'altair.sphinxext.altairplot',
+    'altair.sphinxext.altairgallery'
 ]
 
 altair_plot_links = {'editor': True, 'source': False, 'export': False}
@@ -311,8 +310,7 @@ texinfo_documents = [
 numpydoc_show_class_members = False
 
 # For the altairplot extension
-# altairplot_links = {'editor': True, 'source': True, 'export': True}
-# altairplot_d3_js_url = "https://d3js.org/d3.v3.min.js"
-altairplot_vega_js_url = "https://vega.github.io/vega/releases/v2.6.5/vega.js"
-altairplot_vegalite_js_url = "https://cdnjs.cloudflare.com/ajax/libs/vega-lite/1.2.1/vega-lite.min.js"
-altairplot_vegaembed_js_url = "https://cdnjs.cloudflare.com/ajax/libs/vega-embed/2.2.0/vega-embed.min.js"
+altairplot_links = {'editor': True, 'source': True, 'export': True}
+altairplot_vega_js_url = "https://cdn.jsdelivr.net/npm/vega@3"
+altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@2"
+altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@3"

@@ -22,8 +22,8 @@ chart = alt.Chart(source).mark_circle(
     ),
     color = alt.Color('Entity:N', legend = None)
 ).properties(
-    width=600,
-    height=400
+    width=480,
+    height=350
 ).transform_filter(
     "datum.Entity !== 'All natural disasters'"
 )

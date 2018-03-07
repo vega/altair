@@ -1,6 +1,6 @@
 """
 Binned Scatterplot
------------------
+------------------
 This example shows how to make a binned scatterplot.
 """
 
@@ -13,4 +13,4 @@ chart = alt.Chart(source).mark_circle().encode(
     x = alt.X('IMDB_Rating:Q',  bin = alt.BinParams(maxbins=10)),
     y = alt.Y('Rotten_Tomatoes_Rating:Q',  bin = alt.BinParams(maxbins=10)),
     size = 'count(*):Q'
-)  
+)

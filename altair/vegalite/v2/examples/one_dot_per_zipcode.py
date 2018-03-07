@@ -3,6 +3,7 @@ One Dot Per Zipcode
 -----------------------
 This example shows a geographical plot with one dot per zipcode.
 """
+# category: geographic
 
 import altair as alt
 from vega_datasets import data
@@ -15,8 +16,8 @@ chart = alt.Chart(zipcodes).mark_circle(size = 3).encode(
     color='digit:N'
 ).properties(
     projection={'type': 'albersUsa'},
-    width=800,
-    height=500
+    width=650,
+    height=400
 ).transform_calculate(
     "digit", "substring(datum.zip_code, 0, 1)"
 )

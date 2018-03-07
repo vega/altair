@@ -1,6 +1,6 @@
 """
 Box Plot with Min/Max Whiskers
------------------
+------------------------------
 This example shows how to make a basic box plot using US Population
 data from 2000.
 

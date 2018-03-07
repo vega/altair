@@ -7,7 +7,8 @@ sphinx documentation. There are two directives defined: ``altair-setup`` and
 ``altiar-plot``. ``altair-setup`` code is used to set-up various options
 prior to running the plot code. For example::
 
-    .. altair-setup::
+    .. altair-plot::
+        :output: none
 
         from altair import *
         import pandas as pd
@@ -28,18 +29,14 @@ Options
 -------
 The directives have the following options::
 
-    .. altair-setup::
-        :show: # if set, then show the setup code as a code block
-
-        pass
-
     .. altair-plot::
+        :namespace:  # specify a plotting namespace that is persistent within the doc
         :hide-code:  # if set, then hide the code and only show the plot
         :code-below:  # if set, then code is below rather than above the figure
+        :output:  [plot|repr|stdout|none]
         :alt: text  # Alternate text when plot cannot be rendered
         :links: editor source export  # specify one or more of these options
 
-        Chart()
 
 Additionally, this extension introduces a global configuration
 ``altairplot_links``, set in your ``conf.py`` which is a dictionary
@@ -68,14 +65,13 @@ from sphinx.locale import _
 from sphinx import addnodes, directives
 from sphinx.util.nodes import set_source_info
 
-from altair.api import TopLevelMixin
+import altair as alt
 from .utils import exec_then_eval
 
 # These default URLs can be changed in conf.py; see setup() below.
-D3_JS_URL_DEFAULT = "https://d3js.org/d3.v3.min.js"
-VEGA_JS_URL_DEFAULT = "https://vega.github.io/vega/vega.js"
-VEGALITE_JS_URL_DEFAULT = "https://vega.github.io/vega-lite/vega-lite.js"
-VEGAEMBED_JS_URL_DEFAULT = "https://vega.github.io/vega-editor/vendor/vega-embed.js"
+VEGA_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega@3"
+VEGALITE_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-lite@2"
+VEGAEMBED_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-embed@3"
 
 
 VGL_TEMPLATE = jinja2.Template("""
@@ -84,7 +80,13 @@ VGL_TEMPLATE = jinja2.Template("""
   // embed when document is loaded, to ensure vega library is available
   // this works on all modern browsers, except IE8 and older
   document.addEventListener("DOMContentLoaded", function(event) {
-    vg.embed("#{{ div_id }}", "{{ filename }}", function(error, result) {});
+      var spec = {{ spec }};
+      var opt = {
+        "mode": "{{ mode }}",
+        "renderer": "{{ renderer }}",
+        "actions": {{ actions}}
+      };
+      vegaEmbed('#{{ div_id }}', {{ spec }}).catch(console.err);
   });
 </script>
 </div>
@@ -95,44 +97,10 @@ class altair_plot(nodes.General, nodes.Element):
     pass
 
 
-class AltairSetupDirective(Directive):
-    has_content = True
-
-    option_spec = {'show': flag}
-
-    def run(self):
-        env = self.state.document.settings.env
-
-        targetid = "altair-plot-{0}".format(env.new_serialno('altair-plot'))
-        targetnode = nodes.target('', '', ids=[targetid])
-
-        code = '\n'.join(self.content)
-
-        # Here we cache the code for use in later setup
-        if not hasattr(env, 'altair_plot_setup'):
-            env.altair_plot_setup = []
-        env.altair_plot_setup.append({
-            'docname': env.docname,
-            'lineno': self.lineno,
-            'code': code,
-            'target': targetnode,
-        })
-
-        result = [targetnode]
-
-        if 'show' in self.options:
-            source_literal = nodes.literal_block(code, code)
-            source_literal['language'] = 'python'
-            result.append(source_literal)
-
-        return result
-
-
-def purge_altair_plot_setup(app, env, docname):
-    if not hasattr(env, 'altair_plot_setup'):
+def purge_altair_namespaces(app, env, docname):
+    if not hasattr(env, '_altair_namespaces'):
         return
-    env.altair_plot_setup = [item for item in env.altair_plot_setup
-                             if item['docname'] != docname]
+    env._altair_namespaces.pop(docname, {})
 
 
 DEFAULT_ALTAIRPLOT_LINKS = {'editor': True, 'source': True, 'export': True}
@@ -149,12 +117,20 @@ def validate_links(links):
     return dict((link, link in links) for link in DEFAULT_ALTAIRPLOT_LINKS)
 
 
-class AltairPlotDirective(Directive):
+def validate_output(output):
+    output = output.strip().lower()
+    if output not in ['plot', 'repr', 'none']:
+        raise ValueError(":output: flag must be one of [plot|repr|stdout|none]")
+    return output
 
+
+class AltairPlotDirective(Directive):
     has_content = True
 
     option_spec = {'hide-code': flag,
                    'code-below': flag,
+                   'namespace': unchanged,
+                   'output': validate_output,
                    'alt': unchanged,
                    'links': validate_links}
 
@@ -165,9 +141,12 @@ class AltairPlotDirective(Directive):
         show_code = 'hide-code' not in self.options
         code_below = 'code-below' in self.options
 
-        setupcode = '\n'.join(item['code']
-                              for item in getattr(env, 'altair_plot_setup', [])
-                              if item['docname'] == env.docname)
+        if not hasattr(env, '_altair_namespaces'):
+            env._altair_namespaces = {}
+        namespace_id = self.options.get('namespace', 'default')
+        namespace = env._altair_namespaces\
+                        .setdefault(env.docname, {})\
+                        .setdefault(namespace_id, {})
 
         code = '\n'.join(self.content)
 
@@ -193,11 +172,12 @@ class AltairPlotDirective(Directive):
         plot_node['target_id'] = target_id
         plot_node['div_id'] = div_id
         plot_node['code'] = code
-        plot_node['setupcode'] = setupcode
+        plot_node['namespace'] = namespace
         plot_node['relpath'] = os.path.relpath(rst_dir, env.srcdir)
         plot_node['rst_source'] = rst_source
         plot_node['rst_lineno'] = self.lineno
         plot_node['links'] = self.options.get('links', app.builder.config.altairplot_links)
+        plot_node['output'] = self.options.get('output', 'plot')
 
         if 'alt' in self.options:
             plot_node['alt'] = self.options['alt']
@@ -215,52 +195,56 @@ class AltairPlotDirective(Directive):
 
 
 def html_visit_altair_plot(self, node):
-    # Execute the setup code, saving the global & local state
-    namespace = {}
-    if node['setupcode']:
-        exec(node['setupcode'], namespace)
-
-    # Execute the plot code in this context, evaluating the last line
+    # Execute the code, saving output and namespace
     try:
-        chart = exec_then_eval(node['code'], namespace)
+        chart = exec_then_eval(node['code'], node['namespace'])
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
                       "{2}: {3}".format(node['rst_source'], node['rst_lineno'],
                                         e.__class__.__name__, str(e)))
         raise nodes.SkipNode
 
-    if isinstance(chart, TopLevelMixin):
-        # Last line should be a chart; convert to spec dict
-        spec = chart.to_dict()
 
-        # Create the vega-lite spec to embed
-        embed_spec = json.dumps({'mode': 'vega-lite',
-                                 'actions': node['links'],
-                                 'spec': spec})
+    output = node['output']
 
-        # Previously we did this, but after github migrated to https only
-        # it started causing issues for some http clients such as localhost.
-        #embed_spec = embed_spec.replace('http://', '//')
-        #embed_spec = embed_spec.replace('https://', '//')
+    if output == 'none':
+        raise nodes.SkipNode
+    elif output == 'repr':
+        if chart is None:
+            raise nodes.SkipNode
+        else:
+            rep = repr(chart)
+            node.extend([nodes.literal_block(rep, rep)])
+    elif output == 'plot':
+        if isinstance(chart, alt.TopLevelMixin):
+            # Last line should be a chart; convert to spec dict
+            spec = chart.to_dict()
+            actions = node['links']
 
-        # Write embed_spec to a *.vl.json file
-        dest_dir = os.path.join(self.builder.outdir, node['relpath'])
-        if not os.path.exists(dest_dir):
-            os.makedirs(dest_dir)
-        filename = "{0}.vl.json".format(node['div_id'])
-        dest_path = os.path.join(dest_dir, filename)
-        with open(dest_path, 'w') as f:
-            f.write(embed_spec)
+            # TODO: add an option to save spects to file & load from there.
+            # TODO: add renderer option
 
-        # Pass relevant info into the template and append to the output
-        html = VGL_TEMPLATE.render(div_id=node['div_id'],
-                                   filename=filename)
-        self.body.append(html)
-    else:
-        warnings.warn('altair-plot: {0}:{1} Malformed block. Last line of '
-                      'code block should define a valid altair Chart object.'
-                      ''.format(node['rst_source'], node['rst_lineno']))
-    raise nodes.SkipNode
+            # Write spec to a *.vl.json file
+            # dest_dir = os.path.join(self.builder.outdir, node['relpath'])
+            # if not os.path.exists(dest_dir):
+            #     os.makedirs(dest_dir)
+            # filename = "{0}.vl.json".format(node['target_id'])
+            # dest_path = os.path.join(dest_dir, filename)
+            # with open(dest_path, 'w') as f:
+            #     json.dump(spec, f)
+
+            # Pass relevant info into the template and append to the output
+            html = VGL_TEMPLATE.render(div_id=node['div_id'],
+                                       spec=json.dumps(spec),
+                                       mode='vega-lite',
+                                       renderer='canvas',
+                                       actions=json.dumps(actions))
+            self.body.append(html)
+        else:
+            warnings.warn('altair-plot: {0}:{1} Malformed block. Last line of '
+                          'code block should define a valid altair Chart object.'
+                          ''.format(node['rst_source'], node['rst_lineno']))
+        raise nodes.SkipNode
 
 
 def generic_visit_altair_plot(self, node):
@@ -272,8 +256,11 @@ def generic_visit_altair_plot(self, node):
     raise nodes.SkipNode
 
 
+def depart_altair_plot(self, node):
+    return
+
+
 def builder_inited(app):
-    app.add_javascript(app.config.altairplot_d3_js_url)
     app.add_javascript(app.config.altairplot_vega_js_url)
     app.add_javascript(app.config.altairplot_vegalite_js_url)
     app.add_javascript(app.config.altairplot_vegaembed_js_url)
@@ -286,24 +273,22 @@ def setup(app):
 
     app.add_config_value('altairplot_links', DEFAULT_ALTAIRPLOT_LINKS, 'env')
 
-    app.add_config_value('altairplot_d3_js_url', D3_JS_URL_DEFAULT, 'html')
     app.add_config_value('altairplot_vega_js_url', VEGA_JS_URL_DEFAULT, 'html')
     app.add_config_value('altairplot_vegalite_js_url', VEGALITE_JS_URL_DEFAULT, 'html')
     app.add_config_value('altairplot_vegaembed_js_url', VEGAEMBED_JS_URL_DEFAULT, 'html')
 
     app.add_directive('altair-plot', AltairPlotDirective)
-    app.add_directive('altair-setup', AltairSetupDirective)
 
     app.add_stylesheet('altair-plot.css')
 
     app.add_node(altair_plot,
-                 html=(html_visit_altair_plot, None),
-                 latex=(generic_visit_altair_plot, None),
-                 texinfo=(generic_visit_altair_plot, None),
-                 text=(generic_visit_altair_plot, None),
-                 man=(generic_visit_altair_plot, None))
+                 html=(html_visit_altair_plot, depart_altair_plot),
+                 latex=(generic_visit_altair_plot, depart_altair_plot),
+                 texinfo=(generic_visit_altair_plot, depart_altair_plot),
+                 text=(generic_visit_altair_plot, depart_altair_plot),
+                 man=(generic_visit_altair_plot, depart_altair_plot))
 
-    app.connect('env-purge-doc', purge_altair_plot_setup)
+    app.connect('env-purge-doc', purge_altair_namespaces)
     app.connect('builder-inited', builder_inited)
 
     return {'version': '0.1'}

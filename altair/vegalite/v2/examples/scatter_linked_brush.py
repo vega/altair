@@ -4,6 +4,7 @@ Faceted Scatter Plot with Linked Brushing
 This is an example of using an interval selection to control the color of
 points across multiple facets.
 """
+# category: interactive
 
 import altair as alt
 from vega_datasets import data
@@ -17,8 +18,8 @@ base = alt.Chart(cars).mark_point().encode(
     color=alt.condition(brush, 'Origin', alt.ColorValue('gray'))
 ).properties(
     selection=brush,
-    width=300,
-    height=300
+    width=250,
+    height=250
 )
 
 chart = base.encode(x='Horsepower') | base.encode(x='Acceleration')

@@ -1,6 +1,6 @@
 """
 Layered Plot with Dual-Axis
------------------------
+---------------------------
 This example shows how to combine two plots and keep their axes.
 """
 

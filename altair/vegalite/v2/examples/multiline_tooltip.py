@@ -4,6 +4,7 @@ Multi-Lite Tooltip
 This example shows how you can use selections and layers to create a multi-line tooltip
 that tracks the x position of the cursor.
 """
+# category: interactive
 
 import altair as alt
 import pandas as pd
@@ -53,4 +54,4 @@ rules = alt.Chart().mark_rule(color='gray').encode(
 
 # Put the five layers into a chart and bind the data
 chart = alt.layer(line, selectors, points, rules, text,
-                  data=data, width=800)
+                  data=data, width=600, height=300)

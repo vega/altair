@@ -3,6 +3,7 @@ Gantt Chart
 -----------------
 This example shows how to make a simple gantt chart.
 """
+# category: basic charts
 
 import altair as alt
 

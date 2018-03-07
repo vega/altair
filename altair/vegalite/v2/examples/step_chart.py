@@ -3,6 +3,7 @@ Step Chart
 -----------------
 This example shows Google's stock price over time.
 """
+# category: basic charts
 
 import altair as alt
 from vega_datasets import data

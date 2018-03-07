@@ -1,6 +1,6 @@
 """
 Aggregate Bar Chart
------------------
+-------------------
 This example is a bar chart showing the US population distribution of age groups in 2000..
 """
 

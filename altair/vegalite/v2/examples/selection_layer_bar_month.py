@@ -5,6 +5,7 @@ The plot below uses an interval selection, which causes the chart to include an 
 (shown in grey). The brush selection parameterizes the red guideline, which visualizes the average
 value within the selected interval.
 """
+# category: interactive
 
 import altair as alt
 from vega_datasets import data

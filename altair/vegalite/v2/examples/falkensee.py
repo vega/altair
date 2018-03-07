@@ -57,23 +57,23 @@ source2 = [{
             "event": "GDR (East Germany)"
           }]
 
-          
+
 source = alt.pd.DataFrame(source)
 source2 = alt.pd.DataFrame(source2)
 
 
 line = alt.Chart(source).mark_line(color = '#333').encode(
-    x = alt.X('year:T', axis=alt.Axis(format='%Y')), 
+    x = alt.X('year:T', axis=alt.Axis(format='%Y')),
     y = 'population'
-).properties(width = 700, height = 400)
+).properties(width=600, height=400)
 
 point = alt.Chart(source).mark_point(color = '#333').encode(
-    x = alt.X('year:T', axis=alt.Axis(format='%Y')), 
+    x = alt.X('year:T', axis=alt.Axis(format='%Y')),
     y = 'population'
 )
 
 recta = alt.Chart(source2).mark_rect().encode(
-    x = 'start:T', 
+    x = 'start:T',
     x2 = 'end:T',
     color = 'event:N'
 )

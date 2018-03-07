@@ -5,6 +5,7 @@ This example shows an interactive chart where selections in one portion of
 the chart affect what is shown in other panels. Click on the bar chart to
 see a detail of the distribution in the upper panel.
 """
+# category: interactive
 
 import altair as alt
 from vega_datasets import data

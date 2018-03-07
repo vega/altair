@@ -29,31 +29,52 @@ HTML_TEMPLATE = """
 </html>
 """
 
-EMBED_CODE = """
-const spec = {spec};
-const opt = {opt};
-vegaEmbed("#vis", spec, opt).then(function(result) {{
-    window.view = result.view;
-}}).catch(console.error);
-"""
-
-CONVERT_CODE = {
+EXTRACT_CODE = {
 'png': """
-       window.view.toCanvas().then(function(canvas) {
-           window.image_render = canvas.toDataURL('image/png');
-       })
-       """,
+        var spec = arguments[0];
+        var mode = arguments[1]
+        var done = arguments[2];
+
+        if(mode === 'vega-lite'){
+          // compile vega-lite to vega
+          const compiled = vl.compile(spec);
+          spec = compiled.spec;
+        }
+
+        new vega.View(vega.parse(spec), {
+              loader: vega.loader(),
+              logLevel: vega.Warn,
+              renderer: 'none',
+            })
+            .initialize()
+            .toCanvas()
+            .then(function(canvas){return canvas.toDataURL('image/png');})
+            .then(done)
+            .catch(function(err) { console.error(err); });
+        """,
 'svg': """
-       window.view.toSVG().then(function(render) {
-           window.image_render = render;
-       })
-       """}
+        var spec = arguments[0];
+        var mode = arguments[1];
+        var done = arguments[2];
 
-EXTRACT_CODE = """
-return window.image_render;
-"""
+        if(mode === 'vega-lite'){
+          // compile vega-lite to vega
+          const compiled = vl.compile(spec);
+          spec = compiled.spec;
+        }
 
-def save_spec(spec, fp, mode=None, format=None):
+        new vega.View(vega.parse(spec), {
+              loader: vega.loader(),
+              logLevel: vega.Warn,
+              renderer: 'none',
+            })
+            .initialize()
+            .toSVG()
+            .then(done)
+            .catch(function(err) { console.error(err); });
+        """}
+
+def save_spec(spec, fp, mode=None, format=None, driver_timeout=10):
     """Save a spec to file
 
     Parameters
@@ -69,6 +90,9 @@ def save_spec(spec, fp, mode=None, format=None):
     format : string (optional)
         the file format to be saved. If not specified, it will be inferred
         from the extension of filename.
+    driver_timeout : int (optional)
+        the number of seconds to wait for page load before raising an
+        error (default: 10)
 
     Note
     ----
@@ -89,27 +113,29 @@ def save_spec(spec, fp, mode=None, format=None):
     Options = attempt_import('selenium.webdriver.chrome.options',
                              'save_spec requires the selenium package').Options
 
-    opt = {'renderer': 'canvas' if format == 'png' else 'svg'}
-    if mode is not None:
-        if mode not in ['vega', 'vega-lite']:
-            raise ValueError("mode must be 'vega' or 'vega-lite'")
-        opt['mode'] = mode
+    if mode is None:
+        if '$schema' in spec:
+            mode = spec['$schema'].split('/')[-2]
+        else:
+            mode = 'vega'
+    if mode not in ['vega', 'vega-lite']:
+        raise ValueError("mode must be 'vega' or 'vega-lite'")
 
     try:
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         driver = webdriver.Chrome(chrome_options=chrome_options)
+        driver.set_page_load_timeout(driver_timeout)
+
         try:
-            fd, name = tempfile.mkstemp(suffix='.html', text=True)
-            with open(name, 'w') as f:
+            fd, htmlfile = tempfile.mkstemp(suffix='.html', text=True)
+            with open(htmlfile, 'w') as f:
                 f.write(HTML_TEMPLATE)
-            driver.get("file://" + name)
-            driver.execute_script(EMBED_CODE.format(spec=json.dumps(spec),
-                                                    opt=json.dumps(opt)))
-            driver.execute_script(CONVERT_CODE[format])
-            render = driver.execute_script(EXTRACT_CODE)
+            driver.get("file://" + htmlfile)
+            render = driver.execute_async_script(EXTRACT_CODE[format],
+                                                 spec, mode)
         finally:
-            os.remove(name)
+            os.remove(htmlfile)
     finally:
         driver.close()
 
