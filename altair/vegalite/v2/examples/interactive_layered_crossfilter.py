@@ -5,6 +5,7 @@ This example shows a multi-panel view of the same data, where you can interactiv
 select a portion of the data in any of the panels to highlight that portion in any
 of the other panels.
 """
+# category: interactive
 
 import altair as alt
 from vega_datasets import data
@@ -14,7 +15,7 @@ flights = alt.UrlData(data.flights_2k.url,
 
 brush = alt.selection(type='interval', encodings=['x'])
 
-# Define the base chart, with the common parts of the 
+# Define the base chart, with the common parts of the
 # background and highlights
 base = alt.Chart().mark_bar().encode(
     x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.BinParams(maxbins=20)),

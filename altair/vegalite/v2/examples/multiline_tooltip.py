@@ -4,6 +4,7 @@ Multi-Lite Tooltip
 This example shows how you can use selections and layers to create a multi-line tooltip
 that tracks the x position of the cursor.
 """
+# category: interactive
 
 import altair as alt
 import pandas as pd

@@ -4,6 +4,7 @@ import ast
 import hashlib
 import itertools
 import json
+import re
 import sys
 
 
@@ -127,6 +128,8 @@ def get_docstring_and_rest(filename):
     -------
     docstring: str
         docstring of ``filename``
+    category: list
+        list of categories specified by the "# category:" comment
     rest: str
         ``filename`` content without the docstring
     lineno: int
@@ -138,6 +141,18 @@ def get_docstring_and_rest(filename):
     https://github.com/sphinx-gallery/sphinx-gallery/
     """
     node, content = _parse_source_file(filename)
+
+    # Find the category comment
+    find_category = re.compile('^#\s*category:\s*(.*)$', re.MULTILINE)
+    match = find_category.search(content)
+    if match is not None:
+        category = match.groups()[0]
+        # remove this comment from the content
+        content = find_category.sub('', content)
+        print(content)
+    else:
+        category = None
+
 
     if node is None:
         return SYNTAX_ERROR_DOCSTRING, content, 1
@@ -187,7 +202,7 @@ def get_docstring_and_rest(filename):
         raise ValueError(('Could not find docstring in file "{0}". '
                           'A docstring is required for the example gallery.')
                          .format(filename))
-    return docstring, rest, lineno
+    return docstring, category, rest, lineno
 
 
 def prev_this_next(it, sentinel=None):

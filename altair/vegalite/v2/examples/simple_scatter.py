@@ -5,6 +5,7 @@ Simple Scatter Plot
 A simple example of an interactive scatter plot using the well-known iris
 dataset.
 """
+# category: basic charts
 
 from altair import Chart
 from vega_datasets import data

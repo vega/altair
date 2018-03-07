@@ -4,6 +4,7 @@ Locations of US Airports
 This is a layered geographic visualization that shows the positions of US
 airports on a background of US states.
 """
+# category: geographic
 import altair as alt
 from vega_datasets import data
 
