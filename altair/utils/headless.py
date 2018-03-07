@@ -29,29 +29,27 @@ HTML_TEMPLATE = """
 </html>
 """
 
-EMBED_CODE = """
-const spec = {spec};
-const opt = {opt};
-vegaEmbed("#vis", spec, opt).then(function(result) {{
-    window.view = result.view;
-}}).catch(console.error);
-"""
-
-CONVERT_CODE = {
+EXTRACT_CODE = {
 'png': """
-       window.view.toCanvas().then(function(canvas) {
-           window.image_render = canvas.toDataURL('image/png');
-       })
+        var spec = arguments[0];
+        var opt = arguments[1];
+        var done = arguments[2];
+        vegaEmbed('#vis', spec, opt).then(function(result){
+            return result.view;
+        }).then(function(view){
+            return view.toCanvas();
+        }).then(function(canvas){
+            return canvas.toDataURL('image/png');
+        }).then(done);
        """,
 'svg': """
-       window.view.toSVG().then(function(render) {
-           window.image_render = render;
-       })
+        var spec = arguments[0];
+        var opt = arguments[1];
+        var done = arguments[2];
+        vegaEmbed('#vis', spec, opt).then(function(result){
+            return result.view.toSVG();
+        }).then(done);
        """}
-
-EXTRACT_CODE = """
-return window.image_render;
-"""
 
 def save_spec(spec, fp, mode=None, format=None):
     """Save a spec to file
@@ -106,13 +104,8 @@ def save_spec(spec, fp, mode=None, format=None):
             with open(name, 'w') as f:
                 f.write(HTML_TEMPLATE)
             driver.get("file://" + name)
-            time.sleep(1)
-            driver.execute_script(EMBED_CODE.format(spec=json.dumps(spec),
-                                                    opt=json.dumps(opt)))
-            time.sleep(1)
-            driver.execute_script(CONVERT_CODE[format])
-            time.sleep(1)
-            render = driver.execute_script(EXTRACT_CODE)
+            render = driver.execute_async_script(EXTRACT_CODE[format],
+                                                 spec, opt)
         finally:
             os.remove(name)
     finally:
