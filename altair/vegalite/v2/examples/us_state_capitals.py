@@ -19,16 +19,33 @@ background = alt.Chart(states).mark_geoshape(
     fill='lightgray',
     stroke='white'
 ).properties(
+    title='US State Capitols',
     projection={'type': 'albersUsa'},
-    width=800,
-    height=500
+    width=700,
+    height=400
 )
 
-# State capitals labeled on background
-points = alt.Chart(capitals).mark_text(dy=-5, align='right').encode(
-    alt.Text('city', type='nominal'),
+# Points and text
+hover = alt.selection(type='single', on='mouseover', nearest=True,
+                      fields=['lat', 'lon'])
+
+base = alt.Chart(capitals).encode(
     alt.X('lon', type='longitude'),
-    alt.Y('lat', type='latitude'),
+    alt.Y('lat', type='latitude')
 )
 
-chart = background + points + points.mark_point(color='black')
+text = base.mark_text(dy=-5, align='right').encode(
+    alt.Text('city', type='nominal'),
+    opacity=alt.condition(~hover, alt.value(0), alt.value(1))
+)
+
+points = base.mark_point().encode(
+    color=alt.value('black'),
+    size=alt.condition(~hover, alt.value(30), alt.value(100))
+).properties(
+    selection=hover
+)
+
+chart = background + points + text
+
+chart

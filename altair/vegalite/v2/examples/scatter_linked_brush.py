@@ -18,8 +18,8 @@ base = alt.Chart(cars).mark_point().encode(
     color=alt.condition(brush, 'Origin', alt.ColorValue('gray'))
 ).properties(
     selection=brush,
-    width=300,
-    height=300
+    width=250,
+    height=250
 )
 
 chart = base.encode(x='Horsepower') | base.encode(x='Acceleration')

@@ -21,8 +21,8 @@ base = alt.Chart().mark_bar().encode(
     x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.BinParams(maxbins=20)),
     y='count(*):Q'
 ).properties(
-    width=300,
-    height=200
+    width=180,
+    height=130
 )
 
 # blue background with selection

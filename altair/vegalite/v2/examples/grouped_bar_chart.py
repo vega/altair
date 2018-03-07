@@ -17,7 +17,7 @@ chart = alt.Chart(source).mark_bar(stroke = 'transparent').encode(
 ).configure_view(
     stroke='transparent'
 ).configure_axis(
-    domainWidth=1
+    domainWidth=0.8
 ).transform_filter(
     "datum.year == 2000"
 ).transform_calculate(
