@@ -57,13 +57,13 @@ The following examples are automatically generated from
 
    <div style='clear:both;'></div>
 
-{% endfor %}
-
 .. toctree::
-   :hidden:
-{% for example in examples %}
-   {{ example.name }}
+  :hidden:
+{% for example in group.list %}
+  {{ example.name }}
 {%- endfor %}
+
+{% endfor %}
 """)
 
 
