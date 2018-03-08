@@ -96,7 +96,7 @@ class SelectionMapping(core.SchemaBase):
     def __or__(self, other):
         if isinstance(other, SelectionMapping):
             other = other._get_name()
-        return core.SelectionAnd(**{'or': [self._get_name(), other]})
+        return core.SelectionOr(**{'or': [self._get_name(), other]})
 
 
 def selection(name=None, **kwds):
