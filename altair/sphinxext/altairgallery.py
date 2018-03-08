@@ -16,6 +16,8 @@ from docutils.statemachine import ViewList
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag
 
+from sphinx.util.nodes import nested_parse_with_titles
+
 from .utils import get_docstring_and_rest, prev_this_next, create_thumbnail
 from altair.vegalite.v2.examples import iter_examples
 
@@ -64,6 +66,23 @@ The following examples are automatically generated from
 {%- endfor %}
 
 {% endfor %}
+""")
+
+MINIGALLERY_TEMPLATE = jinja2.Template(u"""
+{% for example in examples %}
+.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
+    :target: {{ gallery_dir }}/{{ example.name }}.html
+    :align: center
+    :figclass: minigallery
+    {% if width %}:width: {{ width }}{% endif %}
+
+    {% if titles %}:ref:`gallery_{{ example.name }}`{% endif %}
+{% endfor %}
+
+.. raw:: html
+
+   <div style='clear:left;'></div>
+
 """)
 
 
@@ -148,9 +167,58 @@ def populate_examples(**kwds):
     return examples
 
 
-def main(app):
-    print('altair-gallery main')
+class AltairMiniGalleryDirective(Directive):
+    has_content = False
 
+    option_spec = {'size': int,
+                   'indices': lambda x: list(map(int, x.split())),
+                   'shuffle': flag,
+                   'seed': int,
+                   'titles': bool,
+                   'width': str}
+
+    def run(self):
+        size = self.options.get('size', 4)
+        indices = self.options.get('indices', [])
+        shuffle = 'shuffle' in self.options
+        seed = self.options.get('seed', 42)
+        titles = self.options.get('titles', False)
+        width = self.options.get('width', None)
+
+        env = self.state.document.settings.env
+        app = env.app
+
+        gallery_dir = app.builder.config.altair_gallery_dir
+        gallery_ref = app.builder.config.altair_gallery_ref
+
+        examples = populate_examples()
+
+        if indices:
+            examples = [examples[i] for i in indices]
+        if shuffle:
+            random.seed(seed)
+            random.shuffle(examples)
+        if size:
+            examples = examples[:size]
+
+        include = MINIGALLERY_TEMPLATE.render(image_dir='/_images',
+                                              gallery_dir=gallery_dir,
+                                              examples=examples,
+                                              titles=titles,
+                                              width=width)
+
+        # parse and return documentation
+        result = ViewList()
+        for line in include.split('\n'):
+            result.append(line, "<altair-minigallery>")
+        node = nodes.paragraph()
+        node.document = self.state.document
+        nested_parse_with_titles(self.state, result, node)
+
+        return node.children
+
+
+def main(app):
     gallery_dir = app.builder.config.altair_gallery_dir
     target_dir = os.path.join(app.builder.srcdir, gallery_dir)
     image_dir = os.path.join(app.builder.srcdir, '_images')
@@ -190,3 +258,4 @@ def setup(app):
     app.add_config_value('altair_gallery_dir', 'gallery', 'env')
     app.add_config_value('altair_gallery_ref', 'example-gallery', 'env')
     app.add_config_value('altair_gallery_title', 'Example Gallery', 'env')
+    app.add_directive_to_domain('py', 'altair-minigallery', AltairMiniGalleryDirective)

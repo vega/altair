@@ -61,7 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Altair'
-copyright = '2016, Brian Granger and Jake VanderPlas'
+copyright = '2016-2018, Altair Developers'
 author = 'Brian Granger and Jake VanderPlas'
 
 # The version info for the project you're documenting, acts as replacement for
