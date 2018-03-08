@@ -113,7 +113,7 @@ def selection(name=None, **kwds):
 selection.counter = 1
 
 
-def condition(predicate, if_true, if_false):
+def condition(predicate, if_true, if_false, **kwargs):
     """A conditional attribute or encoding
 
     Parameters
@@ -125,6 +125,8 @@ def condition(predicate, if_true, if_false):
         the spec or object to use if the selection predicate is true
     if_false:
         the spec or object to use if the selection predicate is false
+    **kwargs:
+        additional keyword args are added to the resulting dict
 
     Returns
     -------
@@ -155,6 +157,7 @@ def condition(predicate, if_true, if_false):
         if_true = if_true.to_dict()
     elif isinstance(if_true, six.string_types):
         if_true = {'field': if_true}
+        if_true.update(kwargs)
     condition.update(if_true)
 
     if isinstance(if_false, core.SchemaBase):
@@ -164,6 +167,7 @@ def condition(predicate, if_true, if_false):
         selection.condition = condition
     elif isinstance(if_false, six.string_types):
         selection = dict(condition=condition, field=if_false)
+        selection.update(kwargs)
     else:
         selection = dict(condition=condition, **if_false)
 
