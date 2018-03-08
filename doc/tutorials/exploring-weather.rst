@@ -182,7 +182,7 @@ and to allow interactive panning and zooming with the mouse:
         alt.X('temp_max', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
         alt.Y('temp_range:Q', axis=alt.Axis(title='Daily Temperature Range (C)')),
         alt.Color('weather', scale=scale),
-        alt.Size('precipitation', scale=alt.Scale(domain=[-1, 50]))
+        alt.Size('precipitation', scale=alt.Scale(range=[1, 200]))
     ).transform_calculate(
         "temp_range", "datum.temp_max - datum.temp_min"
     ).properties(
@@ -218,7 +218,7 @@ of the selection:
         alt.X('temp_max:Q', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
         alt.Y('temp_range:Q', axis=alt.Axis(title='Daily Temperature Range (C)')),
         color=alt.condition(brush, 'weather:N', alt.value('lightgray'), scale=scale),
-        size=alt.Size('precipitation:Q', scale=alt.Scale(domain=[-1, 50]))
+        size=alt.Size('precipitation:Q', scale=alt.Scale(range=[1, 200]))
     ).transform_calculate(
         "temp_range", "datum.temp_max - datum.temp_min"
     ).properties(
