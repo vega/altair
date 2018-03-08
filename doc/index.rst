@@ -45,8 +45,9 @@ Documentation
 .. toctree::
    :maxdepth: 2
 
-   gallery/index
    tutorials/index
+   gallery/index
+   API
 
 Bug Reports & Questions
 -----------------------
