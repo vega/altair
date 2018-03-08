@@ -13,8 +13,8 @@ from vega_datasets import data
 pts = alt.selection(type="single", encodings=['x'])
 
 rect = alt.Chart(data.movies.url).mark_rect().encode(
-    alt.X('IMDB_Rating:Q', bin=alt.BinParams(maxbins=10)),
-    alt.Y('Rotten_Tomatoes_Rating:Q', bin=alt.BinParams(maxbins=10)),
+    alt.X('IMDB_Rating:Q', bin=True),
+    alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
     alt.Color('count(*):Q',
         scale=alt.Scale(scheme='greenblue'),
         legend=alt.Legend(title='Total Records')

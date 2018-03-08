@@ -36,6 +36,7 @@ The directives have the following options::
         :output:  [plot|repr|stdout|none]
         :alt: text  # Alternate text when plot cannot be rendered
         :links: editor source export  # specify one or more of these options
+        :chart-var-name: chart  # name of variable in namespace containing output
 
 
 Additionally, this extension introduces a global configuration
@@ -51,6 +52,8 @@ again overrides it. It should look something like this::
 If this configuration is not specified, all are set to True.
 """
 
+import contextlib
+import io
 import os
 import json
 import warnings
@@ -119,7 +122,7 @@ def validate_links(links):
 
 def validate_output(output):
     output = output.strip().lower()
-    if output not in ['plot', 'repr', 'none']:
+    if output not in ['plot', 'repr', 'stdout', 'none']:
         raise ValueError(":output: flag must be one of [plot|repr|stdout|none]")
     return output
 
@@ -132,7 +135,8 @@ class AltairPlotDirective(Directive):
                    'namespace': unchanged,
                    'output': validate_output,
                    'alt': unchanged,
-                   'links': validate_links}
+                   'links': validate_links,
+                   'chart-var-name': unchanged}
 
     def run(self):
         env = self.state.document.settings.env
@@ -178,6 +182,7 @@ class AltairPlotDirective(Directive):
         plot_node['rst_lineno'] = self.lineno
         plot_node['links'] = self.options.get('links', app.builder.config.altairplot_links)
         plot_node['output'] = self.options.get('output', 'plot')
+        plot_node['chart-var-name'] = self.options.get('chart-var-name', None)
 
         if 'alt' in self.options:
             plot_node['alt'] = self.options['alt']
@@ -196,25 +201,47 @@ class AltairPlotDirective(Directive):
 
 def html_visit_altair_plot(self, node):
     # Execute the code, saving output and namespace
+    namespace = node['namespace']
     try:
-        chart = exec_then_eval(node['code'], node['namespace'])
+        f = io.StringIO()
+        with contextlib.redirect_stdout(f):
+            chart = exec_then_eval(node['code'], namespace)
+        stdout = f.getvalue()
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
                       "{2}: {3}".format(node['rst_source'], node['rst_lineno'],
                                         e.__class__.__name__, str(e)))
         raise nodes.SkipNode
 
+    chart_name = node['chart-var-name']
+    if chart_name is not None:
+        if chart_name not in namespace:
+            raise ValueError("chart-var-name='{0}' not present in namespace"
+                             "".format(chart_name))
+        chart = namespace[chart_name]
+
 
     output = node['output']
 
     if output == 'none':
         raise nodes.SkipNode
+    elif output == 'stdout':
+        if not stdout:
+            raise nodes.SkipNode
+        else:
+            output_literal = nodes.literal_block(stdout, stdout)
+            output_literal['language'] = 'none'
+            node.extend([output_literal])
+            self.visit_admonition(node)
     elif output == 'repr':
         if chart is None:
             raise nodes.SkipNode
         else:
-            rep = repr(chart)
-            node.extend([nodes.literal_block(rep, rep)])
+            rep = '    ' + repr(chart).replace('\n', '\n    ')
+            repr_literal = nodes.literal_block(rep, rep)
+            repr_literal['language'] = 'none'
+            node.extend([repr_literal])
+            self.visit_admonition(node)
     elif output == 'plot':
         if isinstance(chart, alt.TopLevelMixin):
             # Last line should be a chart; convert to spec dict

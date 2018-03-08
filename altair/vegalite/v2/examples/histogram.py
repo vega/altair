@@ -11,6 +11,6 @@ from vega_datasets import data
 movies = data.movies.url
 
 chart = alt.Chart(movies).mark_bar().encode(
-    alt.X("IMDB_Rating:Q", bin=alt.BinParams(maxbins=10)),
+    alt.X("IMDB_Rating:Q", bin=True),
     y='count(*):Q',
 )
