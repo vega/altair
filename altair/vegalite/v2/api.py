@@ -113,6 +113,24 @@ def selection(name=None, **kwds):
 selection.counter = 1
 
 
+@use_signature(core.IntervalSelection)
+def selection_interval(**kwargs):
+    """A selection with type='interval'"""
+    return selection(type='interval', **kwargs)
+
+
+@use_signature(core.MultiSelection)
+def selection_multi(**kwargs):
+    """A selection with type='multi'"""
+    return selection(type='multi', **kwargs)
+
+
+@use_signature(core.SingleSelection)
+def selection_single(**kwargs):
+    """A selection with type='single'"""
+    return selection(type='single', **kwargs)
+
+
 def condition(predicate, if_true, if_false, **kwargs):
     """A conditional attribute or encoding
 
