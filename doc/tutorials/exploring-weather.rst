@@ -194,6 +194,57 @@ This gives us even more insight into the weather patterns in Seattle: rainy and
 foggy days tend to be cooler with a narrower range of temperatures, while warmer
 days tend to be dry and sunny, with a wider spread between low and high temperature.
 
+You can take this even further using Altair's building blocks for multi-panel
+charts and interactions. For example, we might construct a histogram of days
+by weather type:
+
+.. altair-plot::
+
+    alt.Chart(df).mark_bar().encode(
+        x='count(*):Q',
+        y='weather:N',
+        color=alt.Color('weather:N', scale=scale),
+    )
+
+And now we can vertically concatenate this histogram to the points plot above,
+and add a brush selection tool such that the histogram reflects the content
+of the selection:
+
+.. altair-plot::
+
+    brush = alt.selection(type='interval')
+
+    points = alt.Chart().mark_point().encode(
+        alt.X('temp_max:Q', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
+        alt.Y('temp_range:Q', axis=alt.Axis(title='Daily Temperature Range (C)')),
+        color=alt.condition(brush, 'weather:N', alt.value('lightgray'), scale=scale),
+        size=alt.Size('precipitation:Q', scale=alt.Scale(domain=[-1, 50]))
+    ).transform_calculate(
+        "temp_range", "datum.temp_max - datum.temp_min"
+    ).properties(
+        width=600,
+        height=400,
+        selection=brush
+    )
+
+    bars = alt.Chart().mark_bar().encode(
+        x='count(*):Q',
+        y='weather:N',
+        color=alt.Color('weather:N', scale=scale),
+    ).transform_calculate(
+        "temp_range", "datum.temp_max - datum.temp_min"
+    ).transform_filter(
+        brush.ref()
+    ).properties(
+        width=600
+    )
+
+    alt.vconcat(points, bars, data=df)
+
+This chart, containing concatenations, data transformations, selections, and
+customized axes labels and data scales, shows the power of the grammar behind
+Altair: you can create a complex chart from a small number of building blocks.
+
 This is the end of this tutorial where you have seen various ways to bin
 and aggregate data, derive new fields, and customize your charts.
 You can find more visualizations in the :ref:`example-gallery`.
