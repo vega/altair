@@ -52,6 +52,8 @@ again overrides it. It should look something like this::
 If this configuration is not specified, all are set to True.
 """
 
+import contextlib
+import io
 import os
 import json
 import warnings
@@ -120,7 +122,7 @@ def validate_links(links):
 
 def validate_output(output):
     output = output.strip().lower()
-    if output not in ['plot', 'repr', 'none']:
+    if output not in ['plot', 'repr', 'stdout', 'none']:
         raise ValueError(":output: flag must be one of [plot|repr|stdout|none]")
     return output
 
@@ -201,7 +203,10 @@ def html_visit_altair_plot(self, node):
     # Execute the code, saving output and namespace
     namespace = node['namespace']
     try:
-        chart = exec_then_eval(node['code'], namespace)
+        f = io.StringIO()
+        with contextlib.redirect_stdout(f):
+            chart = exec_then_eval(node['code'], namespace)
+        stdout = f.getvalue()
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
                       "{2}: {3}".format(node['rst_source'], node['rst_lineno'],
@@ -220,12 +225,23 @@ def html_visit_altair_plot(self, node):
 
     if output == 'none':
         raise nodes.SkipNode
+    elif output == 'stdout':
+        if not stdout:
+            raise nodes.SkipNode
+        else:
+            output_literal = nodes.literal_block(stdout, stdout)
+            output_literal['language'] = 'none'
+            node.extend([output_literal])
+            self.visit_admonition(node)
     elif output == 'repr':
         if chart is None:
             raise nodes.SkipNode
         else:
-            rep = repr(chart)
-            node.extend([nodes.literal_block(rep, rep)])
+            rep = '    ' + repr(chart).replace('\n', '\n    ')
+            repr_literal = nodes.literal_block(rep, rep)
+            repr_literal['language'] = 'none'
+            node.extend([repr_literal])
+            self.visit_admonition(node)
     elif output == 'plot':
         if isinstance(chart, alt.TopLevelMixin):
             # Last line should be a chart; convert to spec dict

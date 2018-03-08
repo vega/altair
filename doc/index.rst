@@ -84,6 +84,7 @@ Documentation
    :maxdepth: 2
 
    gallery/index
+   tutorials/index
 
 Bug Reports & Questions
 -----------------------
