@@ -17,6 +17,11 @@ from .display import renderers
 SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v2.json"
 
 
+#------------------------------------------------------------------------
+# Aliases
+Bin = core.BinParams
+
+
 def _get_channels_mapping():
     mapping = {}
     for attr in dir(channels):

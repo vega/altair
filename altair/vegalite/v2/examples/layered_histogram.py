@@ -15,17 +15,17 @@ df = pd.DataFrame({'Trial A':np.random.normal(0, 0.8, 1000),
                    'Trial C':np.random.normal(3, 2, 1000)})
 
 # Tidying Data
-df = pd.melt(df, id_vars=df.index.name, 
+df = pd.melt(df, id_vars=df.index.name,
              value_vars=df.columns,
              var_name = 'Experiment',
              value_name='Measurement')
 
 chart = alt.Chart(df).mark_area(opacity=0.3, interpolate='step').encode(
-    x=alt.X('Measurement',bin = alt.BinParams(maxbins=100)),
-    y=alt.Y('count(*):Q', stack=None), 
-    color=alt.Color('Experiment', 
-                    scale=alt.Scale(range=['#0000ff', 
-                                           '#008000', 
+    x=alt.X('Measurement',bin = alt.Bin(maxbins=100)),
+    y=alt.Y('count(*):Q', stack=None),
+    color=alt.Color('Experiment',
+                    scale=alt.Scale(range=['#0000ff',
+                                           '#008000',
                                            '#ff0000'])
                    )
 )
