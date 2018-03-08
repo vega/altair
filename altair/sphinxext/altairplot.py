@@ -36,6 +36,7 @@ The directives have the following options::
         :output:  [plot|repr|stdout|none]
         :alt: text  # Alternate text when plot cannot be rendered
         :links: editor source export  # specify one or more of these options
+        :chart-var-name: chart  # name of variable in namespace containing output
 
 
 Additionally, this extension introduces a global configuration
@@ -132,7 +133,8 @@ class AltairPlotDirective(Directive):
                    'namespace': unchanged,
                    'output': validate_output,
                    'alt': unchanged,
-                   'links': validate_links}
+                   'links': validate_links,
+                   'chart-var-name': unchanged}
 
     def run(self):
         env = self.state.document.settings.env
@@ -178,6 +180,7 @@ class AltairPlotDirective(Directive):
         plot_node['rst_lineno'] = self.lineno
         plot_node['links'] = self.options.get('links', app.builder.config.altairplot_links)
         plot_node['output'] = self.options.get('output', 'plot')
+        plot_node['chart-var-name'] = self.options.get('chart-var-name', None)
 
         if 'alt' in self.options:
             plot_node['alt'] = self.options['alt']
@@ -196,13 +199,21 @@ class AltairPlotDirective(Directive):
 
 def html_visit_altair_plot(self, node):
     # Execute the code, saving output and namespace
+    namespace = node['namespace']
     try:
-        chart = exec_then_eval(node['code'], node['namespace'])
+        chart = exec_then_eval(node['code'], namespace)
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
                       "{2}: {3}".format(node['rst_source'], node['rst_lineno'],
                                         e.__class__.__name__, str(e)))
         raise nodes.SkipNode
+
+    chart_name = node['chart-var-name']
+    if chart_name is not None:
+        if chart_name not in namespace:
+            raise ValueError("chart-var-name='{0}' not present in namespace"
+                             "".format(chart_name))
+        chart = namespace[chart_name]
 
 
     output = node['output']

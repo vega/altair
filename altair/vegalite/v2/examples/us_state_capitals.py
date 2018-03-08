@@ -47,5 +47,3 @@ points = base.mark_point().encode(
 )
 
 chart = background + points + text
-
-chart

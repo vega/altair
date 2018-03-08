@@ -149,7 +149,6 @@ def get_docstring_and_rest(filename):
         category = match.groups()[0]
         # remove this comment from the content
         content = find_category.sub('', content)
-        print(content)
     else:
         category = None
 
@@ -161,8 +160,8 @@ def get_docstring_and_rest(filename):
         raise TypeError("This function only supports modules. "
                         "You provided {0}".format(node.__class__.__name__))
     try:
-        # in python 3.7 module knows it's docstring
-        # everything else will raise an attribute error
+        # In python 3.7 module knows its docstring.
+        # Everything else will raise an attribute error
         docstring = node.docstring
 
         import tokenize

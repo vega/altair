@@ -75,6 +75,7 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 {{ docstring }}
 
 .. altair-plot::
+    :chart-var-name: chart
     {% if code_below %}:code-below:{% endif %}
 
     {{ code | indent(4) }}
@@ -136,7 +137,6 @@ def populate_examples(**kwds):
     for example in examples:
         docstring, category, code, lineno =\
             get_docstring_and_rest(example['filename'])
-        code += '\nchart'
         example.update(kwds)
         if category is None:
             category = 'general'
