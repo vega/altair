@@ -1,4 +1,5 @@
 import json
+import warnings
 
 import jsonschema
 import six
@@ -20,6 +21,11 @@ SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v2.json"
 #------------------------------------------------------------------------
 # Aliases
 Bin = core.BinParams
+
+# These are parameters that are valid at the top level, but are not valid
+# for specs that are within a composite chart
+# (layer, hconcat, vconcat, facet, repeat)
+TOPLEVEL_ONLY_KEYS = {'background', 'config', 'autosize', 'padding', '$schema'}
 
 
 def _get_channels_mapping():
@@ -572,10 +578,10 @@ def _check_if_valid_subspec(spec, classname):
 
     If it is not, then raise a ValueError
     """
-    err = ('Objects with "{0}" cannot be used within {1}. Consider defining '
-           'the {0} attribute in the {1} object instead.')
+    err = ('Objects with "{0}" attribute cannot be used within {1}. '
+           'Consider defining the {0} attribute in the {1} object instead.')
 
-    for attr in ['autosize', 'background', 'config', 'padding']:
+    for attr in TOPLEVEL_ONLY_KEYS:
         if isinstance(spec, core.SchemaBase):
             val = getattr(spec, attr, Undefined)
         else:
@@ -716,3 +722,27 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
 def layer(*charts, **kwargs):
     """layer multiple charts"""
     return LayerChart(layer=charts, **kwargs)
+
+
+@use_signature(core.TopLevelFacetSpec)
+class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
+    """A Chart with layers within a single panel"""
+    def __init__(self, spec, row=Undefined, column=Undefined,
+                 facet=Undefined, **kwargs):
+        _check_if_valid_subspec(spec, 'FacetChart')
+        if facet is Undefined:
+            facet = core.FacetMapping()
+        if row is not Undefined:
+            facet['row'] = row
+        if column is not Undefined:
+            facet['column'] = column
+        if 'data' not in kwargs:
+            warnings.warn('FacetChart: data should be defined at the top level')
+        super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
+
+    # TODO: think about the most useful class API here
+
+
+def facet(spec, row=Undefined, column=Undefined, **kwargs):
+    """Create a FacetChart"""
+    return FacetChart(spec=spec, row=row, column=column, **kwargs)
