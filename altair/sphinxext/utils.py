@@ -154,7 +154,7 @@ def get_docstring_and_rest(filename):
 
 
     if node is None:
-        return SYNTAX_ERROR_DOCSTRING, content, 1
+        return SYNTAX_ERROR_DOCSTRING, category, content, 1
 
     if not isinstance(node, ast.Module):
         raise TypeError("This function only supports modules. "
