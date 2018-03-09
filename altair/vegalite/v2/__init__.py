@@ -8,6 +8,9 @@ from ...datasets import (
     load_dataset
 )
 
+from ... import expr
+from ...expr import datum
+
 from .display import VegaLite, renderers
 
 from .data import (

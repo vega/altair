@@ -1,4 +1,9 @@
-{
+import os
+import json
+from .core import FunctionExpression
+
+
+FUNCTION_LISTING = {
   "utcyear": "returns the year for a given date input, in UTC time",
   "indexof": "returns the first index of an element (for array inputs) or substring (for string inputs) e.g., `indexof(\"visualization\", \"i\") == 1",
   "upper": "transforms a string to upper-case",
@@ -67,3 +72,31 @@
   "inrange": "tests whether a value falls within a specified inclusive extent; an optional flag uses an exclusive extent instead (i.e., `inrange(value, a, b, exclusive?) `).",
   "eventY": "returns the y-coordinate for the current event. If no arguments are provided, the top-level coordinate space of the visualization is used. If a group name is provided, the coordinate-space of the matching ancestor group item is used."
 }
+
+
+# This maps vega expression function names to the Python name
+NAME_MAP = {'if': 'if_'}
+
+
+class ExprFunc(object):
+    def __init__(self, name, doc):
+        self.name = name
+        self.doc = doc
+        self.__doc__ = """{0}(*args)\n    {1}""".format(name, doc)
+
+    def __call__(self, *args):
+        return FunctionExpression(self.name, *args)
+
+    def __repr__(self):
+        return "<function expr.{0}(*args)>".format(self.name)
+
+
+def _populate_namespace():
+    globals_ = globals()
+    for name, doc in FUNCTION_LISTING.items():
+        py_name = NAME_MAP.get(name, name)
+        globals_[py_name] = ExprFunc(name, doc)
+        yield py_name
+
+
+__all__ = list(_populate_namespace())

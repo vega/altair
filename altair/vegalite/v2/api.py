@@ -8,10 +8,7 @@ import pandas as pd
 from .schema import core, channels, mixins, Undefined
 
 from .data import data_transformers, pipe
-from ...utils import (infer_vegalite_type, parse_shorthand,
-                      parse_shorthand_plus_data,
-                      use_signature, update_nested,
-                      save_spec, write_file_or_filename)
+from ... import utils
 from .display import renderers
 
 
@@ -22,6 +19,11 @@ SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v2.json"
 # Aliases
 Bin = core.BinParams
 
+#------------------------------------------------------------------------
+# Encoding will contain channel objects that aren't valid at instantiation
+core.EncodingWithFacet._class_is_valid_at_instantiation = False
+
+#------------------------------------------------------------------------
 # These are parameters that are valid at the top level, but are not valid
 # for specs that are within a composite chart
 # (layer, hconcat, vconcat, facet, repeat)
@@ -35,11 +37,6 @@ def _get_channels_mapping():
         if isinstance(cls, type) and issubclass(cls, core.SchemaBase):
             mapping[cls] = attr.replace('Value', '').lower()
     return mapping
-
-
-def value(value, **kwargs):
-    """Specify a value for use in an encoding"""
-    return dict(value=value, **kwargs)
 
 
 # -------------------------------------------------------------------------
@@ -96,7 +93,14 @@ class SelectionMapping(core.SchemaBase):
     def __or__(self, other):
         if isinstance(other, SelectionMapping):
             other = other._get_name()
-        return core.SelectionAnd(**{'or': [self._get_name(), other]})
+        return core.SelectionOr(**{'or': [self._get_name(), other]})
+
+#------------------------------------------------------------------------
+# Top-Level Functions
+
+def value(value, **kwargs):
+    """Specify a value for use in an encoding"""
+    return dict(value=value, **kwargs)
 
 
 def selection(name=None, **kwds):
@@ -124,19 +128,19 @@ def selection(name=None, **kwds):
 selection.counter = 1
 
 
-@use_signature(core.IntervalSelection)
+@utils.use_signature(core.IntervalSelection)
 def selection_interval(**kwargs):
     """A selection with type='interval'"""
     return selection(type='interval', **kwargs)
 
 
-@use_signature(core.MultiSelection)
+@utils.use_signature(core.MultiSelection)
 def selection_multi(**kwargs):
     """A selection with type='multi'"""
     return selection(type='multi', **kwargs)
 
 
-@use_signature(core.SingleSelection)
+@utils.use_signature(core.SingleSelection)
 def selection_single(**kwargs):
     """A selection with type='single'"""
     return selection(type='single', **kwargs)
@@ -258,7 +262,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             # add default values if present
             if copy._default_spec_values:
-                dct = update_nested(copy._default_spec_values, dct, copy=True)
+                dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
         return dct
 
     def savechart(self, fp, format=None, **kwargs):
@@ -285,7 +289,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             raise ValueError("must specify file format: "
                              "['png', 'eps', 'html', 'json']")
         elif format == 'json':
-            write_file_or_filename(fp, self.to_json(**kwargs), mode='w')
+            utils.write_file_or_filename(fp, self.to_json(**kwargs), mode='w')
         elif format == 'html':
             from .html import HTML_TEMPLATE
             opt = dict(renderer=kwargs.pop('renderer', 'canvas'),
@@ -294,9 +298,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 raise ValueError("renderer must be 'canvas' or 'svg'")
             spec_html = HTML_TEMPLATE.format(spec=self.to_json(**kwargs),
                                              opt=json.dumps(opt))
-            write_file_or_filename(fp, spec_html, mode='w')
+            utils.write_file_or_filename(fp, spec_html, mode='w')
         elif format in ['png', 'svg']:
-            save_spec(self.to_dict(), fp, format=format, **kwargs)
+            utils.save_spec(self.to_dict(), fp, format=format, **kwargs)
         else:
             raise ValueError("unrecognized format: '{0}'".format(format))
 
@@ -354,34 +358,34 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             copy.transform.extend(transforms)
         return copy
 
-    @use_signature(core.AggregateTransform)
+    @utils.use_signature(core.AggregateTransform)
     def transform_aggregate(self, *args, **kwargs):
         return self._add_transform(core.AggregateTransform(*args, **kwargs))
 
-    @use_signature(core.BinTransform)
+    @utils.use_signature(core.BinTransform)
     def transform_bin(self, *args, **kwargs):
         return self._add_transform(core.BinTransform(*args, **kwargs))
 
-    @use_signature(core.CalculateTransform)
+    @utils.use_signature(core.CalculateTransform)
     def transform_calculate(self, as_, calculate, **kwargs):
         kwargs['as'] = as_
         kwargs['calculate'] = calculate
         return self._add_transform(core.CalculateTransform(**kwargs))
 
-    @use_signature(core.FilterTransform)
+    @utils.use_signature(core.FilterTransform)
     def transform_filter(self, filter, **kwargs):
         kwargs['filter'] = filter
         return self._add_transform(core.FilterTransform(**kwargs))
 
-    @use_signature(core.LookupTransform)
+    @utils.use_signature(core.LookupTransform)
     def transform_lookup(self, *args, **kwargs):
         return self._add_transform(core.LookupTransform(*args, **kwargs))
 
-    @use_signature(core.TimeUnitTransform)
+    @utils.use_signature(core.TimeUnitTransform)
     def transform_timeunit(self, *args, **kwargs):
         return self._add_transform(core.TimeUnitTransform(*args, **kwargs))
 
-    @use_signature(core.Resolve)
+    @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
         """Copy the chart and update the resolve property with kwargs"""
         copy = self.copy()
@@ -391,21 +395,17 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             copy.resolve[key] = val
         return copy
 
-    @use_signature(core.AxisResolveMap)
+    @utils.use_signature(core.AxisResolveMap)
     def resolve_axis(self, *args, **kwargs):
         return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
 
-    @use_signature(core.LegendResolveMap)
+    @utils.use_signature(core.LegendResolveMap)
     def resolve_legend(self, *args, **kwargs):
         return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
 
-    @use_signature(core.ScaleResolveMap)
+    @utils.use_signature(core.ScaleResolveMap)
     def resolve_scale(self, *args, **kwargs):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
-
-
-# Encoding will contain channel objects that aren't valid at instantiation
-core.EncodingWithFacet._class_is_valid_at_instantiation = False
 
 
 class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
@@ -467,7 +467,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
                                     width=width, height=height, **kwargs)
 
-    @use_signature(core.EncodingWithFacet)
+    @utils.use_signature(core.EncodingWithFacet)
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
         if args:
@@ -494,7 +494,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
             # if obj is not a string or Schema, it must be a mapping
             if 'field' in obj:
                 obj = obj.copy()
-                obj.update(parse_shorthand(obj['field']))
+                obj.update(utils.parse_shorthand(obj['field']))
 
             if 'value' in obj:
                 clsname += 'Value'
@@ -590,7 +590,7 @@ def _check_if_valid_subspec(spec, classname):
             raise ValueError(err.format(attr, classname))
 
 
-@use_signature(core.TopLevelRepeatSpec)
+@utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
     def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
@@ -639,7 +639,7 @@ def repeat(repeater):
     return core.RepeatRef(repeat=repeater)
 
 
-@use_signature(core.TopLevelHConcatSpec)
+@utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
     def __init__(self, hconcat=(), **kwargs):
@@ -667,7 +667,7 @@ def hconcat(*charts, **kwargs):
     return HConcatChart(hconcat=charts, **kwargs)
 
 
-@use_signature(core.TopLevelVConcatSpec)
+@utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
     def __init__(self, vconcat=(), **kwargs):
@@ -695,7 +695,7 @@ def vconcat(*charts, **kwargs):
     return VConcatChart(vconcat=charts, **kwargs)
 
 
-@use_signature(core.TopLevelLayerSpec)
+@utils.use_signature(core.TopLevelLayerSpec)
 class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, layer=(), **kwargs):
@@ -724,7 +724,7 @@ def layer(*charts, **kwargs):
     return LayerChart(layer=charts, **kwargs)
 
 
-@use_signature(core.TopLevelFacetSpec)
+@utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, spec, row=Undefined, column=Undefined,
