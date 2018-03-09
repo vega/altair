@@ -71,3 +71,8 @@ def test_json_reprs():
     assert repr(datum.xxx == None) == '(datum.xxx === null)'
     assert repr(datum.xxx == False) == '(datum.xxx === false)'
     assert repr(datum.xxx == True) == '(datum.xxx === true)'
+
+
+def test_to_dict():
+    ex = (datum.xxx * 2 > datum.yyy)
+    assert ex.to_dict() == repr(ex)
