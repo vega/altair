@@ -1,4 +1,5 @@
 import warnings
+from ..utils import SchemaBase
 
 
 class DatumType(object):
@@ -28,13 +29,22 @@ def _js_repr(val):
         return repr(val)
 
 
-class Expression(object):
+class Expression(SchemaBase):
     """Expression
 
     Base object for enabling build-up of Javascript expressions using
     a Python syntax. Calling ``repr(obj)`` will return a Javascript
     representation of the object and the operations it encodes.
     """
+    _schema = {'type': 'string'}
+
+    def to_dict(self, *args, **kwargs):
+        return repr(self)
+
+    def __setattr__(self, attr, val):
+        # We don't need the setattr magic defined in SchemaBase
+        return object.__setattr__(self, attr, val)
+
     def __add__(self, other):
         return BinaryExpression("+", self, other)
 
