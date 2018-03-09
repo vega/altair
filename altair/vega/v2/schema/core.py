@@ -13,7 +13,13 @@ def load_schema():
         return json.load(f)
 
 
-class Root(SchemaBase):
+class VegaSchema(SchemaBase):
+    @classmethod
+    def _default_wrapper_classes(cls):
+        return VegaSchema.__subclasses__()
+
+
+class Root(VegaSchema):
     """Root schema wrapper
     
     allOf(container, Mapping(required=[]))
@@ -31,7 +37,7 @@ class Root(SchemaBase):
                                    width=width, **kwds)
 
 
-class axis(SchemaBase):
+class axis(VegaSchema):
     """axis schema wrapper
     
     Mapping(required=[type, scale])
@@ -94,7 +100,7 @@ class axis(SchemaBase):
                                    **kwds)
 
 
-class background(SchemaBase):
+class background(VegaSchema):
     """background schema wrapper
     
     string
@@ -106,7 +112,7 @@ class background(SchemaBase):
         super(background, self).__init__(*args)
 
 
-class data(SchemaBase):
+class data(VegaSchema):
     """data schema wrapper
     
     allOf(Mapping(required=[name]), anyOf(Mapping(required=[name, modify]), 
@@ -119,7 +125,7 @@ class data(SchemaBase):
         super(data, self).__init__(name=name, format=format, modify=modify, transform=transform, **kwds)
 
 
-class legend(SchemaBase):
+class legend(VegaSchema):
     """legend schema wrapper
     
     anyOf(Mapping(required=[size]), Mapping(required=[shape]), Mapping(required=[fill]), 
@@ -135,7 +141,7 @@ class legend(SchemaBase):
         super(legend, self).__init__(*args, **kwds)
 
 
-class mark(SchemaBase):
+class mark(VegaSchema):
     """mark schema wrapper
     
     Mapping(required=[type])
@@ -171,7 +177,7 @@ class mark(SchemaBase):
                                    name=name, properties=properties, **kwds)
 
 
-class container(SchemaBase):
+class container(VegaSchema):
     """container schema wrapper
     
     Mapping(required=[])
@@ -198,7 +204,7 @@ class container(SchemaBase):
                                         scene=scene, **kwds)
 
 
-class groupMark(SchemaBase):
+class groupMark(VegaSchema):
     """groupMark schema wrapper
     
     allOf(Mapping(required=[type]), mark, container)
@@ -215,7 +221,7 @@ class groupMark(SchemaBase):
                                         **kwds)
 
 
-class visualMark(SchemaBase):
+class visualMark(VegaSchema):
     """visualMark schema wrapper
     
     allOf(not Mapping(required=[]), mark)
@@ -229,7 +235,7 @@ class visualMark(SchemaBase):
                                          key=key, name=name, properties=properties, **kwds)
 
 
-class modify(SchemaBase):
+class modify(VegaSchema):
     """modify schema wrapper
     
     List(oneOf(Mapping(required=[type, signal]), Mapping(required=[type, predicate]), 
@@ -242,7 +248,7 @@ class modify(SchemaBase):
         super(modify, self).__init__(*args)
 
 
-class padding(SchemaBase):
+class padding(VegaSchema):
     """padding schema wrapper
     
     oneOf(enum('strict', 'auto'), float, Mapping(required=[]))
@@ -254,7 +260,7 @@ class padding(SchemaBase):
         super(padding, self).__init__(*args, **kwds)
 
 
-class predicate(SchemaBase):
+class predicate(VegaSchema):
     """predicate schema wrapper
     
     oneOf(Mapping(required=[name, type, operands]), Mapping(required=[name, type, operands]), 
@@ -267,7 +273,7 @@ class predicate(SchemaBase):
         super(predicate, self).__init__(*args, **kwds)
 
 
-class rule(SchemaBase):
+class rule(VegaSchema):
     """rule schema wrapper
     
     anyOf(Mapping(required=[]), Mapping(required=[]))
@@ -279,7 +285,7 @@ class rule(SchemaBase):
         super(rule, self).__init__(*args, **kwds)
 
 
-class propset(SchemaBase):
+class propset(VegaSchema):
     """propset schema wrapper
     
     Mapping(required=[])
@@ -411,7 +417,7 @@ class propset(SchemaBase):
                                       x=x, x2=x2, xc=xc, y=y, y2=y2, yc=yc, **kwds)
 
 
-class signal(SchemaBase):
+class signal(VegaSchema):
     """signal schema wrapper
     
     Mapping(required=[name])
@@ -440,7 +446,7 @@ class signal(SchemaBase):
                                      verbose=verbose, **kwds)
 
 
-class spec(SchemaBase):
+class spec(VegaSchema):
     """spec schema wrapper
     
     allOf(container, Mapping(required=[]))
@@ -458,7 +464,7 @@ class spec(SchemaBase):
                                    width=width, **kwds)
 
 
-class streams(SchemaBase):
+class streams(VegaSchema):
     """streams schema wrapper
     
     List(Mapping(required=[type, expr]))
@@ -470,7 +476,7 @@ class streams(SchemaBase):
         super(streams, self).__init__(*args)
 
 
-class aggregateTransform(SchemaBase):
+class aggregateTransform(VegaSchema):
     """aggregateTransform schema wrapper
     
     Mapping(required=[type])
@@ -492,7 +498,7 @@ class aggregateTransform(SchemaBase):
         super(aggregateTransform, self).__init__(type=type, groupby=groupby, summarize=summarize, **kwds)
 
 
-class binTransform(SchemaBase):
+class binTransform(VegaSchema):
     """binTransform schema wrapper
     
     Mapping(required=[type, field])
@@ -535,7 +541,7 @@ class binTransform(SchemaBase):
                                            step=step, steps=steps, **kwds)
 
 
-class crossTransform(SchemaBase):
+class crossTransform(VegaSchema):
     """crossTransform schema wrapper
     
     Mapping(required=[type])
@@ -562,7 +568,7 @@ class crossTransform(SchemaBase):
                                              **kwds)
 
 
-class countpatternTransform(SchemaBase):
+class countpatternTransform(VegaSchema):
     """countpatternTransform schema wrapper
     
     Mapping(required=[type])
@@ -591,7 +597,7 @@ class countpatternTransform(SchemaBase):
                                                     pattern=pattern, stopwords=stopwords, **kwds)
 
 
-class linkpathTransform(SchemaBase):
+class linkpathTransform(VegaSchema):
     """linkpathTransform schema wrapper
     
     Mapping(required=[type])
@@ -627,7 +633,7 @@ class linkpathTransform(SchemaBase):
                                                 tension=tension, **kwds)
 
 
-class facetTransform(SchemaBase):
+class facetTransform(VegaSchema):
     """facetTransform schema wrapper
     
     Mapping(required=[type])
@@ -653,7 +659,7 @@ class facetTransform(SchemaBase):
                                              transform=transform, **kwds)
 
 
-class filterTransform(SchemaBase):
+class filterTransform(VegaSchema):
     """filterTransform schema wrapper
     
     Mapping(required=[type, test])
@@ -673,7 +679,7 @@ class filterTransform(SchemaBase):
         super(filterTransform, self).__init__(test=test, type=type, **kwds)
 
 
-class foldTransform(SchemaBase):
+class foldTransform(VegaSchema):
     """foldTransform schema wrapper
     
     Mapping(required=[type, fields])
@@ -695,7 +701,7 @@ class foldTransform(SchemaBase):
         super(foldTransform, self).__init__(fields=fields, type=type, output=output, **kwds)
 
 
-class forceTransform(SchemaBase):
+class forceTransform(VegaSchema):
     """forceTransform schema wrapper
     
     Mapping(required=[type, links])
@@ -754,7 +760,7 @@ class forceTransform(SchemaBase):
                                              output=output, size=size, theta=theta, **kwds)
 
 
-class formulaTransform(SchemaBase):
+class formulaTransform(VegaSchema):
     """formulaTransform schema wrapper
     
     Mapping(required=[type, field, expr])
@@ -776,7 +782,7 @@ class formulaTransform(SchemaBase):
         super(formulaTransform, self).__init__(expr=expr, field=field, type=type, **kwds)
 
 
-class geoTransform(SchemaBase):
+class geoTransform(VegaSchema):
     """geoTransform schema wrapper
     
     Mapping(required=[type, lon, lat])
@@ -822,7 +828,7 @@ class geoTransform(SchemaBase):
                                            scale=scale, translate=translate, **kwds)
 
 
-class geopathTransform(SchemaBase):
+class geopathTransform(VegaSchema):
     """geopathTransform schema wrapper
     
     Mapping(required=[type])
@@ -865,7 +871,7 @@ class geopathTransform(SchemaBase):
                                                rotate=rotate, scale=scale, translate=translate, **kwds)
 
 
-class hierarchyTransform(SchemaBase):
+class hierarchyTransform(VegaSchema):
     """hierarchyTransform schema wrapper
     
     Mapping(required=[type])
@@ -904,7 +910,7 @@ class hierarchyTransform(SchemaBase):
                                                  parent=parent, size=size, sort=sort, **kwds)
 
 
-class imputeTransform(SchemaBase):
+class imputeTransform(VegaSchema):
     """imputeTransform schema wrapper
     
     Mapping(required=[type, groupby, orderby, field])
@@ -934,7 +940,7 @@ class imputeTransform(SchemaBase):
                                               method=method, value=value, **kwds)
 
 
-class lookupTransform(SchemaBase):
+class lookupTransform(VegaSchema):
     """lookupTransform schema wrapper
     
     Mapping(required=[type, on, as, keys])
@@ -962,7 +968,7 @@ class lookupTransform(SchemaBase):
                                               **kwds)
 
 
-class pieTransform(SchemaBase):
+class pieTransform(VegaSchema):
     """pieTransform schema wrapper
     
     Mapping(required=[type])
@@ -993,7 +999,7 @@ class pieTransform(SchemaBase):
                                            sort=sort, startAngle=startAngle, **kwds)
 
 
-class rankTransform(SchemaBase):
+class rankTransform(VegaSchema):
     """rankTransform schema wrapper
     
     Mapping(required=[type])
@@ -1019,7 +1025,7 @@ class rankTransform(SchemaBase):
                                             **kwds)
 
 
-class sortTransform(SchemaBase):
+class sortTransform(VegaSchema):
     """sortTransform schema wrapper
     
     Mapping(required=[type, by])
@@ -1039,7 +1045,7 @@ class sortTransform(SchemaBase):
         super(sortTransform, self).__init__(by=by, type=type, **kwds)
 
 
-class stackTransform(SchemaBase):
+class stackTransform(VegaSchema):
     """stackTransform schema wrapper
     
     Mapping(required=[type, groupby, field])
@@ -1069,7 +1075,7 @@ class stackTransform(SchemaBase):
                                              output=output, sortby=sortby, **kwds)
 
 
-class treeifyTransform(SchemaBase):
+class treeifyTransform(VegaSchema):
     """treeifyTransform schema wrapper
     
     Mapping(required=[type, groupby])
@@ -1090,7 +1096,7 @@ class treeifyTransform(SchemaBase):
         super(treeifyTransform, self).__init__(groupby=groupby, type=type, output=output, **kwds)
 
 
-class treemapTransform(SchemaBase):
+class treemapTransform(VegaSchema):
     """treemapTransform schema wrapper
     
     Mapping(required=[type])
@@ -1134,7 +1140,7 @@ class treemapTransform(SchemaBase):
                                                sticky=sticky, **kwds)
 
 
-class voronoiTransform(SchemaBase):
+class voronoiTransform(VegaSchema):
     """voronoiTransform schema wrapper
     
     Mapping(required=[type])
@@ -1161,7 +1167,7 @@ class voronoiTransform(SchemaBase):
                                                y=y, **kwds)
 
 
-class wordcloudTransform(SchemaBase):
+class wordcloudTransform(VegaSchema):
     """wordcloudTransform schema wrapper
     
     Mapping(required=[type])
@@ -1212,7 +1218,7 @@ class wordcloudTransform(SchemaBase):
                                                  **kwds)
 
 
-class transform(SchemaBase):
+class transform(VegaSchema):
     """transform schema wrapper
     
     List(oneOf(aggregateTransform, binTransform, crossTransform, countpatternTransform, 
@@ -1228,7 +1234,7 @@ class transform(SchemaBase):
         super(transform, self).__init__(*args)
 
 
-class scale(SchemaBase):
+class scale(VegaSchema):
     """scale schema wrapper
     
     allOf(Mapping(required=[name]), oneOf(Mapping(required=[type]), Mapping(required=[type]), 
@@ -1245,7 +1251,7 @@ class scale(SchemaBase):
                                     type=type, **kwds)
 
 
-class operand(SchemaBase):
+class operand(VegaSchema):
     """operand schema wrapper
     
     oneOf(Mapping(required=[value]), Mapping(required=[arg]), signal, 
@@ -1258,7 +1264,7 @@ class operand(SchemaBase):
         super(operand, self).__init__(*args, **kwds)
 
 
-class field(SchemaBase):
+class field(VegaSchema):
     """field schema wrapper
     
     oneOf(string, oneOf(signal, Mapping(required=[datum]), Mapping(required=[group]), 
@@ -1271,7 +1277,7 @@ class field(SchemaBase):
         super(field, self).__init__(*args, **kwds)
 
 
-class scale(SchemaBase):
+class scale(VegaSchema):
     """scale schema wrapper
     
     oneOf(field, Mapping(required=[name]))
@@ -1283,7 +1289,7 @@ class scale(SchemaBase):
         super(scale, self).__init__(*args, **kwds)
 
 
-class stringModifiers(SchemaBase):
+class stringModifiers(VegaSchema):
     """stringModifiers schema wrapper
     
     Mapping(required=[])
@@ -1300,7 +1306,7 @@ class stringModifiers(SchemaBase):
         super(stringModifiers, self).__init__(scale=scale, **kwds)
 
 
-class numberModifiers(SchemaBase):
+class numberModifiers(VegaSchema):
     """numberModifiers schema wrapper
     
     Mapping(required=[])
@@ -1321,7 +1327,7 @@ class numberModifiers(SchemaBase):
         super(numberModifiers, self).__init__(mult=mult, offset=offset, scale=scale, **kwds)
 
 
-class value(SchemaBase):
+class value(VegaSchema):
     """value schema wrapper
     
     oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
@@ -1336,7 +1342,7 @@ class value(SchemaBase):
         super(value, self).__init__(*args, **kwds)
 
 
-class numberValue(SchemaBase):
+class numberValue(VegaSchema):
     """numberValue schema wrapper
     
     oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(numberModifiers, oneOf(signal, 
@@ -1351,7 +1357,7 @@ class numberValue(SchemaBase):
         super(numberValue, self).__init__(*args, **kwds)
 
 
-class stringValue(SchemaBase):
+class stringValue(VegaSchema):
     """stringValue schema wrapper
     
     oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
@@ -1367,7 +1373,7 @@ class stringValue(SchemaBase):
         super(stringValue, self).__init__(*args, **kwds)
 
 
-class booleanValue(SchemaBase):
+class booleanValue(VegaSchema):
     """booleanValue schema wrapper
     
     oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
@@ -1382,7 +1388,7 @@ class booleanValue(SchemaBase):
         super(booleanValue, self).__init__(*args, **kwds)
 
 
-class arrayValue(SchemaBase):
+class arrayValue(VegaSchema):
     """arrayValue schema wrapper
     
     oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
@@ -1397,7 +1403,7 @@ class arrayValue(SchemaBase):
         super(arrayValue, self).__init__(*args, **kwds)
 
 
-class colorValue(SchemaBase):
+class colorValue(VegaSchema):
     """colorValue schema wrapper
     
     oneOf(stringValue, Mapping(required=[r, g, b]), Mapping(required=[h, s, l]), 
@@ -1410,7 +1416,7 @@ class colorValue(SchemaBase):
         super(colorValue, self).__init__(*args, **kwds)
 
 
-class signal(SchemaBase):
+class signal(VegaSchema):
     """signal schema wrapper
     
     Mapping(required=[signal])
@@ -1427,7 +1433,7 @@ class signal(SchemaBase):
         super(signal, self).__init__(signal=signal, **kwds)
 
 
-class scopedScale(SchemaBase):
+class scopedScale(VegaSchema):
     """scopedScale schema wrapper
     
     oneOf(string, Mapping(required=[name]))
@@ -1439,7 +1445,7 @@ class scopedScale(SchemaBase):
         super(scopedScale, self).__init__(*args, **kwds)
 
 
-class data(SchemaBase):
+class data(VegaSchema):
     """data schema wrapper
     
     Mapping(required=[])

@@ -41,7 +41,7 @@ def _get_channels_mapping():
 
 # -------------------------------------------------------------------------
 # Tools for working with selections
-class SelectionMapping(core.SchemaBase):
+class SelectionMapping(core.VegaLiteSchema):
     """A mapping of selection names to selection definitions"""
     _schema = {
         'type': 'object',
@@ -163,7 +163,7 @@ def condition(predicate, if_true, if_false, **kwargs):
 
     Returns
     -------
-    spec: dict or SchemaBase
+    spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
     selection_predicates = (core.SelectionNot, core.SelectionOr,

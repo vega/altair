@@ -7,8 +7,16 @@ import pytest
 
 from ..schemapi import UndefinedType, SchemaBase, Undefined
 
+# Make tests inherit from _TestSchema, so that when we test from_dict it won't
+# try to use SchemaBase objects defined elsewhere as wrappers.
 
-class MySchema(SchemaBase):
+class _TestSchema(SchemaBase):
+    @classmethod
+    def _default_wrapper_classes(cls):
+        return _TestSchema.__subclasses__()
+
+
+class MySchema(_TestSchema):
     _schema = {
         'definitions': {
             'StringMapping': {'type': 'object', 'additionalProperties': {'type': 'string'}},
@@ -26,17 +34,17 @@ class MySchema(SchemaBase):
     }
 
 
-class StringMapping(SchemaBase):
+class StringMapping(_TestSchema):
     _schema = {'$ref': '#/definitions/StringMapping'}
     _rootschema = MySchema._schema
 
 
-class StringArray(SchemaBase):
+class StringArray(_TestSchema):
     _schema = {'$ref': '#/definitions/StringArray'}
     _rootschema = MySchema._schema
 
 
-class Derived(SchemaBase):
+class Derived(_TestSchema):
     _schema = {
         'definitions': {
             'Foo': {
@@ -57,21 +65,21 @@ class Derived(SchemaBase):
     }
 
 
-class Foo(SchemaBase):
+class Foo(_TestSchema):
     _schema = {"$ref": "#/definitions/Foo"}
     _rootschema = Derived._schema
 
 
-class Bar(SchemaBase):
+class Bar(_TestSchema):
     _schema = {"$ref": "#/definitions/Bar"}
     _rootschema = Derived._schema
 
 
-class SimpleUnion(SchemaBase):
+class SimpleUnion(_TestSchema):
     _schema = {'anyOf' : [{'type': 'integer'}, {'type': 'string'}]}
 
 
-class DefinitionUnion(SchemaBase):
+class DefinitionUnion(_TestSchema):
     _schema = {
         "anyOf": [
             {"$ref": "#/definitions/Foo"},
@@ -81,7 +89,7 @@ class DefinitionUnion(SchemaBase):
     _rootschema = Derived._schema
 
 
-class SimpleArray(SchemaBase):
+class SimpleArray(_TestSchema):
     _schema = {
         'type': 'array',
         'items': {
@@ -90,7 +98,7 @@ class SimpleArray(SchemaBase):
     }
 
 
-class InvalidProperties(SchemaBase):
+class InvalidProperties(_TestSchema):
     _schema = {
         'type': 'object',
         'properties': {
@@ -252,3 +260,12 @@ def test_to_from_json():
     new_dct = MySchema.from_json(json_str).to_dict()
 
     assert new_dct == dct
+
+
+def test_class_with_no_schema():
+    class BadSchema(SchemaBase):
+        pass
+
+    with pytest.raises(ValueError) as err:
+        BadSchema(4)
+    assert str(err.value).startswith("Cannot instantiate object")

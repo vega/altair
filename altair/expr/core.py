@@ -36,14 +36,7 @@ class Expression(SchemaBase):
     a Python syntax. Calling ``repr(obj)`` will return a Javascript
     representation of the object and the operations it encodes.
     """
-    # can't use {type: 'string'} directly because then this type would be
-    # picked up by ToDict mechanism.
-    _schema = {
-        '$ref': '#/definitions/JSExpressionType',
-        'definitions': {
-            'JSExpressionType': {'type': 'string'}
-        }
-    }
+    _schema = {'type': 'string'}
 
     def to_dict(self, *args, **kwargs):
         return repr(self)
