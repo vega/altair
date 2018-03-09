@@ -17,13 +17,14 @@ original_data['stem'] = original_data['samples'].apply(lambda x: str(x)[:-1])
 original_data['leaf'] = original_data['samples'].apply(lambda x: str(x)[-1])
 
 original_data.sort_values(by=['stem', 'leaf'], inplace=True)
+original_data.reset_index(inplace=True, drop=True)
 
-# Determining position
-position = np.array([], dtype=np.int64)
-for key, group in original_data.groupby('stem'):
-    position = np.hstack([position, [*group.reset_index().index.values]])
+# Determining leaf position
+get_position = lambda x: 1 + pd.Series(range(len(x)))
     
-original_data['position'] = position + 1
+original_data['position'] = original_data.groupby('stem')\
+                                         .apply(get_position)\
+                                         .reset_index(drop=True)
 
 # Creating stem and leaf plot
 chart = alt.Chart(original_data).mark_text(align='left', baseline='middle', dx=-5).encode(
