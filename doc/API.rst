@@ -14,7 +14,7 @@ Top-Level Objects
 
 .. autoclass:: altair.FacetChart
 
-.. autoclass:: altair.REpeatChart
+.. autoclass:: altair.RepeatChart
 
 Encoding Channels
 -----------------
