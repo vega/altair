@@ -11,6 +11,13 @@ from schemapi.codegen import schema_class, CodeSnippet
 from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
 
 
+BASE_SCHEMA = """
+class {basename}(SchemaBase):
+    @classmethod
+    def _default_wrapper_classes(cls):
+        return {basename}.__subclasses__()
+"""
+
 LOAD_SCHEMA = '''
 import os
 import json
@@ -107,20 +114,24 @@ def copy_schemapi_util():
 def generate_vegalite_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
+    basename = 'VegaLiteSchema'
+
     with open(schema_file) as f:
         rootschema = json.load(f)
     contents = [HEADER,
                 "from altair.utils.schemapi import SchemaBase, Undefined",
                 LOAD_SCHEMA.format(schemafile='vega-lite-schema.json')]
-    contents.append(schema_class('Root', schema=rootschema,
+    contents.append(BASE_SCHEMA.format(basename=basename))
+    contents.append(schema_class('Root', schema=rootschema, basename=basename,
                                  schemarepr=CodeSnippet('load_schema()')))
+
     for name in rootschema['definitions']:
         defschema = {'$ref': '#/definitions/' + name}
         defschema_repr = {'$ref': '#/definitions/' + name}
 
         contents.append(schema_class(get_valid_identifier(name),
                                      schema=defschema, schemarepr=defschema_repr,
-                                     rootschema=rootschema,
+                                     rootschema=rootschema, basename=basename,
                                      rootschemarepr=CodeSnippet("Root._schema")))
     contents.append('')  # end with newline
     return '\n'.join(contents)
@@ -129,12 +140,15 @@ def generate_vegalite_schema_wrapper(schema_file):
 def generate_vega_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
+    basename = 'VegaSchema'
+
     with open(schema_file) as f:
         rootschema = json.load(f)
     contents = [HEADER,
                 "from altair.utils.schemapi import SchemaBase, Undefined",
                 LOAD_SCHEMA.format(schemafile='vega-schema.json')]
-    contents.append(schema_class('Root', schema=rootschema,
+    contents.append(BASE_SCHEMA.format(basename=basename))
+    contents.append(schema_class('Root', schema=rootschema, basename=basename,
                                  schemarepr=CodeSnippet('load_schema()')))
     for deflist in ['defs', 'refs']:
         for name in rootschema[deflist]:
@@ -142,7 +156,7 @@ def generate_vega_schema_wrapper(schema_file):
             defschema_repr = {'$ref': '#/{0}/{1}'.format(deflist,name)}
             contents.append(schema_class(get_valid_identifier(name),
                                          schema=defschema, schemarepr=defschema_repr,
-                                         rootschema=rootschema,
+                                         rootschema=rootschema, basename=basename,
                                          rootschemarepr=CodeSnippet("Root._schema")))
     contents.append('')  # end with newline
     return '\n'.join(contents)

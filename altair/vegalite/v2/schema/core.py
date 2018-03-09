@@ -13,7 +13,13 @@ def load_schema():
         return json.load(f)
 
 
-class Root(SchemaBase):
+class VegaLiteSchema(SchemaBase):
+    @classmethod
+    def _default_wrapper_classes(cls):
+        return VegaLiteSchema.__subclasses__()
+
+
+class Root(VegaLiteSchema):
     """Root schema wrapper
     
     anyOf(TopLevelFacetedUnitSpec, TopLevelLayerSpec, TopLevelFacetSpec, TopLevelRepeatSpec, 
@@ -26,7 +32,7 @@ class Root(SchemaBase):
         super(Root, self).__init__(*args, **kwds)
 
 
-class Aggregate(SchemaBase):
+class Aggregate(VegaLiteSchema):
     """Aggregate schema wrapper
     
     enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 
@@ -40,7 +46,7 @@ class Aggregate(SchemaBase):
         super(Aggregate, self).__init__(*args)
 
 
-class AggregateOp(SchemaBase):
+class AggregateOp(VegaLiteSchema):
     """AggregateOp schema wrapper
     
     enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 
@@ -54,7 +60,7 @@ class AggregateOp(SchemaBase):
         super(AggregateOp, self).__init__(*args)
 
 
-class AggregateTransform(SchemaBase):
+class AggregateTransform(VegaLiteSchema):
     """AggregateTransform schema wrapper
     
     Mapping(required=[aggregate])
@@ -74,7 +80,7 @@ class AggregateTransform(SchemaBase):
         super(AggregateTransform, self).__init__(aggregate=aggregate, groupby=groupby, **kwds)
 
 
-class AggregatedFieldDef(SchemaBase):
+class AggregatedFieldDef(VegaLiteSchema):
     """AggregatedFieldDef schema wrapper
     
     Mapping(required=[op, field, as])
@@ -96,7 +102,7 @@ class AggregatedFieldDef(SchemaBase):
         super(AggregatedFieldDef, self).__init__(field=field, op=op, **kwds)
 
 
-class Anchor(SchemaBase):
+class Anchor(VegaLiteSchema):
     """Anchor schema wrapper
     
     enum('start', 'middle', 'end')
@@ -108,7 +114,7 @@ class Anchor(SchemaBase):
         super(Anchor, self).__init__(*args)
 
 
-class AnyMark(SchemaBase):
+class AnyMark(VegaLiteSchema):
     """AnyMark schema wrapper
     
     anyOf(Mark, MarkDef)
@@ -120,7 +126,7 @@ class AnyMark(SchemaBase):
         super(AnyMark, self).__init__(*args, **kwds)
 
 
-class AutoSizeParams(SchemaBase):
+class AutoSizeParams(VegaLiteSchema):
     """AutoSizeParams schema wrapper
     
     Mapping(required=[])
@@ -149,7 +155,7 @@ class AutoSizeParams(SchemaBase):
         super(AutoSizeParams, self).__init__(contains=contains, resize=resize, type=type, **kwds)
 
 
-class AutosizeType(SchemaBase):
+class AutosizeType(VegaLiteSchema):
     """AutosizeType schema wrapper
     
     enum('pad', 'fit', 'none')
@@ -161,7 +167,7 @@ class AutosizeType(SchemaBase):
         super(AutosizeType, self).__init__(*args)
 
 
-class Axis(SchemaBase):
+class Axis(VegaLiteSchema):
     """Axis schema wrapper
     
     Mapping(required=[])
@@ -285,7 +291,7 @@ class Axis(SchemaBase):
                                    values=values, zindex=zindex, **kwds)
 
 
-class AxisConfig(SchemaBase):
+class AxisConfig(VegaLiteSchema):
     """AxisConfig schema wrapper
     
     Mapping(required=[])
@@ -437,7 +443,7 @@ class AxisConfig(SchemaBase):
                                          titlePadding=titlePadding, titleX=titleX, titleY=titleY, **kwds)
 
 
-class AxisOrient(SchemaBase):
+class AxisOrient(VegaLiteSchema):
     """AxisOrient schema wrapper
     
     enum('top', 'right', 'left', 'bottom')
@@ -449,7 +455,7 @@ class AxisOrient(SchemaBase):
         super(AxisOrient, self).__init__(*args)
 
 
-class AxisResolveMap(SchemaBase):
+class AxisResolveMap(VegaLiteSchema):
     """AxisResolveMap schema wrapper
     
     Mapping(required=[])
@@ -468,7 +474,7 @@ class AxisResolveMap(SchemaBase):
         super(AxisResolveMap, self).__init__(x=x, y=y, **kwds)
 
 
-class BarConfig(SchemaBase):
+class BarConfig(VegaLiteSchema):
     """BarConfig schema wrapper
     
     Mapping(required=[])
@@ -618,7 +624,7 @@ class BarConfig(SchemaBase):
                                         theta=theta, **kwds)
 
 
-class BasicType(SchemaBase):
+class BasicType(VegaLiteSchema):
     """BasicType schema wrapper
     
     enum('quantitative', 'ordinal', 'temporal', 'nominal')
@@ -630,7 +636,7 @@ class BasicType(SchemaBase):
         super(BasicType, self).__init__(*args)
 
 
-class BinParams(SchemaBase):
+class BinParams(VegaLiteSchema):
     """BinParams schema wrapper
     
     Mapping(required=[])
@@ -672,7 +678,7 @@ class BinParams(SchemaBase):
                                         minstep=minstep, nice=nice, step=step, steps=steps, **kwds)
 
 
-class BinTransform(SchemaBase):
+class BinTransform(VegaLiteSchema):
     """BinTransform schema wrapper
     
     Mapping(required=[bin, field, as])
@@ -692,7 +698,7 @@ class BinTransform(SchemaBase):
         super(BinTransform, self).__init__(bin=bin, field=field, **kwds)
 
 
-class BrushConfig(SchemaBase):
+class BrushConfig(VegaLiteSchema):
     """BrushConfig schema wrapper
     
     Mapping(required=[])
@@ -726,7 +732,7 @@ class BrushConfig(SchemaBase):
                                           strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, **kwds)
 
 
-class CalculateTransform(SchemaBase):
+class CalculateTransform(VegaLiteSchema):
     """CalculateTransform schema wrapper
     
     Mapping(required=[calculate, as])
@@ -744,7 +750,7 @@ class CalculateTransform(SchemaBase):
         super(CalculateTransform, self).__init__(calculate=calculate, **kwds)
 
 
-class CompositeUnitSpec(SchemaBase):
+class CompositeUnitSpec(VegaLiteSchema):
     """CompositeUnitSpec schema wrapper
     
     Mapping(required=[mark])
@@ -827,7 +833,7 @@ class CompositeUnitSpec(SchemaBase):
                                                 transform=transform, width=width, **kwds)
 
 
-class ConditionalFieldDef(SchemaBase):
+class ConditionalFieldDef(VegaLiteSchema):
     """ConditionalFieldDef schema wrapper
     
     anyOf(ConditionalPredicateFieldDef, ConditionalSelectionFieldDef)
@@ -839,7 +845,7 @@ class ConditionalFieldDef(SchemaBase):
         super(ConditionalFieldDef, self).__init__(*args, **kwds)
 
 
-class ConditionalMarkPropFieldDef(SchemaBase):
+class ConditionalMarkPropFieldDef(VegaLiteSchema):
     """ConditionalMarkPropFieldDef schema wrapper
     
     anyOf(ConditionalPredicateMarkPropFieldDef, ConditionalSelectionMarkPropFieldDef)
@@ -851,7 +857,7 @@ class ConditionalMarkPropFieldDef(SchemaBase):
         super(ConditionalMarkPropFieldDef, self).__init__(*args, **kwds)
 
 
-class ConditionalTextFieldDef(SchemaBase):
+class ConditionalTextFieldDef(VegaLiteSchema):
     """ConditionalTextFieldDef schema wrapper
     
     anyOf(ConditionalPredicateTextFieldDef, ConditionalSelectionTextFieldDef)
@@ -863,7 +869,7 @@ class ConditionalTextFieldDef(SchemaBase):
         super(ConditionalTextFieldDef, self).__init__(*args, **kwds)
 
 
-class ConditionalValueDef(SchemaBase):
+class ConditionalValueDef(VegaLiteSchema):
     """ConditionalValueDef schema wrapper
     
     anyOf(ConditionalPredicateValueDef, ConditionalSelectionValueDef)
@@ -875,7 +881,7 @@ class ConditionalValueDef(SchemaBase):
         super(ConditionalValueDef, self).__init__(*args, **kwds)
 
 
-class ConditionalPredicateFieldDef(SchemaBase):
+class ConditionalPredicateFieldDef(VegaLiteSchema):
     """ConditionalPredicateFieldDef schema wrapper
     
     Mapping(required=[test, type])
@@ -923,7 +929,7 @@ class ConditionalPredicateFieldDef(SchemaBase):
                                                            **kwds)
 
 
-class ConditionalPredicateMarkPropFieldDef(SchemaBase):
+class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
     """ConditionalPredicateMarkPropFieldDef schema wrapper
     
     Mapping(required=[test, type])
@@ -990,7 +996,7 @@ class ConditionalPredicateMarkPropFieldDef(SchemaBase):
                                                                    timeUnit=timeUnit, **kwds)
 
 
-class ConditionalPredicateTextFieldDef(SchemaBase):
+class ConditionalPredicateTextFieldDef(VegaLiteSchema):
     """ConditionalPredicateTextFieldDef schema wrapper
     
     Mapping(required=[test, type])
@@ -1042,7 +1048,7 @@ class ConditionalPredicateTextFieldDef(SchemaBase):
                                                                timeUnit=timeUnit, **kwds)
 
 
-class ConditionalPredicateValueDef(SchemaBase):
+class ConditionalPredicateValueDef(VegaLiteSchema):
     """ConditionalPredicateValueDef schema wrapper
     
     Mapping(required=[test, value])
@@ -1062,7 +1068,7 @@ class ConditionalPredicateValueDef(SchemaBase):
         super(ConditionalPredicateValueDef, self).__init__(test=test, value=value, **kwds)
 
 
-class ConditionalSelectionFieldDef(SchemaBase):
+class ConditionalSelectionFieldDef(VegaLiteSchema):
     """ConditionalSelectionFieldDef schema wrapper
     
     Mapping(required=[selection, type])
@@ -1112,7 +1118,7 @@ class ConditionalSelectionFieldDef(SchemaBase):
                                                            timeUnit=timeUnit, **kwds)
 
 
-class ConditionalSelectionMarkPropFieldDef(SchemaBase):
+class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
     """ConditionalSelectionMarkPropFieldDef schema wrapper
     
     Mapping(required=[selection, type])
@@ -1181,7 +1187,7 @@ class ConditionalSelectionMarkPropFieldDef(SchemaBase):
                                                                    timeUnit=timeUnit, **kwds)
 
 
-class ConditionalSelectionTextFieldDef(SchemaBase):
+class ConditionalSelectionTextFieldDef(VegaLiteSchema):
     """ConditionalSelectionTextFieldDef schema wrapper
     
     Mapping(required=[selection, type])
@@ -1235,7 +1241,7 @@ class ConditionalSelectionTextFieldDef(SchemaBase):
                                                                timeUnit=timeUnit, **kwds)
 
 
-class ConditionalSelectionValueDef(SchemaBase):
+class ConditionalSelectionValueDef(VegaLiteSchema):
     """ConditionalSelectionValueDef schema wrapper
     
     Mapping(required=[selection, value])
@@ -1257,7 +1263,7 @@ class ConditionalSelectionValueDef(SchemaBase):
         super(ConditionalSelectionValueDef, self).__init__(selection=selection, value=value, **kwds)
 
 
-class Config(SchemaBase):
+class Config(VegaLiteSchema):
     """Config schema wrapper
     
     Mapping(required=[])
@@ -1400,7 +1406,7 @@ class Config(SchemaBase):
                                      title=title, view=view, **kwds)
 
 
-class CsvDataFormat(SchemaBase):
+class CsvDataFormat(VegaLiteSchema):
     """CsvDataFormat schema wrapper
     
     Mapping(required=[])
@@ -1431,7 +1437,7 @@ class CsvDataFormat(SchemaBase):
         super(CsvDataFormat, self).__init__(parse=parse, type=type, **kwds)
 
 
-class Data(SchemaBase):
+class Data(VegaLiteSchema):
     """Data schema wrapper
     
     anyOf(UrlData, InlineData, NamedData)
@@ -1443,7 +1449,7 @@ class Data(SchemaBase):
         super(Data, self).__init__(*args, **kwds)
 
 
-class DataFormat(SchemaBase):
+class DataFormat(VegaLiteSchema):
     """DataFormat schema wrapper
     
     anyOf(CsvDataFormat, JsonDataFormat, TopoDataFormat)
@@ -1455,7 +1461,7 @@ class DataFormat(SchemaBase):
         super(DataFormat, self).__init__(*args, **kwds)
 
 
-class DateTime(SchemaBase):
+class DateTime(VegaLiteSchema):
     """DateTime schema wrapper
     
     Mapping(required=[])
@@ -1505,7 +1511,7 @@ class DateTime(SchemaBase):
                                        utc=utc, year=year, **kwds)
 
 
-class Day(SchemaBase):
+class Day(VegaLiteSchema):
     """Day schema wrapper
     
     float
@@ -1517,7 +1523,7 @@ class Day(SchemaBase):
         super(Day, self).__init__(*args)
 
 
-class Encoding(SchemaBase):
+class Encoding(VegaLiteSchema):
     """Encoding schema wrapper
     
     Mapping(required=[])
@@ -1579,7 +1585,7 @@ class Encoding(SchemaBase):
                                        x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
-class EncodingWithFacet(SchemaBase):
+class EncodingWithFacet(VegaLiteSchema):
     """EncodingWithFacet schema wrapper
     
     Mapping(required=[])
@@ -1647,7 +1653,7 @@ class EncodingWithFacet(SchemaBase):
                                                 y2=y2, **kwds)
 
 
-class FacetFieldDef(SchemaBase):
+class FacetFieldDef(VegaLiteSchema):
     """FacetFieldDef schema wrapper
     
     Mapping(required=[type])
@@ -1696,7 +1702,7 @@ class FacetFieldDef(SchemaBase):
                                             header=header, sort=sort, timeUnit=timeUnit, **kwds)
 
 
-class FacetMapping(SchemaBase):
+class FacetMapping(VegaLiteSchema):
     """FacetMapping schema wrapper
     
     Mapping(required=[])
@@ -1715,7 +1721,7 @@ class FacetMapping(SchemaBase):
         super(FacetMapping, self).__init__(column=column, row=row, **kwds)
 
 
-class FieldDef(SchemaBase):
+class FieldDef(VegaLiteSchema):
     """FieldDef schema wrapper
     
     Mapping(required=[type])
@@ -1761,7 +1767,7 @@ class FieldDef(SchemaBase):
                                        timeUnit=timeUnit, **kwds)
 
 
-class FieldDefWithCondition(SchemaBase):
+class FieldDefWithCondition(VegaLiteSchema):
     """FieldDefWithCondition schema wrapper
     
     Mapping(required=[type])
@@ -1818,7 +1824,7 @@ class FieldDefWithCondition(SchemaBase):
                                                     **kwds)
 
 
-class MarkPropFieldDefWithCondition(SchemaBase):
+class MarkPropFieldDefWithCondition(VegaLiteSchema):
     """MarkPropFieldDefWithCondition schema wrapper
     
     Mapping(required=[type])
@@ -1893,7 +1899,7 @@ class MarkPropFieldDefWithCondition(SchemaBase):
                                                             timeUnit=timeUnit, **kwds)
 
 
-class TextFieldDefWithCondition(SchemaBase):
+class TextFieldDefWithCondition(VegaLiteSchema):
     """TextFieldDefWithCondition schema wrapper
     
     Mapping(required=[type])
@@ -1953,7 +1959,7 @@ class TextFieldDefWithCondition(SchemaBase):
                                                         timeUnit=timeUnit, **kwds)
 
 
-class FieldEqualPredicate(SchemaBase):
+class FieldEqualPredicate(VegaLiteSchema):
     """FieldEqualPredicate schema wrapper
     
     Mapping(required=[field, equal])
@@ -1974,7 +1980,7 @@ class FieldEqualPredicate(SchemaBase):
         super(FieldEqualPredicate, self).__init__(equal=equal, field=field, timeUnit=timeUnit, **kwds)
 
 
-class FieldOneOfPredicate(SchemaBase):
+class FieldOneOfPredicate(VegaLiteSchema):
     """FieldOneOfPredicate schema wrapper
     
     Mapping(required=[field, oneOf])
@@ -1996,7 +2002,7 @@ class FieldOneOfPredicate(SchemaBase):
         super(FieldOneOfPredicate, self).__init__(field=field, oneOf=oneOf, timeUnit=timeUnit, **kwds)
 
 
-class FieldRangePredicate(SchemaBase):
+class FieldRangePredicate(VegaLiteSchema):
     """FieldRangePredicate schema wrapper
     
     Mapping(required=[field, range])
@@ -2018,7 +2024,7 @@ class FieldRangePredicate(SchemaBase):
         super(FieldRangePredicate, self).__init__(field=field, range=range, timeUnit=timeUnit, **kwds)
 
 
-class FilterTransform(SchemaBase):
+class FilterTransform(VegaLiteSchema):
     """FilterTransform schema wrapper
     
     Mapping(required=[filter])
@@ -2044,7 +2050,7 @@ class FilterTransform(SchemaBase):
         super(FilterTransform, self).__init__(filter=filter, **kwds)
 
 
-class FontStyle(SchemaBase):
+class FontStyle(VegaLiteSchema):
     """FontStyle schema wrapper
     
     enum('normal', 'italic')
@@ -2056,7 +2062,7 @@ class FontStyle(SchemaBase):
         super(FontStyle, self).__init__(*args)
 
 
-class FontWeight(SchemaBase):
+class FontWeight(VegaLiteSchema):
     """FontWeight schema wrapper
     
     enum('normal', 'bold')
@@ -2068,7 +2074,7 @@ class FontWeight(SchemaBase):
         super(FontWeight, self).__init__(*args)
 
 
-class FontWeightNumber(SchemaBase):
+class FontWeightNumber(VegaLiteSchema):
     """FontWeightNumber schema wrapper
     
     float
@@ -2080,7 +2086,7 @@ class FontWeightNumber(SchemaBase):
         super(FontWeightNumber, self).__init__(*args)
 
 
-class FacetSpec(SchemaBase):
+class FacetSpec(VegaLiteSchema):
     """FacetSpec schema wrapper
     
     Mapping(required=[facet, spec])
@@ -2115,7 +2121,7 @@ class FacetSpec(SchemaBase):
                                         **kwds)
 
 
-class HConcatSpec(SchemaBase):
+class HConcatSpec(VegaLiteSchema):
     """HConcatSpec schema wrapper
     
     Mapping(required=[hconcat])
@@ -2147,7 +2153,7 @@ class HConcatSpec(SchemaBase):
                                           **kwds)
 
 
-class LayerSpec(SchemaBase):
+class LayerSpec(VegaLiteSchema):
     """LayerSpec schema wrapper
     
     Mapping(required=[layer])
@@ -2223,7 +2229,7 @@ class LayerSpec(SchemaBase):
                                         width=width, **kwds)
 
 
-class RepeatSpec(SchemaBase):
+class RepeatSpec(VegaLiteSchema):
     """RepeatSpec schema wrapper
     
     Mapping(required=[repeat, spec])
@@ -2258,7 +2264,7 @@ class RepeatSpec(SchemaBase):
                                          **kwds)
 
 
-class Spec(SchemaBase):
+class Spec(VegaLiteSchema):
     """Spec schema wrapper
     
     anyOf(CompositeUnitSpec, LayerSpec, FacetSpec, RepeatSpec, VConcatSpec, HConcatSpec)
@@ -2270,7 +2276,7 @@ class Spec(SchemaBase):
         super(Spec, self).__init__(*args, **kwds)
 
 
-class CompositeUnitSpecAlias(SchemaBase):
+class CompositeUnitSpecAlias(VegaLiteSchema):
     """CompositeUnitSpecAlias schema wrapper
     
     Mapping(required=[mark])
@@ -2354,7 +2360,7 @@ class CompositeUnitSpecAlias(SchemaBase):
                                                      **kwds)
 
 
-class FacetedCompositeUnitSpecAlias(SchemaBase):
+class FacetedCompositeUnitSpecAlias(VegaLiteSchema):
     """FacetedCompositeUnitSpecAlias schema wrapper
     
     Mapping(required=[mark])
@@ -2439,7 +2445,7 @@ class FacetedCompositeUnitSpecAlias(SchemaBase):
                                                             width=width, **kwds)
 
 
-class VConcatSpec(SchemaBase):
+class VConcatSpec(VegaLiteSchema):
     """VConcatSpec schema wrapper
     
     Mapping(required=[vconcat])
@@ -2471,7 +2477,7 @@ class VConcatSpec(SchemaBase):
                                           **kwds)
 
 
-class GeoType(SchemaBase):
+class GeoType(VegaLiteSchema):
     """GeoType schema wrapper
     
     enum('latitude', 'longitude', 'geojson')
@@ -2483,7 +2489,7 @@ class GeoType(SchemaBase):
         super(GeoType, self).__init__(*args)
 
 
-class Header(SchemaBase):
+class Header(VegaLiteSchema):
     """Header schema wrapper
     
     Mapping(required=[])
@@ -2519,7 +2525,7 @@ class Header(SchemaBase):
         super(Header, self).__init__(format=format, labelAngle=labelAngle, title=title, **kwds)
 
 
-class HorizontalAlign(SchemaBase):
+class HorizontalAlign(VegaLiteSchema):
     """HorizontalAlign schema wrapper
     
     enum('left', 'right', 'center')
@@ -2531,7 +2537,7 @@ class HorizontalAlign(SchemaBase):
         super(HorizontalAlign, self).__init__(*args)
 
 
-class InlineData(SchemaBase):
+class InlineData(VegaLiteSchema):
     """InlineData schema wrapper
     
     Mapping(required=[values])
@@ -2553,7 +2559,7 @@ class InlineData(SchemaBase):
         super(InlineData, self).__init__(values=values, format=format, **kwds)
 
 
-class Interpolate(SchemaBase):
+class Interpolate(VegaLiteSchema):
     """Interpolate schema wrapper
     
     enum('linear', 'linear-closed', 'step', 'step-before', 'step-after', 'basis', 'basis-open', 
@@ -2566,7 +2572,7 @@ class Interpolate(SchemaBase):
         super(Interpolate, self).__init__(*args)
 
 
-class IntervalSelection(SchemaBase):
+class IntervalSelection(VegaLiteSchema):
     """IntervalSelection schema wrapper
     
     Mapping(required=[type])
@@ -2624,7 +2630,7 @@ class IntervalSelection(SchemaBase):
                                                 translate=translate, zoom=zoom, **kwds)
 
 
-class IntervalSelectionConfig(SchemaBase):
+class IntervalSelectionConfig(VegaLiteSchema):
     """IntervalSelectionConfig schema wrapper
     
     Mapping(required=[])
@@ -2680,7 +2686,7 @@ class IntervalSelectionConfig(SchemaBase):
                                                       translate=translate, zoom=zoom, **kwds)
 
 
-class JsonDataFormat(SchemaBase):
+class JsonDataFormat(VegaLiteSchema):
     """JsonDataFormat schema wrapper
     
     Mapping(required=[])
@@ -2716,7 +2722,7 @@ class JsonDataFormat(SchemaBase):
         super(JsonDataFormat, self).__init__(parse=parse, property=property, type=type, **kwds)
 
 
-class Legend(SchemaBase):
+class Legend(VegaLiteSchema):
     """Legend schema wrapper
     
     Mapping(required=[])
@@ -2776,7 +2782,7 @@ class Legend(SchemaBase):
                                      type=type, values=values, zindex=zindex, **kwds)
 
 
-class LegendConfig(SchemaBase):
+class LegendConfig(VegaLiteSchema):
     """LegendConfig schema wrapper
     
     Mapping(required=[])
@@ -2898,7 +2904,7 @@ class LegendConfig(SchemaBase):
                                            titleLimit=titleLimit, titlePadding=titlePadding, **kwds)
 
 
-class LegendOrient(SchemaBase):
+class LegendOrient(VegaLiteSchema):
     """LegendOrient schema wrapper
     
     enum('left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'none')
@@ -2910,7 +2916,7 @@ class LegendOrient(SchemaBase):
         super(LegendOrient, self).__init__(*args)
 
 
-class LegendResolveMap(SchemaBase):
+class LegendResolveMap(VegaLiteSchema):
     """LegendResolveMap schema wrapper
     
     Mapping(required=[])
@@ -2934,7 +2940,7 @@ class LegendResolveMap(SchemaBase):
                                                **kwds)
 
 
-class LocalMultiTimeUnit(SchemaBase):
+class LocalMultiTimeUnit(VegaLiteSchema):
     """LocalMultiTimeUnit schema wrapper
     
     enum('yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours', 
@@ -2948,7 +2954,7 @@ class LocalMultiTimeUnit(SchemaBase):
         super(LocalMultiTimeUnit, self).__init__(*args)
 
 
-class LocalSingleTimeUnit(SchemaBase):
+class LocalSingleTimeUnit(VegaLiteSchema):
     """LocalSingleTimeUnit schema wrapper
     
     enum('year', 'quarter', 'month', 'day', 'date', 'hours', 'minutes', 'seconds', 
@@ -2961,7 +2967,7 @@ class LocalSingleTimeUnit(SchemaBase):
         super(LocalSingleTimeUnit, self).__init__(*args)
 
 
-class LogicalAndPredicate(SchemaBase):
+class LogicalAndPredicate(VegaLiteSchema):
     """LogicalAndPredicate schema wrapper
     
     Mapping(required=[and])
@@ -2976,7 +2982,7 @@ class LogicalAndPredicate(SchemaBase):
         super(LogicalAndPredicate, self).__init__(**kwds)
 
 
-class SelectionAnd(SchemaBase):
+class SelectionAnd(VegaLiteSchema):
     """SelectionAnd schema wrapper
     
     Mapping(required=[and])
@@ -2991,7 +2997,7 @@ class SelectionAnd(SchemaBase):
         super(SelectionAnd, self).__init__(**kwds)
 
 
-class LogicalNotPredicate(SchemaBase):
+class LogicalNotPredicate(VegaLiteSchema):
     """LogicalNotPredicate schema wrapper
     
     Mapping(required=[not])
@@ -3006,7 +3012,7 @@ class LogicalNotPredicate(SchemaBase):
         super(LogicalNotPredicate, self).__init__(**kwds)
 
 
-class SelectionNot(SchemaBase):
+class SelectionNot(VegaLiteSchema):
     """SelectionNot schema wrapper
     
     Mapping(required=[not])
@@ -3021,7 +3027,7 @@ class SelectionNot(SchemaBase):
         super(SelectionNot, self).__init__(**kwds)
 
 
-class LogicalOperandPredicate(SchemaBase):
+class LogicalOperandPredicate(VegaLiteSchema):
     """LogicalOperandPredicate schema wrapper
     
     anyOf(LogicalNotPredicate, LogicalAndPredicate, LogicalOrPredicate, Predicate)
@@ -3033,7 +3039,7 @@ class LogicalOperandPredicate(SchemaBase):
         super(LogicalOperandPredicate, self).__init__(*args, **kwds)
 
 
-class SelectionOperand(SchemaBase):
+class SelectionOperand(VegaLiteSchema):
     """SelectionOperand schema wrapper
     
     anyOf(SelectionNot, SelectionAnd, SelectionOr, string)
@@ -3045,7 +3051,7 @@ class SelectionOperand(SchemaBase):
         super(SelectionOperand, self).__init__(*args, **kwds)
 
 
-class LogicalOrPredicate(SchemaBase):
+class LogicalOrPredicate(VegaLiteSchema):
     """LogicalOrPredicate schema wrapper
     
     Mapping(required=[or])
@@ -3060,7 +3066,7 @@ class LogicalOrPredicate(SchemaBase):
         super(LogicalOrPredicate, self).__init__(**kwds)
 
 
-class SelectionOr(SchemaBase):
+class SelectionOr(VegaLiteSchema):
     """SelectionOr schema wrapper
     
     Mapping(required=[or])
@@ -3075,7 +3081,7 @@ class SelectionOr(SchemaBase):
         super(SelectionOr, self).__init__(**kwds)
 
 
-class LookupData(SchemaBase):
+class LookupData(VegaLiteSchema):
     """LookupData schema wrapper
     
     Mapping(required=[data, key])
@@ -3096,7 +3102,7 @@ class LookupData(SchemaBase):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
 
 
-class LookupTransform(SchemaBase):
+class LookupTransform(VegaLiteSchema):
     """LookupTransform schema wrapper
     
     Mapping(required=[lookup, from])
@@ -3115,7 +3121,7 @@ class LookupTransform(SchemaBase):
         super(LookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
 
 
-class Mark(SchemaBase):
+class Mark(VegaLiteSchema):
     """Mark schema wrapper
     
     enum('area', 'bar', 'line', 'point', 'text', 'tick', 'rect', 'rule', 'circle', 'square', 
@@ -3129,7 +3135,7 @@ class Mark(SchemaBase):
         super(Mark, self).__init__(*args)
 
 
-class MarkConfig(SchemaBase):
+class MarkConfig(VegaLiteSchema):
     """MarkConfig schema wrapper
     
     Mapping(required=[])
@@ -3268,7 +3274,7 @@ class MarkConfig(SchemaBase):
                                          theta=theta, **kwds)
 
 
-class MarkDef(SchemaBase):
+class MarkDef(VegaLiteSchema):
     """MarkDef schema wrapper
     
     Mapping(required=[type])
@@ -3423,7 +3429,7 @@ class MarkDef(SchemaBase):
                                       theta=theta, **kwds)
 
 
-class Month(SchemaBase):
+class Month(VegaLiteSchema):
     """Month schema wrapper
     
     float
@@ -3435,7 +3441,7 @@ class Month(SchemaBase):
         super(Month, self).__init__(*args)
 
 
-class MultiSelection(SchemaBase):
+class MultiSelection(VegaLiteSchema):
     """MultiSelection schema wrapper
     
     Mapping(required=[type])
@@ -3484,7 +3490,7 @@ class MultiSelection(SchemaBase):
                                              **kwds)
 
 
-class MultiSelectionConfig(SchemaBase):
+class MultiSelectionConfig(VegaLiteSchema):
     """MultiSelectionConfig schema wrapper
     
     Mapping(required=[])
@@ -3531,7 +3537,7 @@ class MultiSelectionConfig(SchemaBase):
                                                    toggle=toggle, **kwds)
 
 
-class MultiTimeUnit(SchemaBase):
+class MultiTimeUnit(VegaLiteSchema):
     """MultiTimeUnit schema wrapper
     
     anyOf(LocalMultiTimeUnit, UtcMultiTimeUnit)
@@ -3543,7 +3549,7 @@ class MultiTimeUnit(SchemaBase):
         super(MultiTimeUnit, self).__init__(*args, **kwds)
 
 
-class NamedData(SchemaBase):
+class NamedData(VegaLiteSchema):
     """NamedData schema wrapper
     
     Mapping(required=[name])
@@ -3562,7 +3568,7 @@ class NamedData(SchemaBase):
         super(NamedData, self).__init__(name=name, format=format, **kwds)
 
 
-class NiceTime(SchemaBase):
+class NiceTime(VegaLiteSchema):
     """NiceTime schema wrapper
     
     enum('second', 'minute', 'hour', 'day', 'week', 'month', 'year')
@@ -3574,7 +3580,7 @@ class NiceTime(SchemaBase):
         super(NiceTime, self).__init__(*args)
 
 
-class OrderFieldDef(SchemaBase):
+class OrderFieldDef(VegaLiteSchema):
     """OrderFieldDef schema wrapper
     
     Mapping(required=[type])
@@ -3621,7 +3627,7 @@ class OrderFieldDef(SchemaBase):
                                             sort=sort, timeUnit=timeUnit, **kwds)
 
 
-class Orient(SchemaBase):
+class Orient(VegaLiteSchema):
     """Orient schema wrapper
     
     enum('horizontal', 'vertical')
@@ -3633,7 +3639,7 @@ class Orient(SchemaBase):
         super(Orient, self).__init__(*args)
 
 
-class Padding(SchemaBase):
+class Padding(VegaLiteSchema):
     """Padding schema wrapper
     
     anyOf(float, Mapping(required=[]))
@@ -3645,7 +3651,7 @@ class Padding(SchemaBase):
         super(Padding, self).__init__(*args, **kwds)
 
 
-class PositionFieldDef(SchemaBase):
+class PositionFieldDef(VegaLiteSchema):
     """PositionFieldDef schema wrapper
     
     Mapping(required=[type])
@@ -3727,7 +3733,7 @@ class PositionFieldDef(SchemaBase):
                                                timeUnit=timeUnit, **kwds)
 
 
-class Predicate(SchemaBase):
+class Predicate(VegaLiteSchema):
     """Predicate schema wrapper
     
     anyOf(FieldEqualPredicate, FieldRangePredicate, FieldOneOfPredicate, SelectionPredicate, 
@@ -3740,7 +3746,7 @@ class Predicate(SchemaBase):
         super(Predicate, self).__init__(*args, **kwds)
 
 
-class Projection(SchemaBase):
+class Projection(VegaLiteSchema):
     """Projection schema wrapper
     
     Mapping(required=[])
@@ -3810,7 +3816,7 @@ class Projection(SchemaBase):
                                          tilt=tilt, type=type, **kwds)
 
 
-class ProjectionConfig(SchemaBase):
+class ProjectionConfig(VegaLiteSchema):
     """ProjectionConfig schema wrapper
     
     Mapping(required=[])
@@ -3882,7 +3888,7 @@ class ProjectionConfig(SchemaBase):
                                                type=type, **kwds)
 
 
-class ProjectionType(SchemaBase):
+class ProjectionType(VegaLiteSchema):
     """ProjectionType schema wrapper
     
     enum('albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal', 
@@ -3896,7 +3902,7 @@ class ProjectionType(SchemaBase):
         super(ProjectionType, self).__init__(*args)
 
 
-class RangeConfig(SchemaBase):
+class RangeConfig(VegaLiteSchema):
     """RangeConfig schema wrapper
     
     Mapping(required=[])
@@ -3925,7 +3931,7 @@ class RangeConfig(SchemaBase):
                                           ordinal=ordinal, ramp=ramp, symbol=symbol, **kwds)
 
 
-class RangeConfigValue(SchemaBase):
+class RangeConfigValue(VegaLiteSchema):
     """RangeConfigValue schema wrapper
     
     anyOf(List(anyOf(float, string)), VgScheme, Mapping(required=[step]))
@@ -3937,7 +3943,7 @@ class RangeConfigValue(SchemaBase):
         super(RangeConfigValue, self).__init__(*args, **kwds)
 
 
-class Repeat(SchemaBase):
+class Repeat(VegaLiteSchema):
     """Repeat schema wrapper
     
     Mapping(required=[])
@@ -3956,7 +3962,7 @@ class Repeat(SchemaBase):
         super(Repeat, self).__init__(column=column, row=row, **kwds)
 
 
-class RepeatRef(SchemaBase):
+class RepeatRef(VegaLiteSchema):
     """RepeatRef schema wrapper
     
     Mapping(required=[repeat])
@@ -3974,7 +3980,7 @@ class RepeatRef(SchemaBase):
         super(RepeatRef, self).__init__(repeat=repeat, **kwds)
 
 
-class Resolve(SchemaBase):
+class Resolve(VegaLiteSchema):
     """Resolve schema wrapper
     
     Mapping(required=[])
@@ -3997,7 +4003,7 @@ class Resolve(SchemaBase):
         super(Resolve, self).__init__(axis=axis, legend=legend, scale=scale, **kwds)
 
 
-class ResolveMode(SchemaBase):
+class ResolveMode(VegaLiteSchema):
     """ResolveMode schema wrapper
     
     enum('independent', 'shared')
@@ -4009,7 +4015,7 @@ class ResolveMode(SchemaBase):
         super(ResolveMode, self).__init__(*args)
 
 
-class Scale(SchemaBase):
+class Scale(VegaLiteSchema):
     """Scale schema wrapper
     
     Mapping(required=[])
@@ -4157,7 +4163,7 @@ class Scale(SchemaBase):
                                     zero=zero, **kwds)
 
 
-class ScaleConfig(SchemaBase):
+class ScaleConfig(VegaLiteSchema):
     """ScaleConfig schema wrapper
     
     Mapping(required=[])
@@ -4244,7 +4250,7 @@ class ScaleConfig(SchemaBase):
                                           useUnaggregatedDomain=useUnaggregatedDomain, **kwds)
 
 
-class ScaleInterpolate(SchemaBase):
+class ScaleInterpolate(VegaLiteSchema):
     """ScaleInterpolate schema wrapper
     
     enum('rgb', 'lab', 'hcl', 'hsl', 'hsl-long', 'hcl-long', 'cubehelix', 'cubehelix-long')
@@ -4256,7 +4262,7 @@ class ScaleInterpolate(SchemaBase):
         super(ScaleInterpolate, self).__init__(*args)
 
 
-class ScaleInterpolateParams(SchemaBase):
+class ScaleInterpolateParams(VegaLiteSchema):
     """ScaleInterpolateParams schema wrapper
     
     Mapping(required=[type])
@@ -4275,7 +4281,7 @@ class ScaleInterpolateParams(SchemaBase):
         super(ScaleInterpolateParams, self).__init__(type=type, gamma=gamma, **kwds)
 
 
-class ScaleResolveMap(SchemaBase):
+class ScaleResolveMap(VegaLiteSchema):
     """ScaleResolveMap schema wrapper
     
     Mapping(required=[])
@@ -4304,7 +4310,7 @@ class ScaleResolveMap(SchemaBase):
                                               y=y, **kwds)
 
 
-class ScaleType(SchemaBase):
+class ScaleType(VegaLiteSchema):
     """ScaleType schema wrapper
     
     enum('linear', 'bin-linear', 'log', 'pow', 'sqrt', 'time', 'utc', 'sequential', 'ordinal', 
@@ -4317,7 +4323,7 @@ class ScaleType(SchemaBase):
         super(ScaleType, self).__init__(*args)
 
 
-class SchemeParams(SchemaBase):
+class SchemeParams(VegaLiteSchema):
     """SchemeParams schema wrapper
     
     Mapping(required=[name])
@@ -4340,7 +4346,7 @@ class SchemeParams(SchemaBase):
         super(SchemeParams, self).__init__(name=name, extent=extent, **kwds)
 
 
-class SelectionConfig(SchemaBase):
+class SelectionConfig(VegaLiteSchema):
     """SelectionConfig schema wrapper
     
     Mapping(required=[])
@@ -4371,7 +4377,7 @@ class SelectionConfig(SchemaBase):
         super(SelectionConfig, self).__init__(interval=interval, multi=multi, single=single, **kwds)
 
 
-class SelectionDef(SchemaBase):
+class SelectionDef(VegaLiteSchema):
     """SelectionDef schema wrapper
     
     anyOf(SingleSelection, MultiSelection, IntervalSelection)
@@ -4383,7 +4389,7 @@ class SelectionDef(SchemaBase):
         super(SelectionDef, self).__init__(*args, **kwds)
 
 
-class SelectionDomain(SchemaBase):
+class SelectionDomain(VegaLiteSchema):
     """SelectionDomain schema wrapper
     
     anyOf(Mapping(required=[selection]), Mapping(required=[selection]))
@@ -4395,7 +4401,7 @@ class SelectionDomain(SchemaBase):
         super(SelectionDomain, self).__init__(*args, **kwds)
 
 
-class SelectionPredicate(SchemaBase):
+class SelectionPredicate(VegaLiteSchema):
     """SelectionPredicate schema wrapper
     
     Mapping(required=[selection])
@@ -4412,7 +4418,7 @@ class SelectionPredicate(SchemaBase):
         super(SelectionPredicate, self).__init__(selection=selection, **kwds)
 
 
-class SelectionResolution(SchemaBase):
+class SelectionResolution(VegaLiteSchema):
     """SelectionResolution schema wrapper
     
     enum('global', 'union', 'intersect')
@@ -4424,7 +4430,7 @@ class SelectionResolution(SchemaBase):
         super(SelectionResolution, self).__init__(*args)
 
 
-class SingleDefChannel(SchemaBase):
+class SingleDefChannel(VegaLiteSchema):
     """SingleDefChannel schema wrapper
     
     enum('x', 'y', 'x2', 'y2', 'row', 'column', 'size', 'shape', 'color', 'opacity', 'text', 
@@ -4437,7 +4443,7 @@ class SingleDefChannel(SchemaBase):
         super(SingleDefChannel, self).__init__(*args)
 
 
-class SingleSelection(SchemaBase):
+class SingleSelection(VegaLiteSchema):
     """SingleSelection schema wrapper
     
     Mapping(required=[type])
@@ -4485,7 +4491,7 @@ class SingleSelection(SchemaBase):
                                               **kwds)
 
 
-class SingleSelectionConfig(SchemaBase):
+class SingleSelectionConfig(VegaLiteSchema):
     """SingleSelectionConfig schema wrapper
     
     Mapping(required=[])
@@ -4531,7 +4537,7 @@ class SingleSelectionConfig(SchemaBase):
                                                     resolve=resolve, **kwds)
 
 
-class SingleTimeUnit(SchemaBase):
+class SingleTimeUnit(VegaLiteSchema):
     """SingleTimeUnit schema wrapper
     
     anyOf(LocalSingleTimeUnit, UtcSingleTimeUnit)
@@ -4543,7 +4549,7 @@ class SingleTimeUnit(SchemaBase):
         super(SingleTimeUnit, self).__init__(*args, **kwds)
 
 
-class SortField(SchemaBase):
+class SortField(VegaLiteSchema):
     """SortField schema wrapper
     
     Mapping(required=[op])
@@ -4569,7 +4575,7 @@ class SortField(SchemaBase):
         super(SortField, self).__init__(op=op, field=field, order=order, **kwds)
 
 
-class SortOrder(SchemaBase):
+class SortOrder(VegaLiteSchema):
     """SortOrder schema wrapper
     
     enum('ascending', 'descending', None)
@@ -4581,7 +4587,7 @@ class SortOrder(SchemaBase):
         super(SortOrder, self).__init__(*args)
 
 
-class StackOffset(SchemaBase):
+class StackOffset(VegaLiteSchema):
     """StackOffset schema wrapper
     
     enum('zero', 'center', 'normalize')
@@ -4593,7 +4599,7 @@ class StackOffset(SchemaBase):
         super(StackOffset, self).__init__(*args)
 
 
-class StyleConfigIndex(SchemaBase):
+class StyleConfigIndex(VegaLiteSchema):
     """StyleConfigIndex schema wrapper
     
     Mapping(required=[])
@@ -4605,7 +4611,7 @@ class StyleConfigIndex(SchemaBase):
         super(StyleConfigIndex, self).__init__(**kwds)
 
 
-class TextConfig(SchemaBase):
+class TextConfig(VegaLiteSchema):
     """TextConfig schema wrapper
     
     Mapping(required=[])
@@ -4746,7 +4752,7 @@ class TextConfig(SchemaBase):
                                          tension=tension, text=text, theta=theta, **kwds)
 
 
-class TickConfig(SchemaBase):
+class TickConfig(VegaLiteSchema):
     """TickConfig schema wrapper
     
     Mapping(required=[])
@@ -4889,7 +4895,7 @@ class TickConfig(SchemaBase):
                                          theta=theta, thickness=thickness, **kwds)
 
 
-class TimeUnit(SchemaBase):
+class TimeUnit(VegaLiteSchema):
     """TimeUnit schema wrapper
     
     anyOf(SingleTimeUnit, MultiTimeUnit)
@@ -4901,7 +4907,7 @@ class TimeUnit(SchemaBase):
         super(TimeUnit, self).__init__(*args, **kwds)
 
 
-class TimeUnitTransform(SchemaBase):
+class TimeUnitTransform(VegaLiteSchema):
     """TimeUnitTransform schema wrapper
     
     Mapping(required=[timeUnit, field, as])
@@ -4920,7 +4926,7 @@ class TimeUnitTransform(SchemaBase):
         super(TimeUnitTransform, self).__init__(field=field, timeUnit=timeUnit, **kwds)
 
 
-class TitleOrient(SchemaBase):
+class TitleOrient(VegaLiteSchema):
     """TitleOrient schema wrapper
     
     enum('top', 'bottom', 'left', 'right')
@@ -4932,7 +4938,7 @@ class TitleOrient(SchemaBase):
         super(TitleOrient, self).__init__(*args)
 
 
-class TitleParams(SchemaBase):
+class TitleParams(VegaLiteSchema):
     """TitleParams schema wrapper
     
     Mapping(required=[text])
@@ -4968,7 +4974,7 @@ class TitleParams(SchemaBase):
                                           style=style, **kwds)
 
 
-class TopLevelFacetedUnitSpec(SchemaBase):
+class TopLevelFacetedUnitSpec(VegaLiteSchema):
     """TopLevelFacetedUnitSpec schema wrapper
     
     Mapping(required=[mark])
@@ -5072,7 +5078,7 @@ class TopLevelFacetedUnitSpec(SchemaBase):
                                                       **kwds)
 
 
-class TopLevelFacetSpec(SchemaBase):
+class TopLevelFacetSpec(VegaLiteSchema):
     """TopLevelFacetSpec schema wrapper
     
     Mapping(required=[facet, spec])
@@ -5127,7 +5133,7 @@ class TopLevelFacetSpec(SchemaBase):
                                                 **kwds)
 
 
-class TopLevelHConcatSpec(SchemaBase):
+class TopLevelHConcatSpec(VegaLiteSchema):
     """TopLevelHConcatSpec schema wrapper
     
     Mapping(required=[hconcat])
@@ -5179,7 +5185,7 @@ class TopLevelHConcatSpec(SchemaBase):
                                                   **kwds)
 
 
-class TopLevelLayerSpec(SchemaBase):
+class TopLevelLayerSpec(VegaLiteSchema):
     """TopLevelLayerSpec schema wrapper
     
     Mapping(required=[layer])
@@ -5275,7 +5281,7 @@ class TopLevelLayerSpec(SchemaBase):
                                                 width=width, **kwds)
 
 
-class TopLevelRepeatSpec(SchemaBase):
+class TopLevelRepeatSpec(VegaLiteSchema):
     """TopLevelRepeatSpec schema wrapper
     
     Mapping(required=[repeat, spec])
@@ -5330,7 +5336,7 @@ class TopLevelRepeatSpec(SchemaBase):
                                                  **kwds)
 
 
-class TopLevelVConcatSpec(SchemaBase):
+class TopLevelVConcatSpec(VegaLiteSchema):
     """TopLevelVConcatSpec schema wrapper
     
     Mapping(required=[vconcat])
@@ -5382,7 +5388,7 @@ class TopLevelVConcatSpec(SchemaBase):
                                                   **kwds)
 
 
-class TopLevelExtendedSpec(SchemaBase):
+class TopLevelExtendedSpec(VegaLiteSchema):
     """TopLevelExtendedSpec schema wrapper
     
     anyOf(TopLevelFacetedUnitSpec, TopLevelLayerSpec, TopLevelFacetSpec, TopLevelRepeatSpec, 
@@ -5395,7 +5401,7 @@ class TopLevelExtendedSpec(SchemaBase):
         super(TopLevelExtendedSpec, self).__init__(*args, **kwds)
 
 
-class TopoDataFormat(SchemaBase):
+class TopoDataFormat(VegaLiteSchema):
     """TopoDataFormat schema wrapper
     
     Mapping(required=[])
@@ -5438,7 +5444,7 @@ class TopoDataFormat(SchemaBase):
         super(TopoDataFormat, self).__init__(feature=feature, mesh=mesh, parse=parse, type=type, **kwds)
 
 
-class Transform(SchemaBase):
+class Transform(VegaLiteSchema):
     """Transform schema wrapper
     
     anyOf(FilterTransform, CalculateTransform, LookupTransform, BinTransform, TimeUnitTransform,
@@ -5451,7 +5457,7 @@ class Transform(SchemaBase):
         super(Transform, self).__init__(*args, **kwds)
 
 
-class Type(SchemaBase):
+class Type(VegaLiteSchema):
     """Type schema wrapper
     
     anyOf(BasicType, GeoType)
@@ -5465,7 +5471,7 @@ class Type(SchemaBase):
         super(Type, self).__init__(*args, **kwds)
 
 
-class UrlData(SchemaBase):
+class UrlData(VegaLiteSchema):
     """UrlData schema wrapper
     
     Mapping(required=[url])
@@ -5485,7 +5491,7 @@ class UrlData(SchemaBase):
         super(UrlData, self).__init__(url=url, format=format, **kwds)
 
 
-class UtcMultiTimeUnit(SchemaBase):
+class UtcMultiTimeUnit(VegaLiteSchema):
     """UtcMultiTimeUnit schema wrapper
     
     enum('utcyearquarter', 'utcyearquartermonth', 'utcyearmonth', 'utcyearmonthdate', 
@@ -5500,7 +5506,7 @@ class UtcMultiTimeUnit(SchemaBase):
         super(UtcMultiTimeUnit, self).__init__(*args)
 
 
-class UtcSingleTimeUnit(SchemaBase):
+class UtcSingleTimeUnit(VegaLiteSchema):
     """UtcSingleTimeUnit schema wrapper
     
     enum('utcyear', 'utcquarter', 'utcmonth', 'utcday', 'utcdate', 'utchours', 'utcminutes', 
@@ -5513,7 +5519,7 @@ class UtcSingleTimeUnit(SchemaBase):
         super(UtcSingleTimeUnit, self).__init__(*args)
 
 
-class ValueDef(SchemaBase):
+class ValueDef(VegaLiteSchema):
     """ValueDef schema wrapper
     
     Mapping(required=[value])
@@ -5532,7 +5538,7 @@ class ValueDef(SchemaBase):
         super(ValueDef, self).__init__(value=value, **kwds)
 
 
-class ValueDefWithCondition(SchemaBase):
+class ValueDefWithCondition(VegaLiteSchema):
     """ValueDefWithCondition schema wrapper
     
     Mapping(required=[])
@@ -5556,7 +5562,7 @@ class ValueDefWithCondition(SchemaBase):
         super(ValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
-class MarkPropValueDefWithCondition(SchemaBase):
+class MarkPropValueDefWithCondition(VegaLiteSchema):
     """MarkPropValueDefWithCondition schema wrapper
     
     Mapping(required=[])
@@ -5581,7 +5587,7 @@ class MarkPropValueDefWithCondition(SchemaBase):
         super(MarkPropValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
-class TextValueDefWithCondition(SchemaBase):
+class TextValueDefWithCondition(VegaLiteSchema):
     """TextValueDefWithCondition schema wrapper
     
     Mapping(required=[])
@@ -5605,7 +5611,7 @@ class TextValueDefWithCondition(SchemaBase):
         super(TextValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
-class VerticalAlign(SchemaBase):
+class VerticalAlign(VegaLiteSchema):
     """VerticalAlign schema wrapper
     
     enum('top', 'middle', 'bottom')
@@ -5617,7 +5623,7 @@ class VerticalAlign(SchemaBase):
         super(VerticalAlign, self).__init__(*args)
 
 
-class VgAxisConfig(SchemaBase):
+class VgAxisConfig(VegaLiteSchema):
     """VgAxisConfig schema wrapper
     
     Mapping(required=[])
@@ -5766,7 +5772,7 @@ class VgAxisConfig(SchemaBase):
                                            **kwds)
 
 
-class VgBinding(SchemaBase):
+class VgBinding(VegaLiteSchema):
     """VgBinding schema wrapper
     
     anyOf(VgCheckboxBinding, VgRadioBinding, VgSelectBinding, VgRangeBinding, VgGenericBinding)
@@ -5778,7 +5784,7 @@ class VgBinding(SchemaBase):
         super(VgBinding, self).__init__(*args, **kwds)
 
 
-class VgCheckboxBinding(SchemaBase):
+class VgCheckboxBinding(VegaLiteSchema):
     """VgCheckboxBinding schema wrapper
     
     Mapping(required=[input])
@@ -5797,7 +5803,7 @@ class VgCheckboxBinding(SchemaBase):
         super(VgCheckboxBinding, self).__init__(input=input, element=element, **kwds)
 
 
-class VgEventStream(SchemaBase):
+class VgEventStream(VegaLiteSchema):
     """VgEventStream schema wrapper
     
     Mapping(required=[])
@@ -5809,7 +5815,7 @@ class VgEventStream(SchemaBase):
         super(VgEventStream, self).__init__(**kwds)
 
 
-class VgGenericBinding(SchemaBase):
+class VgGenericBinding(VegaLiteSchema):
     """VgGenericBinding schema wrapper
     
     Mapping(required=[input])
@@ -5828,7 +5834,7 @@ class VgGenericBinding(SchemaBase):
         super(VgGenericBinding, self).__init__(input=input, element=element, **kwds)
 
 
-class VgMarkConfig(SchemaBase):
+class VgMarkConfig(VegaLiteSchema):
     """VgMarkConfig schema wrapper
     
     Mapping(required=[])
@@ -5955,7 +5961,7 @@ class VgMarkConfig(SchemaBase):
                                            tension=tension, text=text, theta=theta, **kwds)
 
 
-class VgProjectionType(SchemaBase):
+class VgProjectionType(VegaLiteSchema):
     """VgProjectionType schema wrapper
     
     enum('albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal', 
@@ -5969,7 +5975,7 @@ class VgProjectionType(SchemaBase):
         super(VgProjectionType, self).__init__(*args)
 
 
-class VgRadioBinding(SchemaBase):
+class VgRadioBinding(VegaLiteSchema):
     """VgRadioBinding schema wrapper
     
     Mapping(required=[input, options])
@@ -5990,7 +5996,7 @@ class VgRadioBinding(SchemaBase):
         super(VgRadioBinding, self).__init__(input=input, options=options, element=element, **kwds)
 
 
-class VgRangeBinding(SchemaBase):
+class VgRangeBinding(VegaLiteSchema):
     """VgRangeBinding schema wrapper
     
     Mapping(required=[input])
@@ -6017,7 +6023,7 @@ class VgRangeBinding(SchemaBase):
                                              **kwds)
 
 
-class VgScheme(SchemaBase):
+class VgScheme(VegaLiteSchema):
     """VgScheme schema wrapper
     
     Mapping(required=[scheme])
@@ -6038,7 +6044,7 @@ class VgScheme(SchemaBase):
         super(VgScheme, self).__init__(scheme=scheme, count=count, extent=extent, **kwds)
 
 
-class VgSelectBinding(SchemaBase):
+class VgSelectBinding(VegaLiteSchema):
     """VgSelectBinding schema wrapper
     
     Mapping(required=[input, options])
@@ -6059,7 +6065,7 @@ class VgSelectBinding(SchemaBase):
         super(VgSelectBinding, self).__init__(input=input, options=options, element=element, **kwds)
 
 
-class VgTitleConfig(SchemaBase):
+class VgTitleConfig(VegaLiteSchema):
     """VgTitleConfig schema wrapper
     
     Mapping(required=[])
@@ -6104,7 +6110,7 @@ class VgTitleConfig(SchemaBase):
                                             limit=limit, offset=offset, orient=orient, **kwds)
 
 
-class ViewConfig(SchemaBase):
+class ViewConfig(VegaLiteSchema):
     """ViewConfig schema wrapper
     
     Mapping(required=[])
