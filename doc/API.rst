@@ -78,5 +78,4 @@ Other Objects
 .. automodule:: altair
    :members:
    :imported-members:
-   :undoc-members:
-   :exclude-members: Chart,LayerChart,FacetChart
+   :exclude-members: Chart,LayerChart,FacetChart,
