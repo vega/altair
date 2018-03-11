@@ -14,40 +14,32 @@ Altair's API is simple, friendly and consistent and built on top of the
 powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Getting Started
 
-Example
--------
-Here is an example of using the Altair API to quickly visualize a dataset with
-an interactive scatter plot:
-
-.. altair-plot::
-
-    import altair as alt
-
-    # load a simple dataset as a pandas DataFrame
-    from vega_datasets import data
-    cars = data.cars()
-
-    alt.Chart(cars).mark_point().encode(
-        x='Horsepower',
-        y='Miles_per_Gallon',
-        color='Origin',
-    ).interactive()
-
-The key idea is that you are declaring links between *data columns* and *visual encoding
-channels*, such as the x-axis, y-axis, color, etc. The rest of the plot details are
-handled automatically. Building on this declarative plotting idea, a surprising number
-of useful plots and visualizations can be created using a relatively concise grammar.
-
-Documentation
--------------
+   getting_started/overview
+   getting_started/installation
+   getting_started/starting
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :caption: User Guide
 
-   tutorials/index
+   user_guide/display
+   user_guide/API
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Case Studies
+
+   case_studies/exploring-weather
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Gallery
+
    gallery/index
-   API
 
 Bug Reports & Questions
 -----------------------
@@ -62,7 +54,6 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
 
 
 .. _GitHub: http://github.com/altair-viz/altair

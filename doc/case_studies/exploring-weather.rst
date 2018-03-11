@@ -1,14 +1,14 @@
-.. tutorial-exploring-weather
+.. _exploring-weather:
 
-Exploring Data: Seattle Weather
-===============================
+Exploring Seattle Weather
+=========================
 
 (This tutorial is adapted from `Vega-Lite's documentation
 <http://vega.github.io/vega-lite/tutorials/explore.html>`_)
 
 In this tutorial, you’ll learn a few more techniques for creating
 visualizations in Altair. If you are not familiar with Altair,
-please read :ref:`tutorial-getting-started` first.
+please read :ref:`starting` first.
 
 For this tutorial, we will create visualizations to explore
 weather data for Seattle, taken from NOAA.
@@ -125,8 +125,7 @@ where they will be calculated by the renderer.
 Of course, the same calculation could be done by using Pandas manipulations to
 explicitly add a column to the dataframe; the disadvantage there is that the
 derived values would have to be stored in the plot specification
-rather than computed on-demand in the browser. For more information on these
-transformations, see :ref:`data-transformations`.
+rather than computed on-demand in the browser.
 
 Next we will explore the ``weather`` field, which encodes a categorical
 variable describing the weather on a given day.
@@ -249,6 +248,6 @@ This is the end of this tutorial where you have seen various ways to bin
 and aggregate data, derive new fields, and customize your charts.
 You can find more visualizations in the :ref:`example-gallery`.
 If you want to further customize your charts, you can refer to Altair's
-:ref:`api-documentation`.
+:ref:`API`.
 
 .. _Pandas: http://pandas.pydata.org/

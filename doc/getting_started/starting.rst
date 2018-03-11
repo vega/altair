@@ -1,21 +1,19 @@
-.. _tutorial-getting-started:
+.. _starting:
 
-Getting Started with Altair
-===========================
+Basic Statistical Visualization
+===================================
 
-(this tutorial is adapted from `Vega-Lite's documentation
+(This tutorial is adapted from `Vega-Lite's documentation
 <http://vega.github.io/vega-lite/tutorials/getting_started.html>`_)
 
 .. currentmodule:: altair
 
 This tutorial will guide you through the basic process of creating
-visualizations in Altair.
-First, you will need to make sure you have the Altair package and its
-dependencies installed (see :ref:`Installation`)
-and make sure you understand how altair
-plots are displayed (see :ref:`displaying-plots`).
-This tutorial will assume you are working within a Jupyter notebook
-user interface, so that plots are automatically rendered.
+visualizations in Altair. First, you will need to make sure you have the Altair
+package and its dependencies installed (see :ref:`installation`) and make sure
+you understand how altair plots are displayed (see :ref:`displaying-charts`).
+This tutorial will assume you are working within a Jupyter notebook user
+interface, so that plots are automatically rendered.
 
 Here is the outline of this basic tutorial:
 
@@ -29,10 +27,13 @@ Here is the outline of this basic tutorial:
 
 The Data
 --------
-Data in Altair is built around the Pandas Dataframe. For the purposes of
-this tutorial, we'll start by importing Pandas and creating a simple
-DataFrame to visualize, with a categorical variable in column a and a
-numerical variable in column b:
+
+Data in Altair is built around the Pandas Dataframe. One of the defining
+characteristics of statistical visualization is that it begins with 
+`tidy <http://vita.had.co.nz/papers/tidy-data.html>`_
+Dataframes. For the purposes of this tutorial, we'll start by importing Pandas
+and creating a simple DataFrame to visualize, with a categorical variable in
+column a and a numerical variable in column b:
 
 .. altair-plot::
    :output: none
@@ -50,6 +51,7 @@ piece of plotting with Altair.
 
 The Chart Object
 ----------------
+
 The fundamental object in Altair is the :class:`Chart`, which takes a
 dataframe as a single argument:
 
@@ -66,6 +68,7 @@ to *do* anything with the data. That will come next.
 
 Encodings and Marks
 -------------------
+
 With this chart object in hand, we can now specify how we would like the
 data to be visualized. This is done via the ``mark`` attribute of the chart
 object, which is most conveniently accessed via the ``Chart.mark_*`` methods.
@@ -98,7 +101,7 @@ the dataset, accessed by column name.
 
 For pandas dataframes, Altair automatically determines the appropriate data
 type for the mapped column, which in this case is a *nominal* value, or an
-unordered categorical (see :ref:`data-types` for more information).
+unordered categorical.
 
 Though we've now separated the data by one attribute, we still have multiple
 points overlapping within each category. Let's further separate these by
@@ -116,14 +119,11 @@ by altair, and this time is treated as a *quantitative* type (i.e. real-valued).
 Additionally, we see that grid lines and appropriate axis titles are
 automatically added as well.
 
-For more information on available marks and encodings, see :ref:`mark-reference`
-and :ref:`encoding-reference`.
-
-
 .. _basic-tutorial-aggregation:
 
 Data Transformation: Aggregation
 --------------------------------
+
 To allow for more flexibility in how data are visualized, Altair has a built-in
 syntax for *aggregation* of data.
 For example, we can compute the average of all values by specifying this
@@ -217,6 +217,7 @@ of the more advanced field configurations:
 
 Customizing your Visualization
 ------------------------------
+
 By default, Altair via Vega-Lite makes some choices about default properties
 of the visualization.
 Altair also provides an API to customize the look of the visualization.
@@ -237,6 +238,7 @@ color string:
 
 Publishing your Visualization
 -----------------------------
+
 Once you have visualized your data, perhaps you would like to publish it
 somewhere on the web. This can be done straightforwardly using the
 Vega-Embed_ javascript package.
