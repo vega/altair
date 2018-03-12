@@ -26,6 +26,12 @@ Python APIs. The important point here is that you must have a renderer installed
 for the given version of the Python API you are using, that works with
 frontend user-interface you are using.
 
+.. note::
+
+  We strongly recommend all users transition to Vega-Lite 2.x and Vega 3.x.
+  These versions support many new features, are more stable, and Altair 2.0
+  works best with them.
+
 .. _renderers:
 
 Renderers
@@ -113,8 +119,9 @@ for Vega-Lite/Vega described in :ref:`importing`.
 Jupyter Notebook
 ~~~~~~~~~~~~~~~~
 
-To render Vega-Lite 2.x or Vega 3.x in the Jupyter Notebook, you will need to
-install and enable the `ipyvega3`_ Python package using conda:
+To render Vega-Lite 2.x or Vega 3.x in the Jupyter Notebook (as mentioned above
+we recommend these versions), you will need to install and enable the
+`ipyvega3`_ Python package using conda:
 
 .. code-block:: bash
 
@@ -153,7 +160,7 @@ Once you have installed one of these packages, enable the corresponding renderer
 JupyterLab
 ~~~~~~~~~~
 
-JupyterLab 0.31.x
+JupyterLab 0.31
 +++++++++++++++++
 
 Version 0.31 of JupyterLab includes built-in support for VegaLite 1.x and Vega
@@ -170,7 +177,7 @@ and then import Altair as::
 
     import altair as alt
 
-JupyterLab 0.33.x and later
+JupyterLab 0.32 and later
 +++++++++++++++++++++++++++
 
 JupyterLab versions 0.32 and later include built-in support for Vega-Lite 2.x and

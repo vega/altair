@@ -8,6 +8,12 @@ Vega-Lite (1.x and 2.x) and Vega (2.x and 3.x) in a single Python package.
 This section of the documentation describe how you can import the different
 versions of the Python APIs.
 
+.. note::
+
+  We strongly recommend all users transition to Vega-Lite 2.x and Vega 3.x.
+  These versions support many new features, are more stable, and Altair 2.0
+  works best with them.
+
 Vega-Lite
 ---------
 
