@@ -90,10 +90,3 @@ class PluginRegistry(Generic[PluginType]):
         """Return the currently active plugin."""
         return self._active
 
-
-    def set_options(self, **kwargs):
-        self._options = kwargs
-
-
-    def get_options(self):
-        return self._options
