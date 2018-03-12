@@ -9,7 +9,7 @@ import json
 def load_schema():
     """Load the json schema associated with this module's functions"""
     directory = os.path.dirname(__file__)
-    with open(os.path.join(directory, '..', 'vega-schema.json')) as f:
+    with open(os.path.join(directory, 'vega-schema.json')) as f:
         return json.load(f)
 
 
@@ -42,7 +42,7 @@ class Root(VegaSchema):
 class autosize(VegaSchema):
     """autosize schema wrapper
     
-    oneOf(enum('pad', 'fit', 'none'), Mapping(required=[type]))
+    oneOf(enum('pad', 'fit', 'fit-x', 'fit-y', 'none'), Mapping(required=[type]))
     """
     _schema = {'$ref': '#/defs/autosize'}
     _rootschema = Root._schema
@@ -152,6 +152,19 @@ class bind(VegaSchema):
         super(bind, self).__init__(*args, **kwds)
 
 
+class dataFormat(VegaSchema):
+    """dataFormat schema wrapper
+    
+    anyOf(Mapping(required=[]), Mapping(required=[]), Mapping(required=[]), 
+    oneOf(Mapping(required=[]), Mapping(required=[])))
+    """
+    _schema = {'$ref': '#/defs/dataFormat'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(dataFormat, self).__init__(*args, **kwds)
+
+
 class data(VegaSchema):
     """data schema wrapper
     
@@ -161,8 +174,8 @@ class data(VegaSchema):
     _schema = {'$ref': '#/defs/data'}
     _rootschema = Root._schema
 
-    def __init__(self, name=Undefined, format=Undefined, on=Undefined, transform=Undefined, **kwds):
-        super(data, self).__init__(name=name, format=format, on=on, transform=transform, **kwds)
+    def __init__(self, name=Undefined, on=Undefined, transform=Undefined, **kwds):
+        super(data, self).__init__(name=name, on=on, transform=transform, **kwds)
 
 
 class rule(VegaSchema):
@@ -231,7 +244,7 @@ class encodeEntry(VegaSchema):
     
     fontStyle : stringValue
     
-    fontWeight : nullableStringValue
+    fontWeight : fontWeightValue
     
     height : numberValue
     
@@ -395,11 +408,11 @@ class mark(VegaSchema):
     ----------
     type : marktype
     
-    clip : boolean
+    clip : markclip
     
     encode : encode
     
-    interactive : boolean
+    interactive : booleanOrSignal
     
     key : string
     
@@ -528,13 +541,11 @@ class padding(VegaSchema):
 class projection(VegaSchema):
     """projection schema wrapper
     
-    Mapping(required=[name, type])
+    Mapping(required=[name])
     
     Attributes
     ----------
     name : string
-    
-    type : stringOrSignal
     
     center : oneOf(signal, List(numberOrSignal))
     
@@ -560,19 +571,21 @@ class projection(VegaSchema):
     
     translate : oneOf(signal, List(numberOrSignal))
     
+    type : stringOrSignal
+    
     """
     _schema = {'$ref': '#/defs/projection'}
     _rootschema = Root._schema
 
-    def __init__(self, name=Undefined, type=Undefined, center=Undefined, clipAngle=Undefined,
-                 clipExtent=Undefined, extent=Undefined, fit=Undefined, parallels=Undefined,
-                 pointRadius=Undefined, precision=Undefined, rotate=Undefined, scale=Undefined,
-                 size=Undefined, translate=Undefined, **kwds):
-        super(projection, self).__init__(name=name, type=type, center=center, clipAngle=clipAngle,
+    def __init__(self, name=Undefined, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
+                 extent=Undefined, fit=Undefined, parallels=Undefined, pointRadius=Undefined,
+                 precision=Undefined, rotate=Undefined, scale=Undefined, size=Undefined,
+                 translate=Undefined, type=Undefined, **kwds):
+        super(projection, self).__init__(name=name, center=center, clipAngle=clipAngle,
                                          clipExtent=clipExtent, extent=extent, fit=fit,
                                          parallels=parallels, pointRadius=pointRadius,
                                          precision=precision, rotate=rotate, scale=scale, size=size,
-                                         translate=translate, **kwds)
+                                         translate=translate, type=type, **kwds)
 
 
 class scale(VegaSchema):
@@ -805,14 +818,14 @@ class transform(VegaSchema):
     """transform schema wrapper
     
     oneOf(aggregateTransform, binTransform, collectTransform, countpatternTransform, 
-    crossTransform, densityTransform, extentTransform, filterTransform, foldTransform, 
-    formulaTransform, imputeTransform, joinaggregateTransform, lookupTransform, 
-    projectTransform, sampleTransform, sequenceTransform, windowTransform, identifierTransform, 
-    linkpathTransform, pieTransform, stackTransform, contourTransform, geojsonTransform, 
-    geopathTransform, geopointTransform, geoshapeTransform, graticuleTransform, forceTransform, 
-    nestTransform, packTransform, partitionTransform, stratifyTransform, treeTransform, 
-    treelinksTransform, treemapTransform, voronoiTransform, wordcloudTransform, 
-    crossfilterTransform, resolvefilterTransform)
+    crossTransform, densityTransform, extentTransform, filterTransform, flattenTransform, 
+    foldTransform, formulaTransform, imputeTransform, joinaggregateTransform, lookupTransform, 
+    pivotTransform, projectTransform, sampleTransform, sequenceTransform, windowTransform, 
+    identifierTransform, linkpathTransform, pieTransform, stackTransform, contourTransform, 
+    geojsonTransform, geopathTransform, geopointTransform, geoshapeTransform, 
+    graticuleTransform, forceTransform, nestTransform, packTransform, partitionTransform, 
+    stratifyTransform, treeTransform, treelinksTransform, treemapTransform, voronoiTransform, 
+    wordcloudTransform, crossfilterTransform, resolvefilterTransform)
     """
     _schema = {'$ref': '#/defs/transform'}
     _rootschema = Root._schema
@@ -825,11 +838,11 @@ class transformMark(VegaSchema):
     """transformMark schema wrapper
     
     oneOf(binTransform, collectTransform, extentTransform, formulaTransform, 
-    joinaggregateTransform, lookupTransform, windowTransform, identifierTransform, 
-    linkpathTransform, pieTransform, stackTransform, geojsonTransform, geopathTransform, 
-    geopointTransform, geoshapeTransform, forceTransform, packTransform, partitionTransform, 
-    stratifyTransform, treeTransform, treemapTransform, voronoiTransform, wordcloudTransform, 
-    crossfilterTransform, resolvefilterTransform)
+    joinaggregateTransform, lookupTransform, sampleTransform, windowTransform, 
+    identifierTransform, linkpathTransform, pieTransform, stackTransform, geojsonTransform, 
+    geopathTransform, geopointTransform, geoshapeTransform, forceTransform, packTransform, 
+    partitionTransform, stratifyTransform, treeTransform, treemapTransform, voronoiTransform, 
+    wordcloudTransform, crossfilterTransform, resolvefilterTransform)
     """
     _schema = {'$ref': '#/defs/transformMark'}
     _rootschema = Root._schema
@@ -857,9 +870,9 @@ class aggregateTransform(VegaSchema):
     
     key : oneOf(scaleField, paramField, expr)
     
-    ops : oneOf(List(anyOf(enum('values', 'count', 'missing', 'valid', 'sum', 'mean', 'average',
-     'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 
-    'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)), signal)
+    ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 
+    'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 
+    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)), signal)
     
     signal : string
     
@@ -1063,6 +1076,27 @@ class filterTransform(VegaSchema):
         super(filterTransform, self).__init__(expr=expr, type=type, signal=signal, **kwds)
 
 
+class flattenTransform(VegaSchema):
+    """flattenTransform schema wrapper
+    
+    Mapping(required=[type, fields])
+    
+    Attributes
+    ----------
+    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
+    type : enum('flatten')
+    
+    signal : string
+    
+    """
+    _schema = {'$ref': '#/defs/flattenTransform'}
+    _rootschema = Root._schema
+
+    def __init__(self, fields=Undefined, type=Undefined, signal=Undefined, **kwds):
+        super(flattenTransform, self).__init__(fields=fields, type=type, signal=signal, **kwds)
+
+
 class foldTransform(VegaSchema):
     """foldTransform schema wrapper
     
@@ -1157,9 +1191,9 @@ class joinaggregateTransform(VegaSchema):
     
     key : oneOf(scaleField, paramField, expr)
     
-    ops : oneOf(List(anyOf(enum('values', 'count', 'missing', 'valid', 'sum', 'mean', 'average',
-     'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 
-    'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)), signal)
+    ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 
+    'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 
+    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)), signal)
     
     signal : string
     
@@ -1200,6 +1234,41 @@ class lookupTransform(VegaSchema):
                  signal=Undefined, values=Undefined, **kwds):
         super(lookupTransform, self).__init__(fields=fields, key=key, type=type, default=default,
                                               signal=signal, values=values, **kwds)
+
+
+class pivotTransform(VegaSchema):
+    """pivotTransform schema wrapper
+    
+    Mapping(required=[type, field, value])
+    
+    Attributes
+    ----------
+    field : oneOf(scaleField, paramField, expr)
+    
+    type : enum('pivot')
+    
+    value : oneOf(scaleField, paramField, expr)
+    
+    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    
+    key : oneOf(scaleField, paramField, expr)
+    
+    limit : anyOf(float, signal)
+    
+    op : anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'mean', 
+    'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 
+    'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)
+    
+    signal : string
+    
+    """
+    _schema = {'$ref': '#/defs/pivotTransform'}
+    _rootschema = Root._schema
+
+    def __init__(self, field=Undefined, type=Undefined, value=Undefined, groupby=Undefined,
+                 key=Undefined, limit=Undefined, op=Undefined, signal=Undefined, **kwds):
+        super(pivotTransform, self).__init__(field=field, type=type, value=value, groupby=groupby,
+                                             key=key, limit=limit, op=op, signal=signal, **kwds)
 
 
 class projectTransform(VegaSchema):
@@ -1290,9 +1359,9 @@ class windowTransform(VegaSchema):
     
     ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist',
      'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'values', 'count', 
-    'missing', 'valid', 'sum', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 
-    'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'),
-     signal)), signal)
+    '__count__', 'missing', 'valid', 'sum', 'mean', 'average', 'variance', 'variancep', 'stdev',
+     'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 
+    'min', 'max'), signal)), signal)
     
     params : oneOf(List(anyOf(float, signal, None)), signal)
     
@@ -1499,6 +1568,8 @@ class geopathTransform(VegaSchema):
     
     field : oneOf(scaleField, paramField, expr)
     
+    pointRadius : anyOf(float, signal, expr, paramField)
+    
     projection : string
     
     signal : string
@@ -1507,9 +1578,10 @@ class geopathTransform(VegaSchema):
     _schema = {'$ref': '#/defs/geopathTransform'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, field=Undefined, projection=Undefined, signal=Undefined, **kwds):
-        super(geopathTransform, self).__init__(type=type, field=field, projection=projection,
-                                               signal=signal, **kwds)
+    def __init__(self, type=Undefined, field=Undefined, pointRadius=Undefined, projection=Undefined,
+                 signal=Undefined, **kwds):
+        super(geopathTransform, self).__init__(type=type, field=field, pointRadius=pointRadius,
+                                               projection=projection, signal=signal, **kwds)
 
 
 class geopointTransform(VegaSchema):
@@ -1547,6 +1619,8 @@ class geoshapeTransform(VegaSchema):
     
     field : oneOf(scaleField, paramField, expr)
     
+    pointRadius : anyOf(float, signal, expr, paramField)
+    
     projection : string
     
     signal : string
@@ -1555,9 +1629,10 @@ class geoshapeTransform(VegaSchema):
     _schema = {'$ref': '#/defs/geoshapeTransform'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, field=Undefined, projection=Undefined, signal=Undefined, **kwds):
-        super(geoshapeTransform, self).__init__(type=type, field=field, projection=projection,
-                                                signal=signal, **kwds)
+    def __init__(self, type=Undefined, field=Undefined, pointRadius=Undefined, projection=Undefined,
+                 signal=Undefined, **kwds):
+        super(geoshapeTransform, self).__init__(type=type, field=field, pointRadius=pointRadius,
+                                                projection=projection, signal=signal, **kwds)
 
 
 class graticuleTransform(VegaSchema):
@@ -2199,6 +2274,23 @@ class nullableStringValue(VegaSchema):
         super(nullableStringValue, self).__init__(*args, **kwds)
 
 
+class fontWeightValue(VegaSchema):
+    """fontWeightValue schema wrapper
+    
+    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
+     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]), 
+    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers, 
+    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
+    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale, 
+    band]), Mapping(required=[offset]))))
+    """
+    _schema = {'$ref': '#/refs/fontWeightValue'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(fontWeightValue, self).__init__(*args, **kwds)
+
+
 class colorRGB(VegaSchema):
     """colorRGB schema wrapper
     
@@ -2371,6 +2463,18 @@ class facet(VegaSchema):
 
     def __init__(self, facet=Undefined, data=Undefined, **kwds):
         super(facet, self).__init__(facet=facet, data=data, **kwds)
+
+
+class markclip(VegaSchema):
+    """markclip schema wrapper
+    
+    oneOf(booleanOrSignal, Mapping(required=[path]), Mapping(required=[sphere]))
+    """
+    _schema = {'$ref': '#/refs/markclip'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(markclip, self).__init__(*args, **kwds)
 
 
 class style(VegaSchema):

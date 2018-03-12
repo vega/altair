@@ -9,7 +9,7 @@ import json
 def load_schema():
     """Load the json schema associated with this module's functions"""
     directory = os.path.dirname(__file__)
-    with open(os.path.join(directory, '..', 'vega-lite-schema.json')) as f:
+    with open(os.path.join(directory, 'vega-lite-schema.json')) as f:
         return json.load(f)
 
 
@@ -193,8 +193,8 @@ class Axis(VegaLiteSchema):
         The rotation angle of the axis labels.  __Default value:__ `-90` for nominal and 
         ordinal fields; `0` otherwise.
     labelBound : anyOf(boolean, float)
-        Indicates if labels should be hidden if they exceed the axis range. If `false `(the 
-        default) no bounds overlap analysis is performed. If `true`, labels will be hidden 
+        Indicates if labels should be hidden if they exceed the axis range. If `false `(the 
+        default) no bounds overlap analysis is performed. If `true`, labels will be hidden 
         if they exceed the axis range by more than 1 pixel. If this property is a number, it
          specifies the pixel tolerance: the maximum amount by which a label bounding box may
          exceed the axis range.  __Default value:__ `false`.
@@ -326,8 +326,8 @@ class AxisConfig(VegaLiteSchema):
         The rotation angle of the axis labels.  __Default value:__ `-90` for nominal and 
         ordinal fields; `0` otherwise.
     labelBound : anyOf(boolean, float)
-        Indicates if labels should be hidden if they exceed the axis range. If `false `(the 
-        default) no bounds overlap analysis is performed. If `true`, labels will be hidden 
+        Indicates if labels should be hidden if they exceed the axis range. If `false `(the 
+        default) no bounds overlap analysis is performed. If `true`, labels will be hidden 
         if they exceed the axis range by more than 1 pixel. If this property is a number, it
          specifies the pixel tolerance: the maximum amount by which a label bounding box may
          exceed the axis range.  __Default value:__ `false`.
@@ -395,8 +395,10 @@ class AxisConfig(VegaLiteSchema):
         Font of the title. (e.g., `"Helvetica Neue"`).
     titleFontSize : float
         Font size of the title.
-    titleFontWeight : anyOf(string, float)
-        Font weight of the title. (e.g., `"bold"`).
+    titleFontWeight : FontWeight
+        Font weight of the title. This can be either a string (e.g `"bold"`, `"normal"`) or 
+        a number (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = 
+        `700`).
     titleLimit : float
         Maximum allowed pixel width of axis titles.
     titleMaxLength : float
@@ -530,8 +532,9 @@ class BarConfig(VegaLiteSchema):
         The font size, in pixels.
     fontStyle : FontStyle
         The font style (e.g., `"italic"`).
-    fontWeight : anyOf(FontWeight, FontWeightNumber)
-        The font weight (e.g., `"bold"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number 
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : Interpolate
@@ -1305,6 +1308,10 @@ class Config(VegaLiteSchema):
     countTitle : string
         Default axis and legend title for count fields.  __Default value:__ `'Number of 
         Records'`.
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
     fieldTitle : enum('verbal', 'functional', 'plain')
         Defines how Vega-Lite generates title for fields.  There are three possible styles: 
         - `"verbal"` (Default) - displays function in a verbal style (e.g., "Sum of field", 
@@ -1387,16 +1394,17 @@ class Config(VegaLiteSchema):
     def __init__(self, area=Undefined, autosize=Undefined, axis=Undefined, axisBand=Undefined,
                  axisBottom=Undefined, axisLeft=Undefined, axisRight=Undefined, axisTop=Undefined,
                  axisX=Undefined, axisY=Undefined, background=Undefined, bar=Undefined,
-                 circle=Undefined, countTitle=Undefined, fieldTitle=Undefined, geoshape=Undefined,
-                 invalidValues=Undefined, legend=Undefined, line=Undefined, mark=Undefined,
-                 numberFormat=Undefined, padding=Undefined, point=Undefined, projection=Undefined,
-                 range=Undefined, rect=Undefined, rule=Undefined, scale=Undefined, selection=Undefined,
-                 square=Undefined, stack=Undefined, style=Undefined, text=Undefined, tick=Undefined,
-                 timeFormat=Undefined, title=Undefined, view=Undefined, **kwds):
+                 circle=Undefined, countTitle=Undefined, datasets=Undefined, fieldTitle=Undefined,
+                 geoshape=Undefined, invalidValues=Undefined, legend=Undefined, line=Undefined,
+                 mark=Undefined, numberFormat=Undefined, padding=Undefined, point=Undefined,
+                 projection=Undefined, range=Undefined, rect=Undefined, rule=Undefined, scale=Undefined,
+                 selection=Undefined, square=Undefined, stack=Undefined, style=Undefined,
+                 text=Undefined, tick=Undefined, timeFormat=Undefined, title=Undefined, view=Undefined,
+                 **kwds):
         super(Config, self).__init__(area=area, autosize=autosize, axis=axis, axisBand=axisBand,
                                      axisBottom=axisBottom, axisLeft=axisLeft, axisRight=axisRight,
                                      axisTop=axisTop, axisX=axisX, axisY=axisY, background=background,
-                                     bar=bar, circle=circle, countTitle=countTitle,
+                                     bar=bar, circle=circle, countTitle=countTitle, datasets=datasets,
                                      fieldTitle=fieldTitle, geoshape=geoshape,
                                      invalidValues=invalidValues, legend=legend, line=line, mark=mark,
                                      numberFormat=numberFormat, padding=padding, point=point,
@@ -1461,6 +1469,18 @@ class DataFormat(VegaLiteSchema):
         super(DataFormat, self).__init__(*args, **kwds)
 
 
+class Datasets(VegaLiteSchema):
+    """Datasets schema wrapper
+    
+    Mapping(required=[])
+    """
+    _schema = {'$ref': '#/definitions/Datasets'}
+    _rootschema = Root._schema
+
+    def __init__(self, **kwds):
+        super(Datasets, self).__init__(**kwds)
+
+
 class DateTime(VegaLiteSchema):
     """DateTime schema wrapper
     
@@ -1521,6 +1541,18 @@ class Day(VegaLiteSchema):
 
     def __init__(self, *args):
         super(Day, self).__init__(*args)
+
+
+class DictInlineDataset(VegaLiteSchema):
+    """DictInlineDataset schema wrapper
+    
+    Mapping(required=[])
+    """
+    _schema = {'$ref': '#/definitions/Dict<InlineDataset>'}
+    _rootschema = Root._schema
+
+    def __init__(self, **kwds):
+        super(DictInlineDataset, self).__init__(**kwds)
 
 
 class Encoding(VegaLiteSchema):
@@ -2065,13 +2097,13 @@ class FontStyle(VegaLiteSchema):
 class FontWeight(VegaLiteSchema):
     """FontWeight schema wrapper
     
-    enum('normal', 'bold')
+    anyOf(FontWeightString, FontWeightNumber)
     """
     _schema = {'$ref': '#/definitions/FontWeight'}
     _rootschema = Root._schema
 
-    def __init__(self, *args):
-        super(FontWeight, self).__init__(*args)
+    def __init__(self, *args, **kwds):
+        super(FontWeight, self).__init__(*args, **kwds)
 
 
 class FontWeightNumber(VegaLiteSchema):
@@ -2084,6 +2116,18 @@ class FontWeightNumber(VegaLiteSchema):
 
     def __init__(self, *args):
         super(FontWeightNumber, self).__init__(*args)
+
+
+class FontWeightString(VegaLiteSchema):
+    """FontWeightString schema wrapper
+    
+    enum('normal', 'bold')
+    """
+    _schema = {'$ref': '#/definitions/FontWeightString'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(FontWeightString, self).__init__(*args)
 
 
 class FacetSpec(VegaLiteSchema):
@@ -2544,8 +2588,7 @@ class InlineData(VegaLiteSchema):
     
     Attributes
     ----------
-    values : anyOf(List(float), List(string), List(boolean), List(Mapping(required=[])), string,
-     Mapping(required=[]))
+    values : InlineDataset
         The full data set, included inline. This can be an array of objects or primitive 
         values or a string. Arrays of primitive values are ingested as objects with a `data`
          property. Strings are parsed according to the specified format type.
@@ -2557,6 +2600,19 @@ class InlineData(VegaLiteSchema):
 
     def __init__(self, values=Undefined, format=Undefined, **kwds):
         super(InlineData, self).__init__(values=values, format=format, **kwds)
+
+
+class InlineDataset(VegaLiteSchema):
+    """InlineDataset schema wrapper
+    
+    anyOf(List(float), List(string), List(boolean), List(Mapping(required=[])), string, 
+    Mapping(required=[]))
+    """
+    _schema = {'$ref': '#/definitions/InlineDataset'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(InlineDataset, self).__init__(*args, **kwds)
 
 
 class Interpolate(VegaLiteSchema):
@@ -2859,8 +2915,10 @@ class LegendConfig(VegaLiteSchema):
         The font of the legend title.
     titleFontSize : float
         The font size of the legend title.
-    titleFontWeight : anyOf(string, float)
-        The font weight of the legend title.
+    titleFontWeight : FontWeight
+        The font weight of the legend title. This can be either a string (e.g `"bold"`, 
+        `"normal"`) or a number (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` 
+        and `"bold"` = `700`).
     titleLimit : float
         Maximum allowed pixel width of axis titles.
     titlePadding : float
@@ -3183,8 +3241,9 @@ class MarkConfig(VegaLiteSchema):
         The font size, in pixels.
     fontStyle : FontStyle
         The font style (e.g., `"italic"`).
-    fontWeight : anyOf(FontWeight, FontWeightNumber)
-        The font weight (e.g., `"bold"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number 
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : Interpolate
@@ -3327,8 +3386,9 @@ class MarkDef(VegaLiteSchema):
         The font size, in pixels.
     fontStyle : FontStyle
         The font style (e.g., `"italic"`).
-    fontWeight : anyOf(FontWeight, FontWeightNumber)
-        The font weight (e.g., `"bold"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number 
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : Interpolate
@@ -4076,8 +4136,8 @@ class Scale(VegaLiteSchema):
         For _[continuous](scale.html#continuous)_ scales, expands the scale domain to 
         accommodate the specified number of pixels on each of the scale range. The scale 
         range must represent pixels for this parameter to function as intended. Padding 
-        adjustment is performed prior to all other adjustments, including the effects of the
-         zero, nice, domainMin, and domainMax properties.  For _[band](scale.html#band)_ 
+        adjustment is performed prior to all other adjustments, including the effects of 
+        the zero, nice, domainMin, and domainMax properties.  For _[band](scale.html#band)_ 
         scales, shortcut for setting `paddingInner` and `paddingOuter` to the same value.  
         For _[point](scale.html#point)_ scales, alias for `paddingOuter`.  __Default 
         value:__ For _continuous_ scales, derived from the [scale 
@@ -4659,8 +4719,9 @@ class TextConfig(VegaLiteSchema):
         The font size, in pixels.
     fontStyle : FontStyle
         The font style (e.g., `"italic"`).
-    fontWeight : anyOf(FontWeight, FontWeightNumber)
-        The font weight (e.g., `"bold"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number 
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : Interpolate
@@ -4802,8 +4863,9 @@ class TickConfig(VegaLiteSchema):
         The font size, in pixels.
     fontStyle : FontStyle
         The font style (e.g., `"italic"`).
-    fontWeight : anyOf(FontWeight, FontWeightNumber)
-        The font weight (e.g., `"bold"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number 
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : Interpolate
@@ -4998,6 +5060,10 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         of a specification.
     data : Data
         An object describing the data source
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
     description : string
         Description of this mark for commenting purpose.
     encoding : EncodingWithFacet
@@ -5066,16 +5132,16 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, mark=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, description=Undefined, encoding=Undefined, height=Undefined,
-                 name=Undefined, padding=Undefined, projection=Undefined, selection=Undefined,
-                 title=Undefined, transform=Undefined, width=Undefined, **kwds):
+                 data=Undefined, datasets=Undefined, description=Undefined, encoding=Undefined,
+                 height=Undefined, name=Undefined, padding=Undefined, projection=Undefined,
+                 selection=Undefined, title=Undefined, transform=Undefined, width=Undefined, **kwds):
         super(TopLevelFacetedUnitSpec, self).__init__(mark=mark, autosize=autosize,
                                                       background=background, config=config, data=data,
-                                                      description=description, encoding=encoding,
-                                                      height=height, name=name, padding=padding,
-                                                      projection=projection, selection=selection,
-                                                      title=title, transform=transform, width=width,
-                                                      **kwds)
+                                                      datasets=datasets, description=description,
+                                                      encoding=encoding, height=height, name=name,
+                                                      padding=padding, projection=projection,
+                                                      selection=selection, title=title,
+                                                      transform=transform, width=width, **kwds)
 
 
 class TopLevelFacetSpec(VegaLiteSchema):
@@ -5103,6 +5169,10 @@ class TopLevelFacetSpec(VegaLiteSchema):
         of a specification.
     data : Data
         An object describing the data source
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -5124,13 +5194,14 @@ class TopLevelFacetSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, facet=Undefined, spec=Undefined, autosize=Undefined, background=Undefined,
-                 config=Undefined, data=Undefined, description=Undefined, name=Undefined,
-                 padding=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
+                 config=Undefined, data=Undefined, datasets=Undefined, description=Undefined,
+                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
+                 transform=Undefined, **kwds):
         super(TopLevelFacetSpec, self).__init__(facet=facet, spec=spec, autosize=autosize,
                                                 background=background, config=config, data=data,
-                                                description=description, name=name, padding=padding,
-                                                resolve=resolve, title=title, transform=transform,
-                                                **kwds)
+                                                datasets=datasets, description=description, name=name,
+                                                padding=padding, resolve=resolve, title=title,
+                                                transform=transform, **kwds)
 
 
 class TopLevelHConcatSpec(VegaLiteSchema):
@@ -5155,6 +5226,10 @@ class TopLevelHConcatSpec(VegaLiteSchema):
         of a specification.
     data : Data
         An object describing the data source
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -5176,13 +5251,13 @@ class TopLevelHConcatSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, description=Undefined, name=Undefined, padding=Undefined,
-                 resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
+                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
+                 padding=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
         super(TopLevelHConcatSpec, self).__init__(hconcat=hconcat, autosize=autosize,
                                                   background=background, config=config, data=data,
-                                                  description=description, name=name, padding=padding,
-                                                  resolve=resolve, title=title, transform=transform,
-                                                  **kwds)
+                                                  datasets=datasets, description=description, name=name,
+                                                  padding=padding, resolve=resolve, title=title,
+                                                  transform=transform, **kwds)
 
 
 class TopLevelLayerSpec(VegaLiteSchema):
@@ -5209,6 +5284,10 @@ class TopLevelLayerSpec(VegaLiteSchema):
         of a specification.
     data : Data
         An object describing the data source
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
     description : string
         Description of this mark for commenting purpose.
     height : float
@@ -5271,14 +5350,14 @@ class TopLevelLayerSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, layer=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, description=Undefined, height=Undefined, name=Undefined,
-                 padding=Undefined, resolve=Undefined, title=Undefined, transform=Undefined,
-                 width=Undefined, **kwds):
+                 data=Undefined, datasets=Undefined, description=Undefined, height=Undefined,
+                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
+                 transform=Undefined, width=Undefined, **kwds):
         super(TopLevelLayerSpec, self).__init__(layer=layer, autosize=autosize, background=background,
-                                                config=config, data=data, description=description,
-                                                height=height, name=name, padding=padding,
-                                                resolve=resolve, title=title, transform=transform,
-                                                width=width, **kwds)
+                                                config=config, data=data, datasets=datasets,
+                                                description=description, height=height, name=name,
+                                                padding=padding, resolve=resolve, title=title,
+                                                transform=transform, width=width, **kwds)
 
 
 class TopLevelRepeatSpec(VegaLiteSchema):
@@ -5306,6 +5385,10 @@ class TopLevelRepeatSpec(VegaLiteSchema):
         of a specification.
     data : Data
         An object describing the data source
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -5327,13 +5410,14 @@ class TopLevelRepeatSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, repeat=Undefined, spec=Undefined, autosize=Undefined, background=Undefined,
-                 config=Undefined, data=Undefined, description=Undefined, name=Undefined,
-                 padding=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
+                 config=Undefined, data=Undefined, datasets=Undefined, description=Undefined,
+                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
+                 transform=Undefined, **kwds):
         super(TopLevelRepeatSpec, self).__init__(repeat=repeat, spec=spec, autosize=autosize,
                                                  background=background, config=config, data=data,
-                                                 description=description, name=name, padding=padding,
-                                                 resolve=resolve, title=title, transform=transform,
-                                                 **kwds)
+                                                 datasets=datasets, description=description, name=name,
+                                                 padding=padding, resolve=resolve, title=title,
+                                                 transform=transform, **kwds)
 
 
 class TopLevelVConcatSpec(VegaLiteSchema):
@@ -5358,6 +5442,10 @@ class TopLevelVConcatSpec(VegaLiteSchema):
         of a specification.
     data : Data
         An object describing the data source
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -5379,13 +5467,13 @@ class TopLevelVConcatSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, description=Undefined, name=Undefined, padding=Undefined,
-                 resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
+                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
+                 padding=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
         super(TopLevelVConcatSpec, self).__init__(vconcat=vconcat, autosize=autosize,
                                                   background=background, config=config, data=data,
-                                                  description=description, name=name, padding=padding,
-                                                  resolve=resolve, title=title, transform=transform,
-                                                  **kwds)
+                                                  datasets=datasets, description=description, name=name,
+                                                  padding=padding, resolve=resolve, title=title,
+                                                  transform=transform, **kwds)
 
 
 class TopLevelExtendedSpec(VegaLiteSchema):
@@ -5658,8 +5746,8 @@ class VgAxisConfig(VegaLiteSchema):
         The rotation angle of the axis labels.  __Default value:__ `-90` for nominal and 
         ordinal fields; `0` otherwise.
     labelBound : anyOf(boolean, float)
-        Indicates if labels should be hidden if they exceed the axis range. If `false `(the 
-        default) no bounds overlap analysis is performed. If `true`, labels will be hidden 
+        Indicates if labels should be hidden if they exceed the axis range. If `false `(the 
+        default) no bounds overlap analysis is performed. If `true`, labels will be hidden 
         if they exceed the axis range by more than 1 pixel. If this property is a number, it
          specifies the pixel tolerance: the maximum amount by which a label bounding box may
          exceed the axis range.  __Default value:__ `false`.
@@ -5724,8 +5812,10 @@ class VgAxisConfig(VegaLiteSchema):
         Font of the title. (e.g., `"Helvetica Neue"`).
     titleFontSize : float
         Font size of the title.
-    titleFontWeight : anyOf(string, float)
-        Font weight of the title. (e.g., `"bold"`).
+    titleFontWeight : FontWeight
+        Font weight of the title. This can be either a string (e.g `"bold"`, `"normal"`) or 
+        a number (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = 
+        `700`).
     titleLimit : float
         Maximum allowed pixel width of axis titles.
     titleMaxLength : float
@@ -5872,8 +5962,9 @@ class VgMarkConfig(VegaLiteSchema):
         The font size, in pixels.
     fontStyle : FontStyle
         The font style (e.g., `"italic"`).
-    fontWeight : anyOf(FontWeight, FontWeightNumber)
-        The font weight (e.g., `"bold"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number 
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : Interpolate
@@ -6090,8 +6181,10 @@ class VgTitleConfig(VegaLiteSchema):
         Font name for title text.
     fontSize : float
         Font size in pixels for title text.  __Default value:__ `10`.
-    fontWeight : anyOf(FontWeight, FontWeightNumber)
-        Font weight for title text.
+    fontWeight : FontWeight
+        Font weight for title text. This can be either a string (e.g `"bold"`, `"normal"`) 
+        or a number (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` =
+         `700`).
     limit : float
         The maximum allowed length in pixels of legend labels.
     offset : float
