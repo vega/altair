@@ -5,6 +5,8 @@ import re
 import warnings
 import collections
 from copy import deepcopy
+import sys
+import traceback
 
 import six
 import pandas as pd
@@ -348,3 +350,18 @@ def write_file_or_filename(fp, content, mode='w'):
             f.write(content)
     else:
         fp.write(content)
+
+
+def display_traceback(in_ipython=True):
+    exc_info = sys.exc_info()
+
+    if in_ipython:
+        from IPython.core.getipython import get_ipython
+        ip = get_ipython()
+    else:
+        ip = None
+
+    if ip is not None:
+        ip.showtraceback(exc_info)
+    else:
+        traceback.print_exception(*exc_info)
