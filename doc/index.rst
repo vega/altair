@@ -26,6 +26,7 @@ beautiful and effective visualizations with a minimal amount of code.
    :maxdepth: 1
    :caption: User Guide
 
+   user_guide/importing
    user_guide/display
    user_guide/API
 

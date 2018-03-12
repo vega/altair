@@ -10,23 +10,20 @@ Altair can be installed via `pip` with the following:
     $ pip install altair
     $ pip install --upgrade notebook
 
-In addition, to render Altair visualizations in the classic Jupyter Notebook,
-you will need to enable the `ipyvega`_ nbextension:
-
-.. code-block:: bash
-
-    $ jupyter nbextension enable --sys-prefix --py vega
-
-This single step is **not** needed for usage with JupyterLab and nteract, which have built-in
-support for Vega-Lite.
-
-If you use conda to install Altair:
+Or you use conda to install Altair:
 
 .. code-block:: bash
 
     $ conda install altair --channel conda-forge
 
-the nbextension is automatically enabled.
+Renderers
+---------
+
+Altair relies on `Vega-Lite`_ and `Vega`_ to render its visualizations.
+Different users interfaces, such as the classic `Jupyter Notebook`_,
+`JupyterLab`_, and `nteract`_, offer built-in or separate third-party packages
+for rendering Vega-Lite and Vega. For information about these renderers,
+see the :ref:`displaying-charts` section of the documentation.
 
 Dependencies
 ------------
@@ -34,37 +31,47 @@ Dependencies
 Altair has the following dependencies, all of which are installed by default
 with either of the above installation commands:
 
-- Pandas_
-- Traitlets_
+- entrypoints_
 - IPython_
-- ipyvega_
+- jsonschema_
+- NumPy_
+- Pandas_
+- Six_
+- Toolz_
+- vega_datasets_
 
 Development Install
 -------------------
 
-The `Altair source repository`_ is available on GitHub.
-Once you have cloned the repository and installed all the above dependencies,
-run the following command from the root of the repository to install the
-master version of Altair:
+The `Altair source repository`_ is available on GitHub. Once you have cloned the
+repository and installed all the above dependencies, run the following command
+from the root of the repository to install the master version of Altair:
 
 .. code-block:: bash
 
     $ pip install -e .
 
-If you do not wish to clone the source repository, you can install the development
-version directly from GitHub using:
+If you do not wish to clone the source repository, you can install the
+development version directly from GitHub using:
 
 .. code-block:: bash
 
     $ pip install git+https://github.com/altair-viz/altair
 
 
-.. _Vega-Lite: http://vega.github.io/vega-lite
-.. _Pandas: http://pandas.pydata.org
-.. _traitlets: https://github.com/ipython/traitlets
+.. _entrypoints: https://github.com/takluyver/entrypoints
 .. _IPython: https://github.com/ipython/ipython
-.. _ipyvega: http://github.com/vega/ipyvega
+.. _jsonschema: https://github.com/Julian/jsonschema
+.. _NumPy: http://www.numpy.org/
+.. _Pandas: http://pandas.pydata.org
+.. _Six: http://six.readthedocs.io/
+.. _Toolz: https://github.com/pytoolz/toolz
+.. _vega_datasets: https://github.com/altair-viz/vega_datasets
+
+.. _Vega-Lite: http://vega.github.io/vega-lite
+.. _Vega: https://vega.github.io/vega/
 .. _conda: http://conda.pydata.org
 .. _Altair source repository: http://github.com/altair-viz/altair
-.. _JupyterLab: https://github.com/jupyterlab/jupyterlab
-.. _nteract: https://github.com/nteract/nteract
+.. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
+.. _nteract: https://nteract.io
+.. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
