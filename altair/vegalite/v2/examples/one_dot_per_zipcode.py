@@ -11,8 +11,8 @@ from vega_datasets import data
 zipcodes = data.zipcodes.url
 
 chart = alt.Chart(zipcodes).mark_circle(size = 3).encode(
-    x='longitude:lon',
-    y='latitude:lat',
+    longitude='lon:Q',
+    latitude='lat:Q',
     color='digit:N'
 ).properties(
     projection={'type': 'albersUsa'},
