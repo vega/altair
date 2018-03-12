@@ -355,7 +355,8 @@ def vegalite_main():
         print("Writing {0}".format(outfile))
         with open(outfile, 'w') as f:
             f.write("from .core import *\nfrom .channels import *\n")
-            f.write("SCHEMA_VERSION = {0!r}\n".format(version))
+            f.write("SCHEMA_VERSION = {0!r}\n"
+                    "".format(SCHEMA_VERSION[library][version]))
             f.write("SCHEMA_URL = {0!r}\n"
                     "".format(schema_url(library, version)))
 
@@ -405,7 +406,8 @@ def vega_main():
         print("Writing {0}".format(outfile))
         with open(outfile, 'w') as f:
             f.write("from .core import *\n\n")
-            f.write("SCHEMA_VERSION = {0!r}\n".format(version))
+            f.write("SCHEMA_VERSION = {0!r}\n"
+                    "".format(SCHEMA_VERSION[library][version]))
             f.write("SCHEMA_URL = {0!r}\n"
                     "".format(schema_url(library, version)))
 
