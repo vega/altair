@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Vega 3.0 Visualization Specification Language",
+  "title": "Vega Visualization Specification Language",
   "defs": {
     "autosize": {
       "oneOf": [
@@ -8,6 +8,8 @@
           "enum": [
             "pad",
             "fit",
+            "fit-x",
+            "fit-y",
             "none"
           ]
         },
@@ -18,6 +20,8 @@
               "enum": [
                 "pad",
                 "fit",
+                "fit-x",
+                "fit-y",
                 "none"
               ]
             },
@@ -316,6 +320,171 @@
         }
       ]
     },
+    "dataFormat": {
+      "type": "object",
+      "anyOf": [
+        {
+          "properties": {
+            "type": {
+              "enum": [
+                "json"
+              ]
+            },
+            "parse": {
+              "oneOf": [
+                {
+                  "enum": [
+                    "auto"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "oneOf": [
+                      {
+                        "enum": [
+                          "boolean",
+                          "number",
+                          "date",
+                          "string"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(date|utc):.*$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "property": {
+              "type": "string"
+            },
+            "copy": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": [
+                "csv",
+                "tsv"
+              ]
+            },
+            "parse": {
+              "oneOf": [
+                {
+                  "enum": [
+                    "auto"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "oneOf": [
+                      {
+                        "enum": [
+                          "boolean",
+                          "number",
+                          "date",
+                          "string"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(date|utc):.*$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "properties": {
+            "type": {
+              "enum": [
+                "dsv"
+              ]
+            },
+            "delimiter": {
+              "type": "string"
+            },
+            "parse": {
+              "oneOf": [
+                {
+                  "enum": [
+                    "auto"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": {
+                    "oneOf": [
+                      {
+                        "enum": [
+                          "boolean",
+                          "number",
+                          "date",
+                          "string"
+                        ]
+                      },
+                      {
+                        "type": "string",
+                        "pattern": "^(date|utc):.*$"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "topojson"
+                  ]
+                },
+                "feature": {
+                  "type": "string"
+                },
+                "property": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "properties": {
+                "type": {
+                  "enum": [
+                    "topojson"
+                  ]
+                },
+                "mesh": {
+                  "type": "string"
+                },
+                "property": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      ]
+    },
     "data": {
       "title": "Input data set definition",
       "type": "object",
@@ -333,171 +502,6 @@
             },
             "on": {
               "$ref": "#/defs/onTrigger"
-            },
-            "format": {
-              "type": "object",
-              "anyOf": [
-                {
-                  "properties": {
-                    "type": {
-                      "enum": [
-                        "json"
-                      ]
-                    },
-                    "parse": {
-                      "oneOf": [
-                        {
-                          "enum": [
-                            "auto"
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": {
-                            "oneOf": [
-                              {
-                                "enum": [
-                                  "boolean",
-                                  "number",
-                                  "date",
-                                  "string"
-                                ]
-                              },
-                              {
-                                "type": "string",
-                                "pattern": "^(date|utc):.*$"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    },
-                    "property": {
-                      "type": "string"
-                    },
-                    "copy": {
-                      "type": "boolean"
-                    }
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "properties": {
-                    "type": {
-                      "enum": [
-                        "csv",
-                        "tsv"
-                      ]
-                    },
-                    "parse": {
-                      "oneOf": [
-                        {
-                          "enum": [
-                            "auto"
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": {
-                            "oneOf": [
-                              {
-                                "enum": [
-                                  "boolean",
-                                  "number",
-                                  "date",
-                                  "string"
-                                ]
-                              },
-                              {
-                                "type": "string",
-                                "pattern": "^(date|utc):.*$"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "properties": {
-                    "type": {
-                      "enum": [
-                        "dsv"
-                      ]
-                    },
-                    "delimiter": {
-                      "type": "string"
-                    },
-                    "parse": {
-                      "oneOf": [
-                        {
-                          "enum": [
-                            "auto"
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": {
-                            "oneOf": [
-                              {
-                                "enum": [
-                                  "boolean",
-                                  "number",
-                                  "date",
-                                  "string"
-                                ]
-                              },
-                              {
-                                "type": "string",
-                                "pattern": "^(date|utc):.*$"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  },
-                  "additionalProperties": false
-                },
-                {
-                  "oneOf": [
-                    {
-                      "properties": {
-                        "type": {
-                          "enum": [
-                            "topojson"
-                          ]
-                        },
-                        "feature": {
-                          "type": "string"
-                        },
-                        "property": {
-                          "type": "string"
-                        }
-                      },
-                      "additionalProperties": false
-                    },
-                    {
-                      "properties": {
-                        "type": {
-                          "enum": [
-                            "topojson"
-                          ]
-                        },
-                        "mesh": {
-                          "type": "string"
-                        },
-                        "property": {
-                          "type": "string"
-                        }
-                      },
-                      "additionalProperties": false
-                    }
-                  ]
-                }
-              ]
             }
           },
           "required": [
@@ -538,6 +542,9 @@
                   "properties": {
                     "values": {
                       "type": "array"
+                    },
+                    "format": {
+                      "$ref": "#/defs/dataFormat"
                     }
                   },
                   "required": [
@@ -548,6 +555,9 @@
                   "properties": {
                     "url": {
                       "type": "string"
+                    },
+                    "format": {
+                      "$ref": "#/defs/dataFormat"
                     }
                   },
                   "required": [
@@ -1177,7 +1187,7 @@
           "$ref": "#/refs/numberValue"
         },
         "fontWeight": {
-          "$ref": "#/refs/nullableStringValue"
+          "$ref": "#/refs/fontWeightValue"
         },
         "fontStyle": {
           "$ref": "#/refs/stringValue"
@@ -1590,13 +1600,13 @@
           "type": "string"
         },
         "clip": {
-          "type": "boolean"
+          "$ref": "#/refs/markclip"
         },
         "sort": {
           "$ref": "#/refs/compare"
         },
         "interactive": {
-          "type": "boolean"
+          "$ref": "#/refs/booleanOrSignal"
         },
         "encode": {
           "$ref": "#/defs/encode"
@@ -2021,8 +2031,7 @@
       },
       "additionalProperties": true,
       "required": [
-        "name",
-        "type"
+        "name"
       ]
     },
     "scale": {
@@ -3452,6 +3461,9 @@
           "$ref": "#/defs/filterTransform"
         },
         {
+          "$ref": "#/defs/flattenTransform"
+        },
+        {
           "$ref": "#/defs/foldTransform"
         },
         {
@@ -3465,6 +3477,9 @@
         },
         {
           "$ref": "#/defs/lookupTransform"
+        },
+        {
+          "$ref": "#/defs/pivotTransform"
         },
         {
           "$ref": "#/defs/projectTransform"
@@ -3565,6 +3580,9 @@
         },
         {
           "$ref": "#/defs/lookupTransform"
+        },
+        {
+          "$ref": "#/defs/sampleTransform"
         },
         {
           "$ref": "#/defs/windowTransform"
@@ -3669,6 +3687,7 @@
                     "enum": [
                       "values",
                       "count",
+                      "__count__",
                       "missing",
                       "valid",
                       "sum",
@@ -4444,6 +4463,67 @@
         "expr"
       ]
     },
+    "flattenTransform": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "flatten"
+          ]
+        },
+        "signal": {
+          "type": "string"
+        },
+        "fields": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/refs/scaleField"
+                  },
+                  {
+                    "$ref": "#/refs/paramField"
+                  },
+                  {
+                    "$ref": "#/refs/expr"
+                  }
+                ]
+              }
+            },
+            {
+              "$ref": "#/refs/signal"
+            }
+          ]
+        },
+        "as": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/refs/signal"
+                  }
+                ]
+              }
+            },
+            {
+              "$ref": "#/refs/signal"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "fields"
+      ]
+    },
     "foldTransform": {
       "type": "object",
       "properties": {
@@ -4720,6 +4800,7 @@
                     "enum": [
                       "values",
                       "count",
+                      "__count__",
                       "missing",
                       "valid",
                       "sum",
@@ -4896,6 +4977,132 @@
         "from",
         "key",
         "fields"
+      ]
+    },
+    "pivotTransform": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "pivot"
+          ]
+        },
+        "signal": {
+          "type": "string"
+        },
+        "groupby": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/refs/scaleField"
+                  },
+                  {
+                    "$ref": "#/refs/paramField"
+                  },
+                  {
+                    "$ref": "#/refs/expr"
+                  }
+                ]
+              }
+            },
+            {
+              "$ref": "#/refs/signal"
+            }
+          ]
+        },
+        "field": {
+          "oneOf": [
+            {
+              "$ref": "#/refs/scaleField"
+            },
+            {
+              "$ref": "#/refs/paramField"
+            },
+            {
+              "$ref": "#/refs/expr"
+            }
+          ]
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/refs/scaleField"
+            },
+            {
+              "$ref": "#/refs/paramField"
+            },
+            {
+              "$ref": "#/refs/expr"
+            }
+          ]
+        },
+        "op": {
+          "anyOf": [
+            {
+              "enum": [
+                "values",
+                "count",
+                "__count__",
+                "missing",
+                "valid",
+                "sum",
+                "mean",
+                "average",
+                "variance",
+                "variancep",
+                "stdev",
+                "stdevp",
+                "stderr",
+                "distinct",
+                "ci0",
+                "ci1",
+                "median",
+                "q1",
+                "q3",
+                "argmin",
+                "argmax",
+                "min",
+                "max"
+              ]
+            },
+            {
+              "$ref": "#/refs/signal"
+            }
+          ],
+          "default": "sum"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/signal"
+            }
+          ]
+        },
+        "key": {
+          "oneOf": [
+            {
+              "$ref": "#/refs/scaleField"
+            },
+            {
+              "$ref": "#/refs/paramField"
+            },
+            {
+              "$ref": "#/refs/expr"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "field",
+        "value"
       ]
     },
     "projectTransform": {
@@ -5097,6 +5304,7 @@
                       "nth_value",
                       "values",
                       "count",
+                      "__count__",
                       "missing",
                       "valid",
                       "sum",
@@ -5803,6 +6011,22 @@
             }
           ]
         },
+        "pointRadius": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/signal"
+            },
+            {
+              "$ref": "#/refs/expr"
+            },
+            {
+              "$ref": "#/refs/paramField"
+            }
+          ]
+        },
         "as": {
           "anyOf": [
             {
@@ -5920,6 +6144,22 @@
             }
           ],
           "default": "datum"
+        },
+        "pointRadius": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/signal"
+            },
+            {
+              "$ref": "#/refs/expr"
+            },
+            {
+              "$ref": "#/refs/paramField"
+            }
+          ]
         },
         "as": {
           "anyOf": [
@@ -8691,6 +8931,206 @@
         }
       ]
     },
+    "fontWeightValue": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "#/defs/rule"
+              },
+              {
+                "type": "object",
+                "allOf": [
+                  {
+                    "$ref": "#/refs/stringModifiers"
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "oneOf": [
+                          {
+                            "$ref": "#/refs/signal"
+                          },
+                          {
+                            "properties": {
+                              "value": {
+                                "enum": [
+                                  null,
+                                  "normal",
+                                  "bold",
+                                  "lighter",
+                                  "bolder",
+                                  "100",
+                                  "200",
+                                  "300",
+                                  "400",
+                                  "500",
+                                  "600",
+                                  "700",
+                                  "800",
+                                  "900",
+                                  100,
+                                  200,
+                                  300,
+                                  400,
+                                  500,
+                                  600,
+                                  700,
+                                  800,
+                                  900
+                                ]
+                              }
+                            },
+                            "required": [
+                              "value"
+                            ]
+                          },
+                          {
+                            "properties": {
+                              "field": {
+                                "$ref": "#/refs/field"
+                              }
+                            },
+                            "required": [
+                              "field"
+                            ]
+                          },
+                          {
+                            "properties": {
+                              "range": {
+                                "type": [
+                                  "number",
+                                  "boolean"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "range"
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "required": [
+                          "scale",
+                          "value"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "scale",
+                          "band"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "offset"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/refs/stringModifiers"
+            },
+            {
+              "anyOf": [
+                {
+                  "oneOf": [
+                    {
+                      "$ref": "#/refs/signal"
+                    },
+                    {
+                      "properties": {
+                        "value": {
+                          "enum": [
+                            null,
+                            "normal",
+                            "bold",
+                            "lighter",
+                            "bolder",
+                            "100",
+                            "200",
+                            "300",
+                            "400",
+                            "500",
+                            "600",
+                            "700",
+                            "800",
+                            "900",
+                            100,
+                            200,
+                            300,
+                            400,
+                            500,
+                            600,
+                            700,
+                            800,
+                            900
+                          ]
+                        }
+                      },
+                      "required": [
+                        "value"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "field": {
+                          "$ref": "#/refs/field"
+                        }
+                      },
+                      "required": [
+                        "field"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "range": {
+                          "type": [
+                            "number",
+                            "boolean"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "range"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "required": [
+                    "scale",
+                    "value"
+                  ]
+                },
+                {
+                  "required": [
+                    "scale",
+                    "band"
+                  ]
+                },
+                {
+                  "required": [
+                    "offset"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "colorRGB": {
       "type": "object",
       "properties": {
@@ -8973,6 +9413,37 @@
       "additionalProperties": false,
       "required": [
         "facet"
+      ]
+    },
+    "markclip": {
+      "oneOf": [
+        {
+          "$ref": "#/refs/booleanOrSignal"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "path": {
+              "$ref": "#/refs/stringOrSignal"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sphere": {
+              "$ref": "#/refs/stringOrSignal"
+            }
+          },
+          "required": [
+            "sphere"
+          ],
+          "additionalProperties": false
+        }
       ]
     },
     "style": {

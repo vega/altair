@@ -425,6 +425,16 @@ class ConfigMethodMixin(object):
         copy.config["circle"] = core.MarkConfig(*args, **kwargs)
         return copy
 
+    @use_signature(core.Datasets)
+    def configure_datasets(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["datasets"] = core.Datasets(*args, **kwargs)
+        return copy
+
     @use_signature(core.MarkConfig)
     def configure_geoshape(self, *args, **kwargs):
         copy = self.copy(deep=False)

@@ -1,14 +1,31 @@
 """Generate a schema wrapper from a schema"""
+import os
 import sys
 import json
 from datetime import datetime
 from os.path import abspath, join, dirname
+
+from urllib import request
 
 # import schemapi from here
 sys.path.insert(0, abspath(dirname(__file__)))
 from schemapi import codegen
 from schemapi.codegen import schema_class, CodeSnippet
 from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
+
+SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
+                       '{library}/{version}.json')
+
+SCHEMA_VERSION = {
+    'vega': {
+        'v2': 'v2.6.5',
+        'v3': 'v3.2.1'
+    },
+    'vega-lite': {
+        'v1': 'v1.3.1',
+        'v2': 'v2.2.0'
+    }
+}
 
 
 BASE_SCHEMA = """
@@ -25,7 +42,7 @@ import json
 def load_schema():
     """Load the json schema associated with this module's functions"""
     directory = os.path.dirname(__file__)
-    with open(os.path.join(directory, '..', '{schemafile}')) as f:
+    with open(os.path.join(directory, '{schemafile}')) as f:
         return json.load(f)
 '''
 
@@ -80,7 +97,19 @@ class {classname}(core.{basename}):
 HEADER = """\
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
-"""#.format(datetime.now().strftime('%Y-%m-%d %H:%M'))
+"""
+
+
+def schema_url(library, version):
+    version = SCHEMA_VERSION[library][version]
+    return SCHEMA_URL_TEMPLATE.format(library=library, version=version)
+
+
+def download_schemafile(library, version, schemapath):
+    url = schema_url(library, version)
+    filename = os.path.join(schemapath, '{library}-schema.json'.format(library=library))
+    request.urlretrieve(url, filename)
+    return filename
 
 
 def copy_schemapi_util():
@@ -310,28 +339,36 @@ def generate_vegalite_config_mixin(schemafile):
 
 
 def vegalite_main():
+    library = 'vega-lite'
     encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
 
     for version in ['v1', 'v2']:
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vegalite', version))
-        schemafile = join(path, 'vega-lite-schema.json')
+        schemapath = os.path.join(path, 'schema')
+        schemafile = download_schemafile(library=library,
+                                         version=version,
+                                         schemapath=schemapath)
 
         # Generate __init__.py file
-        outfile = join(path, 'schema', '__init__.py')
+        outfile = join(schemapath, '__init__.py')
         print("Writing {0}".format(outfile))
         with open(outfile, 'w') as f:
-            f.write("from .core import *\nfrom .channels import *")
+            f.write("from .core import *\nfrom .channels import *\n")
+            f.write("SCHEMA_VERSION = {0!r}\n"
+                    "".format(SCHEMA_VERSION[library][version]))
+            f.write("SCHEMA_URL = {0!r}\n"
+                    "".format(schema_url(library, version)))
 
         # Generate the core schema wrappers
-        outfile = join(path, 'schema', 'core.py')
+        outfile = join(schemapath, 'core.py')
         print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
         file_contents = generate_vegalite_schema_wrapper(schemafile)
         with open(outfile, 'w') as f:
             f.write(file_contents)
 
         # Generate the channel wrappers
-        outfile = join(path, 'schema', 'channels.py')
+        outfile = join(schemapath, 'channels.py')
         print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
         code = generate_vegalite_channel_wrappers(schemafile, encoding_def=encoding_defs[version])
         with open(outfile, 'w') as f:
@@ -339,7 +376,7 @@ def vegalite_main():
 
         if version != 'v1':
             # generate the mark mixin
-            outfile = join(path, 'schema', 'mixins.py')
+            outfile = join(schemapath, 'mixins.py')
             print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
             mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile)
             config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
@@ -354,19 +391,28 @@ def vegalite_main():
 
 
 def vega_main():
+    library = 'vega'
+
     for version in ['v2', 'v3']:
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vega', version))
-        schemafile = join(path, 'vega-schema.json')
+        schemapath = os.path.join(path, 'schema')
+        schemafile = download_schemafile(library=library,
+                                         version=version,
+                                         schemapath=schemapath)
 
         # Generate __init__.py file
-        outfile = join(path, 'schema', '__init__.py')
+        outfile = join(schemapath, '__init__.py')
         print("Writing {0}".format(outfile))
         with open(outfile, 'w') as f:
-            f.write("from .core import *")
+            f.write("from .core import *\n\n")
+            f.write("SCHEMA_VERSION = {0!r}\n"
+                    "".format(SCHEMA_VERSION[library][version]))
+            f.write("SCHEMA_URL = {0!r}\n"
+                    "".format(schema_url(library, version)))
 
         # Generate the core schema wrappers
-        outfile = join(path, 'schema', 'core.py')
+        outfile = join(schemapath, 'core.py')
         print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
         file_contents = generate_vega_schema_wrapper(schemafile)
         with open(outfile, 'w') as f:

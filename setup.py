@@ -85,11 +85,10 @@ DESCRIPTION         = "Altair: A declarative statistical visualization library f
 NAME                = "altair"
 PACKAGES            = find_packages()
 PACKAGE_DATA        = {'altair': [
-                                  'expr/*.json',
-                                  'vega/v2/*.json',
-                                  'vega/v3/*.json',
-                                  'vegalite/v1/*.json',
-                                  'vegalite/v2/*.json'
+                                  'vega/v2/schema/*.json',
+                                  'vega/v3/schema/*.json',
+                                  'vegalite/v1/schema/*.json',
+                                  'vegalite/v2/schema/*.json'
                                   ]
                       }
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
