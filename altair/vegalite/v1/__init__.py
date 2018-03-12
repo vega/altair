@@ -1,3 +1,4 @@
+from .schema import *
 from .api import *
 
 from ...datasets import (
