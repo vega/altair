@@ -12,7 +12,9 @@ branch for maintenance of the 1.x series.**
 
 Altair is a declarative statistical visualization library for Python.
 
-*Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [UW Interactive Data Lab](http://idl.cs.washington.edu/).*
+*Altair is developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
+Granger](https://github.com/ellisonbg) in close collaboration with the [UW
+Interactive Data Lab](http://idl.cs.washington.edu/).*
 
 With Altair, you can spend more time understanding your data and its meaning. Altair's
 API is simple, friendly and consistent and built on top of the powerful
