@@ -221,7 +221,15 @@ class TopLevelMixin(object):
 
     def _repr_mimebundle_(self, include, exclude):
         """Return a MIME bundle for display in Jupyter frontends."""
-        return renderers.get()(self.to_dict())
+        # Catch errors explicitly to get around issues in Jupyter frontend
+        # see https://github.com/ipython/ipython/issues/11038
+        try:
+            dct = self.to_dict()
+        except Exception:
+            utils.display_traceback(in_ipython=True)
+            return {}
+        else:
+            return renderers.get()(dct)
 
 
 class Chart(TopLevelMixin, core.ExtendedUnitSpec):
