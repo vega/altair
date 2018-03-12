@@ -26,20 +26,20 @@ To import the latest version of the Python API for Vega-Lite::
 Currently, this points to the Vega-Lite 2.x API, which can be imported
 explicitly as::
 
-  from altair.vegalite import v2 as alt
+  import altair.vegalite.v2 as alt
 
 The older, Vega-Lite 1.x Python API is available as::
 
-  from altair.vegalite import v1 as alt
+  import altair.vegalite.v1 as alt
 
 Vega
 ----
 
 To import the Python API for Vega 3.x, use::
 
-  from altair.vega import v3 as vega
+  import altair.vega.v3 as vega
 
 To import the Python API for Vega 2.x, use::
 
-  from altair.vega import v2 as vega
+  import altair.vega.v2 as vega
 
