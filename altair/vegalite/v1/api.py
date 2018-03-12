@@ -42,6 +42,7 @@ class Formula(core.Formula):
 #*************************************************************************
 
 class TopLevelMixin(object):
+    _default_spec_values = {"width": 400, "height": 300}
     _class_is_valid_at_instantiation = False
 
     def _prepare_data(self):
@@ -89,7 +90,7 @@ class TopLevelMixin(object):
                 dct['$schema'] = SCHEMA_URL
 
             # add default values if present
-            if getattr(copy, '_default_spec_values', None):
+            if copy._default_spec_values:
                 dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
         return dct
 
