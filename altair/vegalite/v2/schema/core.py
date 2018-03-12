@@ -22,7 +22,7 @@ class VegaLiteSchema(SchemaBase):
 class Root(VegaLiteSchema):
     """Root schema wrapper
     
-    anyOf(TopLevelFacetedUnitSpec, TopLevelLayerSpec, TopLevelFacetSpec, TopLevelRepeatSpec, 
+    anyOf(TopLevelFacetedUnitSpec, TopLevelFacetSpec, TopLevelLayerSpec, TopLevelRepeatSpec, 
     TopLevelVConcatSpec, TopLevelHConcatSpec)
     """
     _schema = load_schema()
@@ -36,7 +36,7 @@ class Aggregate(VegaLiteSchema):
     """Aggregate schema wrapper
     
     enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 
-    'missing', 'q1', 'q3', 'ci0', 'ci1', 'stdev', 'stdevp', 'sum', 'valid', 'values', 
+    'missing', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 
     'variance', 'variancep')
     """
     _schema = {'$ref': '#/definitions/Aggregate'}
@@ -50,7 +50,7 @@ class AggregateOp(VegaLiteSchema):
     """AggregateOp schema wrapper
     
     enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min', 
-    'missing', 'q1', 'q3', 'ci0', 'ci1', 'stdev', 'stdevp', 'sum', 'valid', 'values', 
+    'missing', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values', 
     'variance', 'variancep')
     """
     _schema = {'$ref': '#/definitions/AggregateOp'}
@@ -793,8 +793,8 @@ class CompositeUnitSpec(VegaLiteSchema):
         Name of the visualization for later reference.
     projection : Projection
         An object defining properties of geographic projection.  Works with `"geoshape"` 
-        marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`, 
-        `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or `"longitude"`.
+        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"` 
+        channels.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
@@ -968,12 +968,14 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         An object defining properties of the legend. If `null`, the legend for the encoding 
         channel will be removed.  __Default value:__ If undefined, default [legend 
         properties](https://vega.github.io/vega-lite/docs/legend.html) are applied.
-    scale : Scale
+    scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that 
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  __Default value:__ If undefined,
-         default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are 
-        applied.
+         (pixels, colors, sizes) of the encoding channels.  If `null`, the scale will be 
+        [disabled and the data value will be directly 
+        encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default 
+        value:__ If undefined, default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
     sort : anyOf(SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`, 
         `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
@@ -1159,12 +1161,14 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         An object defining properties of the legend. If `null`, the legend for the encoding 
         channel will be removed.  __Default value:__ If undefined, default [legend 
         properties](https://vega.github.io/vega-lite/docs/legend.html) are applied.
-    scale : Scale
+    scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that 
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  __Default value:__ If undefined,
-         default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are 
-        applied.
+         (pixels, colors, sizes) of the encoding channels.  If `null`, the scale will be 
+        [disabled and the data value will be directly 
+        encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default 
+        value:__ If undefined, default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
     sort : anyOf(SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`, 
         `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
@@ -1563,25 +1567,50 @@ class Encoding(VegaLiteSchema):
     Attributes
     ----------
     color : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Color of the marks – either fill or stroke color based on mark type. By default, 
-        `color` represents fill color for `"area"`, `"bar"`, `"tick"`, `"text"`, `"circle"`,
-         and `"square"` / stroke color for `"line"` and `"point"`.  __Default value:__ If 
-        undefined, the default color depends on [mark config](config.html#mark)'s `color` 
-        property.  _Note:_ See the scale documentation for more information about 
-        customizing [color scheme](scale.html#scheme).
+        Color of the marks – either fill or stroke color based on  the `filled` property of 
+        mark definition. By default, `color` represents fill color for `"area"`, `"bar"`, 
+        `"tick"`, `"text"`, `"circle"`, and `"square"` / stroke color for `"line"` and 
+        `"point"`.  __Default value:__ If undefined, the default color depends on [mark 
+        config](config.html#mark)'s `color` property.  _Note:_ 1) For fine-grained control 
+        over both fill and stroke colors of the marks, please use the `fill` and `stroke` 
+        channels. 2) See the scale documentation for more information about customizing 
+        [color scheme](scale.html#scheme).
     detail : anyOf(FieldDef, List(FieldDef))
         Additional levels of detail for grouping data in aggregate views and in line and 
         area marks without mapping data to a specific visual channel.
+    fill : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
+        Fill color of the marks. __Default value:__ If undefined, the default color depends 
+        on [mark config](config.html#mark)'s `color` property.  _Note:_ The `fill` channel 
+        has higher precedence than `color` and will override color value.
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
+    key : FieldDef
+        A data field to use as a unique key for data binding. When a visualization’s data is
+         updated, the key value will be used to match data elements to existing mark 
+        instances. Use a key channel to enable object constancy for transitions over dynamic
+         data.
+    latitude : FieldDef
+        Latitude position of geographically projected marks.
+    latitude2 : FieldDef
+        Latitude-2 position for geographically projected ranged `"area"`, `"bar"`, `"rect"`,
+         and  `"rule"`.
+    longitude : FieldDef
+        Longitude position of geographically projected marks.
+    longitude2 : FieldDef
+        Longitude-2 position for geographically projected ranged `"area"`, `"bar"`, 
+        `"rect"`, and  `"rule"`.
     opacity : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Opacity of the marks – either can be a value or a range.  __Default value:__ If 
         undefined, the default opacity depends on [mark config](config.html#mark)'s 
         `opacity` property.
     order : anyOf(OrderFieldDef, List(OrderFieldDef))
-        Stack order for stacked marks or order of data points in line marks for connected 
-        scatter plots.  __Note__: In aggregate plots, `order` field should be `aggregate`d 
-        to avoid creating additional aggregation grouping.
+        Order of the marks. - For stacked marks, this `order` channel encodes stack order. -
+         For line marks, this `order` channel encodes order of data points in the lines. 
+        This can be useful for creating [a connected 
+        scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).
+         - Otherwise, this `order` channel encodes layer order of the marks.  __Note__: In 
+        aggregate plots, `order` field should be `aggregate`d to avoid creating additional 
+        aggregation grouping.
     shape : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         For `point` marks the supported values are `"circle"` (default), `"square"`, 
         `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or else a custom SVG 
@@ -1593,6 +1622,10 @@ class Encoding(VegaLiteSchema):
         pixel area of the mark. - For `"bar"` and `"tick"` – the bar and tick's size. - For 
         `"text"` – the text's font size. - Size is currently unsupported for `"line"`, 
         `"area"`, and `"rect"`.
+    stroke : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
+        Stroke color of the marks. __Default value:__ If undefined, the default color 
+        depends on [mark config](config.html#mark)'s `color` property.  _Note:_ The `stroke`
+         channel has higher precedence than `color` and will override color value.
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the `text` mark.
     tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
@@ -1600,21 +1633,25 @@ class Encoding(VegaLiteSchema):
     x : anyOf(PositionFieldDef, ValueDef)
         X coordinates of the marks, or width of horizontal `"bar"` and `"area"`.
     x2 : anyOf(FieldDef, ValueDef)
-        X2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        X2 coordinates for ranged `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
     y : anyOf(PositionFieldDef, ValueDef)
         Y coordinates of the marks, or height of vertical `"bar"` and `"area"`.
     y2 : anyOf(FieldDef, ValueDef)
-        Y2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        Y2 coordinates for ranged `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
     """
     _schema = {'$ref': '#/definitions/Encoding'}
     _rootschema = Root._schema
 
-    def __init__(self, color=Undefined, detail=Undefined, href=Undefined, opacity=Undefined,
-                 order=Undefined, shape=Undefined, size=Undefined, text=Undefined, tooltip=Undefined,
-                 x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
-        super(Encoding, self).__init__(color=color, detail=detail, href=href, opacity=opacity,
-                                       order=order, shape=shape, size=size, text=text, tooltip=tooltip,
-                                       x=x, x2=x2, y=y, y2=y2, **kwds)
+    def __init__(self, color=Undefined, detail=Undefined, fill=Undefined, href=Undefined, key=Undefined,
+                 latitude=Undefined, latitude2=Undefined, longitude=Undefined, longitude2=Undefined,
+                 opacity=Undefined, order=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 text=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 y2=Undefined, **kwds):
+        super(Encoding, self).__init__(color=color, detail=detail, fill=fill, href=href, key=key,
+                                       latitude=latitude, latitude2=latitude2, longitude=longitude,
+                                       longitude2=longitude2, opacity=opacity, order=order, shape=shape,
+                                       size=size, stroke=stroke, text=text, tooltip=tooltip, x=x, x2=x2,
+                                       y=y, y2=y2, **kwds)
 
 
 class EncodingWithFacet(VegaLiteSchema):
@@ -1625,27 +1662,52 @@ class EncodingWithFacet(VegaLiteSchema):
     Attributes
     ----------
     color : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
-        Color of the marks – either fill or stroke color based on mark type. By default, 
-        `color` represents fill color for `"area"`, `"bar"`, `"tick"`, `"text"`, `"circle"`,
-         and `"square"` / stroke color for `"line"` and `"point"`.  __Default value:__ If 
-        undefined, the default color depends on [mark config](config.html#mark)'s `color` 
-        property.  _Note:_ See the scale documentation for more information about 
-        customizing [color scheme](scale.html#scheme).
+        Color of the marks – either fill or stroke color based on  the `filled` property of 
+        mark definition. By default, `color` represents fill color for `"area"`, `"bar"`, 
+        `"tick"`, `"text"`, `"circle"`, and `"square"` / stroke color for `"line"` and 
+        `"point"`.  __Default value:__ If undefined, the default color depends on [mark 
+        config](config.html#mark)'s `color` property.  _Note:_ 1) For fine-grained control 
+        over both fill and stroke colors of the marks, please use the `fill` and `stroke` 
+        channels. 2) See the scale documentation for more information about customizing 
+        [color scheme](scale.html#scheme).
     column : FacetFieldDef
         Horizontal facets for trellis plots.
     detail : anyOf(FieldDef, List(FieldDef))
         Additional levels of detail for grouping data in aggregate views and in line and 
         area marks without mapping data to a specific visual channel.
+    fill : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
+        Fill color of the marks. __Default value:__ If undefined, the default color depends 
+        on [mark config](config.html#mark)'s `color` property.  _Note:_ The `fill` channel 
+        has higher precedence than `color` and will override color value.
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
+    key : FieldDef
+        A data field to use as a unique key for data binding. When a visualization’s data is
+         updated, the key value will be used to match data elements to existing mark 
+        instances. Use a key channel to enable object constancy for transitions over dynamic
+         data.
+    latitude : FieldDef
+        Latitude position of geographically projected marks.
+    latitude2 : FieldDef
+        Latitude-2 position for geographically projected ranged `"area"`, `"bar"`, `"rect"`,
+         and  `"rule"`.
+    longitude : FieldDef
+        Longitude position of geographically projected marks.
+    longitude2 : FieldDef
+        Longitude-2 position for geographically projected ranged `"area"`, `"bar"`, 
+        `"rect"`, and  `"rule"`.
     opacity : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Opacity of the marks – either can be a value or a range.  __Default value:__ If 
         undefined, the default opacity depends on [mark config](config.html#mark)'s 
         `opacity` property.
     order : anyOf(OrderFieldDef, List(OrderFieldDef))
-        Stack order for stacked marks or order of data points in line marks for connected 
-        scatter plots.  __Note__: In aggregate plots, `order` field should be `aggregate`d 
-        to avoid creating additional aggregation grouping.
+        Order of the marks. - For stacked marks, this `order` channel encodes stack order. -
+         For line marks, this `order` channel encodes order of data points in the lines. 
+        This can be useful for creating [a connected 
+        scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).
+         - Otherwise, this `order` channel encodes layer order of the marks.  __Note__: In 
+        aggregate plots, `order` field should be `aggregate`d to avoid creating additional 
+        aggregation grouping.
     row : FacetFieldDef
         Vertical facets for trellis plots.
     shape : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
@@ -1659,6 +1721,10 @@ class EncodingWithFacet(VegaLiteSchema):
         pixel area of the mark. - For `"bar"` and `"tick"` – the bar and tick's size. - For 
         `"text"` – the text's font size. - Size is currently unsupported for `"line"`, 
         `"area"`, and `"rect"`.
+    stroke : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
+        Stroke color of the marks. __Default value:__ If undefined, the default color 
+        depends on [mark config](config.html#mark)'s `color` property.  _Note:_ The `stroke`
+         channel has higher precedence than `color` and will override color value.
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the `text` mark.
     tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
@@ -1666,23 +1732,111 @@ class EncodingWithFacet(VegaLiteSchema):
     x : anyOf(PositionFieldDef, ValueDef)
         X coordinates of the marks, or width of horizontal `"bar"` and `"area"`.
     x2 : anyOf(FieldDef, ValueDef)
-        X2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        X2 coordinates for ranged `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
     y : anyOf(PositionFieldDef, ValueDef)
         Y coordinates of the marks, or height of vertical `"bar"` and `"area"`.
     y2 : anyOf(FieldDef, ValueDef)
-        Y2 coordinates for ranged  `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
+        Y2 coordinates for ranged `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
     """
     _schema = {'$ref': '#/definitions/EncodingWithFacet'}
     _rootschema = Root._schema
 
-    def __init__(self, color=Undefined, column=Undefined, detail=Undefined, href=Undefined,
-                 opacity=Undefined, order=Undefined, row=Undefined, shape=Undefined, size=Undefined,
-                 text=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined,
-                 y2=Undefined, **kwds):
-        super(EncodingWithFacet, self).__init__(color=color, column=column, detail=detail, href=href,
-                                                opacity=opacity, order=order, row=row, shape=shape,
-                                                size=size, text=text, tooltip=tooltip, x=x, x2=x2, y=y,
-                                                y2=y2, **kwds)
+    def __init__(self, color=Undefined, column=Undefined, detail=Undefined, fill=Undefined,
+                 href=Undefined, key=Undefined, latitude=Undefined, latitude2=Undefined,
+                 longitude=Undefined, longitude2=Undefined, opacity=Undefined, order=Undefined,
+                 row=Undefined, shape=Undefined, size=Undefined, stroke=Undefined, text=Undefined,
+                 tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
+        super(EncodingWithFacet, self).__init__(color=color, column=column, detail=detail, fill=fill,
+                                                href=href, key=key, latitude=latitude,
+                                                latitude2=latitude2, longitude=longitude,
+                                                longitude2=longitude2, opacity=opacity, order=order,
+                                                row=row, shape=shape, size=size, stroke=stroke,
+                                                text=text, tooltip=tooltip, x=x, x2=x2, y=y, y2=y2,
+                                                **kwds)
+
+
+class LayerSpec(VegaLiteSchema):
+    """LayerSpec schema wrapper
+    
+    Mapping(required=[layer])
+    Layer Spec with encoding and projection
+    
+    Attributes
+    ----------
+    layer : List(anyOf(LayerSpec, CompositeUnitSpec))
+        Layer or single view specifications to be layered.  __Note__: Specifications inside 
+        `layer` cannot use `row` and `column` channels as layering facet specifications is 
+        not allowed.
+    data : Data
+        An object describing the data source
+    description : string
+        Description of this mark for commenting purpose.
+    encoding : Encoding
+        A shared key-value mapping between encoding channels and definition of fields in the
+         underlying layers.
+    height : float
+        The height of a visualization.  __Default value:__ - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
+        `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will
+         be the value of 
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - 
+        For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
+        value or unspecified, the height is [determined by the range step, paddings, and the
+         cardinality of the field mapped to 
+        y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the
+         `rangeStep` is `null`, the height will be the value of 
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - If
+         no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.  
+        __Note__: For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
+        represents the height of a single view.  __See also:__ The documentation for [width 
+        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
+    name : string
+        Name of the visualization for later reference.
+    projection : Projection
+        An object defining properties of the geographic projection shared by underlying 
+        layers.
+    resolve : Resolve
+        Scale, axis, and legend resolutions for layers.
+    title : anyOf(string, TitleParams)
+        Title for the plot.
+    transform : List(Transform)
+        An array of data transformations such as filter and new field calculation.
+    width : float
+        The width of a visualization.  __Default value:__ This will be determined by the 
+        following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
+        `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the width will 
+        be the value of 
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - For
+         x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
+        value or unspecified, the width is [determined by the range step, paddings, and the 
+        cardinality of the field mapped to 
+        x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).   Otherwise, if 
+        the `rangeStep` is `null`, the width will be the value of 
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - If 
+        no field is mapped to `x` channel, the `width` will be the value of 
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+         for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For plots 
+        with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
+        represents the width of a single view.  __See also:__ The documentation for [width 
+        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
+    """
+    _schema = {'$ref': '#/definitions/LayerSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, layer=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
+                 height=Undefined, name=Undefined, projection=Undefined, resolve=Undefined,
+                 title=Undefined, transform=Undefined, width=Undefined, **kwds):
+        super(LayerSpec, self).__init__(layer=layer, data=data, description=description,
+                                        encoding=encoding, height=height, name=name,
+                                        projection=projection, resolve=resolve, title=title,
+                                        transform=transform, width=width, **kwds)
 
 
 class FacetFieldDef(VegaLiteSchema):
@@ -1901,12 +2055,14 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
         An object defining properties of the legend. If `null`, the legend for the encoding 
         channel will be removed.  __Default value:__ If undefined, default [legend 
         properties](https://vega.github.io/vega-lite/docs/legend.html) are applied.
-    scale : Scale
+    scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that 
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  __Default value:__ If undefined,
-         default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are 
-        applied.
+         (pixels, colors, sizes) of the encoding channels.  If `null`, the scale will be 
+        [disabled and the data value will be directly 
+        encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default 
+        value:__ If undefined, default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
     sort : anyOf(SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`, 
         `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
@@ -2197,82 +2353,6 @@ class HConcatSpec(VegaLiteSchema):
                                           **kwds)
 
 
-class LayerSpec(VegaLiteSchema):
-    """LayerSpec schema wrapper
-    
-    Mapping(required=[layer])
-    
-    Attributes
-    ----------
-    layer : List(anyOf(LayerSpec, CompositeUnitSpec))
-        Layer or single view specifications to be layered.  __Note__: Specifications inside 
-        `layer` cannot use `row` and `column` channels as layering facet specifications is 
-        not allowed.
-    data : Data
-        An object describing the data source
-    description : string
-        Description of this mark for commenting purpose.
-    height : float
-        The height of a visualization.  __Default value:__ - If a view's 
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
-        `"fit"` or its y-channel has a [continuous 
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will
-         be the value of 
-        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - 
-        For y-axis with a band or point scale: if 
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
-        value or unspecified, the height is [determined by the range step, paddings, and the
-         cardinality of the field mapped to 
-        y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the
-         `rangeStep` is `null`, the height will be the value of 
-        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - If
-         no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.  
-        __Note__: For plots with [`row` and `column` 
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
-        represents the height of a single view.  __See also:__ The documentation for [width 
-        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-    name : string
-        Name of the visualization for later reference.
-    resolve : Resolve
-        Scale, axis, and legend resolutions for layers.
-    title : anyOf(string, TitleParams)
-        Title for the plot.
-    transform : List(Transform)
-        An array of data transformations such as filter and new field calculation.
-    width : float
-        The width of a visualization.  __Default value:__ This will be determined by the 
-        following rules:  - If a view's 
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
-        `"fit"` or its x-channel has a [continuous 
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the width will 
-        be the value of 
-        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - For
-         x-axis with a band or point scale: if 
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
-        value or unspecified, the width is [determined by the range step, paddings, and the 
-        cardinality of the field mapped to 
-        x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).   Otherwise, if 
-        the `rangeStep` is `null`, the width will be the value of 
-        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - If 
-        no field is mapped to `x` channel, the `width` will be the value of 
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-         for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For plots 
-        with [`row` and `column` 
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
-        represents the width of a single view.  __See also:__ The documentation for [width 
-        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-    """
-    _schema = {'$ref': '#/definitions/LayerSpec'}
-    _rootschema = Root._schema
-
-    def __init__(self, layer=Undefined, data=Undefined, description=Undefined, height=Undefined,
-                 name=Undefined, resolve=Undefined, title=Undefined, transform=Undefined,
-                 width=Undefined, **kwds):
-        super(LayerSpec, self).__init__(layer=layer, data=data, description=description, height=height,
-                                        name=name, resolve=resolve, title=title, transform=transform,
-                                        width=width, **kwds)
-
-
 class RepeatSpec(VegaLiteSchema):
     """RepeatSpec schema wrapper
     
@@ -2360,8 +2440,8 @@ class CompositeUnitSpecAlias(VegaLiteSchema):
         Name of the visualization for later reference.
     projection : Projection
         An object defining properties of geographic projection.  Works with `"geoshape"` 
-        marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`, 
-        `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or `"longitude"`.
+        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"` 
+        channels.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
@@ -2444,8 +2524,8 @@ class FacetedCompositeUnitSpecAlias(VegaLiteSchema):
         Name of the visualization for later reference.
     projection : Projection
         An object defining properties of geographic projection.  Works with `"geoshape"` 
-        marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`, 
-        `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or `"longitude"`.
+        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"` 
+        channels.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
@@ -2983,19 +3063,24 @@ class LegendResolveMap(VegaLiteSchema):
     ----------
     color : ResolveMode
     
+    fill : ResolveMode
+    
     opacity : ResolveMode
     
     shape : ResolveMode
     
     size : ResolveMode
     
+    stroke : ResolveMode
+    
     """
     _schema = {'$ref': '#/definitions/LegendResolveMap'}
     _rootschema = Root._schema
 
-    def __init__(self, color=Undefined, opacity=Undefined, shape=Undefined, size=Undefined, **kwds):
-        super(LegendResolveMap, self).__init__(color=color, opacity=opacity, shape=shape, size=size,
-                                               **kwds)
+    def __init__(self, color=Undefined, fill=Undefined, opacity=Undefined, shape=Undefined,
+                 size=Undefined, stroke=Undefined, **kwds):
+        super(LegendResolveMap, self).__init__(color=color, fill=fill, opacity=opacity, shape=shape,
+                                               size=size, stroke=stroke, **kwds)
 
 
 class LocalMultiTimeUnit(VegaLiteSchema):
@@ -3746,12 +3831,14 @@ class PositionFieldDef(VegaLiteSchema):
         `"a\\.b"` and `"a\\[0\\]"`). See more details about escaping in the [field 
         documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__ `field`
          is not required if `aggregate` is `count`.
-    scale : Scale
+    scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that 
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  __Default value:__ If undefined,
-         default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are 
-        applied.
+         (pixels, colors, sizes) of the encoding channels.  If `null`, the scale will be 
+        [disabled and the data value will be directly 
+        encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default 
+        value:__ If undefined, default [scale 
+        properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
     sort : anyOf(SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`, 
         `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
@@ -4350,11 +4437,15 @@ class ScaleResolveMap(VegaLiteSchema):
     ----------
     color : ResolveMode
     
+    fill : ResolveMode
+    
     opacity : ResolveMode
     
     shape : ResolveMode
     
     size : ResolveMode
+    
+    stroke : ResolveMode
     
     x : ResolveMode
     
@@ -4364,10 +4455,10 @@ class ScaleResolveMap(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/ScaleResolveMap'}
     _rootschema = Root._schema
 
-    def __init__(self, color=Undefined, opacity=Undefined, shape=Undefined, size=Undefined, x=Undefined,
-                 y=Undefined, **kwds):
-        super(ScaleResolveMap, self).__init__(color=color, opacity=opacity, shape=shape, size=size, x=x,
-                                              y=y, **kwds)
+    def __init__(self, color=Undefined, fill=Undefined, opacity=Undefined, shape=Undefined,
+                 size=Undefined, stroke=Undefined, x=Undefined, y=Undefined, **kwds):
+        super(ScaleResolveMap, self).__init__(color=color, fill=fill, opacity=opacity, shape=shape,
+                                              size=size, stroke=stroke, x=x, y=y, **kwds)
 
 
 class ScaleType(VegaLiteSchema):
@@ -4493,8 +4584,9 @@ class SelectionResolution(VegaLiteSchema):
 class SingleDefChannel(VegaLiteSchema):
     """SingleDefChannel schema wrapper
     
-    enum('x', 'y', 'x2', 'y2', 'row', 'column', 'size', 'shape', 'color', 'opacity', 'text', 
-    'tooltip', 'href')
+    enum('x', 'y', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'row', 
+    'column', 'color', 'fill', 'stroke', 'size', 'shape', 'opacity', 'text', 'tooltip', 'href', 
+    'key')
     """
     _schema = {'$ref': '#/definitions/SingleDefChannel'}
     _rootschema = Root._schema
@@ -5036,17 +5128,17 @@ class TitleParams(VegaLiteSchema):
                                           style=style, **kwds)
 
 
-class TopLevelFacetedUnitSpec(VegaLiteSchema):
-    """TopLevelFacetedUnitSpec schema wrapper
+class TopLevelLayerSpec(VegaLiteSchema):
+    """TopLevelLayerSpec schema wrapper
     
-    Mapping(required=[mark])
+    Mapping(required=[layer])
     
     Attributes
     ----------
-    mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark 
-        definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
+    layer : List(anyOf(LayerSpec, CompositeUnitSpec))
+        Layer or single view specifications to be layered.  __Note__: Specifications inside 
+        `layer` cannot use `row` and `column` channels as layering facet specifications is 
+        not allowed.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a string, should be one of 
         `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for 
@@ -5066,8 +5158,9 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
          primitive values are ingested as objects with a `data` property.
     description : string
         Description of this mark for commenting purpose.
-    encoding : EncodingWithFacet
-        A key-value mapping between encoding channels and definition of fields.
+    encoding : Encoding
+        A shared key-value mapping between encoding channels and definition of fields in the
+         underlying layers.
     height : float
         The height of a visualization.  __Default value:__ - If a view's 
         [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
@@ -5096,11 +5189,10 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         "bottom": 5}` to specify padding for each side of the visualization.  __Default 
         value__: `5`
     projection : Projection
-        An object defining properties of geographic projection.  Works with `"geoshape"` 
-        marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`, 
-        `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or `"longitude"`.
-    selection : Mapping(required=[])
-        A key-value mapping between selection names and definitions.
+        An object defining properties of the geographic projection shared by underlying 
+        layers.
+    resolve : Resolve
+        Scale, axis, and legend resolutions for layers.
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -5128,80 +5220,19 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         represents the width of a single view.  __See also:__ The documentation for [width 
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
     """
-    _schema = {'$ref': '#/definitions/TopLevel<FacetedUnitSpec>'}
+    _schema = {'$ref': '#/definitions/TopLevelLayerSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, mark=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
+    def __init__(self, layer=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
                  data=Undefined, datasets=Undefined, description=Undefined, encoding=Undefined,
                  height=Undefined, name=Undefined, padding=Undefined, projection=Undefined,
-                 selection=Undefined, title=Undefined, transform=Undefined, width=Undefined, **kwds):
-        super(TopLevelFacetedUnitSpec, self).__init__(mark=mark, autosize=autosize,
-                                                      background=background, config=config, data=data,
-                                                      datasets=datasets, description=description,
-                                                      encoding=encoding, height=height, name=name,
-                                                      padding=padding, projection=projection,
-                                                      selection=selection, title=title,
-                                                      transform=transform, width=width, **kwds)
-
-
-class TopLevelFacetSpec(VegaLiteSchema):
-    """TopLevelFacetSpec schema wrapper
-    
-    Mapping(required=[facet, spec])
-    
-    Attributes
-    ----------
-    facet : FacetMapping
-        An object that describes mappings between `row` and `column` channels and their 
-        field definitions.
-    spec : anyOf(LayerSpec, CompositeUnitSpec)
-        A specification of the view that gets faceted.
-    autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be one of 
-        `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for 
-        content sizing and automatic resizing. `"fit"` is only supported for single and 
-        layered views that don't use `rangeStep`.  __Default value__: `pad`
-    background : string
-        CSS color property to use as the background of visualization.  __Default value:__ 
-        none (transparent)
-    config : Config
-        Vega-Lite configuration object.  This property can only be defined at the top-level 
-        of a specification.
-    data : Data
-        An object describing the data source
-    datasets : Datasets
-        A global data store for named datasets. This is a mapping from names to inline 
-        datasets. This can be an array of objects or primitive values or a string. Arrays of
-         primitive values are ingested as objects with a `data` property.
-    description : string
-        Description of this mark for commenting purpose.
-    name : string
-        Name of the visualization for later reference.
-    padding : Padding
-        The default visualization padding, in pixels, from the edge of the visualization 
-        canvas to the data rectangle.  If a number, specifies padding for all sides. If an 
-        object, the value should have the format `{"left": 5, "top": 5, "right": 5, 
-        "bottom": 5}` to specify padding for each side of the visualization.  __Default 
-        value__: `5`
-    resolve : Resolve
-        Scale, axis, and legend resolutions for facets.
-    title : anyOf(string, TitleParams)
-        Title for the plot.
-    transform : List(Transform)
-        An array of data transformations such as filter and new field calculation.
-    """
-    _schema = {'$ref': '#/definitions/TopLevel<FacetSpec>'}
-    _rootschema = Root._schema
-
-    def __init__(self, facet=Undefined, spec=Undefined, autosize=Undefined, background=Undefined,
-                 config=Undefined, data=Undefined, datasets=Undefined, description=Undefined,
-                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
-                 transform=Undefined, **kwds):
-        super(TopLevelFacetSpec, self).__init__(facet=facet, spec=spec, autosize=autosize,
-                                                background=background, config=config, data=data,
-                                                datasets=datasets, description=description, name=name,
-                                                padding=padding, resolve=resolve, title=title,
-                                                transform=transform, **kwds)
+                 resolve=Undefined, title=Undefined, transform=Undefined, width=Undefined, **kwds):
+        super(TopLevelLayerSpec, self).__init__(layer=layer, autosize=autosize, background=background,
+                                                config=config, data=data, datasets=datasets,
+                                                description=description, encoding=encoding,
+                                                height=height, name=name, padding=padding,
+                                                projection=projection, resolve=resolve, title=title,
+                                                transform=transform, width=width, **kwds)
 
 
 class TopLevelHConcatSpec(VegaLiteSchema):
@@ -5247,7 +5278,7 @@ class TopLevelHConcatSpec(VegaLiteSchema):
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/TopLevel<HConcatSpec>'}
+    _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
     _rootschema = Root._schema
 
     def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
@@ -5258,106 +5289,6 @@ class TopLevelHConcatSpec(VegaLiteSchema):
                                                   datasets=datasets, description=description, name=name,
                                                   padding=padding, resolve=resolve, title=title,
                                                   transform=transform, **kwds)
-
-
-class TopLevelLayerSpec(VegaLiteSchema):
-    """TopLevelLayerSpec schema wrapper
-    
-    Mapping(required=[layer])
-    
-    Attributes
-    ----------
-    layer : List(anyOf(LayerSpec, CompositeUnitSpec))
-        Layer or single view specifications to be layered.  __Note__: Specifications inside 
-        `layer` cannot use `row` and `column` channels as layering facet specifications is 
-        not allowed.
-    autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be one of 
-        `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for 
-        content sizing and automatic resizing. `"fit"` is only supported for single and 
-        layered views that don't use `rangeStep`.  __Default value__: `pad`
-    background : string
-        CSS color property to use as the background of visualization.  __Default value:__ 
-        none (transparent)
-    config : Config
-        Vega-Lite configuration object.  This property can only be defined at the top-level 
-        of a specification.
-    data : Data
-        An object describing the data source
-    datasets : Datasets
-        A global data store for named datasets. This is a mapping from names to inline 
-        datasets. This can be an array of objects or primitive values or a string. Arrays of
-         primitive values are ingested as objects with a `data` property.
-    description : string
-        Description of this mark for commenting purpose.
-    height : float
-        The height of a visualization.  __Default value:__ - If a view's 
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
-        `"fit"` or its y-channel has a [continuous 
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will
-         be the value of 
-        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - 
-        For y-axis with a band or point scale: if 
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
-        value or unspecified, the height is [determined by the range step, paddings, and the
-         cardinality of the field mapped to 
-        y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the
-         `rangeStep` is `null`, the height will be the value of 
-        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - If
-         no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.  
-        __Note__: For plots with [`row` and `column` 
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
-        represents the height of a single view.  __See also:__ The documentation for [width 
-        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-    name : string
-        Name of the visualization for later reference.
-    padding : Padding
-        The default visualization padding, in pixels, from the edge of the visualization 
-        canvas to the data rectangle.  If a number, specifies padding for all sides. If an 
-        object, the value should have the format `{"left": 5, "top": 5, "right": 5, 
-        "bottom": 5}` to specify padding for each side of the visualization.  __Default 
-        value__: `5`
-    resolve : Resolve
-        Scale, axis, and legend resolutions for layers.
-    title : anyOf(string, TitleParams)
-        Title for the plot.
-    transform : List(Transform)
-        An array of data transformations such as filter and new field calculation.
-    width : float
-        The width of a visualization.  __Default value:__ This will be determined by the 
-        following rules:  - If a view's 
-        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
-        `"fit"` or its x-channel has a [continuous 
-        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the width will 
-        be the value of 
-        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - For
-         x-axis with a band or point scale: if 
-        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
-        value or unspecified, the width is [determined by the range step, paddings, and the 
-        cardinality of the field mapped to 
-        x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).   Otherwise, if 
-        the `rangeStep` is `null`, the width will be the value of 
-        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - If 
-        no field is mapped to `x` channel, the `width` will be the value of 
-        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
-         for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For plots 
-        with [`row` and `column` 
-        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
-        represents the width of a single view.  __See also:__ The documentation for [width 
-        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-    """
-    _schema = {'$ref': '#/definitions/TopLevel<LayerSpec>'}
-    _rootschema = Root._schema
-
-    def __init__(self, layer=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, datasets=Undefined, description=Undefined, height=Undefined,
-                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
-                 transform=Undefined, width=Undefined, **kwds):
-        super(TopLevelLayerSpec, self).__init__(layer=layer, autosize=autosize, background=background,
-                                                config=config, data=data, datasets=datasets,
-                                                description=description, height=height, name=name,
-                                                padding=padding, resolve=resolve, title=title,
-                                                transform=transform, width=width, **kwds)
 
 
 class TopLevelRepeatSpec(VegaLiteSchema):
@@ -5406,7 +5337,7 @@ class TopLevelRepeatSpec(VegaLiteSchema):
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/TopLevel<RepeatSpec>'}
+    _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
     _rootschema = Root._schema
 
     def __init__(self, repeat=Undefined, spec=Undefined, autosize=Undefined, background=Undefined,
@@ -5463,7 +5394,7 @@ class TopLevelVConcatSpec(VegaLiteSchema):
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/TopLevel<VConcatSpec>'}
+    _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
     _rootschema = Root._schema
 
     def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
@@ -5476,17 +5407,172 @@ class TopLevelVConcatSpec(VegaLiteSchema):
                                                   transform=transform, **kwds)
 
 
-class TopLevelExtendedSpec(VegaLiteSchema):
-    """TopLevelExtendedSpec schema wrapper
+class TopLevelFacetSpec(VegaLiteSchema):
+    """TopLevelFacetSpec schema wrapper
     
-    anyOf(TopLevelFacetedUnitSpec, TopLevelLayerSpec, TopLevelFacetSpec, TopLevelRepeatSpec, 
-    TopLevelVConcatSpec, TopLevelHConcatSpec)
+    Mapping(required=[data, facet, spec])
+    
+    Attributes
+    ----------
+    data : Data
+        An object describing the data source
+    facet : FacetMapping
+        An object that describes mappings between `row` and `column` channels and their 
+        field definitions.
+    spec : anyOf(LayerSpec, CompositeUnitSpec)
+        A specification of the view that gets faceted.
+    autosize : anyOf(AutosizeType, AutoSizeParams)
+        Sets how the visualization size should be determined. If a string, should be one of 
+        `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for 
+        content sizing and automatic resizing. `"fit"` is only supported for single and 
+        layered views that don't use `rangeStep`.  __Default value__: `pad`
+    background : string
+        CSS color property to use as the background of visualization.  __Default value:__ 
+        none (transparent)
+    config : Config
+        Vega-Lite configuration object.  This property can only be defined at the top-level 
+        of a specification.
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
+    description : string
+        Description of this mark for commenting purpose.
+    name : string
+        Name of the visualization for later reference.
+    padding : Padding
+        The default visualization padding, in pixels, from the edge of the visualization 
+        canvas to the data rectangle.  If a number, specifies padding for all sides. If an 
+        object, the value should have the format `{"left": 5, "top": 5, "right": 5, 
+        "bottom": 5}` to specify padding for each side of the visualization.  __Default 
+        value__: `5`
+    resolve : Resolve
+        Scale, axis, and legend resolutions for facets.
+    title : anyOf(string, TitleParams)
+        Title for the plot.
+    transform : List(Transform)
+        An array of data transformations such as filter and new field calculation.
     """
-    _schema = {'$ref': '#/definitions/TopLevelExtendedSpec'}
+    _schema = {'$ref': '#/definitions/TopLevelFacetSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(TopLevelExtendedSpec, self).__init__(*args, **kwds)
+    def __init__(self, data=Undefined, facet=Undefined, spec=Undefined, autosize=Undefined,
+                 background=Undefined, config=Undefined, datasets=Undefined, description=Undefined,
+                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
+                 transform=Undefined, **kwds):
+        super(TopLevelFacetSpec, self).__init__(data=data, facet=facet, spec=spec, autosize=autosize,
+                                                background=background, config=config, datasets=datasets,
+                                                description=description, name=name, padding=padding,
+                                                resolve=resolve, title=title, transform=transform,
+                                                **kwds)
+
+
+class TopLevelFacetedUnitSpec(VegaLiteSchema):
+    """TopLevelFacetedUnitSpec schema wrapper
+    
+    Mapping(required=[data, mark])
+    
+    Attributes
+    ----------
+    data : Data
+        An object describing the data source
+    mark : AnyMark
+        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
+         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark 
+        definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
+    autosize : anyOf(AutosizeType, AutoSizeParams)
+        Sets how the visualization size should be determined. If a string, should be one of 
+        `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for 
+        content sizing and automatic resizing. `"fit"` is only supported for single and 
+        layered views that don't use `rangeStep`.  __Default value__: `pad`
+    background : string
+        CSS color property to use as the background of visualization.  __Default value:__ 
+        none (transparent)
+    config : Config
+        Vega-Lite configuration object.  This property can only be defined at the top-level 
+        of a specification.
+    datasets : Datasets
+        A global data store for named datasets. This is a mapping from names to inline 
+        datasets. This can be an array of objects or primitive values or a string. Arrays of
+         primitive values are ingested as objects with a `data` property.
+    description : string
+        Description of this mark for commenting purpose.
+    encoding : EncodingWithFacet
+        A key-value mapping between encoding channels and definition of fields.
+    height : float
+        The height of a visualization.  __Default value:__ - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
+        `"fit"` or its y-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will
+         be the value of 
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - 
+        For y-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
+        value or unspecified, the height is [determined by the range step, paddings, and the
+         cardinality of the field mapped to 
+        y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the
+         `rangeStep` is `null`, the height will be the value of 
+        [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config). - If
+         no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.  
+        __Note__: For plots with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
+        represents the height of a single view.  __See also:__ The documentation for [width 
+        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
+    name : string
+        Name of the visualization for later reference.
+    padding : Padding
+        The default visualization padding, in pixels, from the edge of the visualization 
+        canvas to the data rectangle.  If a number, specifies padding for all sides. If an 
+        object, the value should have the format `{"left": 5, "top": 5, "right": 5, 
+        "bottom": 5}` to specify padding for each side of the visualization.  __Default 
+        value__: `5`
+    projection : Projection
+        An object defining properties of geographic projection.  Works with `"geoshape"` 
+        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"` 
+        channels.
+    selection : Mapping(required=[])
+        A key-value mapping between selection names and definitions.
+    title : anyOf(string, TitleParams)
+        Title for the plot.
+    transform : List(Transform)
+        An array of data transformations such as filter and new field calculation.
+    width : float
+        The width of a visualization.  __Default value:__ This will be determined by the 
+        following rules:  - If a view's 
+        [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is 
+        `"fit"` or its x-channel has a [continuous 
+        scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the width will 
+        be the value of 
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - For
+         x-axis with a band or point scale: if 
+        [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric 
+        value or unspecified, the width is [determined by the range step, paddings, and the 
+        cardinality of the field mapped to 
+        x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).   Otherwise, if 
+        the `rangeStep` is `null`, the width will be the value of 
+        [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config). - If 
+        no field is mapped to `x` channel, the `width` will be the value of 
+        [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height)
+         for `text` mark and the value of `rangeStep` for other marks.  __Note:__ For plots 
+        with [`row` and `column` 
+        channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
+        represents the width of a single view.  __See also:__ The documentation for [width 
+        and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
+    """
+    _schema = {'$ref': '#/definitions/TopLevelFacetedUnitSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, data=Undefined, mark=Undefined, autosize=Undefined, background=Undefined,
+                 config=Undefined, datasets=Undefined, description=Undefined, encoding=Undefined,
+                 height=Undefined, name=Undefined, padding=Undefined, projection=Undefined,
+                 selection=Undefined, title=Undefined, transform=Undefined, width=Undefined, **kwds):
+        super(TopLevelFacetedUnitSpec, self).__init__(data=data, mark=mark, autosize=autosize,
+                                                      background=background, config=config,
+                                                      datasets=datasets, description=description,
+                                                      encoding=encoding, height=height, name=name,
+                                                      padding=padding, projection=projection,
+                                                      selection=selection, title=title,
+                                                      transform=transform, width=width, **kwds)
 
 
 class TopoDataFormat(VegaLiteSchema):
