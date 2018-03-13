@@ -165,7 +165,21 @@ method, to remove these values from the dataset:
     alt.Chart(cars).mark_point().encode(
         alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20))),
         y='Horsepower:Q'
-    ).transform_filter(datum.Acceleration < 15)
+    ).transform_filter(datum.Acceleration < 20)
+
+Finally, if you have interactive scales in your plot, this filtration of
+out-of-chart data happens automatically:
+
+
+.. altair-plot::
+
+    from altair.expr import datum
+
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20))),
+        y='Horsepower:Q'
+    ).interactive()
+
 
 Some combination of filtering and clamping is usually suitable for adjusting
 of axis limits.
