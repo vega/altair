@@ -76,3 +76,9 @@ def test_json_reprs():
 def test_to_dict():
     ex = (datum.xxx * 2 > datum.yyy)
     assert ex.to_dict() == repr(ex)
+
+
+def test_copy():
+    ex = datum.xxx * 2 > abs(datum.yyy)
+    ex_copy = ex.copy()
+    assert ex.to_dict() == ex_copy.to_dict()
