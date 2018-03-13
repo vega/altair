@@ -89,11 +89,11 @@ class Expression(SchemaBase):
 
     def __pow__(self, other):
         # "**" Javascript operator is not supported in all browsers
-        return FunctionExpression('pow', self, other)
+        return FunctionExpression('pow', (self, other))
 
     def __rpow__(self, other):
         # "**" Javascript operator is not supported in all browsers
-        return FunctionExpression('pow', other, self)
+        return FunctionExpression('pow', (other, self))
 
     def __neg__(self):
         return UnaryExpression('-', self)
@@ -122,7 +122,7 @@ class Expression(SchemaBase):
         return BinaryExpression("<=", self, other)
 
     def __abs__(self):
-        return FunctionExpression('abs', self)
+        return FunctionExpression('abs', (self,))
 
     # logical operators
 
@@ -144,8 +144,7 @@ class Expression(SchemaBase):
 
 class UnaryExpression(Expression):
     def __init__(self, op, val):
-        self.op = op
-        self.val = val
+        super(UnaryExpression, self).__init__(op=op, val=val)
 
     def __repr__(self):
         return "({op}{val})".format(op=self.op, val=_js_repr(self.val))
@@ -153,9 +152,7 @@ class UnaryExpression(Expression):
 
 class BinaryExpression(Expression):
     def __init__(self, op, lhs, rhs):
-        self.op = op
-        self.lhs = lhs
-        self.rhs = rhs
+        super(BinaryExpression, self).__init__(op=op, lhs=lhs, rhs=rhs)
 
     def __repr__(self):
         return "({lhs} {op} {rhs})".format(op=self.op,
@@ -164,9 +161,8 @@ class BinaryExpression(Expression):
 
 
 class FunctionExpression(Expression):
-    def __init__(self, name, *args):
-        self.name = name
-        self.args = args
+    def __init__(self, name, args):
+        super(FunctionExpression, self).__init__(name=name, args=args)
 
     def __repr__(self):
         args = ','.join(_js_repr(arg) for arg in self.args)
@@ -175,9 +171,8 @@ class FunctionExpression(Expression):
 
 class ConstExpression(Expression):
     def __init__(self, name, doc):
-        self.name = name
-        self.doc = doc
         self.__doc__ = """{0}: {1}""".format(name, doc)
+        super(ConstExpression, self).__init__(name=name, doc=doc)
 
     def __repr__(self):
         return str(self.name)
@@ -185,7 +180,7 @@ class ConstExpression(Expression):
 
 class ValueExpression(Expression):
     def __init__(self, name):
-        self.name = name
+        super(ValueExpression, self).__init__(name=name)
 
     def __repr__(self):
         return "datum.{0}".format(self.name)

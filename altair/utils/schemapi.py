@@ -207,7 +207,7 @@ class SchemaBase(object):
         def _todict(val):
             if isinstance(val, SchemaBase):
                 return val.to_dict(validate=sub_validate, context=context)
-            elif isinstance(val, list):
+            elif isinstance(val, (list, tuple)):
                 return [_todict(v) for v in val]
             elif isinstance(val, dict):
                 return {k: _todict(v) for k, v in val.items()
