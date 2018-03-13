@@ -19,8 +19,8 @@ HTML_TEMPLATE = """
 <html>
 <head>
   <title>Embedding Vega-Lite</title>
-  <script src="https://cdn.jsdelivr.net/npm/vega@3.0.10"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.1.3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@3.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.3"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.0.0"></script>
 </head>
 <body>
