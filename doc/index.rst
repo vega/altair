@@ -30,6 +30,7 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/display
    user_guide/data
    user_guide/encoding
+   user_guide/marks
    user_guide/API
 
 .. toctree::

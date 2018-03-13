@@ -237,34 +237,32 @@ represents the mean of a third quantity, such as acceleration:
 In addition to ``count`` and ``average``, there are a large number of available
 aggregation functions built into Altair; they are listed in the following table:
 
-*TODO: fill-in examples*
-
-=========  ========================================  =================================
-Aggregate  Description                               Example
-=========  ========================================  =================================
-argmin     Index of minimum value
-argmax     Index of maximum value
-average    Arithmetic mean of values
-count      Total number of values
-distinct   Number of distinct values
-max        Maximum value
-mean       Arithmetic mean of values
-median     Median of values
-min        Minimum value
-missing    ??
-q1         First quartile of values
-q3         Third quartile of values
-ci0        ??
-ci1        ??
-stderr     Standard error of values
-stdev      Standard Deviation of values
-stdevp     ??
-sum        Sum of values
-valid      ??
+=========  ===========================================================================  =================================
+Aggregate  Description                                                                  Example
+=========  ===========================================================================  =================================
+argmin     An input data object containing the minimum field value.
+argmax     An input data object containing the maximum field value.
+average    The mean (average) field value. Identical to mean.
+count      The total count of data objects in the group.
+distinct   The count of distinct field values.
+max        The maximum field value.
+mean       The mean (average) field value.
+median     The median field value
+min        The minimum field value.
+missing    The count of null or undefined field values.
+q1         The lower quartile boundary of values.
+q3         The upper quartile boundary of values.
+ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.
+ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.
+stderr     The standard error of the field values.
+stdev      The sample standard deviation of field values.
+stdevp     The population standard deviation of field values.
+sum        The sum of field values.
+valid      The count of field values that are not null or undefined.
 values     ??
-variance   Variance of values
-variancep  ??
-=========  ========================================  =================================
+variance   The sample variance of field values
+variancep  The population variance of field values
+=========  ===========================================================================  =================================
 
 
 .. _shorthand-description:
