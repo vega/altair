@@ -29,8 +29,8 @@ background = alt.Chart(boroughs).mark_geoshape(
 )
 
 labels = alt.Chart(centroids).mark_text().encode(
-    x='cx:lon',
-    y='cy:lat',
+    longitude='cx:Q',
+    latitude='cy:Q',
     text='bLabel:N',
     size=alt.value(8),
     opacity=alt.value(0.6)

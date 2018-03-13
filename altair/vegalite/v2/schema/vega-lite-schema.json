@@ -1,6 +1,25 @@
 {
-  "$ref": "#/definitions/TopLevelExtendedSpec",
   "$schema": "http://json-schema.org/draft-06/schema#",
+  "anyOf": [
+    {
+      "$ref": "#/definitions/TopLevelFacetedUnitSpec"
+    },
+    {
+      "$ref": "#/definitions/TopLevelFacetSpec"
+    },
+    {
+      "$ref": "#/definitions/TopLevelLayerSpec"
+    },
+    {
+      "$ref": "#/definitions/TopLevelRepeatSpec"
+    },
+    {
+      "$ref": "#/definitions/TopLevelVConcatSpec"
+    },
+    {
+      "$ref": "#/definitions/TopLevelHConcatSpec"
+    }
+  ],
   "definitions": {
     "Aggregate": {
       "$ref": "#/definitions/AggregateOp"
@@ -21,6 +40,7 @@
         "q3",
         "ci0",
         "ci1",
+        "stderr",
         "stdev",
         "stdevp",
         "sum",
@@ -954,8 +974,15 @@
           "description": "An object defining properties of the legend.\nIf `null`, the legend for the encoding channel will be removed.\n\n__Default value:__ If undefined, default [legend properties](https://vega.github.io/vega-lite/docs/legend.html) are applied."
         },
         "scale": {
-          "$ref": "#/definitions/Scale",
-          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Scale"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\nIf `null`, the scale will be [disabled and the data value will be directly encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
         },
         "sort": {
           "anyOf": [
@@ -1150,8 +1177,15 @@
           "description": "An object defining properties of the legend.\nIf `null`, the legend for the encoding channel will be removed.\n\n__Default value:__ If undefined, default [legend properties](https://vega.github.io/vega-lite/docs/legend.html) are applied."
         },
         "scale": {
-          "$ref": "#/definitions/Scale",
-          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Scale"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\nIf `null`, the scale will be [disabled and the data value will be directly encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
         },
         "selection": {
           "$ref": "#/definitions/SelectionOperand",
@@ -1590,7 +1624,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Color of the marks – either fill or stroke color based on mark type.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
+          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
         },
         "detail": {
           "anyOf": [
@@ -1606,6 +1640,17 @@
           ],
           "description": "Additional levels of detail for grouping data in aggregate views and\nin line and area marks without mapping data to a specific visual channel."
         },
+        "fill": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkPropFieldDefWithCondition"
+            },
+            {
+              "$ref": "#/definitions/MarkPropValueDefWithCondition"
+            }
+          ],
+          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `fill` channel has higher precedence than `color` and will override color value."
+        },
         "href": {
           "anyOf": [
             {
@@ -1616,6 +1661,26 @@
             }
           ],
           "description": "A URL to load upon mouse click."
+        },
+        "key": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "A data field to use as a unique key for data binding. When a visualization’s data is updated, the key value will be used to match data elements to existing mark instances. Use a key channel to enable object constancy for transitions over dynamic data."
+        },
+        "latitude": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Latitude position of geographically projected marks."
+        },
+        "latitude2": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Latitude-2 position for geographically projected ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
+        },
+        "longitude": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Longitude position of geographically projected marks."
+        },
+        "longitude2": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Longitude-2 position for geographically projected ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
         },
         "opacity": {
           "anyOf": [
@@ -1640,7 +1705,7 @@
               "type": "array"
             }
           ],
-          "description": "Stack order for stacked marks or order of data points in line marks for connected scatter plots.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
+          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes stack order.\n- For line marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
         },
         "shape": {
           "anyOf": [
@@ -1663,6 +1728,17 @@
             }
           ],
           "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is currently unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`."
+        },
+        "stroke": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkPropFieldDefWithCondition"
+            },
+            {
+              "$ref": "#/definitions/MarkPropValueDefWithCondition"
+            }
+          ],
+          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `stroke` channel has higher precedence than `color` and will override color value."
         },
         "text": {
           "anyOf": [
@@ -1706,7 +1782,7 @@
               "$ref": "#/definitions/ValueDef"
             }
           ],
-          "description": "X2 coordinates for ranged  `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
+          "description": "X2 coordinates for ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
         },
         "y": {
           "anyOf": [
@@ -1728,7 +1804,7 @@
               "$ref": "#/definitions/ValueDef"
             }
           ],
-          "description": "Y2 coordinates for ranged  `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
+          "description": "Y2 coordinates for ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
         }
       },
       "type": "object"
@@ -1745,7 +1821,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Color of the marks – either fill or stroke color based on mark type.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
+          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
         },
         "column": {
           "$ref": "#/definitions/FacetFieldDef",
@@ -1765,6 +1841,17 @@
           ],
           "description": "Additional levels of detail for grouping data in aggregate views and\nin line and area marks without mapping data to a specific visual channel."
         },
+        "fill": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkPropFieldDefWithCondition"
+            },
+            {
+              "$ref": "#/definitions/MarkPropValueDefWithCondition"
+            }
+          ],
+          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `fill` channel has higher precedence than `color` and will override color value."
+        },
         "href": {
           "anyOf": [
             {
@@ -1775,6 +1862,26 @@
             }
           ],
           "description": "A URL to load upon mouse click."
+        },
+        "key": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "A data field to use as a unique key for data binding. When a visualization’s data is updated, the key value will be used to match data elements to existing mark instances. Use a key channel to enable object constancy for transitions over dynamic data."
+        },
+        "latitude": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Latitude position of geographically projected marks."
+        },
+        "latitude2": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Latitude-2 position for geographically projected ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
+        },
+        "longitude": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Longitude position of geographically projected marks."
+        },
+        "longitude2": {
+          "$ref": "#/definitions/FieldDef",
+          "description": "Longitude-2 position for geographically projected ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
         },
         "opacity": {
           "anyOf": [
@@ -1799,7 +1906,7 @@
               "type": "array"
             }
           ],
-          "description": "Stack order for stacked marks or order of data points in line marks for connected scatter plots.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
+          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes stack order.\n- For line marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
         },
         "row": {
           "$ref": "#/definitions/FacetFieldDef",
@@ -1827,6 +1934,17 @@
           ],
           "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is currently unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`."
         },
+        "stroke": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/MarkPropFieldDefWithCondition"
+            },
+            {
+              "$ref": "#/definitions/MarkPropValueDefWithCondition"
+            }
+          ],
+          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `stroke` channel has higher precedence than `color` and will override color value."
+        },
         "text": {
           "anyOf": [
             {
@@ -1869,7 +1987,7 @@
               "$ref": "#/definitions/ValueDef"
             }
           ],
-          "description": "X2 coordinates for ranged  `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
+          "description": "X2 coordinates for ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
         },
         "y": {
           "anyOf": [
@@ -1891,9 +2009,83 @@
               "$ref": "#/definitions/ValueDef"
             }
           ],
-          "description": "Y2 coordinates for ranged  `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
+          "description": "Y2 coordinates for ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`."
         }
       },
+      "type": "object"
+    },
+    "LayerSpec": {
+      "additionalProperties": false,
+      "description": "Layer Spec with encoding and projection",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/Data",
+          "description": "An object describing the data source"
+        },
+        "description": {
+          "description": "Description of this mark for commenting purpose.",
+          "type": "string"
+        },
+        "encoding": {
+          "$ref": "#/definitions/Encoding",
+          "description": "A shared key-value mapping between encoding channels and definition of fields in the underlying layers."
+        },
+        "height": {
+          "description": "The height of a visualization.\n\n__Default value:__\n- If a view's [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is `\"fit\"` or its y-channel has a [continuous scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- For y-axis with a band or point scale: if [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric value or unspecified, the height is [determined by the range step, paddings, and the cardinality of the field mapped to y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the `rangeStep` is `null`, the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- If no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.\n\n__Note__: For plots with [`row` and `column` channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this represents the height of a single view.\n\n__See also:__ The documentation for [width and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.",
+          "type": "number"
+        },
+        "layer": {
+          "description": "Layer or single view specifications to be layered.\n\n__Note__: Specifications inside `layer` cannot use `row` and `column` channels as layering facet specifications is not allowed.",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/LayerSpec"
+              },
+              {
+                "$ref": "#/definitions/CompositeUnitSpec"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of the visualization for later reference.",
+          "type": "string"
+        },
+        "projection": {
+          "$ref": "#/definitions/Projection",
+          "description": "An object defining properties of the geographic projection shared by underlying layers."
+        },
+        "resolve": {
+          "$ref": "#/definitions/Resolve",
+          "description": "Scale, axis, and legend resolutions for layers."
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/TitleParams"
+            }
+          ],
+          "description": "Title for the plot."
+        },
+        "transform": {
+          "description": "An array of data transformations such as filter and new field calculation.",
+          "items": {
+            "$ref": "#/definitions/Transform"
+          },
+          "type": "array"
+        },
+        "width": {
+          "description": "The width of a visualization.\n\n__Default value:__ This will be determined by the following rules:\n\n- If a view's [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is `\"fit\"` or its x-channel has a [continuous scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the width will be the value of [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- For x-axis with a band or point scale: if [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric value or unspecified, the width is [determined by the range step, paddings, and the cardinality of the field mapped to x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).   Otherwise, if the `rangeStep` is `null`, the width will be the value of [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- If no field is mapped to `x` channel, the `width` will be the value of [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height) for `text` mark and the value of `rangeStep` for other marks.\n\n__Note:__ For plots with [`row` and `column` channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this represents the width of a single view.\n\n__See also:__ The documentation for [width and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "layer"
+      ],
       "type": "object"
     },
     "FacetFieldDef": {
@@ -2119,8 +2311,15 @@
           "description": "An object defining properties of the legend.\nIf `null`, the legend for the encoding channel will be removed.\n\n__Default value:__ If undefined, default [legend properties](https://vega.github.io/vega-lite/docs/legend.html) are applied."
         },
         "scale": {
-          "$ref": "#/definitions/Scale",
-          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Scale"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\nIf `null`, the scale will be [disabled and the data value will be directly encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
         },
         "sort": {
           "anyOf": [
@@ -2482,71 +2681,6 @@
       ],
       "type": "object"
     },
-    "LayerSpec": {
-      "additionalProperties": false,
-      "properties": {
-        "data": {
-          "$ref": "#/definitions/Data",
-          "description": "An object describing the data source"
-        },
-        "description": {
-          "description": "Description of this mark for commenting purpose.",
-          "type": "string"
-        },
-        "height": {
-          "description": "The height of a visualization.\n\n__Default value:__\n- If a view's [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is `\"fit\"` or its y-channel has a [continuous scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- For y-axis with a band or point scale: if [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric value or unspecified, the height is [determined by the range step, paddings, and the cardinality of the field mapped to y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the `rangeStep` is `null`, the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- If no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.\n\n__Note__: For plots with [`row` and `column` channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this represents the height of a single view.\n\n__See also:__ The documentation for [width and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.",
-          "type": "number"
-        },
-        "layer": {
-          "description": "Layer or single view specifications to be layered.\n\n__Note__: Specifications inside `layer` cannot use `row` and `column` channels as layering facet specifications is not allowed.",
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/LayerSpec"
-              },
-              {
-                "$ref": "#/definitions/CompositeUnitSpec"
-              }
-            ]
-          },
-          "type": "array"
-        },
-        "name": {
-          "description": "Name of the visualization for later reference.",
-          "type": "string"
-        },
-        "resolve": {
-          "$ref": "#/definitions/Resolve",
-          "description": "Scale, axis, and legend resolutions for layers."
-        },
-        "title": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "$ref": "#/definitions/TitleParams"
-            }
-          ],
-          "description": "Title for the plot."
-        },
-        "transform": {
-          "description": "An array of data transformations such as filter and new field calculation.",
-          "items": {
-            "$ref": "#/definitions/Transform"
-          },
-          "type": "array"
-        },
-        "width": {
-          "description": "The width of a visualization.\n\n__Default value:__ This will be determined by the following rules:\n\n- If a view's [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is `\"fit\"` or its x-channel has a [continuous scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the width will be the value of [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- For x-axis with a band or point scale: if [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric value or unspecified, the width is [determined by the range step, paddings, and the cardinality of the field mapped to x-channel](https://vega.github.io/vega-lite/docs/scale.html#band).   Otherwise, if the `rangeStep` is `null`, the width will be the value of [`config.view.width`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- If no field is mapped to `x` channel, the `width` will be the value of [`config.scale.textXRangeStep`](https://vega.github.io/vega-lite/docs/size.html#default-width-and-height) for `text` mark and the value of `rangeStep` for other marks.\n\n__Note:__ For plots with [`row` and `column` channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this represents the width of a single view.\n\n__See also:__ The documentation for [width and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.",
-          "type": "number"
-        }
-      },
-      "required": [
-        "layer"
-      ],
-      "type": "object"
-    },
     "RepeatSpec": {
       "additionalProperties": false,
       "properties": {
@@ -2649,7 +2783,7 @@
         },
         "projection": {
           "$ref": "#/definitions/Projection",
-          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have a channel (one or more of `\"X\"`, `\"X2\"`, `\"Y\"`, `\"Y2\"`) with type `\"latitude\"`, or `\"longitude\"`."
+          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have `latitude` and `\"longitude\"` channels."
         },
         "selection": {
           "additionalProperties": {
@@ -2715,7 +2849,7 @@
         },
         "projection": {
           "$ref": "#/definitions/Projection",
-          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have a channel (one or more of `\"X\"`, `\"X2\"`, `\"Y\"`, `\"Y2\"`) with type `\"latitude\"`, or `\"longitude\"`."
+          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have `latitude` and `\"longitude\"` channels."
         },
         "selection": {
           "additionalProperties": {
@@ -3325,6 +3459,9 @@
         "color": {
           "$ref": "#/definitions/ResolveMode"
         },
+        "fill": {
+          "$ref": "#/definitions/ResolveMode"
+        },
         "opacity": {
           "$ref": "#/definitions/ResolveMode"
         },
@@ -3332,6 +3469,9 @@
           "$ref": "#/definitions/ResolveMode"
         },
         "size": {
+          "$ref": "#/definitions/ResolveMode"
+        },
+        "stroke": {
           "$ref": "#/definitions/ResolveMode"
         }
       },
@@ -4220,8 +4360,15 @@
           "description": "__Required.__ A string defining the name of the field from which to pull a data value\nor an object defining iterated values from the [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.\n\n__Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested objects (e.g., `\"field\": \"foo.bar\"` and `\"field\": \"foo['bar']\"`).\nIf field names contain dots or brackets but are not nested, you can use `\\\\` to escape dots and brackets (e.g., `\"a\\\\.b\"` and `\"a\\\\[0\\\\]\"`).\nSee more details about escaping in the [field documentation](https://vega.github.io/vega-lite/docs/field.html).\n\n__Note:__ `field` is not required if `aggregate` is `count`."
         },
         "scale": {
-          "$ref": "#/definitions/Scale",
-          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Scale"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "An object defining properties of the channel's scale, which is the function that transforms values in the data domain (numbers, dates, strings, etc) to visual values (pixels, colors, sizes) of the encoding channels.\n\nIf `null`, the scale will be [disabled and the data value will be directly encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).\n\n__Default value:__ If undefined, default [scale properties](https://vega.github.io/vega-lite/docs/scale.html) are applied."
         },
         "sort": {
           "anyOf": [
@@ -4930,6 +5077,9 @@
         "color": {
           "$ref": "#/definitions/ResolveMode"
         },
+        "fill": {
+          "$ref": "#/definitions/ResolveMode"
+        },
         "opacity": {
           "$ref": "#/definitions/ResolveMode"
         },
@@ -4937,6 +5087,9 @@
           "$ref": "#/definitions/ResolveMode"
         },
         "size": {
+          "$ref": "#/definitions/ResolveMode"
+        },
+        "stroke": {
           "$ref": "#/definitions/ResolveMode"
         },
         "x": {
@@ -5081,15 +5234,22 @@
         "y",
         "x2",
         "y2",
+        "longitude",
+        "latitude",
+        "longitude2",
+        "latitude2",
         "row",
         "column",
+        "color",
+        "fill",
+        "stroke",
         "size",
         "shape",
-        "color",
         "opacity",
         "text",
         "tooltip",
-        "href"
+        "href",
+        "key"
       ],
       "type": "string"
     },
@@ -5732,7 +5892,7 @@
       ],
       "type": "object"
     },
-    "TopLevel<FacetedUnitSpec>": {
+    "TopLevelLayerSpec": {
       "additionalProperties": false,
       "properties": {
         "$schema": {
@@ -5772,16 +5932,26 @@
           "type": "string"
         },
         "encoding": {
-          "$ref": "#/definitions/EncodingWithFacet",
-          "description": "A key-value mapping between encoding channels and definition of fields."
+          "$ref": "#/definitions/Encoding",
+          "description": "A shared key-value mapping between encoding channels and definition of fields in the underlying layers."
         },
         "height": {
           "description": "The height of a visualization.\n\n__Default value:__\n- If a view's [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is `\"fit\"` or its y-channel has a [continuous scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- For y-axis with a band or point scale: if [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric value or unspecified, the height is [determined by the range step, paddings, and the cardinality of the field mapped to y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the `rangeStep` is `null`, the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- If no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.\n\n__Note__: For plots with [`row` and `column` channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this represents the height of a single view.\n\n__See also:__ The documentation for [width and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.",
           "type": "number"
         },
-        "mark": {
-          "$ref": "#/definitions/AnyMark",
-          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n* `\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
+        "layer": {
+          "description": "Layer or single view specifications to be layered.\n\n__Note__: Specifications inside `layer` cannot use `row` and `column` channels as layering facet specifications is not allowed.",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/LayerSpec"
+              },
+              {
+                "$ref": "#/definitions/CompositeUnitSpec"
+              }
+            ]
+          },
+          "type": "array"
         },
         "name": {
           "description": "Name of the visualization for later reference.",
@@ -5793,14 +5963,11 @@
         },
         "projection": {
           "$ref": "#/definitions/Projection",
-          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have a channel (one or more of `\"X\"`, `\"X2\"`, `\"Y\"`, `\"Y2\"`) with type `\"latitude\"`, or `\"longitude\"`."
+          "description": "An object defining properties of the geographic projection shared by underlying layers."
         },
-        "selection": {
-          "additionalProperties": {
-            "$ref": "#/definitions/SelectionDef"
-          },
-          "description": "A key-value mapping between selection names and definitions.",
-          "type": "object"
+        "resolve": {
+          "$ref": "#/definitions/Resolve",
+          "description": "Scale, axis, and legend resolutions for layers."
         },
         "title": {
           "anyOf": [
@@ -5826,11 +5993,258 @@
         }
       },
       "required": [
-        "mark"
+        "layer"
       ],
       "type": "object"
     },
-    "TopLevel<FacetSpec>": {
+    "TopLevelHConcatSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
+          "format": "uri",
+          "type": "string"
+        },
+        "autosize": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AutosizeType"
+            },
+            {
+              "$ref": "#/definitions/AutoSizeParams"
+            }
+          ],
+          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n`\"fit\"` is only supported for single and layered views that don't use `rangeStep`.\n\n__Default value__: `pad`"
+        },
+        "background": {
+          "description": "CSS color property to use as the background of visualization.\n\n__Default value:__ none (transparent)",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/Config",
+          "description": "Vega-Lite configuration object.  This property can only be defined at the top-level of a specification."
+        },
+        "data": {
+          "$ref": "#/definitions/Data",
+          "description": "An object describing the data source"
+        },
+        "datasets": {
+          "$ref": "#/definitions/Datasets",
+          "description": "A global data store for named datasets. This is a mapping from names to inline datasets.\nThis can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
+        },
+        "description": {
+          "description": "Description of this mark for commenting purpose.",
+          "type": "string"
+        },
+        "hconcat": {
+          "description": "A list of views that should be concatenated and put into a row.",
+          "items": {
+            "$ref": "#/definitions/Spec"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of the visualization for later reference.",
+          "type": "string"
+        },
+        "padding": {
+          "$ref": "#/definitions/Padding",
+          "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle.  If a number, specifies padding for all sides.\nIf an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
+        },
+        "resolve": {
+          "$ref": "#/definitions/Resolve",
+          "description": "Scale, axis, and legend resolutions for horizontally concatenated charts."
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/TitleParams"
+            }
+          ],
+          "description": "Title for the plot."
+        },
+        "transform": {
+          "description": "An array of data transformations such as filter and new field calculation.",
+          "items": {
+            "$ref": "#/definitions/Transform"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "hconcat"
+      ],
+      "type": "object"
+    },
+    "TopLevelRepeatSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
+          "format": "uri",
+          "type": "string"
+        },
+        "autosize": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AutosizeType"
+            },
+            {
+              "$ref": "#/definitions/AutoSizeParams"
+            }
+          ],
+          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n`\"fit\"` is only supported for single and layered views that don't use `rangeStep`.\n\n__Default value__: `pad`"
+        },
+        "background": {
+          "description": "CSS color property to use as the background of visualization.\n\n__Default value:__ none (transparent)",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/Config",
+          "description": "Vega-Lite configuration object.  This property can only be defined at the top-level of a specification."
+        },
+        "data": {
+          "$ref": "#/definitions/Data",
+          "description": "An object describing the data source"
+        },
+        "datasets": {
+          "$ref": "#/definitions/Datasets",
+          "description": "A global data store for named datasets. This is a mapping from names to inline datasets.\nThis can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
+        },
+        "description": {
+          "description": "Description of this mark for commenting purpose.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the visualization for later reference.",
+          "type": "string"
+        },
+        "padding": {
+          "$ref": "#/definitions/Padding",
+          "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle.  If a number, specifies padding for all sides.\nIf an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
+        },
+        "repeat": {
+          "$ref": "#/definitions/Repeat",
+          "description": "An object that describes what fields should be repeated into views that are laid out as a `row` or `column`."
+        },
+        "resolve": {
+          "$ref": "#/definitions/Resolve",
+          "description": "Scale and legend resolutions for repeated charts."
+        },
+        "spec": {
+          "$ref": "#/definitions/Spec"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/TitleParams"
+            }
+          ],
+          "description": "Title for the plot."
+        },
+        "transform": {
+          "description": "An array of data transformations such as filter and new field calculation.",
+          "items": {
+            "$ref": "#/definitions/Transform"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "repeat",
+        "spec"
+      ],
+      "type": "object"
+    },
+    "TopLevelVConcatSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
+          "format": "uri",
+          "type": "string"
+        },
+        "autosize": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AutosizeType"
+            },
+            {
+              "$ref": "#/definitions/AutoSizeParams"
+            }
+          ],
+          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n`\"fit\"` is only supported for single and layered views that don't use `rangeStep`.\n\n__Default value__: `pad`"
+        },
+        "background": {
+          "description": "CSS color property to use as the background of visualization.\n\n__Default value:__ none (transparent)",
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#/definitions/Config",
+          "description": "Vega-Lite configuration object.  This property can only be defined at the top-level of a specification."
+        },
+        "data": {
+          "$ref": "#/definitions/Data",
+          "description": "An object describing the data source"
+        },
+        "datasets": {
+          "$ref": "#/definitions/Datasets",
+          "description": "A global data store for named datasets. This is a mapping from names to inline datasets.\nThis can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
+        },
+        "description": {
+          "description": "Description of this mark for commenting purpose.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the visualization for later reference.",
+          "type": "string"
+        },
+        "padding": {
+          "$ref": "#/definitions/Padding",
+          "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle.  If a number, specifies padding for all sides.\nIf an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
+        },
+        "resolve": {
+          "$ref": "#/definitions/Resolve",
+          "description": "Scale, axis, and legend resolutions for vertically concatenated charts."
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/TitleParams"
+            }
+          ],
+          "description": "Title for the plot."
+        },
+        "transform": {
+          "description": "An array of data transformations such as filter and new field calculation.",
+          "items": {
+            "$ref": "#/definitions/Transform"
+          },
+          "type": "array"
+        },
+        "vconcat": {
+          "description": "A list of views that should be concatenated and put into a column.",
+          "items": {
+            "$ref": "#/definitions/Spec"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "vconcat"
+      ],
+      "type": "object"
+    },
+    "TopLevelFacetSpec": {
       "additionalProperties": false,
       "properties": {
         "$schema": {
@@ -5916,12 +6330,13 @@
         }
       },
       "required": [
+        "data",
         "facet",
         "spec"
       ],
       "type": "object"
     },
-    "TopLevel<HConcatSpec>": {
+    "TopLevelFacetedUnitSpec": {
       "additionalProperties": false,
       "properties": {
         "$schema": {
@@ -5960,105 +6375,17 @@
           "description": "Description of this mark for commenting purpose.",
           "type": "string"
         },
-        "hconcat": {
-          "description": "A list of views that should be concatenated and put into a row.",
-          "items": {
-            "$ref": "#/definitions/Spec"
-          },
-          "type": "array"
-        },
-        "name": {
-          "description": "Name of the visualization for later reference.",
-          "type": "string"
-        },
-        "padding": {
-          "$ref": "#/definitions/Padding",
-          "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle.  If a number, specifies padding for all sides.\nIf an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
-        },
-        "resolve": {
-          "$ref": "#/definitions/Resolve",
-          "description": "Scale, axis, and legend resolutions for horizontally concatenated charts."
-        },
-        "title": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "$ref": "#/definitions/TitleParams"
-            }
-          ],
-          "description": "Title for the plot."
-        },
-        "transform": {
-          "description": "An array of data transformations such as filter and new field calculation.",
-          "items": {
-            "$ref": "#/definitions/Transform"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "hconcat"
-      ],
-      "type": "object"
-    },
-    "TopLevel<LayerSpec>": {
-      "additionalProperties": false,
-      "properties": {
-        "$schema": {
-          "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
-          "format": "uri",
-          "type": "string"
-        },
-        "autosize": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/AutosizeType"
-            },
-            {
-              "$ref": "#/definitions/AutoSizeParams"
-            }
-          ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n`\"fit\"` is only supported for single and layered views that don't use `rangeStep`.\n\n__Default value__: `pad`"
-        },
-        "background": {
-          "description": "CSS color property to use as the background of visualization.\n\n__Default value:__ none (transparent)",
-          "type": "string"
-        },
-        "config": {
-          "$ref": "#/definitions/Config",
-          "description": "Vega-Lite configuration object.  This property can only be defined at the top-level of a specification."
-        },
-        "data": {
-          "$ref": "#/definitions/Data",
-          "description": "An object describing the data source"
-        },
-        "datasets": {
-          "$ref": "#/definitions/Datasets",
-          "description": "A global data store for named datasets. This is a mapping from names to inline datasets.\nThis can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
-        },
-        "description": {
-          "description": "Description of this mark for commenting purpose.",
-          "type": "string"
+        "encoding": {
+          "$ref": "#/definitions/EncodingWithFacet",
+          "description": "A key-value mapping between encoding channels and definition of fields."
         },
         "height": {
           "description": "The height of a visualization.\n\n__Default value:__\n- If a view's [`autosize`](https://vega.github.io/vega-lite/docs/size.html#autosize) type is `\"fit\"` or its y-channel has a [continuous scale](https://vega.github.io/vega-lite/docs/scale.html#continuous), the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- For y-axis with a band or point scale: if [`rangeStep`](https://vega.github.io/vega-lite/docs/scale.html#band) is a numeric value or unspecified, the height is [determined by the range step, paddings, and the cardinality of the field mapped to y-channel](https://vega.github.io/vega-lite/docs/scale.html#band). Otherwise, if the `rangeStep` is `null`, the height will be the value of [`config.view.height`](https://vega.github.io/vega-lite/docs/spec.html#config).\n- If no field is mapped to `y` channel, the `height` will be the value of `rangeStep`.\n\n__Note__: For plots with [`row` and `column` channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this represents the height of a single view.\n\n__See also:__ The documentation for [width and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.",
           "type": "number"
         },
-        "layer": {
-          "description": "Layer or single view specifications to be layered.\n\n__Note__: Specifications inside `layer` cannot use `row` and `column` channels as layering facet specifications is not allowed.",
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/LayerSpec"
-              },
-              {
-                "$ref": "#/definitions/CompositeUnitSpec"
-              }
-            ]
-          },
-          "type": "array"
+        "mark": {
+          "$ref": "#/definitions/AnyMark",
+          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n* `\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
         },
         "name": {
           "description": "Name of the visualization for later reference.",
@@ -6068,9 +6395,16 @@
           "$ref": "#/definitions/Padding",
           "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle.  If a number, specifies padding for all sides.\nIf an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
         },
-        "resolve": {
-          "$ref": "#/definitions/Resolve",
-          "description": "Scale, axis, and legend resolutions for layers."
+        "projection": {
+          "$ref": "#/definitions/Projection",
+          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have `latitude` and `\"longitude\"` channels."
+        },
+        "selection": {
+          "additionalProperties": {
+            "$ref": "#/definitions/SelectionDef"
+          },
+          "description": "A key-value mapping between selection names and definitions.",
+          "type": "object"
         },
         "title": {
           "anyOf": [
@@ -6096,196 +6430,10 @@
         }
       },
       "required": [
-        "layer"
+        "data",
+        "mark"
       ],
       "type": "object"
-    },
-    "TopLevel<RepeatSpec>": {
-      "additionalProperties": false,
-      "properties": {
-        "$schema": {
-          "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
-          "format": "uri",
-          "type": "string"
-        },
-        "autosize": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/AutosizeType"
-            },
-            {
-              "$ref": "#/definitions/AutoSizeParams"
-            }
-          ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n`\"fit\"` is only supported for single and layered views that don't use `rangeStep`.\n\n__Default value__: `pad`"
-        },
-        "background": {
-          "description": "CSS color property to use as the background of visualization.\n\n__Default value:__ none (transparent)",
-          "type": "string"
-        },
-        "config": {
-          "$ref": "#/definitions/Config",
-          "description": "Vega-Lite configuration object.  This property can only be defined at the top-level of a specification."
-        },
-        "data": {
-          "$ref": "#/definitions/Data",
-          "description": "An object describing the data source"
-        },
-        "datasets": {
-          "$ref": "#/definitions/Datasets",
-          "description": "A global data store for named datasets. This is a mapping from names to inline datasets.\nThis can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
-        },
-        "description": {
-          "description": "Description of this mark for commenting purpose.",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name of the visualization for later reference.",
-          "type": "string"
-        },
-        "padding": {
-          "$ref": "#/definitions/Padding",
-          "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle.  If a number, specifies padding for all sides.\nIf an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
-        },
-        "repeat": {
-          "$ref": "#/definitions/Repeat",
-          "description": "An object that describes what fields should be repeated into views that are laid out as a `row` or `column`."
-        },
-        "resolve": {
-          "$ref": "#/definitions/Resolve",
-          "description": "Scale and legend resolutions for repeated charts."
-        },
-        "spec": {
-          "$ref": "#/definitions/Spec"
-        },
-        "title": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "$ref": "#/definitions/TitleParams"
-            }
-          ],
-          "description": "Title for the plot."
-        },
-        "transform": {
-          "description": "An array of data transformations such as filter and new field calculation.",
-          "items": {
-            "$ref": "#/definitions/Transform"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "repeat",
-        "spec"
-      ],
-      "type": "object"
-    },
-    "TopLevel<VConcatSpec>": {
-      "additionalProperties": false,
-      "properties": {
-        "$schema": {
-          "description": "URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless you have a reason to change this, use `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property allows automatic validation and autocomplete in editors that support JSON schema.",
-          "format": "uri",
-          "type": "string"
-        },
-        "autosize": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/AutosizeType"
-            },
-            {
-              "$ref": "#/definitions/AutoSizeParams"
-            }
-          ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n`\"fit\"` is only supported for single and layered views that don't use `rangeStep`.\n\n__Default value__: `pad`"
-        },
-        "background": {
-          "description": "CSS color property to use as the background of visualization.\n\n__Default value:__ none (transparent)",
-          "type": "string"
-        },
-        "config": {
-          "$ref": "#/definitions/Config",
-          "description": "Vega-Lite configuration object.  This property can only be defined at the top-level of a specification."
-        },
-        "data": {
-          "$ref": "#/definitions/Data",
-          "description": "An object describing the data source"
-        },
-        "datasets": {
-          "$ref": "#/definitions/Datasets",
-          "description": "A global data store for named datasets. This is a mapping from names to inline datasets.\nThis can be an array of objects or primitive values or a string. Arrays of primitive values are ingested as objects with a `data` property."
-        },
-        "description": {
-          "description": "Description of this mark for commenting purpose.",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name of the visualization for later reference.",
-          "type": "string"
-        },
-        "padding": {
-          "$ref": "#/definitions/Padding",
-          "description": "The default visualization padding, in pixels, from the edge of the visualization canvas to the data rectangle.  If a number, specifies padding for all sides.\nIf an object, the value should have the format `{\"left\": 5, \"top\": 5, \"right\": 5, \"bottom\": 5}` to specify padding for each side of the visualization.\n\n__Default value__: `5`"
-        },
-        "resolve": {
-          "$ref": "#/definitions/Resolve",
-          "description": "Scale, axis, and legend resolutions for vertically concatenated charts."
-        },
-        "title": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "$ref": "#/definitions/TitleParams"
-            }
-          ],
-          "description": "Title for the plot."
-        },
-        "transform": {
-          "description": "An array of data transformations such as filter and new field calculation.",
-          "items": {
-            "$ref": "#/definitions/Transform"
-          },
-          "type": "array"
-        },
-        "vconcat": {
-          "description": "A list of views that should be concatenated and put into a column.",
-          "items": {
-            "$ref": "#/definitions/Spec"
-          },
-          "type": "array"
-        }
-      },
-      "required": [
-        "vconcat"
-      ],
-      "type": "object"
-    },
-    "TopLevelExtendedSpec": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/TopLevel<FacetedUnitSpec>"
-        },
-        {
-          "$ref": "#/definitions/TopLevel<LayerSpec>"
-        },
-        {
-          "$ref": "#/definitions/TopLevel<FacetSpec>"
-        },
-        {
-          "$ref": "#/definitions/TopLevel<RepeatSpec>"
-        },
-        {
-          "$ref": "#/definitions/TopLevel<VConcatSpec>"
-        },
-        {
-          "$ref": "#/definitions/TopLevel<HConcatSpec>"
-        }
-      ]
     },
     "TopoDataFormat": {
       "additionalProperties": false,

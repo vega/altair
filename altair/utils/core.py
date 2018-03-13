@@ -23,9 +23,7 @@ from .schemapi import SchemaBase, Undefined
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',
                 'quantitative': 'Q',
-                'temporal': 'T',
-                'latitude': 'lat',
-                'longitude': 'lon'}
+                'temporal': 'T'}
 
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
@@ -188,8 +186,8 @@ def parse_shorthand(shorthand):
     # List taken from vega-lite v2 AggregateOp
     valid_aggregates = ["argmax", "argmin", "average", "count", "distinct",
                         "max", "mean", "median", "min", "missing", "q1", "q3",
-                        "ci0", "ci1", "stdev", "stdevp", "sum", "valid",
-                        "values", "variance", "variancep"]
+                        "ci0", "ci1", "stderr", "stdev", "stdevp", "sum",
+                        "valid", "values", "variance", "variancep"]
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
     # build regular expressions

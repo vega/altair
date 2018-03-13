@@ -30,8 +30,8 @@ hover = alt.selection(type='single', on='mouseover', nearest=True,
                       fields=['lat', 'lon'])
 
 base = alt.Chart(capitals).encode(
-    alt.X('lon', type='longitude'),
-    alt.Y('lat', type='latitude')
+    longitude='lon:Q',
+    latitude='lat:Q'
 )
 
 text = base.mark_text(dy=-5, align='right').encode(
