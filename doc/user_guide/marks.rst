@@ -1,9 +1,9 @@
+.. currentmodule:: altair
+
 .. _user-guide-mark:
 
 Marks
 -----
-
-.. currentmodule:: altair
 
 We saw in :ref:`user-guide-encoding` that the :meth:`~Chart.encode` method is
 used to map columns to visual attributes of the plot.

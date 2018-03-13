@@ -1,9 +1,9 @@
+.. currentmodule:: altair
+
 .. _user-guide-encoding:
 
 Encodings
 ---------
-
-.. currentmodule:: altair
 
 The key to creating meaningful visualizations is to map *properties of the data*
 to *visual properties* in order to effectively communicate information.
