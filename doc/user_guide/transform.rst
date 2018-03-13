@@ -1,6 +1,6 @@
 .. currentmodule:: altair
 
-.. _data-transformations:
+.. _user-guide-transformations:
 
 Data Transformations
 --------------------

@@ -31,8 +31,11 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/data
    user_guide/encoding
    user_guide/marks
+   user_guide/selections
    user_guide/config
    user_guide/transform
+   user_guide/selections
+   user_guide/compound_charts
    user_guide/API
 
 .. toctree::
