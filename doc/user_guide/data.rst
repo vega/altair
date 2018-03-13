@@ -68,3 +68,7 @@ Similarly, we must also specify the data type when referencing data by URL:
     )
 
 We will further discuss encodings and associated types in :ref:`user-guide-encoding`, next.
+
+Long-form vs. Wide-form Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*TODO*
