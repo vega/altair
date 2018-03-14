@@ -54,7 +54,7 @@ number of charts:
       base.mark_line(),
       base.mark_point(),
       base.mark_rule()
-    )
+    ).interactive()
 
 The output of both of these patterns is a :class:`LayerChart` object, which
 can has properties and methods similar to the :class:`Chart` object.
@@ -118,7 +118,41 @@ and :ref:`facet-chart` for more explanation).
 
 Vertical Concatenation
 ~~~~~~~~~~~~~~~~~~~~~~
-*TODO*
+Similarly to :ref:`hconcat-chart` above, Altair offers vertical concatenation
+via the :func:`vconcat` function or the ``&`` operator.
+
+For example, here we vertically-concatenate two views of the same data,
+with a ``brush`` selection to add interaction:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+    sp500 = data.sp500.url
+
+    brush = alt.selection(type='interval', encodings=['x'])
+
+    upper = alt.Chart(sp500).mark_area().encode(
+        x=alt.X('date:T', scale={'domain': brush.ref()}),
+        y='price:Q'
+    ).properties(
+        width=600,
+        height=200
+    )
+
+    lower = upper.properties(
+        selection=brush,
+        height=60
+    )
+
+    alt.vconcat(upper, lower)
+
+Note that we could just as well have used ``upper & lower`` rather than the
+more verbose ``alt.vconcat(upper, lower)``.
+
+As with horizontally-concatenated charts, keep in mind that for concatenations
+where only one data grouping or encoding is changing in each panel, using
+:ref:`repeat-chart` or :ref:`facet-chart` can be more efficient.
 
 .. _repeat-chart:
 
@@ -130,4 +164,13 @@ Repeated Charts
 
 Faceted Charts
 ~~~~~~~~~~~~~~
+*TODO*
+
+.. _compound-charts-data
+
+Compound Charts and Data Specification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Altair's compound charts give you a couple options about where your data should
+be specified.
+
 *TODO*
