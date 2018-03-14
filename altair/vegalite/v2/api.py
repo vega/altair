@@ -416,8 +416,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.FilterTransform(**kwargs))
 
     @utils.use_signature(core.LookupTransform)
-    def transform_lookup(self, *args, **kwargs):
-        return self._add_transform(core.LookupTransform(*args, **kwargs))
+    def transform_lookup(self, from_=Undefined, **kwargs):
+        if from_ is not Undefined:
+            if 'from' in kwargs:
+                raise ValueError("transform_lookup: both 'from_' and 'from' passed as arguments.")
+            kwargs['from'] = from_
+        return self._add_transform(core.LookupTransform(**kwargs))
 
     @utils.use_signature(core.TimeUnitTransform)
     def transform_timeunit(self, *args, **kwargs):
