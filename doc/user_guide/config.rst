@@ -145,8 +145,18 @@ these limits:
     )
 
 The problem is that the data still exists beyond the scale, and we need to tell
-Altair what to do with this data. One option is to "clamp" the data; that is,
-to adjust it so that data beyond the limits are moved to the limit:
+Altair what to do with this data. One option is to "clip" the data by setting
+the ``"clip"`` property of the mark to True:
+
+.. altair-plot::
+
+    alt.Chart(cars).mark_point(clip=True).encode(
+        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20))),
+        y='Horsepower:Q'
+    )
+
+Another option is to "clamp" the data; that is, to move points beyond the
+limit to the edge of the domain:
 
 .. altair-plot::
 
@@ -155,8 +165,9 @@ to adjust it so that data beyond the limits are moved to the limit:
         y='Horsepower:Q'
     )
 
-Another option is to *filter* the data, using the :meth:`Chart.transform_data`
-method, to remove these values from the dataset:
+Finally, you can address this by filtering the data itself, using the
+:meth:`Chart.transform_filter` method, to remove these points from the
+dataset altogether:
 
 .. altair-plot::
 
@@ -167,21 +178,8 @@ method, to remove these values from the dataset:
         y='Horsepower:Q'
     ).transform_filter(datum.Acceleration < 20)
 
-Finally, if you have interactive scales in your plot, this filtration of
-out-of-chart data happens automatically:
 
-
-.. altair-plot::
-
-    from altair.expr import datum
-
-    alt.Chart(cars).mark_point().encode(
-        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20))),
-        y='Horsepower:Q'
-    ).interactive()
-
-
-Some combination of filtering and clamping is usually suitable for adjusting
+Some combination of these approaches is usually suitable for adjusting
 of axis limits.
 
 
