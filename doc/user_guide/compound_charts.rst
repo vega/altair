@@ -227,7 +227,102 @@ more general in the future.
 
 Faceted Charts
 ~~~~~~~~~~~~~~
-*TODO*
+Like repeated charts, Faceted charts provide a more convenient API for creating
+multiple views of a dataset for a specific type of chart: one where each panel
+contains a different subset of data.
+
+We could do this manually using a filter transform along with a horizontal
+concatenation:
+
+.. altair-plot::
+
+    import altair as alt
+    from altair.expr import datum
+    from vega_datasets import data
+    iris = data.iris.url
+
+    base = alt.Chart(iris).mark_point().encode(
+        x='petalLength:Q',
+        y='petalWidth:Q',
+        color='species:N'
+    ).properties(
+        width=160,
+        height=160
+    )
+
+    chart = alt.hconcat()
+    for species in ['setosa', 'versicolor', 'virginica']:
+        chart |= base.transform_filter(datum.species == species)
+    chart
+
+As with the manual approach to :ref:`repeat-chart`, this is straightforward,
+if a bit verbose.
+
+Using ``alt.facet`` it becomes a bit cleaner:
+
+.. altair-plot::
+
+    chart = alt.Chart(iris).mark_point().encode(
+        x='petalLength:Q',
+        y='petalWidth:Q',
+        color='species:N'
+    ).properties(
+        width=180,
+        height=180
+    ).facet(
+        column='species:N'
+    )
+
+For simple charts like this, there is also a ``column`` encoding channel that
+can give the same results:
+
+.. altair-plot::
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalLength:Q',
+        y='petalWidth:Q',
+        color='species:N',
+        column='species:N'
+    ).properties(
+        width=180,
+        height=180
+    )
+
+The advantage of using ``alt.facet`` is that it can create faceted views of
+more complicated compound charts. For example, here is a faceted view of a
+layered chart with a hover selection:
+
+.. altair-plot::
+
+    hover = alt.selection_single(on='mouseover', nearest=True, empty='none')
+
+    base = alt.Chart().encode(
+        x='petalLength:Q',
+        y='petalWidth:Q',
+        color=alt.condition(hover, 'species:N', alt.value('lightgray'))
+    ).properties(
+        width=180,
+        height=180,
+    )
+
+    chart = base.mark_point().properties(
+        selection=hover
+    )
+
+    chart += base.mark_text(dy=-5).encode(
+        text = 'species:N',
+        opacity = alt.condition(hover, alt.value(1), alt.value(0))
+    )
+
+    chart.facet(
+        data=iris,
+        column='species:N'
+    )
+
+Though each of the above examples have faceted the data across columns,
+faceting across rows (or across rows *and* columns) is supported as
+well.
+
 
 .. _compound-charts-data:
 
