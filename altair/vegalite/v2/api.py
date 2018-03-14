@@ -146,6 +146,36 @@ def selection_single(**kwargs):
     return selection(type='single', **kwargs)
 
 
+@utils.use_signature(core.VgBinding)
+def binding(input, **kwargs):
+    """A generic binding"""
+    return core.VgBinding(input=input, **kwargs)
+
+
+@utils.use_signature(core.VgCheckboxBinding)
+def binding_checkbox(**kwargs):
+    """A checkbox binding"""
+    return core.VgCheckboxBinding(input='checkbox', **kwargs)
+
+
+@utils.use_signature(core.VgRadioBinding)
+def binding_radio(**kwargs):
+    """A radio button binding"""
+    return core.VgRadioBinding(input='radio', **kwargs)
+
+
+@utils.use_signature(core.VgSelectBinding)
+def binding_select(**kwargs):
+    """A select binding"""
+    return core.VgSelectBinding(input='select', **kwargs)
+
+
+@utils.use_signature(core.VgRangeBinding)
+def binding_range(**kwargs):
+    """A range binding"""
+    return core.VgRangeBinding(input='range', **kwargs)
+
+
 def condition(predicate, if_true, if_false, **kwargs):
     """A conditional attribute or encoding
 
