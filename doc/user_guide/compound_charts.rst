@@ -158,7 +158,70 @@ where only one data grouping or encoding is changing in each panel, using
 
 Repeated Charts
 ~~~~~~~~~~~~~~~
-*TODO*
+The :class:`RepeatChart` object provides a convenient interface for a particular
+type of horizontal or vertical concatenation, in which the only difference between
+the concatenated panels is modification of *one or more encodings*.
+
+For example, suppose you would like to create a multi-panel scatter-plot to show
+different projections of a multi-dimensional dataset.
+Let's first create sucha chart manually using ``hconcat`` and ``vconcat``, before
+showing how ``repeat`` can be used to build the chart more efficiently:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris.url
+
+    base = alt.Chart().mark_point().encode(
+        color='species:N'
+    ).properties(
+        width=200,
+        height=200
+    ).interactive()
+
+    chart = alt.vconcat(data=iris)
+    for y_encoding in ['petalLength:Q', 'petalWidth:Q']:
+        row = alt.hconcat()
+        for x_encoding in ['sepalLength:Q', 'sepalWidth:Q']:
+            row |= base.encode(x=x_encoding, y=y_encoding)
+        chart &= row
+    chart
+
+In this example, we explicitly loop over different x and y encodings
+to create a 2 x 2 grid of charts showing different views of the data.
+The code is straightforward, if a bit verbose.
+
+The :class:`RepeatChart` pattern makes this type of chart a bit easier
+to produce:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+    iris = data.iris.url
+
+    alt.Chart(iris).mark_point().encode(
+        alt.X(alt.repeat("column"), type='quantitative'),
+        alt.Y(alt.repeat("row"), type='quantitative'),
+        color='species:N'
+    ).properties(
+        width=200,
+        height=200
+    ).repeat(
+        row=['petalLength', 'petalWidth'],
+        column=['sepalLength', 'sepalWidth']
+    ).interactive()
+
+The :meth:`Chart.repeat` method is the key here: it lets you specify a set of
+encodings for the row and/or column which can be referred to in the chart's
+encoding specification using ``alt.repeat('row')`` or ``alt.repeat('column')``.
+
+Currently ``repeat`` can only be specified for rows and column (not, e.g., for
+layers) and the target can only be encodings (not, e.g., data transforms)
+but there is discussion within the Vega-Lite community about making this pattern
+more general in the future.
 
 .. _facet-chart:
 
@@ -166,7 +229,7 @@ Faceted Charts
 ~~~~~~~~~~~~~~
 *TODO*
 
-.. _compound-charts-data
+.. _compound-charts-data:
 
 Compound Charts and Data Specification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
