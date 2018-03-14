@@ -580,6 +580,20 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
                                     encodings=encodings)
         return copy
 
+    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
+        """Create a facet chart from the current chart.
+
+        Faceted charts require data to be specified at the top level; if data
+        is not specified, the data from the current chart will be used at the
+        top level.
+        """
+        if data is Undefined:
+            data = self.data
+            self = self.copy()
+            self.data = Undefined
+        return FacetChart(self, row=row, column=column, data=data, **kwargs)
+
+
 
 def _check_if_valid_subspec(spec, classname):
     """Check if the spec is a valid sub-spec.
@@ -750,6 +764,19 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
         copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
+    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
+        """Create a facet chart from the current chart.
+
+        Faceted charts require data to be specified at the top level; if data
+        is not specified, the data from the current chart will be used at the
+        top level.
+        """
+        if data is Undefined:
+            data = self.data
+            self = self.copy()
+            self.data = Undefined
+        return FacetChart(self, row=row, column=column, data=data, **kwargs)
+
 
 def layer(*charts, **kwargs):
     """layer multiple charts"""
@@ -777,8 +804,3 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
 
     # TODO: think about the most useful class API here
-
-
-def facet(spec, row=Undefined, column=Undefined, **kwargs):
-    """Create a FacetChart"""
-    return FacetChart(spec=spec, row=row, column=column, **kwargs)
