@@ -738,7 +738,6 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
         copy.layer.append(other)
         return copy
 
-
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
@@ -803,4 +802,24 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             warnings.warn('FacetChart: data should be defined at the top level')
         super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
 
-    # TODO: think about the most useful class API here
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The selection name to use for the axes scales. This name should be
+            unique among all selections within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+        """
+        copy = self.copy()
+        copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
+        return copy
