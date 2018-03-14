@@ -6,7 +6,7 @@ Compound Charts: Layer, HConcat, VConcat, Repeat, Facet
 -------------------------------------------------------
 Along with the basic :class:`Chart` object, Altair provides a number of
 compound plot types that can be used to create stacked, layered, faceted,
-and repeated charts. They are summarized in the following table:
+and repeated charts. They are summarized in the following tables:
 
 ======================  ===============================  ===================  ======================
 class                   functional form                  operator form        reference
@@ -14,9 +14,14 @@ class                   functional form                  operator form        re
 :class:`LayerChart`     ``alt.layer(chart1, chart2)``    ``chart1 + chart2``  :ref:`layer-chart`
 :class:`HConcatChart`   ``alt.hconcat(chart1, chart2)``  ``chart1 | chart2``  :ref:`hconcat-chart`
 :class:`VConcatChart`   ``alt.vconcat(chart1, chart2)``  ``chart1 & chart2``  :ref:`vconcat-chart`
-:class:`RepeatChart`    N/A                              N/A                  :ref:`repeat-chart`
-:class:`FacetChart`     N/A                              N/A                  :ref:`facet-chart`
 ======================  ===============================  ===================  ======================
+
+======================  =============================  ======================
+class                   method form                    reference
+======================  =============================  ======================
+:class:`RepeatChart`    ``chart.repeat(row, column)``  :ref:`repeat-chart`
+:class:`FacetChart`     ``chart.facet(row, column)``   :ref:`facet-chart`
+======================  =============================  ======================
 
 .. _layer-chart:
 
@@ -315,8 +320,8 @@ layered chart with a hover selection:
     )
 
     chart.facet(
-        data=iris,
-        column='species:N'
+        column='species:N',
+        data=iris
     )
 
 Though each of the above examples have faceted the data across columns,
