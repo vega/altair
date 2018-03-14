@@ -131,26 +131,30 @@ temporal      ``T``           a time or date value
 These types can either be expressed in a long-form using the channel encoding
 classes such as :class:`X` and :class:`Y`, or in short-form using the
 :ref:`Shorthand Syntax <shorthand-description>` discussed below.
-For example, the following two means of specifying the type result in identical
-plot specifications:
+For example, the following two methods of specifying the type will lead to
+identical plots:
 
->>> import altair as alt
->>> chart = alt.Chart().encode(
-...             x=alt.X('name', type='quantitative')
-...         )
->>> print(chart.to_json())
-{"encoding": {"x": {"field": "name", "type": "quantitative"}}}
+.. altair-plot::
+   :output: none
 
->>> chart = alt.Chart().encode(
-...             x='name:Q'
-...         )
->>> print(chart.to_json())
-{"encoding": {"x": {"field": "name", "type": "quantitative"}}}
+   alt.Chart(cars).mark_point().encode(
+       x='Acceleration:Q',
+       y='Miles_per_Gallon:Q',
+       color='Origin:N'
+   )
 
-The shorthand form, ``"name:Q"``, is useful for its lack of boilerplate
+.. altair-plot::
+
+  alt.Chart(cars).mark_point().encode(
+      alt.X('Acceleration', type='quantitative'),
+      alt.Y('Miles_per_Gallon', type='quantitative'),
+      alt.Color('Origin', type='nominal')
+  )
+
+The shorthand form, ``x="name:Q"``, is useful for its lack of boilerplate
 when doing quick data explorations. The long-form,
 ``alt.X('name', type='quantitative')``, is useful when doing more fine-tuned
-adustments to the encoding, such as binning, axis and scale properties,
+adjustments to the encoding, such as binning, axis and scale properties,
 or more.
 
 Specifying the correct type for your data is important, as it affects the
@@ -170,9 +174,9 @@ using three vertically-concatenated charts (see :ref:`vconcat`):
    )
 
    alt.vconcat(
-      base.encode(color='Cylinders:Q').properties(title='type=quantitative)'),
-      base.encode(color='Cylinders:O').properties(title='type=ordinal)'),
-      base.encode(color='Cylinders:N').properties(title='type=nominal)'),
+      base.encode(color='Cylinders:Q').properties(title='quantitative'),
+      base.encode(color='Cylinders:O').properties(title='ordinal'),
+      base.encode(color='Cylinders:N').properties(title='nominal'),
    )
 
 The type specification influences the way Altair, via Vega-Lite, decides on
@@ -277,12 +281,12 @@ as well as the aggregate names listed in :ref:`encoding-aggregates`.
 The following table shows examples of the shorthand specification alongside
 the long-form equivalent:
 
-===================  ===================================================
+===================  =======================================================
 Shorthand            Equivalent long-form
-===================  ===================================================
-``x='name'``         ``X('name')``
-``x='name:Q'``       ``X('name', type='quantitative')``
-``x='sum(name)'``    ``X('name', aggregate='sum')``
-``x='sum(name):Q'``  ``X('name', aggregate='sum', type='quantitative')``
-``x='sum(*):Q'``     ``X(aggregate='sum', type='quantitative')``
-===================  ===================================================
+===================  =======================================================
+``x='name'``         ``alt.X('name')``
+``x='name:Q'``       ``alt.X('name', type='quantitative')``
+``x='sum(name)'``    ``alt.X('name', aggregate='sum')``
+``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
+``x='sum(*):Q'``     ``alt.X(aggregate='sum', type='quantitative')``
+===================  =======================================================
