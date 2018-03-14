@@ -605,7 +605,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         _check_if_valid_subspec(spec, 'RepeatChart')
         super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
 
-    def interactive(self):
+    def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
         Parameters
@@ -624,7 +624,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             copy of self, with interactive axes added
         """
         copy = self.copy()
-        copy.spec = copy.spec.interactive()
+        copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
 
@@ -724,7 +724,31 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
         copy.layer.append(other)
         return copy
 
-    # TODO: think about the most useful class API here
+
+    def interactive(self, name=None, bind_x=True, bind_y=True):
+        """Make chart axes scales interactive
+
+        Parameters
+        ----------
+        name : string
+            The selection name to use for the axes scales. This name should be
+            unique among all selections within the chart.
+        bind_x : boolean, default True
+            If true, then bind the interactive scales to the x-axis
+        bind_y : boolean, default True
+            If true, then bind the interactive scales to the y-axis
+
+        Returns
+        -------
+        chart :
+            copy of self, with interactive axes added
+        """
+        if not self.layer:
+            raise ValueError("LayerChart: cannot call interactive() until a "
+                             "layer is defined")
+        copy = self.copy()
+        copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
+        return copy
 
 
 def layer(*charts, **kwargs):
