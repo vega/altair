@@ -159,3 +159,13 @@ def test_savechart(format):
     elif format == 'html':
         content = out.read()
         assert content.startswith('\n<!DOCTYPE html>')
+
+def test_facet_parse():
+    chart = alt.Chart().mark_point().encode(
+        x='x:Q',
+        y='y:Q'
+    )
+    facet = alt.facet(chart, data='data.csv', row='row:N', column='column:O')
+    dct = facet.to_dict()
+    assert dct['facet'] == {'column': {'field': 'column', 'type': 'ordinal'},
+                            'row': {'field': 'row', 'type': 'nominal'}}
