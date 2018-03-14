@@ -765,8 +765,12 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         if facet is Undefined:
             facet = core.FacetMapping()
         if row is not Undefined:
+            if isinstance(row, six.string_types):
+                row = core.FacetFieldDef(**utils.parse_shorthand(row))
             facet['row'] = row
         if column is not Undefined:
+            if isinstance(column, six.string_types):
+                column = core.FacetFieldDef(**utils.parse_shorthand(column))
             facet['column'] = column
         if 'data' not in kwargs:
             warnings.warn('FacetChart: data should be defined at the top level')
