@@ -580,6 +580,20 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
                                     encodings=encodings)
         return copy
 
+    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
+        """Create a facet chart from the current chart.
+
+        Faceted charts require data to be specified at the top level; if data
+        is not specified, the data from the current chart will be used at the
+        top level.
+        """
+        if data is Undefined:
+            data = self.data
+            self = self.copy()
+            self.data = Undefined
+        return FacetChart(self, row=row, column=column, data=data, **kwargs)
+
+
 
 def _check_if_valid_subspec(spec, classname):
     """Check if the spec is a valid sub-spec.
@@ -750,6 +764,19 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
         copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
+    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
+        """Create a facet chart from the current chart.
+
+        Faceted charts require data to be specified at the top level; if data
+        is not specified, the data from the current chart will be used at the
+        top level.
+        """
+        if data is Undefined:
+            data = self.data
+            self = self.copy()
+            self.data = Undefined
+        return FacetChart(self, row=row, column=column, data=data, **kwargs)
+
 
 def layer(*charts, **kwargs):
     """layer multiple charts"""
@@ -765,16 +792,15 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         if facet is Undefined:
             facet = core.FacetMapping()
         if row is not Undefined:
+            if isinstance(row, six.string_types):
+                row = core.FacetFieldDef(**utils.parse_shorthand(row))
             facet['row'] = row
         if column is not Undefined:
+            if isinstance(column, six.string_types):
+                column = core.FacetFieldDef(**utils.parse_shorthand(column))
             facet['column'] = column
         if 'data' not in kwargs:
             warnings.warn('FacetChart: data should be defined at the top level')
         super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
 
     # TODO: think about the most useful class API here
-
-
-def facet(spec, row=Undefined, column=Undefined, **kwargs):
-    """Create a FacetChart"""
-    return FacetChart(spec=spec, row=row, column=column, **kwargs)
