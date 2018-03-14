@@ -418,6 +418,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     @utils.use_signature(core.LookupTransform)
     def transform_lookup(self, from_=Undefined, **kwargs):
         if from_ is not Undefined:
+            if 'from' in kwargs:
+                raise ValueError("transform_lookup: both 'from_' and 'from' passed as arguments.")
             kwargs['from'] = from_
         return self._add_transform(core.LookupTransform(**kwargs))
 
