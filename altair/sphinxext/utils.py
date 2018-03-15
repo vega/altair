@@ -8,25 +8,24 @@ import re
 import sys
 
 
-
-# def create_thumbnail(image_filename, thumb_filename, window_size=(180, 100):
-#     im = Image.open(image_filename)
-#     im_width, im_height = im.size
-#     width, height = window_size
-#     scale = min(im_width // width, im_height // height)
-#     thumb = im.resize((im_width // scale, im_height // scale), Image.ANTIALIAS)
-#     thumb.save(thumb_filename)
-
-
-def create_thumbnail(image_filename, thumb_filename, window_size=(180, 180)):
-    """Create a thumbnailfor a filename"""
+def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):
+    """Create a thumbnail whose shortest dimension matches the window"""
     from PIL import Image
     im = Image.open(image_filename)
-    box = [(im.size[0] - window_size[0]) // 2,
-           (im.size[1] - window_size[1]) // 2,
-           (im.size[0] + window_size[0]) // 2,
-           (im.size[1] + window_size[1]) // 2]
-    im.crop(box).save(thumb_filename)
+    im_width, im_height = im.size
+    width, height = window_size
+
+    width_factor, height_factor = width / im_width, height / im_height
+
+    if width_factor > height_factor:
+        final_width = width
+        final_height = int(im_height * width_factor)
+    else:
+        final_height = height
+        final_width = int(im_width * height_factor)
+
+    thumb = im.resize((final_width, final_height), Image.ANTIALIAS)
+    thumb.save(thumb_filename)
 
 
 class _CatchDisplay(object):

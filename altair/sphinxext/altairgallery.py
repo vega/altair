@@ -70,17 +70,15 @@ The following examples are automatically generated from
 """)
 
 MINIGALLERY_TEMPLATE = jinja2.Template(u"""
-{% for example in examples %}
-.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
-    :target: {{ gallery_dir }}/{{ example.name }}.html
-    :align: center
-    :figclass: minigallery
-    {% if width %}:width: {{ width }}{% endif %}
-
-    {% if titles %}:ref:`gallery_{{ example.name }}`{% endif %}
-{% endfor %}
-
 .. raw:: html
+
+    <div id="showcase">
+      <div class="examples">
+      {% for example in examples %}
+        <a class="preview" href="{{ gallery_dir }}/{{ example.name }}.html" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png)"></a>
+      {% endfor %}
+      </div>
+    </div>
 
    <div style='clear:left;'></div>
 
@@ -203,7 +201,7 @@ class AltairMiniGalleryDirective(Directive):
         if size:
             examples = examples[:size]
 
-        include = MINIGALLERY_TEMPLATE.render(image_dir='/_images',
+        include = MINIGALLERY_TEMPLATE.render(image_dir='/_static',
                                               gallery_dir=gallery_dir,
                                               examples=examples,
                                               titles=titles,
@@ -237,7 +235,7 @@ def main(app):
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
         f.write(GALLERY_TEMPLATE.render(title=gallery_title,
                                         examples=examples,
-                                        image_dir='/_images',
+                                        image_dir='/_static',
                                         gallery_ref=gallery_ref))
 
     # save the images to file
