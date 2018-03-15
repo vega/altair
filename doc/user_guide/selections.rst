@@ -126,21 +126,10 @@ Selection Types: Interval, Single, Multi
 With this interesting example under our belt, let's take a more systematic
 look at some of the types of selections available in Altair.
 For simplicity, we'll use a common chart in all the following examples; a
-simple heat-map based on the ``cars`` dataset:
-
-.. altair-plot::
-
-    alt.Chart(cars).mark_rect().encode(
-        x="Cylinders:O",
-        y="Origin:N",
-        color='count(*):Q'
-    ).properties(
-        width=300,
-        height=180,
-    )
-
+simple heat-map based on the ``cars`` dataset.
 For convenience, let's write a quick Python function that will take a selection
-object and apply it to this chart:
+object and create a chart with the color of the chart elements linked to this
+selection:
 
 .. altair-plot::
     :output: none
@@ -162,7 +151,7 @@ Next we'll use this function to demonstrate the properties of various selections
 
 Interval Selections
 ^^^^^^^^^^^^^^^^^^^
-An interval selection allows you to select points by clicking and dragging.
+An *interval* selection allows you to select chart elements by clicking and dragging.
 You can create such a selection using the :func:`selection_interval` function:
 
 .. altair-plot::
@@ -179,13 +168,77 @@ empty selection contains none of the points:
 
 .. altair-plot::
 
-   interval = alt.selection_interval(encodings=['x'], empty='null')
-   make_example(interval)
+   interval_x = alt.selection_interval(encodings=['x'], empty='none')
+   make_example(interval_x)
+
+A special case of an interval selection is when the interval is bound to the
+chart scales; this is how Altair plots can be made interactive:
+
+.. altair-plot::
+
+    scales = alt.selection_interval(bind='scales')
+
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    ).properties(
+        selection=scales
+    )
+
+Because this is such a common pattern, Altair provides the :meth:`Chart.interactive`
+method which creates such a selection more concisely.
+
 
 Single Selections
 ^^^^^^^^^^^^^^^^^
-*TODO*
+A *single* selection allows you to select a single chart element at a time using
+mouse actions. By default, points are selected on click:
+
+.. altair-plot::
+
+    single = alt.selection_single()
+    make_example(single)
+
+By changing some arguments, we can select points on mouseover rather than on
+click. We can also set the ``nearest`` flag to ``True`` so that the nearest
+point is highlighted:
+
+.. altair-plot::
+
+    single_nearest = alt.selection_single(on='mouseover', nearest=True)
+    make_example(single_nearest)
 
 Multiple Selections
-~~~~~~~~~~~~~~~~~~~
-*TODO*
+^^^^^^^^^^^^^^^^^^^
+A *multi* selection is similar to a *single* selection, but it allows for
+multiple chart objects to be selected at once.
+By default, chart elements can be added to and removed from the selection
+by clicking on them while holding the *shift* key:
+
+.. altair-plot::
+
+    multi = alt.selection_multi()
+    make_example(multi)
+
+In addition to the options seen in :func:`selection_single`, the multi selection
+accepts the ``toggle`` parameter, which controls whether points can be removed
+from the selection once they are added.
+
+For example, here is a plot where you can "paint" the chart objects by hovering
+over them with your mouse:
+
+.. altair-plot::
+
+    multi_mouseover = alt.selection_multi(on='mouseover', toggle=False, empty='none')
+    make_example(multi_mouseover)
+
+Further Examples
+~~~~~~~~~~~~~~~~
+Now that you understand the basics of Altair selections, you might wish to look
+through the :ref:`gallery-category-interactive` section of the example gallery
+for ideas about how they can be applied to more interesting charts.
+
+For more information on how to fine-tune selections, including specifying other
+mouse and keystroke options, see the `Vega-Lite Selection documentation
+<https://vega.github.io/vega-lite/docs/selection.html>`_.
