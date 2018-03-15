@@ -79,9 +79,6 @@ MINIGALLERY_TEMPLATE = jinja2.Template(u"""
       {% endfor %}
       </div>
     </div>
-
-   <div style='clear:left;'></div>
-
 """)
 
 
@@ -178,7 +175,7 @@ class AltairMiniGalleryDirective(Directive):
                    'width': str}
 
     def run(self):
-        size = self.options.get('size', 4)
+        size = self.options.get('size', 15)
         indices = self.options.get('indices', [])
         shuffle = 'shuffle' in self.options
         seed = self.options.get('seed', 42)

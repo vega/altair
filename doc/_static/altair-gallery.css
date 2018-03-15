@@ -49,6 +49,7 @@ div.bottomnav {
   margin: 0;
   padding: 0;
   position: relative;
+  margin-bottom: 10px;
 }
 #showcase:after,
 #showcase:before {
