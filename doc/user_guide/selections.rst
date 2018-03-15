@@ -120,13 +120,70 @@ We can modify the brush definition, and leave the rest of the code unchanged:
 
     chart.encode(x='Acceleration:Q') | chart.encode(x='Miles_per_Gallon:Q')
 
+Selection Types: Interval, Single, Multi
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With this interesting example under our belt, let's take a more systematic
+look at some of the types of selections available in Altair.
+For simplicity, we'll use a common chart in all the following examples; a
+simple heat-map based on the ``cars`` dataset:
+
+.. altair-plot::
+
+    alt.Chart(cars).mark_rect().encode(
+        x="Cylinders:O",
+        y="Origin:N",
+        color='count(*):Q'
+    ).properties(
+        width=300,
+        height=180,
+    )
+
+For convenience, let's write a quick Python function that will take a selection
+object and apply it to this chart:
+
+.. altair-plot::
+    :output: none
+
+    def make_example(selector):
+        cars = data.cars.url
+
+        return alt.Chart(cars).mark_rect().encode(
+            x="Cylinders:O",
+            y="Origin:N",
+            color=alt.condition(selector, 'count(*):Q', alt.value('lightgray'))
+        ).properties(
+            width=300,
+            height=180,
+            selection=selector
+        )
+
+Next we'll use this function to demonstrate the properties of various selections.
 
 Interval Selections
-~~~~~~~~~~~~~~~~~~~
-*TODO*
+^^^^^^^^^^^^^^^^^^^
+An interval selection allows you to select points by clicking and dragging.
+You can create such a selection using the :func:`selection_interval` function:
+
+.. altair-plot::
+
+   interval = alt.selection_interval()
+   make_example(interval)
+
+As you click and drag on the plot, you'll find that your mouse creates a box
+that can be subsequently moved to change the selection.
+
+The :func:`selection_interval` function takes a few additional arguments; for
+example we can bind the interval to only the x-axis, and set it such that the
+empty selection contains none of the points:
+
+.. altair-plot::
+
+   interval = alt.selection_interval(encodings=['x'], empty='null')
+   make_example(interval)
 
 Single Selections
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 *TODO*
 
 Multiple Selections
