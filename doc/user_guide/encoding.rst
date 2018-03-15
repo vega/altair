@@ -15,8 +15,8 @@ channel encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
 .. altair-plot::
 
    import altair as alt
-
-   cars = alt.load_dataset('cars')
+   from vega_datasets import data
+   cars = data.cars()
 
    alt.Chart(cars).mark_point().encode(
        x='Horsepower',
@@ -106,8 +106,8 @@ Facet Channels:
 =======  ================  ============================  ===================================
 Channel  Altair Class      Description                   Example
 =======  ================  ============================  ===================================
-column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_stacked_bar`
-row      :class:`Row`      The row of a faceted plot     :ref:`gallery_trellis_barley`
+column   :class:`Column`   The column of a faceted plot  
+row      :class:`Row`      The row of a faceted plot     
 =======  ================  ============================  ===================================
 
 
@@ -135,7 +135,6 @@ For example, the following two methods of specifying the type will lead to
 identical plots:
 
 .. altair-plot::
-   :output: none
 
    alt.Chart(cars).mark_point().encode(
        x='Acceleration:Q',
