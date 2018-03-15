@@ -47,15 +47,16 @@ The following examples are automatically generated from
 {{ group.grouper }}
 {% for char in group.grouper %}~{% endfor %}
 
-{% for example in group.list %}
-.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
-    :target: {{ example.name }}.html
-    :align: center
-
-    :ref:`gallery_{{ example.name }}`
-{% endfor %}
-
 .. raw:: html
+
+   <span class="gallery">
+   {% for example in group.list %}
+   <a class="imagegroup" href="{{ example.name }}.html">
+     <span class="image" alt="{{ example.title }}" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png);"></span>
+     <span class="image-title">{{ example.title }}</span>
+   </a>
+   {% endfor %}
+   </span>
 
    <div style='clear:both;'></div>
 
@@ -160,6 +161,7 @@ def populate_examples(**kwds):
         if category is None:
             category = 'general'
         example.update({'docstring': docstring,
+                        'title': docstring.strip().split('\n')[0],
                         'code': code,
                         'category': category.title(),
                         'lineno': lineno})

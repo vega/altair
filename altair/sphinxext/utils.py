@@ -8,6 +8,16 @@ import re
 import sys
 
 
+
+# def create_thumbnail(image_filename, thumb_filename, window_size=(180, 100):
+#     im = Image.open(image_filename)
+#     im_width, im_height = im.size
+#     width, height = window_size
+#     scale = min(im_width // width, im_height // height)
+#     thumb = im.resize((im_width // scale, im_height // scale), Image.ANTIALIAS)
+#     thumb.save(thumb_filename)
+
+
 def create_thumbnail(image_filename, thumb_filename, window_size=(180, 180)):
     """Create a thumbnailfor a filename"""
     from PIL import Image

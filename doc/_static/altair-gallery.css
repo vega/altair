@@ -40,3 +40,43 @@ div.section h2 {
 div.bottomnav {
     clear: left;
 }
+
+/* Example Gallery */
+/* Gallery */
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+}
+.gallery .imagegroup {
+  display: inline-block;
+  position: relative;
+  /* Show 4 images per row, each image has 18px horizontal margin */
+  width: calc(25% - 36px);
+  margin: 12px 18px;
+  /* For small screens */
+  min-width: 140px;
+}
+
+.gallery .imagegroup:hover {
+  text-decoration: none;
+}
+.gallery .image {
+  background-size: cover;
+  display: block;
+  width: 100%;
+  /* hack to make height depend on width, golden ratio*/
+  padding-bottom: 75%;
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+  overflow: hidden;
+  transition: background-position 2s;
+}
+.gallery .image:hover {
+  background-position: right bottom;
+}
+
+.gallery .image-title {
+  font-size: .95em;
+}
