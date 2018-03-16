@@ -873,3 +873,24 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         copy = self.copy()
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
+
+
+def topo_feature(url, feature, **kwargs):
+    """A convenience function for extracting features from a topojson url
+    
+    Parameters
+    ----------
+    url : string
+        An URL from which to load the data set.
+     
+    feature : string
+        The name of the TopoJSON object set to convert to a GeoJSON feature collection. For 
+        example, in a map of the world, there may be an object set named `"countries"`. 
+        Using the feature property, we can extract this set and generate a GeoJSON feature 
+        object for each country.
+
+    **kwargs : 
+        additional keywords passed to TopoDataFormat
+    """
+    return core.UrlData(url=url,format=core.TopoDataFormat(type='topojson', 
+                                                         feature=feature, **kwargs))
