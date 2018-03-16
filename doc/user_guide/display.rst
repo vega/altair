@@ -10,27 +10,35 @@ This step of displaying a Vega-Lite or Vega JSON object is encoding in a rendere
 abstraction. This section of the documentation describes renderers and how you
 can use them to display Altair visualizations.
 
-.. note::
+You may need to install an additional Python/npm package to display Altair
+charts for a given frontend user-interface. See instructions for:
+:ref:`display-notebook`, :ref:`display-jupyterlab` and :ref:`display-nteract`.
 
-    You may need to install an additional Python/npm package to display Altair
-    charts for a given frontend user-interface. See instructions for:
-    :ref:`display-notebook`, :ref:`display-jupyterlab` and :ref:`display-nteract`.
+.. _altair-vega-versions:
 
 Vega-Lite/Vega versions
 -----------------------
 
 As of version 2.0, Altair includes support for multiple version of both
-Vega-Lite (2.x and 1.x) and Vega (3.x and 2.x) in a single Python package. See
-:ref:`importing` for details about how to import the different versions of the
-Python APIs. The important point here is that you must have a renderer installed
-for the given version of the Python API you are using, that works with
-frontend user-interface you are using.
+Vega-Lite (2.x and 1.x) and Vega (3.x and 2.x) in a single Python package.
+The default usage, including all examples in this documentation, makes use of
+the newest available versions (Vega-Lite 2.X and Vega 3.X).
 
-.. note::
+The vega-lite version used by default can be found as follows:
 
-  We strongly recommend all users transition to Vega-Lite 2.x and Vega 3.x.
-  These versions support many new features, are more stable, and Altair 2.0
-  works best with them.
+.. code-block:: python
+
+   >>> import altair as alt
+   >>> alt.schema.SCHEMA_VERSION
+   'v2.3.0'
+
+If you wish to use an older version of these libraries, see :ref:`importing`
+for more information. We strongly recommend all users transition to
+Vega-Lite 2.x and Vega 3.x. These versions support many new features, are more
+stable, and Altair 2.0 works best with them.
+
+For all users, the important point here is that you must have a renderer
+installed that works with the appropriate version.
 
 .. _renderers:
 
@@ -111,7 +119,7 @@ To register and enable a new renderer::
 Renderers can also be registered using the `entrypoints`_ API of Python packages.
 For an example, see `ipyvega3`_.
 
-This same ``renderer`` objects exists separately on all of the Python APIs 
+This same ``renderer`` objects exists separately on all of the Python APIs
 for Vega-Lite/Vega described in :ref:`importing`.
 
 .. _display-notebook:
@@ -197,6 +205,8 @@ nteract
 nteract will render Vega-Lite 1.x and Vega out of the box. Support for Vega-Lite 2.x
 and Vega 3.x will likely be released soon.
 
+.. _data-transformers:
+
 Data transformers
 -----------------
 
@@ -250,7 +260,7 @@ Convert a Dataframe to inline JSON values before visualization::
 
     to_values(data):
 
-Piping 
+Piping
 ~~~~~~
 
 Multiple data transformers can be piped together using ``pipe``::

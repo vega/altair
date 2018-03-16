@@ -3,12 +3,16 @@
 Installation
 ============
 
+.. note::
+
+   Altair version 2.0 requires Python 3.5 or later.
+   It does not work with Python 2.
+
 Altair can be installed via `pip` with the following:
 
 .. code-block:: bash
 
     $ pip install altair
-    $ pip install --upgrade notebook
 
 Or you use conda to install Altair:
 
@@ -16,13 +20,13 @@ Or you use conda to install Altair:
 
     $ conda install altair --channel conda-forge
 
-Renderers
----------
-
-Altair relies on `Vega-Lite`_ and `Vega`_ to render its visualizations.
-Different users interfaces, such as the classic `Jupyter Notebook`_,
+To display plots, Altair relies on the `Vega-Lite`_ and `Vega`_
+javascript libraries.
+Different user interfaces, such as the classic `Jupyter Notebook`_,
 `JupyterLab`_, and `nteract`_, offer built-in or separate third-party packages
-for rendering Vega-Lite and Vega. For information about these renderers,
+for rendering Vega-Lite and Vega.
+
+For information about these renderers,
 see the :ref:`displaying-charts` section of the documentation.
 
 Dependencies
@@ -31,6 +35,7 @@ Dependencies
 Altair has the following dependencies, all of which are installed by default
 with either of the above installation commands:
 
+- python 3.5 or higher
 - entrypoints_
 - IPython_
 - jsonschema_

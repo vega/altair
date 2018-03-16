@@ -33,12 +33,10 @@ GALLERY_TEMPLATE = jinja2.Template(u"""
 {{ title }}
 {% for char in title %}-{% endfor %}
 
-The following examples are automatically generated from
-`Vega-Lite's Examples <http://vega.github.io/vega-lite/examples>`_
-
-{% for group in examples|groupby('category') %}
-* :ref:`gallery-category-{{ group.grouper }}`
-{% endfor %}
+This gallery contains a selection of examples of the types of plots Altair
+can create. Though some may seem fairly complicated at first glance, they
+are built by combining a simple set of declarative building blocks:
+see the User Guide for more information on this.
 
 {% for group in examples|groupby('category') %}
 
