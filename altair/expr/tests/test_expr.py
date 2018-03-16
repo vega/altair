@@ -82,3 +82,8 @@ def test_copy():
     ex = datum.xxx * 2 > abs(datum.yyy)
     ex_copy = ex.copy()
     assert ex.to_dict() == ex_copy.to_dict()
+
+
+def test_datum_getattr():
+    x = datum['foo']
+    assert repr(x) == "datum['foo']"

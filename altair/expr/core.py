@@ -11,7 +11,7 @@ class DatumType(object):
         return ValueExpression(attr)
 
     def __getitem__(self, attr):
-        return ValueExpression(attr)
+        return GetItemExpression(attr)
 
 
 datum = DatumType()
@@ -184,3 +184,11 @@ class ValueExpression(Expression):
 
     def __repr__(self):
         return "datum.{0}".format(self.name)
+
+
+class GetItemExpression(Expression):
+    def __init__(self, name):
+        super(GetItemExpression, self).__init__(name=name)
+
+    def __repr__(self):
+        return "datum['{0}']".format(self.name)
