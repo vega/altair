@@ -1,5 +1,9 @@
 # Altair Change Log
 
+## Version 2.0.0:
+
+Complete rewrite of Altair, focused on supporting Vega-Lite 2.X
+
 ## Version 1.2.1: October 29, 2017
 
 This version of Altair is based on Vega-Lite 1.2.1.
