@@ -876,5 +876,5 @@ def topo_feature(url, feature, **kwargs):
     **kwargs : 
         additional keywords passed to TopoDataFormat
     """
-    return alt.UrlData(url=url,format=alt.TopoDataFormat(type='topojson', 
+    return core.UrlData(url=url,format=core.TopoDataFormat(type='topojson', 
                                                          feature=feature, **kwargs))
