@@ -18,9 +18,15 @@ To use Altair for visualization, you need to install two sets of tools
 Here we will briefly describe installation with JupyterLab; for the Jupyter notebook
 or for nteract see :ref:`displaying-charts`.
 
+.. warning::
+
+   conda installation is not yet available for the version 2.0 release
+   candidate. Please install the release candidate with pip.
+
 Both Altair and JupyterLab can be installed with `pip`::
 
-    $ pip install altair jupyterlab
+    $ pip install altair==2.0.0rc1
+    $ pip install jupyterlab
 
 or with ``conda``::
 
