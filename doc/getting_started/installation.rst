@@ -3,34 +3,57 @@
 Installation
 ============
 
-Altair can be installed via `pip` with the following:
+.. note::
 
-.. code-block:: bash
+   Altair version 2.0 requires Python 3.5 or later.
+   It does not work with Python 2.
 
-    $ pip install altair
-    $ pip install --upgrade notebook
+To use Altair for visualization, you need to install two sets of tools
 
-Or you use conda to install Altair:
+1. The core Altair Package and its dependencies
 
-.. code-block:: bash
+2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`_,
+   `JupyterLab`_, or `nteract`_)
 
-    $ conda install altair --channel conda-forge
+Here we will briefly describe installation with JupyterLab; for the Jupyter notebook
+or for nteract see :ref:`displaying-charts`.
 
-Renderers
----------
+Both Altair and JupyterLab can be installed with `pip`::
 
-Altair relies on `Vega-Lite`_ and `Vega`_ to render its visualizations.
-Different users interfaces, such as the classic `Jupyter Notebook`_,
-`JupyterLab`_, and `nteract`_, offer built-in or separate third-party packages
-for rendering Vega-Lite and Vega. For information about these renderers,
-see the :ref:`displaying-charts` section of the documentation.
+    $ pip install altair jupyterlab
+
+or with ``conda``::
+
+    $ conda install altair jupyterlab --channel conda-forge
+
+For JupyterLab version 0.32 or newer, nothing else needs to be done to use
+the main Altair API. For JupyterLab version 0.31, you'll additionally need to
+run the following::
+
+    $ jupyter labextension install @jupyterlab/vega3-extension
+
+Once altair and Jupyterlab are installed, launch Jupyterlab by running::
+
+    $ jupyter lab
+
+Open a new notebook in the browser-based interface that opens, and start
+making Altair charts!
+
+.. note::
+
+    Using Altair in the classic Jupyter Notebook (i.e. not JupyterLab)
+    requires a slightly different setup. See :ref:`displaying-charts` for
+    details.
+
+.. _install-dependencies:
 
 Dependencies
 ------------
 
-Altair has the following dependencies, all of which are installed by default
-with either of the above installation commands:
+Altair has the following dependencies, all of which are installed automatically
+with the above installation commands:
 
+- python 3.5 or higher
 - entrypoints_
 - IPython_
 - jsonschema_
@@ -39,6 +62,7 @@ with either of the above installation commands:
 - Six_
 - Toolz_
 - vega_datasets_
+
 
 Development Install
 -------------------

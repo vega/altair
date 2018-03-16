@@ -33,12 +33,10 @@ GALLERY_TEMPLATE = jinja2.Template(u"""
 {{ title }}
 {% for char in title %}-{% endfor %}
 
-The following examples are automatically generated from
-`Vega-Lite's Examples <http://vega.github.io/vega-lite/examples>`_
-
-{% for group in examples|groupby('category') %}
-* :ref:`gallery-category-{{ group.grouper }}`
-{% endfor %}
+This gallery contains a selection of examples of the types of plots Altair
+can create. Though some may seem fairly complicated at first glance, they
+are built by combining a simple set of declarative building blocks:
+see the User Guide for more information on this.
 
 {% for group in examples|groupby('category') %}
 
@@ -47,15 +45,16 @@ The following examples are automatically generated from
 {{ group.grouper }}
 {% for char in group.grouper %}~{% endfor %}
 
-{% for example in group.list %}
-.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
-    :target: {{ example.name }}.html
-    :align: center
-
-    :ref:`gallery_{{ example.name }}`
-{% endfor %}
-
 .. raw:: html
+
+   <span class="gallery">
+   {% for example in group.list %}
+   <a class="imagegroup" href="{{ example.name }}.html">
+     <span class="image" alt="{{ example.title }}" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png);"></span>
+     <span class="image-title">{{ example.title }}</span>
+   </a>
+   {% endfor %}
+   </span>
 
    <div style='clear:both;'></div>
 
@@ -69,20 +68,15 @@ The following examples are automatically generated from
 """)
 
 MINIGALLERY_TEMPLATE = jinja2.Template(u"""
-{% for example in examples %}
-.. figure:: {{ image_dir }}/{{ example.name }}-thumb.png
-    :target: {{ gallery_dir }}/{{ example.name }}.html
-    :align: center
-    :figclass: minigallery
-    {% if width %}:width: {{ width }}{% endif %}
-
-    {% if titles %}:ref:`gallery_{{ example.name }}`{% endif %}
-{% endfor %}
-
 .. raw:: html
 
-   <div style='clear:left;'></div>
-
+    <div id="showcase">
+      <div class="examples">
+      {% for example in examples %}
+        <a class="preview" href="{{ gallery_dir }}/{{ example.name }}.html" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png)"></a>
+      {% endfor %}
+      </div>
+    </div>
 """)
 
 
@@ -160,6 +154,7 @@ def populate_examples(**kwds):
         if category is None:
             category = 'general'
         example.update({'docstring': docstring,
+                        'title': docstring.strip().split('\n')[0],
                         'code': code,
                         'category': category.title(),
                         'lineno': lineno})
@@ -178,7 +173,7 @@ class AltairMiniGalleryDirective(Directive):
                    'width': str}
 
     def run(self):
-        size = self.options.get('size', 4)
+        size = self.options.get('size', 15)
         indices = self.options.get('indices', [])
         shuffle = 'shuffle' in self.options
         seed = self.options.get('seed', 42)
@@ -201,7 +196,7 @@ class AltairMiniGalleryDirective(Directive):
         if size:
             examples = examples[:size]
 
-        include = MINIGALLERY_TEMPLATE.render(image_dir='/_images',
+        include = MINIGALLERY_TEMPLATE.render(image_dir='/_static',
                                               gallery_dir=gallery_dir,
                                               examples=examples,
                                               titles=titles,
@@ -235,7 +230,7 @@ def main(app):
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
         f.write(GALLERY_TEMPLATE.render(title=gallery_title,
                                         examples=examples,
-                                        image_dir='/_images',
+                                        image_dir='/_static',
                                         gallery_ref=gallery_ref))
 
     # save the images to file

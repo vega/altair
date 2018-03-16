@@ -1,10 +1,10 @@
-Declarative Visualization in Python
-===================================
+Altair: Declarative Visualization in Python
+===========================================
 
 .. altair-minigallery::
-   :size: 6
-   :width: 110px
-   :indices: 14 23 41 43 45 60
+   :size: 15
+   :shuffle:
+   :seed: 6543
 
 Altair is a declarative statistical visualization library for Python, based on
 Vega_ and Vega-Lite_.
