@@ -27,8 +27,9 @@ an interactive scatter plot:
 
 The key idea is that you are declaring links between *data columns* and *visual encoding
 channels*, such as the x-axis, y-axis, color, etc. The rest of the plot details are
-handled automatically. Building on this declarative plotting idea, a surprising number
-of useful plots and visualizations can be created using a relatively concise grammar.
+handled automatically. Building on this declarative plotting idea, a surprising range
+of simple to sophisticated plots and visualizations can be created using a relatively
+concise grammar.
 
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite
