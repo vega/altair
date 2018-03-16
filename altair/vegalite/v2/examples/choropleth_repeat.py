@@ -8,11 +8,9 @@ Three choropleths representing disjoint data from the same table.
 import altair as alt
 from vega_datasets import data
 
-pop_eng_hur = alt.UrlData(data.population_engineers_hurricanes.url)
+states = alt.topo_feature(data.us_10m.url,'states')
 
-states = alt.UrlData(data.us_10m.url,
-                     format=alt.TopoDataFormat(type='topojson',
-                                               feature='states'))
+pop_eng_hur = alt.UrlData(data.population_engineers_hurricanes.url)
 
 variable_list = ['population','engineers','hurricanes']
 
