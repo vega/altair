@@ -91,8 +91,8 @@ PACKAGE_DATA        = {'altair': [
                                   'vegalite/v2/schema/*.json'
                                   ]
                       }
-AUTHOR              = "Brian E. Granger / Jake VanderPlas"
-AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@gmail.com"
+AUTHOR              = "Brian E. Granger & Jake VanderPlas"
+AUTHOR_EMAIL        = "jakevdp@gmail.com"
 URL                 = 'http://altair-viz.github.io'
 DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
