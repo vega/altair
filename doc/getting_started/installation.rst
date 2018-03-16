@@ -32,21 +32,21 @@ run the following::
 
     $ jupyter labextension install @jupyterlab/vega3-extension
 
-Once altair and Jupyterlab are installed, launch Jupyterlab by running::
-
-    $ jupyter lab
-
-Open a new notebook in the browser-based interface that opens, and start
-making Altair charts!
-
 .. note::
 
     Using Altair in the classic Jupyter Notebook (i.e. not JupyterLab)
     requires a slightly different setup. See :ref:`displaying-charts` for
     details.
 
-Once everything is installed, you should be able to import Altair and create
-a simple chart in the notebook that will render in your browser; for example:
+Once altair and Jupyterlab are installed, launch Jupyterlab by running::
+
+    $ jupyter lab
+
+This should launch a web browser window. The first time JupyterLab is launched,
+you will see a *Launcher* window: Under the "Notebook" section, click "Python 3"
+to launch a new notebook. Then you should be able to execute Altair code and
+see the rendered charts; to try it out, you can copy, paste, and execute the
+following code to make certain everythin is working correctly:
 
 .. altair-plot::
 
@@ -60,6 +60,11 @@ a simple chart in the notebook that will render in your browser; for example:
         y='petalWidth',
         color='species'
     )
+
+Once things are up and running, you may wish to go through the tutorials at
+:ref:`starting` and :ref:`exploring-weather`, read through the User Guide
+indexed in the left panel, or check out the :ref:`example-gallery` for more ideas.
+
 
 .. _install-dependencies:
 
