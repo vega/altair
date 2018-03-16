@@ -396,52 +396,172 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             copy.transform.extend(transforms)
         return copy
 
-    @utils.use_signature(core.AggregateTransform)
-    def transform_aggregate(self, as_=Undefined, *args, **kwargs):
-        if as_ is not Undefined:
-            if 'as' in kwargs:
-                raise ValueError("transform_aggregate: both 'as_' and 'as' passed as arguments.")
-            kwargs['as'] = as_
-        return self._add_transform(core.AggregateTransform(*args, **kwargs))
+    def transform_aggregate(self, aggregate, groupby=Undefined, **kwargs):
+        """
+        Add an AggregateTransform to the schema.
 
-    @utils.use_signature(core.BinTransform)
-    def transform_bin(self, as_=Undefined, *args, **kwargs):
+        Attributes
+        ----------
+        aggregate : List(AggregatedFieldDef)
+            Array of objects that define fields to aggregate.
+        groupby : List(string)
+            The data fields to group by. If not specified, a single group
+            containing all data objects will be used.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.AggregateTransform : underlying transform object
+        """
+        kwargs['aggregate'] = aggregate
+        kwargs['groupby'] = groupby
+        return self._add_transform(core.AggregateTransform(**kwargs))
+
+    def transform_bin(self, as_=Undefined, bin=Undefined, field=Undefined, **kwargs):
+        """
+        Add a BinTransform to the schema.
+
+        Attributes
+        ----------
+        as_ : string
+            The output fields at which to write the start and end bin values.
+        bin : anyOf(boolean, BinParams)
+            An object indicating bin properties, or simply `true` for using
+            default bin parameters.
+        field : string
+            The data field to bin.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.BinTransform : underlying transform object
+        """
         if as_ is not Undefined:
             if 'as' in kwargs:
                 raise ValueError("transform_bin: both 'as_' and 'as' passed as arguments.")
             kwargs['as'] = as_
-        return self._add_transform(core.BinTransform(*args, **kwargs))
+        kwargs['bin'] = bin
+        kwargs['field'] = field
+        return self._add_transform(core.BinTransform(**kwargs))
 
-    @utils.use_signature(core.CalculateTransform)
     def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs):
+        """
+        Add a CalculateTransform to the schema.
+
+        Attributes
+        ----------
+        as_ : string
+            The output fields at which to write the start and end bin values.
+        calculate : string or alt.expr expression
+            An expression string. Use the variable `datum` to refer to the
+            current data object.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.CalculateTransform : underlying transform object
+        """
         if as_ is not Undefined:
             if 'as' in kwargs:
                 raise ValueError("transform_calculate: both 'as_' and 'as' passed as arguments.")
             kwargs['as'] = as_
-        if calculate is not Undefined:
-            kwargs['calculate'] = calculate
+        kwargs['calculate'] = calculate
         return self._add_transform(core.CalculateTransform(**kwargs))
 
-    @utils.use_signature(core.FilterTransform)
     def transform_filter(self, filter, **kwargs):
-        kwargs['filter'] = filter
-        return self._add_transform(core.FilterTransform(**kwargs))
+        """
+        Add a FilterTransform to the schema.
 
-    @utils.use_signature(core.LookupTransform)
-    def transform_lookup(self, from_=Undefined, **kwargs):
+        Attributes
+        ----------
+        filter : LogicalOperandPredicate
+            The `filter` property must be one of the predicate definitions:
+            (1) a string or alt.expr expression
+            (2) a range predicate
+            (3) a selection predicate
+            (4) a logical operand combining (1)-(3)
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.FilterTransform : underlying transform object
+        """
+        return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+
+    def transform_lookup(self, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
+        """Add a LookupTransform to the schema
+
+        Attributes
+        ----------
+        from_ : LookupData
+            Secondary data reference.
+        lookup : string
+            Key in primary data source.
+        default : string
+            The default value to use if lookup fails
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.LookupTransform : underlying transform object
+        """
         if from_ is not Undefined:
             if 'from' in kwargs:
                 raise ValueError("transform_lookup: both 'from_' and 'from' passed as arguments.")
             kwargs['from'] = from_
+        kwargs['lookup'] = lookup
+        kwargs['default'] = default
         return self._add_transform(core.LookupTransform(**kwargs))
 
-    @utils.use_signature(core.TimeUnitTransform)
-    def transform_timeunit(self, as_=Undefined, *args, **kwargs):
+    def transform_timeunit(self, as_=Undefined, field=Undefined, timeUnit=Undefined, **kwargs):
+        """
+        Add a TimeUnitTransform to the schema.
+
+        Attributes
+        ----------
+        as_ : string
+            The output fields at which to write the start and end bin values.
+        field : string
+            The data field to apply time unit.
+        timeUnit : TimeUnit
+            The timeUnit.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.TimeUnitTransform : underlying transform object
+        """
         if as_ is not Undefined:
             if 'as' in kwargs:
                 raise ValueError("transform_timeunit: both 'as_' and 'as' passed as arguments.")
             kwargs['as'] = as_
-        return self._add_transform(core.TimeUnitTransform(*args, **kwargs))
+        kwargs['field'] = field
+        kwargs['timeUnit'] = timeUnit
+        return self._add_transform(core.TimeUnitTransform(**kwargs))
 
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
@@ -877,20 +997,20 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
 
 def topo_feature(url, feature, **kwargs):
     """A convenience function for extracting features from a topojson url
-    
+
     Parameters
     ----------
     url : string
         An URL from which to load the data set.
-     
+
     feature : string
-        The name of the TopoJSON object set to convert to a GeoJSON feature collection. For 
-        example, in a map of the world, there may be an object set named `"countries"`. 
-        Using the feature property, we can extract this set and generate a GeoJSON feature 
+        The name of the TopoJSON object set to convert to a GeoJSON feature collection. For
+        example, in a map of the world, there may be an object set named `"countries"`.
+        Using the feature property, we can extract this set and generate a GeoJSON feature
         object for each country.
 
-    **kwargs : 
+    **kwargs :
         additional keywords passed to TopoDataFormat
     """
-    return core.UrlData(url=url,format=core.TopoDataFormat(type='topojson', 
+    return core.UrlData(url=url,format=core.TopoDataFormat(type='topojson',
                                                          feature=feature, **kwargs))
