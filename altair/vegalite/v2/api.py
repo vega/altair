@@ -8,7 +8,7 @@ import pandas as pd
 from .schema import core, channels, mixins, Undefined
 
 from .data import data_transformers, pipe
-from ... import utils
+from ... import utils, expr
 from .display import renderers
 
 
@@ -181,7 +181,7 @@ def condition(predicate, if_true, if_false, **kwargs):
 
     Parameters
     ----------
-    predicate: SelectionMapping, LogicalOperandPredicate, dict, or string
+    predicate: SelectionMapping, LogicalOperandPredicate, expr.Expression, dict, or string
         the selection predicate or test predicate for the condition.
         if a string is passed, it will be treated as a test operand.
     if_true:
@@ -198,7 +198,7 @@ def condition(predicate, if_true, if_false, **kwargs):
     """
     selection_predicates = (core.SelectionNot, core.SelectionOr,
                             core.SelectionAnd, core.SelectionOperand)
-    test_predicates = (six.string_types, core.Predicate,
+    test_predicates = (six.string_types, expr.Expression, core.Predicate,
                        core.LogicalOperandPredicate, core.LogicalNotPredicate,
                        core.LogicalOrPredicate, core.LogicalAndPredicate)
 
