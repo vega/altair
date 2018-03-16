@@ -45,6 +45,22 @@ making Altair charts!
     requires a slightly different setup. See :ref:`displaying-charts` for
     details.
 
+Once everything is installed, you should be able to import Altair and create
+a simple chart in the notebook that will render in your browser; for example:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalLength',
+        y='petalWidth',
+        color='species'
+    )
+
 .. _install-dependencies:
 
 Dependencies
