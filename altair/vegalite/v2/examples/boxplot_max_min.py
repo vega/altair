@@ -19,8 +19,7 @@ upper_whisker = 'max(people):Q'
 
 # Compose each layer individually
 lower_plot = alt.Chart(population).mark_rule().encode(
-    y=alt.Y(lower_whisker,
-            axis=alt.Axis(title="population")),
+    y=alt.Y(lower_whisker, axis=alt.Axis(title="population")),
     y2=lower_box,
     x='age:O'
 )
@@ -37,12 +36,12 @@ upper_plot = alt.Chart(population).mark_rule().encode(
     x='age:O'
 )
 
-middle_tick = alt.Chart(population).mark_tick(color='white', size=5.0).encode(
+middle_tick = alt.Chart(population).mark_tick(
+    color='white',
+    size=5.0
+).encode(
     y='median(people):Q',
     x='age:O',
 )
 
-chart = alt.layer(lower_plot,
-                  middle_plot,
-                  upper_plot,
-                  middle_tick)
+chart = lower_plot + middle_plot + upper_plot + middle_tick

@@ -13,38 +13,31 @@ cars = data.cars()
 
 brush = alt.selection(type='interval')
 
+tick_axis = alt.Axis(labels=False, domain=False, ticks=False)
+tick_axis_notitle = alt.Axis(labels=False, domain=False, ticks=False, title='')
+
 points = alt.Chart(cars).mark_point().encode(
-    x=alt.X('Miles_per_Gallon',axis=alt.Axis(title='')),
-    y=alt.Y('Horsepower',axis=alt.Axis(title='')),
-    color=alt.condition(brush, 'Origin', alt.ColorValue('grey'))
+    x=alt.X('Miles_per_Gallon', axis=alt.Axis(title='')),
+    y=alt.Y('Horsepower', axis=alt.Axis(title='')),
+    color=alt.condition(brush, 'Origin', alt.value('grey'))
 ).properties(
     selection=brush
 )
 
 x_ticks = alt.Chart(cars).mark_tick().encode(
-    x=alt.X('Miles_per_Gallon',axis=alt.Axis(labels=False,
-                                             domain=False,
-                                             ticks=False)),
-    y=alt.Y('Origin',axis=alt.Axis(labels=False,
-                                   domain=False,
-                                   ticks=False,
-                                   title='')),
-    color=alt.condition(brush, 'Origin', alt.ColorValue('lightgrey'))
+    alt.X('Miles_per_Gallon', axis=tick_axis),
+    alt.Y('Origin', axis=tick_axis_notitle),
+    color=alt.condition(brush, 'Origin', alt.value('lightgrey'))
 ).properties(
     selection=brush
 )
 
 y_ticks = alt.Chart(cars).mark_tick().encode(
-    y=alt.Y('Horsepower',axis=alt.Axis(labels=False,
-                                       domain=False,
-                                       ticks=False)),
-    x=alt.X('Origin',axis=alt.Axis(labels=False,
-                                   domain=False,
-                                   ticks=False,
-                                   title='')),
-    color=alt.condition(brush, 'Origin', alt.ColorValue('lightgrey'))
+    alt.X('Origin', axis=tick_axis_notitle),
+    alt.Y('Horsepower', axis=tick_axis),
+    color=alt.condition(brush, 'Origin', alt.value('lightgrey'))
 ).properties(
     selection=brush
 )
 
-chart = alt.hconcat(y_ticks, alt.vconcat(points, x_ticks))
+chart = y_ticks | (points & x_ticks)

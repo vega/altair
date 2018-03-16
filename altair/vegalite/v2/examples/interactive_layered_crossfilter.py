@@ -32,7 +32,7 @@ background = base.properties(
 
 # yellow highlights on the transformed data
 highlight = base.encode(
-    alt.ColorValue('goldenrod')
+    color=alt.value('goldenrod')
 ).transform_filter(
     brush.ref()
 )

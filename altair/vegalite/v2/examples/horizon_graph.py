@@ -5,6 +5,7 @@ This example shows how to make a Horizon Graph with 2 layers. (See https://idl.c
 """
 
 import altair as alt
+from altair.expr import datum
 import pandas as pd
 
 df = pd.DataFrame([
@@ -20,19 +21,22 @@ df = pd.DataFrame([
       {"x": 19, "y": 49}, {"x": 20, "y": 15}
     ])
 
-area1 = alt.Chart(df).mark_area(clip=True, interpolate='monotone').encode(
-    x = alt.X('x', scale=alt.Scale(zero=False, nice=False)), 
-    y = alt.Y('y', scale=alt.Scale(domain=[0, 50]),
-             axis=alt.Axis(title='y')), 
+area1 = alt.Chart(df).mark_area(
+    clip=True,
+    interpolate='monotone'
+).encode(
+    alt.X('x', scale=alt.Scale(zero=False, nice=False)),
+    alt.Y('y', scale=alt.Scale(domain=[0, 50]), axis=alt.Axis(title='y')),
     opacity = alt.value(0.6)
 ).properties(
-    width=300, 
+    width=300,
     height=50
 )
-area2 = alt.Chart(df).mark_area(clip=True, interpolate='monotone').encode(
-    x = 'x',
-    y = alt.Y('ny:Q', scale=alt.Scale(domain=[0, 50])),
-    opacity = alt.value(0.3)
-).transform_calculate("ny", "datum.y - 50")
+
+area2 = area1.encode(
+    y='ny:Q'
+).transform_calculate(
+    "ny", datum.y - 50
+)
 
 chart = area1 + area2

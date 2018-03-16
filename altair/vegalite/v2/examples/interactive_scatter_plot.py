@@ -1,6 +1,6 @@
 """
-Interactive Colored Scatterplot
--------------------------------
+Simple Interactive Colored Scatterplot
+--------------------------------------
 This example shows how to make an interactive scatterplot.
 """
 # category: interactive
@@ -13,4 +13,5 @@ source = data.cars()
 chart = alt.Chart(source).mark_circle().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
-    color='Origin').interactive()
+    color='Origin'
+).interactive()

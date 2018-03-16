@@ -12,17 +12,18 @@ from vega_datasets import data
 stocks = data.stocks()
 
 line = alt.Chart(stocks).mark_line().encode(
-    x = 'date',
-    y = 'price',
-    color = 'symbol'
-).properties(width = 600,
-            title = "Daily closing prices with their aggregate prices"
+    x='date',
+    y='price',
+    color='symbol'
+).properties(
+    width = 600,
+    title = "Daily closing prices with their aggregate prices"
 ).interactive(bind_y=False)
 
 rule = alt.Chart(stocks).mark_rule().encode(
-    y = alt.Y('average(price)', ),
+    alt.Y('average(price)'),
     color = 'symbol',
     size = alt.SizeValue(2)
 )
 
-chart = (line + rule)
+chart = line + rule

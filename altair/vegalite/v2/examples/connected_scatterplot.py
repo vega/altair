@@ -11,15 +11,15 @@ from vega_datasets import data
 driving = data.driving()
 
 lines = alt.Chart(driving).mark_line().encode(
-    x = alt.X('miles', scale = alt.Scale(zero=False)), 
-    y = alt.Y('gas', scale = alt.Scale(zero=False)),
-    order = 'year'
+    alt.X('miles', scale=alt.Scale(zero=False)),
+    alt.Y('gas', scale=alt.Scale(zero=False)),
+    order='year'
 )
 
 points = alt.Chart(driving).mark_circle().encode(
-    x = alt.X('miles', scale = alt.Scale(zero=False)), 
-    y = alt.Y('gas', scale = alt.Scale(zero=False)),
-    order = 'year'
+    alt.X('miles', scale=alt.Scale(zero=False)),
+    alt.Y('gas', scale=alt.Scale(zero=False)),
+    order='year'
 )
 
 chart = lines + points

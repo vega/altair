@@ -11,7 +11,7 @@ from vega_datasets import data
 source = data.cars()
 
 chart = alt.Chart(source).mark_point().encode(
-    x = 'Horsepower',
-    y = 'Miles_per_Gallon',
-    size = 'Acceleration'
+    x='Horsepower',
+    y='Miles_per_Gallon',
+    size='Acceleration'
 )

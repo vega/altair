@@ -209,26 +209,32 @@ df = pd.DataFrame(
       }
     ]
 )
-open_close_color = alt.condition("datum.open < datum.close", 
-                          alt.ColorValue("#06982d"),
-                          alt.ColorValue("#ae1325"))
+open_close_color = alt.condition("datum.open < datum.close",
+                                 alt.value("#06982d"),
+                                 alt.value("#ae1325"))
 
 rule = alt.Chart(df).mark_rule().encode(
-    x = alt.X('date:T', timeUnit='yearmonthdate',
-              scale=alt.Scale(domain=[{"month": 5, "date": 31, "year": 2009}, 
-                                      {"month": 7, "date": 1, "year": 2009}]),
-             axis=alt.Axis(format='%m/%d', title='Date in 2009')),
-    y = alt.Y('low', scale=alt.Scale(zero=False),
-              axis=alt.Axis(title='Price')), 
-    y2 = alt.Y('high'),
-    color = open_close_color
+    alt.X(
+        'date:T',
+        timeUnit='yearmonthdate',
+        scale=alt.Scale(domain=[{"month": 5, "date": 31, "year": 2009},
+                                {"month": 7, "date": 1, "year": 2009}]),
+        axis=alt.Axis(format='%m/%d', title='Date in 2009')
+    ),
+    alt.Y(
+        'low',
+        scale=alt.Scale(zero=False),
+        axis=alt.Axis(title='Price')
+    ),
+    alt.Y2('high'),
+    color=open_close_color
 )
 
 bar = alt.Chart(df).mark_bar().encode(
-    x = alt.X('date:T', timeUnit='yearmonthdate'), 
-    y = 'open', 
-    y2 = 'close', 
-    color = open_close_color
+    alt.X('date:T', timeUnit='yearmonthdate'),
+    y='open',
+    y2='close',
+    color=open_close_color
 )
 
 chart = rule + bar

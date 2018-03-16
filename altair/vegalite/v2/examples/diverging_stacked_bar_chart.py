@@ -347,19 +347,20 @@ color_scale = alt.Scale(
         )
 
 y_axis = alt.Axis(title = 'Question',
-                   offset = 5,
-                   ticks = False,
-                   minExtent = 60,
-                   domain = False)
-
-
+                  offset = 5,
+                  ticks = False,
+                  minExtent = 60,
+                  domain = False)
 
 source = alt.pd.DataFrame(data)
 
 chart = alt.Chart(source).mark_bar().encode(
-    x = alt.X('percentage_start:Q'),
-    x2 = 'percentage_end:Q',
-    y = alt.Y('question:N', axis = y_axis),
-    color = alt.Color('type:N',
+    x='percentage_start:Q',
+    x2='percentage_end:Q',
+    y=alt.Y('question:N', axis=y_axis),
+    color=alt.Color(
+        'type:N',
         legend=alt.Legend( title='Response'),
-        scale = color_scale,))
+        scale = color_scale,
+    )
+)

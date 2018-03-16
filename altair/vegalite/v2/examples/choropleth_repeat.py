@@ -18,10 +18,11 @@ chart = alt.Chart(states).mark_geoshape().properties(
     projection={'type': 'albersUsa'},
     width=500,
     height=300
-).transform_lookup(lookup='id', 
-                   from_=alt.LookupData(pop_eng_hur, 'id', variable_list)
 ).encode(
-    color=alt.Color(alt.repeat('row'), type='quantitative')
+    alt.Color(alt.repeat('row'), type='quantitative')
+).transform_lookup(
+    lookup='id',
+    from_=alt.LookupData(pop_eng_hur, 'id', variable_list)
 ).repeat(
     row = variable_list
 ).resolve_scale(color='independent')

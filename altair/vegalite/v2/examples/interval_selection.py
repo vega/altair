@@ -14,7 +14,7 @@ sp500 = data.sp500.url
 brush = alt.selection(type='interval', encodings=['x'])
 
 upper = alt.Chart().mark_area().encode(
-    x=alt.X('date:T', scale={'domain': brush.ref()}),
+    alt.X('date:T', scale={'domain': brush.ref()}),
     y='price:Q'
 ).properties(
     width=600,
@@ -26,4 +26,4 @@ lower = upper.properties(
     height=60
 )
 
-chart = alt.VConcatChart([upper, lower], data=sp500)
+chart = alt.vconcat(upper, lower, data=sp500)

@@ -7,18 +7,29 @@ This example shows how to layer two charts on top of one another.
 import altair as alt
 import pandas as pd
 
-data = {'project': ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
-       'score': [25, 57, 23, 19, 8, 47, 8],
-       'goal': [25, 47, 30, 27, 38, 19,4]}
+data = pd.DataFrame({
+    'project': ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+    'score': [25, 57, 23, 19, 8, 47, 8],
+    'goal': [25, 47, 30, 27, 38, 19,4]}
+)
 
-source = pd.DataFrame(data)
-
-a = alt.Chart(source).mark_bar().encode(
+a = alt.Chart().mark_bar().encode(
     x='project',
-    y='score')
+    y='score'
+)
 
-b = alt.Chart(source).mark_tick(color='red').encode(
+b = alt.Chart().mark_tick(
+    color='red',
+).encode(
     x='project',
-    y='goal')
+    y='goal'
+)
 
-chart = alt.layer(a, b, config={'tick': {'thickness': 2, 'bandSize': 50}})
+chart = alt.layer(a, b).properties(
+    data=data
+).configure_tick(
+    thickness=2,
+    bandSize=35  # controls the width of the tick
+).configure_scale(
+    rangeStep=40  # controls the width of the bar
+)

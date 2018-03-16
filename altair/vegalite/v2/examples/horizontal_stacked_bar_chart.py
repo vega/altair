@@ -11,7 +11,7 @@ from vega_datasets import data
 barley = data.barley()
 
 chart = alt.Chart(barley).mark_bar().encode(
-    x = 'sum(yield)',
-    y = 'variety',
-    color = 'site'
+    x='sum(yield)',
+    y='variety',
+    color='site'
 )

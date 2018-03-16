@@ -17,9 +17,11 @@ bars = alt.Chart(data).mark_bar().encode(
     x='b'
 )
 
-text = alt.Chart(data).mark_text(align='left',baseline='middle',dx=3).encode(
-    y='a',
-    x='b', 
+text = bars.mark_text(
+    align='left',
+    baseline='middle',
+    dx=3
+).encode(
     text='b'
 )
 
