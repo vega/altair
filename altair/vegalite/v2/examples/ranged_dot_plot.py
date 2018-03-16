@@ -8,7 +8,7 @@ import altair as alt
 from vega_datasets import data
 
 
-chart = alt.LayerChart(
+chart = alt.layer(
     data=data.countries.url
 ).transform_filter(
     filter={"field": 'country',
@@ -19,9 +19,9 @@ chart = alt.LayerChart(
 )
 
 chart += alt.Chart().mark_line(color='#db646f').encode(
-    x = 'life_expect:Q',
-    y = 'country:N',
-    detail = 'country:N'
+    x='life_expect:Q',
+    y='country:N',
+    detail='country:N'
 )
 # Add points for life expectancy in 1955 & 2000
 chart += alt.Chart().mark_point(
@@ -29,8 +29,8 @@ chart += alt.Chart().mark_point(
     opacity = 1,
     filled = True
 ).encode(
-    x = 'life_expect:Q',
-    y = 'country:N',
+    x='life_expect:Q',
+    y='country:N',
     color=alt.Color('year:O',
         scale=alt.Scale(
             domain=['1955', '2000'],

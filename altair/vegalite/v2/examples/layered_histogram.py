@@ -20,12 +20,14 @@ df = pd.melt(df, id_vars=df.index.name,
              var_name = 'Experiment',
              value_name='Measurement')
 
-chart = alt.Chart(df).mark_area(opacity=0.3, interpolate='step').encode(
-    x=alt.X('Measurement',bin = alt.Bin(maxbins=100)),
-    y=alt.Y('count(*):Q', stack=None),
-    color=alt.Color('Experiment',
-                    scale=alt.Scale(range=['#0000ff',
-                                           '#008000',
-                                           '#ff0000'])
-                   )
+chart = alt.Chart(df).mark_area(
+    opacity=0.3,
+    interpolate='step'
+).encode(
+    alt.X('Measurement', bin=alt.Bin(maxbins=100)),
+    alt.Y('count(*):Q', stack=None),
+    alt.Color(
+        'Experiment',
+        scale=alt.Scale(range=['#0000ff', '#008000', '#ff0000'])
+    )
 )

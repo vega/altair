@@ -12,7 +12,7 @@ from vega_datasets import data
 stocks = data.stocks()
 
 chart = Chart(stocks).mark_line().encode(
-    x = 'date',
-    y = 'price',
-    color = 'symbol'
+    x='date',
+    y='price',
+    color='symbol'
 )

@@ -14,7 +14,7 @@ source = data.barley()
 source.year = source.year.astype(str)
 
 chart = alt.Chart(source).mark_line().encode(
-    x = 'year', 
-    y = alt.Y('median(yield)', ), 
-    color = 'site'
+    x='year',
+    y='median(yield)',
+    color='site'
 )

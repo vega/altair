@@ -23,7 +23,10 @@ click = alt.selection_multi(encodings=['color'])
 # Top panel is scatter plot of temperature vs time
 points = alt.Chart().mark_point().encode(
     alt.X('date:T', timeUnit='monthdate', axis=alt.Axis(title='Date')),
-    alt.Y('temp_max:Q', axis=alt.Axis(title='Maximum Daily Temperature (C)'), scale=alt.Scale(domain=[-5, 40])),
+    alt.Y('temp_max:Q',
+        axis=alt.Axis(title='Maximum Daily Temperature (C)'),
+        scale=alt.Scale(domain=[-5, 40])
+    ),
     color=alt.condition(brush, color, alt.value('lightgray')),
     size=alt.Size('precipitation:Q', scale=alt.Scale(range=[5, 200]))
 ).properties(
@@ -47,5 +50,6 @@ bars = alt.Chart().mark_bar().encode(
 )
 
 chart = alt.vconcat(points, bars,
-                    data=data.seattle_weather.url,
-                    title="Seattle Weather: 2012-2015")
+    data=data.seattle_weather.url,
+    title="Seattle Weather: 2012-2015"
+)

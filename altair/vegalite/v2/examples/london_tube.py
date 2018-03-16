@@ -48,9 +48,11 @@ lines = alt.Chart(tubelines).mark_geoshape(
 ).encode(
     alt.Color(
         'id:N',
-        legend=alt.Legend(title=None,
-                          orient='bottom-right',
-                          offset=0)
+        legend=alt.Legend(
+            title=None,
+            orient='bottom-right',
+            offset=0
+        )
     )
 )
 

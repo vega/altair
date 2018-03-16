@@ -10,10 +10,10 @@ import pandas as pd
 
 crimea = data.crimea()
 
-crimea = pd.melt(crimea, id_vars=['date'], 
-        value_vars=['disease', 'other', 'wounds'],
-        var_name='cause', 
-        value_name='deaths')
+crimea = pd.melt(crimea, id_vars=['date'],
+                 value_vars=['disease', 'other', 'wounds'],
+                 var_name='cause',
+                 value_name='deaths')
 
 chart = alt.Chart(crimea).mark_area().encode(
     x='date',

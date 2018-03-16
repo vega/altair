@@ -9,9 +9,7 @@ import altair as alt
 cars = alt.load_dataset('cars')
 
 chart = alt.Chart(cars).mark_bar().encode(
-    alt.X("Horsepower",
-          type="quantitative",
-          bin=alt.Bin(maxbins=15)),
+    alt.X("Horsepower:Q", bin=True),
     y='count(*):Q',
     row='Origin'
 )

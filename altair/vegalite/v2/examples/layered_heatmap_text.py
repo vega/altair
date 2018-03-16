@@ -23,8 +23,8 @@ text = alt.Chart(cars).mark_text(
     alt.Y('Origin:O'),
     alt.Text('count(*):Q'),
     color=alt.condition("datum['count_*'] > 100",
-                        alt.ColorValue('black'),
-                        alt.ColorValue('white'))
+                        alt.value('black'),
+                        alt.value('white'))
 )
 
 chart = heatmap + text

@@ -16,14 +16,14 @@ line = alt.Chart(stocks).mark_line().encode(
     y='price',
     color='symbol'
 ).properties(
-    width = 600,
-    title = "Daily closing prices with their aggregate prices"
+    width=600,
+    title="Daily closing prices with their aggregate prices"
 ).interactive(bind_y=False)
 
 rule = alt.Chart(stocks).mark_rule().encode(
     alt.Y('average(price)'),
-    color = 'symbol',
-    size = alt.SizeValue(2)
+    color='symbol',
+    size=alt.value(2)
 )
 
 chart = line + rule
