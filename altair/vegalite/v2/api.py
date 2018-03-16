@@ -397,17 +397,29 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     @utils.use_signature(core.AggregateTransform)
-    def transform_aggregate(self, *args, **kwargs):
+    def transform_aggregate(self, as_=Undefined, *args, **kwargs):
+        if as_ is not Undefined:
+            if 'as' in kwargs:
+                raise ValueError("transform_aggregate: both 'as_' and 'as' passed as arguments.")
+            kwargs['as'] = as_
         return self._add_transform(core.AggregateTransform(*args, **kwargs))
 
     @utils.use_signature(core.BinTransform)
-    def transform_bin(self, *args, **kwargs):
+    def transform_bin(self, as_=Undefined, *args, **kwargs):
+        if as_ is not Undefined:
+            if 'as' in kwargs:
+                raise ValueError("transform_bin: both 'as_' and 'as' passed as arguments.")
+            kwargs['as'] = as_
         return self._add_transform(core.BinTransform(*args, **kwargs))
 
     @utils.use_signature(core.CalculateTransform)
-    def transform_calculate(self, as_, calculate, **kwargs):
-        kwargs['as'] = as_
-        kwargs['calculate'] = calculate
+    def transform_calculate(self, as_=Undefined, calculate=Undefined, **kwargs):
+        if as_ is not Undefined:
+            if 'as' in kwargs:
+                raise ValueError("transform_calculate: both 'as_' and 'as' passed as arguments.")
+            kwargs['as'] = as_
+        if calculate is not Undefined:
+            kwargs['calculate'] = calculate
         return self._add_transform(core.CalculateTransform(**kwargs))
 
     @utils.use_signature(core.FilterTransform)
@@ -424,7 +436,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.LookupTransform(**kwargs))
 
     @utils.use_signature(core.TimeUnitTransform)
-    def transform_timeunit(self, *args, **kwargs):
+    def transform_timeunit(self, as_=Undefined, *args, **kwargs):
+        if as_ is not Undefined:
+            if 'as' in kwargs:
+                raise ValueError("transform_timeunit: both 'as_' and 'as' passed as arguments.")
+            kwargs['as'] = as_
         return self._add_transform(core.TimeUnitTransform(*args, **kwargs))
 
     @utils.use_signature(core.Resolve)
