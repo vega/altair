@@ -859,7 +859,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         return copy
 
 
-def UrlTopoFeature(url, feature, **kwargs):
+def topo_feature(url, feature, **kwargs):
     """A convenience function for extracting features from a topojson url
     
     Parameters
@@ -872,6 +872,9 @@ def UrlTopoFeature(url, feature, **kwargs):
         example, in a map of the world, there may be an object set named `"countries"`. 
         Using the feature property, we can extract this set and generate a GeoJSON feature 
         object for each country.
+
+    **kwargs : 
+        additional keywords passed to TopoDataFormat
     """
     return alt.UrlData(url=url,format=alt.TopoDataFormat(type='topojson', 
                                                          feature=feature, **kwargs))
