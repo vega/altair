@@ -255,6 +255,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             self.data = core.UrlData(self.data)
 
     def to_dict(self, *args, **kwargs):
+        """Convert the chart to a dictionary suitable for JSON export"""
         copy = self.copy()
         original_data = getattr(copy, 'data', Undefined)
         copy._prepare_data()
@@ -311,7 +312,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         """
-
         if isinstance(fp, six.string_types):
             format = fp.split('.')[-1]
 
@@ -381,7 +381,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return RepeatChart(spec=self, repeat=repeat, **kwargs)
 
     def properties(self, **kwargs):
-        """Set top-level properties of the Chart."""
+        """Set top-level properties of the Chart.
+
+        Argument names and types are the same as class initialization.
+        """
         copy = self.copy(deep=True, ignore=['data'])
         for key, val in kwargs.items():
             setattr(copy, key, val)
@@ -877,20 +880,20 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
 
 def topo_feature(url, feature, **kwargs):
     """A convenience function for extracting features from a topojson url
-    
+
     Parameters
     ----------
     url : string
         An URL from which to load the data set.
-     
+
     feature : string
-        The name of the TopoJSON object set to convert to a GeoJSON feature collection. For 
-        example, in a map of the world, there may be an object set named `"countries"`. 
-        Using the feature property, we can extract this set and generate a GeoJSON feature 
+        The name of the TopoJSON object set to convert to a GeoJSON feature collection. For
+        example, in a map of the world, there may be an object set named `"countries"`.
+        Using the feature property, we can extract this set and generate a GeoJSON feature
         object for each country.
 
-    **kwargs : 
+    **kwargs :
         additional keywords passed to TopoDataFormat
     """
-    return core.UrlData(url=url,format=core.TopoDataFormat(type='topojson', 
+    return core.UrlData(url=url,format=core.TopoDataFormat(type='topojson',
                                                          feature=feature, **kwargs))
