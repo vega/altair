@@ -250,10 +250,17 @@ def parse_shorthand_plus_data(shorthand, data):
     attrs = parse_shorthand(shorthand)
     if 'type' not in attrs and attrs['field'] != '*':
         if not isinstance(data, pd.DataFrame):
-            raise ValueError("type must be specified unless data is provided "
-                             "in the form of a dataframe.")
-        col = data[attrs['field']]
-        attrs['type'] = infer_vegalite_type(col)
+            raise ValueError("'{0}' encoding field is specified without a type, "
+                             "the type cannot be automacially inferred because "
+                             "the data is not specified as a pandas.DataFrame."
+                             "".format(attrs["field"]))
+        if attrs['field'] not in data.columns:
+            raise ValueError("'{0}' encoding field is specified without a type, "
+                             "and the type cannot be automatically inferred "
+                             "because it does not match any column names within "
+                             "the data. Valid columns are {1}"
+                             "".format(attrs["field"], list(data.columns)))
+        attrs['type'] = infer_vegalite_type(data[attrs['field']])
     return attrs
 
 
