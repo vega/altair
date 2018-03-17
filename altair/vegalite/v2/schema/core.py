@@ -94,11 +94,17 @@ class AggregatedFieldDef(VegaLiteSchema):
         See the [full list of supported aggregation 
         operations](https://vega.github.io/vega-lite/docs/aggregate.html#ops) for more 
         information.
+    as_ : string
+        The output fields at which to write the aggregated values.
     """
     _schema = {'$ref': '#/definitions/AggregatedFieldDef'}
     _rootschema = Root._schema
 
-    def __init__(self, field=Undefined, op=Undefined, **kwds):
+    def __init__(self, field=Undefined, op=Undefined, as_=Undefined, **kwds):
+        if as_ is not Undefined:
+            if 'as' in kwds:
+                raise ValueError("transform_bin: both 'as_' and 'as' passed as arguments.")
+            kwds['as'] = as_
         super(AggregatedFieldDef, self).__init__(field=field, op=op, **kwds)
 
 
