@@ -264,7 +264,7 @@ def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
                       rootschema=schema)
 
     # adapted from SchemaInfo.init_code
-    nonkeyword, required, kwds, additional = codegen._get_args(info)
+    nonkeyword, required, kwds, invalid_kwds, additional = codegen._get_args(info)
     required -= {'type'}
     kwds -= {'type'}
 
@@ -273,7 +273,7 @@ def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
     dict_args = ['{0}={0}'.format(p)
                  for p in (sorted(required) + sorted(kwds))]
 
-    if additional:
+    if additional or invalid_kwds:
         def_args.append('**kwds')
         dict_args.append('**kwds')
 

@@ -78,7 +78,7 @@ def docstring(classname, schema, rootschema=None, indent=4):
         doc += info.description.splitlines()
 
     if info.properties:
-        nonkeyword, required, kwds, additional = _get_args(info)
+        nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
         doc += ['',
                 'Attributes',
                 '----------']
@@ -86,6 +86,15 @@ def docstring(classname, schema, rootschema=None, indent=4):
             propinfo = info.properties[prop]
             doc += ["{0} : {1}".format(prop, propinfo.short_description),
                     "    {0}".format(propinfo.description)]
+
+        if invalid_kwds:
+            doc += ['',
+                    'Dict-Only Attributes',
+                    '--------------------']
+            for prop in sorted(invalid_kwds):
+                propinfo = info.properties[prop]
+                doc += ["'{0}' : {1}".format(prop, propinfo.short_description),
+                        "    {0}".format(propinfo.description)]
     if len(doc) > 1:
         doc += ['']
     return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
@@ -97,6 +106,7 @@ def _get_args(info):
     #       - handle patternProperties etc.
     required = set()
     kwds = set()
+    invalid_kwds = set()
 
     # TODO: specialize for anyOf/oneOf?
 
@@ -106,7 +116,8 @@ def _get_args(info):
         nonkeyword = all(args[0] for args in arginfo)
         required = set.union(set(), *(args[1] for args in arginfo))
         kwds = set.union(set(), *(args[2] for args in arginfo))
-        additional = all(args[3] for args in arginfo)
+        invalid_kwds = set.union(set(), *(args[3] for args in arginfo))
+        additional = all(args[4] for args in arginfo)
     elif info.is_empty() or info.is_compound():
         nonkeyword = True
         additional = True
@@ -114,6 +125,8 @@ def _get_args(info):
         nonkeyword = True
         additional=False
     elif info.is_object():
+        invalid_kwds = ({p for p in info.required if not is_valid_identifier(p)} |
+                        {p for p in info.properties if not is_valid_identifier(p)})
         required = {p for p in info.required if is_valid_identifier(p)}
         kwds = {p for p in info.properties if is_valid_identifier(p)}
         kwds -= required
@@ -123,7 +136,7 @@ def _get_args(info):
     else:
         raise ValueError("Schema object not understood")
 
-    return (nonkeyword, required, kwds, additional)
+    return (nonkeyword, required, kwds, invalid_kwds, additional)
 
 
 INIT_DEF = """
@@ -135,7 +148,7 @@ def __init__({arglist}):
 def init_code(classname, schema, rootschema=None, indent=0, nodefault=()):
     """Return code suitablde for the __init__ function of a Schema class"""
     info = SchemaInfo(schema, rootschema=rootschema)
-    nonkeyword, required, kwds, additional =_get_args(info)
+    nonkeyword, required, kwds, invalid_kwds, additional =_get_args(info)
 
     nodefault=set(nodefault)
     required -= nodefault

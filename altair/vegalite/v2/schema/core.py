@@ -94,6 +94,11 @@ class AggregatedFieldDef(VegaLiteSchema):
         See the [full list of supported aggregation 
         operations](https://vega.github.io/vega-lite/docs/aggregate.html#ops) for more 
         information.
+    
+    Dict-Only Attributes
+    --------------------
+    'as' : string
+        The output field names to use for each aggregated field.
     """
     _schema = {'$ref': '#/definitions/AggregatedFieldDef'}
     _rootschema = Root._schema
@@ -693,6 +698,11 @@ class BinTransform(VegaLiteSchema):
         parameters.
     field : string
         The data field to bin.
+    
+    Dict-Only Attributes
+    --------------------
+    'as' : string
+        The output fields at which to write the start and end bin values.
     """
     _schema = {'$ref': '#/definitions/BinTransform'}
     _rootschema = Root._schema
@@ -745,6 +755,11 @@ class CalculateTransform(VegaLiteSchema):
     calculate : string
         A [expression](https://vega.github.io/vega-lite/docs/types.html#expression) string. 
         Use the variable `datum` to refer to the current data object.
+    
+    Dict-Only Attributes
+    --------------------
+    'as' : string
+        The field for storing the computed formula value.
     """
     _schema = {'$ref': '#/definitions/CalculateTransform'}
     _rootschema = Root._schema
@@ -3117,6 +3132,11 @@ class LogicalAndPredicate(VegaLiteSchema):
     
     Attributes
     ----------
+    
+    Dict-Only Attributes
+    --------------------
+    'and' : List(LogicalOperandPredicate)
+    
     """
     _schema = {'$ref': '#/definitions/LogicalAnd<Predicate>'}
     _rootschema = Root._schema
@@ -3132,6 +3152,11 @@ class SelectionAnd(VegaLiteSchema):
     
     Attributes
     ----------
+    
+    Dict-Only Attributes
+    --------------------
+    'and' : List(SelectionOperand)
+    
     """
     _schema = {'$ref': '#/definitions/SelectionAnd'}
     _rootschema = Root._schema
@@ -3147,6 +3172,11 @@ class LogicalNotPredicate(VegaLiteSchema):
     
     Attributes
     ----------
+    
+    Dict-Only Attributes
+    --------------------
+    'not' : LogicalOperandPredicate
+    
     """
     _schema = {'$ref': '#/definitions/LogicalNot<Predicate>'}
     _rootschema = Root._schema
@@ -3162,6 +3192,11 @@ class SelectionNot(VegaLiteSchema):
     
     Attributes
     ----------
+    
+    Dict-Only Attributes
+    --------------------
+    'not' : SelectionOperand
+    
     """
     _schema = {'$ref': '#/definitions/SelectionNot'}
     _rootschema = Root._schema
@@ -3201,6 +3236,11 @@ class LogicalOrPredicate(VegaLiteSchema):
     
     Attributes
     ----------
+    
+    Dict-Only Attributes
+    --------------------
+    'or' : List(LogicalOperandPredicate)
+    
     """
     _schema = {'$ref': '#/definitions/LogicalOr<Predicate>'}
     _rootschema = Root._schema
@@ -3216,6 +3256,11 @@ class SelectionOr(VegaLiteSchema):
     
     Attributes
     ----------
+    
+    Dict-Only Attributes
+    --------------------
+    'or' : List(SelectionOperand)
+    
     """
     _schema = {'$ref': '#/definitions/SelectionOr'}
     _rootschema = Root._schema
@@ -3256,6 +3301,16 @@ class LookupTransform(VegaLiteSchema):
         Key in primary data source.
     default : string
         The default value to use if lookup fails.  __Default value:__ `null`
+    
+    Dict-Only Attributes
+    --------------------
+    'as' : anyOf(string, List(string))
+        The field or fields for storing the computed formula value. If `from.fields` is 
+        specified, the transform will use the same names for `as`. If `from.fields` is not 
+        specified, `as` has to be a string and we put the whole object into the data under 
+        the specified name.
+    'from' : LookupData
+        Secondary data reference.
     """
     _schema = {'$ref': '#/definitions/LookupTransform'}
     _rootschema = Root._schema
@@ -5072,6 +5127,11 @@ class TimeUnitTransform(VegaLiteSchema):
         The data field to apply time unit.
     timeUnit : TimeUnit
         The timeUnit.
+    
+    Dict-Only Attributes
+    --------------------
+    'as' : string
+        The output field to write the timeUnit value.
     """
     _schema = {'$ref': '#/definitions/TimeUnitTransform'}
     _rootschema = Root._schema
@@ -5219,6 +5279,14 @@ class TopLevelLayerSpec(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
         represents the width of a single view.  __See also:__ The documentation for [width 
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
+    
+    Dict-Only Attributes
+    --------------------
+    '$schema' : string
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless 
+        you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property 
+        allows automatic validation and autocomplete in editors that support JSON schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelLayerSpec'}
     _rootschema = Root._schema
@@ -5277,6 +5345,14 @@ class TopLevelHConcatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
+    
+    Dict-Only Attributes
+    --------------------
+    '$schema' : string
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless 
+        you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property 
+        allows automatic validation and autocomplete in editors that support JSON schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
     _rootschema = Root._schema
@@ -5336,6 +5412,14 @@ class TopLevelRepeatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
+    
+    Dict-Only Attributes
+    --------------------
+    '$schema' : string
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless 
+        you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property 
+        allows automatic validation and autocomplete in editors that support JSON schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
     _rootschema = Root._schema
@@ -5393,6 +5477,14 @@ class TopLevelVConcatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
+    
+    Dict-Only Attributes
+    --------------------
+    '$schema' : string
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless 
+        you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property 
+        allows automatic validation and autocomplete in editors that support JSON schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
     _rootschema = Root._schema
@@ -5452,6 +5544,14 @@ class TopLevelFacetSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
+    
+    Dict-Only Attributes
+    --------------------
+    '$schema' : string
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless 
+        you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property 
+        allows automatic validation and autocomplete in editors that support JSON schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelFacetSpec'}
     _rootschema = Root._schema
@@ -5558,6 +5658,14 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this 
         represents the width of a single view.  __See also:__ The documentation for [width 
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
+    
+    Dict-Only Attributes
+    --------------------
+    '$schema' : string
+        URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless 
+        you have a reason to change this, use 
+        `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property 
+        allows automatic validation and autocomplete in editors that support JSON schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelFacetedUnitSpec'}
     _rootschema = Root._schema
