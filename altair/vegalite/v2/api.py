@@ -507,11 +507,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
-    def transform_lookup(self, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
+    def transform_lookup(self, as_=Undefined, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
         """Add a LookupTransform to the schema
 
         Attributes
         ----------
+        as_ : string or List(string)
+            The field or fields for storing the computed formula value.
+            If `from.fields` is specified, the transform will use the same names for `as`.
+            If `from.fields` is not specified, `as` has to be a string and we put
+            the whole object into the data under the specified name.
         from_ : LookupData
             Secondary data reference.
         lookup : string
@@ -528,6 +533,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.LookupTransform : underlying transform object
         """
+        if as_ is not Undefined:
+            if 'as' in kwargs:
+                raise ValueError("transform_lookup: both 'as_' and 'as' passed as arguments.")
+            kwargs['from'] = from_
         if from_ is not Undefined:
             if 'from' in kwargs:
                 raise ValueError("transform_lookup: both 'from_' and 'from' passed as arguments.")
