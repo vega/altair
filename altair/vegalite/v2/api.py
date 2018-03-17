@@ -55,8 +55,8 @@ class SelectionMapping(core.VegaLiteSchema):
         If the mapping contains only one selection, then the name need not
         be specified.
         """
-        if name is None and len(self._kwds) == 1:
-            name = list(self._kwds.keys())[0]
+        if name is None:
+            name = self._get_name()
         if name not in self._kwds:
             raise ValueError("'{0}' is not a valid selection name "
                              "in this mapping".format(name))

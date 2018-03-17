@@ -174,3 +174,34 @@ def test_facet_parse():
     assert 'data' not in dct['spec']
     assert dct['facet'] == {'column': {'field': 'column', 'type': 'ordinal'},
                             'row': {'field': 'row', 'type': 'nominal'}}
+
+
+def test_SelectionMapping():
+    # test instantiation of selections
+    interval = alt.selection_interval(name='selec_1')
+    assert interval['selec_1'].type == 'interval'
+    assert interval._get_name() == 'selec_1'
+
+    single = alt.selection_single(name='selec_2')
+    assert single['selec_2'].type == 'single'
+    assert single._get_name() == 'selec_2'
+
+    multi = alt.selection_multi(name='selec_3')
+    assert multi['selec_3'].type == 'multi'
+    assert multi._get_name() == 'selec_3'
+
+    # test addition
+    x = single + multi + interval
+    assert x.to_dict().keys() == {'selec_1', 'selec_2', 'selec_3'}
+
+    y = single.copy()
+    y += multi
+    y += interval
+    assert x.to_dict() == y.to_dict()
+
+    # test logical operations
+    x = single & multi
+    assert isinstance(x, alt.SelectionAnd)
+
+    y = single | multi
+    assert isinstance(y, alt.SelectionOr)
