@@ -331,8 +331,9 @@ def update_nested(original, update, copy=False):
     >>> original = {'x': {'b': 2, 'c': 4}}
     >>> update = {'x': {'b': 5, 'd': 6}, 'y': 40}
     >>> update_nested(original, update)
+    {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     >>> original
-    {'x': {'b': 5, 'c': 2, 'd': 6}, 'y': 40}
+    {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     """
     if copy:
         original = deepcopy(original)
