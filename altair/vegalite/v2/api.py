@@ -103,7 +103,7 @@ def value(value, **kwargs):
     return dict(value=value, **kwargs)
 
 
-def selection(name=None, **kwds):
+def selection(name=None, type=Undefined, **kwds):
     """Create a named selection.
 
     Parameters
@@ -111,6 +111,8 @@ def selection(name=None, **kwds):
     name : string (optional)
         The name of the selection. If not specified, a unique name will be
         created.
+    type : string
+        The type of the selection: one of ["interval", "single", or "multi"]
     **kwds :
         additional keywords will be used to construct a SelectionDef instance
         that controls the selection.
@@ -123,26 +125,25 @@ def selection(name=None, **kwds):
     if name is None:
         name = "selector{0:03d}".format(selection.counter)
         selection.counter += 1
-    return SelectionMapping(**{name: core.SelectionDef(**kwds)})
+    return SelectionMapping(**{name: core.SelectionDef(type=type, **kwds)})
 
 selection.counter = 1
 
-
 @utils.use_signature(core.IntervalSelection)
 def selection_interval(**kwargs):
-    """A selection with type='interval'"""
+    """Create a selection with type='interval'"""
     return selection(type='interval', **kwargs)
 
 
 @utils.use_signature(core.MultiSelection)
 def selection_multi(**kwargs):
-    """A selection with type='multi'"""
+    """Create a selection with type='multi'"""
     return selection(type='multi', **kwargs)
 
 
 @utils.use_signature(core.SingleSelection)
 def selection_single(**kwargs):
-    """A selection with type='single'"""
+    """Create a selection with type='single'"""
     return selection(type='single', **kwargs)
 
 
