@@ -205,3 +205,36 @@ def test_SelectionMapping():
 
     y = single | multi
     assert isinstance(y, alt.SelectionOr)
+
+
+def test_transforms():
+    # aggregate transform
+    chart = alt.Chart().transform_aggregate([], ['foo'])
+    kwds = {'aggregate': [], 'groupby': ['foo']}
+    assert chart.transform == [alt.AggregateTransform(**kwds)]
+
+    # bin transform
+    chart = alt.Chart().transform_bin("binned", field="field", bin=True)
+    kwds = {'as': 'binned', 'field': 'field', 'bin': True}
+    assert chart.transform == [alt.BinTransform(**kwds)]
+
+    # calcualte transform
+    chart = alt.Chart().transform_calculate("calc", "datum.a * 4")
+    kwds = {'as': 'calc', 'calculate': 'datum.a * 4'}
+    assert chart.transform == [alt.CalculateTransform(**kwds)]
+
+    # filter transform
+    chart = alt.Chart().transform_filter("datum.a < 4")
+    assert chart.transform == [alt.FilterTransform(filter="datum.a < 4")]
+
+    # lookup transform
+    lookup = alt.LookupData(alt.UrlData('foo.csv'), 'id', ['rate'])
+    chart = alt.Chart().transform_lookup(lookup, lookup='a', default='b')
+    kwds = {'from': lookup,
+            'lookup': 'a', 'default': 'b'}
+    assert chart.transform == [alt.LookupTransform(**kwds)]
+
+    # timeUnit transform
+    chart = alt.Chart().transform_timeunit("foo", field="x", timeUnit="date")
+    kwds = {'as': 'foo', 'field': 'x', 'timeUnit': 'date'}
+    assert chart.transform == [alt.TimeUnitTransform(**kwds)]
