@@ -114,51 +114,6 @@ def sanitize_dataframe(df):
     return df
 
 
-def prepare_vegalite_spec(spec, data=None):
-    """Prepare a Vega-Lite spec for sending to the frontend.
-
-    This allows data to be passed in either as part of the spec
-    or separately. If separately, the data is assumed to be a
-    pandas DataFrame or object that can be converted to to a DataFrame.
-    Note that if data is not None, this modifies spec in-place
-    """
-
-    if isinstance(data, pd.DataFrame):
-        # We have to do the isinstance test first because we can't
-        # compare a DataFrame to None.
-        data = sanitize_dataframe(data)
-        spec['data'] = {'values': data.to_dict(orient='records')}
-    elif data is None:
-        # Data is either passed in spec or error
-        if 'data' not in spec:
-            raise ValueError('No data provided')
-    else:
-        # As a last resort try to pass the data to a DataFrame and use it
-        data = pd.DataFrame(data)
-        data = sanitize_dataframe(data)
-        spec['data'] = {'values': data.to_dict(orient='records')}
-    return spec
-
-
-def prepare_vega_spec(spec, data=None):
-    """Prepare a Vega spec for sending to the frontend.
-
-    This allows data to be passed in either as part of the spec
-    or separately. If separately, the data is assumed to be a
-    pandas DataFrame or object that can be converted to to a DataFrame.
-    Note that if data is not None, this modifies spec in-place
-    """
-
-    if isinstance(data, dict):
-        spec['data'] = []
-        # We have to do the isinstance test first because we can't
-        # compare a DataFrame to None.
-        for key, value in data.items():
-            data = sanitize_dataframe(value)
-            spec['data'].append({'name': key, 'values': data.to_dict(orient='records')})
-    return spec
-
-
 def parse_shorthand(shorthand):
     """
     Parse the shorthand expression for aggregation, field, and type.
@@ -331,8 +286,9 @@ def update_nested(original, update, copy=False):
     >>> original = {'x': {'b': 2, 'c': 4}}
     >>> update = {'x': {'b': 5, 'd': 6}, 'y': 40}
     >>> update_nested(original, update)
+    {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     >>> original
-    {'x': {'b': 5, 'c': 2, 'd': 6}, 'y': 40}
+    {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     """
     if copy:
         original = deepcopy(original)

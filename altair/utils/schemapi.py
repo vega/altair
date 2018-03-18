@@ -175,6 +175,11 @@ class SchemaBase(object):
         else:
             return "{0}({1!r})".format(self.__class__.__name__, self._args[0])
 
+    def __eq__(self, other):
+        return (type(self) is type(other)
+                and self._args == other._args
+                and self._kwds == other._kwds)
+
     def to_dict(self, validate=True, ignore=[], context={}):
         """Return a dictionary representation of the object
 

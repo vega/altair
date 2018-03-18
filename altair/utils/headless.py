@@ -12,6 +12,23 @@ import six
 
 from .importing import attempt_import
 from .core import write_file_or_filename
+from ._py3k_compat import urlopen, HTTPError, URLError
+
+
+def connection_ok():
+    """Check web connection.
+    Returns True if web connection is OK, False otherwise.
+    """
+    try:
+        urlopen('http://vega.github.io', timeout=1)
+    except HTTPError:
+        # connection works, but there's an HTTP error
+        return True
+    except URLError:
+        # This is raised if there is no internet connection
+        return False
+    else:
+        return True
 
 
 HTML_TEMPLATE = """

@@ -12,4 +12,4 @@ install:
   - python setup.py install
 
 script:
-  python -m pytest altair
+  python -m pytest --pyargs altair
