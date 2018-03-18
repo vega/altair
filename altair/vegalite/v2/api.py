@@ -555,7 +555,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         if as_ is not Undefined:
             if 'as' in kwargs:
                 raise ValueError("transform_lookup: both 'as_' and 'as' passed as arguments.")
-            kwargs['from'] = from_
+            kwargs['as'] = as_
         if from_ is not Undefined:
             if 'from' in kwargs:
                 raise ValueError("transform_lookup: both 'from_' and 'from' passed as arguments.")

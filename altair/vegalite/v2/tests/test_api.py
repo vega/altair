@@ -235,10 +235,13 @@ def test_transforms():
     assert chart.transform == [alt.FilterTransform(filter="datum.a < 4")]
 
     # lookup transform
-    lookup = alt.LookupData(alt.UrlData('foo.csv'), 'id', ['rate'])
-    chart = alt.Chart().transform_lookup(lookup, lookup='a', default='b')
-    kwds = {'from': lookup,
-            'lookup': 'a', 'default': 'b'}
+    lookup_data = alt.LookupData(alt.UrlData('foo.csv'), 'id', ['rate'])
+    chart = alt.Chart().transform_lookup(from_=lookup_data, as_='a',
+                                         lookup='a', default='b')
+    kwds = {'from': lookup_data,
+            'as': 'a',
+            'lookup': 'a',
+            'default': 'b'}
     assert chart.transform == [alt.LookupTransform(**kwds)]
 
     # timeUnit transform
