@@ -49,24 +49,6 @@ class SelectionMapping(core.VegaLiteSchema):
     }
     _rootschema = core.Root._schema
 
-    def ref(self, name=None):
-        """Return a named selection reference.
-
-        If the mapping contains only one selection, then the name need not
-        be specified.
-        """
-        if name is None:
-            name = self._get_name()
-        if name not in self._kwds:
-            raise ValueError("'{0}' is not a valid selection name "
-                             "in this mapping".format(name))
-        return {"selection": name}
-
-    def _get_name(self):
-        if len(self._kwds) != 1:
-            raise ValueError("Selection Mapping has more than one name")
-        return next(iter(self._kwds))
-
     def __add__(self, other):
         if isinstance(other, SelectionMapping):
             copy = self.copy()
@@ -82,6 +64,34 @@ class SelectionMapping(core.VegaLiteSchema):
         else:
             return NotImplemented
 
+
+class NamedSelection(SelectionMapping):
+    """A SelectionMapping with a single named selection item"""
+    _schema = {
+        'type': 'object',
+        'additionalPropeties': {'$ref': '#/definitions/SelectionDef'},
+        'minProperties': 1, 'maxProperties': 1
+    }
+    _rootschema = core.Root._schema
+
+    def _get_name(self):
+        if len(self._kwds) != 1:
+            raise ValueError("NamedSelection has multiple properties")
+        return next(iter(self._kwds))
+
+    def ref(self, name=None):
+        """Return a named selection reference.
+
+        If the mapping contains only one selection, then the name need not
+        be specified.
+        """
+        if name is None:
+            name = self._get_name()
+        if name not in self._kwds:
+            raise ValueError("'{0}' is not a valid selection name "
+                             "in this mapping".format(name))
+        return {"selection": name}
+
     def __invert__(self):
         return core.SelectionNot(**{'not': self._get_name()})
 
@@ -94,6 +104,14 @@ class SelectionMapping(core.VegaLiteSchema):
         if isinstance(other, SelectionMapping):
             other = other._get_name()
         return core.SelectionOr(**{'or': [self._get_name(), other]})
+
+    def __add__(self, other):
+        copy = SelectionMapping(**self._kwds)
+        copy += other
+        return copy
+
+    def __iadd__(self, other):
+        return NotImplemented
 
 #------------------------------------------------------------------------
 # Top-Level Functions
@@ -119,13 +137,13 @@ def selection(name=None, type=Undefined, **kwds):
 
     Returns
     -------
-    selection: SelectionMapping
-        The SelectionMapping object that can be used in chart creation.
+    selection: NamedSelection
+        The selection object that can be used in chart creation.
     """
     if name is None:
         name = "selector{0:03d}".format(selection.counter)
         selection.counter += 1
-    return SelectionMapping(**{name: core.SelectionDef(type=type, **kwds)})
+    return NamedSelection(**{name: core.SelectionDef(type=type, **kwds)})
 
 selection.counter = 1
 
@@ -182,7 +200,7 @@ def condition(predicate, if_true, if_false, **kwargs):
 
     Parameters
     ----------
-    predicate: SelectionMapping, LogicalOperandPredicate, expr.Expression, dict, or string
+    predicate: NamedSelection, LogicalOperandPredicate, expr.Expression, dict, or string
         the selection predicate or test predicate for the condition.
         if a string is passed, it will be treated as a test operand.
     if_true:
@@ -203,7 +221,7 @@ def condition(predicate, if_true, if_false, **kwargs):
                        core.LogicalOperandPredicate, core.LogicalNotPredicate,
                        core.LogicalOrPredicate, core.LogicalAndPredicate)
 
-    if isinstance(predicate, SelectionMapping):
+    if isinstance(predicate, NamedSelection):
         condition = {'selection': predicate._get_name()}
     elif isinstance(predicate, selection_predicates):
         condition = {'selection': predicate}
