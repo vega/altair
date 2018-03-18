@@ -9,6 +9,9 @@ import pytest
 import pandas as pd
 
 import altair.vegalite.v2 as alt
+from altair.utils.headless import connection_ok
+
+CONNECTION_OK = connection_ok()
 
 
 def test_chart_data_types():
@@ -125,6 +128,10 @@ def test_selection_to_dict():
 def test_savechart(format):
     from ..examples.bar import chart
 
+    if format in ['png', 'svg']:
+        if not CONNECTION_OK:
+            pytest.skip("No internet connection")
+
     if format in ['html', 'json']:
         out = io.StringIO()
         mode = 'r'
@@ -238,3 +245,18 @@ def test_transforms():
     chart = alt.Chart().transform_timeunit("foo", field="x", timeUnit="date")
     kwds = {'as': 'foo', 'field': 'x', 'timeUnit': 'date'}
     assert chart.transform == [alt.TimeUnitTransform(**kwds)]
+
+
+def test_resolve_methods():
+    chart = alt.LayerChart().resolve_axis(x='shared', y='independent')
+    assert chart.resolve == alt.Resolve(axis=alt.AxisResolveMap(x='shared', y='independent'))
+
+    chart = alt.LayerChart().resolve_legend(color='shared', fill='independent')
+    assert chart.resolve == alt.Resolve(legend=alt.LegendResolveMap(color='shared', fill='independent'))
+
+    chart = alt.LayerChart().resolve_scale(x='shared', y='independent')
+    assert chart.resolve == alt.Resolve(scale=alt.ScaleResolveMap(x='shared', y='independent'))
+
+    with pytest.raises(ValueError) as err:
+        alt.Chart().resolve_axis(x='shared')
+    assert str(err.value).endswith("object has no attribute 'resolve'")

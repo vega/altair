@@ -570,6 +570,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
         """Copy the chart and update the resolve property with kwargs"""
+        if not hasattr(self, 'resolve'):
+            raise ValueError("{0} object has no attribute "
+                             "'resolve'".format(self.__class__))
         copy = self.copy()
         if copy.resolve is Undefined:
             copy.resolve = core.Resolve()
