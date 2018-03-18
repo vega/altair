@@ -20,7 +20,7 @@ from ..display import SpecType, MimeBundleType, RendererType
 VEGA_MIME_TYPE = 'application/vnd.vega.v2+json'  # type: str
 
 # The entry point group that can be used by other packages to declare other
-# renderers that will be auto-detected. Explicit registration is also 
+# renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
 ENTRY_POINT_GROUP = 'altair.vega.v2.renderer'  # type: str
 
@@ -47,7 +47,7 @@ class Vega(Displayable):
     """An IPython/Jupyter display class for rendering Vega 2."""
 
     renderers = renderers
-    schema_path = os.path.join(here,'vega-schema.json')
+    schema_path = os.path.join(here, 'schema', 'vega-schema.json')
 
 
 def vega(spec: dict, validate=True):
