@@ -128,10 +128,6 @@ def test_selection_to_dict():
 def test_savechart(format):
     from ..examples.bar import chart
 
-    if format in ['png', 'svg']:
-        if not CONNECTION_OK:
-            pytest.skip("No internet connection")
-
     if format in ['html', 'json']:
         out = io.StringIO()
         mode = 'r'
@@ -141,13 +137,17 @@ def test_savechart(format):
     fid, filename = tempfile.mkstemp(suffix='.' + format)
 
     try:
-        # selenium may not be installed; skip the test if we get a selenium error.
         try:
             chart.savechart(out, format=format)
             chart.savechart(filename)
-        except RuntimeError as err:
-            if format in ['png', 'svg'] and 'selenium' in str(err):
+        except ImportError as err:
+            if 'selenium' in str(err) or 'chromedriver' in str(err):
                 pytest.skip("selenium installation required for png/svg export")
+            else:
+                raise
+        except ValueError as err:
+            if str(err).startswith('Internet connection'):
+                pytest.skip("web connection required for png/svg export")
             else:
                 raise
 

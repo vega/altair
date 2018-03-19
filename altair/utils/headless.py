@@ -135,9 +135,9 @@ def save_spec(spec, fp, mode=None, format=None, driver_timeout=10):
         raise NotImplementedError("save_spec only supports 'svg' and 'png'")
 
     if webdriver is None:
-        raise ValueError("selenium package is required for saving chart as {0}".format(format))
+        raise ImportError("selenium package is required for saving chart as {0}".format(format))
     if ChromeOptions is None:
-        raise ValueError("chromedriver is required for saving chart as {0}".format(format))
+        raise ImportError("chromedriver is required for saving chart as {0}".format(format))
 
     if mode is None:
         if '$schema' in spec:
