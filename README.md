@@ -80,30 +80,49 @@ Vega-Lite JSON data can be rendered in the following user-interfaces:
 
 ## Installation
 
-Altair can be installed with the following commands:
+**Note**: Altair version 2.0 requires Python 3.5 or later.
+It does not work with Python 2.
+
+To use Altair for visualization, you need to install two sets of tools
+
+1. The core Altair Package and its dependencies
+
+2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`,
+   `JupyterLab`, or `nteract`)
+
+This briefly describes installation with JupyterLab; for the Jupyter notebook
+or for nteract see [`displaying-charts`](https://altair-viz.github.io/user_guide/display.html#displaying-charts).
+
+Both Altair and JupyterLab can be installed with `pip`:
 
 ```
-pip install altair
-pip install --upgrade notebook
+$ pip install altair jupyterlab
 ```
 
-In addition, to render Altair visualizations in the classic Jupyter Notebook,
-you will need to enable the [ipyvega](https://github.com/vega/ipyvega) nbextension:
+or with conda:
 
 ```
-jupyter nbextension enable --sys-prefix --py vega
+conda install altair jupyterlab --channel conda-forge
 ```
 
-This single step is not needed for usage with JupyterLab and nteract, which have built-in
-support for Vega-Lite.
-
-If you use conda to install Altair:
+For JupyterLab version 0.32 or newer, nothing else needs to be done to use
+the main Altair API. For JupyterLab version 0.31, you'll additionally need to
+run the following:
 
 ```
-conda install altair --channel conda-forge
+jupyter labextension install @jupyterlab/vega3-extension
 ```
 
-the nbextension is automatically enabled.
+Once altair and JupyterLab are installed, launch JupyterLab by running:
+
+```
+jupyter lab
+```
+
+This should launch a web browser window. The first time JupyterLab is launched,
+you will see a *Launcher* window: Under the "Notebook" section, click "Python 3"
+to launch a new notebook. Then you should be able to execute Altair code and
+see the rendered charts.
 
 ## Example and tutorial notebooks
 

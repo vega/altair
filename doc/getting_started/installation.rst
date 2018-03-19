@@ -18,7 +18,7 @@ To use Altair for visualization, you need to install two sets of tools
 Here we will briefly describe installation with JupyterLab; for the Jupyter notebook
 or for nteract see :ref:`displaying-charts`.
 
-Both Altair and JupyterLab can be installed with `pip`::
+Both Altair and JupyterLab can be installed with ``pip``::
 
     $ pip install altair jupyterlab
 
@@ -38,7 +38,7 @@ run the following::
     requires a slightly different setup. See :ref:`displaying-charts` for
     details.
 
-Once altair and Jupyterlab are installed, launch Jupyterlab by running::
+Once altair and Jupyterlab are installed, launch JupyterLab by running::
 
     $ jupyter lab
 
