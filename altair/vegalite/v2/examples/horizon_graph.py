@@ -29,8 +29,8 @@ area1 = alt.Chart(df).mark_area(
     alt.Y('y', scale=alt.Scale(domain=[0, 50]), axis=alt.Axis(title='y')),
     opacity = alt.value(0.6)
 ).properties(
-    width=300,
-    height=50
+    width=500,
+    height=75
 )
 
 area2 = area1.encode(

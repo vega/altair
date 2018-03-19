@@ -1,7 +1,12 @@
 """
 Step Chart
------------------
-This example shows Google's stock price over time.
+----------
+This example shows Google's stock price over time. 
+This uses the "step-after" interpolation scheme.
+The full list of interpolation options includes 'linear’,
+‘linear-closed’, ‘step’, ‘step-before’, ‘step-after’, ‘basis’,
+‘basis-open’, ‘basis-closed’, ‘cardinal’, ‘cardinal-open’,
+‘cardinal-closed’, ‘bundle’, and ‘monotone’.
 """
 # category: basic charts
 

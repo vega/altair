@@ -1,7 +1,7 @@
 """
 Layered Histogram
 =================
-This example shows how to make a layered histogram in Altair.
+This example shows how to use opacity to make a layered histogram in Altair.
 """
 
 import pandas as pd
