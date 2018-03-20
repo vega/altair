@@ -1,7 +1,7 @@
 """
 Gantt Chart
 -----------------
-This example shows how to make a simple gantt chart.
+This example shows how to make a simple Gantt chart.
 """
 # category: basic charts
 

@@ -1,7 +1,7 @@
 """
 Line chart with Confidence Interval Band
 ========================================
-This example shows how to make a line chart with a confidence interval Band
+This example shows how to make a line chart with a bootstrapped 95% confidence interval band.
 """
 
 import altair as alt

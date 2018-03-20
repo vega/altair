@@ -1,5 +1,5 @@
 """
-Ploynomial Fit Plot
+Polynomial Fit Plot
 ===================
 This example shows how to overlay data with a fitted polynomial
 """
