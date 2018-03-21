@@ -177,8 +177,9 @@ Version 0.31 of JupyterLab includes built-in support for VegaLite 1.x and Vega
     import altair.vegalite.v1 as alt
 
 To add support for Vega-Lite 2.x and Vega 3.x install the following JupyterLab
-extension::
+extension (which requires nodejs)::
 
+    conda install -c conda-forge nodejs  # if you do not already have nodejs installed
     jupyter labextension install @jupyterlab/vega3-extension
 
 and then import Altair as::
@@ -193,8 +194,10 @@ Vega 3.x. These will work out of the box with Altair imported as::
 
     import altair as alt
 
-An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers::
+An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
+(labextension install requires nodejs)::
 
+    conda install -c conda-forge nodejs  # if you do not already have nodejs installed
     jupyter labextension install @jupyterlab/vega2-extension
 
 .. _display-nteract:
