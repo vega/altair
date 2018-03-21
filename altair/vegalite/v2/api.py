@@ -348,27 +348,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         """
-        if isinstance(fp, six.string_types):
-            format = fp.split('.')[-1]
-
-        if format is None:
-            raise ValueError("must specify file format: "
-                             "['png', 'eps', 'html', 'json']")
-        elif format == 'json':
-            utils.write_file_or_filename(fp, self.to_json(**kwargs), mode='w')
-        elif format == 'html':
-            from .html import HTML_TEMPLATE
-            opt = dict(renderer=kwargs.pop('renderer', 'canvas'),
-                       actions=kwargs.pop('actions', False))
-            if opt['renderer'] not in ('canvas', 'svg'):
-                raise ValueError("renderer must be 'canvas' or 'svg'")
-            spec_html = HTML_TEMPLATE.format(spec=self.to_json(**kwargs),
-                                             opt=json.dumps(opt))
-            utils.write_file_or_filename(fp, spec_html, mode='w')
-        elif format in ['png', 'svg']:
-            utils.save_spec(self.to_dict(), fp, format=format, **kwargs)
-        else:
-            raise ValueError("unrecognized format: '{0}'".format(format))
+        from ...utils.savechart import savechart
+        return savechart(self, fp=fp, format=format, **kwargs)
 
     # Layering and stacking
 
