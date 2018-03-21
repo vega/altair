@@ -3,7 +3,8 @@ import textwrap
 
 import six
 
-from .headless import save_spec, write_file_or_filename
+from .core import write_file_or_filename
+from .headless import spec_to_image_mimebundle
 
 
 HTML_TEMPLATE = {
@@ -46,7 +47,7 @@ HTML_TEMPLATE = {
 
 
 def savechart(chart, fp, format=None, mode=None,
-              vegalite_version=2, vega_version=3, vegaembed_version=3,
+              vegalite_version='2', vega_version='3', vegaembed_version='3',
               opt=None, json_kwds=None):
     """Save a chart to file in a variety of formats
 
@@ -101,8 +102,7 @@ def savechart(chart, fp, format=None, mode=None,
             mode = 'vega-lite'
 
     if mode not in ['vega', 'vega-lite']:
-        print(mode)
-        raise ValueError("mode must be 'vega' or 'vegalite', "
+        raise ValueError("mode must be 'vega' or 'vega-lite', "
                          "not '{0}'".format(mode))
 
     if format == 'json':
@@ -119,6 +119,13 @@ def savechart(chart, fp, format=None, mode=None,
                                     vegaembed_version=vegaembed_version)
         write_file_or_filename(fp, spec_html, mode='w')
     elif format in ['png', 'svg']:
-        save_spec(chart.to_dict(), fp, mode=mode, format=format)
+        mimebundle = spec_to_image_mimebundle(spec, format=format, mode=mode,
+                                              vega_version=vega_version,
+                                              vegalite_version=vegalite_version,
+                                              vegaembed_version=vegaembed_version)
+        if format == 'png':
+            write_file_or_filename(fp, mimebundle['image/png'], mode='wb')
+        else:
+            write_file_or_filename(fp, mimebundle['image/svg+xml'], mode='w')
     else:
         raise ValueError("unrecognized format: '{0}'".format(format))

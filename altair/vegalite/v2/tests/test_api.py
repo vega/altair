@@ -9,9 +9,6 @@ import pytest
 import pandas as pd
 
 import altair.vegalite.v2 as alt
-from altair.utils.headless import connection_ok
-
-CONNECTION_OK = connection_ok()
 
 
 def test_chart_data_types():
@@ -128,7 +125,7 @@ def test_selection_to_dict():
 def test_savechart(format):
     from ..examples.bar import chart
 
-    if format in ['html', 'json']:
+    if format in ['html', 'json', 'svg']:
         out = io.StringIO()
         mode = 'r'
     else:
