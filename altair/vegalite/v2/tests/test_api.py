@@ -263,3 +263,13 @@ def test_resolve_methods():
     with pytest.raises(ValueError) as err:
         alt.Chart().resolve_axis(x='shared')
     assert str(err.value).endswith("object has no attribute 'resolve'")
+
+
+def test_LookupData():
+    df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
+    lookup = alt.LookupData(data=df, key='x')
+    dct = lookup.to_dict()
+    assert dct['key'] == 'x'
+    assert dct['data'] == {'values': [{'x': 1, 'y': 4},
+                                      {'x': 2, 'y': 5},
+                                      {'x': 3, 'y': 6}]}
