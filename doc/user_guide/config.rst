@@ -220,4 +220,68 @@ the y labels as a dollar value:
 Additional formatting codes are available; for a listing of these see the
 `d3 Format Code Documentation <https://github.com/d3/d3-format/blob/master/README.md#format>`_.
 
-*TODO: more config options*
+
+Adjusting the Legend
+--------------------
+
+A legend is added to the chart automatically when the `color`, `shape` or `size` arguments are passed to the :func:`encode` function. In this example we'll use `color`.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color='species'
+  )
+
+In this case, the legend can be customized by introducing the :class:`Color` class and taking advantage of its `legend` argument. The `shape` and `size` arguments have their own corresponding classes.
+
+The legend option on all of them expects a :class:`Legend` object as its input, which accepts arguments to customize many aspects of its appearance. One simple example is giving the legend a `title`.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', legend=alt.Legend(title="Species by color")),
+  )
+
+Another thing you can do is move the legend to another position with the `orient` argument.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', legend=alt.Legend(orient="left")),
+  )
+
+You can remove the legend entirely by submitting a null value.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', legend=None),
+  )
