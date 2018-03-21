@@ -243,12 +243,12 @@ The legend can be customized by introducing the :class:`Color` function and taki
 
 .. altair-plot::
 
-  from altair import Chart
+  import altair as alt
   from vega_datasets import data
 
   iris = data.iris()
 
-  chart = Chart(iris).mark_point().encode(
+  chart = alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
       color=alt.Color('species', legend=alt.Legend(title="Species by color")),
@@ -258,12 +258,12 @@ Another thing you can do is move the legend to another position with the `orient
 
 .. altair-plot::
 
-  from altair import Chart
+  import altair as alt
   from vega_datasets import data
 
   iris = data.iris()
 
-  chart = Chart(iris).mark_point().encode(
+  chart = alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
       color=alt.Color('species', legend=alt.Legend(orient="left")),
@@ -273,12 +273,12 @@ You can remove the legend entirely by submitting a null value.
 
 .. altair-plot::
 
-  from altair import Chart
+  import altair as alt
   from vega_datasets import data
 
   iris = data.iris()
 
-  chart = Chart(iris).mark_point().encode(
+  chart = alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
       color=alt.Color('species', legend=None),
