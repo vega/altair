@@ -224,7 +224,7 @@ Additional formatting codes are available; for a listing of these see the
 Adjusting the Legend
 --------------------
 
-A legend is added to the chart automatically when the `color` argument is passed to the :func:`encode` function.
+A legend is added to the chart automatically when the `color`, `shape` or `size` arguments are passed to the :func:`encode` function. In this example we'll use `color`.
 
 .. altair-plot::
 
@@ -239,7 +239,9 @@ A legend is added to the chart automatically when the `color` argument is passed
       color='species'
   )
 
-The legend can be customized by introducing the :class:`Color` function and taking advantage of its `legend` argument. It expects a :class:`Legend` object as its input, which accepts arguments to customize many aspects of its appearance. One simple example is giving the legend a `title`.
+In this case, the legend can be customized by introducing the :class:`Color` class and taking advantage of its `legend` argument. The `shape` and `size` arguments have their own corresponding classes.
+
+The legend option on all of them expects a :class:`Legend` object as its input, which accepts arguments to customize many aspects of its appearance. One simple example is giving the legend a `title`.
 
 .. altair-plot::
 
