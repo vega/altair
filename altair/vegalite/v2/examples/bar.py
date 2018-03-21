@@ -4,7 +4,7 @@ Simple Bar Chart
 This example shows a basic bar chart created with Altair.
 """
 # category: basic charts
-from altair import Chart
+import altair as alt
 import pandas as pd
 
 data = pd.DataFrame({
@@ -12,7 +12,7 @@ data = pd.DataFrame({
     'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
 })
 
-chart = Chart(data).mark_bar().encode(
+chart = alt.Chart(data).mark_bar().encode(
     x='a',
     y='b'
 )
