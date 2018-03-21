@@ -168,7 +168,6 @@ way Altair represents your encoding in the resulting plot.
 
 Effect of Data Type on Color Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 As an example of this, here we will represent the same data three different ways,
 with the color encoded as a *quantitative*, *ordinal*, and *nominal* type,
 using three vertically-concatenated charts (see :ref:`vconcat`):
@@ -196,8 +195,7 @@ or continuous legend is used.
 .. _type-axis-scale:
 
 Effect of Data Type on Axis Scales
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Similarly, for x and y axis encodings, the type used for the data will affect
 the scales used and the characteristics of the mark. For example, here is the
 difference between a ``quantitative`` and ``ordinal`` scale for an column
