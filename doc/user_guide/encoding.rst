@@ -106,8 +106,8 @@ Facet Channels:
 =======  ================  ============================  ===================================
 Channel  Altair Class      Description                   Example
 =======  ================  ============================  ===================================
-column   :class:`Column`   The column of a faceted plot  
-row      :class:`Row`      The row of a faceted plot     
+column   :class:`Column`   The column of a faceted plot
+row      :class:`Row`      The row of a faceted plot
 =======  ================  ============================  ===================================
 
 
@@ -128,7 +128,12 @@ nominal       ``N``           a discrete unordered category
 temporal      ``T``           a time or date value
 ============  ==============  ================================================
 
-These types can either be expressed in a long-form using the channel encoding
+If types are not specified for data input as a DataFrame, Altair defaults to
+``quantitative`` for any numeric data, ``temporal`` for date/time data, and
+``nominal`` for string data, but be aware that these defaults are by no means
+always the correct choice!
+
+The types can either be expressed in a long-form using the channel encoding
 classes such as :class:`X` and :class:`Y`, or in short-form using the
 :ref:`Shorthand Syntax <shorthand-description>` discussed below.
 For example, the following two methods of specifying the type will lead to
@@ -181,6 +186,53 @@ using three vertically-concatenated charts (see :ref:`vconcat`):
 The type specification influences the way Altair, via Vega-Lite, decides on
 the color scale to represent the value, and influences whether a discrete
 or continuous legend is used.
+
+Similarly, for x and y axis encodings, the type used for the data will affect
+the scales used and the characteristics of the mark. For example, here is the
+difference between a ``quantitative`` and ``ordinal`` scale for an column
+that contains integers specifying a year:
+
+.. altair-plot::
+
+    pop = data.population.url
+
+    base = alt.Chart(pop).mark_bar().encode(
+        alt.Y('mean(people):Q', axis=alt.Axis(title='total population'))
+    ).properties(
+        width=200,
+        height=200
+    )
+
+    alt.hconcat(
+        base.encode(x='year:Q').properties(title='year=quantitative'),
+        base.encode(x='year:O').properties(title='year=ordinal')
+    )
+
+In altair, quantitative scales always start at zero unless otherwise
+specified, while ordinal scales are limited to the values within the data.
+
+Overriding the behavior of including zero in the axis, we see that even then
+the precise appearance of the marks representing the data are affected by
+the data type:
+
+.. altair-plot::
+
+    base.encode(
+        alt.X('year:Q',
+            scale=alt.Scale(zero=False)
+        )
+    )
+
+Because quantitative values do not have an inherent width, the bars do not
+fill the entire space between the values.
+This view also makes clear the missing year of data that was not immediately
+apparent when we treated the years as categories.
+
+This kind of behavior is sometimes surprising to new users, but it emphasizes
+the importance of thinking carefully about your data types when visualizing
+data: a visual encoding that is suitable for categorical data may not be
+suitable for quantitative data, and vice versa.
+
 
 .. _encoding-aggregates:
 
