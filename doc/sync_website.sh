@@ -7,7 +7,7 @@ cd _build
 
 # clone the repo if needed
 if test -d altair-viz.github.io; 
-then echo "using existing cloned astropy directory";
+then echo "using existing cloned altair directory";
 else git clone git@github.com:altair-viz/altair-viz.github.io.git;
 fi
 
