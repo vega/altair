@@ -41,8 +41,9 @@ or with ``conda``::
 
 For JupyterLab version 0.32 or newer, nothing else needs to be done to use
 the main Altair API. For JupyterLab version 0.31, you'll additionally need to
-run the following::
+install the vega3 jupyterlab extension, which requires nodejs::
 
+    $ conda install -c conda-forge nodejs  # if you do not already have nodejs installed
     $ jupyter labextension install @jupyterlab/vega3-extension
 
 Once altair and Jupyterlab are installed, launch JupyterLab by running::
