@@ -73,15 +73,15 @@ Vega-Lite JSON data can be rendered in the following user-interfaces:
 * Auto-generate Altair Python code from a Vega-Lite JSON spec.
 * Display visualizations in the live Jupyter Notebook, JupyterLab, nteract, on GitHub and
   [nbviewer](http://nbviewer.jupyter.org/).
-* Export visualizations to PNG images, stand-alone HTML pages and the [Online Vega-Lite
-  Editor](https://vega.github.io/vega-editor/?mode=vega-lite).
+* Export visualizations to PNG/SVG images, stand-alone HTML pages and the
+[Online Vega-Lite Editor](https://vega.github.io/editor/#/).
 * Serialize visualizations as JSON files.
-* Explore Altair with 40 example datasets and over 70 examples.
+* Explore Altair with dozens of examples in the [Example Gallery](https://altair-viz.github.io/gallery/index.html)
 
 ## Installation
 
 **Note**: Altair version 2.0 requires Python 3.5 or later.
-It does not work with Python 2.
+It does not currently work with Python 2.
 
 To use Altair for visualization, you need to install two sets of tools
 
@@ -90,39 +90,9 @@ To use Altair for visualization, you need to install two sets of tools
 2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`,
    `JupyterLab`, or `nteract`)
 
-This briefly describes installation with JupyterLab; for the Jupyter notebook
-or for nteract see [`displaying-charts`](https://altair-viz.github.io/user_guide/display.html#displaying-charts).
-
-Both Altair and JupyterLab can be installed with `pip`:
-
-```
-$ pip install altair jupyterlab
-```
-
-or with conda:
-
-```
-conda install altair jupyterlab --channel conda-forge
-```
-
-For JupyterLab version 0.32 or newer, nothing else needs to be done to use
-the main Altair API. For JupyterLab version 0.31, you'll additionally need to
-run the following:
-
-```
-jupyter labextension install @jupyterlab/vega3-extension
-```
-
-Once altair and JupyterLab are installed, launch JupyterLab by running:
-
-```
-jupyter lab
-```
-
-This should launch a web browser window. The first time JupyterLab is launched,
-you will see a *Launcher* window: Under the "Notebook" section, click "Python 3"
-to launch a new notebook. Then you should be able to execute Altair code and
-see the rendered charts.
+Altair can be installed with either ``pip`` or with ``conda``.
+For full installation instructions, please see
+https://altair-viz.github.io/getting_started/installation.html
 
 ## Example and tutorial notebooks
 
