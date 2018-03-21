@@ -220,4 +220,66 @@ the y labels as a dollar value:
 Additional formatting codes are available; for a listing of these see the
 `d3 Format Code Documentation <https://github.com/d3/d3-format/blob/master/README.md#format>`_.
 
-*TODO: more config options*
+
+Adjusting the Legend
+--------------------
+
+A legend is added to the chart automatically when the `color` argument is passed to the :func:`encode` function.
+
+.. altair-plot::
+
+  from altair import Chart
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color='species'
+  )
+
+The legend can be customized by introducing the :class:`Color` function and taking advantage of its `legend` argument. It expects a :class:`Legend` object as its input, which accepts arguments to customize many aspects of its appearance. One simple example is giving the legend a `title`.
+
+.. altair-plot::
+
+  from altair import Chart
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', legend=alt.Legend(title="Species by color")),
+  )
+
+Another thing you can do is move the legend to another position with the `orient` argument.
+
+.. altair-plot::
+
+  from altair import Chart
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', legend=alt.Legend(orient="left")),
+  )
+
+You can remove the legend entirely by submitting a null value.
+
+.. altair-plot::
+
+  from altair import Chart
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  chart = Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', legend=None),
+  )
