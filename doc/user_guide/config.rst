@@ -116,9 +116,10 @@ just before the chart is rendered.
 
 Adjusting Axis Limits
 ---------------------
-Axis limits can be adjusted using the :class:`Scale` property of the axis
+The default axis limit used by Altair is dependent on the type of the data
+(see, for example, :ref:`type-axis-scale`). To fine-tune the axis limits
+beyond these defaults, you can use the :class:`Scale` property of the axis
 encodings. For example, consider the following plot:
-
 
 .. altair-plot::
 
@@ -132,15 +133,27 @@ encodings. For example, consider the following plot:
         y='Horsepower:Q'
     )
 
-
-Suppose you would like to adjust the limits of the x-axis. You can do this by
-adding a :class:`Scale` property to the :class:`X` encoding that specifies
-these limits:
+Altair inherits from Vega-Lite the convention of always including the zero-point
+in quantitative axes; if you would like to turn this off, you can add a
+:class:`Scale` property to the :class:`X` encoding that specifies ``zero=False``:
 
 .. altair-plot::
 
     alt.Chart(cars).mark_point().encode(
-        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20))),
+        alt.X('Acceleration:Q',
+            scale=alt.Scale(zero=False)
+        ),
+        y='Horsepower:Q'
+    )
+
+To specify exact axis limits, you can use the ``domain`` property of the scale:
+
+.. altair-plot::
+
+    alt.Chart(cars).mark_point().encode(
+        alt.X('Acceleration:Q',
+            scale=alt.Scale(domain=(5, 20))
+        ),
         y='Horsepower:Q'
     )
 
@@ -151,7 +164,9 @@ the ``"clip"`` property of the mark to True:
 .. altair-plot::
 
     alt.Chart(cars).mark_point(clip=True).encode(
-        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20))),
+        alt.X('Acceleration:Q',
+            scale=alt.Scale(domain=(5, 20))
+        ),
         y='Horsepower:Q'
     )
 
@@ -161,26 +176,18 @@ limit to the edge of the domain:
 .. altair-plot::
 
     alt.Chart(cars).mark_point().encode(
-        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20), clamp=True)),
+        alt.X('Acceleration:Q',
+            scale=alt.Scale(
+                domain=(5, 20),
+                clamp=True
+            )
+        ),
         y='Horsepower:Q'
-    )
+    ).interactive()
 
-Finally, you can address this by filtering the data itself, using the
-:meth:`Chart.transform_filter` method, to remove these points from the
-dataset altogether:
-
-.. altair-plot::
-
-    from altair.expr import datum
-
-    alt.Chart(cars).mark_point().encode(
-        alt.X('Acceleration:Q', scale=alt.Scale(domain=(5, 20))),
-        y='Horsepower:Q'
-    ).transform_filter(datum.Acceleration < 20)
-
-
-Some combination of these approaches is usually suitable for adjusting
-of axis limits.
+For interactive charts like the one above, the clamping happens dynamically,
+which can be useful for keeping in mind outliers as you pan and zoom on the
+chart.
 
 
 Adjusting Axis Labels
