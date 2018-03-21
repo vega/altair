@@ -349,7 +349,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             associated with the specified format.
         """
         from ...utils.savechart import savechart
-        return savechart(self, fp=fp, format=format, **kwargs)
+        return savechart(self, fp=fp, format=format,
+                         vegalite_version='2.3',
+                         vega_version='3.2',
+                         vegaembed_version='3.0',
+                         **kwargs)
 
     # Layering and stacking
 

@@ -83,9 +83,11 @@ EXTRACT_CODE = {
             .catch(function(err) { console.error(err); });
         """}
 
-def spec_to_image_mimebundle(spec, format, mode, driver_timeout=10,
-                             vegalite_version='2', vega_version='3',
-                             vegaembed_version='3'):
+def spec_to_image_mimebundle(spec, format, mode,
+                             vega_version,
+                             vegaembed_version,
+                             vegalite_version=None,
+                             driver_timeout=10):
     """Conver a vega/vega-lite specification to a PNG/EPS image
 
     Parameters
@@ -96,15 +98,15 @@ def spec_to_image_mimebundle(spec, format, mode, driver_timeout=10,
         the file format to be saved.
     mode : string {'vega' | 'vega-lite'}
         The rendering mode.
-    driver_timeout : int (optional)
-        the number of seconds to wait for page load before raising an
-        error (default: 10)
     vega_version : string
         For html output, the version of vega.js to use
     vegalite_version : string
         For html output, the version of vegalite.js to use
     vegaembed_version : string
         For html output, the version of vegaembed.js to use
+    driver_timeout : int (optional)
+        the number of seconds to wait for page load before raising an
+        error (default: 10)
 
     Returns
     -------
@@ -122,6 +124,9 @@ def spec_to_image_mimebundle(spec, format, mode, driver_timeout=10,
         raise NotImplementedError("format must be 'svg' and 'png'")
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be 'vega' or 'vega-lite'")
+
+    if mode == 'vega-lite' and vegalite_version is None:
+        raise ValueError("must specify vega-lite version")
 
     if webdriver is None:
         raise ImportError("selenium package is required for saving chart as {0}".format(format))

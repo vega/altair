@@ -46,8 +46,8 @@ HTML_TEMPLATE = {
 """}
 
 
-def savechart(chart, fp, format=None, mode=None,
-              vegalite_version='2', vega_version='3', vegaembed_version='3',
+def savechart(chart, fp, vega_version, vegaembed_version,
+              format=None, mode=None, vegalite_version=None,
               opt=None, json_kwds=None):
     """Save a chart to file in a variety of formats
 
@@ -104,6 +104,9 @@ def savechart(chart, fp, format=None, mode=None,
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be 'vega' or 'vega-lite', "
                          "not '{0}'".format(mode))
+
+    if mode == 'vega-lite' and vegalite_version is None:
+        raise ValueError("must specify vega-lite version")
 
     if format == 'json':
         json_spec = json.dumps(spec, **json_kwds)
