@@ -163,6 +163,12 @@ or more.
 
 Specifying the correct type for your data is important, as it affects the
 way Altair represents your encoding in the resulting plot.
+
+.. _type-legend-scale:
+
+Effect of Data Type on Color Scales
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 As an example of this, here we will represent the same data three different ways,
 with the color encoded as a *quantitative*, *ordinal*, and *nominal* type,
 using three vertically-concatenated charts (see :ref:`vconcat`):
@@ -186,6 +192,11 @@ using three vertically-concatenated charts (see :ref:`vconcat`):
 The type specification influences the way Altair, via Vega-Lite, decides on
 the color scale to represent the value, and influences whether a discrete
 or continuous legend is used.
+
+.. _type-axis-scale:
+
+Effect of Data Type on Axis Scales
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Similarly, for x and y axis encodings, the type used for the data will affect
 the scales used and the characteristics of the mark. For example, here is the
