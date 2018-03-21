@@ -5,14 +5,15 @@ import jsonschema
 import six
 import pandas as pd
 
-from .schema import core, channels, mixins, Undefined
+from .schema import core, channels, mixins, Undefined, SCHEMA_URL, SCHEMA_VERSION
 
 from .data import data_transformers, pipe
 from ... import utils, expr
 from .display import renderers
 
-
-SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v2.json"
+VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
+VEGA_VERSION = '3.2'
+VEGAEMBED_VERSION = '3.0'
 
 #------------------------------------------------------------------------
 # Data Utilities
@@ -31,7 +32,7 @@ def _prepare_data(data):
         warnings.warn("data of type {0} not recognized".format(type(data)))
         return data
 
-
+    
 #------------------------------------------------------------------------
 # Aliases & specializations
 Bin = core.BinParams
@@ -350,9 +351,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         from ...utils.savechart import savechart
         return savechart(self, fp=fp, format=format,
-                         vegalite_version='2.3',
-                         vega_version='3.2',
-                         vegaembed_version='3.0',
+                         vegalite_version=VEGALITE_VERSION,
+                         vega_version=VEGA_VERSION,
+                         vegaembed_version=VEGAEMBED_VERSION,
                          **kwargs)
 
     # Layering and stacking
