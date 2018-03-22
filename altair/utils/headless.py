@@ -88,7 +88,7 @@ def spec_to_image_mimebundle(spec, format, mode,
                              vegaembed_version,
                              vegalite_version=None,
                              driver_timeout=10):
-    """Conver a vega/vega-lite specification to a PNG/EPS image
+    """Conver a vega/vega-lite specification to a PNG/SVG image
 
     Parameters
     ----------
