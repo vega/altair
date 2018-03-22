@@ -42,7 +42,7 @@ import json
 def load_schema():
     """Load the json schema associated with this module's functions"""
     directory = os.path.dirname(__file__)
-    with open(os.path.join(directory, '{schemafile}')) as f:
+    with open(os.path.join(directory, '{schemafile}'), encoding='utf8') as f:
         return json.load(f)
 '''
 
