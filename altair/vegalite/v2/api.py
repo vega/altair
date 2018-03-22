@@ -5,14 +5,15 @@ import jsonschema
 import six
 import pandas as pd
 
-from .schema import core, channels, mixins, Undefined
+from .schema import core, channels, mixins, Undefined, SCHEMA_URL, SCHEMA_VERSION
 
 from .data import data_transformers, pipe
 from ... import utils, expr
 from .display import renderers
 
-
-SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v2.json"
+VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
+VEGA_VERSION = '3.2'
+VEGAEMBED_VERSION = '3.0'
 
 #------------------------------------------------------------------------
 # Data Utilities
@@ -31,7 +32,7 @@ def _prepare_data(data):
         warnings.warn("data of type {0} not recognized".format(type(data)))
         return data
 
-
+    
 #------------------------------------------------------------------------
 # Aliases & specializations
 Bin = core.BinParams
@@ -348,27 +349,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         """
-        if isinstance(fp, six.string_types):
-            format = fp.split('.')[-1]
-
-        if format is None:
-            raise ValueError("must specify file format: "
-                             "['png', 'eps', 'html', 'json']")
-        elif format == 'json':
-            utils.write_file_or_filename(fp, self.to_json(**kwargs), mode='w')
-        elif format == 'html':
-            from .html import HTML_TEMPLATE
-            opt = dict(renderer=kwargs.pop('renderer', 'canvas'),
-                       actions=kwargs.pop('actions', False))
-            if opt['renderer'] not in ('canvas', 'svg'):
-                raise ValueError("renderer must be 'canvas' or 'svg'")
-            spec_html = HTML_TEMPLATE.format(spec=self.to_json(**kwargs),
-                                             opt=json.dumps(opt))
-            utils.write_file_or_filename(fp, spec_html, mode='w')
-        elif format in ['png', 'svg']:
-            utils.save_spec(self.to_dict(), fp, format=format, **kwargs)
-        else:
-            raise ValueError("unrecognized format: '{0}'".format(format))
+        from ...utils.savechart import savechart
+        return savechart(self, fp=fp, format=format,
+                         vegalite_version=VEGALITE_VERSION,
+                         vega_version=VEGA_VERSION,
+                         vegaembed_version=VEGAEMBED_VERSION,
+                         **kwargs)
 
     # Layering and stacking
 

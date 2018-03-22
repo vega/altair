@@ -11,7 +11,6 @@ import tempfile
 import six
 
 from .core import write_file_or_filename
-from ._py3k_compat import urlopen, HTTPError, URLError
 
 try:
     from selenium import webdriver
@@ -24,30 +23,14 @@ except ImportError:
     ChromeOptions = None
 
 
-def connection_ok():
-    """Check web connection.
-    Returns True if web connection is OK, False otherwise.
-    """
-    try:
-        urlopen('http://vega.github.io', timeout=1)
-    except HTTPError:
-        # connection works, but there's an HTTP error
-        return True
-    except URLError:
-        # This is raised if there is no internet connection
-        return False
-    else:
-        return True
-
-
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
   <title>Embedding Vega-Lite</title>
-  <script src="https://cdn.jsdelivr.net/npm/vega@3.2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.3"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega@{vega_version}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@{vegalite_version}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@{vegaembed_version}"></script>
 </head>
 <body>
   <div id="vis"></div>
@@ -100,25 +83,35 @@ EXTRACT_CODE = {
             .catch(function(err) { console.error(err); });
         """}
 
-def save_spec(spec, fp, mode=None, format=None, driver_timeout=10):
-    """Save a spec to file
+def spec_to_image_mimebundle(spec, format, mode,
+                             vega_version,
+                             vegaembed_version,
+                             vegalite_version=None,
+                             driver_timeout=10):
+    """Conver a vega/vega-lite specification to a PNG/SVG image
 
     Parameters
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec
-    fp : string or file-like object
-        the filename or file object at which the result will be saved
-    mode : string or None
-        The rendering mode ('vega' or 'vega-lite'). If None, the mode will be
-        inferred from the $schema attribute of the spec, or will default to
-        'vega' if $schema is not in the spec.
-    format : string (optional)
-        the file format to be saved. If not specified, it will be inferred
-        from the extension of filename.
+    format : string {'png' | 'svg'}
+        the file format to be saved.
+    mode : string {'vega' | 'vega-lite'}
+        The rendering mode.
+    vega_version : string
+        For html output, the version of vega.js to use
+    vegalite_version : string
+        For html output, the version of vegalite.js to use
+    vegaembed_version : string
+        For html output, the version of vegaembed.js to use
     driver_timeout : int (optional)
         the number of seconds to wait for page load before raising an
         error (default: 10)
+
+    Returns
+    -------
+    output : dict
+        a mime-bundle representing the image
 
     Note
     ----
@@ -127,39 +120,36 @@ def save_spec(spec, fp, mode=None, format=None, driver_timeout=10):
     """
     # TODO: allow package versions to be specified
     # TODO: detect & use local Jupyter caches of JS packages?
-
-    if format is None and isinstance(fp, six.string_types):
-        format = fp.split('.')[-1]
-
     if format not in ['png', 'svg']:
-        raise NotImplementedError("save_spec only supports 'svg' and 'png'")
+        raise NotImplementedError("format must be 'svg' and 'png'")
+    if mode not in ['vega', 'vega-lite']:
+        raise ValueError("mode must be 'vega' or 'vega-lite'")
+
+    if mode == 'vega-lite' and vegalite_version is None:
+        raise ValueError("must specify vega-lite version")
 
     if webdriver is None:
         raise ImportError("selenium package is required for saving chart as {0}".format(format))
     if ChromeOptions is None:
         raise ImportError("chromedriver is required for saving chart as {0}".format(format))
 
-    if mode is None:
-        if '$schema' in spec:
-            mode = spec['$schema'].split('/')[-2]
-        else:
-            mode = 'vega'
-    if mode not in ['vega', 'vega-lite']:
-        raise ValueError("mode must be 'vega' or 'vega-lite'")
+    html = HTML_TEMPLATE.format(vega_version=vega_version,
+                                vegalite_version=vegalite_version,
+                                vegaembed_version=vegaembed_version)
 
     try:
         chrome_options = ChromeOptions()
         chrome_options.add_argument("--headless")
         if os.geteuid() == 0:
             chrome_options.add_argument('--no-sandbox')
-            
+
         driver = webdriver.Chrome(chrome_options=chrome_options)
         driver.set_page_load_timeout(driver_timeout)
 
         try:
             fd, htmlfile = tempfile.mkstemp(suffix='.html', text=True)
             with open(htmlfile, 'w') as f:
-                f.write(HTML_TEMPLATE)
+                f.write(html)
             driver.get("file://" + htmlfile)
             online = driver.execute_script("return navigator.onLine")
             if not online:
@@ -172,8 +162,6 @@ def save_spec(spec, fp, mode=None, format=None, driver_timeout=10):
         driver.close()
 
     if format == 'png':
-        img_bytes = base64.decodebytes(render.split(',')[1].encode())
-        write_file_or_filename(fp, img_bytes, mode='wb')
-    else:
-        img_bytes = render.encode()
-        write_file_or_filename(fp, img_bytes, mode='wb')
+        return {'image/png': base64.decodebytes(render.split(',', 1)[1].encode())}
+    elif format == 'svg':
+        return {'image/svg+xml': render}
