@@ -14,10 +14,36 @@ from .display import renderers
 
 SCHEMA_URL = "https://vega.github.io/schema/vega-lite/v2.json"
 
+#------------------------------------------------------------------------
+# Data Utilities
+def _prepare_data(data):
+    """Convert input data to data for use within schema"""
+    if data is Undefined:
+        return data
+    elif isinstance(data, (dict, core.Data, core.InlineData,
+                         core.UrlData, core.NamedData)):
+        return data
+    elif isinstance(data, pd.DataFrame):
+        return pipe(data, data_transformers.get())
+    elif isinstance(data, six.string_types):
+        return core.UrlData(data)
+    else:
+        warnings.warn("data of type {0} not recognized".format(type(data)))
+        return data
+
 
 #------------------------------------------------------------------------
-# Aliases
+# Aliases & specializations
 Bin = core.BinParams
+
+@utils.use_signature(core.LookupData)
+class LookupData(core.LookupData):
+    def to_dict(self, *args, **kwargs):
+        """Convert the chart to a dictionary suitable for JSON export"""
+        copy = self.copy(ignore=['data'])
+        copy.data = _prepare_data(copy.data)
+        return super(LookupData, copy).to_dict(*args, **kwargs)
+
 
 #------------------------------------------------------------------------
 # Encoding will contain channel objects that aren't valid at instantiation
@@ -264,20 +290,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     _default_spec_values = {"config": {"view": {"width": 400, "height": 300}}}
     _class_is_valid_at_instantiation = False
 
-    def _prepare_data(self):
-        if isinstance(self.data, (dict, core.Data, core.InlineData,
-                                  core.UrlData, core.NamedData)):
-            pass
-        elif isinstance(self.data, pd.DataFrame):
-            self.data = pipe(self.data, data_transformers.get())
-        elif isinstance(self.data, six.string_types):
-            self.data = core.UrlData(self.data)
-
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
         copy = self.copy()
         original_data = getattr(copy, 'data', Undefined)
-        copy._prepare_data()
+        copy.data = _prepare_data(original_data)
 
         # We make use of two context markers:
         # - 'data' points to the data that should be referenced for column type
