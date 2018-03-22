@@ -145,7 +145,7 @@ def generate_vegalite_schema_wrapper(schema_file):
     # TODO: generate simple tests for each wrapper
     basename = 'VegaLiteSchema'
 
-    with open(schema_file) as f:
+    with open(schema_file, encoding='utf8') as f:
         rootschema = json.load(f)
     contents = [HEADER,
                 "from altair.utils.schemapi import SchemaBase, Undefined",
@@ -194,7 +194,7 @@ def generate_vega_schema_wrapper(schema_file):
 def generate_vegalite_channel_wrappers(schemafile, imports=None,
                                        encoding_def='Encoding'):
     # TODO: generate __all__ for top of file
-    with open(schemafile) as f:
+    with open(schemafile, encoding='utf8') as f:
         schema = json.load(f)
     if imports is None:
         imports = ["import six",
@@ -257,7 +257,7 @@ def mark_{mark}({def_arglist}):
 
 def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
                                  mark_def='MarkDef'):
-    with open(schemafile) as f:
+    with open(schemafile, encoding='utf8') as f:
         schema = json.load(f)
     marks = schema['definitions'][mark_enum]['enum']
     info = SchemaInfo({'$ref': '#/definitions/' + mark_def},
@@ -319,7 +319,7 @@ def generate_vegalite_config_mixin(schemafile):
                "from altair.utils import use_signature"]
     code = ["class ConfigMethodMixin(object):",
             '    """A mixin class that defines config methods"""']
-    with open(schemafile) as f:
+    with open(schemafile, encoding='utf8') as f:
         schema = json.load(f)
     info = SchemaInfo({'$ref': '#/definitions/Config'},
                       rootschema=schema)
@@ -364,7 +364,7 @@ def vegalite_main():
         outfile = join(schemapath, 'core.py')
         print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
         file_contents = generate_vegalite_schema_wrapper(schemafile)
-        with open(outfile, 'w') as f:
+        with open(outfile, 'w', encoding='utf8') as f:
             f.write(file_contents)
 
         # Generate the channel wrappers

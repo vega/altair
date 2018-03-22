@@ -315,14 +315,14 @@ class ConfigMethodMixin(object):
         copy.config = core.Config(*args, **kwargs)
         return copy
 
-    @use_signature(core.MarkConfig)
-    def configure_area(self, *args, **kwargs):
+    @use_signature(core.RangeConfig)
+    def configure_range(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["area"] = core.MarkConfig(*args, **kwargs)
+        copy.config["range"] = core.RangeConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
@@ -335,24 +335,24 @@ class ConfigMethodMixin(object):
         copy.config["axis"] = core.AxisConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.VgAxisConfig)
-    def configure_axisBand(self, *args, **kwargs):
+    @use_signature(core.MarkConfig)
+    def configure_line(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["axisBand"] = core.VgAxisConfig(*args, **kwargs)
+        copy.config["line"] = core.MarkConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.VgAxisConfig)
-    def configure_axisBottom(self, *args, **kwargs):
+    @use_signature(core.Padding)
+    def configure_padding(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["axisBottom"] = core.VgAxisConfig(*args, **kwargs)
+        copy.config["padding"] = core.Padding(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
@@ -365,6 +365,16 @@ class ConfigMethodMixin(object):
         copy.config["axisLeft"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
+    @use_signature(core.MarkConfig)
+    def configure_square(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["square"] = core.MarkConfig(*args, **kwargs)
+        return copy
+
     @use_signature(core.VgAxisConfig)
     def configure_axisRight(self, *args, **kwargs):
         copy = self.copy(deep=False)
@@ -375,24 +385,64 @@ class ConfigMethodMixin(object):
         copy.config["axisRight"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.VgAxisConfig)
-    def configure_axisTop(self, *args, **kwargs):
+    @use_signature(core.MarkConfig)
+    def configure_point(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["axisTop"] = core.VgAxisConfig(*args, **kwargs)
+        copy.config["point"] = core.MarkConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.VgAxisConfig)
-    def configure_axisX(self, *args, **kwargs):
+    @use_signature(core.MarkConfig)
+    def configure_circle(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["axisX"] = core.VgAxisConfig(*args, **kwargs)
+        copy.config["circle"] = core.MarkConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.ViewConfig)
+    def configure_view(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["view"] = core.ViewConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.StackOffset)
+    def configure_stack(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["stack"] = core.StackOffset(*args, **kwargs)
+        return copy
+
+    @use_signature(core.TickConfig)
+    def configure_tick(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["tick"] = core.TickConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.LegendConfig)
+    def configure_legend(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["legend"] = core.LegendConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
@@ -403,6 +453,76 @@ class ConfigMethodMixin(object):
         else:
             copy.config = copy.config.copy(deep=False)
         copy.config["axisY"] = core.VgAxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.MarkConfig)
+    def configure_area(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["area"] = core.MarkConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.VgTitleConfig)
+    def configure_title(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["title"] = core.VgTitleConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.StyleConfigIndex)
+    def configure_style(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["style"] = core.StyleConfigIndex(*args, **kwargs)
+        return copy
+
+    @use_signature(core.SelectionConfig)
+    def configure_selection(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["selection"] = core.SelectionConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.TextConfig)
+    def configure_text(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["text"] = core.TextConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.ScaleConfig)
+    def configure_scale(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["scale"] = core.ScaleConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.VgAxisConfig)
+    def configure_axisBottom(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["axisBottom"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.BarConfig)
@@ -416,13 +536,13 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_circle(self, *args, **kwargs):
+    def configure_rule(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["circle"] = core.MarkConfig(*args, **kwargs)
+        copy.config["rule"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.Datasets)
@@ -445,74 +565,14 @@ class ConfigMethodMixin(object):
         copy.config["geoshape"] = core.MarkConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.LegendConfig)
-    def configure_legend(self, *args, **kwargs):
+    @use_signature(core.VgAxisConfig)
+    def configure_axisBand(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["legend"] = core.LegendConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.MarkConfig)
-    def configure_line(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["line"] = core.MarkConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.MarkConfig)
-    def configure_mark(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["mark"] = core.MarkConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.Padding)
-    def configure_padding(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["padding"] = core.Padding(*args, **kwargs)
-        return copy
-
-    @use_signature(core.MarkConfig)
-    def configure_point(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["point"] = core.MarkConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.ProjectionConfig)
-    def configure_projection(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["projection"] = core.ProjectionConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.RangeConfig)
-    def configure_range(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["range"] = core.RangeConfig(*args, **kwargs)
+        copy.config["axisBand"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
@@ -526,101 +586,41 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.MarkConfig)
-    def configure_rule(self, *args, **kwargs):
+    def configure_mark(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["rule"] = core.MarkConfig(*args, **kwargs)
+        copy.config["mark"] = core.MarkConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.ScaleConfig)
-    def configure_scale(self, *args, **kwargs):
+    @use_signature(core.VgAxisConfig)
+    def configure_axisTop(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["scale"] = core.ScaleConfig(*args, **kwargs)
+        copy.config["axisTop"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.SelectionConfig)
-    def configure_selection(self, *args, **kwargs):
+    @use_signature(core.VgAxisConfig)
+    def configure_axisX(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["selection"] = core.SelectionConfig(*args, **kwargs)
+        copy.config["axisX"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.MarkConfig)
-    def configure_square(self, *args, **kwargs):
+    @use_signature(core.ProjectionConfig)
+    def configure_projection(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["square"] = core.MarkConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.StackOffset)
-    def configure_stack(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["stack"] = core.StackOffset(*args, **kwargs)
-        return copy
-
-    @use_signature(core.StyleConfigIndex)
-    def configure_style(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["style"] = core.StyleConfigIndex(*args, **kwargs)
-        return copy
-
-    @use_signature(core.TextConfig)
-    def configure_text(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["text"] = core.TextConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.TickConfig)
-    def configure_tick(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["tick"] = core.TickConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.VgTitleConfig)
-    def configure_title(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["title"] = core.VgTitleConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.ViewConfig)
-    def configure_view(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["view"] = core.ViewConfig(*args, **kwargs)
+        copy.config["projection"] = core.ProjectionConfig(*args, **kwargs)
         return copy
