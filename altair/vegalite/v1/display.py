@@ -24,6 +24,15 @@ VEGALITE_MIME_TYPE = 'application/vnd.vegalite.v1+json'  # type: str
 # allowed by the PluginRegistery API.
 ENTRY_POINT_GROUP = 'altair.vegalite.v1.renderer'  # type: str
 
+# The display message when rendering fails
+DEFAULT_DISPLAY = """\
+<VegaLite 1 object>
+
+If you see this message, it means the renderer has not been properly enabled
+for the frontend that you are using. For more information, see
+https://altair-viz.github.io/user_guide/display.html
+"""
+
 renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
 
 
@@ -31,11 +40,11 @@ here = os.path.dirname(os.path.realpath(__file__))
 
 
 def default_renderer(spec):
-    return default_renderer_base(spec, VEGALITE_MIME_TYPE, '<VegaLite 1 object>')
+    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY)
 
 
 def json_renderer(spec):
-    return json_renderer_base(spec, '<VegaLite 1 object>')
+    return json_renderer_base(spec, DEFAULT_DISPLAY)
 
 
 renderers.register('default', default_renderer)
