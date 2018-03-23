@@ -350,7 +350,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             associated with the specified format.
         """
         warnings.warn(
-            "Chart.savechart will soon be deprecated in favor of Chart.save",
+            "Chart.savechart is deprecated in favor of Chart.save",
             DeprecationWarning
         )
         return self.save(fp, format=None, **kwargs)

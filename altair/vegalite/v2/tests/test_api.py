@@ -137,8 +137,6 @@ def test_save(format):
         try:
             chart.save(out, format=format)
             chart.save(filename)
-            # Try the deprecated version as well
-            chart.savechart(filename)
         except ImportError as err:
             if 'selenium' in str(err) or 'chromedriver' in str(err):
                 pytest.skip("selenium installation required for png/svg export")
