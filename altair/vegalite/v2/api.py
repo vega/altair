@@ -32,7 +32,7 @@ def _prepare_data(data):
         warnings.warn("data of type {0} not recognized".format(type(data)))
         return data
 
-    
+
 #------------------------------------------------------------------------
 # Aliases & specializations
 Bin = core.BinParams
@@ -333,7 +333,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
         return dct
 
-    def savechart(self, fp, format=None, **kwargs):
+    def save(self, fp, format=None, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -349,8 +349,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         """
-        from ...utils.savechart import savechart
-        return savechart(self, fp=fp, format=format,
+        from ...utils.save import save
+        return save(self, fp=fp, format=format,
                          vegalite_version=VEGALITE_VERSION,
                          vega_version=VEGA_VERSION,
                          vegaembed_version=VEGAEMBED_VERSION,

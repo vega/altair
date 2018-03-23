@@ -29,7 +29,7 @@ The Data
 --------
 
 Data in Altair is built around the Pandas Dataframe. One of the defining
-characteristics of statistical visualization is that it begins with 
+characteristics of statistical visualization is that it begins with
 `tidy <http://vita.had.co.nz/papers/tidy-data.html>`_
 Dataframes. For the purposes of this tutorial, we'll start by importing Pandas
 and creating a simple DataFrame to visualize, with a categorical variable in
@@ -243,7 +243,7 @@ Once you have visualized your data, perhaps you would like to publish it
 somewhere on the web. This can be done straightforwardly using the
 Vega-Embed_ javascript package.
 A simple example of a stand-alone HTML document can be generated for any
-chart using the :meth:`Chart.savechart` method:
+chart using the :meth:`Chart.save` method:
 
 .. code-block:: python
 
@@ -251,7 +251,7 @@ chart using the :meth:`Chart.savechart` method:
         x='a',
         y='average(b)',
     )
-    chart.savechart('chart.html')
+    chart.save('chart.html')
 
 The basic HTML template produces output that looks like this, where the JSON
 specification for your plot produced by :meth:`Chart.to_dict` should be stored
@@ -276,7 +276,7 @@ in the ``vlSpec`` Javascript variable:
     </body>
   </html>
 
-The :meth:`~Chart.savechart` method provides a convenient way to save such HTML
+The :meth:`~Chart.save` method provides a convenient way to save such HTML
 output to file.
 For more information on embedding Altair/Vega-Lite, see the documentation of the Vega-Embed_ project.
 

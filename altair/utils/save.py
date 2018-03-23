@@ -46,7 +46,7 @@ HTML_TEMPLATE = {
 """}
 
 
-def savechart(chart, fp, vega_version, vegaembed_version,
+def save(chart, fp, vega_version, vegaembed_version,
               format=None, mode=None, vegalite_version=None,
               opt=None, json_kwds=None):
     """Save a chart to file in a variety of formats

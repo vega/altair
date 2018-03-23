@@ -126,7 +126,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
             _globals = {}
             exec(example['code'], _globals)
             chart = _globals['chart']
-            chart.savechart(image_file)
+            chart.save(image_file)
             hashes[filename] = example_hash
 
             with open(hash_file, 'w') as f:

@@ -4,7 +4,7 @@
 
 Saving Altair Charts
 --------------------
-Altair chart objects have a :meth:`Chart.savechart` method which allows charts
+Altair chart objects have a :meth:`Chart.save` method which allows charts
 to be saved in a variety of formats.
 
 .. _saving-png:
@@ -15,8 +15,8 @@ To save an Altair chart object as a PNG or SVG image, you can use
 
 .. code-block:: python
 
-    chart.savechart('chart.png')
-    chart.savechart('chart.svg')
+    chart.save('chart.png')
+    chart.save('chart.svg')
 
 However, saving these images requires some additional dependencies to run the
 javascript code necessary to interpret the Vega-Lite specification and output
@@ -52,7 +52,7 @@ Once those dependencies are installed, you should be able to save charts as
 JSON format
 ~~~~~~~~~~~
 The fundamental chart representation output by Altair is a JSON string format;
-you can save a chart to a JSON file using :meth:`Chart.savechart`, by passing
+you can save a chart to a JSON file using :meth:`Chart.save`, by passing
 a filename with a ``.json`` extension.
 
 For example, here we save a simple scatter-plot to JSON:
@@ -68,7 +68,7 @@ For example, here we save a simple scatter-plot to JSON:
         color='Origin:N'
     )
 
-    chart.savechart('chart.json')
+    chart.save('chart.json')
 
 The condetns of the resulting file will look something like this:
 
@@ -113,7 +113,7 @@ file using
 
 .. code-block:: python
 
-    chart.savechart('chart.html')
+    chart.save('chart.html')
 
 This will create a simple HTML template page that loads Vega, Vega-Lite, and
 vegaEmbed, such that when opened in a browser the chart will be rendered.
