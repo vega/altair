@@ -1,5 +1,3 @@
-# Altair
-
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 
 Altair is a declarative statistical visualization library for Python.
@@ -23,16 +21,17 @@ as well as Altair's [Tutorial Notebooks](http://github.com/altair-viz/altair_not
 
 ## Example
 
-Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the Jupyter Notebook:
+Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the JupyterLab:
 
 ```python
 import altair as alt
 
-# Uncomment/run this line to enable Altair in JupyterLab/nteract:
-# alt.enable_mime_rendering()
+# to use with Jupyter notebook (not JupyterLab) run the following
+# alt.renderers.enable('notebook')
 
-# load data as a pandas DataFrame
-cars = alt.load_dataset('cars')
+# load a simple dataset as a pandas DataFrame
+from vega_datasets import data
+cars = data.cars()
 
 alt.Chart(cars).mark_point().encode(
     x='Horsepower',
