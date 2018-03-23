@@ -4,6 +4,7 @@ Main API for Vega-lite spec generation.
 DSL mapping Vega types to IPython traitlets.
 """
 import six
+import warnings
 
 import pandas as pd
 
@@ -95,6 +96,28 @@ class TopLevelMixin(object):
             if copy._default_spec_values:
                 dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
         return dct
+
+    def savechart(self, fp, format=None, **kwargs):
+        """Save a chart to file in a variety of formats
+
+        Supported formats are json, html, png, svg
+
+        Parameters
+        ----------
+        fp : string filename or file-like object
+            file in which to write the chart.
+        format : string (optional)
+            the format to write: one of ['json', 'html', 'png', 'eps'].
+            If not specified, the format will be determined from the filename.
+        **kwargs :
+            Additional keyword arguments are passed to the output method
+            associated with the specified format.
+        """
+        warnings.warn(
+            "Chart.savechart will soon be deprecated in favor of Chart.save",
+            DeprecationWarning
+        )
+        return self.save(fp, format=None, **kwargs)
 
     def save(self, fp, format=None, **kwargs):
         """Save a chart to file in a variety of formats
