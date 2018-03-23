@@ -7,9 +7,9 @@ API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
 simplicity produces beautiful and effective visualizations with a minimal amount of code.
 
-*Altair is developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
+**Altair is developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
 Granger](https://github.com/ellisonbg) in close collaboration with the [UW
-Interactive Data Lab](http://idl.cs.washington.edu/).*
+Interactive Data Lab](http://idl.cs.washington.edu/).**
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 
