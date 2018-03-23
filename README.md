@@ -26,6 +26,9 @@ Here is an example using Altair to quickly visualize and display a dataset with 
 ```python
 import altair as alt
 
+# to use with Jupyter notebook (not JupyterLab) run the following
+# alt.renderers.enable('notebook')
+
 # load a simple dataset as a pandas DataFrame
 from vega_datasets import data
 cars = data.cars()
