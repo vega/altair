@@ -13,6 +13,8 @@ Interactive Data Lab](http://idl.cs.washington.edu/).**
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 
+[![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
+
 ## Altair Documentation
 
 **Note: Altair's documentation is currently in a very incomplete form; we are
