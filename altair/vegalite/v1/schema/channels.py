@@ -3,6 +3,7 @@
 
 import six
 from . import core
+import pandas as pd
 from altair.utils.schemapi import Undefined
 from altair.utils import parse_shorthand, parse_shorthand_plus_data
 
@@ -10,10 +11,12 @@ from altair.utils import parse_shorthand, parse_shorthand_plus_data
 class Row(core.PositionChannelDef):
     """Row schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -42,24 +45,45 @@ class Row(core.PositionChannelDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(Row, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale,
-                                  sort=sort, timeUnit=timeUnit, title=title, type=type, value=value,
-                                  **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(Row, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
+                                  field=field, scale=scale, sort=sort, timeUnit=timeUnit, title=title,
+                                  type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Row, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -68,10 +92,12 @@ class Row(core.PositionChannelDef):
 class Column(core.PositionChannelDef):
     """Column schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -100,24 +126,45 @@ class Column(core.PositionChannelDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(Column, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale,
-                                     sort=sort, timeUnit=timeUnit, title=title, type=type, value=value,
-                                     **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(Column, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
+                                     field=field, scale=scale, sort=sort, timeUnit=timeUnit,
+                                     title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Column, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -126,10 +173,12 @@ class Column(core.PositionChannelDef):
 class X(core.PositionChannelDef):
     """X schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -158,24 +207,45 @@ class X(core.PositionChannelDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(X, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale,
-                                sort=sort, timeUnit=timeUnit, title=title, type=type, value=value,
-                                **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(X, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
+                                field=field, scale=scale, sort=sort, timeUnit=timeUnit, title=title,
+                                type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(X, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -184,10 +254,12 @@ class X(core.PositionChannelDef):
 class Y(core.PositionChannelDef):
     """Y schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -216,24 +288,45 @@ class Y(core.PositionChannelDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, axis=Undefined, bin=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(Y, self).__init__(field=field, aggregate=aggregate, axis=axis, bin=bin, scale=scale,
-                                sort=sort, timeUnit=timeUnit, title=title, type=type, value=value,
-                                **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(Y, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
+                                field=field, scale=scale, sort=sort, timeUnit=timeUnit, title=title,
+                                type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Y, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -242,10 +335,12 @@ class Y(core.PositionChannelDef):
 class X2(core.FieldDef):
     """X2 schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -268,22 +363,43 @@ class X2(core.FieldDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined,
-                 type=Undefined, value=Undefined, **kwds):
-        super(X2, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit,
-                                 title=title, type=type, value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(X2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                 timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(X2, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -292,10 +408,12 @@ class X2(core.FieldDef):
 class Y2(core.FieldDef):
     """Y2 schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -318,22 +436,43 @@ class Y2(core.FieldDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined,
-                 type=Undefined, value=Undefined, **kwds):
-        super(Y2, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit,
-                                 title=title, type=type, value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Y2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                 timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Y2, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -342,10 +481,12 @@ class Y2(core.FieldDef):
 class Color(core.ChannelDefWithLegend):
     """Color schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -374,24 +515,45 @@ class Color(core.ChannelDefWithLegend):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(Color, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend,
-                                    scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
-                                    value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(Color, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                    legend=legend, scale=scale, sort=sort, timeUnit=timeUnit,
+                                    title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Color, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -400,10 +562,12 @@ class Color(core.ChannelDefWithLegend):
 class Opacity(core.ChannelDefWithLegend):
     """Opacity schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -432,24 +596,45 @@ class Opacity(core.ChannelDefWithLegend):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(Opacity, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend,
-                                      scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
-                                      value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(Opacity, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                      legend=legend, scale=scale, sort=sort, timeUnit=timeUnit,
+                                      title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Opacity, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -458,10 +643,12 @@ class Opacity(core.ChannelDefWithLegend):
 class Size(core.ChannelDefWithLegend):
     """Size schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -490,24 +677,45 @@ class Size(core.ChannelDefWithLegend):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(Size, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend,
-                                   scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
-                                   value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(Size, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                   legend=legend, scale=scale, sort=sort, timeUnit=timeUnit,
+                                   title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Size, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -516,10 +724,12 @@ class Size(core.ChannelDefWithLegend):
 class Shape(core.ChannelDefWithLegend):
     """Shape schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -548,24 +758,45 @@ class Shape(core.ChannelDefWithLegend):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, legend=Undefined, scale=Undefined,
-                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
-                 **kwds):
-        super(Shape, self).__init__(field=field, aggregate=aggregate, bin=bin, legend=legend,
-                                    scale=scale, sort=sort, timeUnit=timeUnit, title=title, type=type,
-                                    value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined,
+                 type=Undefined, value=Undefined, **kwds):
+        super(Shape, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                    legend=legend, scale=scale, sort=sort, timeUnit=timeUnit,
+                                    title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Shape, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -574,10 +805,12 @@ class Shape(core.ChannelDefWithLegend):
 class Detail(core.FieldDef):
     """Detail schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -600,22 +833,43 @@ class Detail(core.FieldDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined,
-                 type=Undefined, value=Undefined, **kwds):
-        super(Detail, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit,
-                                     title=title, type=type, value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                     timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Detail, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -624,10 +878,12 @@ class Detail(core.FieldDef):
 class Text(core.FieldDef):
     """Text schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -650,22 +906,43 @@ class Text(core.FieldDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined,
-                 type=Undefined, value=Undefined, **kwds):
-        super(Text, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit,
-                                   title=title, type=type, value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Text, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                   timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Text, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -674,10 +951,12 @@ class Text(core.FieldDef):
 class Label(core.FieldDef):
     """Label schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -700,22 +979,43 @@ class Label(core.FieldDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, timeUnit=Undefined, title=Undefined,
-                 type=Undefined, value=Undefined, **kwds):
-        super(Label, self).__init__(field=field, aggregate=aggregate, bin=bin, timeUnit=timeUnit,
-                                    title=title, type=type, value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined, **kwds):
+        super(Label, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                    timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Label, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -724,10 +1024,12 @@ class Label(core.FieldDef):
 class Path(core.OrderChannelDef):
     """Path schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -752,22 +1054,45 @@ class Path(core.OrderChannelDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, value=Undefined, **kwds):
-        super(Path, self).__init__(field=field, aggregate=aggregate, bin=bin, sort=sort,
-                                   timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
+                 **kwds):
+        super(Path, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                   sort=sort, timeUnit=timeUnit, title=title, type=type, value=value,
+                                   **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Path, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -776,10 +1101,12 @@ class Path(core.OrderChannelDef):
 class Order(core.OrderChannelDef):
     """Order schema wrapper
     
-    Mapping(required=[])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : AggregateOp
         Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).
@@ -804,22 +1131,45 @@ class Order(core.OrderChannelDef):
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, aggregate=Undefined, bin=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, type=Undefined, value=Undefined, **kwds):
-        super(Order, self).__init__(field=field, aggregate=aggregate, bin=bin, sort=sort,
-                                    timeUnit=timeUnit, title=title, type=type, value=value, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, value=Undefined,
+                 **kwds):
+        super(Order, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                    sort=sort, timeUnit=timeUnit, title=title, type=type, value=value,
+                                    **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            if 'data' in context and isinstance(context['data'], pd.DataFrame):
+                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
+            else:
+                kwds = parse_shorthand(self.shorthand)
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Order, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
