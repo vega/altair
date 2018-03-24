@@ -122,7 +122,7 @@ def test_selection_to_dict():
 
 
 @pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
-def test_savechart(format):
+def test_save(format):
     from ..examples.bar import chart
 
     if format in ['html', 'json', 'svg']:
@@ -135,8 +135,8 @@ def test_savechart(format):
 
     try:
         try:
-            chart.savechart(out, format=format)
-            chart.savechart(filename)
+            chart.save(out, format=format)
+            chart.save(filename)
         except ImportError as err:
             if 'selenium' in str(err) or 'chromedriver' in str(err):
                 pytest.skip("selenium installation required for png/svg export")

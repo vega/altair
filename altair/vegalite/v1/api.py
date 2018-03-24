@@ -4,6 +4,7 @@ Main API for Vega-lite spec generation.
 DSL mapping Vega types to IPython traitlets.
 """
 import six
+import warnings
 
 import pandas as pd
 
@@ -112,8 +113,30 @@ class TopLevelMixin(object):
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         """
-        from ...utils.savechart import savechart
-        return savechart(self, fp=fp, format=format,
+        warnings.warn(
+            "Chart.savechart is deprecated in favor of Chart.save",
+            DeprecationWarning
+        )
+        return self.save(fp, format=None, **kwargs)
+
+    def save(self, fp, format=None, **kwargs):
+        """Save a chart to file in a variety of formats
+
+        Supported formats are json, html, png, svg
+
+        Parameters
+        ----------
+        fp : string filename or file-like object
+            file in which to write the chart.
+        format : string (optional)
+            the format to write: one of ['json', 'html', 'png', 'eps'].
+            If not specified, the format will be determined from the filename.
+        **kwargs :
+            Additional keyword arguments are passed to the output method
+            associated with the specified format.
+        """
+        from ...utils.save import save
+        return save(self, fp=fp, format=format,
                          vegalite_version=VEGALITE_VERSION,
                          vega_version=VEGA_VERSION,
                          vegaembed_version=VEGAEMBED_VERSION,
