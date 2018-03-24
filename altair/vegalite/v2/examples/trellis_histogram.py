@@ -10,6 +10,6 @@ cars = alt.load_dataset('cars')
 
 chart = alt.Chart(cars).mark_bar().encode(
     alt.X("Horsepower:Q", bin=True),
-    y='count(*):Q',
+    y='count()',
     row='Origin'
 )

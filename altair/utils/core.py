@@ -148,8 +148,11 @@ def parse_shorthand(shorthand):
     # build regular expressions
     units = dict(field='(?P<field>.*)',
                  type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
+                 count='(?P<aggregate>count)',
                  aggregate='(?P<aggregate>{0})'.format('|'.join(valid_aggregates)))
-    patterns = [r'{aggregate}\({field}\):{type}',
+    patterns = [r'{count}\(\)',
+                r'{count}\(\):{type}',
+                r'{aggregate}\({field}\):{type}',
                 r'{aggregate}\({field}\)',
                 r'{field}:{type}',
                 r'{field}']
@@ -164,6 +167,10 @@ def parse_shorthand(shorthand):
     type_ = match.get('type', None)
     if type_:
         match['type'] = INV_TYPECODE_MAP.get(type_, type_)
+
+    # counts are quantitative by default
+    if match == {'aggregate': 'count'}:
+        match['type'] = 'quantitative'
 
     return match
 

@@ -22,5 +22,5 @@ chart = alt.Chart(weather).mark_bar().encode(
         axis=alt.Axis(title='Month of the Year'),
         timeUnit='month',
     ),
-    y='count(*):Q',
+    y='count()',
 )

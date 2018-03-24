@@ -11,7 +11,7 @@ source = data.movies.url
 
 bar = alt.Chart(source).mark_bar().encode(
     alt.X('IMDB_Rating:Q', bin=True, axis=None),
-    alt.Y('count(*):Q')
+    alt.Y('count()')
 )
 
 rule = alt.Chart(source).mark_rule(color='red').encode(

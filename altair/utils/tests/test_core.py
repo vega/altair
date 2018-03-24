@@ -43,6 +43,10 @@ def test_parse_shorthand():
     check('average(a b:(c\nd):Q', aggregate='average',
           field='a b:(c\nd', type='quantitative')
 
+    # special case: count doesn't need an argument
+    check('count()', aggregate='count', type='quantitative')
+    check('count():O', aggregate='count', type='ordinal')
+
 
 def test_parse_shorthand_plus_data():
     def check(s, data, **kwargs):

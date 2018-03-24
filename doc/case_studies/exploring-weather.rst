@@ -56,7 +56,7 @@ The result is a histogram of precipitation values:
 
     alt.Chart(df).mark_bar().encode(
         alt.X('precipitation', bin=True),
-        alt.Y('count(*):Q')
+        alt.Y('count()')
     )
 
 Next, let’s look at how precipitation in Seattle changes throughout the year.
@@ -142,7 +142,7 @@ stack the bars atop each other:
 
     alt.Chart(df).mark_bar().encode(
         x=alt.X('date:N', timeUnit='month'),
-        y='count(*):Q',
+        y='count()',
         color='weather',
     )
 
@@ -165,7 +165,7 @@ meaning of the plot more clear:
 
     alt.Chart(df).mark_bar().encode(
         x=alt.X('date:N', timeUnit='month', axis=alt.Axis(title='Month of the year')),
-        y='count(*):Q',
+        y='count()',
         color=alt.Color('weather', legend=alt.Legend(title='Weather type'), scale=scale),
     )
 
@@ -200,7 +200,7 @@ by weather type:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        x='count(*):Q',
+        x='count()',
         y='weather:N',
         color=alt.Color('weather:N', scale=scale),
     )
@@ -227,7 +227,7 @@ of the selection:
     )
 
     bars = alt.Chart().mark_bar().encode(
-        x='count(*):Q',
+        x='count()',
         y='weather:N',
         color=alt.Color('weather:N', scale=scale),
     ).transform_calculate(

@@ -39,7 +39,7 @@ points = alt.Chart().mark_point().encode(
 
 # Bottom panel is a bar chart of weather type
 bars = alt.Chart().mark_bar().encode(
-    x='count(*):Q',
+    x='count()',
     y='weather:N',
     color=alt.condition(click, color, alt.value('lightgray')),
 ).transform_filter(

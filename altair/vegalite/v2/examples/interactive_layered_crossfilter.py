@@ -19,7 +19,7 @@ brush = alt.selection(type='interval', encodings=['x'])
 # background and highlights
 base = alt.Chart().mark_bar().encode(
     x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.Bin(maxbins=20)),
-    y='count(*):Q'
+    y='count()'
 ).properties(
     width=180,
     height=130

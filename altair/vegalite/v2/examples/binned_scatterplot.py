@@ -12,5 +12,5 @@ source = data.movies.url
 chart = alt.Chart(source).mark_circle().encode(
     alt.X('IMDB_Rating:Q', bin=True),
     alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
-    size='count(*):Q'
+    size='count()'
 )
