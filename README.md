@@ -2,7 +2,7 @@
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 
-<a href="https://altair-viz.github.io"><img src="https://altair-viz.github.io/_static/altair-logo-light.png" align="left" hspace="10" vspace="6" alt="Altair logo"></a>
+<a href="https://altair-viz.github.io"><img src="https://altair-viz.github.io/_static/altair-logo-light.png" align="left" hspace="10" vspace="6" alt="Altair logo" width="150px"></a>
 
 **Altair** is a declarative statistical visualization library for Python. With Altair, you can spend more time understanding your data and its meaning. Altair's
 API is simple, friendly and consistent and built on top of the powerful
