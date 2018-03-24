@@ -5,7 +5,7 @@ import six
 from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined
-from altair.utils import parse_shorthand, parse_shorthand_plus_data
+from altair.utils import parse_shorthand
 
 
 class Color(core.MarkPropFieldDefWithCondition):
@@ -89,10 +89,7 @@ class Color(core.MarkPropFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -152,10 +149,7 @@ class ColorValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(ColorValue, copy).to_dict(validate=validate,
@@ -217,10 +211,7 @@ class Column(core.FacetFieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -300,10 +291,7 @@ class Detail(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -413,10 +401,7 @@ class Fill(core.MarkPropFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -476,10 +461,7 @@ class FillValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(FillValue, copy).to_dict(validate=validate,
@@ -549,10 +531,7 @@ class Href(core.FieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -611,10 +590,7 @@ class HrefValue(core.ValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(HrefValue, copy).to_dict(validate=validate,
@@ -673,10 +649,7 @@ class Key(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -756,10 +729,7 @@ class Latitude(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -839,10 +809,7 @@ class Latitude2(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -922,10 +889,7 @@ class Longitude(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1005,10 +969,7 @@ class Longitude2(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1118,10 +1079,7 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1181,10 +1139,7 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(OpacityValue, copy).to_dict(validate=validate,
@@ -1244,10 +1199,7 @@ class Order(core.OrderFieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1330,10 +1282,7 @@ class Row(core.FacetFieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1443,10 +1392,7 @@ class Shape(core.MarkPropFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1506,10 +1452,7 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(ShapeValue, copy).to_dict(validate=validate,
@@ -1598,10 +1541,7 @@ class Size(core.MarkPropFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1661,10 +1601,7 @@ class SizeValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(SizeValue, copy).to_dict(validate=validate,
@@ -1753,10 +1690,7 @@ class Stroke(core.MarkPropFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1816,10 +1750,7 @@ class StrokeValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(StrokeValue, copy).to_dict(validate=validate,
@@ -1892,10 +1823,7 @@ class Text(core.TextFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1954,10 +1882,7 @@ class TextValue(core.TextValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(TextValue, copy).to_dict(validate=validate,
@@ -2030,10 +1955,7 @@ class Tooltip(core.TextFieldDefWithCondition):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -2092,10 +2014,7 @@ class TooltipValue(core.TextValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(TooltipValue, copy).to_dict(validate=validate,
@@ -2192,10 +2111,7 @@ class X(core.PositionFieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -2249,10 +2165,7 @@ class XValue(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(XValue, copy).to_dict(validate=validate,
@@ -2311,10 +2224,7 @@ class X2(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -2368,10 +2278,7 @@ class X2Value(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(X2Value, copy).to_dict(validate=validate,
@@ -2468,10 +2375,7 @@ class Y(core.PositionFieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -2525,10 +2429,7 @@ class YValue(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(YValue, copy).to_dict(validate=validate,
@@ -2587,10 +2488,7 @@ class Y2(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -2644,10 +2542,7 @@ class Y2Value(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(Y2Value, copy).to_dict(validate=validate,

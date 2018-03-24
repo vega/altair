@@ -59,10 +59,7 @@ class {classname}(core.{basename}):
         if self.shorthand is Undefined:
             kwds = {{}}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -106,10 +103,7 @@ class {classname}(core.{basename}):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super({classname}, copy).to_dict(validate=validate,
@@ -132,7 +126,7 @@ def schema_url(library, version):
 def download_schemafile(library, version, schemapath):
     url = schema_url(library, version)
     filename = os.path.join(schemapath, '{library}-schema.json'.format(library=library))
-    #request.urlretrieve(url, filename)
+    request.urlretrieve(url, filename)
     return filename
 
 
@@ -225,7 +219,7 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
                    "from . import core",
                    "import pandas as pd",
                    "from altair.utils.schemapi import Undefined",
-                   "from altair.utils import parse_shorthand, parse_shorthand_plus_data"]
+                   "from altair.utils import parse_shorthand"]
     contents = [HEADER]
     contents.extend(imports)
     contents.append('')

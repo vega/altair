@@ -5,7 +5,7 @@ import six
 from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined
-from altair.utils import parse_shorthand, parse_shorthand_plus_data
+from altair.utils import parse_shorthand
 
 
 class Row(core.PositionChannelDef):
@@ -57,10 +57,7 @@ class Row(core.PositionChannelDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -138,10 +135,7 @@ class Column(core.PositionChannelDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -219,10 +213,7 @@ class X(core.PositionChannelDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -300,10 +291,7 @@ class Y(core.PositionChannelDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -373,10 +361,7 @@ class X2(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -446,10 +431,7 @@ class Y2(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -527,10 +509,7 @@ class Color(core.ChannelDefWithLegend):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -608,10 +587,7 @@ class Opacity(core.ChannelDefWithLegend):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -689,10 +665,7 @@ class Size(core.ChannelDefWithLegend):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -770,10 +743,7 @@ class Shape(core.ChannelDefWithLegend):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -843,10 +813,7 @@ class Detail(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -916,10 +883,7 @@ class Text(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -989,10 +953,7 @@ class Label(core.FieldDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1066,10 +1027,7 @@ class Path(core.OrderChannelDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
@@ -1143,10 +1101,7 @@ class Order(core.OrderChannelDef):
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, six.string_types):
-            if 'data' in context and isinstance(context['data'], pd.DataFrame):
-                kwds = parse_shorthand_plus_data(self.shorthand, context['data'])
-            else:
-                kwds = parse_shorthand(self.shorthand)
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
