@@ -46,6 +46,21 @@ class LookupData(core.LookupData):
         return super(LookupData, copy).to_dict(*args, **kwargs)
 
 
+@utils.use_signature(core.FacetMapping)
+class FacetMapping(core.FacetMapping):
+    _class_is_valid_at_instantiation = False
+
+    def to_dict(self, *args, **kwargs):
+        copy = self.copy()
+        context = kwargs.get('context', {})
+        data = context.get('data', None)
+        if isinstance(self.row, six.string_types):
+            copy.row = core.FacetFieldDef(**utils.parse_shorthand(self.row, data))
+        if isinstance(self.column, six.string_types):
+            copy.column = core.FacetFieldDef(**utils.parse_shorthand(self.column, data))
+        return super(FacetMapping, copy).to_dict(*args, **kwargs)
+
+
 #------------------------------------------------------------------------
 # Encoding will contain channel objects that aren't valid at instantiation
 core.EncodingWithFacet._class_is_valid_at_instantiation = False
@@ -106,18 +121,16 @@ class NamedSelection(SelectionMapping):
             raise ValueError("NamedSelection has multiple properties")
         return next(iter(self._kwds))
 
-    def ref(self, name=None):
-        """Return a named selection reference.
+    def ref(self):
+        """Return a selection reference to this object
 
-        If the mapping contains only one selection, then the name need not
-        be specified.
+        Examples
+        --------
+        >>> sel = alt.selection_interval(name='interval')
+        >>> sel.ref()
+        {'selection': 'interval'}
         """
-        if name is None:
-            name = self._get_name()
-        if name not in self._kwds:
-            raise ValueError("'{0}' is not a valid selection name "
-                             "in this mapping".format(name))
-        return {"selection": name}
+        return {"selection": self._get_name()}
 
     def __invert__(self):
         return core.SelectionNot(**{'not': self._get_name()})
@@ -138,6 +151,7 @@ class NamedSelection(SelectionMapping):
         return copy
 
     def __iadd__(self, other):
+        # this will be delegated to SelectionMapping
         return NotImplemented
 
 #------------------------------------------------------------------------
@@ -533,12 +547,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Attributes
         ----------
-        filter : LogicalOperandPredicate
+        filter : a filter expression
             The `filter` property must be one of the predicate definitions:
             (1) a string or alt.expr expression
             (2) a range predicate
             (3) a selection predicate
             (4) a logical operand combining (1)-(3)
+            (5) a NamedSelection object
 
         Returns
         -------
@@ -549,6 +564,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.FilterTransform : underlying transform object
         """
+        if isinstance(filter, NamedSelection):
+            filter = filter.ref()
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_lookup(self, as_=Undefined, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
@@ -819,8 +836,8 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
             data = self.data
             self = self.copy()
             self.data = Undefined
-        return FacetChart(spec=self, row=row, column=column, data=data, **kwargs)
-
+        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
+                          data=data, **kwargs)
 
 
 def _check_if_valid_subspec(spec, classname):
@@ -1007,7 +1024,8 @@ class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
             data = self.data
             self = self.copy()
             self.data = Undefined
-        return FacetChart(spec=self, row=row, column=column, data=data, **kwargs)
+        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
+                          data=data, **kwargs)
 
 
 def layer(*charts, **kwargs):
@@ -1018,21 +1036,8 @@ def layer(*charts, **kwargs):
 @utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
-    def __init__(self, spec, row=Undefined, column=Undefined,
-                 facet=Undefined, **kwargs):
+    def __init__(self, spec, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'FacetChart')
-        if facet is Undefined:
-            facet = core.FacetMapping()
-        if row is not Undefined:
-            if isinstance(row, six.string_types):
-                row = core.FacetFieldDef(**utils.parse_shorthand(row))
-            facet['row'] = row
-        if column is not Undefined:
-            if isinstance(column, six.string_types):
-                column = core.FacetFieldDef(**utils.parse_shorthand(column))
-            facet['column'] = column
-        if 'data' not in kwargs:
-            warnings.warn('FacetChart: data should be defined at the top level')
         super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):

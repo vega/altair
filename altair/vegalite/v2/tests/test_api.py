@@ -180,6 +180,22 @@ def test_facet_parse():
                             'row': {'field': 'row', 'type': 'nominal'}}
 
 
+def test_facet_parse_data():
+    data = pd.DataFrame({'x': range(5), 'y': range(5), 'row': list('abcab')})
+    chart = alt.Chart(data).mark_point().encode(
+        x='x',
+        y='y:O'
+    ).facet(
+        row='row',
+        column='column:O'
+    )
+    dct = chart.to_dict()
+    assert 'values' in dct['data']
+    assert 'data' not in dct['spec']
+    assert dct['facet'] == {'column': {'field': 'column', 'type': 'ordinal'},
+                            'row': {'field': 'row', 'type': 'nominal'}}
+
+
 def test_SelectionMapping():
     # test instantiation of selections
     interval = alt.selection_interval(name='selec_1')
