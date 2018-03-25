@@ -93,7 +93,7 @@ distribution of its points:
     )
 
     chart2 = alt.Chart(iris).mark_bar().encode(
-        x='count(*):Q',
+        x='count()',
         y=alt.Y('petalWidth:Q', bin=alt.Bin(maxbins=30)),
         color='species:N'
     ).properties(

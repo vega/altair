@@ -3,14 +3,15 @@
 
 import six
 from . import core
+import pandas as pd
 from altair.utils.schemapi import Undefined
-from altair.utils import parse_shorthand, parse_shorthand_plus_data
+from altair.utils import parse_shorthand
 
 
 class Color(core.MarkPropFieldDefWithCondition):
     """Color schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -20,11 +21,8 @@ class Color(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -71,26 +69,50 @@ class Color(core.MarkPropFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Color, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                    condition=condition, legend=legend, scale=scale, sort=sort,
-                                    timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(Color, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                    condition=condition, field=field, legend=legend, scale=scale,
+                                    sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Color, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -114,6 +136,8 @@ class ColorValue(core.MarkPropValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -125,10 +149,7 @@ class ColorValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(ColorValue, copy).to_dict(validate=validate,
@@ -139,15 +160,12 @@ class ColorValue(core.MarkPropValueDefWithCondition):
 class Column(core.FacetFieldDef):
     """Column schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -175,25 +193,48 @@ class Column(core.FacetFieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, header=Undefined,
-                 sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Column, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                     header=header, sort=sort, timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 header=Undefined, sort=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+        super(Column, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                     header=header, sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Column, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -202,16 +243,13 @@ class Column(core.FacetFieldDef):
 class Detail(core.FieldDef):
     """Detail schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -235,25 +273,48 @@ class Detail(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(Detail, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                     timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                     timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Detail, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -262,7 +323,7 @@ class Detail(core.FieldDef):
 class Fill(core.MarkPropFieldDefWithCondition):
     """Fill schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -272,11 +333,8 @@ class Fill(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -323,26 +381,50 @@ class Fill(core.MarkPropFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Fill, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                   condition=condition, legend=legend, scale=scale, sort=sort,
-                                   timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(Fill, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                   condition=condition, field=field, legend=legend, scale=scale,
+                                   sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Fill, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -366,6 +448,8 @@ class FillValue(core.MarkPropValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -377,10 +461,7 @@ class FillValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(FillValue, copy).to_dict(validate=validate,
@@ -391,7 +472,7 @@ class FillValue(core.MarkPropValueDefWithCondition):
 class Href(core.FieldDefWithCondition):
     """Href schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -401,11 +482,8 @@ class Href(core.FieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -434,25 +512,49 @@ class Href(core.FieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 timeUnit=Undefined, **kwds):
-        super(Href, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                   condition=condition, timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+        super(Href, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                   condition=condition, field=field, timeUnit=timeUnit, type=type,
+                                   **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Href, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -475,6 +577,8 @@ class HrefValue(core.ValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -486,10 +590,7 @@ class HrefValue(core.ValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(HrefValue, copy).to_dict(validate=validate,
@@ -500,16 +601,13 @@ class HrefValue(core.ValueDefWithCondition):
 class Key(core.FieldDef):
     """Key schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -533,25 +631,48 @@ class Key(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(Key, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                  timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(Key, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                  timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Key, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -560,16 +681,13 @@ class Key(core.FieldDef):
 class Latitude(core.FieldDef):
     """Latitude schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -593,25 +711,48 @@ class Latitude(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(Latitude, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                       timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                       timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Latitude, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -620,16 +761,13 @@ class Latitude(core.FieldDef):
 class Latitude2(core.FieldDef):
     """Latitude2 schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -653,25 +791,48 @@ class Latitude2(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(Latitude2, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                        timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(Latitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                        timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Latitude2, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -680,16 +841,13 @@ class Latitude2(core.FieldDef):
 class Longitude(core.FieldDef):
     """Longitude schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -713,25 +871,48 @@ class Longitude(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(Longitude, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                        timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                        timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Longitude, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -740,16 +921,13 @@ class Longitude(core.FieldDef):
 class Longitude2(core.FieldDef):
     """Longitude2 schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -773,25 +951,48 @@ class Longitude2(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(Longitude2, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                         timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(Longitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                         timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Longitude2, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -800,7 +1001,7 @@ class Longitude2(core.FieldDef):
 class Opacity(core.MarkPropFieldDefWithCondition):
     """Opacity schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -810,11 +1011,8 @@ class Opacity(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -861,26 +1059,50 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Opacity, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                      condition=condition, legend=legend, scale=scale, sort=sort,
-                                      timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(Opacity, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                      condition=condition, field=field, legend=legend, scale=scale,
+                                      sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Opacity, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -904,6 +1126,8 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -915,10 +1139,7 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(OpacityValue, copy).to_dict(validate=validate,
@@ -929,15 +1150,12 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
 class Order(core.OrderFieldDef):
     """Order schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -963,25 +1181,48 @@ class Order(core.OrderFieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, sort=Undefined,
-                 timeUnit=Undefined, **kwds):
-        super(Order, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin, sort=sort,
-                                    timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 sort=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+        super(Order, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                    sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Order, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -990,15 +1231,12 @@ class Order(core.OrderFieldDef):
 class Row(core.FacetFieldDef):
     """Row schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1026,25 +1264,48 @@ class Row(core.FacetFieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, header=Undefined,
-                 sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Row, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin, header=header,
-                                  sort=sort, timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 header=Undefined, sort=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+        super(Row, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                  header=header, sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Row, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1053,7 +1314,7 @@ class Row(core.FacetFieldDef):
 class Shape(core.MarkPropFieldDefWithCondition):
     """Shape schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1063,11 +1324,8 @@ class Shape(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1114,26 +1372,50 @@ class Shape(core.MarkPropFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Shape, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                    condition=condition, legend=legend, scale=scale, sort=sort,
-                                    timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(Shape, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                    condition=condition, field=field, legend=legend, scale=scale,
+                                    sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Shape, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1157,6 +1439,8 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -1168,10 +1452,7 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(ShapeValue, copy).to_dict(validate=validate,
@@ -1182,7 +1463,7 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
 class Size(core.MarkPropFieldDefWithCondition):
     """Size schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1192,11 +1473,8 @@ class Size(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1243,26 +1521,50 @@ class Size(core.MarkPropFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Size, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                   condition=condition, legend=legend, scale=scale, sort=sort,
-                                   timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(Size, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                   condition=condition, field=field, legend=legend, scale=scale,
+                                   sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Size, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1286,6 +1588,8 @@ class SizeValue(core.MarkPropValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -1297,10 +1601,7 @@ class SizeValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(SizeValue, copy).to_dict(validate=validate,
@@ -1311,7 +1612,7 @@ class SizeValue(core.MarkPropValueDefWithCondition):
 class Stroke(core.MarkPropFieldDefWithCondition):
     """Stroke schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1321,11 +1622,8 @@ class Stroke(core.MarkPropFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1372,26 +1670,50 @@ class Stroke(core.MarkPropFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
-        super(Stroke, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                     condition=condition, legend=legend, scale=scale, sort=sort,
-                                     timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(Stroke, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                     condition=condition, field=field, legend=legend, scale=scale,
+                                     sort=sort, timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Stroke, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1415,6 +1737,8 @@ class StrokeValue(core.MarkPropValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -1426,10 +1750,7 @@ class StrokeValue(core.MarkPropValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(StrokeValue, copy).to_dict(validate=validate,
@@ -1440,7 +1761,7 @@ class StrokeValue(core.MarkPropValueDefWithCondition):
 class Text(core.TextFieldDefWithCondition):
     """Text schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1450,11 +1771,8 @@ class Text(core.TextFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1486,25 +1804,49 @@ class Text(core.TextFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 format=Undefined, timeUnit=Undefined, **kwds):
-        super(Text, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                   condition=condition, format=format, timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, format=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+        super(Text, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                   condition=condition, field=field, format=format, timeUnit=timeUnit,
+                                   type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Text, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1527,6 +1869,8 @@ class TextValue(core.TextValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -1538,10 +1882,7 @@ class TextValue(core.TextValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(TextValue, copy).to_dict(validate=validate,
@@ -1552,7 +1893,7 @@ class TextValue(core.TextValueDefWithCondition):
 class Tooltip(core.TextFieldDefWithCondition):
     """Tooltip schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     A FieldDef with Condition<ValueDef>
     {
        condition: {value: ...},
@@ -1562,11 +1903,8 @@ class Tooltip(core.TextFieldDefWithCondition):
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1598,25 +1936,49 @@ class Tooltip(core.TextFieldDefWithCondition):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 format=Undefined, timeUnit=Undefined, **kwds):
-        super(Tooltip, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                      condition=condition, format=format, timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, format=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+        super(Tooltip, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                      condition=condition, field=field, format=format,
+                                      timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Tooltip, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1639,6 +2001,8 @@ class TooltipValue(core.TextValueDefWithCondition):
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, condition=Undefined, **kwds):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
 
@@ -1650,10 +2014,7 @@ class TooltipValue(core.TextValueDefWithCondition):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(TooltipValue, copy).to_dict(validate=validate,
@@ -1664,15 +2025,12 @@ class TooltipValue(core.TextValueDefWithCondition):
 class X(core.PositionFieldDef):
     """X schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1733,25 +2091,50 @@ class X(core.PositionFieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
-                 scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined, **kwds):
-        super(X, self).__init__(field=field, type=type, aggregate=aggregate, axis=axis, bin=bin,
-                                scale=scale, sort=sort, stack=stack, timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(X, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
+                                field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit,
+                                type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(X, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1769,6 +2152,8 @@ class XValue(core.ValueDef):
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values 
         between `0` to `1` for opacity).
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
 
@@ -1780,10 +2165,7 @@ class XValue(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(XValue, copy).to_dict(validate=validate,
@@ -1794,16 +2176,13 @@ class XValue(core.ValueDef):
 class X2(core.FieldDef):
     """X2 schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1827,25 +2206,48 @@ class X2(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(X2, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                 timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(X2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                 timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(X2, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1863,6 +2265,8 @@ class X2Value(core.ValueDef):
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values 
         between `0` to `1` for opacity).
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
 
@@ -1874,10 +2278,7 @@ class X2Value(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(X2Value, copy).to_dict(validate=validate,
@@ -1888,15 +2289,12 @@ class X2Value(core.ValueDef):
 class Y(core.PositionFieldDef):
     """Y schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -1957,25 +2355,50 @@ class Y(core.PositionFieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
-                 scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined, **kwds):
-        super(Y, self).__init__(field=field, type=type, aggregate=aggregate, axis=axis, bin=bin,
-                                scale=scale, sort=sort, stack=stack, timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
+                 field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
+                 type=Undefined, **kwds):
+        super(Y, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
+                                field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit,
+                                type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Y, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -1993,6 +2416,8 @@ class YValue(core.ValueDef):
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values 
         between `0` to `1` for opacity).
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
 
@@ -2004,10 +2429,7 @@ class YValue(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(YValue, copy).to_dict(validate=validate,
@@ -2018,16 +2440,13 @@ class YValue(core.ValueDef):
 class Y2(core.FieldDef):
     """Y2 schema wrapper
     
-    Mapping(required=[type])
+    Mapping(required=[shorthand])
     Definition object for a data field, its type and transformation of an encoding channel.
     
     Attributes
     ----------
-    type : Type
-        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
-        `"longitude"`, and `"geojson"`) when a [geographic 
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+    shorthand : string
+        shorthand for field, aggregate, and type
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`, 
         `count`).  __Default value:__ `undefined` (None)
@@ -2051,25 +2470,48 @@ class Y2(core.FieldDef):
         temporal field that gets casted as 
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__ 
         `undefined` (None)
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`, 
+        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`, 
+        `"longitude"`, and `"geojson"`) when a [geographic 
+        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
     """
     _class_is_valid_at_instantiation = False
 
-    def __init__(self, field, type=Undefined, aggregate=Undefined, bin=Undefined, timeUnit=Undefined,
-                 **kwds):
-        super(Y2, self).__init__(field=field, type=type, aggregate=aggregate, bin=bin,
-                                 timeUnit=timeUnit, **kwds)
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 timeUnit=Undefined, type=Undefined, **kwds):
+        super(Y2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                 timeUnit=timeUnit, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
         return super(Y2, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -2087,6 +2529,8 @@ class Y2Value(core.ValueDef):
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values 
         between `0` to `1` for opacity).
     """
+    _class_is_valid_at_instantiation = False
+
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
 
@@ -2098,10 +2542,7 @@ class Y2Value(core.ValueDef):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super(Y2Value, copy).to_dict(validate=validate,

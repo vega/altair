@@ -25,7 +25,7 @@ chart = alt.Chart(df).mark_area(
     interpolate='step'
 ).encode(
     alt.X('Measurement', bin=alt.Bin(maxbins=100)),
-    alt.Y('count(*):Q', stack=None),
+    alt.Y('count()', stack=None),
     alt.Color(
         'Experiment',
         scale=alt.Scale(range=['#0000ff', '#008000', '#ff0000'])

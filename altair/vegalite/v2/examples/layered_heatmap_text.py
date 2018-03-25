@@ -14,13 +14,13 @@ cars = data.cars.url
 heatmap = alt.Chart(cars).mark_rect().encode(
     alt.X('Cylinders:O', scale=alt.Scale(paddingInner=0)),
     alt.Y('Origin:O', scale=alt.Scale(paddingInner=0)),
-    color='count(*):Q'
+    color='count()'
 )
 
 text = alt.Chart(cars).mark_text(baseline='middle').encode(
     x='Cylinders:O',
     y='Origin:O',
-    text='count(*):Q',
+    text='count()',
     color=alt.condition(datum['count_*'] > 100,
                         alt.value('black'),
                         alt.value('white'))

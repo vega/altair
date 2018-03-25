@@ -265,7 +265,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # dict in the appropriate schema
         if_true = if_true.to_dict()
     elif isinstance(if_true, six.string_types):
-        if_true = {'field': if_true}
+        if_true = {'shorthand': if_true}
         if_true.update(kwargs)
     condition.update(if_true)
 
@@ -275,7 +275,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         selection = if_false.copy()
         selection.condition = condition
     elif isinstance(if_false, six.string_types):
-        selection = dict(condition=condition, field=if_false)
+        selection = {'condition': condition, 'shorthand': if_false}
         selection.update(kwargs)
     else:
         selection = dict(condition=condition, **if_false)
@@ -668,12 +668,7 @@ class EncodingMixin(object):
                 return obj
 
             if isinstance(obj, six.string_types):
-                obj = {'field': obj}
-
-            # if obj is not a string or Schema, it must be a mapping
-            if 'field' in obj:
-                obj = obj.copy()
-                obj.update(utils.parse_shorthand(obj['field']))
+                obj = {'shorthand': obj}
 
             if 'value' in obj:
                 clsname += 'Value'
@@ -691,15 +686,16 @@ class EncodingMixin(object):
                 # our attempts at finding the correct class have failed
                 return obj
 
-        for prop, field in list(kwargs.items()):
+        for prop, obj in list(kwargs.items()):
             try:
-                condition = field['condition']
+                condition = obj['condition']
             except (KeyError, TypeError):
                 pass
             else:
                 if condition is not Undefined:
-                    field['condition'] = _wrap_in_channel_class(condition, prop)
-            kwargs[prop] = _wrap_in_channel_class(field, prop)
+                    obj['condition'] = _wrap_in_channel_class(condition, prop)
+            kwargs[prop] = _wrap_in_channel_class(obj, prop)
+
 
         copy = self.copy(deep=True, ignore=['data'])
 

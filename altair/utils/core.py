@@ -114,7 +114,7 @@ def sanitize_dataframe(df):
     return df
 
 
-def parse_shorthand(shorthand):
+def _parse_shorthand(shorthand):
     """
     Parse the shorthand expression for aggregation, field, and type.
 
@@ -148,8 +148,11 @@ def parse_shorthand(shorthand):
     # build regular expressions
     units = dict(field='(?P<field>.*)',
                  type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
+                 count='(?P<aggregate>count)',
                  aggregate='(?P<aggregate>{0})'.format('|'.join(valid_aggregates)))
-    patterns = [r'{aggregate}\({field}\):{type}',
+    patterns = [r'{count}\(\)',
+                r'{count}\(\):{type}',
+                r'{aggregate}\({field}\):{type}',
                 r'{aggregate}\({field}\)',
                 r'{field}:{type}',
                 r'{field}']
@@ -165,17 +168,31 @@ def parse_shorthand(shorthand):
     if type_:
         match['type'] = INV_TYPECODE_MAP.get(type_, type_)
 
+    # counts are quantitative by default
+    if match == {'aggregate': 'count'}:
+        match['type'] = 'quantitative'
+
     return match
 
 
-def parse_shorthand_plus_data(shorthand, data):
-    """Parse a field shorthand, and use data to infer type if not specified
+def parse_shorthand(shorthand, data=None):
+    """Parse the shorthand expression for aggregation, field, and type.
+
+    These are of the form:
+
+    - "col_name"
+    - "col_name:O"
+    - "average(col_name)"
+    - "average(col_name):O"
+
+    Optionally, a dataframe may be supplied, from which the type
+    will be inferred if not specified in the shorthand.
 
     Parameters
     ----------
     shorthand: str
         Shorthand string of the form "agg(col):typ"
-    data : pd.DataFrame
+    data : pd.DataFrame (optional)
         Dataframe from which to infer types
 
     Returns
@@ -188,34 +205,38 @@ def parse_shorthand_plus_data(shorthand, data):
     --------
     >>> data = pd.DataFrame({'foo': ['A', 'B', 'A', 'B'],
     ...                      'bar': [1, 2, 3, 4]})
-    ...
 
-    >>> parse_shorthand_plus_data('foo', data)
+    >>> parse_shorthand('name')
+    {'field': 'name'}
+
+    >>> parse_shorthand('average(col)')
+    {'field': 'col', 'aggregate': 'average'}
+
+    >>> parse_shorthand('foo:O')
+    {'field': 'foo', 'type': 'ordinal'}
+
+    >>> parse_shorthand('min(foo):Q')
+    {'field': 'foo', 'aggregate': 'min', 'type': 'ordinal'}
+
+    >>> parse_shorthand('foo', data)
     {'field': 'foo', 'type': 'nominal'}
 
-    >>> parse_shorthand_plus_data('bar', data)
+    >>> parse_shorthand('bar', data)
     {'field': 'bar', 'type': 'quantitative'}
 
-    >>> parse_shorthand_plus_data('bar:O', data)
+    >>> parse_shorthand('bar:O', data)
     {'field': 'bar', 'type': 'ordinal'}
 
-    >>> parse_shorthand_plus_data('sum(bar)', data)
+    >>> parse_shorthand('sum(bar)', data)
     {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
+
+    >>> parse_shorthand('count()', data)
+    {'aggregate': 'count', 'bar', 'type': 'quantitative'}
     """
-    attrs = parse_shorthand(shorthand)
-    if 'type' not in attrs and attrs['field'] != '*':
-        if not isinstance(data, pd.DataFrame):
-            raise ValueError("'{0}' encoding field is specified without a type, "
-                             "the type cannot be automacially inferred because "
-                             "the data is not specified as a pandas.DataFrame."
-                             "".format(attrs["field"]))
-        if attrs['field'] not in data.columns:
-            raise ValueError("'{0}' encoding field is specified without a type, "
-                             "and the type cannot be automatically inferred "
-                             "because it does not match any column names within "
-                             "the data. Valid columns are {1}"
-                             "".format(attrs["field"], list(data.columns)))
-        attrs['type'] = infer_vegalite_type(data[attrs['field']])
+    attrs = _parse_shorthand(shorthand)
+    if isinstance(data, pd.DataFrame) and 'type' not in attrs:
+        if 'field' in attrs and attrs['field'] in data.columns:
+            attrs['type'] = infer_vegalite_type(data[attrs['field']])
     return attrs
 
 

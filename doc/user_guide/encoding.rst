@@ -264,14 +264,14 @@ In Altair, such an operation looks like this:
 
    alt.Chart(cars).mark_bar().encode(
        alt.X('Horsepower', bin=True),
-       y='count(*):Q'
+       y='count()'
        # could also use alt.Y(aggregate='count', type='quantitative')
    )
 
 Notice here we use the shorthand version of expressing an encoding channel
 (see :ref:`shorthand-description`) with the ``count`` aggregation,
-the special ``*`` wild-card identifier often used with counts,
-and ``Q`` for quantitative type.
+which is the one aggregation that does not require a field to be
+specified.
 
 Similarly, we can create a two-dimensional histogram using, for example, the
 size of points to indicate counts within the grid (sometimes called
@@ -282,7 +282,7 @@ a "Bubble Plot"):
    alt.Chart(cars).mark_point().encode(
        alt.X('Horsepower', bin=True),
        alt.Y('Miles_per_Gallon', bin=True),
-       size='count(*):Q',
+       size='count()',
    )
 
 There is no need, however, to limit aggregations to counts alone. For example,
@@ -294,7 +294,7 @@ represents the mean of a third quantity, such as acceleration:
    alt.Chart(cars).mark_circle().encode(
        alt.X('Horsepower', bin=True),
        alt.Y('Miles_per_Gallon', bin=True),
-       size='count(*):Q',
+       size='count()',
        color='average(Acceleration):Q'
    )
 
@@ -348,5 +348,5 @@ Shorthand            Equivalent long-form
 ``x='name:Q'``       ``alt.X('name', type='quantitative')``
 ``x='sum(name)'``    ``alt.X('name', aggregate='sum')``
 ``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
-``x='sum(*):Q'``     ``alt.X(aggregate='sum', type='quantitative')``
+``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
 ===================  =======================================================

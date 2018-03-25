@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from .. import parse_shorthand, parse_shorthand_plus_data, update_nested
+from .. import parse_shorthand, update_nested
 
 
 def test_parse_shorthand():
@@ -43,10 +43,14 @@ def test_parse_shorthand():
     check('average(a b:(c\nd):Q', aggregate='average',
           field='a b:(c\nd', type='quantitative')
 
+    # special case: count doesn't need an argument
+    check('count()', aggregate='count', type='quantitative')
+    check('count():O', aggregate='count', type='ordinal')
 
-def test_parse_shorthand_plus_data():
+
+def test_parse_shorthand_with_data():
     def check(s, data, **kwargs):
-        assert parse_shorthand_plus_data(s, data) == kwargs
+        assert parse_shorthand(s, data) == kwargs
 
     data = pd.DataFrame({'x': [1, 2, 3, 4, 5],
                          'y': ['A', 'B', 'C', 'D', 'E'],

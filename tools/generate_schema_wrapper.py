@@ -1,4 +1,5 @@
 """Generate a schema wrapper from a schema"""
+import copy
 import os
 import sys
 import json
@@ -54,16 +55,34 @@ class {classname}(core.{basename}):
     {init_code}
 
     def to_dict(self, validate=True, ignore=(), context=None):
-        type_ = getattr(self, 'type', Undefined)
         context = context or {{}}
-        if not isinstance(self.field, six.string_types):
-            # field is a RepeatSpec or similar; cannot infer type
+        if self.shorthand is Undefined:
             kwds = {{}}
-        elif type_ is Undefined and 'data' in context:
-            kwds = parse_shorthand_plus_data(self.field, context['data'])
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{{0}} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{{0}} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
         else:
-            kwds = parse_shorthand(self.field)
-        self._kwds.update(kwds)
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {{0}}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {{'field': self.shorthand}}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({{k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined}})
         return super({classname}, self).to_dict(validate=validate,
                                                 ignore=ignore,
                                                 context=context)
@@ -72,6 +91,8 @@ class {classname}(core.{basename}):
 VALUE_TEMPLATE = '''
 class {classname}(core.{basename}):
     """{docstring}"""
+    _class_is_valid_at_instantiation = False
+
     {init_code}
 
     def to_dict(self, validate=True, ignore=(), context=None):
@@ -82,10 +103,7 @@ class {classname}(core.{basename}):
             if isinstance(condition, core.SchemaBase):
                 pass
             elif 'field' in condition and 'type' not in condition:
-                if 'data' in context:
-                    kwds = parse_shorthand_plus_data(condition['field'], context['data'])
-                else:
-                    kwds = parse_shorthand(condition['field'])
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
                 copy = self.copy()
                 copy.condition.update(kwds)
         return super({classname}, copy).to_dict(validate=validate,
@@ -199,8 +217,9 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
     if imports is None:
         imports = ["import six",
                    "from . import core",
+                   "import pandas as pd",
                    "from altair.utils.schemapi import Undefined",
-                   "from altair.utils import parse_shorthand, parse_shorthand_plus_data"]
+                   "from altair.utils import parse_shorthand"]
     contents = [HEADER]
     contents.extend(imports)
     contents.append('')
@@ -226,7 +245,11 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
                 nodefault = ['value']
             else:
                 template = FIELD_TEMPLATE
-                nodefault = ['field']
+                nodefault = []
+                defschema = copy.deepcopy(schema['definitions'][basename])
+                defschema['properties']['shorthand'] = {'type': 'string',
+                                                        'description': 'shorthand for field, aggregate, and type'}
+                defschema['required'] = ['shorthand']
             docstring = codegen.docstring(classname=classname, schema=defschema,
                                           rootschema=schema, indent=4)
             init_code = codegen.init_code(classname=classname, schema=defschema,

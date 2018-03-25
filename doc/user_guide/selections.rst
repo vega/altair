@@ -140,7 +140,7 @@ selection:
         return alt.Chart(cars).mark_rect().encode(
             x="Cylinders:O",
             y="Origin:N",
-            color=alt.condition(selector, 'count(*):Q', alt.value('lightgray'))
+            color=alt.condition(selector, 'count()', alt.value('lightgray'))
         ).properties(
             width=300,
             height=180,
