@@ -8,8 +8,8 @@ import pandas as pd
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL, SCHEMA_VERSION
 
 from .data import data_transformers, pipe
-from ... import utils, expr
 from .display import renderers
+from ... import utils, expr
 
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
 VEGA_VERSION = '3.2'
@@ -381,13 +381,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     # Layering and stacking
 
     def __add__(self, other):
-        return LayerChart([self, other])
+        return LayerChart(layer=[self, other])
 
     def __and__(self, other):
-        return VConcatChart([self, other])
+        return VConcatChart(vconcat=[self, other])
 
     def __or__(self, other):
-        return HConcatChart([self, other])
+        return HConcatChart(hconcat=[self, other])
 
     # Display-related methods
 
@@ -645,65 +645,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
 
-class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec):
-    """Create a basic Altair/Vega-Lite chart.
-
-    Although it is possible to set all Chart properties as constructor attributes,
-    it is more idiomatic to use methods such as ``mark_point()``, ``encode()``,
-    ``transform_filter()``, ``properties()``, etc. See Altair's documentation
-    for details and examples: http://altair-viz.github.io/.
-
-    Attributes
-    ----------
-    data : Data
-        An object describing the data source
-    mark : AnyMark
-        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a
-         MarkDef object.
-    encoding : EncodingWithFacet
-        A key-value mapping between encoding channels and definition of fields.
-    autosize : anyOf(AutosizeType, AutoSizeParams)
-        Sets how the visualization size should be determined. If a string, should be one of
-        `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for
-        content sizing and automatic resizing. `"fit"` is only supported for single and
-        layered views that don't use `rangeStep`.  __Default value__: `pad`
-    background : string
-        CSS color property to use as the background of visualization.  __Default value:__
-        none (transparent)
-    config : Config
-        Vega-Lite configuration object.  This property can only be defined at the top-level
-        of a specification.
-    description : string
-        Description of this mark for commenting purpose.
-    height : float
-        The height of a visualization.
-    name : string
-        Name of the visualization for later reference.
-    padding : Padding
-        The default visualization padding, in pixels, from the edge of the visualization
-        canvas to the data rectangle.  If a number, specifies padding for all sides. If an
-        object, the value should have the format `{"left": 5, "top": 5, "right": 5,
-        "bottom": 5}` to specify padding for each side of the visualization.  __Default
-        value__: `5`
-    projection : Projection
-        An object defining properties of geographic projection.  Works with `"geoshape"`
-        marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`,
-        `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or `"longitude"`.
-    selection : Mapping(required=[])
-        A key-value mapping between selection names and definitions.
-    title : anyOf(string, TitleParams)
-        Title for the plot.
-    transform : List(Transform)
-        An array of data transformations such as filter and new field calculation.
-    width : float
-        The width of a visualization.
-    """
-    def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
-                 width=Undefined, height=Undefined, **kwargs):
-        super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
-                                    width=width, height=height, **kwargs)
-
+class EncodingMixin(object):
     @utils.use_signature(core.EncodingWithFacet)
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
@@ -776,6 +718,67 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
         copy.encoding = core.EncodingWithFacet(**encoding)
         return copy
 
+
+class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
+            core.TopLevelFacetedUnitSpec):
+    """Create a basic Altair/Vega-Lite chart.
+
+    Although it is possible to set all Chart properties as constructor attributes,
+    it is more idiomatic to use methods such as ``mark_point()``, ``encode()``,
+    ``transform_filter()``, ``properties()``, etc. See Altair's documentation
+    for details and examples: http://altair-viz.github.io/.
+
+    Attributes
+    ----------
+    data : Data
+        An object describing the data source
+    mark : AnyMark
+        A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
+         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a
+         MarkDef object.
+    encoding : EncodingWithFacet
+        A key-value mapping between encoding channels and definition of fields.
+    autosize : anyOf(AutosizeType, AutoSizeParams)
+        Sets how the visualization size should be determined. If a string, should be one of
+        `"pad"`, `"fit"` or `"none"`. Object values can additionally specify parameters for
+        content sizing and automatic resizing. `"fit"` is only supported for single and
+        layered views that don't use `rangeStep`.  __Default value__: `pad`
+    background : string
+        CSS color property to use as the background of visualization.  __Default value:__
+        none (transparent)
+    config : Config
+        Vega-Lite configuration object.  This property can only be defined at the top-level
+        of a specification.
+    description : string
+        Description of this mark for commenting purpose.
+    height : float
+        The height of a visualization.
+    name : string
+        Name of the visualization for later reference.
+    padding : Padding
+        The default visualization padding, in pixels, from the edge of the visualization
+        canvas to the data rectangle.  If a number, specifies padding for all sides. If an
+        object, the value should have the format `{"left": 5, "top": 5, "right": 5,
+        "bottom": 5}` to specify padding for each side of the visualization.  __Default
+        value__: `5`
+    projection : Projection
+        An object defining properties of geographic projection.  Works with `"geoshape"`
+        marks and `"point"` or `"line"` marks that have a channel (one or more of `"X"`,
+        `"X2"`, `"Y"`, `"Y2"`) with type `"latitude"`, or `"longitude"`.
+    selection : Mapping(required=[])
+        A key-value mapping between selection names and definitions.
+    title : anyOf(string, TitleParams)
+        Title for the plot.
+    transform : List(Transform)
+        An array of data transformations such as filter and new field calculation.
+    width : float
+        The width of a visualization.
+    """
+    def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
+                 width=Undefined, height=Undefined, **kwargs):
+        super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
+                                    width=width, height=height, **kwargs)
+
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
@@ -820,7 +823,7 @@ class Chart(TopLevelMixin, mixins.MarkMethodMixin, core.TopLevelFacetedUnitSpec)
             data = self.data
             self = self.copy()
             self.data = Undefined
-        return FacetChart(self, row=row, column=column, data=data, **kwargs)
+        return FacetChart(spec=self, row=row, column=column, data=data, **kwargs)
 
 
 
@@ -947,14 +950,14 @@ def vconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelLayerSpec)
-class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
+class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
-    def __init__(self, layer=(), **kwargs):
+    def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, 'LayerChart')
-        super(LayerChart, self).__init__(layer=list(layer), **kwargs)
+        super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, 'LayerChart')
@@ -962,9 +965,14 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
         return self
 
     def __add__(self, other):
-        _check_if_valid_subspec(other, 'LayerChart')
         copy = self.copy()
         copy.layer.append(other)
+        return copy
+
+    def add_layers(self, *layers):
+        copy = self.copy()
+        for layer in layers:
+            copy += layer
         return copy
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
@@ -1003,7 +1011,7 @@ class LayerChart(TopLevelMixin, core.TopLevelLayerSpec):
             data = self.data
             self = self.copy()
             self.data = Undefined
-        return FacetChart(self, row=row, column=column, data=data, **kwargs)
+        return FacetChart(spec=self, row=row, column=column, data=data, **kwargs)
 
 
 def layer(*charts, **kwargs):
