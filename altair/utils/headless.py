@@ -153,14 +153,18 @@ def spec_to_image_mimebundle(spec, format, mode,
     html = HTML_TEMPLATE.format(vega_version=vega_version,
                                 vegalite_version=vegalite_version,
                                 vegaembed_version=vegaembed_version)
+    
+    chrome_options = ChromeOptions()
+    chrome_options.add_argument("--headless")
+
+    # for linux/osx root user, need to add --no-sandbox option.
+    # since geteuid doesn't exist on windows, we don't check it
+    if hasattr(os, 'geteuid') and (os.geteuid() == 0):
+        chrome_options.add_argument('--no-sandbox')
+
+    driver = webdriver.Chrome(chrome_options=chrome_options)
 
     try:
-        chrome_options = ChromeOptions()
-        chrome_options.add_argument("--headless")
-        if os.geteuid() == 0:
-            chrome_options.add_argument('--no-sandbox')
-
-        driver = webdriver.Chrome(chrome_options=chrome_options)
         driver.set_page_load_timeout(driver_timeout)
 
         with temporary_filename(suffix='.html') as htmlfile:
