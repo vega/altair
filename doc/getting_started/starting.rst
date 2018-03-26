@@ -166,7 +166,7 @@ Aside: Examining the JSON Output
 
 Recall that Altair's main purpose is to convert plot specifications to a JSON
 string that conforms to the Vega-Lite schema.
-It is instructive here to use the :meth:`~Chart.to_dict` method to inspect the
+It is instructive here to use the :meth:`~Chart.to_json` method to inspect the
 JSON specification that Altair is exporting and sending as JSON to Vega-Lite.
 For clarity, we'll leave out the data and make a nicely-formatted output:
 
@@ -181,7 +181,7 @@ For clarity, we'll leave out the data and make a nicely-formatted output:
 
 Notice here that ``encode(x='a')`` has been expanded to a JSON structure with
 a ``field`` name, and a ``type`` for the data.
-The ``encode(y='b')`` has been expanded similarly and includes an ``aggregate``
+The ``encode(y='average(b)')`` has been expanded similarly and includes an ``aggregate``
 field.
 
 Altair's full shorthand syntax includes a way to specify the type of the
@@ -254,7 +254,7 @@ chart using the :meth:`Chart.save` method:
     chart.save('chart.html')
 
 The basic HTML template produces output that looks like this, where the JSON
-specification for your plot produced by :meth:`Chart.to_dict` should be stored
+specification for your plot produced by :meth:`Chart.to_json` should be stored
 in the ``vlSpec`` Javascript variable:
 
 .. code-block:: html
