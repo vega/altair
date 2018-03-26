@@ -48,6 +48,7 @@ def json_renderer(spec):
 
 
 renderers.register('default', default_renderer)
+renderers.register('jupyterlab', default_renderer)
 renderers.register('json', json_renderer)
 renderers.enable('default')
 

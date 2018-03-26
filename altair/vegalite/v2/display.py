@@ -3,11 +3,12 @@ import os
 import pandas as pd
 from IPython.display import display
 
-from ...utils import PluginRegistry
+from ...utils import PluginRegistry, headless
 from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
 from ..display import json_renderer as json_renderer_base
 from ..display import SpecType, MimeBundleType, RendererType
+from . import api
 
 
 #==============================================================================
@@ -47,8 +48,27 @@ def json_renderer(spec):
     return json_renderer_base(spec, DEFAULT_DISPLAY)
 
 
+def png_renderer(spec):
+    return headless.spec_to_image_mimebundle(spec, format='png',
+                                             mode='vega-lite',
+                                             vega_version=api.VEGA_VERSION,
+                                             vegaembed_version=api.VEGAEMBED_VERSION,
+                                             vegalite_version=api.VEGALITE_VERSION)
+
+
+def svg_renderer(spec):
+    return headless.spec_to_image_mimebundle(spec, format='svg',
+                                             mode='vega-lite',
+                                             vega_version=api.VEGA_VERSION,
+                                             vegaembed_version=api.VEGAEMBED_VERSION,
+                                             vegalite_version=api.VEGALITE_VERSION)
+
+
 renderers.register('default', default_renderer)
+renderers.register('jupyterlab', default_renderer)
 renderers.register('json', json_renderer)
+renderers.register('png', png_renderer)
+renderers.register('svg', svg_renderer)
 renderers.enable('default')
 
 
