@@ -3,9 +3,9 @@
 Importing Altair
 ================
 
-As of Altair 2.0, we are including support for multiple version of both
+As of Altair 2.0, we include support for multiple versions of both
 Vega-Lite (1.x and 2.x) and Vega (2.x and 3.x) in a single Python package.
-This section of the documentation describe how you can import the different
+This section of the documentation describes how you can import the different
 versions of the Python APIs.
 
 .. note::
