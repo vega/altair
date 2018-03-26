@@ -3,14 +3,9 @@ Utilities that use selenium + chrome headless to save figures
 """
 
 import base64
-import io
-import json
+import contextlib
 import os
 import tempfile
-
-import six
-
-from .core import write_file_or_filename
 
 try:
     from selenium import webdriver
@@ -21,6 +16,25 @@ try:
     from selenium.webdriver.chrome.options import Options as ChromeOptions
 except ImportError:
     ChromeOptions = None
+
+
+@contextlib.contextmanager
+def temporary_filename(**kwargs):
+    """Create and clean-up a temporary file
+
+    Arguments are the same as those passed to tempfile.mkstemp
+
+    We could use tempfile.NamedTemporaryFile here, but that causes issues on
+    windows (see https://bugs.python.org/issue14243).
+    """
+    filedescriptor, filename = tempfile.mkstemp(**kwargs)
+    os.close(filedescriptor)
+
+    try:
+        yield filename
+    finally:
+        if os.path.exists(filename):
+            os.remove(filename)
 
 
 HTML_TEMPLATE = """
@@ -83,6 +97,7 @@ EXTRACT_CODE = {
             .catch(function(err) { console.error(err); });
         """}
 
+
 def spec_to_image_mimebundle(spec, format, mode,
                              vega_version,
                              vegaembed_version,
@@ -129,9 +144,11 @@ def spec_to_image_mimebundle(spec, format, mode,
         raise ValueError("must specify vega-lite version")
 
     if webdriver is None:
-        raise ImportError("selenium package is required for saving chart as {0}".format(format))
+        raise ImportError("selenium package is required "
+                          "for saving chart as {0}".format(format))
     if ChromeOptions is None:
-        raise ImportError("chromedriver is required for saving chart as {0}".format(format))
+        raise ImportError("chromedriver is required "
+                          "for saving chart as {0}".format(format))
 
     html = HTML_TEMPLATE.format(vega_version=vega_version,
                                 vegalite_version=vegalite_version,
@@ -146,18 +163,16 @@ def spec_to_image_mimebundle(spec, format, mode,
         driver = webdriver.Chrome(chrome_options=chrome_options)
         driver.set_page_load_timeout(driver_timeout)
 
-        try:
-            fd, htmlfile = tempfile.mkstemp(suffix='.html', text=True)
+        with temporary_filename(suffix='.html') as htmlfile:
             with open(htmlfile, 'w') as f:
                 f.write(html)
             driver.get("file://" + htmlfile)
             online = driver.execute_script("return navigator.onLine")
             if not online:
-                raise ValueError("Internet connection required for saving chart as {0}".format(format))
+                raise ValueError("Internet connection required for saving "
+                                 "chart as {0}".format(format))
             render = driver.execute_async_script(EXTRACT_CODE[format],
                                                  spec, mode)
-        finally:
-            os.remove(htmlfile)
     finally:
         driver.close()
 
