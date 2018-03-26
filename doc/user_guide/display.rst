@@ -5,7 +5,7 @@ Displaying Charts
 
 Altair provides a high-level API for creating visualizations that are
 encoded as declarative JSON objects. To display a visualization, those JSON
-objects must be diplayed using the `Vega-Lite`_ and `Vega`_ JavaScript packages.
+objects must be displayed using the `Vega-Lite`_ and `Vega`_ JavaScript packages.
 This step of displaying a Vega-Lite or Vega JSON object is encoding in a renderer
 abstraction. This section of the documentation describes renderers and how you
 can use them to display Altair visualizations.
