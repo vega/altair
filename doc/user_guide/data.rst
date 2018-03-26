@@ -138,7 +138,7 @@ labels of rows and columns:
     )
 
 Wide-form data can be similarly visualized using e.g. layering
-(see :ref:`layer-chart`), but it is far less convenient within Altiar's grammar.
+(see :ref:`layer-chart`), but it is far less convenient within Altair's grammar.
 
 
 .. _data-converting-long-form:
