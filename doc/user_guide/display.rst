@@ -49,7 +49,7 @@ Altair displays visualizations using renderers. There are two aspects of rendere
 
 * The Python side :ref:`renderer-api` that sends display data to various frontend
   user-interfaces.
-* Frontend user-interfaces that interpret that display data and render a visualiztion.
+* Frontend user-interfaces that interpret that display data and render a visualization.
   See relevant instructions for:
 
   * :ref:`display-notebook`
@@ -296,7 +296,7 @@ advantages to these two data transformers:
 * The performance of the Vega-Lite/Vega JavaScript appears to be better
   for standalone JSON/CSV files than for inline values.
 
-There is are disadvantages of the JSON/CSV data transformers:
+There are disadvantages of the JSON/CSV data transformers:
 
 * The Dataframe will be exported to a temporary ``.json`` or ``.csv``
   file that sits next to the notebook.
