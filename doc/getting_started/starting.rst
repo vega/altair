@@ -181,7 +181,7 @@ For clarity, we'll leave out the data and make a nicely-formatted output:
 
 Notice here that ``encode(x='a')`` has been expanded to a JSON structure with
 a ``field`` name, and a ``type`` for the data.
-The ``encode(y='average(b)')`` has been expanded similarly and includes an ``aggregate``
+The ``encode(y='b')`` has been expanded similarly and includes an ``aggregate``
 field.
 
 Altair's full shorthand syntax includes a way to specify the type of the
