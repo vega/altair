@@ -4,7 +4,7 @@ Altair Plot Sphinx Extension
 
 This extension provides a means of inserting live-rendered Altair plots within
 sphinx documentation. There are two directives defined: ``altair-setup`` and
-``altiar-plot``. ``altair-setup`` code is used to set-up various options
+``altair-plot``. ``altair-setup`` code is used to set-up various options
 prior to running the plot code. For example::
 
     .. altair-plot::
