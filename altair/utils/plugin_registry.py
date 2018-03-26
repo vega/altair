@@ -17,16 +17,15 @@ class PluginRegistry(Generic[PluginType]):
     2. By looking for other Python packages that are installed and provide
        a setuptools entry point group.
 
-    When you create an instance of this claass, provide the name of the 
+    When you create an instance of this class, provide the name of the
     entry point group to use::
 
         reg = PluginRegister('my_entrypoint_group')
 
     """
-
     def __init__(self, entry_point_group: str = '', plugin_type=object) -> None:
         """Create a PluginRegistry for a named entry point group.
-        
+
         Parameters
         ==========
         entry_point_group: str
@@ -38,9 +37,9 @@ class PluginRegistry(Generic[PluginType]):
         self.entry_point_group = entry_point_group
         self.plugin_type = plugin_type
         self._active = None     # type: None
+        self._active_name = ''  # type: str
         self._plugins = {}      # type: dict
         self._options = {}      # type: dict
-    
 
     def register(self, name: str, value: Union[PluginType,None]) -> PluginType:
         """Register a plugin by name and value.
@@ -83,6 +82,7 @@ class PluginRegistry(Generic[PluginType]):
             value = cast(PluginType, ep.load())
             assert isinstance(value, self.plugin_type)
             self.register(name, value)
+        self._active_name = name
         self._active = self._plugins[name]
 
 
@@ -90,3 +90,8 @@ class PluginRegistry(Generic[PluginType]):
         """Return the currently active plugin."""
         return self._active
 
+    def __repr__(self) -> str:
+        return ("{0}(active={0!r}, registered={1!r})"
+                "".format(self.__class__.__name__,
+                          self._active_name,
+                          list(self.names())))
