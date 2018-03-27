@@ -25,7 +25,7 @@ b = alt.Chart().mark_tick(
     y='goal'
 )
 
-chart = alt.layer(a, b).properties(
+alt.layer(a, b).properties(
     data=data
 ).configure_tick(
     thickness=2,

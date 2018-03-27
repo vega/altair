@@ -44,4 +44,4 @@ middle_tick = alt.Chart(population).mark_tick(
     x='age:O',
 )
 
-chart = lower_plot + middle_plot + upper_plot + middle_tick
+lower_plot + middle_plot + upper_plot + middle_tick

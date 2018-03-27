@@ -19,6 +19,7 @@ from docutils.parsers.rst.directives import flag
 from sphinx.util.nodes import nested_parse_with_titles
 
 from .utils import get_docstring_and_rest, prev_this_next, create_thumbnail
+from altair.utils.execeval import eval_block
 from altair.vegalite.v2.examples import iter_examples
 
 
@@ -88,7 +89,6 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 {{ docstring }}
 
 .. altair-plot::
-    :chart-var-name: chart
     {% if code_below %}:code-below:{% endif %}
 
     {{ code | indent(4) }}
@@ -118,14 +118,13 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
 
         example_hash = hashlib.md5(example['code'].encode()).hexdigest()
         hashes_match = (hashes.get(filename, '') == example_hash)
-        print('-> using cached {0}'.format(image_file))
 
-        if not hashes_match or not os.path.exists(image_file):
+        if hashes_match and os.path.exists(image_file):
+            print('-> using cached {0}'.format(image_file))
+        else:
             # the file changed or the image file does not exist. Generate it.
             print('-> saving {0}'.format(image_file))
-            _globals = {}
-            exec(example['code'], _globals)
-            chart = _globals['chart']
+            chart = eval_block(example['code'])
             chart.save(image_file)
             hashes[filename] = example_hash
 

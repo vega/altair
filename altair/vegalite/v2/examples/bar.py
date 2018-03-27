@@ -12,7 +12,7 @@ data = pd.DataFrame({
     'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
 })
 
-chart = alt.Chart(data).mark_bar().encode(
+alt.Chart(data).mark_bar().encode(
     x='a',
     y='b'
 )

@@ -10,7 +10,7 @@ from vega_datasets import data
 
 source = data.cars()
 
-chart = alt.Chart(source).mark_tick().encode(
+alt.Chart(source).mark_tick().encode(
     x='Horsepower:Q',
     y='Cylinders:O'
 )

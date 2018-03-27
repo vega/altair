@@ -11,7 +11,7 @@ from vega_datasets import data
 
 zipcodes = data.zipcodes.url
 
-chart = alt.Chart(zipcodes).mark_circle(size = 3).encode(
+alt.Chart(zipcodes).mark_circle(size = 3).encode(
     longitude='longitude:Q',
     latitude='latitude:Q',
     color='digit:N'

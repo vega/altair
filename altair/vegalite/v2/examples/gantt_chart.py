@@ -14,7 +14,7 @@ data = pd.DataFrame([
     {"task": "C","start": 8, "end": 10}
 ])
 
-chart = alt.Chart(data).mark_bar().encode(
+alt.Chart(data).mark_bar().encode(
     x='start',
     x2='end',
     y='task',

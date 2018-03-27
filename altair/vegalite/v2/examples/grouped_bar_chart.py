@@ -12,7 +12,7 @@ from vega_datasets import data
 
 source = data.population.url
 
-chart = alt.Chart(source).mark_bar(stroke = 'transparent').encode(
+alt.Chart(source).mark_bar(stroke = 'transparent').encode(
     alt.X('gender:N', scale=alt.Scale(rangeStep = 12), axis=alt.Axis(title='')),
     alt.Y('sum(people):Q', axis=alt.Axis(title='population', grid=False)),
     color = alt.Color('gender:N', scale=alt.Scale(range=["#EA98D2", "#659CCA"])),

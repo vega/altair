@@ -10,7 +10,7 @@ from vega_datasets import data
 
 weather = data.seattle_weather()
 
-chart = alt.Chart(weather).mark_bar().encode(
+alt.Chart(weather).mark_bar().encode(
     alt.Color('weather:N',
         legend=alt.Legend(title='Weather type'),
         scale=alt.Scale(

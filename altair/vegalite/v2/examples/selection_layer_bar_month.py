@@ -26,4 +26,4 @@ line = alt.Chart().mark_rule(color='firebrick').encode(
     size=alt.SizeValue(3)
 ).transform_filter(brush.ref())
 
-chart = alt.layer(bars + line, data=weather)
+alt.layer(bars, line, data=weather)

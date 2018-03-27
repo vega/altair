@@ -49,7 +49,7 @@ bars = alt.Chart().mark_bar().encode(
     selection=click
 )
 
-chart = alt.vconcat(points, bars,
+alt.vconcat(points, bars,
     data=data.seattle_weather.url,
     title="Seattle Weather: 2012-2015"
 )

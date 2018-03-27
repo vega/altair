@@ -22,4 +22,4 @@ base = alt.Chart(cars).mark_point().encode(
     height=250
 )
 
-chart = base.encode(x='Horsepower') | base.encode(x='Acceleration')
+base.encode(x='Horsepower') | base.encode(x='Acceleration')

@@ -9,7 +9,7 @@ from vega_datasets import data
 
 source = data.barley()
 
-chart = alt.Chart(source).mark_point().encode(
+alt.Chart(source).mark_point().encode(
     alt.X('median(yield)', scale=alt.Scale(zero = False)),
     alt.Y(
         'variety',

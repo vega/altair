@@ -40,4 +40,4 @@ y_ticks = alt.Chart(cars).mark_tick().encode(
     selection=brush
 )
 
-chart = y_ticks | (points & x_ticks)
+y_ticks | (points & x_ticks)

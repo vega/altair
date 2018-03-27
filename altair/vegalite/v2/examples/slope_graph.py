@@ -13,7 +13,7 @@ source = data.barley()
 # it is best to use either a string representation or a datetime representation.
 source.year = source.year.astype(str)
 
-chart = alt.Chart(source).mark_line().encode(
+alt.Chart(source).mark_line().encode(
     x='year',
     y='median(yield)',
     color='site'

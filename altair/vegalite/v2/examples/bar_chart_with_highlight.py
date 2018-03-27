@@ -39,4 +39,4 @@ text = alt.Chart(data2).mark_text(
     text=alt.value('hazardous')
 )
 
-chart = bar1 + text + bar2 + rule
+bar1 + text + bar2 + rule

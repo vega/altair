@@ -13,7 +13,7 @@ from vega_datasets import data
 cars = data.cars.url
 brush = alt.selection(type='interval')
 
-chart = alt.Chart(cars).mark_point().encode(
+alt.Chart(cars).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))

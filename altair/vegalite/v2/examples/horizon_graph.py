@@ -39,4 +39,4 @@ area2 = area1.encode(
     "ny", datum.y - 50
 )
 
-chart = area1 + area2
+area1 + area2

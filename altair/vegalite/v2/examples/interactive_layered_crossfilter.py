@@ -38,7 +38,7 @@ highlight = base.encode(
 )
 
 # layer the two charts & repeat
-chart = alt.layer(
+alt.layer(
     background, highlight,
     data=flights
 ).transform_calculate(

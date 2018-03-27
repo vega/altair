@@ -10,7 +10,7 @@ from vega_datasets import data
 
 source = data.movies.url
 
-chart = alt.Chart(source).mark_point().encode(
+alt.Chart(source).mark_point().encode(
     x='Worldwide_Gross:Q',
     y='US_DVD_Sales:Q',
     column='MPAA_Rating:N'

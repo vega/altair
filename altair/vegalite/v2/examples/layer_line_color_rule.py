@@ -26,4 +26,4 @@ rule = alt.Chart(stocks).mark_rule().encode(
     size=alt.value(2)
 )
 
-chart = line + rule
+line + rule

@@ -27,7 +27,7 @@ original_data['position'] = original_data.groupby('stem')\
                                          .reset_index(drop=True)
 
 # Creating stem and leaf plot
-chart = alt.Chart(original_data).mark_text(
+alt.Chart(original_data).mark_text(
     align='left',
     baseline='middle',
     dx=-5
