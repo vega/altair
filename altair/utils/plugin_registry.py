@@ -1,7 +1,18 @@
 from typing import Callable, Generic, List, TypeVar, Union, cast
+import textwrap
 
 import entrypoints
 
+
+ERR_MESSAGES = {
+    'notebook': textwrap.dedent(
+        """
+        To use the 'notebook' renderer, you must install the vega3 package
+        and the associated Jupyter extension.
+        See https://altair-viz.github.io/getting_started/installation.html
+        for more information.
+        """)
+}
 
 
 PluginType = TypeVar('PluginType')
@@ -81,10 +92,10 @@ class PluginRegistry(Generic[PluginType]):
             try:
                 ep = entrypoints.get_single(self.entry_point_group, name)
             except entrypoints.NoSuchEntryPoint as err:
-                if name == 'notebook':
-                    raise ValueError("To use the 'notebook' renderer, you must install the vega3 package.\n"
-                                     "See https://altair-viz.github.io/getting_started/installation.html for more information.")
-                raise
+                if name in ERR_MESSAGES:
+                    raise ValueError(ERR_MESSAGES[name])
+                else:
+                    raise
             value = cast(PluginType, ep.load())
             assert isinstance(value, self.plugin_type)
             self.register(name, value)
