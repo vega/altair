@@ -12,7 +12,8 @@ can use them to display Altair visualizations.
 
 You may need to install an additional Python/npm package to display Altair
 charts for a given frontend user-interface. See instructions for:
-:ref:`display-notebook`, :ref:`display-jupyterlab` and :ref:`display-nteract`.
+:ref:`display-notebook`, :ref:`display-jupyterlab`, :ref:`display-nteract`
+and :ref:`display-colab`.
 
 .. _altair-vega-versions:
 
@@ -208,6 +209,22 @@ nteract
 nteract will render Vega-Lite 1.x and Vega out of the box. Support for Vega-Lite 2.x
 and Vega 3.x will likely be released soon.
 
+.. _display-colab:
+
+Colab
+~~~~~
+Google's Colab is a cloud-based notebook backed by Google Drive. Altair works
+with the public version of Colab once the package is installed and ``'colab'``
+renderer is enabled.
+
+At the top of your Colab session, run the following::
+
+    !pip install altair
+    import altair as alt
+    alt.renderers.enable('colab')
+
+And then you can create Altair plots normally within the notebook.
+
 .. _data-transformers:
 
 Data transformers
@@ -322,6 +339,7 @@ be registered and enabled as::
 .. _ipyvega3: https://github.com/vega/ipyvega/tree/vega3
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
+.. _Colab: https://colab.research.google.com
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
 .. _Vega-Lite: http://vega.github.io/vega-lite
 .. _Vega: https://vega.github.io/vega/
