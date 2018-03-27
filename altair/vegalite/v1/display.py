@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from IPython.display import display
 
-from ...utils import PluginRegistry, headless
+from ...utils import PluginRegistry, headless, html
 from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
 from ..display import json_renderer as json_renderer_base
@@ -64,11 +64,19 @@ def svg_renderer(spec):
                                              vegalite_version=api.VEGALITE_VERSION)
 
 
+def colab_renderer(spec):
+    return html.spec_to_html_mimebundle(spec, mode='vega-lite',
+                                        vega_version=api.VEGA_VERSION,
+                                        vegaembed_version=api.VEGAEMBED_VERSION,
+                                        vegalite_version=api.VEGALITE_VERSION)
+
+
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
 renderers.register('json', json_renderer)
 renderers.register('png', png_renderer)
 renderers.register('svg', svg_renderer)
+renderers.register('colab', colab_renderer)
 renderers.enable('default')
 
 
