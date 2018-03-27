@@ -20,7 +20,7 @@ df = pd.melt(df, id_vars=df.index.name,
              var_name = 'Experiment',
              value_name='Measurement')
 
-chart = alt.Chart(df).mark_area(
+alt.Chart(df).mark_area(
     opacity=0.3,
     interpolate='step'
 ).encode(

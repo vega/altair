@@ -12,7 +12,7 @@ counties = alt.topo_feature(data.us_10m.url,'counties')
 unemp_data = alt.UrlData(data.unemployment.url)
 
 
-chart = alt.Chart(counties).mark_geoshape().properties(
+alt.Chart(counties).mark_geoshape().properties(
     projection={'type': 'albersUsa'},
     width=500,
     height=300

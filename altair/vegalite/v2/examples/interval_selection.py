@@ -26,4 +26,4 @@ lower = upper.properties(
     height=60
 )
 
-chart = alt.vconcat(upper, lower, data=sp500)
+alt.vconcat(upper, lower, data=sp500)

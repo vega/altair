@@ -27,4 +27,4 @@ error_bars = alt.Chart(barley).mark_rule().encode(
     y='variety'
 )
 
-chart = points + error_bars
+points + error_bars

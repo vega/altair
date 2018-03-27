@@ -30,4 +30,4 @@ bars = alt.Chart().mark_bar().encode(
     brush.ref()
 )
 
-chart = alt.vconcat(points, bars, data=cars)
+alt.vconcat(points, bars, data=cars)

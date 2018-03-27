@@ -69,7 +69,7 @@ from sphinx import addnodes, directives
 from sphinx.util.nodes import set_source_info
 
 import altair as alt
-from .utils import exec_then_eval
+from altair.utils.execeval import eval_block
 
 # These default URLs can be changed in conf.py; see setup() below.
 VEGA_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega@3"
@@ -205,7 +205,7 @@ def html_visit_altair_plot(self, node):
     try:
         f = io.StringIO()
         with contextlib.redirect_stdout(f):
-            chart = exec_then_eval(node['code'], namespace)
+            chart = eval_block(node['code'], namespace)
         stdout = f.getvalue()
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"

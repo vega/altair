@@ -14,7 +14,7 @@ pop_eng_hur = alt.UrlData(data.population_engineers_hurricanes.url)
 
 variable_list = ['population','engineers','hurricanes']
 
-chart = alt.Chart(states).mark_geoshape().properties(
+alt.Chart(states).mark_geoshape().properties(
     projection={'type': 'albersUsa'},
     width=500,
     height=300
@@ -25,4 +25,6 @@ chart = alt.Chart(states).mark_geoshape().properties(
     from_=alt.LookupData(pop_eng_hur, 'id', variable_list)
 ).repeat(
     row = variable_list
-).resolve_scale(color='independent')
+).resolve_scale(
+    color='independent'
+)

@@ -78,4 +78,4 @@ rect = alt.Chart(source2).mark_rect().encode(
     color = 'event:N'
 )
 
-chart = rect + line + point
+rect + line + point

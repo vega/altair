@@ -53,5 +53,5 @@ rules = alt.Chart().mark_rule(color='gray').encode(
 )
 
 # Put the five layers into a chart and bind the data
-chart = alt.layer(line, selectors, points, rules, text,
-                  data=data, width=600, height=300)
+alt.layer(line, selectors, points, rules, text,
+          data=data, width=600, height=300)

@@ -25,4 +25,4 @@ text = bars.mark_text(
     text='b'
 )
 
-chart = bars + text
+bars + text

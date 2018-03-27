@@ -29,4 +29,4 @@ points = alt.Chart(airports).mark_circle().encode(
     color=alt.value('steelblue')
 )
 
-chart = background + points
+background + points

@@ -38,3 +38,5 @@ chart += alt.Chart().mark_point(
         )
     )
 ).interactive()
+
+chart

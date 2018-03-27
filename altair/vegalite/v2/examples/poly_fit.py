@@ -42,4 +42,4 @@ polynomial_fit = alt.Chart(poly_data).mark_line().encode(
     color='degree'
 )
 
-chart = points + polynomial_fit
+points + polynomial_fit

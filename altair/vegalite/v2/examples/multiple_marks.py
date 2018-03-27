@@ -9,7 +9,7 @@ from vega_datasets import data
 
 stocks = data.stocks()
 
-chart = alt.LayerChart(stocks).encode(
+alt.LayerChart(stocks).encode(
     x='date:T',
     y='price:Q',
     color='symbol:N'

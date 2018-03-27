@@ -9,7 +9,7 @@ with linked panning and zooming.
 import altair as alt
 from vega_datasets import data
 
-chart = alt.Chart(data.cars.url).mark_circle().encode(
+alt.Chart(data.cars.url).mark_circle().encode(
     alt.X(alt.repeat("column"), type='quantitative'),
     alt.Y(alt.repeat("row"), type='quantitative'),
     color='Origin:N'

@@ -12,7 +12,7 @@ from vega_datasets import data
 
 gapminder = data.gapminder_health_income.url
 
-chart = alt.Chart(gapminder).mark_circle().encode(
+alt.Chart(gapminder).mark_circle().encode(
     alt.X('income:Q', scale=alt.Scale(type='log')),
     alt.Y('health:Q', scale=alt.Scale(zero=False)),
     size='population:Q'

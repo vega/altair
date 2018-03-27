@@ -56,4 +56,4 @@ lines = alt.Chart(tubelines).mark_geoshape(
     )
 )
 
-chart = background + labels + lines
+background + labels + lines

@@ -26,4 +26,9 @@ line =  base.mark_line(color='red').encode(
     y='mean(temp_max)',
 )
 
-chart = (bar + line).resolve_scale(y='independent')
+alt.layer(
+    bar,
+    line
+).resolve_scale(
+    y='independent'
+)

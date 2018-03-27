@@ -19,4 +19,4 @@ rule = alt.Chart(source).mark_rule(color='red').encode(
     size=alt.value(5)
 )
 
-chart = bar + rule
+bar + rule

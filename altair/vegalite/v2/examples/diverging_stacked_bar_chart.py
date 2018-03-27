@@ -354,7 +354,7 @@ y_axis = alt.Axis(title = 'Question',
 
 source = alt.pd.DataFrame(data)
 
-chart = alt.Chart(source).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     x='percentage_start:Q',
     x2='percentage_end:Q',
     y=alt.Y('question:N', axis=y_axis),

@@ -44,4 +44,4 @@ points = base.mark_point().encode(
     selection=hover
 )
 
-chart = background + points + text
+background + points + text

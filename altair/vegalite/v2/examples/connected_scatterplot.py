@@ -22,4 +22,4 @@ points = alt.Chart(driving).mark_circle().encode(
     order='year'
 )
 
-chart = lines + points
+lines + points

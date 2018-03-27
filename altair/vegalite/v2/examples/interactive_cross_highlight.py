@@ -40,7 +40,7 @@ bar = alt.Chart(data.movies.url).mark_bar().encode(
     height=200
 )
 
-chart = alt.vconcat(
+alt.vconcat(
     rect + circ,
     bar
 ).resolve_legend(

@@ -26,4 +26,4 @@ text = alt.Chart(cars).mark_text(baseline='middle').encode(
                         alt.value('white'))
 )
 
-chart = heatmap + text
+heatmap + text

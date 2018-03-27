@@ -10,7 +10,7 @@ from vega_datasets import data
 
 source = data.disasters.url
 
-chart = alt.Chart(source).mark_circle(
+alt.Chart(source).mark_circle(
     opacity=0.8,
     stroke='black',
     strokeWidth=1

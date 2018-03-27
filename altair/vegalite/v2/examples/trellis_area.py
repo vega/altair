@@ -10,7 +10,7 @@ from vega_datasets import data
 
 source = data.stocks()
 
-chart = alt.Chart(source).mark_area().encode(
+alt.Chart(source).mark_area().encode(
     alt.X('date:T', axis=alt.Axis(format='%Y', title='Time', grid=False)),
     alt.Y('price:Q', axis=alt.Axis(title='Price', grid=False)),
     alt.Color('symbol', legend=None),

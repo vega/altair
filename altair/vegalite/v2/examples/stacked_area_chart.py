@@ -8,15 +8,13 @@ import altair as alt
 from vega_datasets import data
 import pandas as pd
 
-crimea = data.crimea()
-
-crimea = pd.melt(crimea, id_vars=['date'],
+crimea = pd.melt(data.crimea(), id_vars=['date'],
                  value_vars=['disease', 'other', 'wounds'],
                  var_name='cause',
                  value_name='deaths')
 
-chart = alt.Chart(crimea).mark_area().encode(
+alt.Chart(crimea).mark_area().encode(
     x='date',
-    y='sum(deaths)', 
+    y='sum(deaths)',
     color='cause'
 )

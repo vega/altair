@@ -237,4 +237,4 @@ bar = alt.Chart(df).mark_bar().encode(
     color=open_close_color
 )
 
-chart = rule + bar
+rule + bar
