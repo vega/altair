@@ -78,7 +78,13 @@ class PluginRegistry(Generic[PluginType]):
     def enable(self, name: str) -> None:
         """Enable a plugin by name."""
         if name not in self._plugins:
-            ep = entrypoints.get_single(self.entry_point_group, name)
+            try:
+                ep = entrypoints.get_single(self.entry_point_group, name)
+            except entrypoints.NoSuchEntryPoint as err:
+                if name == 'notebook':
+                    raise ValueError("To use the 'notebook' renderer, you must install the vega3 package.\n"
+                                     "See https://altair-viz.github.io/getting_started/installation.html for more information.")
+                raise
             value = cast(PluginType, ep.load())
             assert isinstance(value, self.plugin_type)
             self.register(name, value)
