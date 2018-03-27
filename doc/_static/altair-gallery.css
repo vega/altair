@@ -2,7 +2,7 @@
     float: left;
     margin: 10px;
     width: auto;
-    height: 200px;
+    height: 220px;
 }
 
 .figure.minigallery {
@@ -39,4 +39,97 @@ div.section h2 {
 
 div.bottomnav {
     clear: left;
+}
+
+/* Front-page Example Showcase */
+#showcase {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  margin-bottom: 10px;
+}
+#showcase:after,
+#showcase:before {
+  content: "";
+  display: block;
+  width: 100%;
+  position: absolute;
+  background: white;
+  height: 16px;
+  z-index: 2;
+}
+#showcase:before {
+  bottom: -16px;
+  box-shadow: 0px -8px 16px rgba(0,0,0,0.3);
+}
+#showcase:after {
+  top: -16px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+}
+#showcase .examples {
+  margin: 0 auto;
+  height: 240px;
+  width: 800px;
+  line-height: 0;
+}
+#showcase .preview {
+  width: 144px;
+  height: 80px;
+  padding: 0;
+  outline: 1px solid #ddd;
+  background-position: left top;
+  background-size: cover;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+  transition: background-position 2s;
+  display: block;
+  float: left
+}
+#showcase .preview:hover {
+  background-position: right bottom;
+  outline: 2px solid #4682B4;
+  z-index: 1;
+}
+
+/* Example Gallery */
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+}
+.gallery .imagegroup {
+  display: inline-block;
+  position: relative;
+  /* Show 4 images per row, each image has 18px horizontal margin */
+  width: calc(25% - 36px);
+  margin: 12px 18px;
+  /* For small screens */
+  min-width: 140px;
+}
+
+.gallery .imagegroup:hover {
+  text-decoration: none;
+}
+.gallery .image {
+  background-size: cover;
+  display: block;
+  width: 100%;
+  /* hack to make height depend on width, golden ratio*/
+  padding-bottom: 75%;
+  background-repeat: no-repeat;
+  margin-bottom: 5px;
+  overflow: hidden;
+  transition: background-position 2s;
+}
+.gallery .image:hover {
+  background-position: right bottom;
+}
+
+.gallery .image-title {
+  font-size: .95em;
 }

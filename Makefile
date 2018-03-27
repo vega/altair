@@ -4,20 +4,11 @@ install:
 	python setup.py install
 
 test :
-	py.test altair --doctest-modules
-
-generate-schema :
-	rm -rf altair/schema/_interface
-	python tools/generate_schema_interface.py
+	python -m pytest --pyargs --doctest-modules altair
 
 
-sync-examples :
-	python tools/sync_vegalite_examples.py
+test-coverage:
+	python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair
 
-
-sync-schema :
-	python tools/sync_vegalite_schema.py
-
-
-sync-datasets :
-	python tools/sync_vegalite_datasets.py
+test-coverage-html:
+	python -m pytest --pyargs --doctest-modules --cov=altair --cov-report html altair

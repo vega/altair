@@ -1,4 +1,9 @@
-traitlets>=4.3.1
+entrypoints
 ipython
+jsonschema
+numpy
 pandas
-vega==0.4.4
+pytest
+six
+toolz
+vega_datasets

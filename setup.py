@@ -28,40 +28,6 @@ See the `Altair Github Repository`_ for issues, bug reports, and contributions.
 .. _ipyvega: https://github.com/vega/ipyvega
 """
 
-DESCRIPTION         = "Altair: A declarative statistical visualization library for Python."
-NAME                = "altair"
-PACKAGES            = ['altair',
-                       'altair.v1',
-                       'altair.v1.tests',
-                       'altair.v1.schema',
-                       'altair.v1.schema._interface',
-                       'altair.v1.schema._interface.tests',
-                       'altair.v1.examples',
-                       'altair.v1.examples.tests',
-                       'altair.datasets',
-                       'altair.datasets.tests',
-                       'altair.expr',
-                       'altair.expr.tests',
-                       'altair.tests',
-                       'altair.utils',
-                       'altair.utils.tests',
-                       ]
-PACKAGE_DATA        = {'altair': ['notebooks/*.ipynb',
-                                  'notebooks/*.html',
-                                  'notebooks/auto_examples/*.ipynb',
-                                  'v1/schema/*.json',
-                                  'v1/examples/*.json',
-                                  'v1/examples/json/*.json',
-                                  'datasets/*.json',
-                                  'expr/*.json']}
-AUTHOR              = "Brian E. Granger / Jake VanderPlas"
-AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@cs.washington.edu"
-URL                 = 'http://altair-viz.github.io'
-DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
-LICENSE             = 'BSD 3-clause'
-INSTALL_REQUIRES    = ['traitlets>=4.3.1','ipython','pandas','vega==0.4.4']
-
-
 import io
 import os
 import re
@@ -71,6 +37,9 @@ try:
 except ImportError:
     from distutils.core import setup
 
+#==============================================================================
+# Utilities
+#==============================================================================
 
 def read(path, encoding='utf-8'):
     path = os.path.join(os.path.dirname(__file__), path)
@@ -90,8 +59,53 @@ def version(path):
         return version_match.group(1)
     raise RuntimeError("Unable to find version string.")
 
+HERE = os.path.abspath(os.path.dirname(__file__))
 
-VERSION = version('altair/__init__.py')
+# From https://github.com/jupyterlab/jupyterlab/blob/master/setupbase.py, BSD licensed
+def find_packages(top=HERE):
+    """
+    Find all of the packages.
+    """
+    packages = []
+    for d, dirs, _ in os.walk(top, followlinks=True):
+        if os.path.exists(os.path.join(d, '__init__.py')):
+            packages.append(os.path.relpath(d, top).replace(os.path.sep, '.'))
+        elif d != top:
+            # Do not look for packages in subfolders if current is not a package
+            dirs[:] = []
+    return packages
+
+#==============================================================================
+# Variables
+#==============================================================================
+
+
+
+DESCRIPTION         = "Altair: A declarative statistical visualization library for Python."
+NAME                = "altair"
+PACKAGES            = find_packages()
+PACKAGE_DATA        = {'altair': [
+                                  'vega/v2/schema/*.json',
+                                  'vega/v3/schema/*.json',
+                                  'vegalite/v1/schema/*.json',
+                                  'vegalite/v2/schema/*.json'
+                                  ]
+                      }
+AUTHOR              = "Brian E. Granger / Jake VanderPlas"
+AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@gmail.com"
+URL                 = 'http://altair-viz.github.io'
+DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
+LICENSE             = 'BSD 3-clause'
+INSTALL_REQUIRES    = ['entrypoints',
+                       'ipython',
+                       'jsonschema',
+                       'numpy',
+                       'pandas',
+                       'pytest',
+                       'six',
+                       'toolz',
+                       'vega_datasets']
+VERSION             = version('altair/__init__.py')
 
 
 setup(name=NAME,

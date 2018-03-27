@@ -64,3 +64,4 @@ target/
 .idea/*
 tools/_build
 Untitled*.ipynb
+.mypy*

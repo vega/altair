@@ -2,14 +2,14 @@
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 
-Altair is a declarative statistical visualization library for Python.
+<a href="https://altair-viz.github.io"><img src="https://altair-viz.github.io/_static/altair-logo-light.png" align="left" hspace="40" vspace="6" alt="Altair logo" width="150px"></a>
 
-*Altair is developed by [Brian Granger](https://github.com/ellisonbg) and [Jake Vanderplas](https://github.com/jakevdp) in close collaboration with the [UW Interactive Data Lab](http://idl.cs.washington.edu/).*
-
-With Altair, you can spend more time understanding your data and its meaning. Altair's
+**Altair** is a declarative statistical visualization library for Python. With Altair, you can spend more time understanding your data and its meaning. Altair's
 API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
-simplicity produces beautiful and effective visualizations with a minimal amount of code.
+simplicity produces beautiful and effective visualizations with a minimal amount of code. *Altair is developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
+Granger](https://github.com/ellisonbg) in close collaboration with the [UW
+Interactive Data Lab](http://idl.cs.washington.edu/).*
 
 ## Altair Documentation
 
@@ -21,16 +21,17 @@ as well as Altair's [Tutorial Notebooks](http://github.com/altair-viz/altair_not
 
 ## Example
 
-Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the Jupyter Notebook:
+Here is an example using Altair to quickly visualize and display a dataset with the native Vega-Lite renderer in the JupyterLab:
 
 ```python
 import altair as alt
 
-# Uncomment/run this line to enable Altair in JupyterLab/nteract:
-# alt.enable_mime_rendering()
+# to use with Jupyter notebook (not JupyterLab) run the following
+# alt.renderers.enable('notebook')
 
-# load data as a pandas DataFrame
-cars = alt.load_dataset('cars')
+# load a simple dataset as a pandas DataFrame
+from vega_datasets import data
+cars = data.cars()
 
 alt.Chart(cars).mark_point().encode(
     x='Horsepower',
@@ -71,37 +72,26 @@ Vega-Lite JSON data can be rendered in the following user-interfaces:
 * Auto-generate Altair Python code from a Vega-Lite JSON spec.
 * Display visualizations in the live Jupyter Notebook, JupyterLab, nteract, on GitHub and
   [nbviewer](http://nbviewer.jupyter.org/).
-* Export visualizations to PNG images, stand-alone HTML pages and the [Online Vega-Lite
-  Editor](https://vega.github.io/vega-editor/?mode=vega-lite).
+* Export visualizations to PNG/SVG images, stand-alone HTML pages and the
+[Online Vega-Lite Editor](https://vega.github.io/editor/#/).
 * Serialize visualizations as JSON files.
-* Explore Altair with 40 example datasets and over 70 examples.
+* Explore Altair with dozens of examples in the [Example Gallery](https://altair-viz.github.io/gallery/index.html)
 
 ## Installation
 
-Altair can be installed with the following commands:
+**Note**: Altair version 2.0 requires Python 3.5 or later.
+It does not currently work with Python 2.
 
-```
-pip install altair
-pip install --upgrade notebook
-```
+To use Altair for visualization, you need to install two sets of tools
 
-In addition, to render Altair visualizations in the classic Jupyter Notebook,
-you will need to enable the [ipyvega](https://github.com/vega/ipyvega) nbextension:
+1. The core Altair Package and its dependencies
 
-```
-jupyter nbextension enable --sys-prefix --py vega
-```
+2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`,
+   `JupyterLab`, or `nteract`)
 
-This single step is not needed for usage with JupyterLab and nteract, which have built-in
-support for Vega-Lite.
-
-If you use conda to install Altair:
-
-```
-conda install altair --channel conda-forge
-```
-
-the nbextension is automatically enabled.
+Altair can be installed with either ``pip`` or with ``conda``.
+For full installation instructions, please see
+https://altair-viz.github.io/getting_started/installation.html
 
 ## Example and tutorial notebooks
 

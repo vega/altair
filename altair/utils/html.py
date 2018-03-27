@@ -1,83 +1,100 @@
 import json
 
-from .. import urls
 
-
-def to_html(json_dict,
-            template=None, title=None,
-            d3_js_url=urls.D3_JS_URL,
-            vega_js_url=urls.VEGA_JS_URL,
-            vegalite_js_url=urls.VEGALITE_JS_URL,
-            vegaembed_js_url=urls.VEGAEMBED_JS_URL,
-            **kwargs):
-    """Embed a Vega-Lite JSON into an HTML document.
-
-    Parameters
-    ----------
-    json_dict : dict
-        A dictionary describing the Vega-Lite specification.
-    template : string
-        The HTML template to use. This should have a format method, which
-        accepts a "spec" and "title" argument. Note that a standard Python
-        format string meets these requirements.
-        By default, uses DEFAULT_TEMPLATE.
-    title: string
-        The title to use in the document. Default is "Vega-Lite Chart"
-
-    Returns
-    -------
-    html : string
-        A string of HTML representing the chart
-    """
-    if template is None:
-        template = DEFAULT_TEMPLATE
-    if title is None:
-        title = "Vega-Lite Chart"
-    spec = json.dumps(json_dict, indent=4)
-    return template.format(spec=spec, title=title,
-                           d3_js_url=d3_js_url,
-                           vega_js_url=vega_js_url,
-                           vegalite_js_url=vegalite_js_url,
-                           vegaembed_js_url=vegaembed_js_url,
-                           **kwargs)
-
-
-DEFAULT_TEMPLATE = """
+HTML_TEMPLATE = {
+'vega-lite': """
 <!DOCTYPE html>
+<html>
 <head>
-  <title>{title}</title>
-  <meta charset="utf-8">
-
-  <script src="{d3_js_url}"></script>
-  <script src="{vega_js_url}"></script>
-  <script src="{vegalite_js_url}"></script>
-  <script src="{vegaembed_js_url}" charset="utf-8"></script>
-
-  <style media="screen">
-    /* Add space between vega-embed links  */
+  <style>
     .vega-actions a {{
-      margin-right: 5px;
+        margin-right: 12px;
+        color: #757575;
+        font-weight: normal;
+        font-size: 13px;
     }}
   </style>
+  <script src="{base_url}/vega@{vega_version}"></script>
+  <script src="{base_url}/vega-lite@{vegalite_version}"></script>
+  <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
 </head>
 <body>
-  <!-- Container for the visualization -->
   <div id="vis"></div>
-
-  <script>
-  var vlSpec = {spec}
-
-  var embedSpec = {{
-    mode: "vega-lite",  // Instruct Vega-Embed to use the Vega-Lite compiler
-    spec: vlSpec
-  }};
-
-  // Embed the visualization in the container with id `vis`
-  vg.embed("#vis", embedSpec, function(error, result) {{
-    // Callback receiving the View instance and parsed Vega spec
-    // result.view is the View, which resides under the '#vis' element
-  }});
+  <script type="text/javascript">
+    var spec = {spec};
+    var opt = {embed_opt};
+    vegaEmbed("#vis", spec, opt);
   </script>
 </body>
 </html>
-"""
+""",
+
+'vega': """
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .vega-actions a {{
+        margin-right: 12px;
+        color: #757575;
+        font-weight: normal;
+        font-size: 13px;
+    }}
+  </style>
+  <script src="{base_url}/vega@{vega_version}"></script>
+  <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script type="text/javascript">
+    var spec = {spec};
+    var opt = {embed_opt};
+    vegaEmbed("#vis", spec, opt);
+  </script>
+</body>
+</html>
+"""}
+
+
+def spec_to_html_mimebundle(spec, mode,
+                            vega_version,
+                            vegaembed_version,
+                            vegalite_version=None,
+                            base_url="https://cdn.jsdelivr.net/npm/",
+                            opt=None, json_kwds=None):
+    """Conver a vega/vega-lite specification to a PNG/SVG image
+
+    Parameters
+    ----------
+    spec : dict
+        a dictionary representing a vega-lite plot spec
+    mode : string {'vega' | 'vega-lite'}
+        The rendering mode.
+    vega_version : string
+        For html output, the version of vega.js to use
+    vegalite_version : string
+        For html output, the version of vegalite.js to use
+    vegaembed_version : string
+        For html output, the version of vegaembed.js to use
+    base_url : string (optional)
+        The base url from which to load the javascript libraries
+    opt : dict (optional)
+        Dictionary of options to pass to the renderer
+    json_kwds : dict (optional)
+
+    Returns
+    -------
+    output : dict
+        a mime-bundle representing the image
+    """
+    opt = opt or {}
+    json_kwds = json_kwds or {}
+    template = HTML_TEMPLATE[mode]
+    opt['mode'] = mode
+    spec_html = template.format(spec=json.dumps(spec, **json_kwds),
+                                embed_opt=json.dumps(opt),
+                                vega_version=vega_version,
+                                vegalite_version=vegalite_version,
+                                vegaembed_version=vegaembed_version,
+                                base_url=base_url)
+    return {'text/html': spec_html}

@@ -1,0 +1,31 @@
+<svg width="400" height="400" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>Altair Logo</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(165 262)">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M -165 -262L 235 -262L 235 138L -165 138L -165 -262Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="Altair Logo" clip-path="url(#clip-0)">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(-138 -212)" fill="#FBC02D"/>
+</g>
+<g id="Rectangle">
+<use xlink:href="#path1_fill" transform="translate(-23 -212)" fill="#0288D1"/>
+</g>
+<g id="Rectangle 2">
+<use xlink:href="#path2_fill" transform="translate(47 -112)" fill="#03A9F4"/>
+</g>
+<g id="Rectangle 3">
+<use xlink:href="#path3_fill" transform="translate(117 -12)" fill="#4FC3F7"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 115 300L 0 300L 115 0L 115 300Z"/>
+<path id="path1_fill" d="M 0 0L 90 0L 90 300L 0 300L 0 0Z"/>
+<path id="path2_fill" d="M 0 0L 90 0L 90 200L 0 200L 0 0Z"/>
+<path id="path3_fill" d="M 0 0L 90 0L 90 100L 0 100L 0 0Z"/>
+</defs>
+</svg>
