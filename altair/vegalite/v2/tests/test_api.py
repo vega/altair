@@ -11,6 +11,19 @@ import pandas as pd
 import altair.vegalite.v2 as alt
 
 
+@pytest.fixture
+def basic_chart():
+    data = pd.DataFrame({
+        'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+        'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
+    })
+
+    return alt.Chart(data).mark_bar().encode(
+        x='a',
+        y='b'
+    )
+
+
 def test_chart_data_types():
     Chart = lambda data: alt.Chart(data).mark_point().encode(x='x:Q', y='y:Q')
 
@@ -122,9 +135,7 @@ def test_selection_to_dict():
 
 
 @pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
-def test_save(format):
-    from ..examples.bar import chart
-
+def test_save(format, basic_chart):
     if format in ['html', 'json', 'svg']:
         out = io.StringIO()
         mode = 'r'
@@ -135,8 +146,8 @@ def test_save(format):
 
     try:
         try:
-            chart.save(out, format=format)
-            chart.save(filename)
+            basic_chart.save(out, format=format)
+            basic_chart.save(filename)
         except ImportError as err:
             if 'selenium' in str(err) or 'chromedriver' in str(err):
                 pytest.skip("selenium installation required for png/svg export")
