@@ -6,6 +6,14 @@ HTML_TEMPLATE = {
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+    .vega-actions a {{
+        margin-right: 12px;
+        color: #757575;
+        font-weight: normal;
+        font-size: 13px;
+    }}
+  </style>
   <script src="{base_url}/vega@{vega_version}"></script>
   <script src="{base_url}/vega-lite@{vegalite_version}"></script>
   <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
@@ -25,6 +33,14 @@ HTML_TEMPLATE = {
 <!DOCTYPE html>
 <html>
 <head>
+  <style>
+    .vega-actions a {{
+        margin-right: 12px;
+        color: #757575;
+        font-weight: normal;
+        font-size: 13px;
+    }}
+  </style>
   <script src="{base_url}/vega@{vega_version}"></script>
   <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
 </head>
