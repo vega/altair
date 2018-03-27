@@ -85,13 +85,17 @@ class PluginRegistry(Generic[PluginType]):
         self._active_name = name
         self._active = self._plugins[name]
 
+    @property
+    def active(self) -> str:
+        """Return the name of the currently active plugin"""
+        return self._active_name
 
     def get(self) -> PluginType:
         """Return the currently active plugin."""
         return self._active
 
     def __repr__(self) -> str:
-        return ("{0}(active={0!r}, registered={1!r})"
+        return ("{0}(active={1!r}, registered={2!r})"
                 "".format(self.__class__.__name__,
                           self._active_name,
                           list(self.names())))
