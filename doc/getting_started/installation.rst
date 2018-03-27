@@ -130,6 +130,11 @@ indexed in the left panel, or check out the :ref:`example-gallery` for more idea
 
 Quick Start: Altair + Colab
 ---------------------------
+.. note::
+
+   Altair version 2.0 requires Python 3.5 or later.
+   It does not work with Python 2.
+
 Altair can be used directly in Google's Colab_. Open a notebook, and run the
 following in a notebook cell:
 
