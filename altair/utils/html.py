@@ -13,17 +13,29 @@ HTML_TEMPLATE = {
         font-weight: normal;
         font-size: 13px;
     }}
+    .error {{
+        color: red;
+    }}
   </style>
   <script src="{base_url}/vega@{vega_version}"></script>
   <script src="{base_url}/vega-lite@{vegalite_version}"></script>
   <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
 </head>
 <body>
-  <div id="vis"></div>
+  <div id="{output_div}"></div>
   <script type="text/javascript">
     var spec = {spec};
     var opt = {embed_opt};
-    vegaEmbed("#vis", spec, opt);
+    vegaEmbed("#vis", spec, opt)
+      .catch(function(error){{
+        var outputDiv = document.getElementById('{output_div}');
+        outputDiv.innerHTML = ('<div class="error">'
+                               + '<p>Javascript Error: ' + error.message + '</p>'
+                               + "<p>This usually means there's a typo in your chart specification. "
+                               + "See the javascript console for the full traceback</p>"
+                               + '</div>');
+        console.error(error);
+      }});
   </script>
 </body>
 </html>
@@ -40,16 +52,28 @@ HTML_TEMPLATE = {
         font-weight: normal;
         font-size: 13px;
     }}
+    .error {{
+        color: red;
+    }}
   </style>
   <script src="{base_url}/vega@{vega_version}"></script>
   <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
 </head>
 <body>
-  <div id="vis"></div>
+  <div id="{output_div}"></div>
   <script type="text/javascript">
     var spec = {spec};
     var opt = {embed_opt};
-    vegaEmbed("#vis", spec, opt);
+    vegaEmbed("#vis", spec, opt)
+      .catch(function(error){{
+        var outputDiv = document.getElementById('{output_div}');
+        outputDiv.innerHTML = ('<div class="error">'
+                               + '<p>Javascript Error: ' + error.message + '</p>'
+                               + "<p>This usually means there's a typo in your chart specification. "
+                               + "See the javascript console for the full traceback</p>"
+                               + '</div>');
+        console.error(error);
+      }});
   </script>
 </body>
 </html>
@@ -96,5 +120,6 @@ def spec_to_html_mimebundle(spec, mode,
                                 vega_version=vega_version,
                                 vegalite_version=vegalite_version,
                                 vegaembed_version=vegaembed_version,
-                                base_url=base_url)
+                                base_url=base_url,
+                                output_div='vis')
     return {'text/html': spec_html}
