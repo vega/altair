@@ -1,4 +1,5 @@
 import os
+import textwrap
 
 import pandas as pd
 from IPython.display import display
@@ -34,6 +35,15 @@ https://altair-viz.github.io/user_guide/display.html
 """
 
 renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
+renderers.entrypoint_err_messages = {
+    'notebook': textwrap.dedent(
+        """
+        To use the 'notebook' renderer, you must install the vega3 package
+        and the associated Jupyter extension.
+        See https://altair-viz.github.io/getting_started/installation.html
+        for more information.
+        """)
+}
 
 
 here = os.path.dirname(os.path.realpath(__file__))

@@ -1,18 +1,6 @@
 from typing import Callable, Generic, List, TypeVar, Union, cast
-import textwrap
 
 import entrypoints
-
-
-ERR_MESSAGES = {
-    'notebook': textwrap.dedent(
-        """
-        To use the 'notebook' renderer, you must install the vega3 package
-        and the associated Jupyter extension.
-        See https://altair-viz.github.io/getting_started/installation.html
-        for more information.
-        """)
-}
 
 
 PluginType = TypeVar('PluginType')
@@ -34,6 +22,10 @@ class PluginRegistry(Generic[PluginType]):
         reg = PluginRegister('my_entrypoint_group')
 
     """
+    # this is a mapping of name to error message to allow custom error messages
+    # in case an entrypoint is not found
+    entrypoint_err_messages = {}
+
     def __init__(self, entry_point_group: str = '', plugin_type=object) -> None:
         """Create a PluginRegistry for a named entry point group.
 
@@ -92,8 +84,8 @@ class PluginRegistry(Generic[PluginType]):
             try:
                 ep = entrypoints.get_single(self.entry_point_group, name)
             except entrypoints.NoSuchEntryPoint as err:
-                if name in ERR_MESSAGES:
-                    raise ValueError(ERR_MESSAGES[name])
+                if name in self.entrypoint_err_messages:
+                    raise ValueError(self.entrypoint_err_messages[name])
                 else:
                     raise
             value = cast(PluginType, ep.load())
