@@ -240,7 +240,7 @@ A legend is added to the chart automatically when the `color`, `shape` or `size`
 
   iris = data.iris()
 
-  chart = alt.Chart(iris).mark_point().encode(
+  alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
       color='species'
@@ -257,7 +257,7 @@ The legend option on all of them expects a :class:`Legend` object as its input, 
 
   iris = data.iris()
 
-  chart = alt.Chart(iris).mark_point().encode(
+  alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
       color=alt.Color('species', legend=alt.Legend(title="Species by color")),
@@ -272,7 +272,7 @@ Another thing you can do is move the legend to another position with the `orient
 
   iris = data.iris()
 
-  chart = alt.Chart(iris).mark_point().encode(
+  alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
       color=alt.Color('species', legend=alt.Legend(orient="left")),
@@ -287,7 +287,7 @@ You can remove the legend entirely by submitting a null value.
 
   iris = data.iris()
 
-  chart = alt.Chart(iris).mark_point().encode(
+  alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
       color=alt.Color('species', legend=None),
