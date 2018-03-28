@@ -1,6 +1,8 @@
 import json
 
 
+
+
 HTML_TEMPLATE = {
 'vega-lite': """
 <!DOCTYPE html>
@@ -26,7 +28,7 @@ HTML_TEMPLATE = {
   <script type="text/javascript">
     var spec = {spec};
     var opt = {embed_opt};
-    vegaEmbed("#vis", spec, opt)
+    vegaEmbed("#{output_div}", spec, opt)
       .catch(function(error){{
         var outputDiv = document.getElementById('{output_div}');
         outputDiv.innerHTML = ('<div class="error">'
@@ -64,7 +66,7 @@ HTML_TEMPLATE = {
   <script type="text/javascript">
     var spec = {spec};
     var opt = {embed_opt};
-    vegaEmbed("#vis", spec, opt)
+    vegaEmbed("#{output_div}", spec, opt)
       .catch(function(error){{
         var outputDiv = document.getElementById('{output_div}');
         outputDiv.innerHTML = ('<div class="error">'
