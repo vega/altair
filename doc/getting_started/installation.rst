@@ -3,58 +3,45 @@
 Installation
 ============
 
-.. note::
-
-   Altair version 2.0 requires Python 3.5 or later.
-   It does not work with Python 2.
-
 To use Altair for visualization, you need to install two sets of tools
 
 1. The core Altair Package and its dependencies
 
 2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`_,
-   `JupyterLab`_, or `nteract`_)
+   `JupyterLab`_, `Colab`_, or `nteract`_)
 
-Here we will briefly outline the basic installation steps for JupyterLab and
-for Jupyter Notebook; for more details, or for information about nteract and
-other front-ends, see :ref:`displaying-charts`
+See the following instructions for your chosen frontend:
 
 - :ref:`installation-jupyterlab`
-
 - :ref:`installation-notebook`
-
+- :ref:`installation-colab`
 
 .. _installation-jupyterlab:
 
-Installing Altair with JupyterLab
+Quick Start: Altair + JupyterLab
 ---------------------------------
-This section details how to install Altair for use with JupyterLab.
-To install Altair for use with the Jupyter notebook, see :ref:`installation-notebook`.
 
-Both Altair and JupyterLab can be installed with ``pip``::
+.. note::
 
-    $ pip install altair jupyterlab
+   Altair version 2.0 requires Python 3.5 or later.
+   It does not work with Python 2.
 
-or with ``conda``::
+We recommend installing Altair with JupyterLab. If you would like to use it
+with the classic notebook, see :ref:`installation-notebook`.
 
-    $ conda install altair jupyterlab --channel conda-forge
+To install Altair with pip, run the following commands::
 
-For JupyterLab version 0.32 or newer, nothing else needs to be done to use
-the main Altair API. For JupyterLab version 0.31, you'll additionally need to
-install the vega3 jupyterlab extension, which requires nodejs::
+    $ pip install jupyterlab altair
+    $ jupyter labextension install @jupyterlab/vega3-extension  # not needed for JupyterLab 0.32 or newer
 
-    $ conda install -c conda-forge nodejs  # if you do not already have nodejs installed
-    $ jupyter labextension install @jupyterlab/vega3-extension
-
-Once altair and Jupyterlab are installed, launch JupyterLab by running::
+Once this is finished, run::
 
     $ jupyter lab
 
-This should launch a web browser window. The first time JupyterLab is launched,
-you will see a *Launcher* window: Under the "Notebook" section, click "Python 3"
-to launch a new notebook. Then you should be able to execute Altair code and
-see the rendered charts; to try it out, you can copy, paste, and execute the
-following code to make certain everythin is working correctly:
+In the browser window that launches, under "Notebook" click "Python 3".
+
+In the notebook that opens, you can run the following code to ensure everything
+is properly set up:
 
 .. altair-plot::
 
@@ -69,39 +56,41 @@ following code to make certain everythin is working correctly:
         color='species'
     )
 
+If the plot does not render, ensure you have installed the exact versions
+mentioned above, and if it still does not work see
+:ref:`display-troubleshooting` for help.
+
 Once things are up and running, you may wish to go through the tutorials at
 :ref:`starting` and :ref:`exploring-weather`, read through the User Guide
 indexed in the left panel, or check out the :ref:`example-gallery` for more ideas.
 
+
 .. _installation-notebook:
 
-Installing Altair with Jupyter Notebook
----------------------------------------
-This section details how to install Altair for use with Jupyter Notebook.
-To install Altair for use with the JupyterLab, see :ref:`installation-jupyterlab`.
+Quick Start: Altair + Notebook
+------------------------------
 
-Both Altair and Jupyter Notebook can be installed with ``pip``::
+.. note::
 
-    $ pip install altair notebook
+   Altair version 2.0 requires Python 3.5 or later.
+   It does not work with Python 2.
 
-or with ``conda``::
+Altair, the jupyter notebook, and their dependencies can be installed with ``pip``.
+Note that rendering Altair plots in the notebook also requires the vega3_ package
+to be installed and configured::
 
-    $ conda install altair notebook --channel conda-forge
-
-To use Altair with the Jupyter notebook, you must additionally install the
-vega3_  package and enable its notebook extension::
-
-    $ pip install vega3
+    $ pip install altair notebook vega3
     $ jupyter nbextension install --sys-prefix --py vega3 # not needed in notebook >= 5.3
 
-Once altair and Jupyter Notebook are installed, launch the notebook by running::
+Once the packages and extensions are installed, launch the notebook by running::
 
     $ jupyter notebook
 
-This should launch a web browser window. Click the *New* drop-down menu and
-select "Python 3".
-Then you should be able to copy and paste the following code, and see a chart
-within your notebook:
+In the browser window that launches, click the *New* drop-down menu and
+select "Python 3".under "Notebook" click "Python 3".
+
+In the notebook that opens, you can run the following code to ensure everything
+is properly set up:
 
 .. altair-plot::
 
@@ -119,6 +108,10 @@ within your notebook:
         color='species'
     )
 
+If the plot does not render, ensure you have installed the exact versions
+mentioned above, and if it still does not work see
+:ref:`display-troubleshooting` for help.
+
 .. note::
 
     For the classic Jupyter notebook (not JupyterLab), each time you launch a
@@ -132,6 +125,55 @@ within your notebook:
 Once things are up and running, you may wish to go through the tutorials at
 :ref:`starting` and :ref:`exploring-weather`, read through the User Guide
 indexed in the left panel, or check out the :ref:`example-gallery` for more ideas.
+
+.. _installation-colab:
+
+Quick Start: Altair + Colab
+---------------------------
+.. note::
+
+   Altair version 2.0 requires Python 3.5 or later.
+   It does not work with Python 2.
+
+Altair can be used directly in Google's Colab_. Open a notebook, and run the
+following in a notebook cell:
+
+    !pip install altair
+    import altair as alt
+    # for colab only run this command once per session
+    alt.renderers.enable('colab')
+
+With this set up, paste the following code to check if renderings are working
+correctly:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalLength',
+        y='petalWidth',
+        color='species'
+    )
+
+If the plot does not render, ensure you have installed the exact versions
+mentioned above, and if it still does not work see
+:ref:`display-troubleshooting` for help.
+
+Once things are up and running, you may wish to go through the tutorials at
+:ref:`starting` and :ref:`exploring-weather`, read through the User Guide
+indexed in the left panel, or check out the :ref:`example-gallery` for more ideas.
+
+.. _installation-with-conda:
+
+Installation with Conda
+-----------------------
+If you wish to use conda instead of pip to install Altair and related packages,
+the ``conda-forge`` channel is the best option. Simply the above ``pip install``
+commands with the equivalent ``conda install`` commands.
 
 
 .. _install-dependencies:
@@ -186,6 +228,7 @@ development version directly from GitHub using:
 .. _conda: http://conda.pydata.org
 .. _Altair source repository: http://github.com/altair-viz/altair
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
+.. _Colab: https://colab.research.google.com
 .. _nteract: https://nteract.io
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
 .. _vega3: https://pypi.python.org/pypi/vega3/

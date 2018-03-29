@@ -3,7 +3,6 @@ from typing import Callable, Generic, List, TypeVar, Union, cast
 import entrypoints
 
 
-
 PluginType = TypeVar('PluginType')
 
 
@@ -23,6 +22,10 @@ class PluginRegistry(Generic[PluginType]):
         reg = PluginRegister('my_entrypoint_group')
 
     """
+    # this is a mapping of name to error message to allow custom error messages
+    # in case an entrypoint is not found
+    entrypoint_err_messages = {}
+
     def __init__(self, entry_point_group: str = '', plugin_type=object) -> None:
         """Create a PluginRegistry for a named entry point group.
 
@@ -78,7 +81,13 @@ class PluginRegistry(Generic[PluginType]):
     def enable(self, name: str) -> None:
         """Enable a plugin by name."""
         if name not in self._plugins:
-            ep = entrypoints.get_single(self.entry_point_group, name)
+            try:
+                ep = entrypoints.get_single(self.entry_point_group, name)
+            except entrypoints.NoSuchEntryPoint as err:
+                if name in self.entrypoint_err_messages:
+                    raise ValueError(self.entrypoint_err_messages[name])
+                else:
+                    raise
             value = cast(PluginType, ep.load())
             assert isinstance(value, self.plugin_type)
             self.register(name, value)
