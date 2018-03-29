@@ -62,7 +62,13 @@ number of charts:
     ).interactive()
 
 The output of both of these patterns is a :class:`LayerChart` object, which
-can has properties and methods similar to the :class:`Chart` object.
+has properties and methods similar to the :class:`Chart` object.
+
+.. note::
+
+   The bottom-layer is the chart on the left side of the ``+`` operator, or
+   the one that was passed as the first argument of ``alt.layer``. If you
+   do not see the expected output, check the order of the layers.
 
 
 .. _hconcat-chart:
