@@ -5,28 +5,52 @@ import json
 
 import IPython
 from IPython.core import magic, magic_arguments
+import pandas as pd
+import six
+from toolz import pipe
 
-from altair.utils import sanitize_dataframe
-from altair.vegalite.v1 import VegaLite as VegaLiteV1
-from altair.vegalite.v2 import VegaLite as VegaLiteV2
-from altair.vega.v2 import Vega as VegaV2
-from altair.vega.v3 import Vega as VegaV3
+from altair.vegalite import v1 as vegalite_v1
+from altair.vegalite import v2 as vegalite_v2
+from altair.vega import v2 as vega_v2
+from altair.vega import v3 as vega_v3
+
 
 RENDERERS = {
   'vega': {
-      '2': VegaV2,
-      '3': VegaV3
+      '2': vega_v2.Vega,
+      '3': vega_v3.Vega,
   },
   'vega-lite': {
-      '1': VegaLiteV1,
-      '2': VegaLiteV2
+      '1': vegalite_v1.VegaLite,
+      '2': vegalite_v2.VegaLite,
   }
 }
 
 
-def _to_jsondict(df):
-    """Convert a dataframe to a JSON dictionary."""
-    return sanitize_dataframe(df).to_dict(orient='records')
+TRANSFORMERS = {
+  'vega': {
+      # Vega doesn't yet have specific data transformers; use vegalite
+      '2': vegalite_v1.data.data_transformers,
+      '3': vegalite_v2.data.data_transformers,
+  },
+  'vega-lite': {
+      '1': vegalite_v1.data.data_transformers,
+      '2': vegalite_v2.data.data_transformers,
+  }
+}
+
+
+def _prepare_data(data, data_transformers):
+    """Convert input data to data for use within schema"""
+    if data is None or isinstance(data, dict):
+        return data
+    elif isinstance(data, pd.DataFrame):
+        return pipe(data, data_transformers.get())
+    elif isinstance(data, six.string_types):
+        return {'url': data}
+    else:
+        warnings.warn("data of type {0} not recognized".format(type(data)))
+        return data
 
 
 def _get_variable(name):
@@ -61,6 +85,7 @@ def vega(line, cell):
     version = args.version
     assert version in RENDERERS['vega']
     Vega = RENDERERS['vega'][version]
+    data_transformers = TRANSFORMERS['vega'][version]
 
     def namevar(s):
         s = s.split(':')
@@ -83,10 +108,12 @@ def vega(line, cell):
         spec = json.loads(cell)
 
     if data:
-        spec['data'] = [{
-            'name': name,
-            'values': _to_jsondict(_get_variable(val))
-        } for name, val in data]
+        spec['data'] = []
+        for name, val in data:
+            val = _get_variable(val)
+            prepped = _prepare_data(val, data_transformers)
+            prepped['name'] = name
+            spec['data'].append(prepped)
 
     return Vega(spec)
 
@@ -113,6 +140,7 @@ def vegalite(line, cell):
     version = args.version
     assert version in RENDERERS['vega-lite']
     VegaLite = RENDERERS['vega-lite'][version]
+    data_transformers = TRANSFORMERS['vega-lite'][version]
 
     if args.yaml:
         import yaml
@@ -120,6 +148,7 @@ def vegalite(line, cell):
     else:
         spec = json.loads(cell)
     if args.data is not None:
-        spec['data'] = {'values': _to_jsondict(_get_variable(args.data))}
+        data = _get_variable(args.data)
+        spec['data'] = _prepare_data(data, data_transformers)
 
     return VegaLite(spec)
