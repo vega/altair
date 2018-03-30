@@ -5,8 +5,7 @@ from IPython.display import display
 
 from ...utils import PluginRegistry
 from ..display import Displayable
-from ..display import default_renderer as default_renderer_base
-from ..display import json_renderer as json_renderer_base
+from ..display import default_renderer_base, json_renderer_base
 from ..display import SpecType, MimeBundleType, RendererType
 
 
@@ -39,12 +38,13 @@ renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
 here = os.path.dirname(os.path.realpath(__file__))
 
 
-def default_renderer(spec):
-    return default_renderer_base(spec, VEGA_MIME_TYPE, DEFAULT_DISPLAY)
+def default_renderer(spec, metadata):
+    return default_renderer_base(spec, mime_type=VEGA_MIME_TYPE,
+                                 str_repr=DEFAULT_DISPLAY, metadata=metadata)
 
 
-def json_renderer(spec):
-    return json_renderer_base(spec, DEFAULT_DISPLAY)
+def json_renderer(spec, metadata):
+    return json_renderer_base(spec, str_repr=DEFAULT_DISPLAY, metadata=metadata)
 
 
 renderers.register('default', default_renderer)

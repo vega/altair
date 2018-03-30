@@ -69,14 +69,12 @@ class PluginRegistry(Generic[PluginType]):
             self._plugins[name] = value
             return value
 
-
     def names(self) -> List[str]:
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
         more_exts = [ep.name for ep in entrypoints.get_group_all(self.entry_point_group)]
         exts.extend(more_exts)
         return exts
-
 
     def enable(self, name: str) -> None:
         """Enable a plugin by name."""

@@ -126,6 +126,7 @@ class NamedSelection(SelectionMapping):
 
         Examples
         --------
+        >>> import altair as alt
         >>> sel = alt.selection_interval(name='interval')
         >>> sel.ref()
         {'selection': 'interval'}
@@ -415,7 +416,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             utils.display_traceback(in_ipython=True)
             return {}
         else:
-            return renderers.get()(dct)
+            return renderers.get()(dct, {})
 
     def repeat(self, row=Undefined, column=Undefined, **kwargs):
         """Return a RepeatChart built from the chart
