@@ -1,27 +1,21 @@
-import os
-from os.path import join, dirname, abspath
+import pkgutil
 
 import pytest
 
 from altair.utils.execeval import eval_block
-
-EXAMPLE_DIR = abspath(join(dirname(__file__), '..'))
+from altair.vegalite.v2 import examples
 
 
 def iter_example_filenames():
-    for filename in os.listdir(EXAMPLE_DIR):
-        if filename.startswith('__'):
+    for importer, modname, ispkg in pkgutil.iter_modules(examples.__path__):
+        if ispkg or modname.startswith('_'):
             continue
-        if not filename.endswith('.py'):
-            continue
-        yield filename
+        yield modname + '.py'
 
 
 @pytest.mark.parametrize('filename', iter_example_filenames())
 def test_examples(filename):
-    with open(join(EXAMPLE_DIR, filename)) as f:
-        source = f.read()
-
+    source = pkgutil.get_data(examples.__name__, filename)
     chart = eval_block(source)
 
     if chart is None:

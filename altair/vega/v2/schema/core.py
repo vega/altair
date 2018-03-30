@@ -5,14 +5,12 @@
 
 from altair.utils.schemapi import SchemaBase, Undefined
 
-import os
+import pkgutil
 import json
 
 def load_schema():
     """Load the json schema associated with this module's functions"""
-    directory = os.path.dirname(__file__)
-    with open(os.path.join(directory, 'vega-schema.json'), encoding='utf8') as f:
-        return json.load(f)
+    return json.loads(pkgutil.get_data(__name__, 'vega-schema.json').decode('utf-8'))
 
 
 class VegaSchema(SchemaBase):
