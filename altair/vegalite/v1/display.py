@@ -84,7 +84,7 @@ class VegaLite(Displayable):
     """An IPython/Jupyter display class for rendering VegaLite 1."""
 
     renderers = renderers
-    schema_path = os.path.join(here, 'schema', 'vega-lite-schema.json')
+    schema_path = (__name__, 'schema/vega-lite-schema.json')
 
 
 def vegalite(spec: dict, validate=True):

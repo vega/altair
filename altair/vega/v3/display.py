@@ -57,7 +57,7 @@ class Vega(Displayable):
     """An IPython/Jupyter display class for rendering Vega 3."""
 
     renderers = renderers
-    schema_path = os.path.join(here, 'schema', 'vega-schema.json')
+    schema_path = (__name__, 'schema/vega-schema.json')
 
 
 def vega(spec: dict, validate=True):

@@ -1,5 +1,6 @@
 import json
 import os
+import pkgutil
 from typing import Callable, Dict, Union
 
 from jsonschema import validate
@@ -19,7 +20,7 @@ class Displayable(object):
     """A base display class for VegaLite v1/v2.
 
     This class takes a VegaLite v1/v2 spec and does the following:
-    
+
     1. Optionally validates the spec against a schema.
     2. Uses the RendererPlugin to grab a renderer and call it when the
        IPython/Jupyter display method (_repr_mimebundle_) is called.
@@ -31,17 +32,16 @@ class Displayable(object):
     """
 
     renderers = None
-    schema_path = ''
+    schema_path = ('altair', '')
 
     def __init__(self, spec, validate=False) -> None:
         self.spec = spec
         self.validate = validate
         self._validate()
-    
+
     def _validate(self) -> None:
         """Validate the spec against the schema."""
-        with open(self.schema_path) as f:
-            schema_dict = json.load(f)
+        schema_dict = json.loads(pkgutil.get_data(*self.schema_path))
         validate(self.spec, schema_dict)
 
     def _repr_mimebundle_(self, include, exclude):
