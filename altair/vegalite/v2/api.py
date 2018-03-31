@@ -126,6 +126,7 @@ class NamedSelection(SelectionMapping):
 
         Examples
         --------
+        >>> import altair as alt
         >>> sel = alt.selection_interval(name='interval')
         >>> sel.ref()
         {'selection': 'interval'}
@@ -476,6 +477,43 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         -------
         self : Chart object
             returns chart to allow for chaining
+
+        Examples
+        --------
+        The aggregate transform allows you to specify transforms directly using
+        the same shorthand syntax as used in encodings:
+
+        >>> import altair as alt
+        >>> chart1 = alt.Chart().transform_aggregate(
+        ...     mean_acc='mean(Acceleration)',
+        ...     groupby=['Origin']
+        ... )
+        >>> print(chart1.transform[0].to_json())
+        {
+          "aggregate": [
+            {
+              "as": "mean_acc",
+              "field": "Acceleration",
+              "op": "mean"
+            }
+          ],
+          "groupby": [
+            "Origin"
+          ]
+        }
+
+        It also supports including AggregatedFieldDef instances or dicts directly,
+        so you can create the above transform like this:
+
+        >>> chart2 = alt.Chart().transform_aggregate(
+        ...     [alt.AggregatedFieldDef(field='Acceleration', op='mean',
+        ...                             **{'as': 'mean_acc'})],
+        ...     groupby=['Origin']
+        ... )
+        >>> chart2.transform == chart1.transform
+        True
+
+
 
         See Also
         --------
