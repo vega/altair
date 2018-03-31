@@ -5,15 +5,11 @@ import jsonschema
 import six
 import pandas as pd
 
-from .schema import core, channels, mixins, Undefined, SCHEMA_URL, SCHEMA_VERSION
+from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
 from .data import data_transformers, pipe
-from .display import renderers
+from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from ... import utils, expr
-
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '3.2'
-VEGAEMBED_VERSION = '3.0'
 
 #------------------------------------------------------------------------
 # Data Utilities

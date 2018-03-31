@@ -9,7 +9,11 @@ from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
 from ..display import json_renderer as json_renderer_base
 from ..display import SpecType, MimeBundleType, RendererType
-from . import api
+
+from .schema import SCHEMA_VERSION
+VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
+VEGA_VERSION = '3.2'
+VEGAEMBED_VERSION = '3.0'
 
 
 #==============================================================================
