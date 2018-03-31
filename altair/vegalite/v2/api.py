@@ -513,8 +513,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> chart2.transform == chart1.transform
         True
 
-
-
         See Also
         --------
         alt.AggregateTransform : underlying transform object
@@ -530,7 +528,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.AggregateTransform(aggregate=aggregate,
                                                            groupby=groupby))
 
-    def transform_bin(self, as_=Undefined, bin=Undefined, field=Undefined, **kwargs):
+    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs):
         """
         Add a BinTransform to the schema.
 
