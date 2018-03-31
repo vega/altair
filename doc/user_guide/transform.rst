@@ -20,8 +20,9 @@ for example, a URL pointer to a JSON or CSV file. It can also be useful in a
 compound chart where different views of the dataset require different
 transformations.
 
-This second approach -- specifying data transformations within the chart itself
--- can be accomplished using the ``transform_*`` methods of top-level objects:
+This second approach -- specifying data transformations within the chart
+specification itself -- can be accomplished using the ``transform_*``
+methods of top-level objects:
 
 =========================================  ================================================================================
 Method                                     Description
@@ -36,6 +37,66 @@ Method                                     Description
 =========================================  ================================================================================
 
 We will see some examples of these transforms in the following sections.
+
+.. _user-guide-aggregate-transform
+
+Aggregate Transforms
+~~~~~~~~~~~~~~~~~~~~
+There are two ways to aggregate data within Altair: within the encoding itself,
+or within an aggregate transform.
+
+The aggregate property of a field definition can be used to compute aggregate
+summary statistics (e.g., median, min, max) over groups of data.
+
+If at least one fields in the specified encoding channels contain aggregate,
+the resulting visualization will show aggregate data. In this case, all
+fields without aggregation function specified are treated as group-by fields
+in the aggregation process.
+
+For example, the following bar chart aggregates mean of ``acceleration``,
+grouped by the number of Cylinders.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    cars = data.cars.url
+
+    alt.Chart(cars).mark_bar().encode(
+        y='Cylinders:O',
+        x='mean(Acceleration):Q',
+    )
+
+The Altair shorthand string::
+
+    ...
+    y='mean(acceleration):Q',
+    ...
+
+is made available for convenience, and is equivalent to the longer form::
+
+    ...
+    y=alt.Y(field='acceleration', aggregate='mean', type='quantitative')
+    ...
+
+For more information on shorthand encodings specifications, see
+:ref:`encoding-aggregates`.
+
+The same plot can be shown using an explicitly computed aggregation, using the
+:meth:`~Chart.transform_aggregate` method:
+
+.. altair-plot::
+
+    alt.Chart(cars).mark_bar().encode(
+        y='Cylinders:O',
+        x='mean_acc:Q'
+    ).transform_aggregate(
+        mean_acc='mean(Acceleration)',
+        groupby=["Cylinders"]
+    )
+
+For a list of available aggregates, see :ref:`encoding-aggregates`.
 
 .. _user-guide-expressions:
 
