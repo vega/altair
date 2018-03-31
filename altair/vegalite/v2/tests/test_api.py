@@ -240,8 +240,10 @@ def test_SelectionMapping():
 
 def test_transforms():
     # aggregate transform
-    chart = alt.Chart().transform_aggregate([], ['foo'])
-    kwds = {'aggregate': [], 'groupby': ['foo']}
+    agg1 = alt.AggregatedFieldDef(**{'as': 'x1', 'op': 'mean', 'field': 'y'})
+    agg2 = alt.AggregatedFieldDef(**{'as': 'x2', 'op': 'median', 'field': 'z'})
+    chart = alt.Chart().transform_aggregate([agg1], ['foo'], x2='median(z)')
+    kwds = dict(aggregate=[agg1, agg2], groupby=['foo'])
     assert chart.transform == [alt.AggregateTransform(**kwds)]
 
     # bin transform

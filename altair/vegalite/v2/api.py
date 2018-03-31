@@ -457,17 +457,20 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             copy.transform.extend(transforms)
         return copy
 
-    def transform_aggregate(self, aggregate, groupby=Undefined, **kwargs):
+    def transform_aggregate(self, aggregate=Undefined, groupby=Undefined, **kwds):
         """
         Add an AggregateTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         aggregate : List(AggregatedFieldDef)
             Array of objects that define fields to aggregate.
         groupby : List(string)
             The data fields to group by. If not specified, a single group
             containing all data objects will be used.
+        **kwds :
+            additional keywords are converted to aggregates using standard
+            shorthand parsing.
 
         Returns
         -------
@@ -478,9 +481,16 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.AggregateTransform : underlying transform object
         """
-        kwargs['aggregate'] = aggregate
-        kwargs['groupby'] = groupby
-        return self._add_transform(core.AggregateTransform(**kwargs))
+        if aggregate is Undefined:
+            aggregate = []
+        for key, val in kwds.items():
+            parsed = utils.parse_shorthand(val)
+            dct = {'as': key,
+                   'field': parsed.get('field', Undefined),
+                   'op': parsed.get('aggregate', Undefined)}
+            aggregate.append(core.AggregatedFieldDef(**dct))
+        return self._add_transform(core.AggregateTransform(aggregate=aggregate,
+                                                           groupby=groupby))
 
     def transform_bin(self, as_=Undefined, bin=Undefined, field=Undefined, **kwargs):
         """
