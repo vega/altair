@@ -547,6 +547,28 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         self : Chart object
             returns chart to allow for chaining
 
+        Examples
+        --------
+        >>> import altair as alt
+        >>> chart = alt.Chart().transform_bin("x_binned", "x")
+        >>> chart.transform[0]
+        BinTransform({
+          bin: True,
+          field: 'x',
+          as: 'x_binned'
+        })
+
+        >>> chart = alt.Chart().transform_bin("x_binned", "x",
+        ...                                   bin=alt.Bin(maxbins=10))
+        >>> chart.transform[0]
+        BinTransform({
+          bin: BinParams({
+            maxbins: 10
+          }),
+          field: 'x',
+          as: 'x_binned'
+        })
+
         See Also
         --------
         alt.BinTransform : underlying transform object
@@ -570,22 +592,55 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         calculate : string or alt.expr expression
             An expression string. Use the variable `datum` to refer to the
             current data object.
+        **kwargs
+            transforms can also be passed by keyword argument; see Examples
 
         Returns
         -------
         self : Chart object
             returns chart to allow for chaining
 
+        Examples
+        --------
+        >>> import altair as alt
+        >>> from altair import datum, expr
+
+        >>> chart = alt.Chart().transform_calculate(y = 2 * expr.sin(datum.x))
+        >>> chart.transform[0]
+        CalculateTransform({
+          calculate: (2 * sin(datum.x)),
+          as: 'y'
+        })
+
+        It's also possible to pass the ``CalculateTransform`` arguments directly:
+
+        >>> kwds = {'as': 'y', 'calculate': '2 * sin(datum.x)'}
+        >>> chart = alt.Chart().transform_calculate(**kwds)
+        >>> chart.transform[0]
+        CalculateTransform({
+          calculate: '2 * sin(datum.x)',
+          as: 'y'
+        })
+
+        As the first form is easier to write and understand, that is the
+        recommended method.
+
         See Also
         --------
         alt.CalculateTransform : underlying transform object
         """
-        if as_ is not Undefined:
+        if as_ is Undefined:
+            as_ = kwargs.pop('as', Undefined)
+        else:
             if 'as' in kwargs:
                 raise ValueError("transform_calculate: both 'as_' and 'as' passed as arguments.")
-            kwargs['as'] = as_
-        kwargs['calculate'] = calculate
-        return self._add_transform(core.CalculateTransform(**kwargs))
+        if as_ is not Undefined or calculate is not Undefined:
+            dct = {'as': as_, 'calculate': calculate}
+            self = self._add_transform(core.CalculateTransform(**dct))
+        for as_, calculate in kwargs.items():
+            dct = {'as': as_, 'calculate': calculate}
+            self = self._add_transform(core.CalculateTransform(**dct))
+        return self
 
     def transform_filter(self, filter, **kwargs):
         """
