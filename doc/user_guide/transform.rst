@@ -177,12 +177,63 @@ And here is the transformed color scale using a top-level bin transform:
         'binned_acc', 'Acceleration', bin=alt.Bin(maxbins=5)
     )
 
-
 The advantage of the top-level transform is that the same named field can be
 used in multiple places in the chart if desired.
 Note the slight difference in binning behavior between the encoding-based binnings
 (which preserve the range of the bins) and the transform-based binnings (which
 collapse each bin to a single representative value.
+
+.. _user-guide-calculate-transform
+
+Calculate Transform
+~~~~~~~~~~~~~~~~~~~
+The calculate transform allows the user to define new fields in the dataset
+which are calculated from other fields using an expression syntax.
+
+As a simple example, here we take data with a simple input sequence, and compute
+a sine curve:
+
+.. altair-plot::
+
+    import altair as alt
+    import pandas as pd
+
+    data = pd.DataFrame({'t': range(101)})
+
+    alt.Chart(data).mark_line().encode(
+        x='x:Q',
+        y='y:Q',
+        order='t:Q'
+    ).transform_calculate(
+        x='cos(datum.t * PI / 50)',
+        y='sin(datum.t * PI / 25)'
+    )
+
+Each argument within ``transform_calculate`` is a `Vega expression`_ string,
+which is a well-defined set of javascript-style operations that can be used
+to calculate a new field from an existing one.
+
+To streamline building these vega expressions in Python, Altair provides the
+:mod:`altair.expr` module which provides constants and functions to allow
+these expressions to be constructed with Python syntax; for example:
+
+.. altair-plot::
+
+    from altair import expr, datum
+
+    alt.Chart(data).mark_line().encode(
+        x='x:Q',
+        y='y:Q',
+        order='t:Q'
+    ).transform_calculate(
+        x=expr.cos(datum.t * expr.PI / 50),
+        y=expr.sin(datum.t * expr.PI / 25)
+    )
+
+Altair expressions are designed to output valid Vega expressions. The benefit of
+using them is that proper syntax is ensured by the Python interpreter, and tab
+completion of the :mod:`~altair.expr` submodule can be used to explore the
+available functions and constants.
 
 .. _user-guide-expressions:
 
@@ -213,4 +264,4 @@ in Python rather than in the chart renderer; you can also use Jupyter
 tab-completion on the :mod:`expr` module to see what functions and constants
 are available.
 
-*TODO: section detailing each type of transform*
+.. Vega expression: https://vega.github.io/vega/docs/expressions/
