@@ -63,23 +63,15 @@ class Expression(SchemaBase):
     def __rmul__(self, other):
         return BinaryExpression("*", other, self)
 
-    def __floordiv__(self, other):
+    def __truediv__(self, other):
         return BinaryExpression("/", self, other)
 
-    def __rfloordiv__(self, other):
+    def __rtruediv__(self, other):
         return BinaryExpression("/", other, self)
 
-    def __truediv__(self, other):
-        warnings.warn("Javascript uses floor division; use '//' to silence this warning")
-        return self.__floordiv__(other)
+    __div__ = __truediv__
 
-    def __rtruediv__(self, other):
-        warnings.warn("Javascript uses floor division; use '//' to silence this warning")
-        return self.__rfloordiv(other)
-
-    __div__ = __floordiv__
-
-    __rdiv__ = __rfloordiv__
+    __rdiv__ = __rtruediv__
 
     def __mod__(self, other):
         return BinaryExpression('%', self, other)
