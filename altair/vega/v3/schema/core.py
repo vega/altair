@@ -10,7 +10,7 @@ import json
 
 def load_schema():
     """Load the json schema associated with this module's functions"""
-    return json.loads(pkgutil.get_data(__name__, 'vega-schema.json').decode())
+    return json.loads(pkgutil.get_data(__name__, 'vega-schema.json').decode('utf-8'))
 
 
 class VegaSchema(SchemaBase):

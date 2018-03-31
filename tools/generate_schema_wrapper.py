@@ -42,7 +42,7 @@ import json
 
 def load_schema():
     """Load the json schema associated with this module's functions"""
-    return json.loads(pkgutil.get_data(__name__, '{schemafile}').decode())
+    return json.loads(pkgutil.get_data(__name__, '{schemafile}').decode('utf-8'))
 '''
 
 FIELD_TEMPLATE = '''

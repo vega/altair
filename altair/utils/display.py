@@ -41,7 +41,7 @@ class Displayable(object):
 
     def _validate(self) -> None:
         """Validate the spec against the schema."""
-        schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode())
+        schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode('utf-8'))
         validate(self.spec, schema_dict)
 
     def _repr_mimebundle_(self, include, exclude):
