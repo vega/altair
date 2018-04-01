@@ -360,7 +360,7 @@ Ordering marks
 
 The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.
 
-For stacked marks, this controls the order of components of the stack. Here, the elements of each bar as sorted alphabetically by the name of the nominal data in the color channel.
+For stacked marks, this controls the order of components of the stack. Here, the elements of each bar are sorted alphabetically by the name of the nominal data in the color channel.
 
 .. altair-plot::
 
