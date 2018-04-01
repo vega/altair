@@ -191,7 +191,7 @@ The calculate transform allows the user to define new fields in the dataset
 which are calculated from other fields using an expression syntax.
 
 As a simple example, here we take data with a simple input sequence, and compute
-a sine curve:
+a some trigonometric quantities:
 
 .. altair-plot::
 
@@ -235,6 +235,9 @@ using them is that proper syntax is ensured by the Python interpreter, and tab
 completion of the :mod:`~altair.expr` submodule can be used to explore the
 available functions and constants.
 
+These expressions can also be used when constructing a
+:ref:`user-guide-filter-transform`.
+
 .. _user-guide-expressions:
 
 Altair Expressions
@@ -264,4 +267,4 @@ in Python rather than in the chart renderer; you can also use Jupyter
 tab-completion on the :mod:`expr` module to see what functions and constants
 are available.
 
-.. Vega expression: https://vega.github.io/vega/docs/expressions/
+.. _Vega expression: https://vega.github.io/vega/docs/expressions/
