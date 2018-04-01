@@ -376,7 +376,7 @@ For stacked marks, this controls the order of components of the stack. Here, the
         order=alt.Order("site", sort="ascending")
     )
 
-The order can be reversed by changing the sort option to `descending.`.
+The order can be reversed by changing the sort option to `descending`.
 
 .. altair-plot::
 
@@ -407,7 +407,6 @@ The same approach works for other mark types, like stacked areas charts.
         color='site:N',
         order=alt.Order("site", sort="ascending")
     )
-
 
 For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatterplot that draws lines between the dots using a different field than the x and y axes.
 
