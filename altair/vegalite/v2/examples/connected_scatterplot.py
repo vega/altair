@@ -18,8 +18,7 @@ lines = alt.Chart(driving).mark_line().encode(
 
 points = alt.Chart(driving).mark_circle().encode(
     alt.X('miles', scale=alt.Scale(zero=False)),
-    alt.Y('gas', scale=alt.Scale(zero=False)),
-    order='year'
+    alt.Y('gas', scale=alt.Scale(zero=False))
 )
 
 lines + points
