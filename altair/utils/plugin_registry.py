@@ -75,7 +75,7 @@ class PluginRegistry(Generic[PluginType]):
         exts = list(self._plugins.keys())
         more_exts = [ep.name for ep in entrypoints.get_group_all(self.entry_point_group)]
         exts.extend(more_exts)
-        return exts
+        return sorted(set(exts))
 
 
     def enable(self, name: str) -> None:
