@@ -362,7 +362,7 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
     """Indent a docstring for use in generated code"""
     final_lines = []
 
-    for line in lines:
+    for i, line in enumerate(lines):
         stripped = line.lstrip()
         if stripped:
             leading_space = len(line) - len(stripped)
@@ -374,9 +374,21 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
                                            break_on_hyphens=False,
                                            drop_whitespace=False)
             final_lines.extend(wrapper.wrap(stripped))
-        else:
+        # If this is the last line, put in an indent
+        elif i + 1 == len(lines):
             final_lines.append(indent_level * ' ')
-    wrapped = '\n'.join(final_lines)
+        # If it's not the last line, this is a blank line that should not indent.
+        else:
+            final_lines.append('')
+    # Remove any trailing whitespaces on the right side
+    stripped_lines = []
+    for i, line in enumerate(final_lines):
+        if i + 1 == len(final_lines):
+            stripped_lines.append(line)
+        else:
+            stripped_lines.append(line.rstrip())
+    # Join it all together
+    wrapped = '\n'.join(stripped_lines)
     if lstrip:
         wrapped = wrapped.lstrip()
     return wrapped
