@@ -84,7 +84,11 @@ def _get_channels_mapping():
 # -------------------------------------------------------------------------
 # Tools for working with selections
 class SelectionMapping(core.VegaLiteSchema):
-    """A mapping of selection names to selection definitions"""
+    """A mapping of selection names to selection definitions.
+
+    This is designed to match the schema of the "selection" property of
+    top-level objects.
+    """
     _schema = {
         'type': 'object',
         'additionalPropeties': {'$ref': '#/definitions/SelectionDef'}
@@ -137,12 +141,12 @@ class NamedSelection(SelectionMapping):
         return core.SelectionNot(**{'not': self._get_name()})
 
     def __and__(self, other):
-        if isinstance(other, SelectionMapping):
+        if isinstance(other, NamedSelection):
             other = other._get_name()
         return core.SelectionAnd(**{'and': [self._get_name(), other]})
 
     def __or__(self, other):
-        if isinstance(other, SelectionMapping):
+        if isinstance(other, NamedSelection):
             other = other._get_name()
         return core.SelectionOr(**{'or': [self._get_name(), other]})
 

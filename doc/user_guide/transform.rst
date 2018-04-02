@@ -38,7 +38,7 @@ Method                                     Description
 
 We will see some examples of these transforms in the following sections.
 
-.. _user-guide-aggregate-transform
+.. _user-guide-aggregate-transform:
 
 Aggregate Transforms
 ~~~~~~~~~~~~~~~~~~~~
@@ -98,7 +98,7 @@ The same plot can be shown using an explicitly computed aggregation, using the
 
 For a list of available aggregates, see :ref:`encoding-aggregates`.
 
-.. _user-guide-bin-transform
+.. _user-guide-bin-transform:
 
 Bin transforms
 ~~~~~~~~~~~~~~
@@ -183,7 +183,7 @@ Note the slight difference in binning behavior between the encoding-based binnin
 (which preserve the range of the bins) and the transform-based binnings (which
 collapse each bin to a single representative value.
 
-.. _user-guide-calculate-transform
+.. _user-guide-calculate-transform:
 
 Calculate Transform
 ~~~~~~~~~~~~~~~~~~~
@@ -238,7 +238,7 @@ available functions and constants.
 These expressions can also be used when constructing a
 :ref:`user-guide-filter-transform`, as we shall see next.
 
-.. _user-guide-filter-transform
+.. _user-guide-filter-transform:
 
 Filter Transform
 ~~~~~~~~~~~~~~~~
@@ -387,33 +387,36 @@ to select the data to be shown in the top chart:
         data=pop
     )
 
-.. _user-guide-expressions:
+Logical Operands
+^^^^^^^^^^^^^^^^
+At times it is useful to combine several types of predicates into a single
+selection. This can be accomplished using the various logical operand classes:
 
-Altair Expressions
-~~~~~~~~~~~~~~~~~~
-Transformation expressions in Vega-Lite are specified as strings of javascript
-code, with a well-defined set of functions and constants available
-(see Vega's `Expression Documentation <https://github.com/vega/vega/wiki/Expressions>`_).
-For convenience when when working from Python, Altair provides an API
-in the :mod:`altair.expr` module to allow users to build these expressions
-more idiomatically within Python.
+- :class:`~LogicalOrPredicate`
+- :class:`~LogicalAndPredicate`
+- :class:`~LogicalNotPredicate`
 
-So, for example, if you want to perform the following data filtration:
+These are not yet part of the Altair interface
+(see `Issue 693 <https://github.com/altair-viz/altair/pull/693>`_)
+but can be constructed explicitly; for example, here we plot US population
+distributions for all data *except* the years 1950-1960,
+by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
 
-.. code-block:: python
+.. altair-plot::
 
-   chart.transform_filter("datum.y < sin(datum.t + PI)")
+    import altair as alt
+    from vega_datasets import data
 
-You can instead write the following:
+    pop = data.population.url
 
-.. code-block:: python
-
-   from altair.expr import datum, sin, PI
-   chart.transform_filter(datum.y < sin(datum.t) + PI)
-
-This approach has the benefit that syntax errors in the formula will be caught
-in Python rather than in the chart renderer; you can also use Jupyter
-tab-completion on the :mod:`expr` module to see what functions and constants
-are available.
+    alt.Chart(pop).mark_line().encode(
+        x='age:O',
+        y='sum(people):Q',
+        color='year:O'
+    ).properties(
+        width=600, height=200
+    ).transform_filter(
+        {'not': alt.FieldRangePredicate(field='year', range=[1900, 1950])}
+    )
 
 .. _Vega expression: https://vega.github.io/vega/docs/expressions/
