@@ -44,7 +44,7 @@ class Row(core.PositionChannelDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
@@ -124,7 +124,7 @@ class Column(core.PositionChannelDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
@@ -204,7 +204,7 @@ class X(core.PositionChannelDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
@@ -284,7 +284,7 @@ class Y(core.PositionChannelDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
@@ -358,7 +358,7 @@ class X2(core.FieldDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -430,7 +430,7 @@ class Y2(core.FieldDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -508,7 +508,7 @@ class Color(core.ChannelDefWithLegend):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -588,7 +588,7 @@ class Opacity(core.ChannelDefWithLegend):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -668,7 +668,7 @@ class Size(core.ChannelDefWithLegend):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -748,7 +748,7 @@ class Shape(core.ChannelDefWithLegend):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -822,7 +822,7 @@ class Detail(core.FieldDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -894,7 +894,7 @@ class Text(core.FieldDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -966,7 +966,7 @@ class Label(core.FieldDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -1040,7 +1040,7 @@ class Path(core.OrderChannelDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -1116,7 +1116,7 @@ class Order(core.OrderChannelDef):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,

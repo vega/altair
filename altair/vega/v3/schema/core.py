@@ -23,7 +23,7 @@ class Root(VegaSchema):
     """Root schema wrapper
 
     allOf(scope, Mapping(required=[]))
-"""
+    """
     _schema = load_schema()
     _rootschema = _schema
 
@@ -43,7 +43,7 @@ class autosize(VegaSchema):
     """autosize schema wrapper
 
     oneOf(enum('pad', 'fit', 'fit-x', 'fit-y', 'none'), Mapping(required=[type]))
-"""
+    """
     _schema = {'$ref': '#/defs/autosize'}
     _rootschema = Root._schema
 
@@ -106,7 +106,7 @@ class axis(VegaSchema):
 
     zindex : float
 
-"""
+    """
     _schema = {'$ref': '#/defs/axis'}
     _rootschema = Root._schema
 
@@ -131,7 +131,7 @@ class background(VegaSchema):
     """background schema wrapper
 
     string
-"""
+    """
     _schema = {'$ref': '#/defs/background'}
     _rootschema = Root._schema
 
@@ -144,7 +144,7 @@ class bind(VegaSchema):
 
     oneOf(Mapping(required=[input]), Mapping(required=[input, options]),
     Mapping(required=[input]), Mapping(required=[]))
-"""
+    """
     _schema = {'$ref': '#/defs/bind'}
     _rootschema = Root._schema
 
@@ -157,7 +157,7 @@ class dataFormat(VegaSchema):
 
     anyOf(Mapping(required=[]), Mapping(required=[]), Mapping(required=[]),
     oneOf(Mapping(required=[]), Mapping(required=[])))
-"""
+    """
     _schema = {'$ref': '#/defs/dataFormat'}
     _rootschema = Root._schema
 
@@ -170,7 +170,7 @@ class data(VegaSchema):
 
     allOf(Mapping(required=[name]), anyOf(Mapping(required=[name]),
     oneOf(Mapping(required=[source]), Mapping(required=[values]), Mapping(required=[url]))))
-"""
+    """
     _schema = {'$ref': '#/defs/data'}
     _rootschema = Root._schema
 
@@ -187,7 +187,7 @@ class rule(VegaSchema):
     ----------
     test : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/rule'}
     _rootschema = Root._schema
 
@@ -308,7 +308,7 @@ class encodeEntry(VegaSchema):
 
     yc : numberValue
 
-"""
+    """
     _schema = {'$ref': '#/defs/encodeEntry'}
     _rootschema = Root._schema
 
@@ -342,7 +342,7 @@ class encode(VegaSchema):
     """encode schema wrapper
 
     Mapping(required=[])
-"""
+    """
     _schema = {'$ref': '#/defs/encode'}
     _rootschema = Root._schema
 
@@ -354,7 +354,7 @@ class layout(VegaSchema):
     """layout schema wrapper
 
     oneOf(Mapping(required=[]), signal)
-"""
+    """
     _schema = {'$ref': '#/defs/layout'}
     _rootschema = Root._schema
 
@@ -375,7 +375,7 @@ class guideEncode(VegaSchema):
 
     style : style
 
-"""
+    """
     _schema = {'$ref': '#/defs/guideEncode'}
     _rootschema = Root._schema
 
@@ -391,7 +391,7 @@ class legend(VegaSchema):
 
     Attributes
     ----------
-"""
+    """
     _schema = {'$ref': '#/defs/legend'}
     _rootschema = Root._schema
 
@@ -428,7 +428,7 @@ class mark(VegaSchema):
 
     transform : List(transformMark)
 
-"""
+    """
     _schema = {'$ref': '#/defs/mark'}
     _rootschema = Root._schema
 
@@ -444,7 +444,7 @@ class markGroup(VegaSchema):
     """markGroup schema wrapper
 
     allOf(Mapping(required=[type]), mark, scope, Mapping(required=[]))
-"""
+    """
     _schema = {'$ref': '#/defs/markGroup'}
     _rootschema = Root._schema
 
@@ -465,7 +465,7 @@ class markVisual(VegaSchema):
     """markVisual schema wrapper
 
     allOf(not Mapping(required=[]), mark, Mapping(required=[]))
-"""
+    """
     _schema = {'$ref': '#/defs/markVisual'}
     _rootschema = Root._schema
 
@@ -481,7 +481,7 @@ class listener(VegaSchema):
     """listener schema wrapper
 
     oneOf(signal, Mapping(required=[scale]), stream)
-"""
+    """
     _schema = {'$ref': '#/defs/listener'}
     _rootschema = Root._schema
 
@@ -494,7 +494,7 @@ class onEvents(VegaSchema):
 
     List(allOf(Mapping(required=[events]), oneOf(Mapping(required=[encode]),
     Mapping(required=[update]))))
-"""
+    """
     _schema = {'$ref': '#/defs/onEvents'}
     _rootschema = Root._schema
 
@@ -506,7 +506,7 @@ class onTrigger(VegaSchema):
     """onTrigger schema wrapper
 
     List(Mapping(required=[trigger]))
-"""
+    """
     _schema = {'$ref': '#/defs/onTrigger'}
     _rootschema = Root._schema
 
@@ -518,7 +518,7 @@ class onMarkTrigger(VegaSchema):
     """onMarkTrigger schema wrapper
 
     List(Mapping(required=[trigger]))
-"""
+    """
     _schema = {'$ref': '#/defs/onMarkTrigger'}
     _rootschema = Root._schema
 
@@ -530,7 +530,7 @@ class padding(VegaSchema):
     """padding schema wrapper
 
     oneOf(float, Mapping(required=[]))
-"""
+    """
     _schema = {'$ref': '#/defs/padding'}
     _rootschema = Root._schema
 
@@ -573,7 +573,7 @@ class projection(VegaSchema):
 
     type : stringOrSignal
 
-"""
+    """
     _schema = {'$ref': '#/defs/projection'}
     _rootschema = Root._schema
 
@@ -595,7 +595,7 @@ class scale(VegaSchema):
     Mapping(required=[type]), Mapping(required=[type, range]), Mapping(required=[type]),
     Mapping(required=[type]), Mapping(required=[type]), not Mapping(required=[]),
     Mapping(required=[type]), Mapping(required=[type]), Mapping(required=[type])))
-"""
+    """
     _schema = {'$ref': '#/defs/scale'}
     _rootschema = Root._schema
 
@@ -634,7 +634,7 @@ class scope(VegaSchema):
 
     title : title
 
-"""
+    """
     _schema = {'$ref': '#/defs/scope'}
     _rootschema = Root._schema
 
@@ -650,7 +650,7 @@ class signal(VegaSchema):
     """signal schema wrapper
 
     oneOf(signalPush, signalNew)
-"""
+    """
     _schema = {'$ref': '#/defs/signal'}
     _rootschema = Root._schema
 
@@ -662,7 +662,7 @@ class signalName(VegaSchema):
     """signalName schema wrapper
 
     not Mapping(required=[])
-"""
+    """
     _schema = {'$ref': '#/defs/signalName'}
     _rootschema = Root._schema
 
@@ -691,7 +691,7 @@ class signalNew(VegaSchema):
 
     value : Mapping(required=[])
 
-"""
+    """
     _schema = {'$ref': '#/defs/signalNew'}
     _rootschema = Root._schema
 
@@ -716,7 +716,7 @@ class signalPush(VegaSchema):
 
     on : onEvents
 
-"""
+    """
     _schema = {'$ref': '#/defs/signalPush'}
     _rootschema = Root._schema
 
@@ -745,7 +745,7 @@ class streamParams(VegaSchema):
 
     throttle : float
 
-"""
+    """
     _schema = {'$ref': '#/defs/streamParams'}
     _rootschema = Root._schema
 
@@ -767,7 +767,7 @@ class streamEvents(VegaSchema):
 
     source : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/streamEvents'}
     _rootschema = Root._schema
 
@@ -780,7 +780,7 @@ class stream(VegaSchema):
 
     allOf(streamParams, oneOf(streamEvents, Mapping(required=[stream]),
     Mapping(required=[merge])))
-"""
+    """
     _schema = {'$ref': '#/defs/stream'}
     _rootschema = Root._schema
 
@@ -794,7 +794,7 @@ class titleEncode(VegaSchema):
     """titleEncode schema wrapper
 
     Mapping(required=[])
-"""
+    """
     _schema = {'$ref': '#/defs/titleEncode'}
     _rootschema = Root._schema
 
@@ -806,7 +806,7 @@ class title(VegaSchema):
     """title schema wrapper
 
     oneOf(string, Mapping(required=[text]))
-"""
+    """
     _schema = {'$ref': '#/defs/title'}
     _rootschema = Root._schema
 
@@ -826,7 +826,7 @@ class transform(VegaSchema):
     graticuleTransform, forceTransform, nestTransform, packTransform, partitionTransform,
     stratifyTransform, treeTransform, treelinksTransform, treemapTransform, voronoiTransform,
     wordcloudTransform, crossfilterTransform, resolvefilterTransform)
-"""
+    """
     _schema = {'$ref': '#/defs/transform'}
     _rootschema = Root._schema
 
@@ -843,7 +843,7 @@ class transformMark(VegaSchema):
     geopathTransform, geopointTransform, geoshapeTransform, forceTransform, packTransform,
     partitionTransform, stratifyTransform, treeTransform, treemapTransform, voronoiTransform,
     wordcloudTransform, crossfilterTransform, resolvefilterTransform)
-"""
+    """
     _schema = {'$ref': '#/defs/transformMark'}
     _rootschema = Root._schema
 
@@ -881,7 +881,7 @@ class aggregateTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal, None)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/aggregateTransform'}
     _rootschema = Root._schema
 
@@ -930,7 +930,7 @@ class binTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/binTransform'}
     _rootschema = Root._schema
 
@@ -956,7 +956,7 @@ class collectTransform(VegaSchema):
 
     sort : compare
 
-"""
+    """
     _schema = {'$ref': '#/defs/collectTransform'}
     _rootschema = Root._schema
 
@@ -988,7 +988,7 @@ class countpatternTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/countpatternTransform'}
     _rootschema = Root._schema
 
@@ -1016,7 +1016,7 @@ class crossTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/crossTransform'}
     _rootschema = Root._schema
 
@@ -1049,7 +1049,7 @@ class densityTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/densityTransform'}
     _rootschema = Root._schema
 
@@ -1072,7 +1072,7 @@ class extentTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/extentTransform'}
     _rootschema = Root._schema
 
@@ -1093,7 +1093,7 @@ class filterTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/filterTransform'}
     _rootschema = Root._schema
 
@@ -1119,7 +1119,7 @@ class flattenTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/flattenTransform'}
     _rootschema = Root._schema
 
@@ -1145,7 +1145,7 @@ class foldTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/foldTransform'}
     _rootschema = Root._schema
 
@@ -1173,7 +1173,7 @@ class formulaTransform(VegaSchema):
     --------------------
     'as' : anyOf(string, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/formulaTransform'}
     _rootschema = Root._schema
 
@@ -1205,7 +1205,7 @@ class imputeTransform(VegaSchema):
 
     value : Mapping(required=[])
 
-"""
+    """
     _schema = {'$ref': '#/defs/imputeTransform'}
     _rootschema = Root._schema
 
@@ -1242,7 +1242,7 @@ class joinaggregateTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal, None)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/joinaggregateTransform'}
     _rootschema = Root._schema
 
@@ -1278,7 +1278,7 @@ class lookupTransform(VegaSchema):
 
     'from' : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/lookupTransform'}
     _rootschema = Root._schema
 
@@ -1313,7 +1313,7 @@ class pivotTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/pivotTransform'}
     _rootschema = Root._schema
 
@@ -1341,7 +1341,7 @@ class projectTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal, None)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/projectTransform'}
     _rootschema = Root._schema
 
@@ -1362,7 +1362,7 @@ class sampleTransform(VegaSchema):
 
     size : anyOf(float, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/sampleTransform'}
     _rootschema = Root._schema
 
@@ -1387,7 +1387,7 @@ class sequenceTransform(VegaSchema):
 
     step : anyOf(float, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/sequenceTransform'}
     _rootschema = Root._schema
 
@@ -1431,7 +1431,7 @@ class windowTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal, None)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/windowTransform'}
     _rootschema = Root._schema
 
@@ -1459,7 +1459,7 @@ class identifierTransform(VegaSchema):
     --------------------
     'as' : anyOf(string, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/identifierTransform'}
     _rootschema = Root._schema
 
@@ -1495,7 +1495,7 @@ class linkpathTransform(VegaSchema):
     --------------------
     'as' : anyOf(string, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/linkpathTransform'}
     _rootschema = Root._schema
 
@@ -1530,7 +1530,7 @@ class pieTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/pieTransform'}
     _rootschema = Root._schema
 
@@ -1564,7 +1564,7 @@ class stackTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/stackTransform'}
     _rootschema = Root._schema
 
@@ -1603,7 +1603,7 @@ class contourTransform(VegaSchema):
 
     y : oneOf(scaleField, paramField, expr)
 
-"""
+    """
     _schema = {'$ref': '#/defs/contourTransform'}
     _rootschema = Root._schema
 
@@ -1630,7 +1630,7 @@ class geojsonTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/geojsonTransform'}
     _rootschema = Root._schema
 
@@ -1661,7 +1661,7 @@ class geopathTransform(VegaSchema):
     --------------------
     'as' : anyOf(string, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/geopathTransform'}
     _rootschema = Root._schema
 
@@ -1691,7 +1691,7 @@ class geopointTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/geopointTransform'}
     _rootschema = Root._schema
 
@@ -1722,7 +1722,7 @@ class geoshapeTransform(VegaSchema):
     --------------------
     'as' : anyOf(string, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/geoshapeTransform'}
     _rootschema = Root._schema
 
@@ -1757,7 +1757,7 @@ class graticuleTransform(VegaSchema):
 
     stepMinor : oneOf(List(anyOf(float, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/graticuleTransform'}
     _rootschema = Root._schema
 
@@ -1804,7 +1804,7 @@ class forceTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/forceTransform'}
     _rootschema = Root._schema
 
@@ -1834,7 +1834,7 @@ class nestTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/nestTransform'}
     _rootschema = Root._schema
 
@@ -1870,7 +1870,7 @@ class packTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/packTransform'}
     _rootschema = Root._schema
 
@@ -1906,7 +1906,7 @@ class partitionTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/partitionTransform'}
     _rootschema = Root._schema
 
@@ -1931,7 +1931,7 @@ class stratifyTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/stratifyTransform'}
     _rootschema = Root._schema
 
@@ -1966,7 +1966,7 @@ class treeTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/treeTransform'}
     _rootschema = Root._schema
 
@@ -1989,7 +1989,7 @@ class treelinksTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/treelinksTransform'}
     _rootschema = Root._schema
 
@@ -2040,7 +2040,7 @@ class treemapTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/treemapTransform'}
     _rootschema = Root._schema
 
@@ -2080,7 +2080,7 @@ class voronoiTransform(VegaSchema):
     --------------------
     'as' : anyOf(string, signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/voronoiTransform'}
     _rootschema = Root._schema
 
@@ -2126,7 +2126,7 @@ class wordcloudTransform(VegaSchema):
     --------------------
     'as' : oneOf(List(anyOf(string, signal)), signal)
 
-"""
+    """
     _schema = {'$ref': '#/defs/wordcloudTransform'}
     _rootschema = Root._schema
 
@@ -2155,7 +2155,7 @@ class crossfilterTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/crossfilterTransform'}
     _rootschema = Root._schema
 
@@ -2179,7 +2179,7 @@ class resolvefilterTransform(VegaSchema):
 
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/defs/resolvefilterTransform'}
     _rootschema = Root._schema
 
@@ -2193,7 +2193,7 @@ class tickCount(VegaSchema):
 
     oneOf(float, enum('millisecond', 'second', 'minute', 'hour', 'day', 'week', 'month',
     'year'), Mapping(required=[interval]), signal)
-"""
+    """
     _schema = {'$ref': '#/refs/tickCount'}
     _rootschema = Root._schema
 
@@ -2205,7 +2205,7 @@ class element(VegaSchema):
     """element schema wrapper
 
     string
-"""
+    """
     _schema = {'$ref': '#/refs/element'}
     _rootschema = Root._schema
 
@@ -2222,7 +2222,7 @@ class paramField(VegaSchema):
     ----------
     field : string
 
-"""
+    """
     _schema = {'$ref': '#/refs/paramField'}
     _rootschema = Root._schema
 
@@ -2235,7 +2235,7 @@ class field(VegaSchema):
 
     oneOf(string, oneOf(signal, Mapping(required=[datum]), Mapping(required=[group]),
     Mapping(required=[parent])))
-"""
+    """
     _schema = {'$ref': '#/refs/field'}
     _rootschema = Root._schema
 
@@ -2248,7 +2248,7 @@ class scale(VegaSchema):
 
     oneOf(string, oneOf(signal, Mapping(required=[datum]), Mapping(required=[group]),
     Mapping(required=[parent])))
-"""
+    """
     _schema = {'$ref': '#/refs/scale'}
     _rootschema = Root._schema
 
@@ -2265,7 +2265,7 @@ class stringModifiers(VegaSchema):
     ----------
     scale : scale
 
-"""
+    """
     _schema = {'$ref': '#/refs/stringModifiers'}
     _rootschema = Root._schema
 
@@ -2294,7 +2294,7 @@ class numberModifiers(VegaSchema):
 
     scale : scale
 
-"""
+    """
     _schema = {'$ref': '#/refs/numberModifiers'}
     _rootschema = Root._schema
 
@@ -2313,7 +2313,7 @@ class value(VegaSchema):
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
     band]), Mapping(required=[offset]))))
-"""
+    """
     _schema = {'$ref': '#/refs/value'}
     _rootschema = Root._schema
 
@@ -2330,7 +2330,7 @@ class numberValue(VegaSchema):
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
     band]), Mapping(required=[offset]))))
-"""
+    """
     _schema = {'$ref': '#/refs/numberValue'}
     _rootschema = Root._schema
 
@@ -2347,7 +2347,7 @@ class stringValue(VegaSchema):
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
     band]), Mapping(required=[offset]))))
-"""
+    """
     _schema = {'$ref': '#/refs/stringValue'}
     _rootschema = Root._schema
 
@@ -2364,7 +2364,7 @@ class booleanValue(VegaSchema):
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
     band]), Mapping(required=[offset]))))
-"""
+    """
     _schema = {'$ref': '#/refs/booleanValue'}
     _rootschema = Root._schema
 
@@ -2381,7 +2381,7 @@ class arrayValue(VegaSchema):
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
     band]), Mapping(required=[offset]))))
-"""
+    """
     _schema = {'$ref': '#/refs/arrayValue'}
     _rootschema = Root._schema
 
@@ -2398,7 +2398,7 @@ class nullableStringValue(VegaSchema):
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
     band]), Mapping(required=[offset]))))
-"""
+    """
     _schema = {'$ref': '#/refs/nullableStringValue'}
     _rootschema = Root._schema
 
@@ -2415,7 +2415,7 @@ class fontWeightValue(VegaSchema):
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
     band]), Mapping(required=[offset]))))
-"""
+    """
     _schema = {'$ref': '#/refs/fontWeightValue'}
     _rootschema = Root._schema
 
@@ -2436,7 +2436,7 @@ class colorRGB(VegaSchema):
 
     r : numberValue
 
-"""
+    """
     _schema = {'$ref': '#/refs/colorRGB'}
     _rootschema = Root._schema
 
@@ -2457,7 +2457,7 @@ class colorHSL(VegaSchema):
 
     s : numberValue
 
-"""
+    """
     _schema = {'$ref': '#/refs/colorHSL'}
     _rootschema = Root._schema
 
@@ -2478,7 +2478,7 @@ class colorLAB(VegaSchema):
 
     l : numberValue
 
-"""
+    """
     _schema = {'$ref': '#/refs/colorLAB'}
     _rootschema = Root._schema
 
@@ -2499,7 +2499,7 @@ class colorHCL(VegaSchema):
 
     l : numberValue
 
-"""
+    """
     _schema = {'$ref': '#/refs/colorHCL'}
     _rootschema = Root._schema
 
@@ -2511,7 +2511,7 @@ class colorValue(VegaSchema):
     """colorValue schema wrapper
 
     oneOf(nullableStringValue, Mapping(required=[gradient]), Mapping(required=[color]))
-"""
+    """
     _schema = {'$ref': '#/refs/colorValue'}
     _rootschema = Root._schema
 
@@ -2528,7 +2528,7 @@ class expr(VegaSchema):
     ----------
     expr : string
 
-"""
+    """
     _schema = {'$ref': '#/refs/expr'}
     _rootschema = Root._schema
 
@@ -2540,7 +2540,7 @@ class exprString(VegaSchema):
     """exprString schema wrapper
 
     string
-"""
+    """
     _schema = {'$ref': '#/refs/exprString'}
     _rootschema = Root._schema
 
@@ -2552,7 +2552,7 @@ class compare(VegaSchema):
     """compare schema wrapper
 
     oneOf(Mapping(required=[]), Mapping(required=[]))
-"""
+    """
     _schema = {'$ref': '#/refs/compare'}
     _rootschema = Root._schema
 
@@ -2569,7 +2569,7 @@ class from_(VegaSchema):
     ----------
     data : string
 
-"""
+    """
     _schema = {'$ref': '#/refs/from'}
     _rootschema = Root._schema
 
@@ -2589,7 +2589,7 @@ class facet(VegaSchema):
 
     data : string
 
-"""
+    """
     _schema = {'$ref': '#/refs/facet'}
     _rootschema = Root._schema
 
@@ -2601,7 +2601,7 @@ class markclip(VegaSchema):
     """markclip schema wrapper
 
     oneOf(booleanOrSignal, Mapping(required=[path]), Mapping(required=[sphere]))
-"""
+    """
     _schema = {'$ref': '#/refs/markclip'}
     _rootschema = Root._schema
 
@@ -2613,7 +2613,7 @@ class style(VegaSchema):
     """style schema wrapper
 
     oneOf(string, List(string))
-"""
+    """
     _schema = {'$ref': '#/refs/style'}
     _rootschema = Root._schema
 
@@ -2625,7 +2625,7 @@ class marktype(VegaSchema):
     """marktype schema wrapper
 
     string
-"""
+    """
     _schema = {'$ref': '#/refs/marktype'}
     _rootschema = Root._schema
 
@@ -2637,7 +2637,7 @@ class sortOrder(VegaSchema):
     """sortOrder schema wrapper
 
     oneOf(enum('ascending', 'descending'), signal)
-"""
+    """
     _schema = {'$ref': '#/refs/sortOrder'}
     _rootschema = Root._schema
 
@@ -2649,7 +2649,7 @@ class scaleField(VegaSchema):
     """scaleField schema wrapper
 
     oneOf(string, signal)
-"""
+    """
     _schema = {'$ref': '#/refs/scaleField'}
     _rootschema = Root._schema
 
@@ -2661,7 +2661,7 @@ class scaleInterpolate(VegaSchema):
     """scaleInterpolate schema wrapper
 
     oneOf(string, signal, Mapping(required=[type]))
-"""
+    """
     _schema = {'$ref': '#/refs/scaleInterpolate'}
     _rootschema = Root._schema
 
@@ -2674,7 +2674,7 @@ class scaleData(VegaSchema):
 
     oneOf(Mapping(required=[data, field]), Mapping(required=[data, fields]),
     Mapping(required=[fields]))
-"""
+    """
     _schema = {'$ref': '#/refs/scaleData'}
     _rootschema = Root._schema
 
@@ -2686,7 +2686,7 @@ class selector(VegaSchema):
     """selector schema wrapper
 
     string
-"""
+    """
     _schema = {'$ref': '#/refs/selector'}
     _rootschema = Root._schema
 
@@ -2703,7 +2703,7 @@ class signal(VegaSchema):
     ----------
     signal : string
 
-"""
+    """
     _schema = {'$ref': '#/refs/signal'}
     _rootschema = Root._schema
 
@@ -2715,7 +2715,7 @@ class booleanOrSignal(VegaSchema):
     """booleanOrSignal schema wrapper
 
     oneOf(boolean, signal)
-"""
+    """
     _schema = {'$ref': '#/refs/booleanOrSignal'}
     _rootschema = Root._schema
 
@@ -2727,7 +2727,7 @@ class numberOrSignal(VegaSchema):
     """numberOrSignal schema wrapper
 
     oneOf(float, signal)
-"""
+    """
     _schema = {'$ref': '#/refs/numberOrSignal'}
     _rootschema = Root._schema
 
@@ -2739,7 +2739,7 @@ class stringOrSignal(VegaSchema):
     """stringOrSignal schema wrapper
 
     oneOf(string, signal)
-"""
+    """
     _schema = {'$ref': '#/refs/stringOrSignal'}
     _rootschema = Root._schema
 

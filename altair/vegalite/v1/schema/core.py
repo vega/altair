@@ -23,7 +23,7 @@ class Root(VegaLiteSchema):
     """Root schema wrapper
 
     anyOf(ExtendedUnitSpec, FacetSpec, LayerSpec)
-"""
+    """
     _schema = load_schema()
     _rootschema = _schema
 
@@ -67,7 +67,7 @@ class ExtendedUnitSpec(VegaLiteSchema):
         An object describing filter and new field calculation.
     width : float
 
-"""
+    """
     _schema = {'$ref': '#/definitions/ExtendedUnitSpec'}
     _rootschema = Root._schema
 
@@ -84,7 +84,7 @@ class Mark(VegaLiteSchema):
     """Mark schema wrapper
 
     enum('area', 'bar', 'line', 'point', 'text', 'tick', 'rule', 'circle', 'square', 'errorBar')
-"""
+    """
     _schema = {'$ref': '#/definitions/Mark'}
     _rootschema = Root._schema
 
@@ -138,7 +138,7 @@ class Encoding(VegaLiteSchema):
         (or to width and height for `bar` and `area` marks).
     y2 : FieldDef
         Y2 coordinates for ranged `bar`, `rule`, `area`
-"""
+    """
     _schema = {'$ref': '#/definitions/Encoding'}
     _rootschema = Root._schema
 
@@ -183,7 +183,7 @@ class PositionChannelDef(VegaLiteSchema):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/PositionChannelDef'}
     _rootschema = Root._schema
 
@@ -199,7 +199,7 @@ class Axis(VegaLiteSchema):
     """Axis schema wrapper
 
     anyOf(Mapping(required=[]), None)
-"""
+    """
     _schema = {'$ref': '#/definitions/Axis'}
     _rootschema = Root._schema
 
@@ -211,7 +211,7 @@ class AxisOrient(VegaLiteSchema):
     """AxisOrient schema wrapper
 
     enum('top', 'right', 'left', 'bottom')
-"""
+    """
     _schema = {'$ref': '#/definitions/AxisOrient'}
     _rootschema = Root._schema
 
@@ -257,7 +257,7 @@ class DateTime(VegaLiteSchema):
         Integer value representing second segment of a time from 0-59.
     year : float
         Integer value representing the year.
-"""
+    """
     _schema = {'$ref': '#/definitions/DateTime'}
     _rootschema = Root._schema
 
@@ -326,7 +326,7 @@ class Scale(VegaLiteSchema):
         If `true`, ensures that a zero baseline value is included in the scale domain.
         Default value: `true` for `x` and `y` channel if the quantitative field is not
         binned  and no custom `domain` is provided; `false` otherwise.
-"""
+    """
     _schema = {'$ref': '#/definitions/Scale'}
     _rootschema = Root._schema
 
@@ -342,7 +342,7 @@ class ScaleType(VegaLiteSchema):
     """ScaleType schema wrapper
 
     enum('linear', 'log', 'pow', 'sqrt', 'quantile', 'quantize', 'ordinal', 'time', 'utc')
-"""
+    """
     _schema = {'$ref': '#/definitions/ScaleType'}
     _rootschema = Root._schema
 
@@ -354,7 +354,7 @@ class BandSize(VegaLiteSchema):
     """BandSize schema wrapper
 
     enum('fit')
-"""
+    """
     _schema = {'$ref': '#/definitions/BandSize'}
     _rootschema = Root._schema
 
@@ -366,7 +366,7 @@ class NiceTime(VegaLiteSchema):
     """NiceTime schema wrapper
 
     enum('second', 'minute', 'hour', 'day', 'week', 'month', 'year')
-"""
+    """
     _schema = {'$ref': '#/definitions/NiceTime'}
     _rootschema = Root._schema
 
@@ -378,7 +378,7 @@ class SortOrder(VegaLiteSchema):
     """SortOrder schema wrapper
 
     enum('ascending', 'descending', 'none')
-"""
+    """
     _schema = {'$ref': '#/definitions/SortOrder'}
     _rootschema = Root._schema
 
@@ -399,7 +399,7 @@ class SortField(VegaLiteSchema):
         The sort aggregation operator
     order : SortOrder
 
-"""
+    """
     _schema = {'$ref': '#/definitions/SortField'}
     _rootschema = Root._schema
 
@@ -413,7 +413,7 @@ class AggregateOp(VegaLiteSchema):
     enum('values', 'count', 'valid', 'missing', 'distinct', 'sum', 'mean', 'average',
     'variance', 'variancep', 'stdev', 'stdevp', 'median', 'q1', 'q3', 'modeskew', 'min', 'max',
     'argmin', 'argmax')
-"""
+    """
     _schema = {'$ref': '#/definitions/AggregateOp'}
     _rootschema = Root._schema
 
@@ -425,7 +425,7 @@ class Type(VegaLiteSchema):
     """Type schema wrapper
 
     enum('quantitative', 'ordinal', 'temporal', 'nominal')
-"""
+    """
     _schema = {'$ref': '#/definitions/Type'}
     _rootschema = Root._schema
 
@@ -441,7 +441,7 @@ class TimeUnit(VegaLiteSchema):
     'yearmonthdatehoursminutesseconds', 'monthdate', 'hoursminutes', 'hoursminutesseconds',
     'minutesseconds', 'secondsmilliseconds', 'quarter', 'yearquarter', 'quartermonth',
     'yearquartermonth')
-"""
+    """
     _schema = {'$ref': '#/definitions/TimeUnit'}
     _rootschema = Root._schema
 
@@ -480,7 +480,7 @@ class Bin(VegaLiteSchema):
          ignored.
     steps : List(float)
         An array of allowable step sizes to choose from.
-"""
+    """
     _schema = {'$ref': '#/definitions/Bin'}
     _rootschema = Root._schema
 
@@ -516,7 +516,7 @@ class FieldDef(VegaLiteSchema):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/FieldDef'}
     _rootschema = Root._schema
 
@@ -558,7 +558,7 @@ class ChannelDefWithLegend(VegaLiteSchema):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/ChannelDefWithLegend'}
     _rootschema = Root._schema
 
@@ -575,7 +575,7 @@ class Legend(VegaLiteSchema):
     """Legend schema wrapper
 
     anyOf(Mapping(required=[]), None)
-"""
+    """
     _schema = {'$ref': '#/definitions/Legend'}
     _rootschema = Root._schema
 
@@ -611,7 +611,7 @@ class OrderChannelDef(VegaLiteSchema):
         insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/OrderChannelDef'}
     _rootschema = Root._schema
 
@@ -636,7 +636,7 @@ class Data(VegaLiteSchema):
         loaded data is correctly parsed.
     values : List(Mapping(required=[]))
         Pass array of objects instead of a url to a file.
-"""
+    """
     _schema = {'$ref': '#/definitions/Data'}
     _rootschema = Root._schema
 
@@ -681,7 +681,7 @@ class DataFormat(VegaLiteSchema):
         Type of input data: `"json"`, `"csv"`, `"tsv"`.  The default format type is
         determined by the extension of the file url.  If no extension is detected, `"json"`
         will be used by default.
-"""
+    """
     _schema = {'$ref': '#/definitions/DataFormat'}
     _rootschema = Root._schema
 
@@ -695,7 +695,7 @@ class DataFormatType(VegaLiteSchema):
     """DataFormatType schema wrapper
 
     enum('json', 'csv', 'tsv', 'topojson')
-"""
+    """
     _schema = {'$ref': '#/definitions/DataFormatType'}
     _rootschema = Root._schema
 
@@ -722,7 +722,7 @@ class Transform(VegaLiteSchema):
         (`undefined`), only quantitative and temporal fields are filtered. If set to `true`,
          all data items with null values are filtered. If `false`, all data items are
         included.
-"""
+    """
     _schema = {'$ref': '#/definitions/Transform'}
     _rootschema = Root._schema
 
@@ -744,7 +744,7 @@ class EqualFilter(VegaLiteSchema):
         Field to be filtered.
     timeUnit : TimeUnit
         Time unit for the field to be filtered.
-"""
+    """
     _schema = {'$ref': '#/definitions/EqualFilter'}
     _rootschema = Root._schema
 
@@ -766,7 +766,7 @@ class RangeFilter(VegaLiteSchema):
         be included in the filtered data.
     timeUnit : TimeUnit
         time unit for the field to be filtered.
-"""
+    """
     _schema = {'$ref': '#/definitions/RangeFilter'}
     _rootschema = Root._schema
 
@@ -788,7 +788,7 @@ class OneOfFilter(VegaLiteSchema):
         included in the filtered data.
     timeUnit : TimeUnit
         time unit for the field to be filtered.
-"""
+    """
     _schema = {'$ref': '#/definitions/OneOfFilter'}
     _rootschema = Root._schema
 
@@ -809,7 +809,7 @@ class Formula(VegaLiteSchema):
         refer to the current data object.
     field : string
         The field in which to store the computed formula value.
-"""
+    """
     _schema = {'$ref': '#/definitions/Formula'}
     _rootschema = Root._schema
 
@@ -851,7 +851,7 @@ class Config(VegaLiteSchema):
     viewport : float
         The width and height of the on-screen viewport, in pixels. If necessary, clipping
         and scrolling will be applied.
-"""
+    """
     _schema = {'$ref': '#/definitions/Config'}
     _rootschema = Root._schema
 
@@ -891,7 +891,7 @@ class CellConfig(VegaLiteSchema):
         The stroke width, in pixels.
     width : float
 
-"""
+    """
     _schema = {'$ref': '#/definitions/CellConfig'}
     _rootschema = Root._schema
 
@@ -1006,7 +1006,7 @@ class MarkConfig(VegaLiteSchema):
         The width of the ticks.
     tickThickness : float
         Thickness of the tick mark.
-"""
+    """
     _schema = {'$ref': '#/definitions/MarkConfig'}
     _rootschema = Root._schema
 
@@ -1040,7 +1040,7 @@ class StackOffset(VegaLiteSchema):
     """StackOffset schema wrapper
 
     enum('zero', 'center', 'normalize', 'none')
-"""
+    """
     _schema = {'$ref': '#/definitions/StackOffset'}
     _rootschema = Root._schema
 
@@ -1052,7 +1052,7 @@ class Orient(VegaLiteSchema):
     """Orient schema wrapper
 
     enum('horizontal', 'vertical')
-"""
+    """
     _schema = {'$ref': '#/definitions/Orient'}
     _rootschema = Root._schema
 
@@ -1065,7 +1065,7 @@ class Interpolate(VegaLiteSchema):
 
     enum('linear', 'linear-closed', 'step', 'step-before', 'step-after', 'basis', 'basis-open',
     'basis-closed', 'cardinal', 'cardinal-open', 'cardinal-closed', 'bundle', 'monotone')
-"""
+    """
     _schema = {'$ref': '#/definitions/Interpolate'}
     _rootschema = Root._schema
 
@@ -1077,7 +1077,7 @@ class Shape(VegaLiteSchema):
     """Shape schema wrapper
 
     enum('circle', 'square', 'cross', 'diamond', 'triangle-up', 'triangle-down')
-"""
+    """
     _schema = {'$ref': '#/definitions/Shape'}
     _rootschema = Root._schema
 
@@ -1089,7 +1089,7 @@ class HorizontalAlign(VegaLiteSchema):
     """HorizontalAlign schema wrapper
 
     enum('left', 'right', 'center')
-"""
+    """
     _schema = {'$ref': '#/definitions/HorizontalAlign'}
     _rootschema = Root._schema
 
@@ -1101,7 +1101,7 @@ class VerticalAlign(VegaLiteSchema):
     """VerticalAlign schema wrapper
 
     enum('top', 'middle', 'bottom')
-"""
+    """
     _schema = {'$ref': '#/definitions/VerticalAlign'}
     _rootschema = Root._schema
 
@@ -1113,7 +1113,7 @@ class FontStyle(VegaLiteSchema):
     """FontStyle schema wrapper
 
     enum('normal', 'italic')
-"""
+    """
     _schema = {'$ref': '#/definitions/FontStyle'}
     _rootschema = Root._schema
 
@@ -1125,7 +1125,7 @@ class FontWeight(VegaLiteSchema):
     """FontWeight schema wrapper
 
     enum('normal', 'bold')
-"""
+    """
     _schema = {'$ref': '#/definitions/FontWeight'}
     _rootschema = Root._schema
 
@@ -1148,7 +1148,7 @@ class OverlayConfig(VegaLiteSchema):
         Default style for the overlayed point.
     pointStyle : MarkConfig
         Default style for the overlayed point.
-"""
+    """
     _schema = {'$ref': '#/definitions/OverlayConfig'}
     _rootschema = Root._schema
 
@@ -1161,7 +1161,7 @@ class AreaOverlay(VegaLiteSchema):
     """AreaOverlay schema wrapper
 
     enum('line', 'linepoint', 'none')
-"""
+    """
     _schema = {'$ref': '#/definitions/AreaOverlay'}
     _rootschema = Root._schema
 
@@ -1211,7 +1211,7 @@ class ScaleConfig(VegaLiteSchema):
         the raw data domain (`"mean"`, `"average"`, `"stdev"`, `"stdevp"`, `"median"`,
         `"q1"`, `"q3"`, `"min"`, `"max"`). For other aggregations that produce values
         outside of the raw data domain (e.g. `"count"`, `"sum"`), this property is ignored.
-"""
+    """
     _schema = {'$ref': '#/definitions/ScaleConfig'}
     _rootschema = Root._schema
 
@@ -1316,7 +1316,7 @@ class AxisConfig(VegaLiteSchema):
          property.
     titleOffset : float
         A title offset value for the axis.
-"""
+    """
     _schema = {'$ref': '#/definitions/AxisConfig'}
     _rootschema = Root._schema
 
@@ -1409,7 +1409,7 @@ class LegendConfig(VegaLiteSchema):
         The font size of the legend title.
     titleFontWeight : string
         The font weight of the legend title.
-"""
+    """
     _schema = {'$ref': '#/definitions/LegendConfig'}
     _rootschema = Root._schema
 
@@ -1451,7 +1451,7 @@ class FacetConfig(VegaLiteSchema):
         Facet Grid Config
     scale : FacetScaleConfig
         Facet Scale Config
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetConfig'}
     _rootschema = Root._schema
 
@@ -1470,7 +1470,7 @@ class FacetScaleConfig(VegaLiteSchema):
 
     round : boolean
 
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetScaleConfig'}
     _rootschema = Root._schema
 
@@ -1491,7 +1491,7 @@ class FacetGridConfig(VegaLiteSchema):
 
     opacity : float
 
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetGridConfig'}
     _rootschema = Root._schema
 
@@ -1521,7 +1521,7 @@ class FacetSpec(VegaLiteSchema):
         Name of the visualization for later reference.
     transform : Transform
         An object describing filter and new field calculation.
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetSpec'}
     _rootschema = Root._schema
 
@@ -1542,7 +1542,7 @@ class Facet(VegaLiteSchema):
 
     row : PositionChannelDef
 
-"""
+    """
     _schema = {'$ref': '#/definitions/Facet'}
     _rootschema = Root._schema
 
@@ -1577,7 +1577,7 @@ class UnitSpec(VegaLiteSchema):
         An object describing filter and new field calculation.
     width : float
 
-"""
+    """
     _schema = {'$ref': '#/definitions/UnitSpec'}
     _rootschema = Root._schema
 
@@ -1631,7 +1631,7 @@ class UnitEncoding(VegaLiteSchema):
         (or to width and height for `bar` and `area` marks).
     y2 : FieldDef
         Y2 coordinates for ranged `bar`, `rule`, `area`
-"""
+    """
     _schema = {'$ref': '#/definitions/UnitEncoding'}
     _rootschema = Root._schema
 
@@ -1667,7 +1667,7 @@ class LayerSpec(VegaLiteSchema):
         An object describing filter and new field calculation.
     width : float
 
-"""
+    """
     _schema = {'$ref': '#/definitions/LayerSpec'}
     _rootschema = Root._schema
 

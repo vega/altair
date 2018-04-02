@@ -24,7 +24,7 @@ class Root(VegaLiteSchema):
 
     anyOf(TopLevelFacetedUnitSpec, TopLevelFacetSpec, TopLevelLayerSpec, TopLevelRepeatSpec,
     TopLevelVConcatSpec, TopLevelHConcatSpec)
-"""
+    """
     _schema = load_schema()
     _rootschema = _schema
 
@@ -38,7 +38,7 @@ class Aggregate(VegaLiteSchema):
     enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min',
     'missing', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
     'variance', 'variancep')
-"""
+    """
     _schema = {'$ref': '#/definitions/Aggregate'}
     _rootschema = Root._schema
 
@@ -52,7 +52,7 @@ class AggregateOp(VegaLiteSchema):
     enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min',
     'missing', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
     'variance', 'variancep')
-"""
+    """
     _schema = {'$ref': '#/definitions/AggregateOp'}
     _rootschema = Root._schema
 
@@ -72,7 +72,7 @@ class AggregateTransform(VegaLiteSchema):
     groupby : List(string)
         The data fields to group by. If not specified, a single group containing all data
         objects will be used.
-"""
+    """
     _schema = {'$ref': '#/definitions/AggregateTransform'}
     _rootschema = Root._schema
 
@@ -99,7 +99,7 @@ class AggregatedFieldDef(VegaLiteSchema):
     --------------------
     'as' : string
         The output field names to use for each aggregated field.
-"""
+    """
     _schema = {'$ref': '#/definitions/AggregatedFieldDef'}
     _rootschema = Root._schema
 
@@ -111,7 +111,7 @@ class Anchor(VegaLiteSchema):
     """Anchor schema wrapper
 
     enum('start', 'middle', 'end')
-"""
+    """
     _schema = {'$ref': '#/definitions/Anchor'}
     _rootschema = Root._schema
 
@@ -123,7 +123,7 @@ class AnyMark(VegaLiteSchema):
     """AnyMark schema wrapper
 
     anyOf(Mark, MarkDef)
-"""
+    """
     _schema = {'$ref': '#/definitions/AnyMark'}
     _rootschema = Root._schema
 
@@ -152,7 +152,7 @@ class AutoSizeParams(VegaLiteSchema):
         The sizing format type. One of `"pad"`, `"fit"` or `"none"`. See the [autosize
         type](https://vega.github.io/vega-lite/docs/size.html#autosize) documentation for
         descriptions of each.  __Default value__: `"pad"`
-"""
+    """
     _schema = {'$ref': '#/definitions/AutoSizeParams'}
     _rootschema = Root._schema
 
@@ -164,7 +164,7 @@ class AutosizeType(VegaLiteSchema):
     """AutosizeType schema wrapper
 
     enum('pad', 'fit', 'none')
-"""
+    """
     _schema = {'$ref': '#/definitions/AutosizeType'}
     _rootschema = Root._schema
 
@@ -276,7 +276,7 @@ class Axis(VegaLiteSchema):
         be drawn behind all chart elements. To put them in front, use `"zindex = 1"`.
         __Default value:__ `1` (in front of the marks) for actual axis and `0` (behind the
         marks) for grids.
-"""
+    """
     _schema = {'$ref': '#/definitions/Axis'}
     _rootschema = Root._schema
 
@@ -415,7 +415,7 @@ class AxisConfig(VegaLiteSchema):
         X-coordinate of the axis title relative to the axis group.
     titleY : float
         Y-coordinate of the axis title relative to the axis group.
-"""
+    """
     _schema = {'$ref': '#/definitions/AxisConfig'}
     _rootschema = Root._schema
 
@@ -454,7 +454,7 @@ class AxisOrient(VegaLiteSchema):
     """AxisOrient schema wrapper
 
     enum('top', 'right', 'left', 'bottom')
-"""
+    """
     _schema = {'$ref': '#/definitions/AxisOrient'}
     _rootschema = Root._schema
 
@@ -473,7 +473,7 @@ class AxisResolveMap(VegaLiteSchema):
 
     y : ResolveMode
 
-"""
+    """
     _schema = {'$ref': '#/definitions/AxisResolveMap'}
     _rootschema = Root._schema
 
@@ -605,7 +605,7 @@ class BarConfig(VegaLiteSchema):
         the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
         mark `startAngle` and `endAngle` properties: angles are measured in radians, with
         `0` indicating "north".
-"""
+    """
     _schema = {'$ref': '#/definitions/BarConfig'}
     _rootschema = Root._schema
 
@@ -636,7 +636,7 @@ class BasicType(VegaLiteSchema):
     """BasicType schema wrapper
 
     enum('quantitative', 'ordinal', 'temporal', 'nominal')
-"""
+    """
     _schema = {'$ref': '#/definitions/BasicType'}
     _rootschema = Root._schema
 
@@ -676,7 +676,7 @@ class BinParams(VegaLiteSchema):
         maxbins will be ignored.
     steps : List(float)
         An array of allowable step sizes to choose from.
-"""
+    """
     _schema = {'$ref': '#/definitions/BinParams'}
     _rootschema = Root._schema
 
@@ -703,7 +703,7 @@ class BinTransform(VegaLiteSchema):
     --------------------
     'as' : string
         The output fields at which to write the start and end bin values.
-"""
+    """
     _schema = {'$ref': '#/definitions/BinTransform'}
     _rootschema = Root._schema
 
@@ -734,7 +734,7 @@ class BrushConfig(VegaLiteSchema):
         The stroke opacity of the interval mark (a value between 0 and 1).
     strokeWidth : float
         The stroke width of the interval mark.
-"""
+    """
     _schema = {'$ref': '#/definitions/BrushConfig'}
     _rootschema = Root._schema
 
@@ -760,7 +760,7 @@ class CalculateTransform(VegaLiteSchema):
     --------------------
     'as' : string
         The field for storing the computed formula value.
-"""
+    """
     _schema = {'$ref': '#/definitions/CalculateTransform'}
     _rootschema = Root._schema
 
@@ -838,7 +838,7 @@ class CompositeUnitSpec(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
         represents the width of a single view.  __See also:__ The documentation for [width
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-"""
+    """
     _schema = {'$ref': '#/definitions/CompositeUnitSpec'}
     _rootschema = Root._schema
 
@@ -855,7 +855,7 @@ class ConditionalFieldDef(VegaLiteSchema):
     """ConditionalFieldDef schema wrapper
 
     anyOf(ConditionalPredicateFieldDef, ConditionalSelectionFieldDef)
-"""
+    """
     _schema = {'$ref': '#/definitions/Conditional<FieldDef>'}
     _rootschema = Root._schema
 
@@ -867,7 +867,7 @@ class ConditionalMarkPropFieldDef(VegaLiteSchema):
     """ConditionalMarkPropFieldDef schema wrapper
 
     anyOf(ConditionalPredicateMarkPropFieldDef, ConditionalSelectionMarkPropFieldDef)
-"""
+    """
     _schema = {'$ref': '#/definitions/Conditional<MarkPropFieldDef>'}
     _rootschema = Root._schema
 
@@ -879,7 +879,7 @@ class ConditionalTextFieldDef(VegaLiteSchema):
     """ConditionalTextFieldDef schema wrapper
 
     anyOf(ConditionalPredicateTextFieldDef, ConditionalSelectionTextFieldDef)
-"""
+    """
     _schema = {'$ref': '#/definitions/Conditional<TextFieldDef>'}
     _rootschema = Root._schema
 
@@ -891,7 +891,7 @@ class ConditionalValueDef(VegaLiteSchema):
     """ConditionalValueDef schema wrapper
 
     anyOf(ConditionalPredicateValueDef, ConditionalSelectionValueDef)
-"""
+    """
     _schema = {'$ref': '#/definitions/Conditional<ValueDef>'}
     _rootschema = Root._schema
 
@@ -936,7 +936,7 @@ class ConditionalPredicateFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<FieldDef>'}
     _rootschema = Root._schema
 
@@ -1002,7 +1002,7 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef>'}
     _rootschema = Root._schema
 
@@ -1056,7 +1056,7 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<TextFieldDef>'}
     _rootschema = Root._schema
 
@@ -1080,7 +1080,7 @@ class ConditionalPredicateValueDef(VegaLiteSchema):
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values
         between `0` to `1` for opacity).
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef>'}
     _rootschema = Root._schema
 
@@ -1127,7 +1127,7 @@ class ConditionalSelectionFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalSelection<FieldDef>'}
     _rootschema = Root._schema
 
@@ -1195,7 +1195,7 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef>'}
     _rootschema = Root._schema
 
@@ -1251,7 +1251,7 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalSelection<TextFieldDef>'}
     _rootschema = Root._schema
 
@@ -1277,7 +1277,7 @@ class ConditionalSelectionValueDef(VegaLiteSchema):
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values
         between `0` to `1` for opacity).
-"""
+    """
     _schema = {'$ref': '#/definitions/ConditionalSelection<ValueDef>'}
     _rootschema = Root._schema
 
@@ -1406,7 +1406,7 @@ class Config(VegaLiteSchema):
          [corresponding section of the title documentation](title.html#config).
     view : ViewConfig
         Default properties for [single view plots](spec.html#single).
-"""
+    """
     _schema = {'$ref': '#/definitions/Config'}
     _rootschema = Root._schema
 
@@ -1456,7 +1456,7 @@ class CsvDataFormat(VegaLiteSchema):
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
         determined by the extension of the file URL. If no extension is detected, `"json"`
         will be used by default.
-"""
+    """
     _schema = {'$ref': '#/definitions/CsvDataFormat'}
     _rootschema = Root._schema
 
@@ -1468,7 +1468,7 @@ class Data(VegaLiteSchema):
     """Data schema wrapper
 
     anyOf(UrlData, InlineData, NamedData)
-"""
+    """
     _schema = {'$ref': '#/definitions/Data'}
     _rootschema = Root._schema
 
@@ -1480,7 +1480,7 @@ class DataFormat(VegaLiteSchema):
     """DataFormat schema wrapper
 
     anyOf(CsvDataFormat, JsonDataFormat, TopoDataFormat)
-"""
+    """
     _schema = {'$ref': '#/definitions/DataFormat'}
     _rootschema = Root._schema
 
@@ -1492,7 +1492,7 @@ class Datasets(VegaLiteSchema):
     """Datasets schema wrapper
 
     Mapping(required=[])
-"""
+    """
     _schema = {'$ref': '#/definitions/Datasets'}
     _rootschema = Root._schema
 
@@ -1538,7 +1538,7 @@ class DateTime(VegaLiteSchema):
          local time
     year : float
         Integer value representing the year.
-"""
+    """
     _schema = {'$ref': '#/definitions/DateTime'}
     _rootschema = Root._schema
 
@@ -1554,7 +1554,7 @@ class Day(VegaLiteSchema):
     """Day schema wrapper
 
     float
-"""
+    """
     _schema = {'$ref': '#/definitions/Day'}
     _rootschema = Root._schema
 
@@ -1566,7 +1566,7 @@ class DictInlineDataset(VegaLiteSchema):
     """DictInlineDataset schema wrapper
 
     Mapping(required=[])
-"""
+    """
     _schema = {'$ref': '#/definitions/Dict<InlineDataset>'}
     _rootschema = Root._schema
 
@@ -1653,7 +1653,7 @@ class Encoding(VegaLiteSchema):
         Y coordinates of the marks, or height of vertical `"bar"` and `"area"`.
     y2 : anyOf(FieldDef, ValueDef)
         Y2 coordinates for ranged `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
-"""
+    """
     _schema = {'$ref': '#/definitions/Encoding'}
     _rootschema = Root._schema
 
@@ -1752,7 +1752,7 @@ class EncodingWithFacet(VegaLiteSchema):
         Y coordinates of the marks, or height of vertical `"bar"` and `"area"`.
     y2 : anyOf(FieldDef, ValueDef)
         Y2 coordinates for ranged `"area"`, `"bar"`, `"rect"`, and  `"rule"`.
-"""
+    """
     _schema = {'$ref': '#/definitions/EncodingWithFacet'}
     _rootschema = Root._schema
 
@@ -1841,7 +1841,7 @@ class LayerSpec(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
         represents the width of a single view.  __See also:__ The documentation for [width
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-"""
+    """
     _schema = {'$ref': '#/definitions/LayerSpec'}
     _rootschema = Root._schema
 
@@ -1893,7 +1893,7 @@ class FacetFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetFieldDef'}
     _rootschema = Root._schema
 
@@ -1914,7 +1914,7 @@ class FacetMapping(VegaLiteSchema):
         Horizontal facets for trellis plots.
     row : FacetFieldDef
         Vertical facets for trellis plots.
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetMapping'}
     _rootschema = Root._schema
 
@@ -1958,7 +1958,7 @@ class FieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/FieldDef'}
     _rootschema = Root._schema
 
@@ -2014,7 +2014,7 @@ class FieldDefWithCondition(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition'}
     _rootschema = Root._schema
 
@@ -2089,7 +2089,7 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/MarkPropFieldDefWithCondition'}
     _rootschema = Root._schema
 
@@ -2151,7 +2151,7 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/TextFieldDefWithCondition'}
     _rootschema = Root._schema
 
@@ -2175,7 +2175,7 @@ class FieldEqualPredicate(VegaLiteSchema):
         Field to be filtered.
     timeUnit : TimeUnit
         Time unit for the field to be filtered.
-"""
+    """
     _schema = {'$ref': '#/definitions/FieldEqualPredicate'}
     _rootschema = Root._schema
 
@@ -2197,7 +2197,7 @@ class FieldOneOfPredicate(VegaLiteSchema):
         included in the filtered data.
     timeUnit : TimeUnit
         time unit for the field to be filtered.
-"""
+    """
     _schema = {'$ref': '#/definitions/FieldOneOfPredicate'}
     _rootschema = Root._schema
 
@@ -2219,7 +2219,7 @@ class FieldRangePredicate(VegaLiteSchema):
          be included in the filtered data.
     timeUnit : TimeUnit
         time unit for the field to be filtered.
-"""
+    """
     _schema = {'$ref': '#/definitions/FieldRangePredicate'}
     _rootschema = Root._schema
 
@@ -2245,7 +2245,7 @@ class FilterTransform(VegaLiteSchema):
         a [selection
         predicate](https://vega.github.io/vega-lite/docs/filter.html#selection-predicate);
         or (4) a logical operand that combines (1), (2), or (3).
-"""
+    """
     _schema = {'$ref': '#/definitions/FilterTransform'}
     _rootschema = Root._schema
 
@@ -2257,7 +2257,7 @@ class FontStyle(VegaLiteSchema):
     """FontStyle schema wrapper
 
     enum('normal', 'italic')
-"""
+    """
     _schema = {'$ref': '#/definitions/FontStyle'}
     _rootschema = Root._schema
 
@@ -2269,7 +2269,7 @@ class FontWeight(VegaLiteSchema):
     """FontWeight schema wrapper
 
     anyOf(FontWeightString, FontWeightNumber)
-"""
+    """
     _schema = {'$ref': '#/definitions/FontWeight'}
     _rootschema = Root._schema
 
@@ -2281,7 +2281,7 @@ class FontWeightNumber(VegaLiteSchema):
     """FontWeightNumber schema wrapper
 
     float
-"""
+    """
     _schema = {'$ref': '#/definitions/FontWeightNumber'}
     _rootschema = Root._schema
 
@@ -2293,7 +2293,7 @@ class FontWeightString(VegaLiteSchema):
     """FontWeightString schema wrapper
 
     enum('normal', 'bold')
-"""
+    """
     _schema = {'$ref': '#/definitions/FontWeightString'}
     _rootschema = Root._schema
 
@@ -2325,7 +2325,7 @@ class FacetSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetSpec'}
     _rootschema = Root._schema
 
@@ -2357,7 +2357,7 @@ class HConcatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-"""
+    """
     _schema = {'$ref': '#/definitions/HConcatSpec'}
     _rootschema = Root._schema
 
@@ -2392,7 +2392,7 @@ class RepeatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-"""
+    """
     _schema = {'$ref': '#/definitions/RepeatSpec'}
     _rootschema = Root._schema
 
@@ -2407,7 +2407,7 @@ class Spec(VegaLiteSchema):
     """Spec schema wrapper
 
     anyOf(CompositeUnitSpec, LayerSpec, FacetSpec, RepeatSpec, VConcatSpec, HConcatSpec)
-"""
+    """
     _schema = {'$ref': '#/definitions/Spec'}
     _rootschema = Root._schema
 
@@ -2485,7 +2485,7 @@ class CompositeUnitSpecAlias(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
         represents the width of a single view.  __See also:__ The documentation for [width
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-"""
+    """
     _schema = {'$ref': '#/definitions/CompositeUnitSpecAlias'}
     _rootschema = Root._schema
 
@@ -2569,7 +2569,7 @@ class FacetedCompositeUnitSpecAlias(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
         represents the width of a single view.  __See also:__ The documentation for [width
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-"""
+    """
     _schema = {'$ref': '#/definitions/FacetedCompositeUnitSpecAlias'}
     _rootschema = Root._schema
 
@@ -2605,7 +2605,7 @@ class VConcatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-"""
+    """
     _schema = {'$ref': '#/definitions/VConcatSpec'}
     _rootschema = Root._schema
 
@@ -2620,7 +2620,7 @@ class GeoType(VegaLiteSchema):
     """GeoType schema wrapper
 
     enum('latitude', 'longitude', 'geojson')
-"""
+    """
     _schema = {'$ref': '#/definitions/GeoType'}
     _rootschema = Root._schema
 
@@ -2656,7 +2656,7 @@ class Header(VegaLiteSchema):
         field name.  __Note__: You can customize the default field title format by providing
          the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function
         via the `compile` function's options](compile.html#field-title).
-"""
+    """
     _schema = {'$ref': '#/definitions/Header'}
     _rootschema = Root._schema
 
@@ -2668,7 +2668,7 @@ class HorizontalAlign(VegaLiteSchema):
     """HorizontalAlign schema wrapper
 
     enum('left', 'right', 'center')
-"""
+    """
     _schema = {'$ref': '#/definitions/HorizontalAlign'}
     _rootschema = Root._schema
 
@@ -2689,7 +2689,7 @@ class InlineData(VegaLiteSchema):
          property. Strings are parsed according to the specified format type.
     format : DataFormat
         An object that specifies the format for parsing the data values.
-"""
+    """
     _schema = {'$ref': '#/definitions/InlineData'}
     _rootschema = Root._schema
 
@@ -2702,7 +2702,7 @@ class InlineDataset(VegaLiteSchema):
 
     anyOf(List(float), List(string), List(boolean), List(Mapping(required=[])), string,
     Mapping(required=[]))
-"""
+    """
     _schema = {'$ref': '#/definitions/InlineDataset'}
     _rootschema = Root._schema
 
@@ -2715,7 +2715,7 @@ class Interpolate(VegaLiteSchema):
 
     enum('linear', 'linear-closed', 'step', 'step-before', 'step-after', 'basis', 'basis-open',
     'basis-closed', 'cardinal', 'cardinal-open', 'cardinal-closed', 'bundle', 'monotone')
-"""
+    """
     _schema = {'$ref': '#/definitions/Interpolate'}
     _rootschema = Root._schema
 
@@ -2769,7 +2769,7 @@ class IntervalSelection(VegaLiteSchema):
         definition](https://vega.github.io/vega/docs/event-streams/). Currently, only
         `wheel` events are supported.   __Default value:__ `true`, which corresponds to
         `wheel!`.
-"""
+    """
     _schema = {'$ref': '#/definitions/IntervalSelection'}
     _rootschema = Root._schema
 
@@ -2825,7 +2825,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         definition](https://vega.github.io/vega/docs/event-streams/). Currently, only
         `wheel` events are supported.   __Default value:__ `true`, which corresponds to
         `wheel!`.
-"""
+    """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
     _rootschema = Root._schema
 
@@ -2865,7 +2865,7 @@ class JsonDataFormat(VegaLiteSchema):
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
         determined by the extension of the file URL. If no extension is detected, `"json"`
         will be used by default.
-"""
+    """
     _schema = {'$ref': '#/definitions/JsonDataFormat'}
     _rootschema = Root._schema
 
@@ -2921,7 +2921,7 @@ class Legend(VegaLiteSchema):
     zindex : float
         A non-positive integer indicating z-index of the legend. If zindex is 0, legend
         should be drawn behind all chart elements. To put them in front, use zindex = 1.
-"""
+    """
     _schema = {'$ref': '#/definitions/Legend'}
     _rootschema = Root._schema
 
@@ -3018,7 +3018,7 @@ class LegendConfig(VegaLiteSchema):
         Maximum allowed pixel width of axis titles.
     titlePadding : float
         The padding, in pixels, between title and legend.
-"""
+    """
     _schema = {'$ref': '#/definitions/LegendConfig'}
     _rootschema = Root._schema
 
@@ -3061,7 +3061,7 @@ class LegendOrient(VegaLiteSchema):
     """LegendOrient schema wrapper
 
     enum('left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'none')
-"""
+    """
     _schema = {'$ref': '#/definitions/LegendOrient'}
     _rootschema = Root._schema
 
@@ -3088,7 +3088,7 @@ class LegendResolveMap(VegaLiteSchema):
 
     stroke : ResolveMode
 
-"""
+    """
     _schema = {'$ref': '#/definitions/LegendResolveMap'}
     _rootschema = Root._schema
 
@@ -3104,7 +3104,7 @@ class LocalMultiTimeUnit(VegaLiteSchema):
     enum('yearquarter', 'yearquartermonth', 'yearmonth', 'yearmonthdate', 'yearmonthdatehours',
     'yearmonthdatehoursminutes', 'yearmonthdatehoursminutesseconds', 'quartermonth',
     'monthdate', 'hoursminutes', 'hoursminutesseconds', 'minutesseconds', 'secondsmilliseconds')
-"""
+    """
     _schema = {'$ref': '#/definitions/LocalMultiTimeUnit'}
     _rootschema = Root._schema
 
@@ -3117,7 +3117,7 @@ class LocalSingleTimeUnit(VegaLiteSchema):
 
     enum('year', 'quarter', 'month', 'day', 'date', 'hours', 'minutes', 'seconds',
     'milliseconds')
-"""
+    """
     _schema = {'$ref': '#/definitions/LocalSingleTimeUnit'}
     _rootschema = Root._schema
 
@@ -3137,7 +3137,7 @@ class LogicalAndPredicate(VegaLiteSchema):
     --------------------
     'and' : List(LogicalOperandPredicate)
 
-"""
+    """
     _schema = {'$ref': '#/definitions/LogicalAnd<Predicate>'}
     _rootschema = Root._schema
 
@@ -3157,7 +3157,7 @@ class SelectionAnd(VegaLiteSchema):
     --------------------
     'and' : List(SelectionOperand)
 
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionAnd'}
     _rootschema = Root._schema
 
@@ -3177,7 +3177,7 @@ class LogicalNotPredicate(VegaLiteSchema):
     --------------------
     'not' : LogicalOperandPredicate
 
-"""
+    """
     _schema = {'$ref': '#/definitions/LogicalNot<Predicate>'}
     _rootschema = Root._schema
 
@@ -3197,7 +3197,7 @@ class SelectionNot(VegaLiteSchema):
     --------------------
     'not' : SelectionOperand
 
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionNot'}
     _rootschema = Root._schema
 
@@ -3209,7 +3209,7 @@ class LogicalOperandPredicate(VegaLiteSchema):
     """LogicalOperandPredicate schema wrapper
 
     anyOf(LogicalNotPredicate, LogicalAndPredicate, LogicalOrPredicate, Predicate)
-"""
+    """
     _schema = {'$ref': '#/definitions/LogicalOperand<Predicate>'}
     _rootschema = Root._schema
 
@@ -3221,7 +3221,7 @@ class SelectionOperand(VegaLiteSchema):
     """SelectionOperand schema wrapper
 
     anyOf(SelectionNot, SelectionAnd, SelectionOr, string)
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionOperand'}
     _rootschema = Root._schema
 
@@ -3241,7 +3241,7 @@ class LogicalOrPredicate(VegaLiteSchema):
     --------------------
     'or' : List(LogicalOperandPredicate)
 
-"""
+    """
     _schema = {'$ref': '#/definitions/LogicalOr<Predicate>'}
     _rootschema = Root._schema
 
@@ -3261,7 +3261,7 @@ class SelectionOr(VegaLiteSchema):
     --------------------
     'or' : List(SelectionOperand)
 
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionOr'}
     _rootschema = Root._schema
 
@@ -3282,7 +3282,7 @@ class LookupData(VegaLiteSchema):
         Key in data to lookup.
     fields : List(string)
         Fields in foreign data to lookup. If not specified, the entire object is queried.
-"""
+    """
     _schema = {'$ref': '#/definitions/LookupData'}
     _rootschema = Root._schema
 
@@ -3311,7 +3311,7 @@ class LookupTransform(VegaLiteSchema):
         the specified name.
     'from' : LookupData
         Secondary data reference.
-"""
+    """
     _schema = {'$ref': '#/definitions/LookupTransform'}
     _rootschema = Root._schema
 
@@ -3325,7 +3325,7 @@ class Mark(VegaLiteSchema):
     enum('area', 'bar', 'line', 'point', 'text', 'tick', 'rect', 'rule', 'circle', 'square',
     'geoshape')
     All types of primitive marks.
-"""
+    """
     _schema = {'$ref': '#/definitions/Mark'}
     _rootschema = Root._schema
 
@@ -3449,7 +3449,7 @@ class MarkConfig(VegaLiteSchema):
         the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
         mark `startAngle` and `endAngle` properties: angles are measured in radians, with
         `0` indicating "north".
-"""
+    """
     _schema = {'$ref': '#/definitions/MarkConfig'}
     _rootschema = Root._schema
 
@@ -3604,7 +3604,7 @@ class MarkDef(VegaLiteSchema):
         the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
         mark `startAngle` and `endAngle` properties: angles are measured in radians, with
         `0` indicating "north".
-"""
+    """
     _schema = {'$ref': '#/definitions/MarkDef'}
     _rootschema = Root._schema
 
@@ -3633,7 +3633,7 @@ class Month(VegaLiteSchema):
     """Month schema wrapper
 
     float
-"""
+    """
     _schema = {'$ref': '#/definitions/Month'}
     _rootschema = Root._schema
 
@@ -3679,7 +3679,7 @@ class MultiSelection(VegaLiteSchema):
         `true`, which corresponds to `event.shiftKey` (i.e., data values are toggled when a
         user interacts with the shift-key pressed).  See the [toggle transform](toggle.html)
          documentation for more information.
-"""
+    """
     _schema = {'$ref': '#/definitions/MultiSelection'}
     _rootschema = Root._schema
 
@@ -3726,7 +3726,7 @@ class MultiSelectionConfig(VegaLiteSchema):
         `true`, which corresponds to `event.shiftKey` (i.e., data values are toggled when a
         user interacts with the shift-key pressed).  See the [toggle transform](toggle.html)
          documentation for more information.
-"""
+    """
     _schema = {'$ref': '#/definitions/MultiSelectionConfig'}
     _rootschema = Root._schema
 
@@ -3741,7 +3741,7 @@ class MultiTimeUnit(VegaLiteSchema):
     """MultiTimeUnit schema wrapper
 
     anyOf(LocalMultiTimeUnit, UtcMultiTimeUnit)
-"""
+    """
     _schema = {'$ref': '#/definitions/MultiTimeUnit'}
     _rootschema = Root._schema
 
@@ -3760,7 +3760,7 @@ class NamedData(VegaLiteSchema):
         Provide a placeholder name and bind data at runtime.
     format : DataFormat
         An object that specifies the format for parsing the data.
-"""
+    """
     _schema = {'$ref': '#/definitions/NamedData'}
     _rootschema = Root._schema
 
@@ -3772,7 +3772,7 @@ class NiceTime(VegaLiteSchema):
     """NiceTime schema wrapper
 
     enum('second', 'minute', 'hour', 'day', 'week', 'month', 'year')
-"""
+    """
     _schema = {'$ref': '#/definitions/NiceTime'}
     _rootschema = Root._schema
 
@@ -3817,7 +3817,7 @@ class OrderFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/OrderFieldDef'}
     _rootschema = Root._schema
 
@@ -3831,7 +3831,7 @@ class Orient(VegaLiteSchema):
     """Orient schema wrapper
 
     enum('horizontal', 'vertical')
-"""
+    """
     _schema = {'$ref': '#/definitions/Orient'}
     _rootschema = Root._schema
 
@@ -3843,7 +3843,7 @@ class Padding(VegaLiteSchema):
     """Padding schema wrapper
 
     anyOf(float, Mapping(required=[]))
-"""
+    """
     _schema = {'$ref': '#/definitions/Padding'}
     _rootschema = Root._schema
 
@@ -3923,7 +3923,7 @@ class PositionFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
-"""
+    """
     _schema = {'$ref': '#/definitions/PositionFieldDef'}
     _rootschema = Root._schema
 
@@ -3940,7 +3940,7 @@ class Predicate(VegaLiteSchema):
 
     anyOf(FieldEqualPredicate, FieldRangePredicate, FieldOneOfPredicate, SelectionPredicate,
     string)
-"""
+    """
     _schema = {'$ref': '#/definitions/Predicate'}
     _rootschema = Root._schema
 
@@ -4003,7 +4003,7 @@ class Projection(VegaLiteSchema):
         projection types [in the
         documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
           __Default value:__ `mercator`
-"""
+    """
     _schema = {'$ref': '#/definitions/Projection'}
     _rootschema = Root._schema
 
@@ -4074,7 +4074,7 @@ class ProjectionConfig(VegaLiteSchema):
         projection types [in the
         documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
           __Default value:__ `mercator`
-"""
+    """
     _schema = {'$ref': '#/definitions/ProjectionConfig'}
     _rootschema = Root._schema
 
@@ -4096,7 +4096,7 @@ class ProjectionType(VegaLiteSchema):
     enum('albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal',
     'conicEqualArea', 'conicEquidistant', 'equirectangular', 'gnomonic', 'mercator',
     'orthographic', 'stereographic', 'transverseMercator')
-"""
+    """
     _schema = {'$ref': '#/definitions/ProjectionType'}
     _rootschema = Root._schema
 
@@ -4123,7 +4123,7 @@ class RangeConfig(VegaLiteSchema):
         Default range for _quantitative_ and _temporal_ fields.
     symbol : List(string)
         Default range palette for the `shape` channel.
-"""
+    """
     _schema = {'$ref': '#/definitions/RangeConfig'}
     _rootschema = Root._schema
 
@@ -4137,7 +4137,7 @@ class RangeConfigValue(VegaLiteSchema):
     """RangeConfigValue schema wrapper
 
     anyOf(List(anyOf(float, string)), VgScheme, Mapping(required=[step]))
-"""
+    """
     _schema = {'$ref': '#/definitions/RangeConfigValue'}
     _rootschema = Root._schema
 
@@ -4156,7 +4156,7 @@ class Repeat(VegaLiteSchema):
         Horizontal repeated views.
     row : List(string)
         Vertical repeated views.
-"""
+    """
     _schema = {'$ref': '#/definitions/Repeat'}
     _rootschema = Root._schema
 
@@ -4174,7 +4174,7 @@ class RepeatRef(VegaLiteSchema):
     ----------
     repeat : enum('row', 'column')
 
-"""
+    """
     _schema = {'$ref': '#/definitions/RepeatRef'}
     _rootschema = Root._schema
 
@@ -4197,7 +4197,7 @@ class Resolve(VegaLiteSchema):
 
     scale : ScaleResolveMap
 
-"""
+    """
     _schema = {'$ref': '#/definitions/Resolve'}
     _rootschema = Root._schema
 
@@ -4209,7 +4209,7 @@ class ResolveMode(VegaLiteSchema):
     """ResolveMode schema wrapper
 
     enum('independent', 'shared')
-"""
+    """
     _schema = {'$ref': '#/definitions/ResolveMode'}
     _rootschema = Root._schema
 
@@ -4350,7 +4350,7 @@ class Scale(VegaLiteSchema):
         __Default value:__ `true` for x and y channels if the quantitative field is not
         binned and no custom `domain` is provided; `false` otherwise.  __Note:__ Log, time,
         and utc scales do not support `zero`.
-"""
+    """
     _schema = {'$ref': '#/definitions/Scale'}
     _rootschema = Root._schema
 
@@ -4429,7 +4429,7 @@ class ScaleConfig(VegaLiteSchema):
         `"average"`, `"median"`, `"q1"`, `"q3"`, `"min"`, `"max"`). For other aggregations
         that produce values outside of the raw data domain (e.g. `"count"`, `"sum"`), this
         property is ignored.  __Default value:__ `false`
-"""
+    """
     _schema = {'$ref': '#/definitions/ScaleConfig'}
     _rootschema = Root._schema
 
@@ -4456,7 +4456,7 @@ class ScaleInterpolate(VegaLiteSchema):
     """ScaleInterpolate schema wrapper
 
     enum('rgb', 'lab', 'hcl', 'hsl', 'hsl-long', 'hcl-long', 'cubehelix', 'cubehelix-long')
-"""
+    """
     _schema = {'$ref': '#/definitions/ScaleInterpolate'}
     _rootschema = Root._schema
 
@@ -4475,7 +4475,7 @@ class ScaleInterpolateParams(VegaLiteSchema):
 
     gamma : float
 
-"""
+    """
     _schema = {'$ref': '#/definitions/ScaleInterpolateParams'}
     _rootschema = Root._schema
 
@@ -4506,7 +4506,7 @@ class ScaleResolveMap(VegaLiteSchema):
 
     y : ResolveMode
 
-"""
+    """
     _schema = {'$ref': '#/definitions/ScaleResolveMap'}
     _rootschema = Root._schema
 
@@ -4521,7 +4521,7 @@ class ScaleType(VegaLiteSchema):
 
     enum('linear', 'bin-linear', 'log', 'pow', 'sqrt', 'time', 'utc', 'sequential', 'ordinal',
     'bin-ordinal', 'point', 'band')
-"""
+    """
     _schema = {'$ref': '#/definitions/ScaleType'}
     _rootschema = Root._schema
 
@@ -4544,7 +4544,7 @@ class SchemeParams(VegaLiteSchema):
         For sequential and diverging schemes only, determines the extent of the color range
         to use. For example `[0.2, 1]` will rescale the color scheme such that color values
         in the range _[0, 0.2)_ are excluded from the scheme.
-"""
+    """
     _schema = {'$ref': '#/definitions/SchemeParams'}
     _rootschema = Root._schema
 
@@ -4575,7 +4575,7 @@ class SelectionConfig(VegaLiteSchema):
         properties and transformations   for a single selection definition (except `type`)
         may be specified here.  For instance, setting `single` to `{"on": "dblclick"}`
         populates single selections on double-click by default.
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionConfig'}
     _rootschema = Root._schema
 
@@ -4587,7 +4587,7 @@ class SelectionDef(VegaLiteSchema):
     """SelectionDef schema wrapper
 
     anyOf(SingleSelection, MultiSelection, IntervalSelection)
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionDef'}
     _rootschema = Root._schema
 
@@ -4599,7 +4599,7 @@ class SelectionDomain(VegaLiteSchema):
     """SelectionDomain schema wrapper
 
     anyOf(Mapping(required=[selection]), Mapping(required=[selection]))
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionDomain'}
     _rootschema = Root._schema
 
@@ -4616,7 +4616,7 @@ class SelectionPredicate(VegaLiteSchema):
     ----------
     selection : SelectionOperand
         Filter using a selection name.
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionPredicate'}
     _rootschema = Root._schema
 
@@ -4628,7 +4628,7 @@ class SelectionResolution(VegaLiteSchema):
     """SelectionResolution schema wrapper
 
     enum('global', 'union', 'intersect')
-"""
+    """
     _schema = {'$ref': '#/definitions/SelectionResolution'}
     _rootschema = Root._schema
 
@@ -4642,7 +4642,7 @@ class SingleDefChannel(VegaLiteSchema):
     enum('x', 'y', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'row',
     'column', 'color', 'fill', 'stroke', 'size', 'shape', 'opacity', 'text', 'tooltip', 'href',
     'key')
-"""
+    """
     _schema = {'$ref': '#/definitions/SingleDefChannel'}
     _rootschema = Root._schema
 
@@ -4687,7 +4687,7 @@ class SingleSelection(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how selections'
         data queries are resolved when applied in a filter transform, conditional encoding
         rule, or scale domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/SingleSelection'}
     _rootschema = Root._schema
 
@@ -4733,7 +4733,7 @@ class SingleSelectionConfig(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how selections'
         data queries are resolved when applied in a filter transform, conditional encoding
         rule, or scale domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/SingleSelectionConfig'}
     _rootschema = Root._schema
 
@@ -4748,7 +4748,7 @@ class SingleTimeUnit(VegaLiteSchema):
     """SingleTimeUnit schema wrapper
 
     anyOf(LocalSingleTimeUnit, UtcSingleTimeUnit)
-"""
+    """
     _schema = {'$ref': '#/definitions/SingleTimeUnit'}
     _rootschema = Root._schema
 
@@ -4774,7 +4774,7 @@ class SortField(VegaLiteSchema):
         defaults to the field specified in the outer data reference.
     order : SortOrder
         The sort order. One of `"ascending"` (default) or `"descending"`.
-"""
+    """
     _schema = {'$ref': '#/definitions/SortField'}
     _rootschema = Root._schema
 
@@ -4786,7 +4786,7 @@ class SortOrder(VegaLiteSchema):
     """SortOrder schema wrapper
 
     enum('ascending', 'descending', None)
-"""
+    """
     _schema = {'$ref': '#/definitions/SortOrder'}
     _rootschema = Root._schema
 
@@ -4798,7 +4798,7 @@ class StackOffset(VegaLiteSchema):
     """StackOffset schema wrapper
 
     enum('zero', 'center', 'normalize')
-"""
+    """
     _schema = {'$ref': '#/definitions/StackOffset'}
     _rootschema = Root._schema
 
@@ -4810,7 +4810,7 @@ class StyleConfigIndex(VegaLiteSchema):
     """StyleConfigIndex schema wrapper
 
     Mapping(required=[])
-"""
+    """
     _schema = {'$ref': '#/definitions/StyleConfigIndex'}
     _rootschema = Root._schema
 
@@ -4936,7 +4936,7 @@ class TextConfig(VegaLiteSchema):
         the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
         mark `startAngle` and `endAngle` properties: angles are measured in radians, with
         `0` indicating "north".
-"""
+    """
     _schema = {'$ref': '#/definitions/TextConfig'}
     _rootschema = Root._schema
 
@@ -5080,7 +5080,7 @@ class TickConfig(VegaLiteSchema):
         `0` indicating "north".
     thickness : float
         Thickness of the tick mark.  __Default value:__  `1`
-"""
+    """
     _schema = {'$ref': '#/definitions/TickConfig'}
     _rootschema = Root._schema
 
@@ -5108,7 +5108,7 @@ class TimeUnit(VegaLiteSchema):
     """TimeUnit schema wrapper
 
     anyOf(SingleTimeUnit, MultiTimeUnit)
-"""
+    """
     _schema = {'$ref': '#/definitions/TimeUnit'}
     _rootschema = Root._schema
 
@@ -5132,7 +5132,7 @@ class TimeUnitTransform(VegaLiteSchema):
     --------------------
     'as' : string
         The output field to write the timeUnit value.
-"""
+    """
     _schema = {'$ref': '#/definitions/TimeUnitTransform'}
     _rootschema = Root._schema
 
@@ -5144,7 +5144,7 @@ class TitleOrient(VegaLiteSchema):
     """TitleOrient schema wrapper
 
     enum('top', 'bottom', 'left', 'right')
-"""
+    """
     _schema = {'$ref': '#/definitions/TitleOrient'}
     _rootschema = Root._schema
 
@@ -5178,7 +5178,7 @@ class TitleParams(VegaLiteSchema):
     style : anyOf(string, List(string))
         A [mark style property](config.html#style) to apply to the title text mark.
         __Default value:__ `"group-title"`.
-"""
+    """
     _schema = {'$ref': '#/definitions/TitleParams'}
     _rootschema = Root._schema
 
@@ -5287,7 +5287,7 @@ class TopLevelLayerSpec(VegaLiteSchema):
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
         allows automatic validation and autocomplete in editors that support JSON schema.
-"""
+    """
     _schema = {'$ref': '#/definitions/TopLevelLayerSpec'}
     _rootschema = Root._schema
 
@@ -5353,7 +5353,7 @@ class TopLevelHConcatSpec(VegaLiteSchema):
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
         allows automatic validation and autocomplete in editors that support JSON schema.
-"""
+    """
     _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
     _rootschema = Root._schema
 
@@ -5420,7 +5420,7 @@ class TopLevelRepeatSpec(VegaLiteSchema):
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
         allows automatic validation and autocomplete in editors that support JSON schema.
-"""
+    """
     _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
     _rootschema = Root._schema
 
@@ -5485,7 +5485,7 @@ class TopLevelVConcatSpec(VegaLiteSchema):
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
         allows automatic validation and autocomplete in editors that support JSON schema.
-"""
+    """
     _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
     _rootschema = Root._schema
 
@@ -5552,7 +5552,7 @@ class TopLevelFacetSpec(VegaLiteSchema):
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
         allows automatic validation and autocomplete in editors that support JSON schema.
-"""
+    """
     _schema = {'$ref': '#/definitions/TopLevelFacetSpec'}
     _rootschema = Root._schema
 
@@ -5666,7 +5666,7 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
         allows automatic validation and autocomplete in editors that support JSON schema.
-"""
+    """
     _schema = {'$ref': '#/definitions/TopLevelFacetedUnitSpec'}
     _rootschema = Root._schema
 
@@ -5718,7 +5718,7 @@ class TopoDataFormat(VegaLiteSchema):
         Type of input data: `"json"`, `"csv"`, `"tsv"`. The default format type is
         determined by the extension of the file URL. If no extension is detected, `"json"`
         will be used by default.
-"""
+    """
     _schema = {'$ref': '#/definitions/TopoDataFormat'}
     _rootschema = Root._schema
 
@@ -5731,7 +5731,7 @@ class Transform(VegaLiteSchema):
 
     anyOf(FilterTransform, CalculateTransform, LookupTransform, BinTransform, TimeUnitTransform,
      AggregateTransform)
-"""
+    """
     _schema = {'$ref': '#/definitions/Transform'}
     _rootschema = Root._schema
 
@@ -5745,7 +5745,7 @@ class Type(VegaLiteSchema):
     anyOf(BasicType, GeoType)
     Constants and utilities for data type
      Data type based on level of measurement
-"""
+    """
     _schema = {'$ref': '#/definitions/Type'}
     _rootschema = Root._schema
 
@@ -5765,7 +5765,7 @@ class UrlData(VegaLiteSchema):
          loaded data is correctly parsed.
     format : DataFormat
         An object that specifies the format for parsing the data file.
-"""
+    """
     _schema = {'$ref': '#/definitions/UrlData'}
     _rootschema = Root._schema
 
@@ -5780,7 +5780,7 @@ class UtcMultiTimeUnit(VegaLiteSchema):
     'utcyearmonthdatehours', 'utcyearmonthdatehoursminutes',
     'utcyearmonthdatehoursminutesseconds', 'utcquartermonth', 'utcmonthdate', 'utchoursminutes',
      'utchoursminutesseconds', 'utcminutesseconds', 'utcsecondsmilliseconds')
-"""
+    """
     _schema = {'$ref': '#/definitions/UtcMultiTimeUnit'}
     _rootschema = Root._schema
 
@@ -5793,7 +5793,7 @@ class UtcSingleTimeUnit(VegaLiteSchema):
 
     enum('utcyear', 'utcquarter', 'utcmonth', 'utcday', 'utcdate', 'utchours', 'utcminutes',
     'utcseconds', 'utcmilliseconds')
-"""
+    """
     _schema = {'$ref': '#/definitions/UtcSingleTimeUnit'}
     _rootschema = Root._schema
 
@@ -5812,7 +5812,7 @@ class ValueDef(VegaLiteSchema):
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values
         between `0` to `1` for opacity).
-"""
+    """
     _schema = {'$ref': '#/definitions/ValueDef'}
     _rootschema = Root._schema
 
@@ -5836,7 +5836,7 @@ class ValueDefWithCondition(VegaLiteSchema):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition'}
     _rootschema = Root._schema
 
@@ -5861,7 +5861,7 @@ class MarkPropValueDefWithCondition(VegaLiteSchema):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/MarkPropValueDefWithCondition'}
     _rootschema = Root._schema
 
@@ -5885,7 +5885,7 @@ class TextValueDefWithCondition(VegaLiteSchema):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _schema = {'$ref': '#/definitions/TextValueDefWithCondition'}
     _rootschema = Root._schema
 
@@ -5897,7 +5897,7 @@ class VerticalAlign(VegaLiteSchema):
     """VerticalAlign schema wrapper
 
     enum('top', 'middle', 'bottom')
-"""
+    """
     _schema = {'$ref': '#/definitions/VerticalAlign'}
     _rootschema = Root._schema
 
@@ -6021,7 +6021,7 @@ class VgAxisConfig(VegaLiteSchema):
         X-coordinate of the axis title relative to the axis group.
     titleY : float
         Y-coordinate of the axis title relative to the axis group.
-"""
+    """
     _schema = {'$ref': '#/definitions/VgAxisConfig'}
     _rootschema = Root._schema
 
@@ -6060,7 +6060,7 @@ class VgBinding(VegaLiteSchema):
     """VgBinding schema wrapper
 
     anyOf(VgCheckboxBinding, VgRadioBinding, VgSelectBinding, VgRangeBinding, VgGenericBinding)
-"""
+    """
     _schema = {'$ref': '#/definitions/VgBinding'}
     _rootschema = Root._schema
 
@@ -6079,7 +6079,7 @@ class VgCheckboxBinding(VegaLiteSchema):
 
     element : string
 
-"""
+    """
     _schema = {'$ref': '#/definitions/VgCheckboxBinding'}
     _rootschema = Root._schema
 
@@ -6091,7 +6091,7 @@ class VgEventStream(VegaLiteSchema):
     """VgEventStream schema wrapper
 
     Mapping(required=[])
-"""
+    """
     _schema = {'$ref': '#/definitions/VgEventStream'}
     _rootschema = Root._schema
 
@@ -6110,7 +6110,7 @@ class VgGenericBinding(VegaLiteSchema):
 
     element : string
 
-"""
+    """
     _schema = {'$ref': '#/definitions/VgGenericBinding'}
     _rootschema = Root._schema
 
@@ -6224,7 +6224,7 @@ class VgMarkConfig(VegaLiteSchema):
         the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
         mark `startAngle` and `endAngle` properties: angles are measured in radians, with
         `0` indicating "north".
-"""
+    """
     _schema = {'$ref': '#/definitions/VgMarkConfig'}
     _rootschema = Root._schema
 
@@ -6252,7 +6252,7 @@ class VgProjectionType(VegaLiteSchema):
     enum('albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal',
     'conicEqualArea', 'conicEquidistant', 'equirectangular', 'gnomonic', 'mercator',
     'orthographic', 'stereographic', 'transverseMercator')
-"""
+    """
     _schema = {'$ref': '#/definitions/VgProjectionType'}
     _rootschema = Root._schema
 
@@ -6273,7 +6273,7 @@ class VgRadioBinding(VegaLiteSchema):
 
     element : string
 
-"""
+    """
     _schema = {'$ref': '#/definitions/VgRadioBinding'}
     _rootschema = Root._schema
 
@@ -6298,7 +6298,7 @@ class VgRangeBinding(VegaLiteSchema):
 
     step : float
 
-"""
+    """
     _schema = {'$ref': '#/definitions/VgRangeBinding'}
     _rootschema = Root._schema
 
@@ -6321,7 +6321,7 @@ class VgScheme(VegaLiteSchema):
 
     extent : List(float)
 
-"""
+    """
     _schema = {'$ref': '#/definitions/VgScheme'}
     _rootschema = Root._schema
 
@@ -6342,7 +6342,7 @@ class VgSelectBinding(VegaLiteSchema):
 
     element : string
 
-"""
+    """
     _schema = {'$ref': '#/definitions/VgSelectBinding'}
     _rootschema = Root._schema
 
@@ -6385,7 +6385,7 @@ class VgTitleConfig(VegaLiteSchema):
         Offset in pixels of the title from the chart body and axes.
     orient : TitleOrient
         Default title orientation ("top", "bottom", "left", or "right")
-"""
+    """
     _schema = {'$ref': '#/definitions/VgTitleConfig'}
     _rootschema = Root._schema
 
@@ -6430,7 +6430,7 @@ class ViewConfig(VegaLiteSchema):
         The default width of the single plot or each plot in a trellis plot when the
         visualization has a continuous (non-ordinal) x-scale or ordinal x-scale with
         `rangeStep` = `null`.  __Default value:__ `200`
-"""
+    """
     _schema = {'$ref': '#/definitions/ViewConfig'}
     _rootschema = Root._schema
 

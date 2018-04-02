@@ -381,9 +381,14 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
         else:
             final_lines.append('')
     # Remove any trailing whitespaces on the right side
-    final_lines = [l.rstrip() for l in final_lines]
+    stripped_lines = []
+    for i, line in enumerate(final_lines):
+        if i + 1 == len(final_lines):
+            stripped_lines.append(line)
+        else:
+            stripped_lines.append(line.rstrip())
     # Join it all together
-    wrapped = '\n'.join(final_lines)
+    wrapped = '\n'.join(stripped_lines)
     if lstrip:
         wrapped = wrapped.lstrip()
     return wrapped

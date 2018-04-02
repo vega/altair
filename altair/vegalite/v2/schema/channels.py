@@ -76,7 +76,7 @@ class Color(core.MarkPropFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -139,7 +139,7 @@ class ColorValue(core.MarkPropValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -202,7 +202,7 @@ class Column(core.FacetFieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -284,7 +284,7 @@ class Detail(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -394,7 +394,7 @@ class Fill(core.MarkPropFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -457,7 +457,7 @@ class FillValue(core.MarkPropValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -527,7 +527,7 @@ class Href(core.FieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -588,7 +588,7 @@ class HrefValue(core.ValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -648,7 +648,7 @@ class Key(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -730,7 +730,7 @@ class Latitude(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -812,7 +812,7 @@ class Latitude2(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -894,7 +894,7 @@ class Longitude(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -976,7 +976,7 @@ class Longitude2(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -1086,7 +1086,7 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -1149,7 +1149,7 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -1210,7 +1210,7 @@ class Order(core.OrderFieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -1295,7 +1295,7 @@ class Row(core.FacetFieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -1405,7 +1405,7 @@ class Shape(core.MarkPropFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -1468,7 +1468,7 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -1556,7 +1556,7 @@ class Size(core.MarkPropFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -1619,7 +1619,7 @@ class SizeValue(core.MarkPropValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -1707,7 +1707,7 @@ class Stroke(core.MarkPropFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -1770,7 +1770,7 @@ class StrokeValue(core.MarkPropValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -1843,7 +1843,7 @@ class Text(core.TextFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -1904,7 +1904,7 @@ class TextValue(core.TextValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -1977,7 +1977,7 @@ class Tooltip(core.TextFieldDefWithCondition):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
@@ -2038,7 +2038,7 @@ class TooltipValue(core.TextValueDefWithCondition):
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
         A constant value in visual domain.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, condition=Undefined, **kwds):
@@ -2134,7 +2134,7 @@ class X(core.PositionFieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
@@ -2191,7 +2191,7 @@ class XValue(core.ValueDef):
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values
         between `0` to `1` for opacity).
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
@@ -2251,7 +2251,7 @@ class X2(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -2306,7 +2306,7 @@ class X2Value(core.ValueDef):
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values
         between `0` to `1` for opacity).
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
@@ -2402,7 +2402,7 @@ class Y(core.PositionFieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
@@ -2459,7 +2459,7 @@ class YValue(core.ValueDef):
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values
         between `0` to `1` for opacity).
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
@@ -2519,7 +2519,7 @@ class Y2(core.FieldDef):
         `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
         `"longitude"`, and `"geojson"`) when a [geographic
         projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
@@ -2574,7 +2574,7 @@ class Y2Value(core.ValueDef):
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., `"red"` / "#0099ff" for color, values
         between `0` to `1` for opacity).
-"""
+    """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
