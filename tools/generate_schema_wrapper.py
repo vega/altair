@@ -81,9 +81,11 @@ class {classname}(core.{basename}):
         self.shorthand = Undefined
         self._kwds.update({{k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined}})
-        return super({classname}, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super({classname}, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 '''
 
 VALUE_TEMPLATE = '''

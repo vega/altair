@@ -83,9 +83,11 @@ class Row(core.PositionChannelDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Row, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Row, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Column(core.PositionChannelDef):
@@ -161,9 +163,11 @@ class Column(core.PositionChannelDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Column, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Column, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class X(core.PositionChannelDef):
@@ -239,9 +243,11 @@ class X(core.PositionChannelDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(X, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(X, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Y(core.PositionChannelDef):
@@ -317,9 +323,11 @@ class Y(core.PositionChannelDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Y, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Y, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class X2(core.FieldDef):
@@ -387,9 +395,11 @@ class X2(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(X2, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(X2, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Y2(core.FieldDef):
@@ -457,9 +467,11 @@ class Y2(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Y2, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Y2, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Color(core.ChannelDefWithLegend):
@@ -535,9 +547,11 @@ class Color(core.ChannelDefWithLegend):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Color, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Color, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Opacity(core.ChannelDefWithLegend):
@@ -613,9 +627,11 @@ class Opacity(core.ChannelDefWithLegend):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Opacity, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Opacity, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Size(core.ChannelDefWithLegend):
@@ -691,9 +707,11 @@ class Size(core.ChannelDefWithLegend):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Size, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Size, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Shape(core.ChannelDefWithLegend):
@@ -769,9 +787,11 @@ class Shape(core.ChannelDefWithLegend):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Shape, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Shape, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Detail(core.FieldDef):
@@ -839,9 +859,11 @@ class Detail(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Detail, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Detail, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Text(core.FieldDef):
@@ -909,9 +931,11 @@ class Text(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Text, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Text, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Label(core.FieldDef):
@@ -979,9 +1003,11 @@ class Label(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Label, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Label, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Path(core.OrderChannelDef):
@@ -1053,9 +1079,11 @@ class Path(core.OrderChannelDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Path, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Path, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Order(core.OrderChannelDef):
@@ -1127,6 +1155,8 @@ class Order(core.OrderChannelDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Order, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Order, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
