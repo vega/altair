@@ -349,7 +349,6 @@ Shorthand            Equivalent long-form
 ``x='sum(name)'``    ``alt.X('name', aggregate='sum')``
 ``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
 ``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
-``order='name'``     ``alt.Order('name')``
 ===================  =======================================================
 
 
