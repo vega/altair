@@ -21,9 +21,9 @@ class VegaSchema(SchemaBase):
 
 class Root(VegaSchema):
     """Root schema wrapper
-    
+
     allOf(container, Mapping(required=[]))
-    """
+"""
     _schema = load_schema()
     _rootschema = _schema
 
@@ -39,50 +39,50 @@ class Root(VegaSchema):
 
 class axis(VegaSchema):
     """axis schema wrapper
-    
+
     Mapping(required=[type, scale])
-    
+
     Attributes
     ----------
     scale : string
-    
+
     type : enum('x', 'y')
-    
+
     format : string
-    
+
     formatType : enum('time', 'utc', 'string', 'number')
-    
+
     grid : boolean
-    
+
     layer : enum('front', 'back')
-    
+
     offset : oneOf(float, Mapping(required=[scale, value]))
-    
+
     orient : enum('top', 'bottom', 'left', 'right')
-    
+
     properties : Mapping(required=[])
-    
+
     subdivide : float
-    
+
     tickPadding : float
-    
+
     tickSize : float
-    
+
     tickSizeEnd : float
-    
+
     tickSizeMajor : float
-    
+
     tickSizeMinor : float
-    
+
     ticks : float
-    
+
     title : string
-    
+
     titleOffset : float
-    
+
     values : List(anyOf(string, float))
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/axis'}
     _rootschema = Root._schema
 
@@ -102,9 +102,9 @@ class axis(VegaSchema):
 
 class background(VegaSchema):
     """background schema wrapper
-    
+
     string
-    """
+"""
     _schema = {'$ref': '#/defs/background'}
     _rootschema = Root._schema
 
@@ -114,10 +114,10 @@ class background(VegaSchema):
 
 class data(VegaSchema):
     """data schema wrapper
-    
-    allOf(Mapping(required=[name]), anyOf(Mapping(required=[name, modify]), 
+
+    allOf(Mapping(required=[name]), anyOf(Mapping(required=[name, modify]),
     oneOf(Mapping(required=[source]), Mapping(required=[values]), Mapping(required=[url]))))
-    """
+"""
     _schema = {'$ref': '#/defs/data'}
     _rootschema = Root._schema
 
@@ -127,13 +127,13 @@ class data(VegaSchema):
 
 class legend(VegaSchema):
     """legend schema wrapper
-    
-    anyOf(Mapping(required=[size]), Mapping(required=[shape]), Mapping(required=[fill]), 
+
+    anyOf(Mapping(required=[size]), Mapping(required=[shape]), Mapping(required=[fill]),
     Mapping(required=[stroke]), Mapping(required=[opacity]))
-    
+
     Attributes
     ----------
-    """
+"""
     _schema = {'$ref': '#/defs/legend'}
     _rootschema = Root._schema
 
@@ -143,36 +143,36 @@ class legend(VegaSchema):
 
 class mark(VegaSchema):
     """mark schema wrapper
-    
+
     Mapping(required=[type])
-    
+
     Attributes
     ----------
-    type : enum('rect', 'symbol', 'path', 'arc', 'area', 'line', 'rule', 'image', 'text', 
+    type : enum('rect', 'symbol', 'path', 'arc', 'area', 'line', 'rule', 'image', 'text',
     'group')
-    
+
     delay : numberValue
-    
-    ease : enum('linear-in', 'linear-out', 'linear-in-out', 'linear-out-in', 'quad-in', 
-    'quad-out', 'quad-in-out', 'quad-out-in', 'cubic-in', 'cubic-out', 'cubic-in-out', 
-    'cubic-out-in', 'sin-in', 'sin-out', 'sin-in-out', 'sin-out-in', 'exp-in', 'exp-out', 
-    'exp-in-out', 'exp-out-in', 'circle-in', 'circle-out', 'circle-in-out', 'circle-out-in', 
+
+    ease : enum('linear-in', 'linear-out', 'linear-in-out', 'linear-out-in', 'quad-in',
+    'quad-out', 'quad-in-out', 'quad-out-in', 'cubic-in', 'cubic-out', 'cubic-in-out',
+    'cubic-out-in', 'sin-in', 'sin-out', 'sin-in-out', 'sin-out-in', 'exp-in', 'exp-out',
+    'exp-in-out', 'exp-out-in', 'circle-in', 'circle-out', 'circle-in-out', 'circle-out-in',
     'bounce-in', 'bounce-out', 'bounce-in-out', 'bounce-out-in')
-    
+
     interactive : boolean
-    
+
     key : string
-    
+
     name : string
-    
+
     properties : anyOf(Mapping(required=[enter]), Mapping(required=[update]))
-    
-    
+
+
     Dict-Only Attributes
     --------------------
     'from' : Mapping(required=[])
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/mark'}
     _rootschema = Root._schema
 
@@ -184,22 +184,22 @@ class mark(VegaSchema):
 
 class container(VegaSchema):
     """container schema wrapper
-    
+
     Mapping(required=[])
-    
+
     Attributes
     ----------
     axes : List(axis)
-    
+
     legends : List(legend)
-    
+
     marks : List(oneOf(groupMark, visualMark))
-    
+
     scales : List(scale)
-    
+
     scene : Mapping(required=[])
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/container'}
     _rootschema = Root._schema
 
@@ -211,9 +211,9 @@ class container(VegaSchema):
 
 class groupMark(VegaSchema):
     """groupMark schema wrapper
-    
+
     allOf(Mapping(required=[type]), mark, container)
-    """
+"""
     _schema = {'$ref': '#/defs/groupMark'}
     _rootschema = Root._schema
 
@@ -228,9 +228,9 @@ class groupMark(VegaSchema):
 
 class visualMark(VegaSchema):
     """visualMark schema wrapper
-    
+
     allOf(not Mapping(required=[]), mark)
-    """
+"""
     _schema = {'$ref': '#/defs/visualMark'}
     _rootschema = Root._schema
 
@@ -242,10 +242,10 @@ class visualMark(VegaSchema):
 
 class modify(VegaSchema):
     """modify schema wrapper
-    
-    List(oneOf(Mapping(required=[type, signal]), Mapping(required=[type, predicate]), 
+
+    List(oneOf(Mapping(required=[type, signal]), Mapping(required=[type, predicate]),
     Mapping(required=[type, test])))
-    """
+"""
     _schema = {'$ref': '#/defs/modify'}
     _rootschema = Root._schema
 
@@ -255,9 +255,9 @@ class modify(VegaSchema):
 
 class padding(VegaSchema):
     """padding schema wrapper
-    
+
     oneOf(enum('strict', 'auto'), float, Mapping(required=[]))
-    """
+"""
     _schema = {'$ref': '#/defs/padding'}
     _rootschema = Root._schema
 
@@ -267,10 +267,10 @@ class padding(VegaSchema):
 
 class predicate(VegaSchema):
     """predicate schema wrapper
-    
-    oneOf(Mapping(required=[name, type, operands]), Mapping(required=[name, type, operands]), 
+
+    oneOf(Mapping(required=[name, type, operands]), Mapping(required=[name, type, operands]),
     oneOf(Mapping(required=[range]), Mapping(required=[data, field])))
-    """
+"""
     _schema = {'$ref': '#/defs/predicate'}
     _rootschema = Root._schema
 
@@ -280,9 +280,9 @@ class predicate(VegaSchema):
 
 class rule(VegaSchema):
     """rule schema wrapper
-    
+
     anyOf(Mapping(required=[]), Mapping(required=[]))
-    """
+"""
     _schema = {'$ref': '#/defs/rule'}
     _rootschema = Root._schema
 
@@ -292,110 +292,110 @@ class rule(VegaSchema):
 
 class propset(VegaSchema):
     """propset schema wrapper
-    
+
     Mapping(required=[])
-    
+
     Attributes
     ----------
-    align : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, 
-    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
-    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal, 
+    align : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers,
+    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal,
     Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))
-    
+
     angle : numberValue
-    
-    baseline : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, 
-    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
-    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal, 
+
+    baseline : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers,
+    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal,
     Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))
-    
+
     clip : booleanValue
-    
+
     cursor : stringValue
-    
+
     dx : numberValue
-    
+
     dy : numberValue
-    
+
     endAngle : numberValue
-    
+
     fill : colorValue
-    
+
     fillOpacity : numberValue
-    
+
     font : stringValue
-    
+
     fontSize : numberValue
-    
+
     fontStyle : stringValue
-    
+
     fontWeight : stringValue
-    
+
     height : numberValue
-    
+
     innerRadius : numberValue
-    
-    interpolate : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, 
-    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
-    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal, 
+
+    interpolate : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers,
+    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal,
     Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))
-    
+
     opacity : numberValue
-    
-    orient : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, 
-    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
-    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal, 
+
+    orient : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers,
+    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal,
     Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))
-    
+
     outerRadius : numberValue
-    
+
     path : stringValue
-    
+
     radius : numberValue
-    
-    shape : anyOf(oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, 
-    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
-    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal, 
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band])))), 
+
+    shape : anyOf(oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers,
+    oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band])))),
     stringValue)
-    
+
     size : numberValue
-    
+
     startAngle : numberValue
-    
+
     stroke : colorValue
-    
+
     strokeDash : arrayValue
-    
+
     strokeDashOffset : numberValue
-    
+
     strokeOpacity : numberValue
-    
+
     strokeWidth : numberValue
-    
+
     tension : numberValue
-    
+
     text : stringValue
-    
+
     theta : numberValue
-    
+
     url : stringValue
-    
+
     width : numberValue
-    
+
     x : numberValue
-    
+
     x2 : numberValue
-    
+
     xc : numberValue
-    
+
     y : numberValue
-    
+
     y2 : numberValue
-    
+
     yc : numberValue
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/propset'}
     _rootschema = Root._schema
 
@@ -424,24 +424,24 @@ class propset(VegaSchema):
 
 class signal(VegaSchema):
     """signal schema wrapper
-    
+
     Mapping(required=[name])
-    
+
     Attributes
     ----------
     name : not Mapping(required=[])
-    
+
     expr : string
-    
+
     init : Mapping(required=[])
-    
+
     scale : scopedScale
-    
+
     streams : streams
-    
+
     verbose : boolean
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/signal'}
     _rootschema = Root._schema
 
@@ -453,9 +453,9 @@ class signal(VegaSchema):
 
 class spec(VegaSchema):
     """spec schema wrapper
-    
+
     allOf(container, Mapping(required=[]))
-    """
+"""
     _schema = {'$ref': '#/defs/spec'}
     _rootschema = Root._schema
 
@@ -471,9 +471,9 @@ class spec(VegaSchema):
 
 class streams(VegaSchema):
     """streams schema wrapper
-    
+
     List(Mapping(required=[type, expr]))
-    """
+"""
     _schema = {'$ref': '#/defs/streams'}
     _rootschema = Root._schema
 
@@ -483,19 +483,19 @@ class streams(VegaSchema):
 
 class aggregateTransform(VegaSchema):
     """aggregateTransform schema wrapper
-    
+
     Mapping(required=[type])
     Compute summary aggregate statistics
-    
+
     Attributes
     ----------
     type : enum('aggregate')
-    
+
     groupby : List(oneOf(string, signal))
         A list of fields to split the data into groups.
     summarize : oneOf(Mapping(required=[]), List(Mapping(required=[field, ops])))
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/aggregateTransform'}
     _rootschema = Root._schema
 
@@ -505,16 +505,16 @@ class aggregateTransform(VegaSchema):
 
 class binTransform(VegaSchema):
     """binTransform schema wrapper
-    
+
     Mapping(required=[type, field])
     Bins values into quantitative bins (e.g., for a histogram).
-    
+
     Attributes
     ----------
     field : oneOf(string, signal)
         The name of the field to bin values from.
     type : enum('bin')
-    
+
     base : oneOf(float, signal)
         The number base to use for automatic bin determination.
     div : oneOf(List(float), signal)
@@ -534,7 +534,7 @@ class binTransform(VegaSchema):
          ignored.
     steps : oneOf(List(float), signal)
         An array of allowable step sizes to choose from.
-    """
+"""
     _schema = {'$ref': '#/defs/binTransform'}
     _rootschema = Root._schema
 
@@ -548,29 +548,29 @@ class binTransform(VegaSchema):
 
 class crossTransform(VegaSchema):
     """crossTransform schema wrapper
-    
+
     Mapping(required=[type])
     Compute the cross-product of two data sets.
-    
+
     Attributes
     ----------
     type : enum('cross')
-    
+
     diagonal : oneOf(boolean, signal)
-        If false, items along the "diagonal" of the cross-product (those elements with the 
+        If false, items along the "diagonal" of the cross-product (those elements with the
         same index in their respective array) will not be included in the output.
     filter : string
-        A string containing an expression (in JavaScript syntax) to filter the resulting 
+        A string containing an expression (in JavaScript syntax) to filter the resulting
         data elements.
     output : Mapping(required=[])
         Rename the output data fields
-    
+
     Dict-Only Attributes
     --------------------
     'with' : string
-        The name of the secondary data set to cross with the primary data. If unspecified, 
+        The name of the secondary data set to cross with the primary data. If unspecified,
         the primary data is crossed with itself.
-    """
+"""
     _schema = {'$ref': '#/defs/crossTransform'}
     _rootschema = Root._schema
 
@@ -581,13 +581,13 @@ class crossTransform(VegaSchema):
 
 class countpatternTransform(VegaSchema):
     """countpatternTransform schema wrapper
-    
+
     Mapping(required=[type])
-    
+
     Attributes
     ----------
     type : enum('countpattern')
-    
+
     case : oneOf(enum('lower', 'upper', 'none'), signal)
         Text case transformation to apply.
     field : oneOf(string, signal)
@@ -598,7 +598,7 @@ class countpatternTransform(VegaSchema):
         A regexp pattern for matching words in text.
     stopwords : oneOf(string, signal)
         A regexp pattern for matching stopwords to omit.
-    """
+"""
     _schema = {'$ref': '#/defs/countpatternTransform'}
     _rootschema = Root._schema
 
@@ -610,17 +610,17 @@ class countpatternTransform(VegaSchema):
 
 class linkpathTransform(VegaSchema):
     """linkpathTransform schema wrapper
-    
+
     Mapping(required=[type])
     Computes a path definition for connecting nodes within a node-link network or tree diagram.
-    
+
     Attributes
     ----------
     type : enum('linkpath')
-    
+
     output : Mapping(required=[])
         Rename the output data fields
-    shape : oneOf(enum('line', 'curve', 'cornerX', 'cornerY', 'cornerR', 'diagonalX', 
+    shape : oneOf(enum('line', 'curve', 'cornerX', 'cornerY', 'cornerR', 'diagonalX',
     'diagonalY', 'diagonalR'), signal)
         The path shape to use
     sourceX : oneOf(string, signal)
@@ -633,7 +633,7 @@ class linkpathTransform(VegaSchema):
         The data field that references the target y-coordinate for this link.
     tension : oneOf(float, signal)
         A tension parameter for the "tightness" of "curve"-shaped links.
-    """
+"""
     _schema = {'$ref': '#/defs/linkpathTransform'}
     _rootschema = Root._schema
 
@@ -646,21 +646,21 @@ class linkpathTransform(VegaSchema):
 
 class facetTransform(VegaSchema):
     """facetTransform schema wrapper
-    
+
     Mapping(required=[type])
     A special aggregate transform that organizes a data set into groups or "facets".
-    
+
     Attributes
     ----------
     type : enum('facet')
-    
+
     groupby : List(oneOf(string, signal))
         A list of fields to split the data into groups.
     summarize : oneOf(Mapping(required=[]), List(Mapping(required=[field, ops])))
-    
+
     transform : transform
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/facetTransform'}
     _rootschema = Root._schema
 
@@ -672,17 +672,17 @@ class facetTransform(VegaSchema):
 
 class filterTransform(VegaSchema):
     """filterTransform schema wrapper
-    
+
     Mapping(required=[type, test])
     Filters elements from a data set to remove unwanted items.
-    
+
     Attributes
     ----------
     test : string
         A string containing an expression (in JavaScript syntax) for the filter predicate.
     type : enum('filter')
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/filterTransform'}
     _rootschema = Root._schema
 
@@ -692,19 +692,19 @@ class filterTransform(VegaSchema):
 
 class foldTransform(VegaSchema):
     """foldTransform schema wrapper
-    
+
     Mapping(required=[type, fields])
     Collapse ("fold") one or more data properties into two properties.
-    
+
     Attributes
     ----------
     fields : oneOf(List(oneOf(string, signal)), signal)
-    
+
     type : enum('fold')
-    
+
     output : Mapping(required=[])
         Rename the output data fields
-    """
+"""
     _schema = {'$ref': '#/defs/foldTransform'}
     _rootschema = Root._schema
 
@@ -714,20 +714,20 @@ class foldTransform(VegaSchema):
 
 class forceTransform(VegaSchema):
     """forceTransform schema wrapper
-    
+
     Mapping(required=[type, links])
     Performs force-directed layout for network data.
-    
+
     Attributes
     ----------
     links : string
         The name of the link (edge) data set.
     type : enum('force')
-    
+
     active : signal
         A signal representing the active node.
     alpha : oneOf(float, signal)
-        A "temperature" parameter that determines how much node positions are adjusted at 
+        A "temperature" parameter that determines how much node positions are adjusted at
         each step.
     charge : oneOf(float, string, signal)
         The strength of the charge each node exerts.
@@ -738,7 +738,7 @@ class forceTransform(VegaSchema):
     friction : oneOf(float, signal)
         The strength of the friction force used to stabilize the layout.
     gravity : oneOf(float, signal)
-        The strength of the pseudo-gravity force that pulls nodes towards the center of the 
+        The strength of the pseudo-gravity force that pulls nodes towards the center of the
         layout area.
     interactive : oneOf(boolean, signal)
         Enables an interactive force-directed layout.
@@ -753,9 +753,9 @@ class forceTransform(VegaSchema):
     size : oneOf(List(oneOf(float, signal)), signal)
         The dimensions [width, height] of this force layout.
     theta : oneOf(float, signal)
-        The theta parameter for the Barnes-Hut algorithm, which is used to compute charge 
+        The theta parameter for the Barnes-Hut algorithm, which is used to compute charge
         forces between nodes.
-    """
+"""
     _schema = {'$ref': '#/defs/forceTransform'}
     _rootschema = Root._schema
 
@@ -773,10 +773,10 @@ class forceTransform(VegaSchema):
 
 class formulaTransform(VegaSchema):
     """formulaTransform schema wrapper
-    
+
     Mapping(required=[type, field, expr])
     Extends data elements with new values according to a calculation formula.
-    
+
     Attributes
     ----------
     expr : string
@@ -784,8 +784,8 @@ class formulaTransform(VegaSchema):
     field : string
         The property name in which to store the computed formula value.
     type : enum('formula')
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/formulaTransform'}
     _rootschema = Root._schema
 
@@ -795,11 +795,11 @@ class formulaTransform(VegaSchema):
 
 class geoTransform(VegaSchema):
     """geoTransform schema wrapper
-    
+
     Mapping(required=[type, lon, lat])
-    Performs a cartographic projection. Given longitude and latitude values, sets corresponding 
+    Performs a cartographic projection. Given longitude and latitude values, sets corresponding
     x and y properties for a mark.
-    
+
     Attributes
     ----------
     lat : oneOf(string, signal)
@@ -807,7 +807,7 @@ class geoTransform(VegaSchema):
     lon : oneOf(string, signal)
         The input longitude values.
     type : enum('geo')
-    
+
     center : oneOf(List(oneOf(float, signal)), signal)
         The center of the projection.
     clipAngle : oneOf(float, signal)
@@ -826,7 +826,7 @@ class geoTransform(VegaSchema):
         The scale of the projection.
     translate : oneOf(List(oneOf(float, signal)), signal)
         The translation of the projection.
-    """
+"""
     _schema = {'$ref': '#/defs/geoTransform'}
     _rootschema = Root._schema
 
@@ -841,14 +841,14 @@ class geoTransform(VegaSchema):
 
 class geopathTransform(VegaSchema):
     """geopathTransform schema wrapper
-    
+
     Mapping(required=[type])
     Creates paths for geographic regions, such as countries, states and counties.
-    
+
     Attributes
     ----------
     type : enum('geopath')
-    
+
     center : oneOf(List(oneOf(float, signal)), signal)
         The center of the projection.
     clipAngle : oneOf(float, signal)
@@ -869,7 +869,7 @@ class geopathTransform(VegaSchema):
         The scale of the projection.
     translate : oneOf(List(oneOf(float, signal)), signal)
         The translation of the projection.
-    """
+"""
     _schema = {'$ref': '#/defs/geopathTransform'}
     _rootschema = Root._schema
 
@@ -884,13 +884,13 @@ class geopathTransform(VegaSchema):
 
 class hierarchyTransform(VegaSchema):
     """hierarchyTransform schema wrapper
-    
+
     Mapping(required=[type])
-    
+
     Attributes
     ----------
     type : enum('hierarchy')
-    
+
     children : oneOf(string, signal)
         The data field for the children node array
     field : oneOf(string, signal)
@@ -909,7 +909,7 @@ class hierarchyTransform(VegaSchema):
         The dimensions of the tree layout
     sort : oneOf(List(oneOf(string, signal)), signal)
         A list of fields to use as sort criteria for sibling nodes.
-    """
+"""
     _schema = {'$ref': '#/defs/hierarchyTransform'}
     _rootschema = Root._schema
 
@@ -923,10 +923,10 @@ class hierarchyTransform(VegaSchema):
 
 class imputeTransform(VegaSchema):
     """imputeTransform schema wrapper
-    
+
     Mapping(required=[type, groupby, orderby, field])
     Performs imputation of missing values.
-    
+
     Attributes
     ----------
     field : oneOf(string, signal)
@@ -936,12 +936,12 @@ class imputeTransform(VegaSchema):
     orderby : oneOf(List(oneOf(string, signal)), signal)
         A list of fields to determine ordering within series.
     type : enum('impute')
-    
+
     method : oneOf(enum('value', 'mean', 'median', 'min', 'max'), signal)
         The imputation method to use.
     value : oneOf(float, string, boolean, None, signal)
         The value to use for missing data if the method is 'value'.
-    """
+"""
     _schema = {'$ref': '#/defs/imputeTransform'}
     _rootschema = Root._schema
 
@@ -953,10 +953,10 @@ class imputeTransform(VegaSchema):
 
 class lookupTransform(VegaSchema):
     """lookupTransform schema wrapper
-    
+
     Mapping(required=[type, on, as, keys])
     Extends a data set by looking up values in another data set.
-    
+
     Attributes
     ----------
     keys : List(oneOf(string, signal))
@@ -964,17 +964,17 @@ class lookupTransform(VegaSchema):
     on : string
         The name of the secondary data set on which to lookup values.
     type : enum('lookup')
-    
+
     default : Mapping(required=[])
         The default value to use if a lookup match fails.
     onKey : oneOf(string, signal)
         The key field to lookup, or null for index-based lookup.
-    
+
     Dict-Only Attributes
     --------------------
     'as' : List(string)
         The names of the fields in which to store looked-up values.
-    """
+"""
     _schema = {'$ref': '#/defs/lookupTransform'}
     _rootschema = Root._schema
 
@@ -986,26 +986,26 @@ class lookupTransform(VegaSchema):
 
 class pieTransform(VegaSchema):
     """pieTransform schema wrapper
-    
+
     Mapping(required=[type])
     Computes a pie chart layout.
-    
+
     Attributes
     ----------
     type : enum('pie')
-    
+
     endAngle : oneOf(float, signal)
-    
+
     field : oneOf(string, signal)
-        The data values to encode as angular spans. If this property is omitted, all pie 
+        The data values to encode as angular spans. If this property is omitted, all pie
         slices will have equal spans.
     output : Mapping(required=[])
         Rename the output data fields
     sort : oneOf(boolean, signal)
          If true, will sort the data prior to computing angles.
     startAngle : oneOf(float, signal)
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/pieTransform'}
     _rootschema = Root._schema
 
@@ -1017,22 +1017,22 @@ class pieTransform(VegaSchema):
 
 class rankTransform(VegaSchema):
     """rankTransform schema wrapper
-    
+
     Mapping(required=[type])
     Computes ascending rank scores for data tuples.
-    
+
     Attributes
     ----------
     type : enum('rank')
-    
+
     field : oneOf(string, signal)
-        A key field to used to rank tuples. If undefined, tuples will be ranked in their 
+        A key field to used to rank tuples. If undefined, tuples will be ranked in their
         observed order.
     normalize : oneOf(boolean, signal)
         If true, values of the output field will lie in the range [0, 1].
     output : Mapping(required=[])
         Rename the output data fields
-    """
+"""
     _schema = {'$ref': '#/defs/rankTransform'}
     _rootschema = Root._schema
 
@@ -1043,17 +1043,17 @@ class rankTransform(VegaSchema):
 
 class sortTransform(VegaSchema):
     """sortTransform schema wrapper
-    
+
     Mapping(required=[type, by])
     Sorts the values of a data set.
-    
+
     Attributes
     ----------
     by : oneOf(string, List(string))
         A list of fields to use as sort criteria.
     type : enum('sort')
-    
-    """
+
+"""
     _schema = {'$ref': '#/defs/sortTransform'}
     _rootschema = Root._schema
 
@@ -1063,10 +1063,10 @@ class sortTransform(VegaSchema):
 
 class stackTransform(VegaSchema):
     """stackTransform schema wrapper
-    
+
     Mapping(required=[type, groupby, field])
     Computes layout values for stacked graphs, as in stacked bar charts or stream graphs.
-    
+
     Attributes
     ----------
     field : oneOf(string, signal)
@@ -1074,14 +1074,14 @@ class stackTransform(VegaSchema):
     groupby : oneOf(List(oneOf(string, signal)), signal)
         A list of fields to split the data into groups (stacks).
     type : enum('stack')
-    
+
     offset : oneOf(enum('zero', 'center', 'normalize'), signal)
         The baseline offset
     output : Mapping(required=[])
         Rename the output data fields
     sortby : oneOf(List(oneOf(string, signal)), signal)
         A list of fields to determine the sort order of stacks.
-    """
+"""
     _schema = {'$ref': '#/defs/stackTransform'}
     _rootschema = Root._schema
 
@@ -1093,18 +1093,18 @@ class stackTransform(VegaSchema):
 
 class treeifyTransform(VegaSchema):
     """treeifyTransform schema wrapper
-    
+
     Mapping(required=[type, groupby])
-    
+
     Attributes
     ----------
     groupby : oneOf(List(oneOf(string, signal)), signal)
         An ordered list of fields by which to group tuples into a tree.
     type : enum('treeify')
-    
+
     output : Mapping(required=[])
         Rename the output data fields
-    """
+"""
     _schema = {'$ref': '#/defs/treeifyTransform'}
     _rootschema = Root._schema
 
@@ -1114,13 +1114,13 @@ class treeifyTransform(VegaSchema):
 
 class treemapTransform(VegaSchema):
     """treemapTransform schema wrapper
-    
+
     Mapping(required=[type])
-    
+
     Attributes
     ----------
     type : enum('treemap')
-    
+
     children : oneOf(string, signal)
         The data field for the children node array
     field : oneOf(string, signal)
@@ -1143,7 +1143,7 @@ class treemapTransform(VegaSchema):
         A list of fields to use as sort criteria for sibling nodes.
     sticky : oneOf(boolean, signal)
         If true, repeated runs of the treemap will use cached partition boundaries.
-    """
+"""
     _schema = {'$ref': '#/defs/treemapTransform'}
     _rootschema = Root._schema
 
@@ -1158,13 +1158,13 @@ class treemapTransform(VegaSchema):
 
 class voronoiTransform(VegaSchema):
     """voronoiTransform schema wrapper
-    
+
     Mapping(required=[type])
-    
+
     Attributes
     ----------
     type : enum('voronoi')
-    
+
     clipExtent : oneOf(List(oneOf(List(oneOf(float, signal)), signal)), signal)
         The min and max points at which to clip the voronoi diagram.
     output : Mapping(required=[])
@@ -1173,7 +1173,7 @@ class voronoiTransform(VegaSchema):
         The input x coordinates.
     y : oneOf(string, signal)
         The input y coordinates.
-    """
+"""
     _schema = {'$ref': '#/defs/voronoiTransform'}
     _rootschema = Root._schema
 
@@ -1185,13 +1185,13 @@ class voronoiTransform(VegaSchema):
 
 class wordcloudTransform(VegaSchema):
     """wordcloudTransform schema wrapper
-    
+
     Mapping(required=[type])
-    
+
     Attributes
     ----------
     type : enum('wordcloud')
-    
+
     font : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])), signal)
         The font face to use for a word.
     fontScale : oneOf(None, List(oneOf(float, signal)))
@@ -1199,28 +1199,28 @@ class wordcloudTransform(VegaSchema):
     fontSize : oneOf(float, oneOf(Mapping(required=[field]), Mapping(required=[value])), string,
      signal)
         The font size to use for a word.
-    fontStyle : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])), 
+    fontStyle : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])),
     signal)
         The font style to use for a word.
-    fontWeight : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])), 
+    fontWeight : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])),
     signal)
         The font weight to use for a word.
     output : Mapping(required=[])
         Rename the output data fields
     padding : oneOf(float, oneOf(Mapping(required=[field]), Mapping(required=[value])), signal)
         The padding around each word.
-    rotate : oneOf(float, string, oneOf(Mapping(required=[field]), Mapping(required=[value])), 
+    rotate : oneOf(float, string, oneOf(Mapping(required=[field]), Mapping(required=[value])),
     signal)
         The field or number to set the roration angle (in degrees).
     size : oneOf(List(oneOf(float, signal)), signal)
         The dimensions of the wordcloud layout
-    spiral : oneOf(enum('archimedean', 'rectangular'), oneOf(Mapping(required=[field]), 
+    spiral : oneOf(enum('archimedean', 'rectangular'), oneOf(Mapping(required=[field]),
     Mapping(required=[value])), signal)
-        The type of spiral used for positioning words, either 'archimedean' or 
+        The type of spiral used for positioning words, either 'archimedean' or
         'rectangular'.
     text : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])), signal)
         The field containing the text to use for each word.
-    """
+"""
     _schema = {'$ref': '#/defs/wordcloudTransform'}
     _rootschema = Root._schema
 
@@ -1236,13 +1236,13 @@ class wordcloudTransform(VegaSchema):
 
 class transform(VegaSchema):
     """transform schema wrapper
-    
-    List(oneOf(aggregateTransform, binTransform, crossTransform, countpatternTransform, 
-    linkpathTransform, facetTransform, filterTransform, foldTransform, forceTransform, 
-    formulaTransform, geoTransform, geopathTransform, hierarchyTransform, imputeTransform, 
-    lookupTransform, pieTransform, rankTransform, sortTransform, stackTransform, 
+
+    List(oneOf(aggregateTransform, binTransform, crossTransform, countpatternTransform,
+    linkpathTransform, facetTransform, filterTransform, foldTransform, forceTransform,
+    formulaTransform, geoTransform, geopathTransform, hierarchyTransform, imputeTransform,
+    lookupTransform, pieTransform, rankTransform, sortTransform, stackTransform,
     treeifyTransform, treemapTransform, voronoiTransform, wordcloudTransform))
-    """
+"""
     _schema = {'$ref': '#/defs/transform'}
     _rootschema = Root._schema
 
@@ -1252,10 +1252,10 @@ class transform(VegaSchema):
 
 class scale(VegaSchema):
     """scale schema wrapper
-    
-    allOf(Mapping(required=[name]), oneOf(Mapping(required=[type]), Mapping(required=[type]), 
+
+    allOf(Mapping(required=[name]), oneOf(Mapping(required=[type]), Mapping(required=[type]),
     anyOf(Mapping(required=[]), Mapping(required=[type]))))
-    """
+"""
     _schema = {'$ref': '#/defs/scale'}
     _rootschema = Root._schema
 
@@ -1269,10 +1269,10 @@ class scale(VegaSchema):
 
 class operand(VegaSchema):
     """operand schema wrapper
-    
-    oneOf(Mapping(required=[value]), Mapping(required=[arg]), signal, 
+
+    oneOf(Mapping(required=[value]), Mapping(required=[arg]), signal,
     Mapping(required=[predicate]))
-    """
+"""
     _schema = {'$ref': '#/refs/operand'}
     _rootschema = Root._schema
 
@@ -1282,10 +1282,10 @@ class operand(VegaSchema):
 
 class field(VegaSchema):
     """field schema wrapper
-    
-    oneOf(string, oneOf(signal, Mapping(required=[datum]), Mapping(required=[group]), 
+
+    oneOf(string, oneOf(signal, Mapping(required=[datum]), Mapping(required=[group]),
     Mapping(required=[parent])))
-    """
+"""
     _schema = {'$ref': '#/refs/field'}
     _rootschema = Root._schema
 
@@ -1295,9 +1295,9 @@ class field(VegaSchema):
 
 class scale(VegaSchema):
     """scale schema wrapper
-    
+
     oneOf(field, Mapping(required=[name]))
-    """
+"""
     _schema = {'$ref': '#/refs/scale'}
     _rootschema = Root._schema
 
@@ -1307,14 +1307,14 @@ class scale(VegaSchema):
 
 class stringModifiers(VegaSchema):
     """stringModifiers schema wrapper
-    
+
     Mapping(required=[])
-    
+
     Attributes
     ----------
     scale : scale
-    
-    """
+
+"""
     _schema = {'$ref': '#/refs/stringModifiers'}
     _rootschema = Root._schema
 
@@ -1324,18 +1324,18 @@ class stringModifiers(VegaSchema):
 
 class numberModifiers(VegaSchema):
     """numberModifiers schema wrapper
-    
+
     Mapping(required=[])
-    
+
     Attributes
     ----------
     mult : float
-    
+
     offset : float
-    
+
     scale : scale
-    
-    """
+
+"""
     _schema = {'$ref': '#/refs/numberModifiers'}
     _rootschema = Root._schema
 
@@ -1345,12 +1345,12 @@ class numberModifiers(VegaSchema):
 
 class value(VegaSchema):
     """value schema wrapper
-    
-    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))), 
-    allOf(stringModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
+
+    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))),
+    allOf(stringModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[band]))))
-    """
+"""
     _schema = {'$ref': '#/refs/value'}
     _rootschema = Root._schema
 
@@ -1360,12 +1360,12 @@ class value(VegaSchema):
 
 class numberValue(VegaSchema):
     """numberValue schema wrapper
-    
-    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(numberModifiers, oneOf(signal, 
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))), 
-    allOf(numberModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
+
+    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(numberModifiers, oneOf(signal,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))),
+    allOf(numberModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[band]))))
-    """
+"""
     _schema = {'$ref': '#/refs/numberValue'}
     _rootschema = Root._schema
 
@@ -1375,13 +1375,13 @@ class numberValue(VegaSchema):
 
 class stringValue(VegaSchema):
     """stringValue schema wrapper
-    
-    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]), 
-    Mapping(required=[template]))))), allOf(stringModifiers, oneOf(signal, 
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]), 
+
+    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]),
+    Mapping(required=[template]))))), allOf(stringModifiers, oneOf(signal,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]),
     Mapping(required=[template]))))
-    """
+"""
     _schema = {'$ref': '#/refs/stringValue'}
     _rootschema = Root._schema
 
@@ -1391,12 +1391,12 @@ class stringValue(VegaSchema):
 
 class booleanValue(VegaSchema):
     """booleanValue schema wrapper
-    
-    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))), 
-    allOf(stringModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
+
+    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))),
+    allOf(stringModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[band]))))
-    """
+"""
     _schema = {'$ref': '#/refs/booleanValue'}
     _rootschema = Root._schema
 
@@ -1406,12 +1406,12 @@ class booleanValue(VegaSchema):
 
 class arrayValue(VegaSchema):
     """arrayValue schema wrapper
-    
-    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal, 
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))), 
-    allOf(stringModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]), 
+
+    oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers, oneOf(signal,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[band]))))),
+    allOf(stringModifiers, oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[band]))))
-    """
+"""
     _schema = {'$ref': '#/refs/arrayValue'}
     _rootschema = Root._schema
 
@@ -1421,10 +1421,10 @@ class arrayValue(VegaSchema):
 
 class colorValue(VegaSchema):
     """colorValue schema wrapper
-    
-    oneOf(stringValue, Mapping(required=[r, g, b]), Mapping(required=[h, s, l]), 
+
+    oneOf(stringValue, Mapping(required=[r, g, b]), Mapping(required=[h, s, l]),
     Mapping(required=[l, a, b]), Mapping(required=[h, c, l]))
-    """
+"""
     _schema = {'$ref': '#/refs/colorValue'}
     _rootschema = Root._schema
 
@@ -1434,14 +1434,14 @@ class colorValue(VegaSchema):
 
 class signal(VegaSchema):
     """signal schema wrapper
-    
+
     Mapping(required=[signal])
-    
+
     Attributes
     ----------
     signal : string
-    
-    """
+
+"""
     _schema = {'$ref': '#/refs/signal'}
     _rootschema = Root._schema
 
@@ -1451,9 +1451,9 @@ class signal(VegaSchema):
 
 class scopedScale(VegaSchema):
     """scopedScale schema wrapper
-    
+
     oneOf(string, Mapping(required=[name]))
-    """
+"""
     _schema = {'$ref': '#/refs/scopedScale'}
     _rootschema = Root._schema
 
@@ -1463,19 +1463,19 @@ class scopedScale(VegaSchema):
 
 class data(VegaSchema):
     """data schema wrapper
-    
+
     Mapping(required=[])
-    
+
     Attributes
     ----------
     data : oneOf(string, Mapping(required=[fields]))
-    
-    field : oneOf(string, List(string), Mapping(required=[parent]), 
+
+    field : oneOf(string, List(string), Mapping(required=[parent]),
     List(Mapping(required=[parent])))
-    
+
     sort : oneOf(boolean, Mapping(required=[]))
-    
-    """
+
+"""
     _schema = {'$ref': '#/refs/data'}
     _rootschema = Root._schema
 
