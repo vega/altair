@@ -9,7 +9,7 @@ import altair as alt
 from vega_datasets import data
 
 counties = alt.topo_feature(data.us_10m.url,'counties')
-unemp_data = alt.UrlData(data.unemployment.url)
+unemp_data = data.unemployment.url
 
 
 alt.Chart(counties).mark_geoshape().properties(
