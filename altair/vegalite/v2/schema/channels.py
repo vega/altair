@@ -115,9 +115,11 @@ class Color(core.MarkPropFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Color, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Color, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class ColorValue(core.MarkPropValueDefWithCondition):
@@ -237,9 +239,11 @@ class Column(core.FacetFieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Column, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Column, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Detail(core.FieldDef):
@@ -317,9 +321,11 @@ class Detail(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Detail, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Detail, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Fill(core.MarkPropFieldDefWithCondition):
@@ -427,9 +433,11 @@ class Fill(core.MarkPropFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Fill, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Fill, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class FillValue(core.MarkPropValueDefWithCondition):
@@ -557,9 +565,11 @@ class Href(core.FieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Href, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Href, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class HrefValue(core.ValueDefWithCondition):
@@ -675,9 +685,11 @@ class Key(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Key, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Key, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Latitude(core.FieldDef):
@@ -755,9 +767,11 @@ class Latitude(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Latitude, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Latitude, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Latitude2(core.FieldDef):
@@ -835,9 +849,11 @@ class Latitude2(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Latitude2, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Latitude2, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Longitude(core.FieldDef):
@@ -915,9 +931,11 @@ class Longitude(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Longitude, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Longitude, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Longitude2(core.FieldDef):
@@ -995,9 +1013,11 @@ class Longitude2(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Longitude2, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Longitude2, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Opacity(core.MarkPropFieldDefWithCondition):
@@ -1105,9 +1125,11 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Opacity, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Opacity, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class OpacityValue(core.MarkPropValueDefWithCondition):
@@ -1225,9 +1247,11 @@ class Order(core.OrderFieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Order, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Order, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Row(core.FacetFieldDef):
@@ -1308,9 +1332,11 @@ class Row(core.FacetFieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Row, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Row, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Shape(core.MarkPropFieldDefWithCondition):
@@ -1418,9 +1444,11 @@ class Shape(core.MarkPropFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Shape, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Shape, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class ShapeValue(core.MarkPropValueDefWithCondition):
@@ -1567,9 +1595,11 @@ class Size(core.MarkPropFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Size, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Size, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class SizeValue(core.MarkPropValueDefWithCondition):
@@ -1716,9 +1746,11 @@ class Stroke(core.MarkPropFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Stroke, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Stroke, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class StrokeValue(core.MarkPropValueDefWithCondition):
@@ -1849,9 +1881,11 @@ class Text(core.TextFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Text, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Text, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class TextValue(core.TextValueDefWithCondition):
@@ -1981,9 +2015,11 @@ class Tooltip(core.TextFieldDefWithCondition):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Tooltip, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Tooltip, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class TooltipValue(core.TextValueDefWithCondition):
@@ -2137,9 +2173,11 @@ class X(core.PositionFieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(X, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(X, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class XValue(core.ValueDef):
@@ -2250,9 +2288,11 @@ class X2(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(X2, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(X2, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class X2Value(core.ValueDef):
@@ -2401,9 +2441,11 @@ class Y(core.PositionFieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Y, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Y, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class YValue(core.ValueDef):
@@ -2514,9 +2556,11 @@ class Y2(core.FieldDef):
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
-        return super(Y2, self).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
+        return super(Y2, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
 
 
 class Y2Value(core.ValueDef):
