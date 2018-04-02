@@ -81,12 +81,11 @@ for Vega and Vega-Lite:
 * Vega 3.x: ``application/vnd.vega.v3+json``
 * Vega 2.x: ``application/vnd.vega.v2+json``
 
-The default renderers simply take a JSON spec and return a MIME bundle with one
-of these MIME types::
+The default renderers simply take a JSON spec and metadata and return a MIME
+bundle with oneof these MIME types::
 
-    def default_renderer(spec):
-        bundle = {}
-        metadata = {}
+    def default_renderer(spec, metadata):
+        bundle = {}renderer
         bundle['text/plain'] = '<VegaLite object>`
         bundle[mime_type] = 'application/vnd.vegalite.v2+json'
         return bundle, metadata
@@ -94,7 +93,7 @@ of these MIME types::
 If a renderer needs to do custom display logic that doesn't use Jupyter's display
 system, it can return an empty MIME bundle ``dict``::
 
-    def non_jupyter_renderer(spec):
+    def non_jupyter_renderer(spec, metadata):
         # Custom display logic that uses the spec
         ...
         # Return empty MIME bundle

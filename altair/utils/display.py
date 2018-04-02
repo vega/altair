@@ -47,12 +47,12 @@ class Displayable(object):
     def _repr_mimebundle_(self, include, exclude):
         """Return a MIME bundle for display in Jupyter frontends."""
         if self.renderers is not None:
-            return self.renderers.get()(self.spec)
+            return self.renderers.get()(self.spec, {})
         else:
             return {}
 
 
-def default_renderer(spec, mime_type, str_repr):
+def default_renderer_base(spec, mime_type, str_repr, metadata):
     """A default renderer for VegaLite 1/2 that works for modern frontends.
 
     This renderer works with modern frontends (JupyterLab, nteract) that know
@@ -60,20 +60,18 @@ def default_renderer(spec, mime_type, str_repr):
     """
     assert isinstance(spec, dict)
     bundle = {}
-    metadata = {}
     bundle['text/plain'] = str_repr
     bundle[mime_type] = spec
     return bundle, metadata
 
 
-def json_renderer(spec, str_repr):
+def json_renderer_base(spec, str_repr, metadata):
     """A renderer that returns a MIME type of application/json.
-    
+
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
     assert isinstance(spec, dict)
     bundle = {}
-    metadata = {}
     bundle['text/plain'] = str_repr
     bundle['application/json'] = spec
     return bundle, metadata

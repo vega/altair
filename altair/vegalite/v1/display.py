@@ -6,8 +6,7 @@ from IPython.display import display
 
 from ...utils import PluginRegistry, headless, html
 from ..display import Displayable
-from ..display import default_renderer as default_renderer_base
-from ..display import json_renderer as json_renderer_base
+from ..display import default_renderer_base, json_renderer_base
 from ..display import SpecType, MimeBundleType, RendererType
 from . import api
 
@@ -50,35 +49,40 @@ renderers.entrypoint_err_messages = {
 here = os.path.dirname(os.path.realpath(__file__))
 
 
-def default_renderer(spec):
-    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY)
+def default_renderer(spec, metadata):
+    return default_renderer_base(spec, mime_type=VEGALITE_MIME_TYPE,
+                                 str_repr=DEFAULT_DISPLAY, metadata=metadata)
 
 
-def json_renderer(spec):
-    return json_renderer_base(spec, DEFAULT_DISPLAY)
+def json_renderer(spec, metadata):
+    return json_renderer_base(spec, str_repr=DEFAULT_DISPLAY, metadata=metadata)
 
 
-def png_renderer(spec):
-    return headless.spec_to_image_mimebundle(spec, format='png',
-                                             mode='vega-lite',
-                                             vega_version=api.VEGA_VERSION,
-                                             vegaembed_version=api.VEGAEMBED_VERSION,
-                                             vegalite_version=api.VEGALITE_VERSION)
+def png_renderer(spec, metadata):
+    bundle = headless.spec_to_image_mimebundle(spec, format='png',
+                                               mode='vega-lite',
+                                               vega_version=api.VEGA_VERSION,
+                                               vegaembed_version=api.VEGAEMBED_VERSION,
+                                               vegalite_version=api.VEGALITE_VERSION)
+    return bundle, metadata
 
 
-def svg_renderer(spec):
-    return headless.spec_to_image_mimebundle(spec, format='svg',
-                                             mode='vega-lite',
-                                             vega_version=api.VEGA_VERSION,
-                                             vegaembed_version=api.VEGAEMBED_VERSION,
-                                             vegalite_version=api.VEGALITE_VERSION)
+def svg_renderer(spec, metadata):
+    bundle = headless.spec_to_image_mimebundle(spec, format='svg',
+                                               mode='vega-lite',
+                                               vega_version=api.VEGA_VERSION,
+                                               vegaembed_version=api.VEGAEMBED_VERSION,
+                                               vegalite_version=api.VEGALITE_VERSION)
+    return bundle, metadata
 
 
-def colab_renderer(spec):
-    return html.spec_to_html_mimebundle(spec, mode='vega-lite',
-                                        vega_version=api.VEGA_VERSION,
-                                        vegaembed_version=api.VEGAEMBED_VERSION,
-                                        vegalite_version=api.VEGALITE_VERSION)
+def colab_renderer(spec, metadata):
+    bundle = html.spec_to_html_mimebundle(spec,
+                                          mode='vega-lite',
+                                          vega_version=api.VEGA_VERSION,
+                                          vegaembed_version=api.VEGAEMBED_VERSION,
+                                          vegalite_version=api.VEGALITE_VERSION)
+    return bundle, metadata
 
 
 renderers.register('default', default_renderer)

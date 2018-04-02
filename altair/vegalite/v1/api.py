@@ -238,7 +238,7 @@ class TopLevelMixin(object):
             utils.display_traceback(in_ipython=True)
             return {}
         else:
-            return renderers.get()(dct)
+            return renderers.get()(dct, {})
 
 
 class Chart(TopLevelMixin, core.ExtendedUnitSpec):
