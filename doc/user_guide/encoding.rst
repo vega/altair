@@ -98,7 +98,7 @@ Order Channels:
 =======  ================  ============================================  =================
 Channel  Altair Class      Description                                   Example
 =======  ================  ============================================  =================
-order    :class:`Order`    --
+order    :class:`Order`    Sets the order of the marks
 =======  ================  ============================================  =================
 
 Facet Channels:
@@ -350,3 +350,81 @@ Shorthand            Equivalent long-form
 ``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
 ``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
 ===================  =======================================================
+
+
+.. _ordering-channels:
+
+Ordering marks
+~~~~~~~~~~~~~~
+
+The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.
+
+For stacked marks, this controls the order of components of the stack. Here, the elements of each bar are sorted alphabetically by the name of the nominal data in the color channel.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    alt.Chart(barley).mark_bar().encode(
+        x='variety:N',
+        y='sum(yield):Q',
+        color='site:N',
+        order=alt.Order("site", sort="ascending")
+    )
+
+The order can be reversed by changing the sort option to `descending`.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    alt.Chart(barley).mark_bar().encode(
+        x='variety:N',
+        y='sum(yield):Q',
+        color='site:N',
+        order=alt.Order("site", sort="descending")
+    )
+
+The same approach works for other mark types, like stacked areas charts.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    alt.Chart(barley).mark_area().encode(
+        x='variety:N',
+        y='sum(yield):Q',
+        color='site:N',
+        order=alt.Order("site", sort="ascending")
+    )
+
+For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatterplot that draws lines between the dots using a different field than the x and y axes.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    driving = data.driving()
+
+    points = alt.Chart(driving).mark_circle().encode(
+        alt.X('miles', scale=alt.Scale(zero=False)),
+        alt.Y('gas', scale=alt.Scale(zero=False))
+    )
+
+    lines = alt.Chart(driving).mark_line().encode(
+        alt.X('miles', scale=alt.Scale(zero=False)),
+        alt.Y('gas', scale=alt.Scale(zero=False)),
+        order='year'
+    )
+
+    points + lines
