@@ -117,7 +117,7 @@ def test_selection_to_dict():
 
     # test some value selections
     # Note: X and Y cannot have conditions
-    chart_values = alt.Chart('path/to/data.json').mark_point().encode(
+    alt.Chart('path/to/data.json').mark_point().encode(
         color=alt.condition(brush, alt.ColorValue('red'), alt.ColorValue('blue')),
         opacity=alt.condition(brush, alt.value(0.5), alt.value(1.0)),
         text=alt.condition(brush, alt.TextValue('foo'), alt.value('bar'))
@@ -126,7 +126,7 @@ def test_selection_to_dict():
     # test some field selections
     # Note: X and Y cannot have conditions
     # Conditions cannot both be fields
-    chart_fields = alt.Chart('path/to/data.json').mark_point().encode(
+    alt.Chart('path/to/data.json').mark_point().encode(
         color=alt.condition(brush, alt.Color('col1:N'), alt.value('blue')),
         opacity=alt.condition(brush, 'col1:N', alt.value(0.5)),
         text=alt.condition(brush, alt.value('abc'), alt.Text('col2:N')),

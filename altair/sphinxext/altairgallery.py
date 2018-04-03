@@ -178,7 +178,6 @@ class AltairMiniGalleryDirective(Directive):
         app = env.app
 
         gallery_dir = app.builder.config.altair_gallery_dir
-        gallery_ref = app.builder.config.altair_gallery_ref
 
         examples = populate_examples()
 

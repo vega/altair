@@ -21,4 +21,4 @@ def test_examples(filename):
     if chart is None:
         raise ValueError("Example file should define chart in its final "
                          "statement.")
-    dct = chart.to_dict()
+    chart.to_dict()
