@@ -28,7 +28,7 @@ TYPECODE_MAP = {'ordinal': 'O',
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
 
-def infer_vegalite_type(data, field=None):
+def infer_vegalite_type(data):
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
@@ -36,14 +36,7 @@ def infer_vegalite_type(data, field=None):
     Parameters
     ----------
     data: Numpy array or Pandas Series
-    field: str column name
     """
-    # See if we can read the type from the field
-    if field is not None:
-        parsed = parse_shorthand(field)
-        if parsed.get('type'):
-            return parsed['type']
-
     # Otherwise, infer based on the dtype of the input
     typ = infer_dtype(data)
 
@@ -210,13 +203,13 @@ def parse_shorthand(shorthand, data=None):
     {'field': 'name'}
 
     >>> parse_shorthand('average(col)')
-    {'field': 'col', 'aggregate': 'average'}
+    {'aggregate': 'average', 'field': 'col'}
 
     >>> parse_shorthand('foo:O')
     {'field': 'foo', 'type': 'ordinal'}
 
     >>> parse_shorthand('min(foo):Q')
-    {'field': 'foo', 'aggregate': 'min', 'type': 'ordinal'}
+    {'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'}
 
     >>> parse_shorthand('foo', data)
     {'field': 'foo', 'type': 'nominal'}
@@ -231,7 +224,7 @@ def parse_shorthand(shorthand, data=None):
     {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
 
     >>> parse_shorthand('count()', data)
-    {'aggregate': 'count', 'bar', 'type': 'quantitative'}
+    {'aggregate': 'count', 'type': 'quantitative'}
     """
     attrs = _parse_shorthand(shorthand)
     if isinstance(data, pd.DataFrame) and 'type' not in attrs:

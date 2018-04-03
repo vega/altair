@@ -1,5 +1,4 @@
 import json
-import os
 import pkgutil
 from typing import Callable, Dict, Union
 
@@ -68,7 +67,7 @@ def default_renderer(spec, mime_type, str_repr):
 
 def json_renderer(spec, str_repr):
     """A renderer that returns a MIME type of application/json.
-    
+
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
     assert isinstance(spec, dict)

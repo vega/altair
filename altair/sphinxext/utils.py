@@ -139,7 +139,7 @@ def get_docstring_and_rest(filename):
     except AttributeError:
         # this block can be removed when python 3.6 support is dropped
         if node.body and isinstance(node.body[0], ast.Expr) and \
-           isinstance(node.body[0].value, ast.Str):
+                         isinstance(node.body[0].value, ast.Str):
             docstring_node = node.body[0]
             docstring = docstring_node.value.s
             # python2.7: Code was read in bytes needs decoding to utf-8
