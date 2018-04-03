@@ -2,8 +2,6 @@ from __future__ import division
 
 import operator
 
-import pytest
-
 from ... import expr
 from .. import datum
 

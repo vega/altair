@@ -1,4 +1,3 @@
-import warnings
 from ..utils import SchemaBase
 
 

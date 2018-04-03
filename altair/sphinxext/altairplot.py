@@ -65,8 +65,6 @@ from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag, unchanged
 
 from sphinx.locale import _
-from sphinx import addnodes, directives
-from sphinx.util.nodes import set_source_info
 
 import altair as alt
 from altair.utils.execeval import eval_block
