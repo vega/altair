@@ -346,11 +346,11 @@ color_scale = alt.Scale(
             range=["#c30d24", "#f3a583", "#cccccc", "#94c6da", "#1770ab"]
         )
 
-y_axis = alt.Axis(title = 'Question',
-                  offset = 5,
-                  ticks = False,
-                  minExtent = 60,
-                  domain = False)
+y_axis = alt.Axis(title='Question',
+                  offset=5,
+                  ticks=False,
+                  minExtent=60,
+                  domain=False)
 
 source = alt.pd.DataFrame(data)
 
@@ -361,6 +361,6 @@ alt.Chart(source).mark_bar().encode(
     color=alt.Color(
         'type:N',
         legend=alt.Legend( title='Response'),
-        scale = color_scale,
+        scale=color_scale,
     )
 )

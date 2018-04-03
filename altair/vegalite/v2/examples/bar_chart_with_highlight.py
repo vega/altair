@@ -14,14 +14,14 @@ data = pd.DataFrame({"Day": range(1, 16),
 data2 = pd.DataFrame([{"ThresholdValue": 300, "Threshold": "hazardous"}])
 
 bar1 = alt.Chart(data).mark_bar().encode(
-    x = 'Day:O',
-    y = 'Value:Q'
+    x='Day:O',
+    y='Value:Q'
 )
 
-bar2 = alt.Chart(data).mark_bar(color = "#e45755").encode(
-    x = 'Day:O',
-    y = 'baseline:Q',
-    y2 = 'Value:Q'
+bar2 = alt.Chart(data).mark_bar(color="#e45755").encode(
+    x='Day:O',
+    y='baseline:Q',
+    y2='Value:Q'
 ).transform_filter(
     "datum.Value >= 300"
 ).transform_calculate(

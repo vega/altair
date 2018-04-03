@@ -24,7 +24,7 @@ alt.Chart(states).mark_geoshape().properties(
     lookup='id',
     from_=alt.LookupData(pop_eng_hur, 'id', variable_list)
 ).repeat(
-    row = variable_list
+    row=variable_list
 ).resolve_scale(
     color='independent'
 )

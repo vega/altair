@@ -15,7 +15,7 @@ alt.Chart(source).mark_circle(
     stroke='black',
     strokeWidth=1
 ).encode(
-    alt.X('Year:O', axis = alt.Axis(labelAngle = 0)),
+    alt.X('Year:O', axis=alt.Axis(labelAngle=0)),
     alt.Y('Entity:N'),
     alt.Size('Deaths:Q',
         scale=alt.Scale(range=[0, 5000]),

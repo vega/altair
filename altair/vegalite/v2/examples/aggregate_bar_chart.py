@@ -12,8 +12,8 @@ from vega_datasets import data
 pop = data.population.url
 
 alt.Chart(pop).mark_bar().encode(
-    x = alt.X('sum(people):Q', axis=alt.Axis(title='population')),
-    y = 'age:O'
+    x=alt.X('sum(people):Q', axis=alt.Axis(title='population')),
+    y='age:O'
 ).properties(
     height=300,
     width=300
