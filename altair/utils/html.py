@@ -1,8 +1,6 @@
 import json
 
 
-
-
 HTML_TEMPLATE = {
 'vega-lite': """
 <!DOCTYPE html>
@@ -32,11 +30,11 @@ HTML_TEMPLATE = {
       .catch(function(error){{
         var outputDiv = document.getElementById('{output_div}');
         outputDiv.innerHTML = ('<div class="error">'
-                               + '<p>Javascript Error: ' + error.message + '</p>'
+                               + '<p>JavaScript Error: ' + error.message + '</p>'
                                + "<p>This usually means there's a typo in your chart specification. "
-                               + "See the javascript console for the full traceback</p>"
+                               + "See the javascript console for the full traceback.</p>"
                                + '</div>');
-        console.error(error);
+        throw error;
       }});
   </script>
 </body>
