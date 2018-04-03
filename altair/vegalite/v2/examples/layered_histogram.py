@@ -10,14 +10,14 @@ import numpy as np
 np.random.seed(42)
 
 # Generating Data
-df = pd.DataFrame({'Trial A':np.random.normal(0, 0.8, 1000),
-                   'Trial B':np.random.normal(-2, 1, 1000),
-                   'Trial C':np.random.normal(3, 2, 1000)})
+df = pd.DataFrame({'Trial A': np.random.normal(0, 0.8, 1000),
+                   'Trial B': np.random.normal(-2, 1, 1000),
+                   'Trial C': np.random.normal(3, 2, 1000)})
 
 # Tidying Data
 df = pd.melt(df, id_vars=df.index.name,
              value_vars=df.columns,
-             var_name = 'Experiment',
+             var_name='Experiment',
              value_name='Measurement')
 
 alt.Chart(df).mark_area(

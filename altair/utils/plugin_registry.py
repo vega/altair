@@ -44,7 +44,7 @@ class PluginRegistry(Generic[PluginType]):
         self._plugins = {}      # type: dict
         self._options = {}      # type: dict
 
-    def register(self, name: str, value: Union[PluginType,None]) -> PluginType:
+    def register(self, name: str, value: Union[PluginType, None]) -> PluginType:
         """Register a plugin by name and value.
 
         This method is used for explicit registration of a plugin and shouldn't be

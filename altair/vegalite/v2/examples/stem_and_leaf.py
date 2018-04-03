@@ -10,7 +10,7 @@ import numpy as np
 np.random.seed(42)
 
 # Generating random data
-original_data = pd.DataFrame({'samples':np.array(np.random.normal(50, 15, 100), dtype=np.int)})
+original_data = pd.DataFrame({'samples': np.array(np.random.normal(50, 15, 100), dtype=np.int)})
 
 # Splitting steam and leaf
 original_data['stem'] = original_data['samples'].apply(lambda x: str(x)[:-1])
@@ -33,7 +33,7 @@ alt.Chart(original_data).mark_text(
     dx=-5
 ).encode(
     alt.X('position:Q',
-        axis=alt.Axis(title='', ticks=False,labels=False,grid=False)
+        axis=alt.Axis(title='', ticks=False, labels=False, grid=False)
     ),
     alt.Y('stem:N', axis=alt.Axis(title='', tickSize=0)),
     text = 'leaf:N'

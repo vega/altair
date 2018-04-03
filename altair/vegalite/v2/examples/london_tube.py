@@ -10,8 +10,8 @@ https://vega.github.io/vega-lite/examples/geo_layer_line_london.html.
 import altair as alt
 from vega_datasets import data
 
-boroughs = alt.topo_feature(data.londonBoroughs.url,'boroughs')
-tubelines = alt.topo_feature(data.londonTubeLines.url,'line')
+boroughs = alt.topo_feature(data.londonBoroughs.url, 'boroughs')
+tubelines = alt.topo_feature(data.londonTubeLines.url, 'line')
 centroids = data.londonCentroids.url
 
 background = alt.Chart(boroughs).mark_geoshape(

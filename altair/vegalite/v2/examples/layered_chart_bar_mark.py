@@ -10,7 +10,7 @@ import pandas as pd
 data = pd.DataFrame({
     'project': ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     'score': [25, 57, 23, 19, 8, 47, 8],
-    'goal': [25, 47, 30, 27, 38, 19,4]}
+    'goal': [25, 47, 30, 27, 38, 19, 4]}
 )
 
 a = alt.Chart().mark_bar().encode(

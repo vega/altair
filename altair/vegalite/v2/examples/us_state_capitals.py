@@ -9,7 +9,7 @@ overlayed on a map.
 import altair as alt
 from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m.url,'states')
+states = alt.topo_feature(data.us_10m.url, 'states')
 capitals = data.us_state_capitals.url
 
 # US states background
