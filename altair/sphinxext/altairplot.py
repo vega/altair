@@ -156,7 +156,7 @@ class AltairPlotDirective(Directive):
             source_literal = nodes.literal_block(code, code)
             source_literal['language'] = 'python'
 
-        #get the name of the source file we are currently processing
+        # get the name of the source file we are currently processing
         rst_source = self.state_machine.document['source']
         rst_dir = os.path.dirname(rst_source)
         rst_filename = os.path.basename(rst_source)

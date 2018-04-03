@@ -9,7 +9,7 @@ from toolz.curried import curry, pipe
 from ..utils.core import sanitize_dataframe
 
 
-#==============================================================================
+# ==============================================================================
 # Data model transformers
 #
 # A data model transformer is a pure function that takes a dict or DataFrame
@@ -25,7 +25,7 @@ from ..utils.core import sanitize_dataframe
 # A data model transformer has the following type signature:
 # DataModelType = Union[dict, pd.DataFrame]
 # DataModelTransformerType = Callable[[DataModelType, KwArgs], DataModelType]
-#==============================================================================
+# ==============================================================================
 
 
 class MaxRowsError(Exception):
@@ -117,9 +117,9 @@ def default_data_transformer(data):
     return pipe(data, limit_rows, to_values)
 
 
-#==============================================================================
+# ==============================================================================
 # Private utilities
-#==============================================================================
+# ==============================================================================
 
 
 def _check_data_type(data):

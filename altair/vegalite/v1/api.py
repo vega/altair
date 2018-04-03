@@ -30,20 +30,20 @@ def _get_channels_mapping():
     return mapping
 
 
-#*************************************************************************
+# *************************************************************************
 # Formula wrapper
 # - makes field a required first argument of initialization
 # - allows expr trait to be an Expression and processes it properly
-#*************************************************************************
+# *************************************************************************
 
 class Formula(core.Formula):
     def __init__(self, field, expr=Undefined, **kwargs):
         super(Formula, self).__init__(field=field, expr=expr, **kwargs)
 
 
-#*************************************************************************
+# *************************************************************************
 # Top-level Objects
-#*************************************************************************
+# *************************************************************************
 
 class TopLevelMixin(object):
     _default_spec_values = {"width": 400, "height": 300}

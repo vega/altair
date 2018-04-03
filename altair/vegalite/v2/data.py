@@ -3,9 +3,9 @@ from ..data import (MaxRowsError, curry, default_data_transformer, limit_rows,
                     pipe, sample, to_csv, to_json, to_values)
 
 
-#==============================================================================
+# ==============================================================================
 # VegaLite 1 data transformers
-#==============================================================================
+# ==============================================================================
 
 
 ENTRY_POINT_GROUP = 'altair.vegalite.v2.data_transformer'  # type: str

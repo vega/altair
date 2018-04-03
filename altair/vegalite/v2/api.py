@@ -14,7 +14,7 @@ VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
 VEGA_VERSION = '3.2'
 VEGAEMBED_VERSION = '3.0'
 
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Data Utilities
 def _prepare_data(data):
     """Convert input data to data for use within schema"""
@@ -32,7 +32,7 @@ def _prepare_data(data):
         return data
 
 
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Aliases & specializations
 Bin = core.BinParams
 
@@ -60,11 +60,11 @@ class FacetMapping(core.FacetMapping):
         return super(FacetMapping, copy).to_dict(*args, **kwargs)
 
 
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Encoding will contain channel objects that aren't valid at instantiation
 core.EncodingWithFacet._class_is_valid_at_instantiation = False
 
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # These are parameters that are valid at the top level, but are not valid
 # for specs that are within a composite chart
 # (layer, hconcat, vconcat, facet, repeat)
@@ -158,7 +158,7 @@ class NamedSelection(SelectionMapping):
         # this will be delegated to SelectionMapping
         return NotImplemented
 
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
 # Top-Level Functions
 
 def value(value, **kwargs):
@@ -301,7 +301,7 @@ def condition(predicate, if_true, if_false, **kwargs):
     return selection
 
 
-#--------------------------------------------------------------------
+# --------------------------------------------------------------------
 # Top-level objects
 
 class TopLevelMixin(mixins.ConfigMethodMixin):
