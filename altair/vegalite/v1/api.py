@@ -6,6 +6,7 @@ DSL mapping Vega types to IPython traitlets.
 import six
 import warnings
 
+import jsonschema
 import pandas as pd
 
 from .schema import core, channels, Undefined, SCHEMA_URL, SCHEMA_VERSION
