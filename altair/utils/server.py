@@ -30,7 +30,7 @@ class MockRequest(object):
 
 class MockServer(object):
     def __init__(self, ip_port, Handler):
-        handler = Handler(MockRequest(), ip_port[0], self)
+        Handler(MockRequest(), ip_port[0], self)
 
     def serve_forever(self):
         pass

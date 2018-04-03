@@ -110,7 +110,7 @@ class SchemaBase(object):
         object.__setattr__(self, '_kwds', kwds)
 
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
-            _ = self.to_dict(validate=True)
+            self.to_dict(validate=True)
 
     def copy(self, deep=True, ignore=()):
         """Return a copy of the object
