@@ -1,7 +1,6 @@
 import os
 import textwrap
 
-import pandas as pd
 from IPython.display import display
 
 from ...utils import PluginRegistry, headless, html
