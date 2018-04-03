@@ -11,9 +11,9 @@ v1_defaults = {
 
 v2_defaults = {
     'config': {
-        'view':{
-            'height':300,
-            'width':400
+        'view': {
+            'height': 300,
+            'width': 400
         }
     }
 }

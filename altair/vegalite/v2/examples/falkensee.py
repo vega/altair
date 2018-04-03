@@ -51,7 +51,8 @@ source2 = [{
             "start": "1933",
             "end": "1945",
             "event": "Nazi Rule"
-          },{
+          },
+          {
             "start": "1948",
             "end": "1989",
             "event": "GDR (East Germany)"

@@ -8,11 +8,11 @@ Three choropleths representing disjoint data from the same table.
 import altair as alt
 from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m.url,'states')
+states = alt.topo_feature(data.us_10m.url, 'states')
 
 pop_eng_hur = data.population_engineers_hurricanes.url
 
-variable_list = ['population','engineers','hurricanes']
+variable_list = ['population', 'engineers', 'hurricanes']
 
 alt.Chart(states).mark_geoshape().properties(
     projection={'type': 'albersUsa'},
