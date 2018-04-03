@@ -4,7 +4,7 @@ Altair: Declarative Visualization in Python
 .. altair-minigallery::
    :size: 15
    :shuffle:
-   :seed: 6543
+   :seed: 654
 
 Altair is a declarative statistical visualization library for Python, based on
 Vega_ and Vega-Lite_.

@@ -17,7 +17,7 @@ def test_unary_operations():
 
 def test_binary_operations():
     OP_MAP = {'+': operator.add, '-': operator.sub,
-              '*': operator.mul, '/': operator.floordiv,
+              '*': operator.mul, '/': operator.truediv,
               '%': operator.mod, '===': operator.eq,
               '<': operator.lt, '<=': operator.le,
               '>': operator.gt, '>=': operator.ge,

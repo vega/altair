@@ -81,3 +81,10 @@ Other Objects
    :members:
    :imported-members:
    :exclude-members: Chart,LayerChart,FacetChart,
+
+Vega Expressions
+----------------
+
+.. automodule:: altair.expr
+   :members:
+   :imported-members:

@@ -84,7 +84,11 @@ def _get_channels_mapping():
 # -------------------------------------------------------------------------
 # Tools for working with selections
 class SelectionMapping(core.VegaLiteSchema):
-    """A mapping of selection names to selection definitions"""
+    """A mapping of selection names to selection definitions.
+
+    This is designed to match the schema of the "selection" property of
+    top-level objects.
+    """
     _schema = {
         'type': 'object',
         'additionalPropeties': {'$ref': '#/definitions/SelectionDef'}
@@ -126,6 +130,7 @@ class NamedSelection(SelectionMapping):
 
         Examples
         --------
+        >>> import altair as alt
         >>> sel = alt.selection_interval(name='interval')
         >>> sel.ref()
         {'selection': 'interval'}
@@ -136,12 +141,12 @@ class NamedSelection(SelectionMapping):
         return core.SelectionNot(**{'not': self._get_name()})
 
     def __and__(self, other):
-        if isinstance(other, SelectionMapping):
+        if isinstance(other, NamedSelection):
             other = other._get_name()
         return core.SelectionAnd(**{'and': [self._get_name(), other]})
 
     def __or__(self, other):
-        if isinstance(other, SelectionMapping):
+        if isinstance(other, NamedSelection):
             other = other._get_name()
         return core.SelectionOr(**{'or': [self._get_name(), other]})
 
@@ -457,32 +462,77 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             copy.transform.extend(transforms)
         return copy
 
-    def transform_aggregate(self, aggregate, groupby=Undefined, **kwargs):
+    def transform_aggregate(self, aggregate=Undefined, groupby=Undefined, **kwds):
         """
         Add an AggregateTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         aggregate : List(AggregatedFieldDef)
             Array of objects that define fields to aggregate.
         groupby : List(string)
             The data fields to group by. If not specified, a single group
             containing all data objects will be used.
+        **kwds :
+            additional keywords are converted to aggregates using standard
+            shorthand parsing.
 
         Returns
         -------
         self : Chart object
             returns chart to allow for chaining
 
+        Examples
+        --------
+        The aggregate transform allows you to specify transforms directly using
+        the same shorthand syntax as used in encodings:
+
+        >>> import altair as alt
+        >>> chart1 = alt.Chart().transform_aggregate(
+        ...     mean_acc='mean(Acceleration)',
+        ...     groupby=['Origin']
+        ... )
+        >>> print(chart1.transform[0].to_json())
+        {
+          "aggregate": [
+            {
+              "as": "mean_acc",
+              "field": "Acceleration",
+              "op": "mean"
+            }
+          ],
+          "groupby": [
+            "Origin"
+          ]
+        }
+
+        It also supports including AggregatedFieldDef instances or dicts directly,
+        so you can create the above transform like this:
+
+        >>> chart2 = alt.Chart().transform_aggregate(
+        ...     [alt.AggregatedFieldDef(field='Acceleration', op='mean',
+        ...                             **{'as': 'mean_acc'})],
+        ...     groupby=['Origin']
+        ... )
+        >>> chart2.transform == chart1.transform
+        True
+
         See Also
         --------
         alt.AggregateTransform : underlying transform object
         """
-        kwargs['aggregate'] = aggregate
-        kwargs['groupby'] = groupby
-        return self._add_transform(core.AggregateTransform(**kwargs))
+        if aggregate is Undefined:
+            aggregate = []
+        for key, val in kwds.items():
+            parsed = utils.parse_shorthand(val)
+            dct = {'as': key,
+                   'field': parsed.get('field', Undefined),
+                   'op': parsed.get('aggregate', Undefined)}
+            aggregate.append(core.AggregatedFieldDef(**dct))
+        return self._add_transform(core.AggregateTransform(aggregate=aggregate,
+                                                           groupby=groupby))
 
-    def transform_bin(self, as_=Undefined, bin=Undefined, field=Undefined, **kwargs):
+    def transform_bin(self, as_=Undefined, field=Undefined, bin=True, **kwargs):
         """
         Add a BinTransform to the schema.
 
@@ -500,6 +550,28 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         -------
         self : Chart object
             returns chart to allow for chaining
+
+        Examples
+        --------
+        >>> import altair as alt
+        >>> chart = alt.Chart().transform_bin("x_binned", "x")
+        >>> chart.transform[0]
+        BinTransform({
+          bin: True,
+          field: 'x',
+          as: 'x_binned'
+        })
+
+        >>> chart = alt.Chart().transform_bin("x_binned", "x",
+        ...                                   bin=alt.Bin(maxbins=10))
+        >>> chart.transform[0]
+        BinTransform({
+          bin: BinParams({
+            maxbins: 10
+          }),
+          field: 'x',
+          as: 'x_binned'
+        })
 
         See Also
         --------
@@ -524,22 +596,55 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         calculate : string or alt.expr expression
             An expression string. Use the variable `datum` to refer to the
             current data object.
+        **kwargs
+            transforms can also be passed by keyword argument; see Examples
 
         Returns
         -------
         self : Chart object
             returns chart to allow for chaining
 
+        Examples
+        --------
+        >>> import altair as alt
+        >>> from altair import datum, expr
+
+        >>> chart = alt.Chart().transform_calculate(y = 2 * expr.sin(datum.x))
+        >>> chart.transform[0]
+        CalculateTransform({
+          calculate: (2 * sin(datum.x)),
+          as: 'y'
+        })
+
+        It's also possible to pass the ``CalculateTransform`` arguments directly:
+
+        >>> kwds = {'as': 'y', 'calculate': '2 * sin(datum.x)'}
+        >>> chart = alt.Chart().transform_calculate(**kwds)
+        >>> chart.transform[0]
+        CalculateTransform({
+          calculate: '2 * sin(datum.x)',
+          as: 'y'
+        })
+
+        As the first form is easier to write and understand, that is the
+        recommended method.
+
         See Also
         --------
         alt.CalculateTransform : underlying transform object
         """
-        if as_ is not Undefined:
+        if as_ is Undefined:
+            as_ = kwargs.pop('as', Undefined)
+        else:
             if 'as' in kwargs:
                 raise ValueError("transform_calculate: both 'as_' and 'as' passed as arguments.")
-            kwargs['as'] = as_
-        kwargs['calculate'] = calculate
-        return self._add_transform(core.CalculateTransform(**kwargs))
+        if as_ is not Undefined or calculate is not Undefined:
+            dct = {'as': as_, 'calculate': calculate}
+            self = self._add_transform(core.CalculateTransform(**dct))
+        for as_, calculate in kwargs.items():
+            dct = {'as': as_, 'calculate': calculate}
+            self = self._add_transform(core.CalculateTransform(**dct))
+        return self
 
     def transform_filter(self, filter, **kwargs):
         """
