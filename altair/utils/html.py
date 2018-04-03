@@ -1,8 +1,7 @@
 import json
 
 
-HTML_TEMPLATE = {
-'vega-lite': """
+TOP = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,67 +16,48 @@ HTML_TEMPLATE = {
         color: red;
     }}
   </style>
-  <script src="{base_url}/vega@{vega_version}"></script>
-  <script src="{base_url}/vega-lite@{vegalite_version}"></script>
-  <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
-</head>
-<body>
-  <div id="{output_div}"></div>
-  <script type="text/javascript">
-    var spec = {spec};
-    var opt = {embed_opt};
-    vegaEmbed("#{output_div}", spec, opt)
-      .catch(function(error){{
-        var outputDiv = document.getElementById('{output_div}');
-        outputDiv.innerHTML = ('<div class="error">'
-                               + '<p>JavaScript Error: ' + error.message + '</p>'
-                               + "<p>This usually means there's a typo in your chart specification. "
-                               + "See the javascript console for the full traceback.</p>"
-                               + '</div>');
-        throw error;
-      }});
-  </script>
-</body>
-</html>
-""",
+"""
 
-'vega': """
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    .vega-actions a {{
-        margin-right: 12px;
-        color: #757575;
-        font-weight: normal;
-        font-size: 13px;
-    }}
-    .error {{
-        color: red;
-    }}
-  </style>
-  <script src="{base_url}/vega@{vega_version}"></script>
-  <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
+VEGA_SCRIPTS = """
+<script src="{base_url}/vega@{vega_version}"></script>
+<script src="{base_url}/vega-embed@{vegaembed_version}"></script>
+"""
+
+VEGALITE_SCRIPTS = """
+<script src="{base_url}/vega@{vega_version}"></script>
+<script src="{base_url}/vega-lite@{vegalite_version}"></script>
+<script src="{base_url}/vega-embed@{vegaembed_version}"></script>
+"""
+
+BOTTOM = """
 </head>
 <body>
   <div id="{output_div}"></div>
   <script type="text/javascript">
     var spec = {spec};
     var opt = {embed_opt};
+
+    function showError(el, error){{
+        el.innerHTML = ('<div class="error">'
+                        + '<p>JavaScript Error: ' + error.message + '</p>'
+                        + "<p>This usually means there's a typo in your chart specification. "
+                        + "See the javascript console for the full traceback.</p>"
+                        + '</div>');
+        throw error;
+    }}
+    const el = document.getElementById('{output_div}');
     vegaEmbed("#{output_div}", spec, opt)
-      .catch(function(error){{
-        var outputDiv = document.getElementById('{output_div}');
-        outputDiv.innerHTML = ('<div class="error">'
-                               + '<p>Javascript Error: ' + error.message + '</p>'
-                               + "<p>This usually means there's a typo in your chart specification. "
-                               + "See the javascript console for the full traceback</p>"
-                               + '</div>');
-        console.error(error);
-      }});
+      .catch(error => showError(el, error));
   </script>
 </body>
 </html>
-"""}
+"""
+
+
+HTML_TEMPLATE = {
+  'vega-lite': TOP + VEGALITE_SCRIPTS + BOTTOM,
+  'vega': TOP + VEGA_SCRIPTS + BOTTOM
+}
 
 
 def spec_to_html_mimebundle(spec, mode,
