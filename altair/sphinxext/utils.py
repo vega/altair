@@ -5,7 +5,6 @@ import hashlib
 import itertools
 import json
 import re
-import sys
 
 
 def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):

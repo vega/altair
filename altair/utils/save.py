@@ -1,5 +1,4 @@
 import json
-import textwrap
 
 import six
 

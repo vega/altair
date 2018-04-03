@@ -1,5 +1,3 @@
-import pytest
-
 from ..execeval import eval_block
 
 HAS_RETURN = """

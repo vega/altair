@@ -1,15 +1,10 @@
 import hashlib
-import importlib
 import os
-import shutil
-import warnings
 import json
 import random
 from operator import itemgetter
 
 import jinja2
-
-from subprocess import CalledProcessError
 
 from docutils import nodes
 from docutils.statemachine import ViewList

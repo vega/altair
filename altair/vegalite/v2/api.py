@@ -1,4 +1,3 @@
-import json
 import warnings
 
 import jsonschema
