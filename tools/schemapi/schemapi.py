@@ -45,10 +45,10 @@ class SchemaValidationError(jsonschema.ValidationError):
         cls = self.obj.__class__
         schema_path = ['{0}.{1}'.format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
-        schema_path = ' ->'.join(val for val in schema_path[:-1]
-                                if val not in ('properties',
-                                               'additionalProperties',
-                                               'patternProperties'))
+        schema_path = ' ->'.join(
+            val for val in schema_path[:-1]
+            if val not in ('properties', 'additionalProperties', 'patternProperties')
+        )
         return """Invalid specification
 
         {0}, validating {1!r}
@@ -60,19 +60,22 @@ class SchemaValidationError(jsonschema.ValidationError):
         __str__ = __unicode__
     else:
         def __str__(self):
-            return unicode(self).encode("utf-8")
-
+            return six.u(self).encode("utf-8")
 
 
 class UndefinedType(object):
     """A singleton object for marking undefined attributes"""
     __instance = None
+
     def __new__(cls, *args, **kwargs):
         if not isinstance(cls.__instance, cls):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
+
     def __repr__(self):
         return 'Undefined'
+
+
 Undefined = UndefinedType()
 
 
@@ -106,7 +109,7 @@ class SchemaBase(object):
         object.__setattr__(self, '_kwds', kwds)
 
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
-            _ = self.to_dict(validate=True)
+            self.to_dict(validate=True)
 
     def copy(self, deep=True, ignore=()):
         """Return a copy of the object
@@ -153,7 +156,7 @@ class SchemaBase(object):
                 _getattr = super(SchemaBase, self).__getattribute__
             return _getattr(attr)
 
-    def __setattr__(self, item , val):
+    def __setattr__(self, item, val):
         self._kwds[item] = val
 
     def __getitem__(self, item):
@@ -168,8 +171,10 @@ class SchemaBase(object):
                     for key, val in self._kwds.items()
                     if val is not Undefined)
             args = '\n' + ',\n'.join(args)
-            return "{0}({{{1}\n}})".format(self.__class__.__name__,
-                                            args.replace('\n', '\n  '))
+            return "{0}({{{1}\n}})".format(
+                self.__class__.__name__,
+                args.replace('\n', '\n  ')
+            )
         else:
             return "{0}({1!r})".format(self.__class__.__name__, self._args[0])
 

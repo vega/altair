@@ -3,16 +3,15 @@ import copy
 import os
 import sys
 import json
-from datetime import datetime
 from os.path import abspath, join, dirname
 
 from urllib import request
 
 # import schemapi from here
 sys.path.insert(0, abspath(dirname(__file__)))
-from schemapi import codegen
-from schemapi.codegen import schema_class, CodeSnippet
-from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
+from schemapi import codegen  # noqa
+from schemapi.codegen import schema_class, CodeSnippet  # noqa
+from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist  # noqa
 
 SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
                        '{library}/{version}.json')
@@ -202,7 +201,7 @@ def generate_vega_schema_wrapper(schema_file):
     for deflist in ['defs', 'refs']:
         for name in rootschema[deflist]:
             defschema = {'$ref': '#/{0}/{1}'.format(deflist, name)}
-            defschema_repr = {'$ref': '#/{0}/{1}'.format(deflist,name)}
+            defschema_repr = {'$ref': '#/{0}/{1}'.format(deflist, name)}
             contents.append(schema_class(get_valid_identifier(name),
                                          schema=defschema, schemarepr=defschema_repr,
                                          rootschema=rootschema, basename=basename,
