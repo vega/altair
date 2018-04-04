@@ -14,7 +14,7 @@ bar = alt.Chart(source).mark_bar().encode(
     alt.Y('mean(precipitation):Q')
 )
 
-rule = alt.Chart(source).mark_rule(color = 'red').encode(
+rule = alt.Chart(source).mark_rule(color='red').encode(
     y='mean(precipitation)',
     size=alt.value(3)
 )

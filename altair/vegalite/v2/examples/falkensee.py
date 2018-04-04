@@ -63,7 +63,7 @@ source = alt.pd.DataFrame(source)
 source2 = alt.pd.DataFrame(source2)
 
 
-line = alt.Chart(source).mark_line(color = '#333').encode(
+line = alt.Chart(source).mark_line(color='#333').encode(
     alt.X('year:T', axis=alt.Axis(format='%Y')),
     y='population'
 ).properties(
@@ -71,12 +71,12 @@ line = alt.Chart(source).mark_line(color = '#333').encode(
     height=400
 )
 
-point = line.mark_point(color = '#333')
+point = line.mark_point(color='#333')
 
 rect = alt.Chart(source2).mark_rect().encode(
-    x = 'start:T',
-    x2 = 'end:T',
-    color = 'event:N'
+    x='start:T',
+    x2='end:T',
+    color='event:N'
 )
 
 rect + line + point

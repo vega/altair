@@ -36,7 +36,7 @@ alt.Chart(original_data).mark_text(
         axis=alt.Axis(title='', ticks=False, labels=False, grid=False)
     ),
     alt.Y('stem:N', axis=alt.Axis(title='', tickSize=0)),
-    text = 'leaf:N'
+    text='leaf:N'
 ).configure_axis(
     labelFontSize=20
 ).configure_text(

@@ -36,8 +36,8 @@ spec_v2 = dict(v2_defaults, **basic_spec)
 def test_basic_chart_to_dict(alt, basic_spec):
     chart = alt.Chart('data.csv').mark_line().encode(
         alt.X('xval:Q'),
-        y = alt.Y('yval:O'),
-        color = 'color:N'
+        y=alt.Y('yval:O'),
+        color='color:N'
     )
     dct = chart.to_dict()
 

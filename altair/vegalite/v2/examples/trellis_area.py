@@ -14,7 +14,7 @@ alt.Chart(source).mark_area().encode(
     alt.X('date:T', axis=alt.Axis(format='%Y', title='Time', grid=False)),
     alt.Y('price:Q', axis=alt.Axis(title='Price', grid=False)),
     alt.Color('symbol', legend=None),
-    alt.Row('symbol:N', header = alt.Header(title = 'Symbol'))
+    alt.Row('symbol:N', header=alt.Header(title='Symbol'))
 ).properties(
     width=300,
     height=40
