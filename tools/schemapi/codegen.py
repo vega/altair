@@ -1,6 +1,4 @@
 """Code generation utilities"""
-import textwrap
-
 from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
 
 
@@ -123,7 +121,7 @@ def _get_args(info):
         additional = True
     elif info.is_value():
         nonkeyword = True
-        additional=False
+        additional = False
     elif info.is_object():
         invalid_kwds = ({p for p in info.required if not is_valid_identifier(p)} |
                         {p for p in info.properties if not is_valid_identifier(p)})
@@ -132,7 +130,6 @@ def _get_args(info):
         kwds -= required
         nonkeyword = False
         additional = True
-        #additional = info.additionalProperties or info.patternProperties
     else:
         raise ValueError("Schema object not understood")
 
@@ -148,9 +145,9 @@ def __init__({arglist}):
 def init_code(classname, schema, rootschema=None, indent=0, nodefault=()):
     """Return code suitablde for the __init__ function of a Schema class"""
     info = SchemaInfo(schema, rootschema=rootschema)
-    nonkeyword, required, kwds, invalid_kwds, additional =_get_args(info)
+    nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
 
-    nodefault=set(nodefault)
+    nodefault = set(nodefault)
     required -= nodefault
     kwds -= nodefault
 

@@ -6,6 +6,7 @@ from ..schemapi import UndefinedType, SchemaBase, Undefined, _FromDict
 # Make tests inherit from _TestSchema, so that when we test from_dict it won't
 # try to use SchemaBase objects defined elsewhere as wrappers.
 
+
 class _TestSchema(SchemaBase):
     @classmethod
     def _default_wrapper_classes(cls):
@@ -72,7 +73,7 @@ class Bar(_TestSchema):
 
 
 class SimpleUnion(_TestSchema):
-    _schema = {'anyOf' : [{'type': 'integer'}, {'type': 'string'}]}
+    _schema = {'anyOf': [{'type': 'integer'}, {'type': 'string'}]}
 
 
 class DefinitionUnion(_TestSchema):
@@ -89,7 +90,7 @@ class SimpleArray(_TestSchema):
     _schema = {
         'type': 'array',
         'items': {
-            'anyOf' : [{'type': 'integer'}, {'type': 'string'}]
+            'anyOf': [{'type': 'integer'}, {'type': 'string'}]
         }
     }
 
@@ -107,9 +108,14 @@ class InvalidProperties(_TestSchema):
 
 
 def test_construct_multifaceted_schema():
-    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
-       'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-       'd': ['x', 'y', 'z']}
+    dct = {
+        'a': {'foo': 'bar'},
+        'a2': {'foo': 42},
+        'b': ['a', 'b', 'c'],
+        'b2': [1, 2, 3],
+        'c': 42,
+        'd': ['x', 'y', 'z']
+    }
 
     myschema = MySchema.from_dict(dct)
     assert myschema.to_dict() == dct
@@ -206,9 +212,13 @@ def test_undefined_singleton():
 
 
 def test_copy():
-    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
-       'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-       'd': ['x', 'y', 'z']}
+    dct = {
+        'a': {'foo': 'bar'},
+        'a2': {'foo': 42},
+        'b': ['a', 'b', 'c'],
+        'b2': [1, 2, 3], 'c': 42,
+        'd': ['x', 'y', 'z']
+    }
 
     myschema = MySchema.from_dict(dct)
 

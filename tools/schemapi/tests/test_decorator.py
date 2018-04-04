@@ -2,6 +2,7 @@ import inspect
 
 from .. import SchemaBase, Undefined, schemaclass
 
+
 @schemaclass
 class MySchema(SchemaBase):
     _schema = {
@@ -37,7 +38,7 @@ def test_myschema_decorator():
 
     assert MySchema.__doc__.startswith('MySchema schema wrapper')
     argspec = inspect.getargspec(MySchema.__init__)
-    assert argspec.args == ['self', 'a' ,'b', 'a2', 'b2', 'c', 'd']
+    assert argspec.args == ['self', 'a', 'b', 'a2', 'b2', 'c', 'd']
     assert argspec.defaults == 6 * (Undefined,)
     assert argspec.varargs is None
     assert argspec.keywords == 'kwds'
