@@ -65,8 +65,7 @@ def test_expr_consts():
     for constname in expr.consts.__all__:
         const = getattr(expr, constname)
         z = const * datum.xxx
-        assert repr(z) == '({0} * datum.xxx)'.format(name_map.get(constname,
-                                                                constname))
+        assert repr(z) == '({0} * datum.xxx)'.format(name_map.get(constname, constname))
 
 
 def test_json_reprs():
