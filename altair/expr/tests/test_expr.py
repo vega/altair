@@ -71,9 +71,9 @@ def test_expr_consts():
 
 def test_json_reprs():
     """Test JSON representations of special values"""
-    assert repr(datum.xxx == None) == '(datum.xxx === null)'
-    assert repr(datum.xxx == False) == '(datum.xxx === false)'
-    assert repr(datum.xxx == True) == '(datum.xxx === true)'
+    assert repr(datum.xxx == None) == '(datum.xxx === null)'  # noqa: E711
+    assert repr(datum.xxx == False) == '(datum.xxx === false)'  # noqa: E712
+    assert repr(datum.xxx == True) == '(datum.xxx === true)'  # noqa: E712
 
 
 def test_to_dict():
