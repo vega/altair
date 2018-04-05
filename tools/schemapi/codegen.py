@@ -1,6 +1,4 @@
 """Code generation utilities"""
-import textwrap
-
 from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
 
 

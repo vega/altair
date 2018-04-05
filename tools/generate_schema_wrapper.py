@@ -3,7 +3,6 @@ import copy
 import os
 import sys
 import json
-from datetime import datetime
 from os.path import abspath, join, dirname
 
 from urllib import request

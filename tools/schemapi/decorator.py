@@ -1,6 +1,4 @@
 import warnings
-
-from .utils import SchemaInfo
 from . import codegen, SchemaBase, Undefined
 
 
