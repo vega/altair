@@ -1,6 +1,6 @@
 import pytest
 
-from ..utils import resolve_references, get_valid_identifier
+from ..utils import get_valid_identifier
 from ..schemapi import _FromDict
 
 
