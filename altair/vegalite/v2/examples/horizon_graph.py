@@ -34,7 +34,7 @@ area1 = alt.Chart(df).mark_area(
 )
 
 area2 = area1.encode(
-    y='ny:Q'
+    alt.Y('ny:Q', scale=alt.Scale(domain=[0, 50]))
 ).transform_calculate(
     "ny", datum.y - 50
 )
