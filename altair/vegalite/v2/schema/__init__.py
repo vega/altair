@@ -1,4 +1,3 @@
-# flake8: noqa
 from .core import *
 from .channels import *
 SCHEMA_VERSION = 'v2.3.0'
