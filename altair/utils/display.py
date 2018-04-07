@@ -1,6 +1,6 @@
 import json
 import pkgutil
-from typing import Callable, Dict, Union
+from typing import Callable, Dict
 
 from jsonschema import validate
 
