@@ -1,4 +1,4 @@
-from typing import Callable, Generic, List, TypeVar, Union, cast
+from typing import Generic, List, TypeVar, Union, cast
 
 import entrypoints
 

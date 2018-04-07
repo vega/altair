@@ -6,7 +6,7 @@ from ...utils import PluginRegistry
 from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
 from ..display import json_renderer as json_renderer_base
-from ..display import SpecType, MimeBundleType, RendererType
+from ..display import RendererType
 
 
 
