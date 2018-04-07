@@ -16,12 +16,14 @@ VEGAEMBED_VERSION = '3.0'
 
 # ------------------------------------------------------------------------
 # Data Utilities
+
+
 def _prepare_data(data):
     """Convert input data to data for use within schema"""
     if data is Undefined:
         return data
     elif isinstance(data, (dict, core.Data, core.InlineData,
-                         core.UrlData, core.NamedData)):
+                           core.UrlData, core.NamedData)):
         return data
     elif isinstance(data, pd.DataFrame):
         return pipe(data, data_transformers.get())
@@ -36,8 +38,10 @@ def _prepare_data(data):
 # Aliases & specializations
 Bin = core.BinParams
 
+
 @utils.use_signature(core.LookupData)
 class LookupData(core.LookupData):
+
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
         copy = self.copy(ignore=['data'])
@@ -54,9 +58,11 @@ class FacetMapping(core.FacetMapping):
         context = kwargs.get('context', {})
         data = context.get('data', None)
         if isinstance(self.row, six.string_types):
-            copy.row = core.FacetFieldDef(**utils.parse_shorthand(self.row, data))
+            copy.row = core.FacetFieldDef(
+                **utils.parse_shorthand(self.row, data))
         if isinstance(self.column, six.string_types):
-            copy.column = core.FacetFieldDef(**utils.parse_shorthand(self.column, data))
+            copy.column = core.FacetFieldDef(
+                **utils.parse_shorthand(self.column, data))
         return super(FacetMapping, copy).to_dict(*args, **kwargs)
 
 
@@ -161,6 +167,7 @@ class NamedSelection(SelectionMapping):
 # ------------------------------------------------------------------------
 # Top-Level Functions
 
+
 def value(value, **kwargs):
     """Specify a value for use in an encoding"""
     return dict(value=value, **kwargs)
@@ -191,6 +198,7 @@ def selection(name=None, type=Undefined, **kwds):
     return NamedSelection(**{name: core.SelectionDef(type=type, **kwds)})
 
 selection.counter = 1
+
 
 @utils.use_signature(core.IntervalSelection)
 def selection_interval(**kwargs):
@@ -348,7 +356,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             # add default values if present
             if copy._default_spec_values:
-                dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
+                dct = utils.update_nested(
+                    copy._default_spec_values, dct, copy=True)
         return dct
 
     def savechart(self, fp, format=None, **kwargs):
@@ -361,7 +370,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         **kwargs :
             Additional keyword arguments are passed to the output method
@@ -383,7 +392,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         **kwargs :
             Additional keyword arguments are passed to the output method
@@ -391,10 +400,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         from ...utils.save import save
         return save(self, fp=fp, format=format,
-                         vegalite_version=VEGALITE_VERSION,
-                         vega_version=VEGA_VERSION,
-                         vegaembed_version=VEGAEMBED_VERSION,
-                         **kwargs)
+                    vegalite_version=VEGALITE_VERSION,
+                    vega_version=VEGA_VERSION,
+                    vegaembed_version=VEGAEMBED_VERSION,
+                    **kwargs)
 
     # Layering and stacking
 
@@ -578,7 +587,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if as_ is not Undefined:
             if 'as' in kwargs:
-                raise ValueError("transform_bin: both 'as_' and 'as' passed as arguments.")
+                raise ValueError(
+                    "transform_bin: both 'as_' and 'as' passed as arguments.")
             kwargs['as'] = as_
         kwargs['bin'] = bin
         kwargs['field'] = field
@@ -636,7 +646,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             as_ = kwargs.pop('as', Undefined)
         else:
             if 'as' in kwargs:
-                raise ValueError("transform_calculate: both 'as_' and 'as' passed as arguments.")
+                raise ValueError(
+                    "transform_calculate: both 'as_' and 'as' passed as arguments.")
         if as_ is not Undefined or calculate is not Undefined:
             dct = {'as': as_, 'calculate': calculate}
             self = self._add_transform(core.CalculateTransform(**dct))
@@ -700,11 +711,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if as_ is not Undefined:
             if 'as' in kwargs:
-                raise ValueError("transform_lookup: both 'as_' and 'as' passed as arguments.")
+                raise ValueError(
+                    "transform_lookup: both 'as_' and 'as' passed as arguments.")
             kwargs['as'] = as_
         if from_ is not Undefined:
             if 'from' in kwargs:
-                raise ValueError("transform_lookup: both 'from_' and 'from' passed as arguments.")
+                raise ValueError(
+                    "transform_lookup: both 'from_' and 'from' passed as arguments.")
             kwargs['from'] = from_
         kwargs['lookup'] = lookup
         kwargs['default'] = default
@@ -734,7 +747,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if as_ is not Undefined:
             if 'as' in kwargs:
-                raise ValueError("transform_timeunit: both 'as_' and 'as' passed as arguments.")
+                raise ValueError(
+                    "transform_timeunit: both 'as_' and 'as' passed as arguments.")
             kwargs['as'] = as_
         kwargs['field'] = field
         kwargs['timeUnit'] = timeUnit
@@ -767,6 +781,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
 
 class EncodingMixin(object):
+
     @utils.use_signature(core.EncodingWithFacet)
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
@@ -797,7 +812,8 @@ class EncodingMixin(object):
             try:
                 cls = getattr(channels, clsname)
             except AttributeError:
-                raise ValueError("Unrecognized encoding channel '{0}'".format(prop))
+                raise ValueError(
+                    "Unrecognized encoding channel '{0}'".format(prop))
 
             try:
                 # Don't force validation here; some objects won't be valid until
@@ -816,7 +832,6 @@ class EncodingMixin(object):
                 if condition is not Undefined:
                     obj['condition'] = _wrap_in_channel_class(condition, prop)
             kwargs[prop] = _wrap_in_channel_class(obj, prop)
-
 
         copy = self.copy(deep=True, ignore=['data'])
 
@@ -891,6 +906,7 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
     width : float
         The width of a visualization.
     """
+
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
                  width=Undefined, height=Undefined, **kwargs):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
@@ -964,9 +980,11 @@ def _check_if_valid_subspec(spec, classname):
 @utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
+
     def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'RepeatChart')
-        super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
+        super(RepeatChart, self).__init__(
+            spec=spec, data=data, repeat=repeat, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -987,7 +1005,8 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             copy of self, with interactive axes added
         """
         copy = self.copy()
-        copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
+        copy.spec = copy.spec.interactive(
+            name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
 
@@ -1013,6 +1032,7 @@ def repeat(repeater):
 @utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
+
     def __init__(self, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
@@ -1041,6 +1061,7 @@ def hconcat(*charts, **kwargs):
 @utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
+
     def __init__(self, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
@@ -1069,12 +1090,14 @@ def vconcat(*charts, **kwargs):
 @utils.use_signature(core.TopLevelLayerSpec)
 class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
+
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, 'LayerChart')
-        super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
+        super(LayerChart, self).__init__(
+            data=data, layer=list(layer), **kwargs)
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, 'LayerChart')
@@ -1114,7 +1137,8 @@ class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
             raise ValueError("LayerChart: cannot call interactive() until a "
                              "layer is defined")
         copy = self.copy()
-        copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
+        copy.layer[0] = copy.layer[0].interactive(
+            name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
     def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
@@ -1140,6 +1164,7 @@ def layer(*charts, **kwargs):
 @utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
+
     def __init__(self, spec, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'FacetChart')
         super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
@@ -1163,7 +1188,8 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             copy of self, with interactive axes added
         """
         copy = self.copy()
-        copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
+        copy.spec = copy.spec.interactive(
+            name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
 
@@ -1185,4 +1211,4 @@ def topo_feature(url, feature, **kwargs):
         additional keywords passed to TopoDataFormat
     """
     return core.UrlData(url=url, format=core.TopoDataFormat(type='topojson',
-                                                         feature=feature, **kwargs))
+                                                            feature=feature, **kwargs))
