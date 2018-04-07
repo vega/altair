@@ -65,3 +65,4 @@ target/
 tools/_build
 Untitled*.ipynb
 .mypy*
+.pytest_cache
