@@ -64,7 +64,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         __str__ = __unicode__
     else:
         def __str__(self):
-            return unicode(self).encode("utf-8")
+            return six.text_type(self).encode("utf-8")
 
 
 
