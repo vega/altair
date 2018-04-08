@@ -21,7 +21,7 @@ def save(chart, fp, vega_version, vegaembed_version,
     fp : string filename or file-like object
         file in which to write the chart.
     format : string (optional)
-        the format to write: one of ['json', 'html', 'png', 'eps'].
+        the format to write: one of ['json', 'html', 'png', 'svg'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
         Either 'vega' or 'vegalite'. If not specified, then infer the mode from
@@ -51,7 +51,7 @@ def save(chart, fp, vega_version, vegaembed_version,
             format = fp.split('.')[-1]
         else:
             raise ValueError("must specify file format: "
-                             "['png', 'eps', 'html', 'json']")
+                             "['png', 'svg', 'html', 'json']")
 
     spec = chart.to_dict()
 
