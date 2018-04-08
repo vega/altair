@@ -1,6 +1,7 @@
 from __future__ import division
 
 import ast
+import six
 import hashlib
 import itertools
 import json
@@ -145,7 +146,7 @@ def get_docstring_and_rest(filename):
             # python2.7: Code was read in bytes needs decoding to utf-8
             # unless future unicode_literals is imported in source which
             # make ast output unicode strings
-            if hasattr(docstring, 'decode') and not isinstance(docstring, unicode):
+            if hasattr(docstring, 'decode') and not isinstance(docstring, six.text_type):
                 docstring = docstring.decode('utf-8')
             lineno = docstring_node.lineno  # The last line of the string.
             # This get the content of the file after the docstring last line

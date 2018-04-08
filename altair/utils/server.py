@@ -111,7 +111,7 @@ def serve(html, ip='127.0.0.1', port=8888, n_retries=50, files=None,
 
     if jupyter_warning:
         try:
-            __IPYTHON__
+            __IPYTHON__  # noqa
         except:
             pass
         else:
