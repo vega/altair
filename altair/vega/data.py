@@ -58,13 +58,11 @@ def sample(data, n=None, frac=None):
 
 
 @curry
-def to_json(data, filename=None, prefix='altair-data', base_url='/', nbserver_cwd='~'):
+def to_json(data, prefix='altair-data'):
     """Write the data model to a .json file and return a url based data model."""
     _check_data_type(data)
     ext = '.json'
-    filename, url = _compute_filename_and_url(filename=filename, prefix=prefix,
-                                         base_url=base_url, nbserver_cwd=nbserver_cwd,
-                                         ext=ext)
+    filename = _compute_filename(prefix=prefix, ext=ext)
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         data.to_json(filename, orient='records')
@@ -75,24 +73,22 @@ def to_json(data, filename=None, prefix='altair-data', base_url='/', nbserver_cw
         with open(filename) as f:
             json.dump(values, f)
     return {
-        'url': url,
+        'url': filename,
         'format': {'type': 'json'}
     }
 
 
 @curry
-def to_csv(data, filename=None, prefix='altair-data', base_url='/', nbserver_cwd='~'):
+def to_csv(data, prefix='altair-data'):
     """Write the data model to a .csv file and return a url based data model."""
     _check_data_type(data)
     ext = '.csv'
-    filename, url = _compute_filename_and_url(filename=filename, prefix=prefix,
-                                         base_url=base_url, nbserver_cwd=nbserver_cwd,
-                                         ext=ext)
+    filename = _compute_filename(prefix=prefix, ext=ext)
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         data.to_csv(filename)
         return {
-            'url': url,
+            'url': filename,
             'format': {'type': 'csv'}
         }
     elif isinstance(data, dict):
@@ -128,40 +124,10 @@ def _check_data_type(data):
         raise TypeError('Expected dict or DataFrame, got: {}'.format(type(data)))
 
 
-def _url_path_join(*pieces):
-    """Join components of url into a relative url
-    Use to prevent double slash when joining subpath. This will leave the
-    initial and final / in place
-    """
-    initial = pieces[0].startswith('/')
-    final = pieces[-1].endswith('/')
-    stripped = [s.strip('/') for s in pieces]
-    result = '/'.join(s for s in stripped if s)
-    if initial: result = '/' + result
-    if final: result = result + '/'
-    if result == '//': result = '/'
-    return result
-
-
-def _compute_nbserver_url(filename, base_url='/', nbserver_cwd='~'):
-    nbserver_cwd = os.path.expanduser(nbserver_cwd)
-    here = os.getcwd()
-    rel_path = os.path.relpath(here, nbserver_cwd)
-    return _url_path_join(base_url, '/files/', rel_path, filename)
-
-
 def _compute_uuid_filename(prefix, ext):
     return prefix + '-' + str(uuid.uuid4()) + ext
 
 
-def _compute_filename_and_url(filename=None, prefix='altair',
-                         base_url='/', nbserver_cwd='~',
-                         ext='.csv'):
-
-    if filename is None:
-        filename = _compute_uuid_filename(prefix, ext)
-    else:
-        if not filename.endswith(ext):
-            filename = filename + ext
-    url = _compute_nbserver_url(filename, base_url=base_url, nbserver_cwd=nbserver_cwd)
-    return filename, url
+def _compute_filename(prefix='altair-data', ext='.csv'):
+    filename = _compute_uuid_filename(prefix, ext)
+    return filename
