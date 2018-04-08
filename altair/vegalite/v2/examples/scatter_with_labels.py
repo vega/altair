@@ -10,7 +10,7 @@ import pandas as pd
 data = pd.DataFrame({
     'x': [1, 3, 5, 7, 9],
     'y': [1, 3, 5, 7, 9],
-    'label':['A', 'B', 'C', 'D', 'E']
+    'label': ['A', 'B', 'C', 'D', 'E']
 })
 
 bars = alt.Chart(data).mark_point().encode(
