@@ -108,7 +108,7 @@ class TopLevelMixin(object):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         **kwargs :
             Additional keyword arguments are passed to the output method
@@ -130,7 +130,7 @@ class TopLevelMixin(object):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         **kwargs :
             Additional keyword arguments are passed to the output method
