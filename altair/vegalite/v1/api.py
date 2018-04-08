@@ -37,6 +37,7 @@ def _get_channels_mapping():
 # *************************************************************************
 
 class Formula(core.Formula):
+
     def __init__(self, field, expr=Undefined, **kwargs):
         super(Formula, self).__init__(field=field, expr=expr, **kwargs)
 
@@ -95,7 +96,8 @@ class TopLevelMixin(object):
 
             # add default values if present
             if copy._default_spec_values:
-                dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
+                dct = utils.update_nested(
+                    copy._default_spec_values, dct, copy=True)
         return dct
 
     def savechart(self, fp, format=None, **kwargs):
@@ -108,7 +110,7 @@ class TopLevelMixin(object):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         **kwargs :
             Additional keyword arguments are passed to the output method
@@ -130,7 +132,7 @@ class TopLevelMixin(object):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         **kwargs :
             Additional keyword arguments are passed to the output method
@@ -138,10 +140,10 @@ class TopLevelMixin(object):
         """
         from ...utils.save import save
         return save(self, fp=fp, format=format,
-                         vegalite_version=VEGALITE_VERSION,
-                         vega_version=VEGA_VERSION,
-                         vegaembed_version=VEGAEMBED_VERSION,
-                         **kwargs)
+                    vegalite_version=VEGALITE_VERSION,
+                    vega_version=VEGA_VERSION,
+                    vegaembed_version=VEGAEMBED_VERSION,
+                    **kwargs)
 
     # transform method
     @utils.use_signature(core.Transform)
@@ -243,6 +245,7 @@ class TopLevelMixin(object):
 
 
 class Chart(TopLevelMixin, core.ExtendedUnitSpec):
+
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
                  width=400, height=300, **kwargs):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
