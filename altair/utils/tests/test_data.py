@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 
 
-from altair.vegalite.data import limit_rows, MaxRowsError, sample, pipe, to_values
+from ..data import limit_rows, MaxRowsError, sample, pipe, to_values
 
 
 def _create_dataframe(N):
