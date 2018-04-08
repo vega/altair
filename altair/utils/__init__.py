@@ -6,7 +6,9 @@ from .core import (
     update_subtraits,
     update_nested,
     write_file_or_filename,
-    display_traceback
+    display_traceback,
+    SchemaBase,
+    Undefined
 )
 from .plugin_registry import PluginRegistry
 
@@ -20,5 +22,7 @@ __all__ = (
     'update_nested',
     'write_file_or_filename',
     'display_traceback',
+    'SchemaBase',
+    'Undefined',
     'PluginRegistry'
 )
