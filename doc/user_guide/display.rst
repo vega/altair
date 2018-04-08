@@ -270,11 +270,11 @@ Randomly sample a DataFrame (without replacement) before visualizing::
 
 Convert a Dataframe to a separate ``.json`` file before visualization::
 
-    to_json(data, filename=None, prefix='altair-data', base_url='/', nbserver_cwd='~'):
+    to_json(data, prefix='altair-data'):
 
 Convert a Dataframe to a separate ``.csv`` file before visualiztion::
 
-    to_csv(data, filename=None, prefix='altair-data', base_url='/', nbserver_cwd='~'):
+    to_csv(data, prefix='altair-data'):
 
 Convert a Dataframe to inline JSON values before visualization::
 
