@@ -1,8 +1,7 @@
 import json
 
 
-HTML_TEMPLATE = {
-'vega-lite': """
+TOP = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,47 +12,52 @@ HTML_TEMPLATE = {
         font-weight: normal;
         font-size: 13px;
     }}
+    .error {{
+        color: red;
+    }}
   </style>
-  <script src="{base_url}/vega@{vega_version}"></script>
-  <script src="{base_url}/vega-lite@{vegalite_version}"></script>
-  <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
-</head>
-<body>
-  <div id="vis"></div>
-  <script type="text/javascript">
-    var spec = {spec};
-    var opt = {embed_opt};
-    vegaEmbed("#vis", spec, opt);
-  </script>
-</body>
-</html>
-""",
+"""
 
-'vega': """
-<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    .vega-actions a {{
-        margin-right: 12px;
-        color: #757575;
-        font-weight: normal;
-        font-size: 13px;
-    }}
-  </style>
-  <script src="{base_url}/vega@{vega_version}"></script>
-  <script src="{base_url}/vega-embed@{vegaembed_version}"></script>
+VEGA_SCRIPTS = """
+<script src="{base_url}/vega@{vega_version}"></script>
+<script src="{base_url}/vega-embed@{vegaembed_version}"></script>
+"""
+
+VEGALITE_SCRIPTS = """
+<script src="{base_url}/vega@{vega_version}"></script>
+<script src="{base_url}/vega-lite@{vegalite_version}"></script>
+<script src="{base_url}/vega-embed@{vegaembed_version}"></script>
+"""
+
+BOTTOM = """
 </head>
 <body>
-  <div id="vis"></div>
+  <div id="{output_div}"></div>
   <script type="text/javascript">
     var spec = {spec};
     var opt = {embed_opt};
-    vegaEmbed("#vis", spec, opt);
+
+    function showError(el, error){{
+        el.innerHTML = ('<div class="error">'
+                        + '<p>JavaScript Error: ' + error.message + '</p>'
+                        + "<p>This usually means there's a typo in your chart specification. "
+                        + "See the javascript console for the full traceback.</p>"
+                        + '</div>');
+        throw error;
+    }}
+    const el = document.getElementById('{output_div}');
+    vegaEmbed("#{output_div}", spec, opt)
+      .catch(error => showError(el, error));
   </script>
 </body>
 </html>
-"""}
+"""
+
+
+HTML_TEMPLATE = {
+  'vega-lite': TOP + VEGALITE_SCRIPTS + BOTTOM,
+  'vega': TOP + VEGA_SCRIPTS + BOTTOM
+}
 
 
 def spec_to_html_mimebundle(spec, mode,
@@ -96,5 +100,6 @@ def spec_to_html_mimebundle(spec, mode,
                                 vega_version=vega_version,
                                 vegalite_version=vegalite_version,
                                 vegaembed_version=vegaembed_version,
-                                base_url=base_url)
+                                base_url=base_url,
+                                output_div='vis')
     return {'text/html': spec_html}
