@@ -27,8 +27,10 @@ __all__ = (
     'default_data_transformer',
     'limit_rows',
     'pipe',
+    'sanitize_dataframe',
     'sample',
     'to_csv',
     'to_json',
-    'to_values'
+    'to_values',
+    'check_data_type'
 )

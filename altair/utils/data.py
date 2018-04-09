@@ -1,10 +1,9 @@
 import json
-import os
 import random
 import uuid
 
 import pandas as pd
-from toolz.curried import curry, pipe
+from toolz.curried import curry, pipe  # noqa
 
 from .core import sanitize_dataframe
 

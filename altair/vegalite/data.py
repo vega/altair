@@ -14,11 +14,13 @@ def default_data_transformer(data):
 __all__ = (
     'MaxRowsError',
     'curry',
+    'sanitize_dataframe',
     'default_data_transformer',
     'limit_rows',
     'pipe',
     'sample',
     'to_csv',
     'to_json',
-    'to_values'
+    'to_values',
+    'check_data_type'
 )
