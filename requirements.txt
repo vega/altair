@@ -7,3 +7,4 @@ pytest
 six
 toolz
 vega_datasets
+flake8
