@@ -5,12 +5,12 @@ python:
   - 3.6
 
 before_install:
-  pip install pip --upgrade;
-  pip install -r requirements.txt;
+  - pip install pip --upgrade;
+  - pip install -r requirements.txt;
 
 install:
-  python setup.py install
+  - python setup.py install;
 
 script:
-  flake8 ./;
-  python -m pytest --pyargs altair;
+  - flake8 ./;
+  - python -m pytest --pyargs altair;
