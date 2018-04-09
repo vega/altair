@@ -58,6 +58,9 @@ def _prepare_data(data, data_transformers):
 def _get_variable(name):
     """Get a variable from the notebook namespace."""
     ip = IPython.get_ipython()
+    if ip is None:
+        raise ValueError("Magic command must be run within an IPython "
+                         "environemnt, in which get_ipython() is defined.")
     if name not in ip.user_ns:
         raise NameError("argument '{0}' does not match the "
                         "name of any defined variable".format(name))
