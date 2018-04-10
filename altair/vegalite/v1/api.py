@@ -9,17 +9,12 @@ import warnings
 import jsonschema
 import pandas as pd
 
-from .schema import core, channels, Undefined, SCHEMA_URL, SCHEMA_VERSION
+from .schema import core, channels, Undefined, SCHEMA_URL
 
 from .data import data_transformers, pipe
 from ... import utils
-from .display import renderers
+from .display import renderers, VEGALITE_VERSION, VEGA_VERSION, VEGAEMBED_VERSION
 from .theme import theme
-
-
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '2'
-VEGAEMBED_VERSION = '3'
 
 
 def _get_channels_mapping():

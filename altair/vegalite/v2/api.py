@@ -4,16 +4,12 @@ import jsonschema
 import six
 import pandas as pd
 
-from .schema import core, channels, mixins, Undefined, SCHEMA_URL, SCHEMA_VERSION
+from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
 from .data import data_transformers, pipe
-from .display import renderers
-from .theme import theme
 from ... import utils, expr
-
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '3.2'
-VEGAEMBED_VERSION = '3.0'
+from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
+from .theme import theme
 
 # ------------------------------------------------------------------------
 # Data Utilities
@@ -345,7 +341,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             # since this is top-level we add $schema if it's missing
             if '$schema' not in dct:
                 dct['$schema'] = SCHEMA_URL
-                
+
             # apply theme from theme registry
             dct = utils.update_nested(theme.get(), dct, copy=True)
 

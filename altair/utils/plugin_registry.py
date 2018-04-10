@@ -1,4 +1,4 @@
-from typing import Generic, List, TypeVar, Union, cast
+from typing import Generic, TypeVar, cast
 
 import entrypoints
 
@@ -26,7 +26,8 @@ class PluginRegistry(Generic[PluginType]):
     # in case an entrypoint is not found
     entrypoint_err_messages = {}
 
-    def __init__(self, entry_point_group: str = '', plugin_type=object) -> None:
+    def __init__(self, entry_point_group='', plugin_type=object):
+        # type: (str, Any) -> None
         """Create a PluginRegistry for a named entry point group.
 
         Parameters
@@ -44,7 +45,8 @@ class PluginRegistry(Generic[PluginType]):
         self._plugins = {}      # type: dict
         self._options = {}      # type: dict
 
-    def register(self, name: str, value: Union[PluginType, None]) -> PluginType:
+    def register(self, name, value):
+        # type: (str, Union[PluginType, None]) -> PluginType
         """Register a plugin by name and value.
 
         This method is used for explicit registration of a plugin and shouldn't be
@@ -69,19 +71,21 @@ class PluginRegistry(Generic[PluginType]):
             self._plugins[name] = value
             return value
 
-    def names(self) -> List[str]:
+    def names(self):
+        # type: () -> List[str]
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
         more_exts = [ep.name for ep in entrypoints.get_group_all(self.entry_point_group)]
         exts.extend(more_exts)
         return sorted(set(exts))
 
-    def enable(self, name: str) -> None:
+    def enable(self, name):
+        # type: (str) -> None
         """Enable a plugin by name."""
         if name not in self._plugins:
             try:
                 ep = entrypoints.get_single(self.entry_point_group, name)
-            except entrypoints.NoSuchEntryPoint as err:
+            except entrypoints.NoSuchEntryPoint:
                 if name in self.entrypoint_err_messages:
                     raise ValueError(self.entrypoint_err_messages[name])
                 else:
@@ -93,15 +97,18 @@ class PluginRegistry(Generic[PluginType]):
         self._active = self._plugins[name]
 
     @property
-    def active(self) -> str:
+    def active(self):
+        # type: () -> str
         """Return the name of the currently active plugin"""
         return self._active_name
 
-    def get(self) -> PluginType:
+    def get(self):
+        # type: () -> PluginType
         """Return the currently active plugin."""
         return self._active
 
-    def __repr__(self) -> str:
+    def __repr__(self):
+        # type: () -> str
         return ("{0}(active={1!r}, registered={2!r})"
                 "".format(self.__class__.__name__,
                           self._active_name,

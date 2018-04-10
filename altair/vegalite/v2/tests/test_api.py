@@ -223,7 +223,7 @@ def test_SelectionMapping():
 
     # test addition
     x = single + multi + interval
-    assert x.to_dict().keys() == {'selec_1', 'selec_2', 'selec_3'}
+    assert set(x.to_dict().keys()) == {'selec_1', 'selec_2', 'selec_3'}
 
     y = single.copy()
     y += multi
