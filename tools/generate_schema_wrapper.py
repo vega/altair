@@ -378,6 +378,7 @@ def vegalite_main():
         outfile = join(schemapath, '__init__.py')
         print("Writing {0}".format(outfile))
         with open(outfile, 'w', encoding='utf8') as f:
+            f.write("# flake8: noqa\n")
             f.write("from .core import *\nfrom .channels import *\n")
             f.write("SCHEMA_VERSION = {0!r}\n"
                     "".format(SCHEMA_VERSION[library][version]))
@@ -429,6 +430,7 @@ def vega_main():
         outfile = join(schemapath, '__init__.py')
         print("Writing {0}".format(outfile))
         with open(outfile, 'w', encoding='utf8') as f:
+            f.write("# flake8: noqa\n")
             f.write("from .core import *\n\n")
             f.write("SCHEMA_VERSION = {0!r}\n"
                     "".format(SCHEMA_VERSION[library][version]))
