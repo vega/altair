@@ -58,3 +58,24 @@ def test_basic_chart_from_dict(alt, basic_spec):
 
     # remainder of spec should match the basic spec
     assert dct == basic_spec
+
+
+@pytest.mark.parametrize('alt', [v1, v2])
+def test_theme_enable(alt):
+    active_theme = alt.theme.active
+
+    try:
+        alt.theme.enable('none')
+
+        chart = alt.Chart.from_dict(basic_spec)
+        dct = chart.to_dict()
+
+        # schema should be in the top level
+        assert dct.pop('$schema').startswith('http')
+
+        # remainder of spec should match the basic spec
+        # without any theme settings
+        assert dct == basic_spec
+    finally:
+        # reset the theme to its initial value
+        alt.theme.enable(active_theme)

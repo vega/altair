@@ -14,6 +14,7 @@ from .schema import core, channels, Undefined, SCHEMA_URL, SCHEMA_VERSION
 from .data import data_transformers, pipe
 from ... import utils
 from .display import renderers
+from .theme import theme
 
 
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
@@ -46,7 +47,6 @@ class Formula(core.Formula):
 # *************************************************************************
 
 class TopLevelMixin(object):
-    _default_spec_values = {"width": 400, "height": 300}
     _class_is_valid_at_instantiation = False
 
     def _prepare_data(self):
@@ -93,9 +93,8 @@ class TopLevelMixin(object):
             if '$schema' not in dct:
                 dct['$schema'] = SCHEMA_URL
 
-            # add default values if present
-            if copy._default_spec_values:
-                dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
+            # apply theme from theme registry
+            dct = utils.update_nested(theme.get(), dct, copy=True)
         return dct
 
     def savechart(self, fp, format=None, **kwargs):
@@ -244,9 +243,9 @@ class TopLevelMixin(object):
 
 class Chart(TopLevelMixin, core.ExtendedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
-                 width=400, height=300, **kwargs):
+                 **kwargs):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
-                                    width=width, height=height, **kwargs)
+                                    **kwargs)
 
     @utils.use_signature(core.MarkConfig)
     def mark_area(self, **kwargs):
