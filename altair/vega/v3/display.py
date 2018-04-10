@@ -59,7 +59,7 @@ class Vega(Displayable):
     schema_path = (__name__, 'schema/vega-schema.json')
 
 
-def vega(spec: dict, validate=True):
+def vega(spec, validate=True):
     """Render and optionally validate a Vega 3 spec.
 
     This will use the currently enabled renderer to render the spec.
