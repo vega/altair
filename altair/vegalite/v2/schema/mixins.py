@@ -427,16 +427,6 @@ class ConfigMethodMixin(object):
         copy.config["circle"] = core.MarkConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.Datasets)
-    def configure_datasets(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["datasets"] = core.Datasets(*args, **kwargs)
-        return copy
-
     @use_signature(core.MarkConfig)
     def configure_geoshape(self, *args, **kwargs):
         copy = self.copy(deep=False)
@@ -475,16 +465,6 @@ class ConfigMethodMixin(object):
         else:
             copy.config = copy.config.copy(deep=False)
         copy.config["mark"] = core.MarkConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.Padding)
-    def configure_padding(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["padding"] = core.Padding(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
@@ -565,26 +545,6 @@ class ConfigMethodMixin(object):
         else:
             copy.config = copy.config.copy(deep=False)
         copy.config["square"] = core.MarkConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.StackOffset)
-    def configure_stack(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["stack"] = core.StackOffset(*args, **kwargs)
-        return copy
-
-    @use_signature(core.StyleConfigIndex)
-    def configure_style(self, *args, **kwargs):
-        copy = self.copy(deep=False)
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
-        copy.config["style"] = core.StyleConfigIndex(*args, **kwargs)
         return copy
 
     @use_signature(core.TextConfig)
