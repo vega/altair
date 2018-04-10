@@ -19,13 +19,7 @@ See the following instructions for your chosen frontend:
 .. _installation-jupyterlab:
 
 Quick Start: Altair + JupyterLab
----------------------------------
-
-.. note::
-
-   Altair version 2.0 requires Python 3.5 or later.
-   It does not work with Python 2.
-
+--------------------------------
 We recommend installing Altair with JupyterLab. If you would like to use it
 with the classic notebook, see :ref:`installation-notebook`.
 
@@ -69,12 +63,6 @@ indexed in the left panel, or check out the :ref:`example-gallery` for more idea
 
 Quick Start: Altair + Notebook
 ------------------------------
-
-.. note::
-
-   Altair version 2.0 requires Python 3.5 or later.
-   It does not work with Python 2.
-
 Altair, the jupyter notebook, and their dependencies can be installed with ``pip``.
 Note that rendering Altair plots in the notebook also requires the vega3_ package
 to be installed and configured::
@@ -130,11 +118,6 @@ indexed in the left panel, or check out the :ref:`example-gallery` for more idea
 
 Quick Start: Altair + Colab
 ---------------------------
-.. note::
-
-   Altair version 2.0 requires Python 3.5 or later.
-   It does not work with Python 2.
-
 Altair can be used directly in Google's Colab_. Open a notebook, and run the
 following in a notebook cell:
 
