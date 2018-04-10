@@ -167,8 +167,7 @@ Aside: Examining the JSON Output
 Recall that Altair's main purpose is to convert plot specifications to a JSON
 string that conforms to the Vega-Lite schema.
 It is instructive here to use the :meth:`~Chart.to_json` method to inspect the
-JSON specification that Altair is exporting and sending as JSON to Vega-Lite.
-For clarity, we'll leave out the data and make a nicely-formatted output:
+JSON specification that Altair is exporting and sending as JSON to Vega-Lite:
 
 .. altair-plot::
     :output: stdout
@@ -177,7 +176,7 @@ For clarity, we'll leave out the data and make a nicely-formatted output:
         x='a',
         y='average(b)',
     )
-    print(chart.to_json(ignore=['data']))
+    print(chart.to_json())
 
 Notice here that ``encode(x='a')`` has been expanded to a JSON structure with
 a ``field`` name, and a ``type`` for the data.
