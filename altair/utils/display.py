@@ -33,12 +33,14 @@ class Displayable(object):
     renderers = None
     schema_path = ('altair', '')
 
-    def __init__(self, spec, validate=False) -> None:
+    def __init__(self, spec, validate=False):
+        # type: (dict, bool) ->: None
         self.spec = spec
         self.validate = validate
         self._validate()
 
-    def _validate(self) -> None:
+    def _validate(self):
+        # type: () -> None
         """Validate the spec against the schema."""
         schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode('utf-8'))
         validate(self.spec, schema_dict)
