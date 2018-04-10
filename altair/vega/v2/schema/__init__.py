@@ -1,4 +1,3 @@
-# flake8: noqa
 from .core import *
 
 SCHEMA_VERSION = 'v2.6.5'

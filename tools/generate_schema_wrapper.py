@@ -355,7 +355,7 @@ def generate_vegalite_config_mixin(schemafile):
     # configure_prop() methods
     for prop, prop_info in info.properties.items():
         classname = prop_info.refname
-        if classname:
+        if classname and classname.endswith('Config'):
             method = CONFIG_PROP_METHOD.format(classname=classname,
                                                prop=prop)
             code.append('\n    '.join(method.splitlines()))
