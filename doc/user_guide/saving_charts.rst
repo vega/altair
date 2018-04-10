@@ -22,8 +22,8 @@ However, saving these images requires some additional dependencies to run the
 javascript code necessary to interpret the Vega-Lite specification and output
 it in the form of an image.
 
-Altair is set up to do this conversion using selenium and headless chrome, which
-requires the following:
+Altair is set up to do this conversion using selenium and headless Chrome or
+Firefox, which requires the following:
 
 - the Selenium_ python package. This can be installed using::
 
@@ -33,16 +33,20 @@ requires the following:
 
       $ pip install selenium
 
-- a recent version of `Google Chrome`_. Please see the Chrome installation page
-  for installation details for your own operating system.
+- a recent version of `Google Chrome`_ or `Mozilla Firefox`_. Please see the
+  Chrome or Firefox installation page for installation details for your own
+  operating system.
 
-- `Chrome Driver`_, which allows Google Chrome to be run in a *headless* state
-  (i.e. to execute Javascript code without opening an actual browser window).
-  If you use homebrew on OSX, this can be installed with::
+- `Chrome Driver`_ or `Gecko Driver`_, which allows Chrome or Firefox to be run
+  in a *headless* state (i.e. to execute Javascript code without opening an
+  actual browser window).  If you use homebrew on OSX, this can be installed
+  with::
 
       $ brew install chromedriver
+      $ brew install geckodriver
 
-  See the ``chromedriver`` documentation for details on installation.
+  See the ``chromedriver`` or ``geckodriver`` documentation for details on
+  installation.
 
 Once those dependencies are installed, you should be able to save charts as
 ``png`` or ``svg``.
@@ -171,5 +175,7 @@ You can view the result here: `chart.html </_static/chart.html>`_.
 
 .. _Selenium: http://selenium-python.readthedocs.io/
 .. _Google Chrome: https://www.google.com/chrome/
+.. _Mozilla Firefox: https://www.mozilla.org/firefox/
 .. _Chrome Driver: https://sites.google.com/a/chromium.org/chromedriver/
+.. _Gecko Driver: https://github.com/mozilla/geckodriver/releases
 .. _vegaEmbed: https://github.com/vega/vega-embed

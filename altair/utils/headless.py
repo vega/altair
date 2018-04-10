@@ -12,11 +12,6 @@ try:
 except ImportError:
     webdriver = None
 
-try:
-    from selenium.webdriver.chrome.options import Options as ChromeOptions
-except ImportError:
-    ChromeOptions = None
-
 
 @contextlib.contextmanager
 def temporary_filename(**kwargs):
@@ -102,7 +97,8 @@ def spec_to_image_mimebundle(spec, format, mode,
                              vega_version,
                              vegaembed_version,
                              vegalite_version=None,
-                             driver_timeout=10):
+                             driver_timeout=10,
+                             webdriver_class=None):
     """Conver a vega/vega-lite specification to a PNG/SVG image
 
     Parameters
@@ -122,6 +118,8 @@ def spec_to_image_mimebundle(spec, format, mode,
     driver_timeout : int (optional)
         the number of seconds to wait for page load before raising an
         error (default: 10)
+    webdriver_class : Type[Union[webdriver.Chrome, webdriver.Firefox]]
+        Webdriver to use (default: webdriver.Chrome).
 
     Returns
     -------
@@ -130,8 +128,8 @@ def spec_to_image_mimebundle(spec, format, mode,
 
     Note
     ----
-    This requires the pillow, selenium, and chrome headless packages to be
-    installed.
+    This requires the pillow, selenium, and chromedriver or geckodriver
+    packages to be installed.
     """
     # TODO: allow package versions to be specified
     # TODO: detect & use local Jupyter caches of JS packages?
@@ -146,23 +144,29 @@ def spec_to_image_mimebundle(spec, format, mode,
     if webdriver is None:
         raise ImportError("selenium package is required "
                           "for saving chart as {0}".format(format))
-    if ChromeOptions is None:
-        raise ImportError("chromedriver is required "
-                          "for saving chart as {0}".format(format))
+    if webdriver_class is None:
+        webdriver_class = webdriver.Chrome
+    if issubclass(webdriver_class, webdriver.Chrome):
+        webdriver_options_class = webdriver.chrome.options.Options
+    elif issubclass(webdriver_class, webdriver.Firefox):
+        webdriver_options_class = webdriver.firefox.options.Options
+    else:
+        raise ValueError("Only Chrome and Firefox webdrivers are supported")
 
     html = HTML_TEMPLATE.format(vega_version=vega_version,
                                 vegalite_version=vegalite_version,
                                 vegaembed_version=vegaembed_version)
     
-    chrome_options = ChromeOptions()
-    chrome_options.add_argument("--headless")
+    webdriver_options = webdriver_options_class()
+    webdriver_options.add_argument("--headless")
 
-    # for linux/osx root user, need to add --no-sandbox option.
-    # since geteuid doesn't exist on windows, we don't check it
-    if hasattr(os, 'geteuid') and (os.geteuid() == 0):
-        chrome_options.add_argument('--no-sandbox')
+    if issubclass(webdriver_class, webdriver.Chrome):
+        # for linux/osx root user, need to add --no-sandbox option.
+        # since geteuid doesn't exist on windows, we don't check it
+        if hasattr(os, 'geteuid') and (os.geteuid() == 0):
+            webdriver_options.add_argument('--no-sandbox')
 
-    driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver = webdriver_class(options=webdriver_options)
 
     try:
         driver.set_page_load_timeout(driver_timeout)
