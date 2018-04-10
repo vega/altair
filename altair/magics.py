@@ -17,6 +17,13 @@ from altair.vegalite import v2 as vegalite_v2
 from altair.vega import v2 as vega_v2
 from altair.vega import v3 as vega_v3
 
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    YAML_AVAILABLE = False
+
+
 
 RENDERERS = {
   'vega': {
@@ -75,16 +82,16 @@ def _get_variable(name):
     nargs='*',
     help='local variable name of a pandas DataFrame to be used as the dataset')
 @magic_arguments.argument('-v', '--version', dest='version', default='3')
-@magic_arguments.argument('-y', '--yaml', dest='yaml', action='store_true')
+@magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vega(line, cell):
     """Cell magic for displaying Vega visualizations in CoLab.
 
-    %%vega [name1:variable1 name2:variable2 ...] [--yaml] [--version='3']
+    %%vega [name1:variable1 name2:variable2 ...] [--json] [--version='3']
 
     Visualize the contents of the cell using Vega, optionally specifying
     one or more pandas DataFrame objects to be used as the datasets.
 
-    If --yaml is passed, then input is parsed as yaml rather than json.
+    If --json is passed, then input is parsed as json rather than yaml.
     """
     args = magic_arguments.parse_argstring(vega, line)
 
@@ -107,11 +114,16 @@ def vega(line, cell):
     except ValueError:
         raise ValueError("Could not parse arguments: '{0}'".format(line))
 
-    if args.yaml:
-        import yaml
-        spec = yaml.load(cell)
-    else:
+    if args.json:
         spec = json.loads(cell)
+    elif not YAML_AVAILABLE:
+        try:
+            spec = json.loads(cell)
+        except JSONDecodeError:
+            raise ValueError("%%vega: spec is not valid JSON. "
+                             "Install pyyaml to parse spec as yaml")
+    else:
+        spec = yaml.load(cell)
 
     if data:
         spec['data'] = []
@@ -131,16 +143,16 @@ def vega(line, cell):
     nargs='?',
     help='local variablename of a pandas DataFrame to be used as the dataset')
 @magic_arguments.argument('-v', '--version', dest='version', default='2')
-@magic_arguments.argument('-y', '--yaml', dest='yaml', action='store_true')
+@magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vegalite(line, cell):
     """Cell magic for displaying vega-lite visualizations in CoLab.
 
-    %%vegalite [dataframe] [--yaml] [--version=2]
+    %%vegalite [dataframe] [--json] [--version=2]
 
     Visualize the contents of the cell using Vega-Lite, optionally
     specifying a pandas DataFrame object to be used as the dataset.
 
-    if --yaml is passed, then input is parsed as yaml rather than json.
+    if --json is passed, then input is parsed as json rather than yaml.
     """
     args = magic_arguments.parse_argstring(vegalite, line)
     version = args.version
@@ -148,11 +160,17 @@ def vegalite(line, cell):
     VegaLite = RENDERERS['vega-lite'][version]
     data_transformers = TRANSFORMERS['vega-lite'][version]
 
-    if args.yaml:
-        import yaml
-        spec = yaml.load(cell)
-    else:
+    if args.json:
         spec = json.loads(cell)
+    elif not YAML_AVAILABLE:
+        try:
+            spec = json.loads(cell)
+        except JSONDecodeError:
+            raise ValueError("%%vegalite: spec is not valid JSON. "
+                             "Install pyyaml to parse spec as yaml")
+    else:
+        spec = yaml.load(cell)
+
     if args.data is not None:
         data = _get_variable(args.data)
         spec['data'] = _prepare_data(data, data_transformers)
