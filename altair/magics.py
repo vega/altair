@@ -4,6 +4,7 @@ Magic functions for rendering vega/vega-lite specifications
 __all__ = ['vega', 'vegalite']
 
 import json
+import warnings
 
 import IPython
 from IPython.core import magic, magic_arguments

@@ -1,6 +1,5 @@
 import json
 
-import pandas as pd
 from IPython import InteractiveShell
 
 from altair.vegalite.v2 import VegaLite
