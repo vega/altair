@@ -78,6 +78,20 @@ def test_vegalite_magic_data_included():
     result = _ipshell.run_cell('%%vegalite\n' + json.dumps(VEGALITE_SPEC))
     assert isinstance(result.result, VegaLite)
     assert VEGALITE_SPEC == result.result.spec
+    
+
+def test_vegalite_magic_json_flag():
+    result = _ipshell.run_cell('%%vegalite --json\n'
+                               + json.dumps(VEGALITE_SPEC))
+    assert isinstance(result.result, VegaLite)
+    assert VEGALITE_SPEC == result.result.spec
+
+
+def test_vegalite_magic_pandas_data():
+    spec = {key: val for key, val in VEGALITE_SPEC.items() if key != 'data'}
+    result = _ipshell.run_cell('%%vegalite table\n' + json.dumps(spec))
+    assert isinstance(result.result, VegaLite)
+    assert VEGALITE_SPEC == result.result.spec
 
 
 def test_vega_magic_data_included():
@@ -86,11 +100,10 @@ def test_vega_magic_data_included():
     assert VEGA_SPEC == result.result.spec
 
 
-def test_vegalite_magic_pandas_data():
-    spec = {key: val for key, val in VEGALITE_SPEC.items() if key != 'data'}
-    result = _ipshell.run_cell('%%vegalite table\n' + json.dumps(spec))
-    assert isinstance(result.result, VegaLite)
-    assert VEGALITE_SPEC == result.result.spec
+def test_vega_magic_json_flag():
+    result = _ipshell.run_cell('%%vega --json\n' + json.dumps(VEGA_SPEC))
+    assert isinstance(result.result, Vega)
+    assert VEGA_SPEC == result.result.spec
 
 
 def test_vega_magic_pandas_data():
