@@ -1,12 +1,12 @@
 import json
 
 import pandas as pd
-from IPython.terminal.embed import InteractiveShellEmbed
+from IPython import InteractiveShell
 
 from altair.vegalite.v2 import VegaLite
 from altair.vega.v3 import Vega
 
-_ipshell = InteractiveShellEmbed()
+_ipshell = InteractiveShell.instance()
 _ipshell.run_cell('from altair.magics import vega, vegalite')
 
 DATA_RECORDS = [{'amount': 28, 'category': 'A'},
