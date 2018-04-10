@@ -299,3 +299,23 @@ def test_LookupData():
     assert dct['data'] == {'values': [{'x': 1, 'y': 4},
                                       {'x': 2, 'y': 5},
                                       {'x': 3, 'y': 6}]}
+
+
+def test_themes():
+    chart = alt.Chart('foo.txt').mark_point()
+    active = alt.theme.active
+
+    try:
+        alt.theme.enable('default')
+        assert chart.to_dict()['config'] == {"view": {"width": 400, "height": 300}}
+
+        alt.theme.enable('opaque')
+        assert chart.to_dict()['config'] == {"background": "white",
+                                             "view": {"width": 400, "height": 300}}
+
+        alt.theme.enable('none')
+        assert 'config' not in chart.to_dict()
+
+    finally:
+        # re-enable the original active theme
+        alt.theme.enable(active)

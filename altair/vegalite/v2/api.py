@@ -8,6 +8,7 @@ from .schema import core, channels, mixins, Undefined, SCHEMA_URL, SCHEMA_VERSIO
 
 from .data import data_transformers, pipe
 from .display import renderers
+from .theme import theme
 from ... import utils, expr
 
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
@@ -306,7 +307,6 @@ def condition(predicate, if_true, if_false, **kwargs):
 
 class TopLevelMixin(mixins.ConfigMethodMixin):
     """Mixin for top-level chart objects such as Chart, LayeredChart, etc."""
-    _default_spec_values = {"config": {"view": {"width": 400, "height": 300}}}
     _class_is_valid_at_instantiation = False
 
     def to_dict(self, *args, **kwargs):
@@ -345,10 +345,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             # since this is top-level we add $schema if it's missing
             if '$schema' not in dct:
                 dct['$schema'] = SCHEMA_URL
+                
+            # apply theme from theme registry
+            dct = utils.update_nested(theme.get(), dct, copy=True)
 
-            # add default values if present
-            if copy._default_spec_values:
-                dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
         return dct
 
     def savechart(self, fp, format=None, **kwargs):
