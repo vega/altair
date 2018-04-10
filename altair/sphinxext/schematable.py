@@ -1,5 +1,4 @@
 import importlib
-import jsonschema
 import warnings
 
 from docutils.parsers.rst import Directive
@@ -85,9 +84,6 @@ class AltairObjectTableDirective(Directive):
     required_arguments = 1
 
     def run(self):
-        env = self.state.document.settings.env
-        app = env.app
-
         objectname = self.arguments[0]
         modname, classname = objectname.rsplit('.', 1)
         module = importlib.import_module(modname)
