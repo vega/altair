@@ -79,9 +79,6 @@ Vega-Lite JSON data can be rendered in the following user-interfaces:
 
 ## Installation
 
-**Note**: Altair version 2.0 requires Python 3.5 or later.
-It does not currently work with Python 2.
-
 To use Altair for visualization, you need to install two sets of tools
 
 1. The core Altair Package and its dependencies
