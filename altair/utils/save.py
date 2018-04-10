@@ -72,7 +72,7 @@ def save(chart, fp, vega_version, vegaembed_version,
 
     if format == 'json':
         json_spec = json.dumps(spec, **json_kwds)
-        write_file_or_filename(fp, json_spec, mode='w')
+        write_file_or_filename(fp, six.u(json_spec), mode='w')
     elif format == 'html':
         mimebundle = spec_to_html_mimebundle(spec=spec, mode=mode, opt=opt,
                                              vega_version=vega_version,
