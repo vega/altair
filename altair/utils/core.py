@@ -202,28 +202,28 @@ def parse_shorthand(shorthand, data=None):
     >>> parse_shorthand('name')
     {'field': 'name'}
 
-    >>> parse_shorthand('average(col)')
+    >>> parse_shorthand('average(col)')  # doctest: +SKIP
     {'aggregate': 'average', 'field': 'col'}
 
-    >>> parse_shorthand('foo:O')
+    >>> parse_shorthand('foo:O')  # doctest: +SKIP
     {'field': 'foo', 'type': 'ordinal'}
 
-    >>> parse_shorthand('min(foo):Q')
+    >>> parse_shorthand('min(foo):Q')  # doctest: +SKIP
     {'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'}
 
-    >>> parse_shorthand('foo', data)
+    >>> parse_shorthand('foo', data)  # doctest: +SKIP
     {'field': 'foo', 'type': 'nominal'}
 
-    >>> parse_shorthand('bar', data)
+    >>> parse_shorthand('bar', data)  # doctest: +SKIP
     {'field': 'bar', 'type': 'quantitative'}
 
-    >>> parse_shorthand('bar:O', data)
+    >>> parse_shorthand('bar:O', data)  # doctest: +SKIP
     {'field': 'bar', 'type': 'ordinal'}
 
-    >>> parse_shorthand('sum(bar)', data)
+    >>> parse_shorthand('sum(bar)', data)  # doctest: +SKIP
     {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
 
-    >>> parse_shorthand('count()', data)
+    >>> parse_shorthand('count()', data)  # doctest: +SKIP
     {'aggregate': 'count', 'type': 'quantitative'}
     """
     attrs = _parse_shorthand(shorthand)
@@ -305,9 +305,9 @@ def update_nested(original, update, copy=False):
     --------
     >>> original = {'x': {'b': 2, 'c': 4}}
     >>> update = {'x': {'b': 5, 'd': 6}, 'y': 40}
-    >>> update_nested(original, update)
+    >>> update_nested(original, update)  # doctest: +SKIP
     {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
-    >>> original
+    >>> original  # doctest: +SKIP
     {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     """
     if copy:
