@@ -487,7 +487,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         ...     mean_acc='mean(Acceleration)',
         ...     groupby=['Origin']
         ... )
-        >>> print(chart1.transform[0].to_json())
+        >>> print(chart1.transform[0].to_json())  # doctest: +NORMALIZE_WHITESPACE
         {
           "aggregate": [
             {
@@ -552,20 +552,20 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> chart = alt.Chart().transform_bin("x_binned", "x")
         >>> chart.transform[0]
         BinTransform({
+          as: 'x_binned',
           bin: True,
-          field: 'x',
-          as: 'x_binned'
+          field: 'x'
         })
 
         >>> chart = alt.Chart().transform_bin("x_binned", "x",
         ...                                   bin=alt.Bin(maxbins=10))
         >>> chart.transform[0]
         BinTransform({
+          as: 'x_binned',
           bin: BinParams({
             maxbins: 10
           }),
-          field: 'x',
-          as: 'x_binned'
+          field: 'x'
         })
 
         See Also
@@ -607,8 +607,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> chart = alt.Chart().transform_calculate(y = 2 * expr.sin(datum.x))
         >>> chart.transform[0]
         CalculateTransform({
-          calculate: (2 * sin(datum.x)),
-          as: 'y'
+          as: 'y',
+          calculate: (2 * sin(datum.x))
         })
 
         It's also possible to pass the ``CalculateTransform`` arguments directly:
@@ -617,8 +617,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> chart = alt.Chart().transform_calculate(**kwds)
         >>> chart.transform[0]
         CalculateTransform({
-          calculate: '2 * sin(datum.x)',
-          as: 'y'
+          as: 'y',
+          calculate: '2 * sin(datum.x)'
         })
 
         As the first form is easier to write and understand, that is the

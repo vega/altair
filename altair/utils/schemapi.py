@@ -169,7 +169,7 @@ class SchemaBase(object):
     def __repr__(self):
         if self._kwds:
             args = ("{0}: {1!r}".format(key, val)
-                    for key, val in self._kwds.items()
+                    for key, val in sorted(self._kwds.items())
                     if val is not Undefined)
             args = '\n' + ',\n'.join(args)
             return "{0}({{{1}\n}})".format(self.__class__.__name__,
