@@ -8,14 +8,9 @@ import os
 import tempfile
 
 try:
-    from selenium import webdriver
+    import selenium.webdriver
 except ImportError:
-    webdriver = None
-
-try:
-    from selenium.webdriver.chrome.options import Options as ChromeOptions
-except ImportError:
-    ChromeOptions = None
+    selenium = None
 
 
 @contextlib.contextmanager
@@ -102,7 +97,8 @@ def spec_to_image_mimebundle(spec, format, mode,
                              vega_version,
                              vegaembed_version,
                              vegalite_version=None,
-                             driver_timeout=10):
+                             driver_timeout=10,
+                             webdriver='chrome'):
     """Conver a vega/vega-lite specification to a PNG/SVG image
 
     Parameters
@@ -122,6 +118,8 @@ def spec_to_image_mimebundle(spec, format, mode,
     driver_timeout : int (optional)
         the number of seconds to wait for page load before raising an
         error (default: 10)
+    webdriver : string {'chrome' | 'firefox'}
+        Webdriver to use.
 
     Returns
     -------
@@ -130,8 +128,9 @@ def spec_to_image_mimebundle(spec, format, mode,
 
     Note
     ----
-    This requires the pillow, selenium, and chrome headless packages to be
-    installed.
+    This requires the pillow and selenium Python modules to be installed.
+    Additionally it requires either chromedriver (if webdriver=='chrome') or
+    geckodriver (if webdriver=='firefox')
     """
     # TODO: allow package versions to be specified
     # TODO: detect & use local Jupyter caches of JS packages?
@@ -143,26 +142,32 @@ def spec_to_image_mimebundle(spec, format, mode,
     if mode == 'vega-lite' and vegalite_version is None:
         raise ValueError("must specify vega-lite version")
 
-    if webdriver is None:
+    if selenium is None:
         raise ImportError("selenium package is required "
                           "for saving chart as {0}".format(format))
-    if ChromeOptions is None:
-        raise ImportError("chromedriver is required "
-                          "for saving chart as {0}".format(format))
+    if webdriver == 'chrome':
+        webdriver_class = selenium.webdriver.Chrome
+        webdriver_options_class = selenium.webdriver.chrome.options.Options
+    elif webdriver == 'firefox':
+        webdriver_class = selenium.webdriver.Firefox
+        webdriver_options_class = selenium.webdriver.firefox.options.Options
+    else:
+        raise ValueError("webdriver can only be 'chrome' or 'firefox'")
 
     html = HTML_TEMPLATE.format(vega_version=vega_version,
                                 vegalite_version=vegalite_version,
                                 vegaembed_version=vegaembed_version)
     
-    chrome_options = ChromeOptions()
-    chrome_options.add_argument("--headless")
+    webdriver_options = webdriver_options_class()
+    webdriver_options.add_argument("--headless")
 
-    # for linux/osx root user, need to add --no-sandbox option.
-    # since geteuid doesn't exist on windows, we don't check it
-    if hasattr(os, 'geteuid') and (os.geteuid() == 0):
-        chrome_options.add_argument('--no-sandbox')
+    if issubclass(webdriver_class, selenium.webdriver.Chrome):
+        # for linux/osx root user, need to add --no-sandbox option.
+        # since geteuid doesn't exist on windows, we don't check it
+        if hasattr(os, 'geteuid') and (os.geteuid() == 0):
+            webdriver_options.add_argument('--no-sandbox')
 
-    driver = webdriver.Chrome(chrome_options=chrome_options)
+    driver = webdriver_class(options=webdriver_options)
 
     try:
         driver.set_page_load_timeout(driver_timeout)

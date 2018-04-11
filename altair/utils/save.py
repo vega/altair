@@ -9,7 +9,7 @@ from .html import spec_to_html_mimebundle
 
 def save(chart, fp, vega_version, vegaembed_version,
          format=None, mode=None, vegalite_version=None,
-         opt=None, json_kwds=None):
+         opt=None, json_kwds=None, webdriver='chrome'):
     """Save a chart to file in a variety of formats
 
     Supported formats are [json, html, png, svg]
@@ -39,6 +39,8 @@ def save(chart, fp, vega_version, vegaembed_version,
     json_kwds : dict
         Additional keyword arguments are passed to the output method
         associated with the specified format.
+    webdriver : string {'chrome' | 'firefox'}
+        Webdriver to use.
     """
     if json_kwds is None:
         json_kwds = {}
@@ -84,7 +86,8 @@ def save(chart, fp, vega_version, vegaembed_version,
         mimebundle = spec_to_image_mimebundle(spec=spec, format=format, mode=mode,
                                               vega_version=vega_version,
                                               vegalite_version=vegalite_version,
-                                              vegaembed_version=vegaembed_version)
+                                              vegaembed_version=vegaembed_version,
+                                              webdriver=webdriver)
         if format == 'png':
             write_file_or_filename(fp, mimebundle['image/png'], mode='wb')
         else:
