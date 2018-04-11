@@ -7,7 +7,7 @@ import json
 import warnings
 
 import IPython
-from IPython.core import magic, magic_arguments
+from IPython.core import magic_arguments
 import pandas as pd
 import six
 from toolz import pipe
@@ -40,12 +40,12 @@ RENDERERS = {
 TRANSFORMERS = {
   'vega': {
       # Vega doesn't yet have specific data transformers; use vegalite
-      '2': vegalite_v1.data.data_transformers,
-      '3': vegalite_v2.data.data_transformers,
+      '2': vegalite_v1.data_transformers,
+      '3': vegalite_v2.data_transformers,
   },
   'vega-lite': {
-      '1': vegalite_v1.data.data_transformers,
-      '2': vegalite_v2.data.data_transformers,
+      '1': vegalite_v1.data_transformers,
+      '2': vegalite_v2.data_transformers,
   }
 }
 
@@ -75,7 +75,6 @@ def _get_variable(name):
     return ip.user_ns[name]
 
 
-@magic.register_cell_magic
 @magic_arguments.magic_arguments()
 @magic_arguments.argument(
     'data',
@@ -136,7 +135,6 @@ def vega(line, cell):
     return Vega(spec)
 
 
-@magic.register_cell_magic
 @magic_arguments.magic_arguments()
 @magic_arguments.argument(
     'data',
