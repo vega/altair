@@ -125,8 +125,8 @@ for Vega-Lite/Vega described in :ref:`importing`.
 
 .. _display-notebook:
 
-Jupyter Notebook
-~~~~~~~~~~~~~~~~
+Displaying in the Jupyter Notebook
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To render Vega-Lite 2.x or Vega 3.x in the Jupyter Notebook (as mentioned above
 we recommend these versions), you will need to install and enable the
@@ -166,11 +166,11 @@ Once you have installed one of these packages, enable the corresponding renderer
 
 .. _display-jupyterlab:
 
-JupyterLab
-~~~~~~~~~~
+Displaying in JupyterLab
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 JupyterLab 0.31
-+++++++++++++++++
++++++++++++++++
 
 Version 0.31 of JupyterLab includes built-in support for VegaLite 1.x and Vega
 2.x. This will work with Altair's Vega-Lite 1.x API out of the box::
@@ -188,7 +188,7 @@ and then import Altair as::
     import altair as alt
 
 JupyterLab 0.32 and later
-+++++++++++++++++++++++++++
++++++++++++++++++++++++++
 
 JupyterLab versions 0.32 and later include built-in support for Vega-Lite 2.x and
 Vega 3.x. These will work out of the box with Altair imported as::
@@ -203,16 +203,16 @@ An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
 
 .. _display-nteract:
 
-nteract
-~~~~~~~
+Displaying in nteract
+~~~~~~~~~~~~~~~~~~~~~
 
 nteract will render Vega-Lite 1.x and Vega out of the box. Support for Vega-Lite 2.x
 and Vega 3.x will likely be released soon.
 
 .. _display-colab:
 
-Colab
-~~~~~
+Displaying in Colab
+~~~~~~~~~~~~~~~~~~~
 Google's Colab is a cloud-based notebook backed by Google Drive. Altair works
 with the public version of Colab once the package is installed and ``'colab'``
 renderer is enabled.
