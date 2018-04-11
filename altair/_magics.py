@@ -40,12 +40,12 @@ RENDERERS = {
 TRANSFORMERS = {
   'vega': {
       # Vega doesn't yet have specific data transformers; use vegalite
-      '2': vegalite_v1.data.data_transformers,
-      '3': vegalite_v2.data.data_transformers,
+      '2': vegalite_v1.data_transformers,
+      '3': vegalite_v2.data_transformers,
   },
   'vega-lite': {
-      '1': vegalite_v1.data.data_transformers,
-      '2': vegalite_v2.data.data_transformers,
+      '1': vegalite_v1.data_transformers,
+      '2': vegalite_v2.data_transformers,
   }
 }
 
@@ -75,7 +75,6 @@ def _get_variable(name):
     return ip.user_ns[name]
 
 
-@magic.register_cell_magic
 @magic_arguments.magic_arguments()
 @magic_arguments.argument(
     'data',
@@ -119,7 +118,7 @@ def vega(line, cell):
     elif not YAML_AVAILABLE:
         try:
             spec = json.loads(cell)
-        except json.JSONDecodeError:
+        except JSONDecodeError:
             raise ValueError("%%vega: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:
@@ -136,7 +135,6 @@ def vega(line, cell):
     return Vega(spec)
 
 
-@magic.register_cell_magic
 @magic_arguments.magic_arguments()
 @magic_arguments.argument(
     'data',
@@ -165,7 +163,7 @@ def vegalite(line, cell):
     elif not YAML_AVAILABLE:
         try:
             spec = json.loads(cell)
-        except json.JSONDecodeError:
+        except JSONDecodeError:
             raise ValueError("%%vegalite: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:

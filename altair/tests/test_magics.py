@@ -6,7 +6,7 @@ from altair.vegalite.v2 import VegaLite
 from altair.vega.v3 import Vega
 
 _ipshell = InteractiveShell.instance()
-_ipshell.run_cell('from altair.magics import vega, vegalite')
+_ipshell.run_cell('%load_ext altair')
 
 DATA_RECORDS = [{'amount': 28, 'category': 'A'},
                 {'amount': 55, 'category': 'B'},
@@ -78,7 +78,7 @@ def test_vegalite_magic_data_included():
     result = _ipshell.run_cell('%%vegalite\n' + json.dumps(VEGALITE_SPEC))
     assert isinstance(result.result, VegaLite)
     assert VEGALITE_SPEC == result.result.spec
-    
+
 
 def test_vegalite_magic_json_flag():
     result = _ipshell.run_cell('%%vegalite --json\n'
