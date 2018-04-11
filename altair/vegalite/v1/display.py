@@ -34,7 +34,7 @@ DEFAULT_DISPLAY = """\
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
-https://altair-viz.github.io/user_guide/display.html
+https://altair-viz.github.io/user_guide/renderers.html
 """
 
 renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
@@ -85,6 +85,7 @@ def colab_renderer(spec):
 
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
+renderers.register('nteract', default_renderer)
 renderers.register('json', json_renderer)
 renderers.register('png', png_renderer)
 renderers.register('svg', svg_renderer)
