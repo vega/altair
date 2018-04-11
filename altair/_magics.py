@@ -7,7 +7,7 @@ import json
 import warnings
 
 import IPython
-from IPython.core import magic, magic_arguments
+from IPython.core import magic_arguments
 import pandas as pd
 import six
 from toolz import pipe
@@ -118,7 +118,7 @@ def vega(line, cell):
     elif not YAML_AVAILABLE:
         try:
             spec = json.loads(cell)
-        except JSONDecodeError:
+        except json.JSONDecodeError:
             raise ValueError("%%vega: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:
@@ -163,7 +163,7 @@ def vegalite(line, cell):
     elif not YAML_AVAILABLE:
         try:
             spec = json.loads(cell)
-        except JSONDecodeError:
+        except json.JSONDecodeError:
             raise ValueError("%%vegalite: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:
