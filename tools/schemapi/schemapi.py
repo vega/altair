@@ -342,7 +342,8 @@ class SchemaBase(object):
                                                       or cls._schema
                                                       or schema)
         while '$ref' in schema:
-            ref, schema = resolver.resolve(schema['$ref'])
+            with resolver.resolving(schema['$ref']) as resolved:
+                schema = resolved
         return schema
 
     def __dir__(self):
