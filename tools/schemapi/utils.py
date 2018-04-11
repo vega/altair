@@ -22,7 +22,8 @@ def resolve_references(schema, root=None):
     """Resolve References within a JSON schema"""
     resolver = jsonschema.RefResolver.from_schema(root or schema)
     while '$ref' in schema:
-        ref, schema = resolver.resolve(schema['$ref'])
+        with resolver.resolving(schema['$ref']) as resolved:
+            schema = resolved
     return schema
 
 
