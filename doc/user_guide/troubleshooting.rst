@@ -67,7 +67,7 @@ it can mean one of two things is wrong
        alt.__version__
 
    If the version is older than 2.0, then exit JupyterLab and follow the
-   installation instructions at :installation-jupyterlab:.
+   installation instructions at :ref:`installation-jupyterlab`.
 
 2. You have enabled the wrong renderer. JupyterLab works with the default
    renderer, but if you have used ``alt.renderers.enable(xxx)`` to enable
