@@ -20,17 +20,26 @@
 
        python setup.py sdist upload
 
-6. update version to, e.g. 2.1.0dev
+6. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io)
+
+       cd docs
+       make clean
+       make html
+       bash sync_website.sh
+
+7. update version to, e.g. 2.1.0dev
 
    - in altair/__init__.py
    - in doc/conf.py (two places)
 
-7. Commit change and push to master
+8. Commit change and push to master
 
        git add altair -u
        git commit -m "MAINT: bump version to 2.1.0dev"
        git push origin master
 
-8. Update recipe on conda-forge/altair-feedstock
+9. Update version and hash in the recipe at conda-forge/altair-feedstock:
+   https://github.com/conda-forge/altair-feedstock/blob/master/recipe/meta.yaml
+   & submit a pull request
 
     
