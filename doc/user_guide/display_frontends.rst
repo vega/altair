@@ -220,7 +220,7 @@ renderer is enabled.
 
 At the top of your Colab session, run the following::
 
-    !pip install altair
+    !pip install altair==2.0.0rc2
     import altair as alt
     alt.renderers.enable('colab')
 

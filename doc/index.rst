@@ -15,6 +15,11 @@ Altair's API is simple, friendly and consistent and built on top of the
 powerful Vega-Lite_ visualization grammar. This elegant simplicity produces
 beautiful and effective visualizations with a minimal amount of code.
 
+.. note::
+
+   The documentation on this site refers to the version 2.0.0rc2 release candidate,
+   released April 12, 2018. See :ref:`installation` for installation information.
+
 .. toctree::
    :maxdepth: 1
    :caption: Getting Started

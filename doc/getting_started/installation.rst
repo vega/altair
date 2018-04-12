@@ -25,7 +25,7 @@ with the classic notebook, see :ref:`installation-notebook`.
 
 To install JupyterLab and Altair with pip, run the following commands::
 
-    $ pip install jupyterlab altair
+    $ pip install jupyterlab altair==2.0.0rc2
     $ jupyter labextension install @jupyterlab/vega3-extension  # not needed for JupyterLab 0.32 or newer
 
 Once this is finished, run::
@@ -69,7 +69,7 @@ Altair, the jupyter notebook, and their dependencies can be installed with ``pip
 Note that rendering Altair plots in the notebook also requires the vega3_ package
 to be installed and configured::
 
-    $ pip install altair notebook vega3
+    $ pip install notebook vega3 altair==2.0.0rc2
     $ jupyter nbextension install --sys-prefix --py vega3 # not needed in notebook >= 5.3
 
 Once the packages and extensions are installed, launch the notebook by running::
@@ -125,7 +125,7 @@ Quick Start: Altair + Colab
 Altair can be used directly in Google's Colab_. Open a notebook, and run the
 following in a notebook cell:
 
-    !pip install altair
+    !pip install altair==2.0.0rc2
     import altair as alt
     # for colab only run this command once per session
     alt.renderers.enable('colab')
@@ -158,9 +158,14 @@ indexed in the left panel, or check out the :ref:`example-gallery` for more idea
 
 Installation with Conda
 -----------------------
-If you wish to use conda instead of pip to install Altair and related packages,
-the ``conda-forge`` channel is the best option. Simply the above ``pip install``
-commands with the equivalent ``conda install`` commands.
+Conda installation is not available for the version 2.0 release candidate.
+If you are in a conda environment, you can install altair using pip::
+
+    $ conda install pip
+    $ pip install altair==2.0.0rc2
+
+When the final version 2.0 release is pushed, we will make it available via
+conda-forge.
 
 
 .. _install-dependencies:
