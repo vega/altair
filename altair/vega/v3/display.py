@@ -29,7 +29,7 @@ DEFAULT_DISPLAY = """\
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
-https://altair-viz.github.io/user_guide/renderers.html
+https://altair-viz.github.io/user_guide/troubleshooting.html
 """
 
 renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)

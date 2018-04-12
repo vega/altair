@@ -23,7 +23,7 @@ Quick Start: Altair + JupyterLab
 We recommend installing Altair with JupyterLab. If you would like to use it
 with the classic notebook, see :ref:`installation-notebook`.
 
-To install Altair with pip, run the following commands::
+To install JupyterLab and Altair with pip, run the following commands::
 
     $ pip install jupyterlab altair
     $ jupyter labextension install @jupyterlab/vega3-extension  # not needed for JupyterLab 0.32 or newer
@@ -32,7 +32,9 @@ Once this is finished, run::
 
     $ jupyter lab
 
-In the browser window that launches, under "Notebook" click "Python 3".
+In the browser window that launches, under "Notebook" click the first available
+kernel (it should say "Python 2" or "Python 3" depending on which Python version
+you are running).
 
 In the notebook that opens, you can run the following code to ensure everything
 is properly set up:
@@ -52,7 +54,7 @@ is properly set up:
 
 If the plot does not render, ensure you have installed the exact versions
 mentioned above, and if it still does not work see
-:ref:`display-troubleshooting` for help.
+:ref:`troubleshooting-jupyterlab` for help.
 
 Once things are up and running, you may wish to go through the tutorials at
 :ref:`starting` and :ref:`exploring-weather`, read through the User Guide
@@ -75,7 +77,9 @@ Once the packages and extensions are installed, launch the notebook by running::
     $ jupyter notebook
 
 In the browser window that launches, click the *New* drop-down menu and
-select "Python 3".under "Notebook" click "Python 3".
+select either "Python 2" or "Python 3", depending on which version of Python
+you are using (note that the kernel you choose *must* match the kernel where
+you installed the vega3 extension).
 
 In the notebook that opens, you can run the following code to ensure everything
 is properly set up:
@@ -96,10 +100,6 @@ is properly set up:
         color='species'
     )
 
-If the plot does not render, ensure you have installed the exact versions
-mentioned above, and if it still does not work see
-:ref:`display-troubleshooting` for help.
-
 .. note::
 
     For the classic Jupyter notebook (not JupyterLab), each time you launch a
@@ -109,6 +109,10 @@ mentioned above, and if it still does not work see
 
     If you neglect this step, charts will not be rendered, but instead
     displayed as a textual representation.
+
+If the plot does not render, ensure you have installed the exact versions
+mentioned above, and if it still does not work see
+:ref:`troubleshooting-notebook` for help.
 
 Once things are up and running, you may wish to go through the tutorials at
 :ref:`starting` and :ref:`exploring-weather`, read through the User Guide
@@ -126,7 +130,7 @@ following in a notebook cell:
     # for colab only run this command once per session
     alt.renderers.enable('colab')
 
-With this set up, paste the following code to check if renderings are working
+Once you have run this, paste the following code to check if renderings are working
 correctly:
 
 .. altair-plot::
@@ -167,7 +171,7 @@ Dependencies
 Altair has the following dependencies, all of which are installed automatically
 with the above installation commands:
 
-- python 2.7 or 3.5 or higher
+- python 2.7, 3.5 or newer
 - entrypoints_
 - IPython_
 - jsonschema_

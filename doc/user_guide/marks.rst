@@ -49,3 +49,11 @@ arguments to represent points as red semi-transparent filled circles:
        x='Horsepower:Q',
        y='Miles_per_Gallon:Q'
    )
+
+The additional arguments to ``mark_*()`` methods are passed along to an
+associated :class:`MarkDef` instance, which supports the following attributes:
+
+.. altair-object-table:: altair.MarkDef
+
+Marks can also be configured globally using chart-level configurations; see
+:ref:`config-mark` for details.
