@@ -1,4 +1,4 @@
-.. _display-troubleshooting
+.. _display-troubleshooting:
 
 Display Troubleshooting
 =======================
@@ -9,17 +9,17 @@ into strange states where things don't immediately work as expected.
 
 This section summarizes some of the most common problems and their solutions.
 
-.. _trouble-shooting-jupyterlab
+.. _troubleshooting-jupyterlab:
 
 Trouble-shooting Altair with JupyterLab
 ---------------------------------------
 
-.. _jupyterlab-vega-lite-2-object
+.. _jupyterlab-vega-lite-2-object:
 
-VegaLite 2 Object
-~~~~~~~~~~~~~~~~~
-**If you are using the Jupyter notebook rather than JupyterLab, see
-:ref:`notebook-vega-lite-2-object` for information on this error**
+JupyterLab: VegaLite 2 Object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*If you are using the Jupyter notebook rather than JupyterLab, then refer to*
+:ref:`notebook-vega-lite-2-object`
 
 If you are using JupyterLab (not Jupyter notebook) and see the following output::
 
@@ -87,17 +87,17 @@ it can mean one of two things is wrong
    is only necessary if you've somewhere changed the renderer explicitly).
 
 
-.. _trouble-shooting-jupyterlab
+.. _troubleshooting-notebook:
 
 Trouble-shooting Altair with Notebook
 -------------------------------------
 
-.. _notebook-vega-lite-2-object
+.. _notebook-vega-lite-2-object:
 
-VegaLite 2 object
-~~~~~~~~~~~~~~~~~
-**If you are using JupyterLab rather than the Jupyter notebook, see
-:ref:`jupyterlab-vega-lite-2-object` for information on this error**
+Notebook: VegaLite 2 object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*If you are using JupyterLab rather than the Jupyter notebook, then refer to*
+:ref:`jupyterlab-vega-lite-2-object`
 
 If you are using the notebook (not JupyterLab) and see the the following output::
 
@@ -110,8 +110,9 @@ Jupyter extension, and then enable it using::
     import altair as alt
     alt.renderers.enable('notebook')
 
-in order to render charts in the classic notebook. If the above code gives an
-error::
+in order to render charts in the classic notebook.
+
+If the above code gives an error::
 
     NoSuchEntryPoint: No 'notebook' entry point found in group 'altair.vegalite.v2.renderer'
 
@@ -119,7 +120,11 @@ This means that you have not installed the vega3 package. If you see this error,
 please make sure to follow the standard installation instructions at
 :ref:`installation-notebook`.
 
-.. _trouble-shooting-general
+If you have done the above steps and charts still do not render, it likely means
+that you are using a different *Kernel* within your notebook. Switch to the kernel
+named *Python 2* if you are using Python 2, or *Python 3* if you are using Python 3.
+
+.. _troubleshooting-general:
 
 General Trouble-shooting
 ------------------------
@@ -204,7 +209,7 @@ an evaluation of that variable:
 
     chart
 
-Alternatively, you can construct a chart directly, and not assign it to a varaible,
+Alternatively, you can evaluate a chart directly, and not assign it to a variable,
 in which case the object definition itself is the final statement and will be
 displayed as an output:
 

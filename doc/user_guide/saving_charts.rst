@@ -37,10 +37,10 @@ Firefox, which requires the following:
   Chrome or Firefox installation page for installation details for your own
   operating system.
 
-- `Chrome Driver`_ or `Gecko Driver`_, which allows Chrome or Firefox to be run
-  in a *headless* state (i.e. to execute Javascript code without opening an
-  actual browser window).  If you use homebrew on OSX, this can be installed
-  with::
+- `Chrome Driver`_ or `Gecko Driver`_, which allows Chrome or Firefox
+  respectively to be run in a *headless* state (i.e. to execute Javascript
+  code without opening an actual browser window).
+  If you use homebrew on OSX, this can be installed with::
 
       $ brew install chromedriver
       $ brew install geckodriver
@@ -74,7 +74,7 @@ For example, here we save a simple scatter-plot to JSON:
 
     chart.save('chart.json')
 
-The condetns of the resulting file will look something like this:
+The contetns of the resulting file will look something like this:
 
 .. code-block:: json
 
