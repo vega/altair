@@ -104,6 +104,7 @@ INSTALL_REQUIRES    = ['entrypoints',
                        'pytest',
                        'six',
                        'toolz',
+                       'typing',
                        'vega_datasets']
 VERSION             = version('altair/__init__.py')
 
