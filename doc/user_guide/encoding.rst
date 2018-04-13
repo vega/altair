@@ -7,9 +7,12 @@ Encodings
 
 The key to creating meaningful visualizations is to map *properties of the data*
 to *visual properties* in order to effectively communicate information.
-Altair abstracts this mapping through the idea of *channel encodings*.
-For example, here we will plot the *cars* dataset using four of the available
-channel encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
+In Alair, this mapping of visual properties to data columns is referred to
+as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
+method.
+
+For example, here we will visualize the cars dataset using four of the available
+encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
 ``color`` (the color of the marker), and ``shape`` (the shape of the point marker):
 
 .. altair-plot::
@@ -31,8 +34,8 @@ legends to represent the data.
 
 .. _encoding-channels:
 
-Channels
-~~~~~~~~
+Encoding Channels
+~~~~~~~~~~~~~~~~~
 
 Altair provides a number of encoding channels that can be useful in different
 circumstances; the following table summarizes them:
@@ -93,7 +96,7 @@ Channel  Altair Class      Description                      Example
 detail   :class:`Detail`   Additional property to group by
 =======  ================  ===============================  =========================================
 
-Order Channels:
+Order Channel:
 
 =======  ================  ============================================  =================
 Channel  Altair Class      Description                                   Example
@@ -109,8 +112,6 @@ Channel  Altair Class      Description                   Example
 column   :class:`Column`   The column of a faceted plot
 row      :class:`Row`      The row of a faceted plot
 =======  ================  ============================  ===================================
-
-
 
 .. _data-types:
 
@@ -241,6 +242,51 @@ This kind of behavior is sometimes surprising to new users, but it emphasizes
 the importance of thinking carefully about your data types when visualizing
 data: a visual encoding that is suitable for categorical data may not be
 suitable for quantitative data, and vice versa.
+
+
+.. _encoding-channel-options:
+
+Encoding Channel Options
+~~~~~~~~~~~~~~~~~~~~~~~~
+Each encoding channel allows for a number of additional options to be expressed;
+these can control things like axis properties, scale properties, headers and
+titles, binning parameters, aggregation, sorting, and many more.
+
+The particular options that are available vary by encoding type; the various
+options are listed below.
+
+The :class:`X` and :class:`Y` encodings accept the following options:
+
+.. altair-object-table:: altair.PositionFieldDef
+
+The :class:`Color`, :class:`Fill`, :class:`Opacity`, :class:`Shape`,
+:class:`Size`, and :class:`Stroke` encodings accept the following options:
+
+.. altair-object-table:: altair.MarkPropFieldDefWithCondition
+
+The :class:`Row` and :class:`Column` encodings accept the following options:
+
+.. altair-object-table:: altair.FacetFieldDef
+
+The :class:`Text` and :class:`Tooltip` encodings accept the following options:
+
+.. altair-object-table:: altair.TextFieldDefWithCondition
+
+The :class:`Detail`, :class:`Key`, :class:`Latitude`, :class:`Latitude2`,
+:class:`Longitude`, :class:`Longitude2`, :class:`X2`
+and :class:`Y2` encodings accept the following options:
+
+.. altair-object-table:: altair.FieldDef
+
+The :class:`Href` encoding accepts the following options:
+
+.. altair-object-table:: altair.FieldDefWithCondition
+
+The :class:`Order` encoding accepts the following options:
+
+.. altair-object-table:: altair.OrderFieldDef
+
+
 
 
 .. _encoding-aggregates:
