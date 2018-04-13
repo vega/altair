@@ -10,8 +10,8 @@ ENTRY_POINT_GROUP = 'altair.vegalite.v1.theme'  # type: str
 class ThemeRegistry(PluginRegistry[dict]):
     pass
     
-theme = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
+themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
-theme.register('default', {"width": 400, "height": 300})
-theme.register('none', {})
-theme.enable('default')
+themes.register('default', {"width": 400, "height": 300})
+themes.register('none', {})
+themes.enable('default')

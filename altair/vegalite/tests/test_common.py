@@ -62,10 +62,10 @@ def test_basic_chart_from_dict(alt, basic_spec):
 
 @pytest.mark.parametrize('alt', [v1, v2])
 def test_theme_enable(alt):
-    active_theme = alt.theme.active
+    active_theme = alt.themes.active
 
     try:
-        alt.theme.enable('none')
+        alt.themes.enable('none')
 
         chart = alt.Chart.from_dict(basic_spec)
         dct = chart.to_dict()
@@ -78,4 +78,4 @@ def test_theme_enable(alt):
         assert dct == basic_spec
     finally:
         # reset the theme to its initial value
-        alt.theme.enable(active_theme)
+        alt.themes.enable(active_theme)
