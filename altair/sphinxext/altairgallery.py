@@ -160,6 +160,7 @@ class AltairMiniGalleryDirective(Directive):
     has_content = False
 
     option_spec = {'size': int,
+                   'names': str,
                    'indices': lambda x: list(map(int, x.split())),
                    'shuffle': flag,
                    'seed': int,
@@ -168,6 +169,7 @@ class AltairMiniGalleryDirective(Directive):
 
     def run(self):
         size = self.options.get('size', 15)
+        names = [name.strip() for name in self.options.get('names', '').split(',')]
         indices = self.options.get('indices', [])
         shuffle = 'shuffle' in self.options
         seed = self.options.get('seed', 42)
@@ -181,13 +183,20 @@ class AltairMiniGalleryDirective(Directive):
 
         examples = populate_examples()
 
-        if indices:
-            examples = [examples[i] for i in indices]
-        if shuffle:
-            random.seed(seed)
-            random.shuffle(examples)
-        if size:
-            examples = examples[:size]
+        if names:
+            if len(names) < size:
+                raise ValueError("altair-minigallery: if names are specified, "
+                                 "the list must be at least as long as size.")
+            mapping = {example['name']: example for example in examples}
+            examples = [mapping[name] for name in names]
+        else:
+            if indices:
+                examples = [examples[i] for i in indices]
+            if shuffle:
+                random.seed(seed)
+                random.shuffle(examples)
+            if size:
+                examples = examples[:size]
 
         include = MINIGALLERY_TEMPLATE.render(image_dir='/_static',
                                               gallery_dir=gallery_dir,

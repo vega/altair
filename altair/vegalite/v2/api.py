@@ -9,7 +9,7 @@ from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 from .data import data_transformers, pipe
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
-from .theme import theme
+from .theme import themes
 
 # ------------------------------------------------------------------------
 # Data Utilities
@@ -343,7 +343,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 dct['$schema'] = SCHEMA_URL
 
             # apply theme from theme registry
-            dct = utils.update_nested(theme.get(), dct, copy=True)
+            dct = utils.update_nested(themes.get(), dct, copy=True)
 
         return dct
 
