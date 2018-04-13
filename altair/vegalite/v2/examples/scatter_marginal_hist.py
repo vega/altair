@@ -11,12 +11,10 @@ from vega_datasets import data
 
 iris = data.iris()
 
-# We do not want to specify the exact axis manually,
-# and ``alt.Bin`` expects a range, rather than a ``alt.Scale`` instance.
-xscale = alt.Scale(padding=1, zero=False)
-yscale = alt.Scale(padding=1, zero=False)
-xlim = xscale.domain
-ylim = yscale.domain
+xlim = (4.0, 8.0)
+ylim = (1.9, 4.55)
+xscale = alt.Scale(domain=xlim)
+yscale = alt.Scale(domain=ylim)
 
 area_args = {'opacity': .3, 'interpolate': 'step'}
 blank_axis = alt.Axis(title='')
