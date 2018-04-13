@@ -14,7 +14,7 @@ from .schema import core, channels, Undefined, SCHEMA_URL
 from .data import data_transformers, pipe
 from ... import utils
 from .display import renderers, VEGALITE_VERSION, VEGA_VERSION, VEGAEMBED_VERSION
-from .theme import theme
+from .theme import themes
 
 
 def _get_channels_mapping():
@@ -89,7 +89,7 @@ class TopLevelMixin(object):
                 dct['$schema'] = SCHEMA_URL
 
             # apply theme from theme registry
-            dct = utils.update_nested(theme.get(), dct, copy=True)
+            dct = utils.update_nested(themes.get(), dct, copy=True)
         return dct
 
     def savechart(self, fp, format=None, **kwargs):
