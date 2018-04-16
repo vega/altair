@@ -12,13 +12,14 @@ counties = alt.topo_feature(data.us_10m.url, 'counties')
 unemp_data = data.unemployment.url
 
 
-alt.Chart(counties).mark_geoshape().properties(
-    projection={'type': 'albersUsa'},
-    width=500,
-    height=300
-).encode(
+alt.Chart(counties).mark_geoshape().encode(
     color='rate:Q'
 ).transform_lookup(
     lookup='id',
     from_=alt.LookupData(unemp_data, 'id', ['rate'])
+).project(
+    type='albersUsa'
+).properties(
+    width=500,
+    height=300
 )

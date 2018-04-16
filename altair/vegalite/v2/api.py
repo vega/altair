@@ -448,6 +448,77 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             setattr(copy, key, val)
         return copy
 
+    def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
+                coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
+                parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
+                rotate=Undefined, spacing=Undefined, tilt=Undefined, **kwds):
+        """Add a geographic projection to the chartself.
+
+        This is generally used either with ``mark_geoshape`` or with the
+        ``latitude``/``longitude`` encodings.
+
+        Available projection types are
+        ['albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant',
+         'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equirectangular',
+         'gnomonic', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
+
+        Attributes
+        ----------
+        type : ProjectionType
+            The cartographic projection to use. This value is case-insensitive, for example
+            `"albers"` and `"Albers"` indicate the same projection type. You can find all valid
+            projection types [in the
+            documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
+              __Default value:__ `mercator`
+        center : List(float)
+            Sets the projection’s center to the specified center, a two-element array of
+            longitude and latitude in degrees.  __Default value:__ `[0, 0]`
+        clipAngle : float
+            Sets the projection’s clipping circle radius to the specified angle in degrees. If
+            `null`, switches to [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting
+            rather than small-circle clipping.
+        clipExtent : List(List(float))
+            Sets the projection’s viewport clip extent to the specified bounds in pixels. The
+            extent bounds are specified as an array `[[x0, y0], [x1, y1]]`, where `x0` is the
+            left-side of the viewport, `y0` is the top, `x1` is the right and `y1` is the
+            bottom. If `null`, no viewport clipping is performed.
+        coefficient : float
+
+        distance : float
+
+        fraction : float
+
+        lobes : float
+
+        parallel : float
+
+        precision : Mapping(required=[length])
+            Sets the threshold for the projection’s [adaptive
+            resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in pixels.
+            This value corresponds to the [Douglas–Peucker
+            distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm).
+             If precision is not specified, returns the projection’s current resampling
+            precision which defaults to `√0.5 ≅ 0.70710…`.
+        radius : float
+
+        ratio : float
+
+        rotate : List(float)
+            Sets the projection’s three-axis rotation to the specified angles, which must be a
+            two- or three-element array of numbers [`lambda`, `phi`, `gamma`] specifying the
+            rotation angles in degrees about each spherical axis. (These correspond to yaw,
+            pitch and roll.)  __Default value:__ `[0, 0, 0]`
+        spacing : float
+
+        tilt : float
+        """
+        projection = core.Projection(center=center, clipAngle=clipAngle, clipExtent=clipExtent,
+                                     coefficient=coefficient, distance=distance, fraction=fraction,
+                                     lobes=lobes, parallel=parallel, precision=precision,
+                                     radius=radius, ratio=ratio, rotate=rotate, spacing=spacing,
+                                     tilt=tilt, type=type, **kwds)
+        return self.properties(projection=projection)
+
     def _add_transform(self, *transforms):
         """Copy the chart and add specified transforms to chart.transform"""
         copy = self.copy()

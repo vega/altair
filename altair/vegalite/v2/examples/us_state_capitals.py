@@ -18,10 +18,9 @@ background = alt.Chart(states).mark_geoshape(
     stroke='white'
 ).properties(
     title='US State Capitols',
-    projection={'type': 'albersUsa'},
     width=700,
     height=400
-)
+).project('albersUsa')
 
 # Points and text
 hover = alt.selection(type='single', on='mouseover', nearest=True,

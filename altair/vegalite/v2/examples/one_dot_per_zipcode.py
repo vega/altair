@@ -15,8 +15,9 @@ alt.Chart(zipcodes).mark_circle(size=3).encode(
     longitude='longitude:Q',
     latitude='latitude:Q',
     color='digit:N'
+).project(
+    type='albersUsa'
 ).properties(
-    projection={'type': 'albersUsa'},
     width=650,
     height=400
 ).transform_calculate(
