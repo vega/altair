@@ -11,10 +11,8 @@ from vega_datasets import data
 
 iris = data.iris()
 
-xlim = (4.0, 8.0)
-ylim = (1.9, 4.55)
-xscale = alt.Scale(domain=xlim)
-yscale = alt.Scale(domain=ylim)
+xscale = alt.Scale(domain=(4.0, 8.0))
+yscale = alt.Scale(domain=(1.9, 4.55))
 
 area_args = {'opacity': .3, 'interpolate': 'step'}
 blank_axis = alt.Axis(title='')
@@ -30,21 +28,21 @@ top_hist = alt.Chart(iris).mark_area(**area_args).encode(
           # when using bins, the axis scale is set through
           # the bin extent, so we do not specify the scale here
           # (which would be ignored anyway)
-          bin=alt.Bin(maxbins=20, extent=xlim),
+          bin=alt.Bin(maxbins=20, extent=xscale.domain),
           stack=None,
           axis=blank_axis,
          ),
-    alt.Y('count(*):Q', stack=None, axis=blank_axis),
+    alt.Y('count()', stack=None, axis=blank_axis),
     alt.Color('species:N'),
 ).properties(height=60)
 
 right_hist = alt.Chart(iris).mark_area(**area_args).encode(
     alt.Y('sepalWidth:Q',
-          bin=alt.Bin(maxbins=20, extent=ylim),
+          bin=alt.Bin(maxbins=20, extent=yscale.domain),
           stack=None,
           axis=blank_axis,
          ),
-    alt.X('count(*):Q', stack=None, axis=blank_axis),
+    alt.X('count()', stack=None, axis=blank_axis),
     alt.Color('species:N'),
 ).properties(width=60)
 
