@@ -16,10 +16,9 @@ background = alt.Chart(states).mark_geoshape(
     fill='lightgray',
     stroke='white'
 ).properties(
-    projection={'type': 'albersUsa'},
     width=500,
     height=300
-)
+).project('albersUsa')
 
 # airport positions on background
 points = alt.Chart(airports).mark_circle().encode(

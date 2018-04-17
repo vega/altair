@@ -14,15 +14,16 @@ pop_eng_hur = data.population_engineers_hurricanes.url
 
 variable_list = ['population', 'engineers', 'hurricanes']
 
-alt.Chart(states).mark_geoshape().properties(
-    projection={'type': 'albersUsa'},
-    width=500,
-    height=300
-).encode(
+alt.Chart(states).mark_geoshape().encode(
     alt.Color(alt.repeat('row'), type='quantitative')
 ).transform_lookup(
     lookup='id',
     from_=alt.LookupData(pop_eng_hur, 'id', variable_list)
+).properties(
+    width=500,
+    height=300
+).project(
+    type='albersUsa'
 ).repeat(
     row=variable_list
 ).resolve_scale(

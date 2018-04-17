@@ -21,7 +21,7 @@ base = alt.Chart(countries).mark_geoshape(
 )
 
 projections = ['equirectangular', 'mercator', 'orthographic', 'gnomonic']
-charts = [base.properties(title=proj, projection={'type': proj})
+charts = [base.project(proj).properties(title=proj)
           for proj in projections]
 
 alt.vconcat(
