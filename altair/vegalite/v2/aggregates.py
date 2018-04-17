@@ -42,7 +42,8 @@ class _AggregateFunction(object):
 
 
 # Define an object for each valid aggregate
-__all__ = _schema_core.Aggregate.resolve_references()['enum']
+_agg_names = _schema_core.Aggregate.resolve_references()['enum']
+__all__ = ["agg_" + name for name in _agg_names]
 
-for aggregate in __all__:
-    globals()[aggregate] = _AggregateFunction(aggregate)
+for name in _agg_names:
+    globals()["agg_" + name] = _AggregateFunction(name)
