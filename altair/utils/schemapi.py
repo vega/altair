@@ -357,8 +357,10 @@ class SchemaBase(object):
         return jsonschema.validate(instance, schema, resolver=resolver)
 
     @classmethod
-    def resolve_references(cls, schema):
+    def resolve_references(cls, schema=None):
         """Resolve references of the schema the context of this object's schema"""
+        if schema is None:
+            schema = cls._schema
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema
                                                       or cls._schema
                                                       or schema)
