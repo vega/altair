@@ -4,6 +4,9 @@ from .api import *
 
 from . import examples
 
+from . import aggregates
+from .aggregates import *
+
 from ...datasets import (
     list_datasets,
     load_dataset
