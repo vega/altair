@@ -84,6 +84,12 @@ def test_chart_infer_types():
     assert dct['encoding']['y']['type'] == 'ordinal'
 
 
+def test_chart_aggregates():
+    chart1 = alt.Chart('foo.csv').mark_point().encode(x='mean(x):Q')
+    chart2 = alt.Chart('foo.csv').mark_point().encode(x=alt.agg_mean('x'))
+    assert chart1.to_dict() == chart2.to_dict()
+
+
 def test_chart_operations():
     data = pd.DataFrame({'x': pd.date_range('2012', periods=10, freq='Y'),
                          'y': range(10),
