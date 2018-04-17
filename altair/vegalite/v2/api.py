@@ -4,6 +4,9 @@ import jsonschema
 import six
 import pandas as pd
 
+from . import aggregates
+from .aggregates import *
+
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
 from .data import data_transformers, pipe
