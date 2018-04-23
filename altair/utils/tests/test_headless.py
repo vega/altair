@@ -6,7 +6,7 @@ try:
 except ImportError:
     selenium = None
 
-from ..headless import spec_to_image_mimebundle
+from ..headless import spec_to_mimebundle
 
 
 # example from https://vega.github.io/editor/#/examples/vega-lite/bar
@@ -158,8 +158,8 @@ VEGALITE_VERSION = '2.3.1'
 VEGA_VERSION = '3.3.1'
 
 @pytest.mark.skipif('not selenium')
-def test_spec_to_image_mimebundle():
-    assert spec_to_image_mimebundle(
+def test_spec_to_mimebundle():
+    assert spec_to_mimebundle(
         spec=VEGA_LITE_SPEC,
         format='vega',
         mode='vega-lite',

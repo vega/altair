@@ -62,7 +62,7 @@ def json_renderer(spec):
 
 
 def png_renderer(spec):
-    return headless.spec_to_image_mimebundle(spec, format='png',
+    return headless.spec_to_mimebundle(spec, format='png',
                                              mode='vega-lite',
                                              vega_version=VEGA_VERSION,
                                              vegaembed_version=VEGAEMBED_VERSION,
@@ -70,7 +70,7 @@ def png_renderer(spec):
 
 
 def svg_renderer(spec):
-    return headless.spec_to_image_mimebundle(spec, format='svg',
+    return headless.spec_to_mimebundle(spec, format='svg',
                                              mode='vega-lite',
                                              vega_version=VEGA_VERSION,
                                              vegaembed_version=VEGAEMBED_VERSION,
