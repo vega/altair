@@ -175,7 +175,7 @@ Altair requires the following dependencies:
 If you have cloned the repository, run the following command from the root of the repository:
 
 ```
-pip install -e .
+pip install -e .[dev]
 ```
 
 If you do not wish to clone the repository, you can install using:

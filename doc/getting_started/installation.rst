@@ -25,7 +25,7 @@ with the classic notebook, see :ref:`installation-notebook`.
 
 To install JupyterLab and Altair with pip, run the following commands::
 
-    $ pip install jupyterlab altair
+    $ pip install jupyterlab altair[dev]
     $ jupyter labextension install @jupyterlab/vega3-extension  # not needed for JupyterLab 0.32 or newer
 
 Once this is finished, run::

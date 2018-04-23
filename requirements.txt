@@ -1,11 +1,7 @@
 entrypoints
-ipython
 jsonschema
 numpy
 pandas
-pytest
 six
 toolz
 typing
-vega_datasets
-flake8
