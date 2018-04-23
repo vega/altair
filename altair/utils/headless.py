@@ -90,6 +90,19 @@ EXTRACT_CODE = {
             .toSVG()
             .then(done)
             .catch(function(err) { console.error(err); });
+        """,
+'vega': """
+        var spec = arguments[0];
+        var mode = arguments[1];
+        var done = arguments[2];
+
+        if(mode === 'vega-lite'){
+          // compile vega-lite to vega
+          const compiled = vl.compile(spec);
+          spec = compiled.spec;
+        }
+
+        done(spec);
         """}
 
 
@@ -99,13 +112,13 @@ def spec_to_image_mimebundle(spec, format, mode,
                              vegalite_version=None,
                              driver_timeout=10,
                              webdriver='chrome'):
-    """Conver a vega/vega-lite specification to a PNG/SVG image
+    """Convert a vega/vega-lite specification to a PNG/SVG image/Vega spec
 
     Parameters
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec
-    format : string {'png' | 'svg'}
+    format : string {'png' | 'svg' | 'vega'}
         the file format to be saved.
     mode : string {'vega' | 'vega-lite'}
         The rendering mode.
@@ -134,7 +147,7 @@ def spec_to_image_mimebundle(spec, format, mode,
     """
     # TODO: allow package versions to be specified
     # TODO: detect & use local Jupyter caches of JS packages?
-    if format not in ['png', 'svg']:
+    if format not in ['png', 'svg', 'vega']:
         raise NotImplementedError("format must be 'svg' and 'png'")
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be 'vega' or 'vega-lite'")
@@ -189,3 +202,5 @@ def spec_to_image_mimebundle(spec, format, mode,
         return {'image/png': base64.decodebytes(render.split(',', 1)[1].encode())}
     elif format == 'svg':
         return {'image/svg+xml': render}
+    elif format == 'vega':
+        return {'application/vnd.vega.v{}+json'.format(vega_version[0]): render}
