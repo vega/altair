@@ -1,6 +1,7 @@
 from typing import Generic, TypeVar, cast
 
 import entrypoints
+from toolz import curry
 
 
 PluginType = TypeVar('PluginType')
@@ -79,8 +80,8 @@ class PluginRegistry(Generic[PluginType]):
         exts.extend(more_exts)
         return sorted(set(exts))
 
-    def enable(self, name):
-        # type: (str) -> None
+    def enable(self, name, **options):
+        # type: (str, **Any) -> None
         """Enable a plugin by name."""
         if name not in self._plugins:
             try:
@@ -95,6 +96,7 @@ class PluginRegistry(Generic[PluginType]):
             self.register(name, value)
         self._active_name = name
         self._active = self._plugins[name]
+        self._options = options
 
     @property
     def active(self):
@@ -102,10 +104,19 @@ class PluginRegistry(Generic[PluginType]):
         """Return the name of the currently active plugin"""
         return self._active_name
 
+    @property
+    def options(self):
+        # type: () -> str
+        """Return the current options dictionary"""
+        return self._options
+
     def get(self):
         # type: () -> PluginType
         """Return the currently active plugin."""
-        return self._active
+        if self._options:
+            return curry(self._active, **self._options)
+        else:
+            return self._active
 
     def __repr__(self):
         # type: () -> str

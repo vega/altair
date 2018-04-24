@@ -50,7 +50,7 @@ renderers.entrypoint_err_messages = {
 here = os.path.dirname(os.path.realpath(__file__))
 
 
-def default_renderer(spec):
+def default_renderer(spec, **options):
     return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY)
 
 

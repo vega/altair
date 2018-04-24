@@ -9,10 +9,8 @@ from jsonschema import validate
 # VegaLite v1/v2 renderer logic
 # ==============================================================================
 
-
-SpecType = dict
 MimeBundleType = Dict[str, object]
-RendererType = Callable[[SpecType], MimeBundleType]
+RendererType = Callable[..., MimeBundleType]
 
 
 class Displayable(object):
