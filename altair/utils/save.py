@@ -84,10 +84,10 @@ def save(chart, fp, vega_version, vegaembed_version,
         write_file_or_filename(fp, mimebundle['text/html'], mode='w')
     elif format in ['png', 'svg']:
         mimebundle = spec_to_mimebundle(spec=spec, format=format, mode=mode,
-                                              vega_version=vega_version,
-                                              vegalite_version=vegalite_version,
-                                              vegaembed_version=vegaembed_version,
-                                              webdriver=webdriver)
+                                        vega_version=vega_version,
+                                        vegalite_version=vegalite_version,
+                                        vegaembed_version=vegaembed_version,
+                                        webdriver=webdriver)
         if format == 'png':
             write_file_or_filename(fp, mimebundle['image/png'], mode='wb')
         else:

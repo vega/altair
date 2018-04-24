@@ -63,18 +63,18 @@ def json_renderer(spec):
 
 def png_renderer(spec):
     return headless.spec_to_mimebundle(spec, format='png',
-                                             mode='vega-lite',
-                                             vega_version=VEGA_VERSION,
-                                             vegaembed_version=VEGAEMBED_VERSION,
-                                             vegalite_version=VEGALITE_VERSION)
+                                       mode='vega-lite',
+                                       vega_version=VEGA_VERSION,
+                                       vegaembed_version=VEGAEMBED_VERSION,
+                                       vegalite_version=VEGALITE_VERSION)
 
 
 def svg_renderer(spec):
     return headless.spec_to_mimebundle(spec, format='svg',
-                                             mode='vega-lite',
-                                             vega_version=VEGA_VERSION,
-                                             vegaembed_version=VEGAEMBED_VERSION,
-                                             vegalite_version=VEGALITE_VERSION)
+                                       mode='vega-lite',
+                                       vega_version=VEGA_VERSION,
+                                       vegaembed_version=VEGAEMBED_VERSION,
+                                       vegalite_version=VEGALITE_VERSION)
 
 def colab_renderer(spec):
     return html.spec_to_html_mimebundle(spec, mode='vega-lite',
