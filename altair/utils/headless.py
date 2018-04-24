@@ -208,3 +208,4 @@ def spec_to_mimebundle(spec, format, mode,
         return {'image/svg+xml': render}
     elif format == 'vega':
         return {'application/vnd.vega.v{}+json'.format(vega_version[0]): render}
+    raise ValueError("format must be 'png', 'svg', or 'vega'")
