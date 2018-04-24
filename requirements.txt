@@ -5,5 +5,3 @@ pandas
 six
 toolz
 typing
-ipython<6; python_version < '3'  # ipython 6 not compatible with python 2
-ipython; python_version >= '3'  # ipython 6 not compatible with python 2

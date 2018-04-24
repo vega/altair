@@ -1,7 +1,11 @@
 import os
 import textwrap
 
-from IPython.display import display
+try:
+    from IPython.display import display
+    IPYTHON_AVAILABLE=True
+except ImportError:
+    IPYTHON_AVAILABLE=False
 
 from ...utils import PluginRegistry, headless, html
 from ..display import Displayable

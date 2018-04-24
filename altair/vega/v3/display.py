@@ -1,6 +1,10 @@
 import os
 
-from IPython.display import display
+try:
+    from IPython.display import display
+    IPYTHON_AVAILABLE=True
+except ImportError:
+    IPYTHON_AVAILABLE=False
 
 from ...utils import PluginRegistry
 from ..display import Displayable
