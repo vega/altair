@@ -6,28 +6,6 @@ __all__ = ['vega', 'vegalite']
 import json
 import warnings
 
-try:
-    import IPython
-    from IPython.core.magic_arguments import (magic_arguments, argument, parse_argstring)
-    IPYTHON_AVAILABLE=True
-except ImportError:
-    IPYTHON_AVAILABLE=False
-
-    # mocking the decorators if Ipython is unavailable
-    class magic_arguments:
-        def __init__(self, *args, **kwargs):
-            pass
-
-        def __call__(self, func):
-            pass
-
-    class argument:
-        def __init__(self, *args, **kwargs):
-            pass
-        def __call__(self, func):
-            pass
-
-
 import pandas as pd
 import six
 from toolz import pipe
@@ -37,6 +15,13 @@ from altair.vegalite import v2 as vegalite_v2
 from altair.vega import v2 as vega_v2
 from altair.vega import v3 as vega_v3
 
+try:
+    import IPython
+    from IPython.core.magic_arguments import (magic_arguments, argument, parse_argstring)
+    IPYTHON_AVAILABLE=True
+except ImportError:
+    IPYTHON_AVAILABLE=False
+    
 try:
     import yaml
     YAML_AVAILABLE = True
