@@ -6,6 +6,8 @@ __all__ = ['vega', 'vegalite']
 import json
 import warnings
 
+import IPython
+from IPython.core import magic_arguments
 import pandas as pd
 import six
 from toolz import pipe
@@ -15,13 +17,6 @@ from altair.vegalite import v2 as vegalite_v2
 from altair.vega import v2 as vega_v2
 from altair.vega import v3 as vega_v3
 
-try:
-    import IPython
-    from IPython.core.magic_arguments import (magic_arguments, argument, parse_argstring)
-    IPYTHON_AVAILABLE=True
-except ImportError:
-    IPYTHON_AVAILABLE=False
-    
 try:
     import yaml
     YAML_AVAILABLE = True
@@ -80,13 +75,13 @@ def _get_variable(name):
     return ip.user_ns[name]
 
 
-@magic_arguments()
-@argument(
+@magic_arguments.magic_arguments()
+@magic_arguments.argument(
     'data',
     nargs='*',
     help='local variable name of a pandas DataFrame to be used as the dataset')
-@argument('-v', '--version', dest='version', default='3')
-@argument('-j', '--json', dest='json', action='store_true')
+@magic_arguments.argument('-v', '--version', dest='version', default='3')
+@magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vega(line, cell):
     """Cell magic for displaying Vega visualizations in CoLab.
 
@@ -97,7 +92,7 @@ def vega(line, cell):
 
     If --json is passed, then input is parsed as json rather than yaml.
     """
-    args = parse_argstring(vega, line)
+    args = magic_arguments.parse_argstring(vega, line)
 
     version = args.version
     assert version in RENDERERS['vega']
@@ -140,13 +135,13 @@ def vega(line, cell):
     return Vega(spec)
 
 
-@magic_arguments()
-@argument(
+@magic_arguments.magic_arguments()
+@magic_arguments.argument(
     'data',
     nargs='?',
     help='local variablename of a pandas DataFrame to be used as the dataset')
-@argument('-v', '--version', dest='version', default='2')
-@argument('-j', '--json', dest='json', action='store_true')
+@magic_arguments.argument('-v', '--version', dest='version', default='2')
+@magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vegalite(line, cell):
     """Cell magic for displaying vega-lite visualizations in CoLab.
 
@@ -157,7 +152,7 @@ def vegalite(line, cell):
 
     if --json is passed, then input is parsed as json rather than yaml.
     """
-    args = parse_argstring(vegalite, line)
+    args = magic_arguments.parse_argstring(vegalite, line)
     version = args.version
     assert version in RENDERERS['vega-lite']
     VegaLite = RENDERERS['vega-lite'][version]
