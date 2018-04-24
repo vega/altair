@@ -7,8 +7,8 @@ from ..utils.data import (
 
 
 @curry
-def default_data_transformer(data):
-    return pipe(data, limit_rows, to_values)
+def default_data_transformer(data, max_rows=5000):
+    return pipe(data, limit_rows(max_rows=max_rows), to_values)
 
 
 __all__ = (
