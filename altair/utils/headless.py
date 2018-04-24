@@ -90,52 +90,27 @@ EXTRACT_CODE = {
             .toSVG()
             .then(done)
             .catch(function(err) { console.error(err); });
+        """,
+'vega': """
+        var spec = arguments[0];
+        var mode = arguments[1];
+        var done = arguments[2];
+
+        if(mode === 'vega-lite'){
+          // compile vega-lite to vega
+          const compiled = vl.compile(spec);
+          spec = compiled.spec;
+        }
+
+        done(spec);
         """}
 
 
-def spec_to_image_mimebundle(spec, format, mode,
-                             vega_version,
-                             vegaembed_version,
-                             vegalite_version=None,
-                             driver_timeout=10,
-                             webdriver='chrome'):
-    """Conver a vega/vega-lite specification to a PNG/SVG image
-
-    Parameters
-    ----------
-    spec : dict
-        a dictionary representing a vega-lite plot spec
-    format : string {'png' | 'svg'}
-        the file format to be saved.
-    mode : string {'vega' | 'vega-lite'}
-        The rendering mode.
-    vega_version : string
-        For html output, the version of vega.js to use
-    vegalite_version : string
-        For html output, the version of vegalite.js to use
-    vegaembed_version : string
-        For html output, the version of vegaembed.js to use
-    driver_timeout : int (optional)
-        the number of seconds to wait for page load before raising an
-        error (default: 10)
-    webdriver : string {'chrome' | 'firefox'}
-        Webdriver to use.
-
-    Returns
-    -------
-    output : dict
-        a mime-bundle representing the image
-
-    Note
-    ----
-    This requires the pillow and selenium Python modules to be installed.
-    Additionally it requires either chromedriver (if webdriver=='chrome') or
-    geckodriver (if webdriver=='firefox')
-    """
+def compile_spec(spec, format, mode, vega_version, vegaembed_version, vegalite_version, driver_timeout, webdriver):
     # TODO: allow package versions to be specified
     # TODO: detect & use local Jupyter caches of JS packages?
-    if format not in ['png', 'svg']:
-        raise NotImplementedError("format must be 'svg' and 'png'")
+    if format not in ['png', 'svg', 'vega']:
+        raise NotImplementedError("format must be 'svg', 'png' or 'vega'")
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be 'vega' or 'vega-lite'")
 
@@ -180,12 +155,57 @@ def spec_to_image_mimebundle(spec, format, mode,
             if not online:
                 raise ValueError("Internet connection required for saving "
                                  "chart as {0}".format(format))
-            render = driver.execute_async_script(EXTRACT_CODE[format],
-                                                 spec, mode)
+            return driver.execute_async_script(EXTRACT_CODE[format],
+                                               spec, mode)
     finally:
         driver.close()
 
+
+def spec_to_mimebundle(spec, format, mode,
+                       vega_version,
+                       vegaembed_version,
+                       vegalite_version=None,
+                       driver_timeout=10,
+                       webdriver='chrome'):
+    """Convert a vega/vega-lite specification to a PNG/SVG image/Vega spec
+
+    Parameters
+    ----------
+    spec : dict
+        a dictionary representing a vega-lite plot spec
+    format : string {'png' | 'svg' | 'vega'}
+        the file format to be saved.
+    mode : string {'vega' | 'vega-lite'}
+        The rendering mode.
+    vega_version : string
+        For html output, the version of vega.js to use
+    vegalite_version : string
+        For html output, the version of vegalite.js to use
+    vegaembed_version : string
+        For html output, the version of vegaembed.js to use
+    driver_timeout : int (optional)
+        the number of seconds to wait for page load before raising an
+        error (default: 10)
+    webdriver : string {'chrome' | 'firefox'}
+        Webdriver to use.
+
+    Returns
+    -------
+    output : dict
+        a mime-bundle representing the image
+
+    Note
+    ----
+    This requires the pillow and selenium Python modules to be installed.
+    Additionally it requires either chromedriver (if webdriver=='chrome') or
+    geckodriver (if webdriver=='firefox')
+    """
+
+    render = compile_spec(spec, format, mode, vega_version, vegaembed_version, vegalite_version, driver_timeout, webdriver)
     if format == 'png':
         return {'image/png': base64.decodebytes(render.split(',', 1)[1].encode())}
     elif format == 'svg':
         return {'image/svg+xml': render}
+    elif format == 'vega':
+        return {'application/vnd.vega.v{}+json'.format(vega_version[0]): render}
+    raise ValueError("format must be 'png', 'svg', or 'vega'")
