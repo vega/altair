@@ -1,8 +1,6 @@
 import os
 import textwrap
 
-from IPython.display import display
-
 from ...utils import PluginRegistry, headless, html
 from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
@@ -112,4 +110,6 @@ def vegalite(spec, validate=True):
     validate: bool
         Should the spec be validated against the VegaLite 1 schema?
     """
+    from IPython.display import display
+
     display(VegaLite(spec, validate=validate))

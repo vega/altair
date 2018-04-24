@@ -1,7 +1,5 @@
 import os
 
-from IPython.display import display
-
 from ...utils import PluginRegistry
 from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
@@ -72,4 +70,6 @@ def vega(spec, validate=True):
     validate: bool
         Should the spec be validated against the Vega 2 schema?
     """
+    from IPython.display import display
+
     display(Vega(spec, validate=validate))

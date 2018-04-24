@@ -1,12 +1,16 @@
 import json
+import pytest
 
-from IPython import InteractiveShell
+try:
+    from IPython import InteractiveShell
+    IPYTHON_AVAILABLE = True
+except ImportError:
+    IPYTHON_AVAILABLE = False
+    pass
 
 from altair.vegalite.v2 import VegaLite
 from altair.vega.v3 import Vega
 
-_ipshell = InteractiveShell.instance()
-_ipshell.run_cell('%load_ext altair')
 
 DATA_RECORDS = [{'amount': 28, 'category': 'A'},
                 {'amount': 55, 'category': 'B'},
@@ -17,7 +21,10 @@ DATA_RECORDS = [{'amount': 28, 'category': 'A'},
                 {'amount': 19, 'category': 'G'},
                 {'amount': 87, 'category': 'H'}]
 
-_ipshell.run_cell("""
+if IPYTHON_AVAILABLE:
+    _ipshell = InteractiveShell.instance()
+    _ipshell.run_cell('%load_ext altair')
+    _ipshell.run_cell("""
 import pandas as pd
 table = pd.DataFrame.from_records({0})
 the_data = table
@@ -74,12 +81,16 @@ VEGALITE_SPEC = {
 }
 
 
+@pytest.mark.skipif(not IPYTHON_AVAILABLE,
+                    reason="requires ipython")
 def test_vegalite_magic_data_included():
     result = _ipshell.run_cell('%%vegalite\n' + json.dumps(VEGALITE_SPEC))
     assert isinstance(result.result, VegaLite)
     assert VEGALITE_SPEC == result.result.spec
 
 
+@pytest.mark.skipif(not IPYTHON_AVAILABLE,
+                    reason="requires ipython")
 def test_vegalite_magic_json_flag():
     result = _ipshell.run_cell('%%vegalite --json\n'
                                + json.dumps(VEGALITE_SPEC))
@@ -87,6 +98,8 @@ def test_vegalite_magic_json_flag():
     assert VEGALITE_SPEC == result.result.spec
 
 
+@pytest.mark.skipif(not IPYTHON_AVAILABLE,
+                    reason="requires ipython")
 def test_vegalite_magic_pandas_data():
     spec = {key: val for key, val in VEGALITE_SPEC.items() if key != 'data'}
     result = _ipshell.run_cell('%%vegalite table\n' + json.dumps(spec))
@@ -94,18 +107,24 @@ def test_vegalite_magic_pandas_data():
     assert VEGALITE_SPEC == result.result.spec
 
 
+@pytest.mark.skipif(not IPYTHON_AVAILABLE,
+                    reason="requires ipython")
 def test_vega_magic_data_included():
     result = _ipshell.run_cell('%%vega\n' + json.dumps(VEGA_SPEC))
     assert isinstance(result.result, Vega)
     assert VEGA_SPEC == result.result.spec
 
 
+@pytest.mark.skipif(not IPYTHON_AVAILABLE,
+                    reason="requires ipython")
 def test_vega_magic_json_flag():
     result = _ipshell.run_cell('%%vega --json\n' + json.dumps(VEGA_SPEC))
     assert isinstance(result.result, Vega)
     assert VEGA_SPEC == result.result.spec
 
 
+@pytest.mark.skipif(not IPYTHON_AVAILABLE,
+                    reason="requires ipython")
 def test_vega_magic_pandas_data():
     spec = {key: val for key, val in VEGA_SPEC.items() if key != 'data'}
     result = _ipshell.run_cell('%%vega table\n' + json.dumps(spec))
@@ -113,6 +132,8 @@ def test_vega_magic_pandas_data():
     assert VEGA_SPEC == result.result.spec
 
 
+@pytest.mark.skipif(not IPYTHON_AVAILABLE,
+                    reason="requires ipython")
 def test_vega_magic_pandas_data_renamed():
     spec = {key: val for key, val in VEGA_SPEC.items() if key != 'data'}
     result = _ipshell.run_cell('%%vega table:the_data\n' + json.dumps(spec))
