@@ -110,7 +110,7 @@ def compile_spec(spec, format, mode, vega_version, vegaembed_version, vegalite_v
     # TODO: allow package versions to be specified
     # TODO: detect & use local Jupyter caches of JS packages?
     if format not in ['png', 'svg', 'vega']:
-        raise NotImplementedError("format must be 'svg' and 'png'")
+        raise NotImplementedError("format must be 'svg', 'png' or 'vega'")
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be 'vega' or 'vega-lite'")
 
