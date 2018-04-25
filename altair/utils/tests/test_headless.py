@@ -159,11 +159,18 @@ VEGA_VERSION = '3.3.1'
 
 @pytest.mark.skipif('not selenium')
 def test_spec_to_mimebundle():
-    assert spec_to_mimebundle(
-        spec=VEGA_LITE_SPEC,
-        format='vega',
-        mode='vega-lite',
-        vega_version=VEGA_VERSION,
-        vegalite_version=VEGALITE_VERSION,
-        vegaembed_version=VEGAEMBED_VERSION
-    ) == {'application/vnd.vega.v3+json': VEGA_SPEC}
+    try:
+        bundle = spec_to_mimebundle(
+            spec=VEGA_LITE_SPEC,
+            format='vega',
+            mode='vega-lite',
+            vega_version=VEGA_VERSION,
+            vegalite_version=VEGALITE_VERSION,
+            vegaembed_version=VEGAEMBED_VERSION
+        )
+    except ValueError as err:
+        if str(err).startswith('Internet connection'):
+            pytest.skip("web connection required for png/svg export")
+        else:
+            raise
+    assert bundle == {'application/vnd.vega.v3+json': VEGA_SPEC}

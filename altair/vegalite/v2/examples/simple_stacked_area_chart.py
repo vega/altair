@@ -8,10 +8,10 @@ This example shows how to make a simple stacked area chart.
 import altair as alt
 from vega_datasets import data
 
-source = data.unemployment_across_industries()
+source = data.unemployment_across_industries.url
 
 alt.Chart(source).mark_area().encode(
     x="date:T",
     y="count:Q",
-    color="series"
+    color="series:N"
 )
