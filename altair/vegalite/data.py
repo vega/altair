@@ -2,7 +2,8 @@
 from toolz.curried import curry, pipe
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
-    MaxRowsError, limit_rows, sample, to_csv, to_json, to_values, check_data_type
+    MaxRowsError, limit_rows, sample, to_csv, to_json, to_values,
+    check_data_type, DataTransformerRegistry
 )
 
 

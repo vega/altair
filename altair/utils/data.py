@@ -4,8 +4,19 @@ import uuid
 
 import pandas as pd
 from toolz.curried import curry, pipe  # noqa
+from typing import Callable
 
 from .core import sanitize_dataframe
+from .plugin_registry import PluginRegistry
+
+
+# ==============================================================================
+# Data transformer registry
+# ==============================================================================
+DataTransformerType = Callable
+
+class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
+    pass
 
 
 # ==============================================================================
