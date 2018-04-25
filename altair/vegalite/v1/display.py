@@ -39,35 +39,39 @@ renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 here = os.path.dirname(os.path.realpath(__file__))
 
-def default_renderer(spec, **options):
-    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY)
+def default_renderer(spec, **metadata):
+    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY,
+                                 **metadata)
 
 
-def json_renderer(spec):
-    return json_renderer_base(spec, DEFAULT_DISPLAY)
+def json_renderer(spec, **metadata):
+    return json_renderer_base(spec, DEFAULT_DISPLAY, **metadata)
 
 
-def png_renderer(spec):
+def png_renderer(spec, **metadata):
     return headless.spec_to_mimebundle(spec, format='png',
                                        mode='vega-lite',
                                        vega_version=VEGA_VERSION,
                                        vegaembed_version=VEGAEMBED_VERSION,
-                                       vegalite_version=VEGALITE_VERSION)
+                                       vegalite_version=VEGALITE_VERSION,
+                                       **metadata)
 
 
-def svg_renderer(spec):
+def svg_renderer(spec, **metadata):
     return headless.spec_to_mimebundle(spec, format='svg',
                                        mode='vega-lite',
                                        vega_version=VEGA_VERSION,
                                        vegaembed_version=VEGAEMBED_VERSION,
-                                       vegalite_version=VEGALITE_VERSION)
+                                       vegalite_version=VEGALITE_VERSION,
+                                       **metadata)
 
 
-def colab_renderer(spec):
+def colab_renderer(spec, **metadata):
     return html.spec_to_html_mimebundle(spec, mode='vega-lite',
                                         vega_version=VEGA_VERSION,
                                         vegaembed_version=VEGAEMBED_VERSION,
-                                        vegalite_version=VEGALITE_VERSION)
+                                        vegalite_version=VEGALITE_VERSION,
+                                        **metadata)
 
 
 renderers.register('default', default_renderer)
