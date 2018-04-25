@@ -10,6 +10,11 @@ import pandas as pd
 
 import altair.vegalite.v2 as alt
 
+try:
+    import selenium
+except ImportError:
+    selenium = None
+
 
 @pytest.fixture
 def basic_chart():
@@ -135,6 +140,7 @@ def test_selection_to_dict():
 
 
 @pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
+@pytest.mark.skipif('not selenium')
 def test_save(format, basic_chart):
     if format in ['html', 'json', 'svg']:
         out = io.StringIO()
@@ -148,11 +154,6 @@ def test_save(format, basic_chart):
         try:
             basic_chart.save(out, format=format)
             basic_chart.save(filename)
-        except ImportError as err:
-            if 'selenium' in str(err) or 'chromedriver' in str(err):
-                pytest.skip("selenium installation required for png/svg export")
-            else:
-                raise
         except ValueError as err:
             if str(err).startswith('Internet connection'):
                 pytest.skip("web connection required for png/svg export")
