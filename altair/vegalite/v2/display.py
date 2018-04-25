@@ -1,11 +1,10 @@
 import os
-import textwrap
 
-from ...utils import PluginRegistry, headless, html
+from ...utils import headless, html
 from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
 from ..display import json_renderer as json_renderer_base
-from ..display import RendererType
+from ..display import RendererRegistry
 
 from .schema import SCHEMA_VERSION
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
@@ -35,20 +34,9 @@ for the frontend that you are using. For more information, see
 https://altair-viz.github.io/user_guide/troubleshooting.html
 """
 
-renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
-renderers.entrypoint_err_messages = {
-    'notebook': textwrap.dedent(
-        """
-        To use the 'notebook' renderer, you must install the vega3 package
-        and the associated Jupyter extension.
-        See https://altair-viz.github.io/getting_started/installation.html
-        for more information.
-        """)
-}
-
+renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 here = os.path.dirname(os.path.realpath(__file__))
-
 
 
 def default_renderer(spec):

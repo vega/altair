@@ -1,16 +1,35 @@
 import json
 import pkgutil
+import textwrap
 from typing import Callable, Dict
 
 from jsonschema import validate
 
+from .plugin_registry import PluginRegistry
+
+
+# ==============================================================================
+# Renderer registry
+# ==============================================================================
+MimeBundleType = Dict[str, object]
+RendererType = Callable[..., MimeBundleType]
+
+
+class RendererRegistry(PluginRegistry[RendererType]):
+    entrypoint_err_messages = {
+        'notebook': textwrap.dedent(
+            """
+            To use the 'notebook' renderer, you must install the vega3 package
+            and the associated Jupyter extension.
+            See https://altair-viz.github.io/getting_started/installation.html
+            for more information.
+            """)
+    }
 
 # ==============================================================================
 # VegaLite v1/v2 renderer logic
 # ==============================================================================
 
-MimeBundleType = Dict[str, object]
-RendererType = Callable[..., MimeBundleType]
 
 
 class Displayable(object):
