@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from typing import Generic, TypeVar, cast
 
 import entrypoints
@@ -97,6 +98,16 @@ class PluginRegistry(Generic[PluginType]):
         self._active_name = name
         self._active = self._plugins[name]
         self._options = options
+
+    @contextmanager
+    def enable_context(self, name, **options):
+        """Temporarily enable a plugin, using a context manager"""
+        state = (self._active_name, self._active, self._options)
+        try:
+            self.enable(name, **options)
+            yield
+        finally:
+            self._active_name, self._active, self._options = state
 
     @property
     def active(self):
