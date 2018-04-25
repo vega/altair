@@ -13,6 +13,7 @@ def default_data_transformer(data, max_rows=5000):
 
 
 __all__ = (
+    'DataTransformerRegistry',
     'MaxRowsError',
     'curry',
     'sanitize_dataframe',
