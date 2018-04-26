@@ -112,5 +112,5 @@ def spec_to_html_mimebundle(spec, mode,
                                 vegalite_version=vegalite_version,
                                 vegaembed_version=vegaembed_version,
                                 base_url=base_url,
-                                output_div='vis')
+                                output_div=output_div)
     return {'text/html': spec_html}
