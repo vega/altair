@@ -5,6 +5,7 @@ import json
 import os
 import tempfile
 
+import jsonschema
 import pytest
 import pandas as pd
 
@@ -335,3 +336,7 @@ def test_chart_from_dict():
     for chart in charts:
         chart_out = alt.Chart.from_dict(chart.to_dict())
         assert type(chart_out) is type(chart)
+
+    # test that an invalid spec leads to a schema validation error
+    with pytest.raises(jsonschema.ValidationError):
+        alt.Chart.from_dict({'invalid': 'spec'})
