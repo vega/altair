@@ -965,6 +965,26 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
                                     width=width, height=height, **kwargs)
 
+    @classmethod
+    def from_dict(cls, dct, validate=True):
+        # First try from_dict for the Chart type
+        try:
+            return super(Chart, cls).from_dict(dct, validate=validate)
+        except jsonschema.ValidationError:
+            pass
+
+        # If this fails, try with all other top level types
+        for class_ in TopLevelMixin.__subclasses__():
+            if class_ is Chart:
+                continue
+            try:
+                return class_.from_dict(dct, validate=validate)
+            except jsonschema.ValidationError:
+                pass
+
+        # As a last resort, try using the Root vegalite object
+        return core.Root.from_dict(dct, validate)
+
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
