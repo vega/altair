@@ -56,6 +56,7 @@ class {classname}(core.{basename}):
         if self.shorthand is Undefined:
             kwds = {{}}
         elif isinstance(self.shorthand, six.string_types):
+            # shorthand is a string: we parse it for forms like "mean(x):Q"
             kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
@@ -68,6 +69,9 @@ class {classname}(core.{basename}):
                                      "the type cannot be automacially inferred because "
                                      "the data is not specified as a pandas.DataFrame."
                                      "".format(self.shorthand))
+        elif isinstance(self.shorthand, dict):
+            # shorthand is a dict; comes from something like alt.mean('x')
+            kwds = self.shorthand
         else:
             # shorthand is not a string; we pass the definition to field
             if self.field is not Undefined:
@@ -76,7 +80,7 @@ class {classname}(core.{basename}):
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {{'field': self.shorthand}}
 
-        # set shorthand to Undefined, because it's not part of the schema
+        # set shorthand to Undefined because it's not part of the schema
         self.shorthand = Undefined
         self._kwds.update({{k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined}})
