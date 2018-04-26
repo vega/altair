@@ -100,10 +100,10 @@ def test_theme_enable(alt):
 def test_max_rows(alt):
     basic_chart = make_basic_chart(alt)
 
-    with alt.data_transformers.enable_context('default'):
+    with alt.data_transformers.enable('default'):
         basic_chart.to_dict()  # this should not fail
 
-    with alt.data_transformers.enable_context('default', max_rows=5):
+    with alt.data_transformers.enable('default', max_rows=5):
         print(alt.data_transformers.options)
         with pytest.raises(alt.MaxRowsError):
             basic_chart.to_dict()  # this should not fail

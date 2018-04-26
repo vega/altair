@@ -8,6 +8,33 @@ from toolz import curry
 PluginType = TypeVar('PluginType')
 
 
+class PluginEnabler(object):
+    """Context manager for enabling plugins
+
+    This object lets you use enable() as a context manager to
+    temporarily enable a given plugin::
+
+        with plugins.enable('name'):
+            do_something()  # 'name' plugin temporarily enabled
+        # plugins back to original state
+    """
+    def __init__(self, registry, name, **options):
+        self.registry = registry
+        self.name = name
+        self.options = options
+        self.original_state = registry._get_state()
+        self.registry._enable(name, **options)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self.registry._set_state(self.original_state    )
+
+    def __repr__(self):
+        return "{0}.enable({1!r})".format(self.registry.__class__.__name__, self.name)
+
+
 class PluginRegistry(Generic[PluginType]):
     """A registry for plugins.
 
@@ -81,7 +108,21 @@ class PluginRegistry(Generic[PluginType]):
         exts.extend(more_exts)
         return sorted(set(exts))
 
-    def enable(self, name, **options):
+    def _get_state(self):
+        """Return a dictionary representing the current state of the registry"""
+        return {'_active': self._active,
+                '_active_name': self._active_name,
+                '_plugins': self._plugins.copy(),
+                '_options': self._options.copy()}
+
+    def _set_state(self, state):
+        """Reset the state of the registry"""
+        assert set(state.keys()) == {'_active', '_active_name',
+                                     '_plugins', '_options'}
+        for key, val in state.items():
+            setattr(self, key, val)
+
+    def _enable(self, name, **options):
         # type: (str, **Any) -> None
         """Enable a plugin by name."""
         if name not in self._plugins:
@@ -99,15 +140,8 @@ class PluginRegistry(Generic[PluginType]):
         self._active = self._plugins[name]
         self._options = options
 
-    @contextmanager
-    def enable_context(self, name, **options):
-        """Temporarily enable a plugin, using a context manager"""
-        state = (self._active_name, self._active, self._options)
-        try:
-            self.enable(name, **options)
-            yield
-        finally:
-            self._active_name, self._active, self._options = state
+    def enable(self, name, **options):
+        return PluginEnabler(self, name, **options)
 
     @property
     def active(self):

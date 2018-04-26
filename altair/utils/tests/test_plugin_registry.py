@@ -54,7 +54,7 @@ def test_plugin_registry_context():
     assert plugins.options == {}
 
     # Make sure the context is set and reset correctly
-    with plugins.enable_context('default', p=6):
+    with plugins.enable('default', p=6):
         assert plugins.active == 'default'
         assert plugins.options == {'p': 6}
 
@@ -63,7 +63,9 @@ def test_plugin_registry_context():
 
     # Make sure the context is reset even if there is an error
     try:
-        with plugins.enable_context('default', p=6):
+        with plugins.enable('default', p=6):
+            assert plugins.active == 'default'
+            assert plugins.options == {'p': 6}
             raise ValueError()
     except ValueError:
         pass
