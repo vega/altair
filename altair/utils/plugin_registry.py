@@ -123,7 +123,6 @@ class PluginRegistry(Generic[PluginType]):
 
     def _enable(self, name, **options):
         # type: (str, **Any) -> None
-        """Enable a plugin by name."""
         if name not in self._plugins:
             try:
                 ep = entrypoints.get_single(self.entry_point_group, name)
@@ -140,6 +139,24 @@ class PluginRegistry(Generic[PluginType]):
         self._options = options
 
     def enable(self, name, **options):
+        # type: (str, **Any) -> PluginEnabler
+        """Enable a plugin by name.
+
+        This can be either called directly, or used as a context manager.
+
+        Parameters
+        ----------
+        name : string
+            The name of the plugin to enable
+        **options :
+            Any additional parameters will be passed to the plugin as keyword
+            arguments
+
+        Returns
+        -------
+        PluginEnabler:
+            An object that allows enable() to be used as a context manager
+        """
         return PluginEnabler(self, name, **options)
 
     @property
