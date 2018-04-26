@@ -4,7 +4,7 @@ HTML_TEMPLATE = """
 <head>
   <script src="https://cdn.jsdelivr.net/npm/vega@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@1"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@2"></script>
 </head>
 <body>
   <div id="vis"></div>
