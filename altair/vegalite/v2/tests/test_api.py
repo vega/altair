@@ -320,3 +320,18 @@ def test_themes():
     finally:
         # re-enable the original active theme
         alt.themes.enable(active)
+
+
+def test_chart_from_dict():
+    base = alt.Chart('data.csv').mark_point().encode(x='x:Q', y='y:Q')
+
+    charts = [base,
+              base + base,
+              base | base,
+              base & base,
+              base.facet(row='c:N'),
+              base.repeat(row=['c:N', 'd:N'])]
+
+    for chart in charts:
+        chart_out = alt.Chart.from_dict(chart.to_dict())
+        assert type(chart_out) is type(chart)
