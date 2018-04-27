@@ -993,7 +993,7 @@ class pieTransform(VegaSchema):
     output : Mapping(required=[])
         Rename the output data fields
     sort : oneOf(boolean, signal)
-         If true, will sort the data prior to computing angles.
+        If true, will sort the data prior to computing angles.
     startAngle : oneOf(float, signal)
 
     """
