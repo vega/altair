@@ -10,23 +10,25 @@ from altair.utils.schemapi import Undefined
 class MarkMethodMixin(object):
     """A mixin class that defines mark methods"""
 
-    def mark_area(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                  color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_area(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'area'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -37,23 +39,25 @@ class MarkMethodMixin(object):
             copy.mark = "area"
         return copy
 
-    def mark_bar(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                 color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                 limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_bar(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                 clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                 fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                 interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                 orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'bar'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -64,23 +68,25 @@ class MarkMethodMixin(object):
             copy.mark = "bar"
         return copy
 
-    def mark_line(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                  color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_line(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'line'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -91,23 +97,54 @@ class MarkMethodMixin(object):
             copy.mark = "line"
         return copy
 
-    def mark_point(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                   color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                   limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                   shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_trail(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                   clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                   fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                   fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                   interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+        """Set the chart's mark to 'trail'
+    
+        For information on additional arguments, see ``alt.MarkDef``
+        """
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
+                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
+                    **kwds)
+        copy = self.copy(deep=True, ignore=['data'])
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.MarkDef(type="trail", **kwds)
+        else:
+            copy.mark = "trail"
+        return copy
+
+    def mark_point(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                   clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                   fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                   fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                   interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                    strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'point'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -118,23 +155,25 @@ class MarkMethodMixin(object):
             copy.mark = "point"
         return copy
 
-    def mark_text(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                  color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_text(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'text'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -145,23 +184,25 @@ class MarkMethodMixin(object):
             copy.mark = "text"
         return copy
 
-    def mark_tick(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                  color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_tick(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'tick'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -172,23 +213,25 @@ class MarkMethodMixin(object):
             copy.mark = "tick"
         return copy
 
-    def mark_rect(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                  color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_rect(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'rect'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -199,23 +242,25 @@ class MarkMethodMixin(object):
             copy.mark = "rect"
         return copy
 
-    def mark_rule(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                  color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                  shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_rule(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'rule'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -226,23 +271,25 @@ class MarkMethodMixin(object):
             copy.mark = "rule"
         return copy
 
-    def mark_circle(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                    color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                    fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                    limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                    shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_circle(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                    clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                    fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                    fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                    interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                     style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'circle'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -253,23 +300,25 @@ class MarkMethodMixin(object):
             copy.mark = "circle"
         return copy
 
-    def mark_square(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                    color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                    fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                    limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                    shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_square(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                    clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                    fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                    fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                    interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                     style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'square'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -280,23 +329,25 @@ class MarkMethodMixin(object):
             copy.mark = "square"
         return copy
 
-    def mark_geoshape(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
-                      color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                      fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                      fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                      limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                      shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
+    def mark_geoshape(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                      clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
+                      fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                      fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                      interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                      orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                      size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                       strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
                       style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         """Set the chart's mark to 'geoshape'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
-        kwds = dict(align=align, angle=angle, baseline=baseline, clip=clip, color=color, cursor=cursor,
-                    dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
-                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, opacity=opacity, orient=orient, radius=radius,
-                    shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
+        kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
+                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
+                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
+                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
+                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
+                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
                     **kwds)
@@ -317,14 +368,14 @@ class ConfigMethodMixin(object):
         copy.config = core.Config(*args, **kwargs)
         return copy
 
-    @use_signature(core.MarkConfig)
+    @use_signature(core.AreaConfig)
     def configure_area(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["area"] = core.MarkConfig(*args, **kwargs)
+        copy.config["area"] = core.AreaConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
@@ -447,14 +498,14 @@ class ConfigMethodMixin(object):
         copy.config["legend"] = core.LegendConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.MarkConfig)
+    @use_signature(core.LineConfig)
     def configure_line(self, *args, **kwargs):
         copy = self.copy(deep=False)
         if copy.config is Undefined:
             copy.config = core.Config()
         else:
             copy.config = copy.config.copy(deep=False)
-        copy.config["line"] = core.MarkConfig(*args, **kwargs)
+        copy.config["line"] = core.LineConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
@@ -575,6 +626,16 @@ class ConfigMethodMixin(object):
         else:
             copy.config = copy.config.copy(deep=False)
         copy.config["title"] = core.VgTitleConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.LineConfig)
+    def configure_trail(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["trail"] = core.LineConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ViewConfig)

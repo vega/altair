@@ -1,25 +1,6 @@
 {
+  "$ref": "#/definitions/TopLevelSpec",
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "anyOf": [
-    {
-      "$ref": "#/definitions/TopLevelFacetedUnitSpec"
-    },
-    {
-      "$ref": "#/definitions/TopLevelFacetSpec"
-    },
-    {
-      "$ref": "#/definitions/TopLevelLayerSpec"
-    },
-    {
-      "$ref": "#/definitions/TopLevelRepeatSpec"
-    },
-    {
-      "$ref": "#/definitions/TopLevelVConcatSpec"
-    },
-    {
-      "$ref": "#/definitions/TopLevelHConcatSpec"
-    }
-  ],
   "definitions": {
     "Aggregate": {
       "$ref": "#/definitions/AggregateOp"
@@ -82,7 +63,7 @@
           "type": "string"
         },
         "field": {
-          "description": "The data field for which to compute aggregate function.",
+          "description": "The data field for which to compute aggregate function. This is required for all aggregation operations except `\"count\"`.",
           "type": "string"
         },
         "op": {
@@ -92,7 +73,6 @@
       },
       "required": [
         "op",
-        "field",
         "as"
       ],
       "type": "object"
@@ -114,6 +94,225 @@
           "$ref": "#/definitions/MarkDef"
         }
       ]
+    },
+    "AreaConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "align": {
+          "$ref": "#/definitions/HorizontalAlign",
+          "description": "The horizontal alignment of the text. One of `\"left\"`, `\"right\"`, `\"center\"`."
+        },
+        "angle": {
+          "description": "The rotation angle of the text, in degrees.",
+          "maximum": 360,
+          "minimum": 0,
+          "type": "number"
+        },
+        "baseline": {
+          "$ref": "#/definitions/VerticalAlign",
+          "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
+        },
+        "color": {
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "type": "string"
+        },
+        "cursor": {
+          "description": "The mouse cursor used over the mark. Any valid [CSS cursor type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used.",
+          "enum": [
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing"
+          ],
+          "type": "string"
+        },
+        "dx": {
+          "description": "The horizontal offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
+          "type": "number"
+        },
+        "dy": {
+          "description": "The vertical offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
+          "type": "number"
+        },
+        "fill": {
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "fillOpacity": {
+          "description": "The fill opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "filled": {
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "type": "boolean"
+        },
+        "font": {
+          "description": "The typeface to set the text in (e.g., `\"Helvetica Neue\"`).",
+          "type": "string"
+        },
+        "fontSize": {
+          "description": "The font size, in pixels.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "fontStyle": {
+          "$ref": "#/definitions/FontStyle",
+          "description": "The font style (e.g., `\"italic\"`)."
+        },
+        "fontWeight": {
+          "$ref": "#/definitions/FontWeight",
+          "description": "The font weight.\nThis can be either a string (e.g `\"bold\"`, `\"normal\"`) or a number (`100`, `200`, `300`, ..., `900` where `\"normal\"` = `400` and `\"bold\"` = `700`)."
+        },
+        "href": {
+          "description": "A URL to load upon mouse click. If defined, the mark acts as a hyperlink.",
+          "format": "uri",
+          "type": "string"
+        },
+        "interpolate": {
+          "$ref": "#/definitions/Interpolate",
+          "description": "The line interpolation method to use for line and area marks. One of the following:\n- `\"linear\"`: piecewise linear segments, as in a polyline.\n- `\"linear-closed\"`: close the linear segments to form a polygon.\n- `\"step\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"step-before\"`: alternate between vertical and horizontal segments, as in a step function.\n- `\"step-after\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"basis\"`: a B-spline, with control point duplication on the ends.\n- `\"basis-open\"`: an open B-spline; may not intersect the start or end.\n- `\"basis-closed\"`: a closed B-spline, as in a loop.\n- `\"cardinal\"`: a Cardinal spline, with control point duplication on the ends.\n- `\"cardinal-open\"`: an open Cardinal spline; may not intersect the start or end, but will intersect other control points.\n- `\"cardinal-closed\"`: a closed Cardinal spline, as in a loop.\n- `\"bundle\"`: equivalent to basis, except the tension parameter is used to straighten the spline.\n- `\"monotone\"`: cubic interpolation that preserves monotonicity in y."
+        },
+        "limit": {
+          "description": "The maximum length of the text mark in pixels (default 0, indicating no limit). The text value will be automatically truncated if the rendered size exceeds the limit.",
+          "type": "number"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/MarkProperties"
+            }
+          ],
+          "description": "A flag for overlaying line on top of area marks, or an object defining the properties of the overlayed lines.\n\n- If this value is an empty object (`{}`) or `true`, lines with default properties will be used.\n\n- If this value is `false`, no lines would be automatically added to area marks.\n\n__Default value:__ `false`."
+        },
+        "opacity": {
+          "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "orient": {
+          "$ref": "#/definitions/Orient",
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+        },
+        "point": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/MarkProperties"
+            },
+            {
+              "enum": [
+                "transparent"
+              ],
+              "type": "string"
+            }
+          ],
+          "description": "A flag for overlaying points on top of line or area marks, or an object defining the properties of the overlayed points.\n\n- If this property is `\"transparent\"`, transparent points will be used (for enhancing tooltips and selections).\n\n- If this property is an empty object (`{}`) or `true`, filled points with default properties will be used.\n\n- If this property is `false`, no points would be automatically added to line or area marks.\n\n__Default value:__ `false`."
+        },
+        "radius": {
+          "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "shape": {
+          "description": "The default symbol shape to use. One of: `\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`, or `\"triangle-down\"`, or a custom SVG path.\n\n__Default value:__ `\"circle\"`",
+          "type": "string"
+        },
+        "size": {
+          "description": "The pixel area each the point/circle/square.\nFor example: in the case of circles, the radius is determined in part by the square root of the size value.\n\n__Default value:__ `30`",
+          "minimum": 0,
+          "type": "number"
+        },
+        "stroke": {
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
+        "strokeDash": {
+          "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "strokeDashOffset": {
+          "description": "The offset (in pixels) into which to begin drawing with the stroke dash array.",
+          "type": "number"
+        },
+        "strokeOpacity": {
+          "description": "The stroke opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "strokeWidth": {
+          "description": "The stroke width, in pixels.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "tension": {
+          "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "text": {
+          "description": "Placeholder text if the `text` channel is not specified",
+          "type": "string"
+        },
+        "theta": {
+          "description": "Polar coordinate angle, in radians, of the text label from the origin determined by the `x` and `y` properties. Values for `theta` follow the same convention of `arc` mark `startAngle` and `endAngle` properties: angles are measured in radians, with `0` indicating \"north\".",
+          "type": "number"
+        }
+      },
+      "type": "object"
     },
     "AutoSizeParams": {
       "additionalProperties": false,
@@ -242,7 +441,7 @@
           "type": "boolean"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as a part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function will be denoted in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Note__: You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -516,7 +715,7 @@
           "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
         },
         "binSpacing": {
-          "description": "Offset between bar for binned field.  Ideal value for this is either 0 (Preferred by statisticians) or 1 (Vega-Lite Default, D3 example style).\n\n__Default value:__ `1`",
+          "description": "Offset between bars for binned field.  Ideal value for this is either 0 (Preferred by statisticians) or 1 (Vega-Lite Default, D3 example style).\n\n__Default value:__ `1`",
           "minimum": 0,
           "type": "number"
         },
@@ -585,7 +784,7 @@
           "type": "number"
         },
         "fill": {
-          "description": "Default Fill Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
         "fillOpacity": {
@@ -636,7 +835,7 @@
         },
         "orient": {
           "$ref": "#/definitions/Orient",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
         },
         "radius": {
           "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
@@ -653,7 +852,16 @@
           "type": "number"
         },
         "stroke": {
-          "description": "Default Stroke Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -846,7 +1054,7 @@
       "$ref": "#/definitions/CompositeUnitSpecAlias",
       "description": "Unit spec that can have a composite mark."
     },
-    "Conditional<FieldDef>": {
+    "ConditionalFieldDef": {
       "anyOf": [
         {
           "$ref": "#/definitions/ConditionalPredicate<FieldDef>"
@@ -856,7 +1064,7 @@
         }
       ]
     },
-    "Conditional<MarkPropFieldDef>": {
+    "ConditionalMarkPropFieldDef": {
       "anyOf": [
         {
           "$ref": "#/definitions/ConditionalPredicate<MarkPropFieldDef>"
@@ -866,7 +1074,7 @@
         }
       ]
     },
-    "Conditional<TextFieldDef>": {
+    "ConditionalTextFieldDef": {
       "anyOf": [
         {
           "$ref": "#/definitions/ConditionalPredicate<TextFieldDef>"
@@ -876,7 +1084,7 @@
         }
       ]
     },
-    "Conditional<ValueDef>": {
+    "ConditionalValueDef": {
       "anyOf": [
         {
           "$ref": "#/definitions/ConditionalPredicate<ValueDef>"
@@ -922,9 +1130,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -987,6 +1202,12 @@
         "sort": {
           "anyOf": [
             {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
               "$ref": "#/definitions/SortOrder"
             },
             {
@@ -996,7 +1217,7 @@
               "type": "null"
             }
           ],
-          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"` and `null` (no sorting).\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\n\n__Default value:__ `\"ascending\"`"
+          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"`, `null` (no sorting), or an array specifying the preferred order of values.\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\nFor `sort` as an [array specifying the preferred order of values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order will obey the values in the array, followed by any unspecified values in their original order.\n\n__Default value:__ `\"ascending\"`"
         },
         "test": {
           "$ref": "#/definitions/LogicalOperand<Predicate>"
@@ -1005,9 +1226,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -1056,9 +1284,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -1125,9 +1360,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -1194,6 +1436,12 @@
         "sort": {
           "anyOf": [
             {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
               "$ref": "#/definitions/SortOrder"
             },
             {
@@ -1203,15 +1451,22 @@
               "type": "null"
             }
           ],
-          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"` and `null` (no sorting).\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\n\n__Default value:__ `\"ascending\"`"
+          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"`, `null` (no sorting), or an array specifying the preferred order of values.\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\nFor `sort` as an [array specifying the preferred order of values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order will obey the values in the array, followed by any unspecified values in their original order.\n\n__Default value:__ `\"ascending\"`"
         },
         "timeUnit": {
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -1261,9 +1516,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -1298,7 +1560,7 @@
       "additionalProperties": false,
       "properties": {
         "area": {
-          "$ref": "#/definitions/MarkConfig",
+          "$ref": "#/definitions/AreaConfig",
           "description": "Area-Specific Config "
         },
         "autosize": {
@@ -1378,7 +1640,7 @@
           "description": "Geoshape-Specific Config "
         },
         "invalidValues": {
-          "description": "Defines how Vega-Lite should handle invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values are filtered.\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
+          "description": "Defines how Vega-Lite should handle invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
           "enum": [
             "filter",
             null
@@ -1393,7 +1655,7 @@
           "description": "Legend configuration, which determines default properties for all [legends](legend.html). For a full list of legend configuration options, please see the [corresponding section of in the legend documentation](legend.html#config)."
         },
         "line": {
-          "$ref": "#/definitions/MarkConfig",
+          "$ref": "#/definitions/LineConfig",
           "description": "Line-Specific Config "
         },
         "mark": {
@@ -1446,7 +1708,7 @@
         },
         "style": {
           "$ref": "#/definitions/StyleConfigIndex",
-          "description": "An object hash that defines key-value mappings to determine default properties for marks with a given [style](mark.html#mark-def).  The keys represent styles names; the value are valid [mark configuration objects](mark.html#config).  "
+          "description": "An object hash that defines key-value mappings to determine default properties for marks with a given [style](mark.html#mark-def).  The keys represent styles names; the values have to be valid [mark configuration objects](mark.html#config).  "
         },
         "text": {
           "$ref": "#/definitions/TextConfig",
@@ -1463,6 +1725,10 @@
         "title": {
           "$ref": "#/definitions/VgTitleConfig",
           "description": "Title configuration, which determines default properties for all [titles](title.html). For a full list of title configuration options, please see the [corresponding section of the title documentation](title.html#config)."
+        },
+        "trail": {
+          "$ref": "#/definitions/LineConfig",
+          "description": "Trail-Specific Config "
         },
         "view": {
           "$ref": "#/definitions/ViewConfig",
@@ -1624,7 +1890,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
+          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.  If either `fill` or `stroke` channel is specified, `color` channel will be ignored.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
         },
         "detail": {
           "anyOf": [
@@ -1638,7 +1904,7 @@
               "type": "array"
             }
           ],
-          "description": "Additional levels of detail for grouping data in aggregate views and\nin line and area marks without mapping data to a specific visual channel."
+          "description": "Additional levels of detail for grouping data in aggregate views and\nin line, trail, and area marks without mapping data to a specific visual channel."
         },
         "fill": {
           "anyOf": [
@@ -1649,7 +1915,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `fill` channel has higher precedence than `color` and will override color value."
+          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `fill` channel, `color ` channel will be ignored. To customize both fill and stroke, please use `fill` and `stroke` channels (not `fill` and `color`)."
         },
         "href": {
           "anyOf": [
@@ -1705,7 +1971,7 @@
               "type": "array"
             }
           ],
-          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes stack order.\n- For line marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
+          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
         },
         "shape": {
           "anyOf": [
@@ -1727,7 +1993,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is currently unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`."
+          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`. (Use `\"trail\"` instead of line with varying size)"
         },
         "stroke": {
           "anyOf": [
@@ -1738,7 +2004,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `stroke` channel has higher precedence than `color` and will override color value."
+          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `stroke` channel, `color ` channel will be ignored. To customize both stroke and fill, please use `stroke` and `fill` channels (not `stroke` and `color`)."
         },
         "text": {
           "anyOf": [
@@ -1758,6 +2024,12 @@
             },
             {
               "$ref": "#/definitions/TextValueDefWithCondition"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/TextFieldDef"
+              },
+              "type": "array"
             }
           ],
           "description": "The tooltip text to show upon mouse hover."
@@ -1821,7 +2093,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
+          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.  If either `fill` or `stroke` channel is specified, `color` channel will be ignored.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
         },
         "column": {
           "$ref": "#/definitions/FacetFieldDef",
@@ -1839,7 +2111,7 @@
               "type": "array"
             }
           ],
-          "description": "Additional levels of detail for grouping data in aggregate views and\nin line and area marks without mapping data to a specific visual channel."
+          "description": "Additional levels of detail for grouping data in aggregate views and\nin line, trail, and area marks without mapping data to a specific visual channel."
         },
         "fill": {
           "anyOf": [
@@ -1850,7 +2122,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `fill` channel has higher precedence than `color` and will override color value."
+          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `fill` channel, `color ` channel will be ignored. To customize both fill and stroke, please use `fill` and `stroke` channels (not `fill` and `color`)."
         },
         "href": {
           "anyOf": [
@@ -1906,7 +2178,7 @@
               "type": "array"
             }
           ],
-          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes stack order.\n- For line marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
+          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
         },
         "row": {
           "$ref": "#/definitions/FacetFieldDef",
@@ -1932,7 +2204,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is currently unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`."
+          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`. (Use `\"trail\"` instead of line with varying size)"
         },
         "stroke": {
           "anyOf": [
@@ -1943,7 +2215,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ The `stroke` channel has higher precedence than `color` and will override color value."
+          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `stroke` channel, `color ` channel will be ignored. To customize both stroke and fill, please use `stroke` and `fill` channels (not `stroke` and `color`)."
         },
         "text": {
           "anyOf": [
@@ -1963,6 +2235,12 @@
             },
             {
               "$ref": "#/definitions/TextValueDefWithCondition"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/TextFieldDef"
+              },
+              "type": "array"
             }
           ],
           "description": "The tooltip text to show upon mouse hover."
@@ -2129,9 +2407,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -2187,9 +2472,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -2219,11 +2511,11 @@
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Conditional<ValueDef>"
+              "$ref": "#/definitions/ConditionalValueDef"
             },
             {
               "items": {
-                "$ref": "#/definitions/Conditional<ValueDef>"
+                "$ref": "#/definitions/ConditionalValueDef"
               },
               "type": "array"
             }
@@ -2245,9 +2537,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -2277,11 +2576,11 @@
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Conditional<ValueDef>"
+              "$ref": "#/definitions/ConditionalValueDef"
             },
             {
               "items": {
-                "$ref": "#/definitions/Conditional<ValueDef>"
+                "$ref": "#/definitions/ConditionalValueDef"
               },
               "type": "array"
             }
@@ -2324,6 +2623,12 @@
         "sort": {
           "anyOf": [
             {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
               "$ref": "#/definitions/SortOrder"
             },
             {
@@ -2333,15 +2638,22 @@
               "type": "null"
             }
           ],
-          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"` and `null` (no sorting).\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\n\n__Default value:__ `\"ascending\"`"
+          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"`, `null` (no sorting), or an array specifying the preferred order of values.\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\nFor `sort` as an [array specifying the preferred order of values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order will obey the values in the array, followed by any unspecified values in their original order.\n\n__Default value:__ `\"ascending\"`"
         },
         "timeUnit": {
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -2371,11 +2683,11 @@
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Conditional<ValueDef>"
+              "$ref": "#/definitions/ConditionalValueDef"
             },
             {
               "items": {
-                "$ref": "#/definitions/Conditional<ValueDef>"
+                "$ref": "#/definitions/ConditionalValueDef"
               },
               "type": "array"
             }
@@ -2401,9 +2713,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -2775,7 +3094,7 @@
         },
         "mark": {
           "$ref": "#/definitions/AnyMark",
-          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n* `\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
+          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n`\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
         },
         "name": {
           "description": "Name of the visualization for later reference.",
@@ -2783,7 +3102,7 @@
         },
         "projection": {
           "$ref": "#/definitions/Projection",
-          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have `latitude` and `\"longitude\"` channels."
+          "description": "An object defining properties of geographic projection, which will be applied to `shape` path for `\"geoshape\"` marks\nand to `latitude` and `\"longitude\"` channels for other marks."
         },
         "selection": {
           "additionalProperties": {
@@ -2841,7 +3160,7 @@
         },
         "mark": {
           "$ref": "#/definitions/AnyMark",
-          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n* `\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
+          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n`\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
         },
         "name": {
           "description": "Name of the visualization for later reference.",
@@ -2849,7 +3168,7 @@
         },
         "projection": {
           "$ref": "#/definitions/Projection",
-          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have `latitude` and `\"longitude\"` channels."
+          "description": "An object defining properties of geographic projection, which will be applied to `shape` path for `\"geoshape\"` marks\nand to `latitude` and `\"longitude\"` channels for other marks."
         },
         "selection": {
           "additionalProperties": {
@@ -2959,7 +3278,7 @@
           "type": "number"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as a part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function will be denoted in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Note__: You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -3236,7 +3555,7 @@
           "type": "number"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as a part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function will be denoted in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Note__: You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -3477,6 +3796,214 @@
       },
       "type": "object"
     },
+    "LineConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "align": {
+          "$ref": "#/definitions/HorizontalAlign",
+          "description": "The horizontal alignment of the text. One of `\"left\"`, `\"right\"`, `\"center\"`."
+        },
+        "angle": {
+          "description": "The rotation angle of the text, in degrees.",
+          "maximum": 360,
+          "minimum": 0,
+          "type": "number"
+        },
+        "baseline": {
+          "$ref": "#/definitions/VerticalAlign",
+          "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
+        },
+        "color": {
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "type": "string"
+        },
+        "cursor": {
+          "description": "The mouse cursor used over the mark. Any valid [CSS cursor type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used.",
+          "enum": [
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing"
+          ],
+          "type": "string"
+        },
+        "dx": {
+          "description": "The horizontal offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
+          "type": "number"
+        },
+        "dy": {
+          "description": "The vertical offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
+          "type": "number"
+        },
+        "fill": {
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "fillOpacity": {
+          "description": "The fill opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "filled": {
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "type": "boolean"
+        },
+        "font": {
+          "description": "The typeface to set the text in (e.g., `\"Helvetica Neue\"`).",
+          "type": "string"
+        },
+        "fontSize": {
+          "description": "The font size, in pixels.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "fontStyle": {
+          "$ref": "#/definitions/FontStyle",
+          "description": "The font style (e.g., `\"italic\"`)."
+        },
+        "fontWeight": {
+          "$ref": "#/definitions/FontWeight",
+          "description": "The font weight.\nThis can be either a string (e.g `\"bold\"`, `\"normal\"`) or a number (`100`, `200`, `300`, ..., `900` where `\"normal\"` = `400` and `\"bold\"` = `700`)."
+        },
+        "href": {
+          "description": "A URL to load upon mouse click. If defined, the mark acts as a hyperlink.",
+          "format": "uri",
+          "type": "string"
+        },
+        "interpolate": {
+          "$ref": "#/definitions/Interpolate",
+          "description": "The line interpolation method to use for line and area marks. One of the following:\n- `\"linear\"`: piecewise linear segments, as in a polyline.\n- `\"linear-closed\"`: close the linear segments to form a polygon.\n- `\"step\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"step-before\"`: alternate between vertical and horizontal segments, as in a step function.\n- `\"step-after\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"basis\"`: a B-spline, with control point duplication on the ends.\n- `\"basis-open\"`: an open B-spline; may not intersect the start or end.\n- `\"basis-closed\"`: a closed B-spline, as in a loop.\n- `\"cardinal\"`: a Cardinal spline, with control point duplication on the ends.\n- `\"cardinal-open\"`: an open Cardinal spline; may not intersect the start or end, but will intersect other control points.\n- `\"cardinal-closed\"`: a closed Cardinal spline, as in a loop.\n- `\"bundle\"`: equivalent to basis, except the tension parameter is used to straighten the spline.\n- `\"monotone\"`: cubic interpolation that preserves monotonicity in y."
+        },
+        "limit": {
+          "description": "The maximum length of the text mark in pixels (default 0, indicating no limit). The text value will be automatically truncated if the rendered size exceeds the limit.",
+          "type": "number"
+        },
+        "opacity": {
+          "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "orient": {
+          "$ref": "#/definitions/Orient",
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+        },
+        "point": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/MarkProperties"
+            },
+            {
+              "enum": [
+                "transparent"
+              ],
+              "type": "string"
+            }
+          ],
+          "description": "A flag for overlaying points on top of line or area marks, or an object defining the properties of the overlayed points.\n\n- If this property is `\"transparent\"`, transparent points will be used (for enhancing tooltips and selections).\n\n- If this property is an empty object (`{}`) or `true`, filled points with default properties will be used.\n\n- If this property is `false`, no points would be automatically added to line or area marks.\n\n__Default value:__ `false`."
+        },
+        "radius": {
+          "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "shape": {
+          "description": "The default symbol shape to use. One of: `\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`, or `\"triangle-down\"`, or a custom SVG path.\n\n__Default value:__ `\"circle\"`",
+          "type": "string"
+        },
+        "size": {
+          "description": "The pixel area each the point/circle/square.\nFor example: in the case of circles, the radius is determined in part by the square root of the size value.\n\n__Default value:__ `30`",
+          "minimum": 0,
+          "type": "number"
+        },
+        "stroke": {
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
+        "strokeDash": {
+          "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "strokeDashOffset": {
+          "description": "The offset (in pixels) into which to begin drawing with the stroke dash array.",
+          "type": "number"
+        },
+        "strokeOpacity": {
+          "description": "The stroke opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "strokeWidth": {
+          "description": "The stroke width, in pixels.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "tension": {
+          "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "text": {
+          "description": "Placeholder text if the `text` channel is not specified",
+          "type": "string"
+        },
+        "theta": {
+          "description": "Polar coordinate angle, in radians, of the text label from the origin determined by the `x` and `y` properties. Values for `theta` follow the same convention of `arc` mark `startAngle` and `endAngle` properties: angles are measured in radians, with `0` indicating \"north\".",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "LocalMultiTimeUnit": {
       "enum": [
         "yearquarter",
@@ -3692,6 +4219,7 @@
         "area",
         "bar",
         "line",
+        "trail",
         "point",
         "text",
         "tick",
@@ -3775,7 +4303,7 @@
           "type": "number"
         },
         "fill": {
-          "description": "Default Fill Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
         "fillOpacity": {
@@ -3826,7 +4354,7 @@
         },
         "orient": {
           "$ref": "#/definitions/Orient",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
         },
         "radius": {
           "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
@@ -3843,7 +4371,16 @@
           "type": "number"
         },
         "stroke": {
-          "description": "Default Stroke Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -3901,6 +4438,11 @@
         "baseline": {
           "$ref": "#/definitions/VerticalAlign",
           "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
+        },
+        "binSpacing": {
+          "description": "Offset between bars for binned field.  Ideal value for this is either 0 (Preferred by statisticians) or 1 (Vega-Lite Default, D3 example style).\n\n__Default value:__ `1`",
+          "minimum": 0,
+          "type": "number"
         },
         "clip": {
           "description": "Whether a mark be clipped to the enclosing group’s width and height.",
@@ -3961,7 +4503,7 @@
           "type": "number"
         },
         "fill": {
-          "description": "Default Fill Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
         "fillOpacity": {
@@ -4004,6 +4546,17 @@
           "description": "The maximum length of the text mark in pixels (default 0, indicating no limit). The text value will be automatically truncated if the rendered size exceeds the limit.",
           "type": "number"
         },
+        "line": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/MarkProperties"
+            }
+          ],
+          "description": "A flag for overlaying line on top of area marks, or an object defining the properties of the overlayed lines.\n\n- If this value is an empty object (`{}`) or `true`, lines with default properties will be used.\n\n- If this value is `false`, no lines would be automatically added to area marks.\n\n__Default value:__ `false`."
+        },
         "opacity": {
           "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
           "maximum": 1,
@@ -4012,7 +4565,24 @@
         },
         "orient": {
           "$ref": "#/definitions/Orient",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+        },
+        "point": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/MarkProperties"
+            },
+            {
+              "enum": [
+                "transparent"
+              ],
+              "type": "string"
+            }
+          ],
+          "description": "A flag for overlaying points on top of line or area marks, or an object defining the properties of the overlayed points.\n\n- If this property is `\"transparent\"`, transparent points will be used (for enhancing tooltips and selections).\n\n- If this property is an empty object (`{}`) or `true`, filled points with default properties will be used.\n\n- If this property is `false`, no points would be automatically added to line or area marks.\n\n__Default value:__ `false`."
         },
         "radius": {
           "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
@@ -4029,7 +4599,16 @@
           "type": "number"
         },
         "stroke": {
-          "description": "Default Stroke Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -4090,6 +4669,220 @@
       "required": [
         "type"
       ],
+      "type": "object"
+    },
+    "MarkProperties": {
+      "additionalProperties": false,
+      "properties": {
+        "align": {
+          "$ref": "#/definitions/HorizontalAlign",
+          "description": "The horizontal alignment of the text. One of `\"left\"`, `\"right\"`, `\"center\"`."
+        },
+        "angle": {
+          "description": "The rotation angle of the text, in degrees.",
+          "maximum": 360,
+          "minimum": 0,
+          "type": "number"
+        },
+        "baseline": {
+          "$ref": "#/definitions/VerticalAlign",
+          "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
+        },
+        "binSpacing": {
+          "description": "Offset between bars for binned field.  Ideal value for this is either 0 (Preferred by statisticians) or 1 (Vega-Lite Default, D3 example style).\n\n__Default value:__ `1`",
+          "minimum": 0,
+          "type": "number"
+        },
+        "clip": {
+          "description": "Whether a mark be clipped to the enclosing group’s width and height.",
+          "type": "boolean"
+        },
+        "color": {
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "type": "string"
+        },
+        "cursor": {
+          "description": "The mouse cursor used over the mark. Any valid [CSS cursor type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used.",
+          "enum": [
+            "auto",
+            "default",
+            "none",
+            "context-menu",
+            "help",
+            "pointer",
+            "progress",
+            "wait",
+            "cell",
+            "crosshair",
+            "text",
+            "vertical-text",
+            "alias",
+            "copy",
+            "move",
+            "no-drop",
+            "not-allowed",
+            "e-resize",
+            "n-resize",
+            "ne-resize",
+            "nw-resize",
+            "s-resize",
+            "se-resize",
+            "sw-resize",
+            "w-resize",
+            "ew-resize",
+            "ns-resize",
+            "nesw-resize",
+            "nwse-resize",
+            "col-resize",
+            "row-resize",
+            "all-scroll",
+            "zoom-in",
+            "zoom-out",
+            "grab",
+            "grabbing"
+          ],
+          "type": "string"
+        },
+        "dx": {
+          "description": "The horizontal offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
+          "type": "number"
+        },
+        "dy": {
+          "description": "The vertical offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
+          "type": "number"
+        },
+        "fill": {
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "fillOpacity": {
+          "description": "The fill opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "filled": {
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "type": "boolean"
+        },
+        "font": {
+          "description": "The typeface to set the text in (e.g., `\"Helvetica Neue\"`).",
+          "type": "string"
+        },
+        "fontSize": {
+          "description": "The font size, in pixels.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "fontStyle": {
+          "$ref": "#/definitions/FontStyle",
+          "description": "The font style (e.g., `\"italic\"`)."
+        },
+        "fontWeight": {
+          "$ref": "#/definitions/FontWeight",
+          "description": "The font weight.\nThis can be either a string (e.g `\"bold\"`, `\"normal\"`) or a number (`100`, `200`, `300`, ..., `900` where `\"normal\"` = `400` and `\"bold\"` = `700`)."
+        },
+        "href": {
+          "description": "A URL to load upon mouse click. If defined, the mark acts as a hyperlink.",
+          "format": "uri",
+          "type": "string"
+        },
+        "interpolate": {
+          "$ref": "#/definitions/Interpolate",
+          "description": "The line interpolation method to use for line and area marks. One of the following:\n- `\"linear\"`: piecewise linear segments, as in a polyline.\n- `\"linear-closed\"`: close the linear segments to form a polygon.\n- `\"step\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"step-before\"`: alternate between vertical and horizontal segments, as in a step function.\n- `\"step-after\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"basis\"`: a B-spline, with control point duplication on the ends.\n- `\"basis-open\"`: an open B-spline; may not intersect the start or end.\n- `\"basis-closed\"`: a closed B-spline, as in a loop.\n- `\"cardinal\"`: a Cardinal spline, with control point duplication on the ends.\n- `\"cardinal-open\"`: an open Cardinal spline; may not intersect the start or end, but will intersect other control points.\n- `\"cardinal-closed\"`: a closed Cardinal spline, as in a loop.\n- `\"bundle\"`: equivalent to basis, except the tension parameter is used to straighten the spline.\n- `\"monotone\"`: cubic interpolation that preserves monotonicity in y."
+        },
+        "limit": {
+          "description": "The maximum length of the text mark in pixels (default 0, indicating no limit). The text value will be automatically truncated if the rendered size exceeds the limit.",
+          "type": "number"
+        },
+        "opacity": {
+          "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "orient": {
+          "$ref": "#/definitions/Orient",
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+        },
+        "radius": {
+          "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "shape": {
+          "description": "The default symbol shape to use. One of: `\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`, or `\"triangle-down\"`, or a custom SVG path.\n\n__Default value:__ `\"circle\"`",
+          "type": "string"
+        },
+        "size": {
+          "description": "The pixel area each the point/circle/square.\nFor example: in the case of circles, the radius is determined in part by the square root of the size value.\n\n__Default value:__ `30`",
+          "minimum": 0,
+          "type": "number"
+        },
+        "stroke": {
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
+          "type": "string"
+        },
+        "strokeDash": {
+          "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "strokeDashOffset": {
+          "description": "The offset (in pixels) into which to begin drawing with the stroke dash array.",
+          "type": "number"
+        },
+        "strokeOpacity": {
+          "description": "The stroke opacity (value between [0,1]).\n\n__Default value:__ `1`",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "strokeWidth": {
+          "description": "The stroke width, in pixels.",
+          "minimum": 0,
+          "type": "number"
+        },
+        "style": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name.  For example, a bar mark will have style `\"bar\"` by default.\n__Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
+        },
+        "tension": {
+          "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "text": {
+          "description": "Placeholder text if the `text` channel is not specified",
+          "type": "string"
+        },
+        "theta": {
+          "description": "Polar coordinate angle, in radians, of the text label from the origin determined by the `x` and `y` properties. Values for `theta` follow the same convention of `arc` mark `startAngle` and `endAngle` properties: angles are measured in radians, with `0` indicating \"north\".",
+          "type": "number"
+        }
+      },
       "type": "object"
     },
     "Month": {
@@ -4276,9 +5069,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -4373,6 +5173,12 @@
         "sort": {
           "anyOf": [
             {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
               "$ref": "#/definitions/SortOrder"
             },
             {
@@ -4382,7 +5188,7 @@
               "type": "null"
             }
           ],
-          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"` and `null` (no sorting).\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\n\n__Default value:__ `\"ascending\"`"
+          "description": "Sort order for the encoded field.\nSupported `sort` values include `\"ascending\"`, `\"descending\"`, `null` (no sorting), or an array specifying the preferred order of values.\nFor fields with discrete domains, `sort` can also be a [sort field definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).\nFor `sort` as an [array specifying the preferred order of values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order will obey the values in the array, followed by any unspecified values in their original order.\n\n__Default value:__ `\"ascending\"`"
         },
         "stack": {
           "anyOf": [
@@ -4399,9 +5205,16 @@
           "$ref": "#/definitions/TimeUnit",
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a geo type (`\"latitude\"`, `\"longitude\"`, and `\"geojson\"`) when a [geographic projection](https://vega.github.io/vega-lite/docs/projection.html) is applied."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
         }
       },
       "required": [
@@ -4919,7 +5732,7 @@
               "$ref": "#/definitions/SchemeParams"
             }
           ],
-          "description": "A string indicating a color [scheme](scale.html#scheme) name (e.g., `\"category10\"` or `\"viridis\"`) or a [scheme parameter object](scale.html#scheme-params).\n\nDiscrete color schemes may be used with [discrete](scale.html#discrete) or [discretizing](scale.html#discretizing) scales. Continuous color schemes are intended for use with [sequential](scales.html#sequential) scales.\n\nFor the full list of supported scheme, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference."
+          "description": "A string indicating a color [scheme](scale.html#scheme) name (e.g., `\"category10\"` or `\"viridis\"`) or a [scheme parameter object](scale.html#scheme-params).\n\nDiscrete color schemes may be used with [discrete](scale.html#discrete) or [discretizing](scale.html#discretizing) scales. Continuous color schemes are intended for use with [sequential](scales.html#sequential) scales.\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference."
         },
         "type": {
           "$ref": "#/definitions/ScaleType",
@@ -4978,7 +5791,7 @@
           "type": "number"
         },
         "maxStrokeWidth": {
-          "description": "Default max strokeWidth for strokeWidth  (or rule/line's size) scale.\n\n__Default value:__ `4`",
+          "description": "Default max strokeWidth for the scale of strokeWidth for rule and line marks and of size for trail marks.\n\n__Default value:__ `4`",
           "minimum": 0,
           "type": "number"
         },
@@ -5004,7 +5817,7 @@
           "type": "number"
         },
         "minStrokeWidth": {
-          "description": "Default minimum strokeWidth for strokeWidth (or rule/line's size) scale with zero=false.\n\n__Default value:__ `1`",
+          "description": "Default minimum strokeWidth for the scale of strokeWidth for rule and line marks and of size for trail marks with zero=false.\n\n__Default value:__ `1`",
           "minimum": 0,
           "type": "number"
         },
@@ -5129,7 +5942,7 @@
           "type": "array"
         },
         "name": {
-          "description": "A color scheme name for sequential/ordinal scales (e.g., `\"category10\"` or `\"viridis\"`).\n\nFor the full list of supported scheme, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference.",
+          "description": "A color scheme name for sequential/ordinal scales (e.g., `\"category10\"` or `\"viridis\"`).\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference.",
           "type": "string"
         }
       },
@@ -5400,7 +6213,7 @@
         },
         "order": {
           "$ref": "#/definitions/SortOrder",
-          "description": "The sort order. One of `\"ascending\"` (default) or `\"descending\"`."
+          "description": "The sort order. One of `\"ascending\"` (default), `\"descending\"`, or `null` (no not sort)."
         }
       },
       "required": [
@@ -5409,14 +6222,13 @@
       "type": "object"
     },
     "SortOrder": {
-      "enum": [
-        "ascending",
-        "descending",
-        null
-      ],
-      "type": [
-        "string",
-        "null"
+      "anyOf": [
+        {
+          "$ref": "#/definitions/VgComparatorOrder"
+        },
+        {
+          "type": "null"
+        }
       ]
     },
     "StackOffset": {
@@ -5505,7 +6317,7 @@
           "type": "number"
         },
         "fill": {
-          "description": "Default Fill Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
         "fillOpacity": {
@@ -5556,7 +6368,7 @@
         },
         "orient": {
           "$ref": "#/definitions/Orient",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
         },
         "radius": {
           "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
@@ -5577,7 +6389,16 @@
           "type": "number"
         },
         "stroke": {
-          "description": "Default Stroke Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -5617,6 +6438,60 @@
           "type": "number"
         }
       },
+      "type": "object"
+    },
+    "TextFieldDef": {
+      "additionalProperties": false,
+      "properties": {
+        "aggregate": {
+          "$ref": "#/definitions/Aggregate",
+          "description": "Aggregation function for the field\n(e.g., `mean`, `sum`, `median`, `min`, `max`, `count`).\n\n__Default value:__ `undefined` (None)"
+        },
+        "bin": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/definitions/BinParams"
+            }
+          ],
+          "description": "A flag for binning a `quantitative` field, or [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params).\nIf `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n__Default value:__ `false`"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/RepeatRef"
+            }
+          ],
+          "description": "__Required.__ A string defining the name of the field from which to pull a data value\nor an object defining iterated values from the [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.\n\n__Note:__ Dots (`.`) and brackets (`[` and `]`) can be used to access nested objects (e.g., `\"field\": \"foo.bar\"` and `\"field\": \"foo['bar']\"`).\nIf field names contain dots or brackets but are not nested, you can use `\\\\` to escape dots and brackets (e.g., `\"a\\\\.b\"` and `\"a\\\\[0\\\\]\"`).\nSee more details about escaping in the [field documentation](https://vega.github.io/vega-lite/docs/field.html).\n\n__Note:__ `field` is not required if `aggregate` is `count`."
+        },
+        "format": {
+          "description": "The [formatting pattern](https://vega.github.io/vega-lite/docs/format.html) for a text field. If not defined, this will be determined automatically.",
+          "type": "string"
+        },
+        "timeUnit": {
+          "$ref": "#/definitions/TimeUnit",
+          "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
+        },
+        "title": {
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "$ref": "#/definitions/Type",
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+        }
+      },
+      "required": [
+        "type"
+      ],
       "type": "object"
     },
     "TickConfig": {
@@ -5696,7 +6571,7 @@
           "type": "number"
         },
         "fill": {
-          "description": "Default Fill Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
         "fillOpacity": {
@@ -5747,7 +6622,7 @@
         },
         "orient": {
           "$ref": "#/definitions/Orient",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
         },
         "radius": {
           "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
@@ -5764,7 +6639,16 @@
           "type": "number"
         },
         "stroke": {
-          "description": "Default Stroke Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -6385,7 +7269,7 @@
         },
         "mark": {
           "$ref": "#/definitions/AnyMark",
-          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n* `\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
+          "description": "A string describing the mark type (one of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n`\"area\"`, `\"point\"`, `\"rule\"`, `\"geoshape\"`, and `\"text\"`) or a [mark definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def)."
         },
         "name": {
           "description": "Name of the visualization for later reference.",
@@ -6397,7 +7281,7 @@
         },
         "projection": {
           "$ref": "#/definitions/Projection",
-          "description": "An object defining properties of geographic projection.\n\nWorks with `\"geoshape\"` marks and `\"point\"` or `\"line\"` marks that have `latitude` and `\"longitude\"` channels."
+          "description": "An object defining properties of geographic projection, which will be applied to `shape` path for `\"geoshape\"` marks\nand to `latitude` and `\"longitude\"` channels for other marks."
         },
         "selection": {
           "additionalProperties": {
@@ -6434,6 +7318,28 @@
         "mark"
       ],
       "type": "object"
+    },
+    "TopLevelSpec": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TopLevelFacetedUnitSpec"
+        },
+        {
+          "$ref": "#/definitions/TopLevelFacetSpec"
+        },
+        {
+          "$ref": "#/definitions/TopLevelLayerSpec"
+        },
+        {
+          "$ref": "#/definitions/TopLevelRepeatSpec"
+        },
+        {
+          "$ref": "#/definitions/TopLevelVConcatSpec"
+        },
+        {
+          "$ref": "#/definitions/TopLevelHConcatSpec"
+        }
+      ]
     },
     "TopoDataFormat": {
       "additionalProperties": false,
@@ -6489,6 +7395,9 @@
         },
         {
           "$ref": "#/definitions/AggregateTransform"
+        },
+        {
+          "$ref": "#/definitions/WindowTransform"
         }
       ]
     },
@@ -6577,14 +7486,14 @@
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Conditional<FieldDef>"
+              "$ref": "#/definitions/ConditionalFieldDef"
             },
             {
-              "$ref": "#/definitions/Conditional<ValueDef>"
+              "$ref": "#/definitions/ConditionalValueDef"
             },
             {
               "items": {
-                "$ref": "#/definitions/Conditional<ValueDef>"
+                "$ref": "#/definitions/ConditionalValueDef"
               },
               "type": "array"
             }
@@ -6609,14 +7518,14 @@
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Conditional<MarkPropFieldDef>"
+              "$ref": "#/definitions/ConditionalMarkPropFieldDef"
             },
             {
-              "$ref": "#/definitions/Conditional<ValueDef>"
+              "$ref": "#/definitions/ConditionalValueDef"
             },
             {
               "items": {
-                "$ref": "#/definitions/Conditional<ValueDef>"
+                "$ref": "#/definitions/ConditionalValueDef"
               },
               "type": "array"
             }
@@ -6641,14 +7550,14 @@
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Conditional<TextFieldDef>"
+              "$ref": "#/definitions/ConditionalTextFieldDef"
             },
             {
-              "$ref": "#/definitions/Conditional<ValueDef>"
+              "$ref": "#/definitions/ConditionalValueDef"
             },
             {
               "items": {
-                "$ref": "#/definitions/Conditional<ValueDef>"
+                "$ref": "#/definitions/ConditionalValueDef"
               },
               "type": "array"
             }
@@ -6903,6 +7812,13 @@
       ],
       "type": "object"
     },
+    "VgComparatorOrder": {
+      "enum": [
+        "ascending",
+        "descending"
+      ],
+      "type": "string"
+    },
     "VgEventStream": {
     },
     "VgGenericBinding": {
@@ -6988,7 +7904,7 @@
           "type": "number"
         },
         "fill": {
-          "description": "Default Fill Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
           "type": "string"
         },
         "fillOpacity": {
@@ -7035,7 +7951,7 @@
         },
         "orient": {
           "$ref": "#/definitions/Orient",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
+          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
         },
         "radius": {
           "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
@@ -7052,7 +7968,16 @@
           "type": "number"
         },
         "stroke": {
-          "description": "Default Stroke Color.  This has higher precedence than config.color\n\n__Default value:__ (None)",
+          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
+          "type": "string"
+        },
+        "strokeCap": {
+          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
+          "enum": [
+            "butt",
+            "round",
+            "square"
+          ],
           "type": "string"
         },
         "strokeDash": {
@@ -7305,6 +8230,117 @@
           "type": "number"
         }
       },
+      "type": "object"
+    },
+    "WindowFieldDef": {
+      "additionalProperties": false,
+      "properties": {
+        "as": {
+          "description": "The output name for the window operation.",
+          "type": "string"
+        },
+        "field": {
+          "description": "The data field for which to compute the aggregate or window function. This can be omitted for window functions that do not operate over a field such as `count`, `rank`, `dense_rank`.",
+          "type": "string"
+        },
+        "op": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AggregateOp"
+            },
+            {
+              "$ref": "#/definitions/WindowOnlyOp"
+            }
+          ],
+          "description": "The window or aggregation operations to apply within a window, including `rank`, `lead`, `sum`, `average` or `count`. See the list of all supported operations [here](https://vega.github.io/vega-lite/docs/window.html#ops)."
+        },
+        "param": {
+          "description": "Parameter values for the window functions. Parameter values can be omitted for operations that do not accept a parameter.\n\nSee the list of all supported operations and their parameters [here](https://vega.github.io/vega-lite/docs/transforms/window.html).",
+          "type": "number"
+        }
+      },
+      "required": [
+        "op",
+        "as"
+      ],
+      "type": "object"
+    },
+    "WindowOnlyOp": {
+      "enum": [
+        "row_number",
+        "rank",
+        "dense_rank",
+        "percent_rank",
+        "cume_dist",
+        "ntile",
+        "lag",
+        "lead",
+        "first_value",
+        "last_value",
+        "nth_value"
+      ],
+      "type": "string"
+    },
+    "WindowSortField": {
+      "additionalProperties": false,
+      "description": "A compartor for fields within the window transform",
+      "properties": {
+        "field": {
+          "description": "The name of the field to sort.",
+          "type": "string"
+        },
+        "order": {
+          "$ref": "#/definitions/VgComparatorOrder",
+          "description": "Whether to sort the field in ascending or descending order."
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "type": "object"
+    },
+    "WindowTransform": {
+      "additionalProperties": false,
+      "properties": {
+        "frame": {
+          "description": "A frame specification as a two-element array indicating how the sliding window should proceed. The array entries should either be a number indicating the offset from the current data object, or null to indicate unbounded rows preceding or following the current data object. The default value is `[null, 0]`, indicating that the sliding window includes the current object and all preceding objects. The value `[-5, 5]` indicates that the window should include five objects preceding and five objects following the current object. Finally, `[null, null]` indicates that the window frame should always include all data objects. The only operators affected are the aggregation operations and the `first_value`, `last_value`, and `nth_value` window operations. The other window operations are not affected by this.\n\n__Default value:__:  `[null, 0]` (includes the current object and all preceding objects)",
+          "items": {
+            "type": [
+              "null",
+              "number"
+            ]
+          },
+          "type": "array"
+        },
+        "groupby": {
+          "description": "The data fields for partitioning the data objects into separate windows. If unspecified, all data points will be a single group.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ignorePeers": {
+          "description": "Indicates if the sliding window frame should ignore peer values. (Peer values are those considered identical by the sort criteria). The default is false, causing the window frame to expand to include all peer values. If set to true, the window frame will be defined by offset values only. This setting only affects those operations that depend on the window frame, namely aggregation operations and the first_value, last_value, and nth_value window operations.\n\n__Default value:__ `false`",
+          "type": "boolean"
+        },
+        "sort": {
+          "description": "A comparator definition for sorting data objects within a window. If two data objects are considered equal by the comparator, they are considered “peer” values of equal rank. If sort is not specified, the order is undefined: data objects are processed in the order they are observed and none are considered peers (the ignorePeers parameter is ignored and treated as if set to `true`).",
+          "items": {
+            "$ref": "#/definitions/WindowSortField"
+          },
+          "type": "array"
+        },
+        "window": {
+          "description": "The definition of the fields in the window, and what calculations to use.",
+          "items": {
+            "$ref": "#/definitions/WindowFieldDef"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "window"
+      ],
       "type": "object"
     }
   }

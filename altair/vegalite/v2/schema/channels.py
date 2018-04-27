@@ -60,31 +60,45 @@ class Color(core.MarkPropFieldDefWithCondition):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(Color, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                     condition=condition, field=field, legend=legend, scale=scale,
-                                    sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -197,18 +211,31 @@ class Column(core.FacetFieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 header=Undefined, sort=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+                 header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
         super(Column, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                     header=header, sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                     header=header, sort=sort, timeUnit=timeUnit, title=title,
+                                     type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -279,18 +306,29 @@ class Detail(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                     timeUnit=timeUnit, type=type, **kwds)
+                                     timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -378,31 +416,45 @@ class Fill(core.MarkPropFieldDefWithCondition):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(Fill, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                    condition=condition, field=field, legend=legend, scale=scale,
-                                   sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                   sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -522,19 +574,30 @@ class Href(core.FieldDefWithCondition):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+                 field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Href, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
-                                   condition=condition, field=field, timeUnit=timeUnit, type=type,
-                                   **kwds)
+                                   condition=condition, field=field, timeUnit=timeUnit, title=title,
+                                   type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -643,18 +706,29 @@ class Key(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Key, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                  timeUnit=timeUnit, type=type, **kwds)
+                                  timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -725,18 +799,29 @@ class Latitude(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                       timeUnit=timeUnit, type=type, **kwds)
+                                       timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -807,18 +892,29 @@ class Latitude2(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Latitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                        timeUnit=timeUnit, type=type, **kwds)
+                                        timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -889,18 +985,29 @@ class Longitude(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                        timeUnit=timeUnit, type=type, **kwds)
+                                        timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -971,18 +1078,29 @@ class Longitude2(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Longitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                         timeUnit=timeUnit, type=type, **kwds)
+                                         timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1070,31 +1188,45 @@ class Opacity(core.MarkPropFieldDefWithCondition):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(Opacity, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                       condition=condition, field=field, legend=legend, scale=scale,
-                                      sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                      sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1205,18 +1337,29 @@ class Order(core.OrderFieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 sort=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+                 sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Order, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                    sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1290,18 +1433,31 @@ class Row(core.FacetFieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 header=Undefined, sort=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+                 header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
         super(Row, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                  header=header, sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                  header=header, sort=sort, timeUnit=timeUnit, title=title, type=type,
+                                  **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1389,31 +1545,45 @@ class Shape(core.MarkPropFieldDefWithCondition):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(Shape, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                     condition=condition, field=field, legend=legend, scale=scale,
-                                    sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1540,31 +1710,45 @@ class Size(core.MarkPropFieldDefWithCondition):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(Size, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                    condition=condition, field=field, legend=legend, scale=scale,
-                                   sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                   sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1691,31 +1875,45 @@ class Stroke(core.MarkPropFieldDefWithCondition):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(Stroke, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                      condition=condition, field=field, legend=legend, scale=scale,
-                                     sort=sort, timeUnit=timeUnit, type=type, **kwds)
+                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1838,19 +2036,31 @@ class Text(core.TextFieldDefWithCondition):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
         super(Text, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                    condition=condition, field=field, format=format, timeUnit=timeUnit,
-                                   type=type, **kwds)
+                                   title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -1972,19 +2182,31 @@ class Tooltip(core.TextFieldDefWithCondition):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, type=Undefined, **kwds):
+                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
         super(Tooltip, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                       condition=condition, field=field, format=format,
-                                      timeUnit=timeUnit, type=type, **kwds)
+                                      timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -2100,12 +2322,15 @@ class X(core.PositionFieldDef):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     stack : anyOf(StackOffset, None)
         Type of stacking offset if the field should be stacked. `stack` is only applicable
         for `x` and `y` channels with continuous domains. For example, `stack` of `y` can be
@@ -2129,20 +2354,31 @@ class X(core.PositionFieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(X, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
                                 field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit,
-                                type=type, **kwds)
+                                title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -2246,18 +2482,29 @@ class X2(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(X2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                 timeUnit=timeUnit, type=type, **kwds)
+                                 timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -2368,12 +2615,15 @@ class Y(core.PositionFieldDef):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     stack : anyOf(StackOffset, None)
         Type of stacking offset if the field should be stacked. `stack` is only applicable
         for `x` and `y` channels with continuous domains. For example, `stack` of `y` can be
@@ -2397,20 +2647,31 @@ class Y(core.PositionFieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
-                 type=Undefined, **kwds):
+                 title=Undefined, type=Undefined, **kwds):
         super(Y, self).__init__(shorthand=shorthand, aggregate=aggregate, axis=axis, bin=bin,
                                 field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit,
-                                type=type, **kwds)
+                                title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
@@ -2514,18 +2775,29 @@ class Y2(core.FieldDef):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     """
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, type=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Y2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
-                                 timeUnit=timeUnit, type=type, **kwds)
+                                 timeUnit=timeUnit, title=title, type=type, **kwds)
 
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
