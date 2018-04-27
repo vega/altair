@@ -83,28 +83,26 @@ class AggregateTransform(VegaLiteSchema):
 class AggregatedFieldDef(VegaLiteSchema):
     """AggregatedFieldDef schema wrapper
 
-    Mapping(required=[op, field, as])
+    Mapping(required=[op, as])
 
     Attributes
     ----------
-    field : string
-        The data field for which to compute aggregate function.
     op : AggregateOp
         The aggregation operations to apply to the fields, such as sum, average or count.
         See the [full list of supported aggregation
         operations](https://vega.github.io/vega-lite/docs/aggregate.html#ops) for more
         information.
-
-    Dict-Only Attributes
-    --------------------
-    'as' : string
+    field : string
+        The data field for which to compute aggregate function. This is required for all
+        aggregation operations except `"count"`.
+    as : string
         The output field names to use for each aggregated field.
     """
     _schema = {'$ref': '#/definitions/AggregatedFieldDef'}
     _rootschema = Root._schema
 
-    def __init__(self, field=Undefined, op=Undefined, **kwds):
-        super(AggregatedFieldDef, self).__init__(field=field, op=op, **kwds)
+    def __init__(self, op=Undefined, field=Undefined, **kwds):
+        super(AggregatedFieldDef, self).__init__(op=op, field=field, **kwds)
 
 
 class Anchor(VegaLiteSchema):
@@ -129,6 +127,161 @@ class AnyMark(VegaLiteSchema):
 
     def __init__(self, *args, **kwds):
         super(AnyMark, self).__init__(*args, **kwds)
+
+
+class AreaConfig(VegaLiteSchema):
+    """AreaConfig schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    align : HorizontalAlign
+        The horizontal alignment of the text. One of `"left"`, `"right"`, `"center"`.
+    angle : float
+        The rotation angle of the text, in degrees.
+    baseline : VerticalAlign
+        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
+        __Default value:__ `"middle"`
+    color : string
+        Default color.  Note that `fill` and `stroke` have higher precedence than `color`
+        and will override `color`.  __Default value:__ <span style="color:
+        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used in a
+        [style config](mark.html#style-config).
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
+    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
+    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
+    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
+    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+        The mouse cursor used over the mark. Any valid [CSS cursor
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used.
+    dx : float
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the _angle_ property.
+    dy : float
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the _angle_ property.
+    fill : string
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
+        value:__ (None)
+    fillOpacity : float
+        The fill opacity (value between [0,1]).  __Default value:__ `1`
+    filled : boolean
+        Whether the mark's color should be used as fill color instead of stroke color.
+        __Default value:__ `true` for all marks except `point` and `false` for `point`.
+        __Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.  __Note:__
+         This property cannot be used in a [style config](mark.html#style-config).
+    font : string
+        The typeface to set the text in (e.g., `"Helvetica Neue"`).
+    fontSize : float
+        The font size, in pixels.
+    fontStyle : FontStyle
+        The font style (e.g., `"italic"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
+    href : string
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+    interpolate : Interpolate
+        The line interpolation method to use for line and area marks. One of the following:
+        - `"linear"`: piecewise linear segments, as in a polyline. - `"linear-closed"`:
+        close the linear segments to form a polygon. - `"step"`: alternate between
+        horizontal and vertical segments, as in a step function. - `"step-before"`:
+        alternate between vertical and horizontal segments, as in a step function. -
+        `"step-after"`: alternate between horizontal and vertical segments, as in a step
+        function. - `"basis"`: a B-spline, with control point duplication on the ends. -
+        `"basis-open"`: an open B-spline; may not intersect the start or end. -
+        `"basis-closed"`: a closed B-spline, as in a loop. - `"cardinal"`: a Cardinal
+        spline, with control point duplication on the ends. - `"cardinal-open"`: an open
+        Cardinal spline; may not intersect the start or end, but will intersect other
+        control points. - `"cardinal-closed"`: a closed Cardinal spline, as in a loop. -
+        `"bundle"`: equivalent to basis, except the tension parameter is used to straighten
+        the spline. - `"monotone"`: cubic interpolation that preserves monotonicity in y.
+    limit : float
+        The maximum length of the text mark in pixels (default 0, indicating no limit). The
+        text value will be automatically truncated if the rendered size exceeds the limit.
+    line : anyOf(boolean, MarkProperties)
+        A flag for overlaying line on top of area marks, or an object defining the
+        properties of the overlayed lines.  - If this value is an empty object (`{}`) or
+        `true`, lines with default properties will be used.  - If this value is `false`, no
+        lines would be automatically added to area marks.  __Default value:__ `false`.
+    opacity : float
+        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
+        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered
+        `bar` charts and `1` otherwise.
+    orient : Orient
+        The orientation of a non-stacked bar, tick, area, and line charts. The value is
+        either horizontal (default) or vertical. - For bar, rule and tick, this determines
+        whether the size of the bar and tick should be applied to x or y dimension. - For
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
+    point : anyOf(boolean, MarkProperties, enum('transparent'))
+        A flag for overlaying points on top of line or area marks, or an object defining the
+         properties of the overlayed points.  - If this property is `"transparent"`,
+        transparent points will be used (for enhancing tooltips and selections).  - If this
+        property is an empty object (`{}`) or `true`, filled points with default properties
+        will be used.  - If this property is `false`, no points would be automatically added
+         to line or area marks.  __Default value:__ `false`.
+    radius : float
+        Polar coordinate radial offset, in pixels, of the text label from the origin
+        determined by the `x` and `y` properties.
+    shape : string
+        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
+        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom SVG path.
+          __Default value:__ `"circle"`
+    size : float
+        The pixel area each the point/circle/square. For example: in the case of circles,
+        the radius is determined in part by the square root of the size value.  __Default
+        value:__ `30`
+    stroke : string
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
+        value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
+    strokeDash : List(float)
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
+    strokeDashOffset : float
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeOpacity : float
+        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+    strokeWidth : float
+        The stroke width, in pixels.
+    tension : float
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
+    text : string
+        Placeholder text if the `text` channel is not specified
+    theta : float
+        Polar coordinate angle, in radians, of the text label from the origin determined by
+        the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
+        mark `startAngle` and `endAngle` properties: angles are measured in radians, with
+        `0` indicating "north".
+    """
+    _schema = {'$ref': '#/definitions/AreaConfig'}
+    _rootschema = Root._schema
+
+    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
+                 cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined, fillOpacity=Undefined,
+                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined, radius=Undefined,
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+        super(AreaConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
+                                         cursor=cursor, dx=dx, dy=dy, fill=fill,
+                                         fillOpacity=fillOpacity, filled=filled, font=font,
+                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                                         href=href, interpolate=interpolate, limit=limit, line=line,
+                                         opacity=opacity, orient=orient, point=point, radius=radius,
+                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                         tension=tension, text=text, theta=theta, **kwds)
 
 
 class AutoSizeParams(VegaLiteSchema):
@@ -257,13 +410,15 @@ class Axis(VegaLiteSchema):
     title : anyOf(string, None)
         A title for the field. If `null`, the title will be removed.  __Default value:__
         derived from the field's name and transformation function (`aggregate`, `bin` and
-        `timeUnit`).  If the field has an aggregate function, the function is displayed as a
-         part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
-        unit applied, the applied function will be denoted in parentheses (e.g., `"Profit
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
         (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
-        field name.  __Note__: You can customize the default field title format by providing
-         the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function
-        via the `compile` function's options](compile.html#field-title).
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     titleMaxLength : float
         Max length for axis title if the title is automatically generated from the field's
         description.
@@ -496,8 +651,9 @@ class BarConfig(VegaLiteSchema):
         The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
         __Default value:__ `"middle"`
     binSpacing : float
-        Offset between bar for binned field.  Ideal value for this is either 0 (Preferred by
-         statisticians) or 1 (Vega-Lite Default, D3 example style).  __Default value:__ `1`
+        Offset between bars for binned field.  Ideal value for this is either 0 (Preferred
+        by statisticians) or 1 (Vega-Lite Default, D3 example style).  __Default value:__
+        `1`
     color : string
         Default color.  Note that `fill` and `stroke` have higher precedence than `color`
         and will override `color`.  __Default value:__ <span style="color:
@@ -522,7 +678,7 @@ class BarConfig(VegaLiteSchema):
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
@@ -568,11 +724,11 @@ class BarConfig(VegaLiteSchema):
         The orientation of a non-stacked bar, tick, area, and line charts. The value is
         either horizontal (default) or vertical. - For bar, rule and tick, this determines
         whether the size of the bar and tick should be applied to x or y dimension. - For
-        area, this property determines the orient property of the Vega output. - For line,
-        this property determines the sort order of the points in the line if
-        `config.sortLineBy` is not specified. For stacked charts, this is always determined
-        by the orientation of the stack; therefore explicitly specified value will be
-        ignored.
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the `x` and `y` properties.
@@ -585,8 +741,11 @@ class BarConfig(VegaLiteSchema):
         the radius is determined in part by the square root of the size value.  __Default
         value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color  __Default
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
     strokeDash : List(float)
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
@@ -615,9 +774,9 @@ class BarConfig(VegaLiteSchema):
                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         super(BarConfig, self).__init__(align=align, angle=angle, baseline=baseline,
                                         binSpacing=binSpacing, color=color,
                                         continuousBandSize=continuousBandSize, cursor=cursor,
@@ -626,10 +785,10 @@ class BarConfig(VegaLiteSchema):
                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
                                         href=href, interpolate=interpolate, limit=limit,
                                         opacity=opacity, orient=orient, radius=radius, shape=shape,
-                                        size=size, stroke=stroke, strokeDash=strokeDash,
-                                        strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                                        strokeWidth=strokeWidth, tension=tension, text=text,
-                                        theta=theta, **kwds)
+                                        size=size, stroke=stroke, strokeCap=strokeCap,
+                                        strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                        strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                        tension=tension, text=text, theta=theta, **kwds)
 
 
 class BasicType(VegaLiteSchema):
@@ -698,10 +857,7 @@ class BinTransform(VegaLiteSchema):
         parameters.
     field : string
         The data field to bin.
-
-    Dict-Only Attributes
-    --------------------
-    'as' : string
+    as : string
         The output fields at which to write the start and end bin values.
     """
     _schema = {'$ref': '#/definitions/BinTransform'}
@@ -755,10 +911,7 @@ class CalculateTransform(VegaLiteSchema):
     calculate : string
         A [expression](https://vega.github.io/vega-lite/docs/types.html#expression) string.
         Use the variable `datum` to refer to the current data object.
-
-    Dict-Only Attributes
-    --------------------
-    'as' : string
+    as : string
         The field for storing the computed formula value.
     """
     _schema = {'$ref': '#/definitions/CalculateTransform'}
@@ -777,7 +930,7 @@ class CompositeUnitSpec(VegaLiteSchema):
     ----------
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
+         `"line"`, `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
         definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     data : Data
         An object describing the data source
@@ -807,9 +960,9 @@ class CompositeUnitSpec(VegaLiteSchema):
     name : string
         Name of the visualization for later reference.
     projection : Projection
-        An object defining properties of geographic projection.  Works with `"geoshape"`
-        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"`
-        channels.
+        An object defining properties of geographic projection, which will be applied to
+        `shape` path for `"geoshape"` marks and to `latitude` and `"longitude"` channels for
+         other marks.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
@@ -856,7 +1009,7 @@ class ConditionalFieldDef(VegaLiteSchema):
 
     anyOf(ConditionalPredicateFieldDef, ConditionalSelectionFieldDef)
     """
-    _schema = {'$ref': '#/definitions/Conditional<FieldDef>'}
+    _schema = {'$ref': '#/definitions/ConditionalFieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
@@ -868,7 +1021,7 @@ class ConditionalMarkPropFieldDef(VegaLiteSchema):
 
     anyOf(ConditionalPredicateMarkPropFieldDef, ConditionalSelectionMarkPropFieldDef)
     """
-    _schema = {'$ref': '#/definitions/Conditional<MarkPropFieldDef>'}
+    _schema = {'$ref': '#/definitions/ConditionalMarkPropFieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
@@ -880,7 +1033,7 @@ class ConditionalTextFieldDef(VegaLiteSchema):
 
     anyOf(ConditionalPredicateTextFieldDef, ConditionalSelectionTextFieldDef)
     """
-    _schema = {'$ref': '#/definitions/Conditional<TextFieldDef>'}
+    _schema = {'$ref': '#/definitions/ConditionalTextFieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
@@ -892,7 +1045,7 @@ class ConditionalValueDef(VegaLiteSchema):
 
     anyOf(ConditionalPredicateValueDef, ConditionalSelectionValueDef)
     """
-    _schema = {'$ref': '#/definitions/Conditional<ValueDef>'}
+    _schema = {'$ref': '#/definitions/ConditionalValueDef'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
@@ -910,9 +1063,8 @@ class ConditionalPredicateFieldDef(VegaLiteSchema):
 
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -936,15 +1088,27 @@ class ConditionalPredicateFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<FieldDef>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, timeUnit=Undefined, **kwds):
+                 field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(ConditionalPredicateFieldDef, self).__init__(test=test, type=type, aggregate=aggregate,
                                                            bin=bin, field=field, timeUnit=timeUnit,
-                                                           **kwds)
+                                                           title=title, **kwds)
 
 
 class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
@@ -958,9 +1122,8 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
 
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -991,29 +1154,45 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 **kwds):
+                 title=Undefined, **kwds):
         super(ConditionalPredicateMarkPropFieldDef, self).__init__(test=test, type=type,
                                                                    aggregate=aggregate, bin=bin,
                                                                    field=field, legend=legend,
                                                                    scale=scale, sort=sort,
-                                                                   timeUnit=timeUnit, **kwds)
+                                                                   timeUnit=timeUnit, title=title,
+                                                                   **kwds)
 
 
 class ConditionalPredicateTextFieldDef(VegaLiteSchema):
@@ -1027,9 +1206,8 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
 
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -1056,16 +1234,28 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<TextFieldDef>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, **kwds):
+                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(ConditionalPredicateTextFieldDef, self).__init__(test=test, type=type,
                                                                aggregate=aggregate, bin=bin,
                                                                field=field, format=format,
-                                                               timeUnit=timeUnit, **kwds)
+                                                               timeUnit=timeUnit, title=title, **kwds)
 
 
 class ConditionalPredicateValueDef(VegaLiteSchema):
@@ -1101,9 +1291,8 @@ class ConditionalSelectionFieldDef(VegaLiteSchema):
         selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -1127,15 +1316,27 @@ class ConditionalSelectionFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<FieldDef>'}
     _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, timeUnit=Undefined, **kwds):
+                 field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(ConditionalSelectionFieldDef, self).__init__(selection=selection, type=type,
                                                            aggregate=aggregate, bin=bin, field=field,
-                                                           timeUnit=timeUnit, **kwds)
+                                                           timeUnit=timeUnit, title=title, **kwds)
 
 
 class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
@@ -1151,9 +1352,8 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -1184,29 +1384,45 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef>'}
     _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 **kwds):
+                 title=Undefined, **kwds):
         super(ConditionalSelectionMarkPropFieldDef, self).__init__(selection=selection, type=type,
                                                                    aggregate=aggregate, bin=bin,
                                                                    field=field, legend=legend,
                                                                    scale=scale, sort=sort,
-                                                                   timeUnit=timeUnit, **kwds)
+                                                                   timeUnit=timeUnit, title=title,
+                                                                   **kwds)
 
 
 class ConditionalSelectionTextFieldDef(VegaLiteSchema):
@@ -1222,9 +1438,8 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         selections](https://vega.github.io/vega-lite/docs/selection.html#compose).
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -1251,16 +1466,28 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<TextFieldDef>'}
     _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, **kwds):
+                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(ConditionalSelectionTextFieldDef, self).__init__(selection=selection, type=type,
                                                                aggregate=aggregate, bin=bin,
                                                                field=field, format=format,
-                                                               timeUnit=timeUnit, **kwds)
+                                                               timeUnit=timeUnit, title=title, **kwds)
 
 
 class ConditionalSelectionValueDef(VegaLiteSchema):
@@ -1292,7 +1519,7 @@ class Config(VegaLiteSchema):
 
     Attributes
     ----------
-    area : MarkConfig
+    area : AreaConfig
         Area-Specific Config
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a string, should be one of
@@ -1342,14 +1569,14 @@ class Config(VegaLiteSchema):
         Geoshape-Specific Config
     invalidValues : enum('filter', None)
         Defines how Vega-Lite should handle invalid values (`null` and `NaN`). - If set to
-        `"filter"` (default), all data items with null values are filtered. - If `null`, all
-         data items are included. In this case, invalid values will be interpreted as
-        zeroes.
+        `"filter"` (default), all data items with null values will be skipped (for line,
+        trail, and area marks) or filtered (for other marks). - If `null`, all data items
+        are included. In this case, invalid values will be interpreted as zeroes.
     legend : LegendConfig
         Legend configuration, which determines default properties for all
         [legends](legend.html). For a full list of legend configuration options, please see
         the [corresponding section of in the legend documentation](legend.html#config).
-    line : MarkConfig
+    line : LineConfig
         Line-Specific Config
     mark : MarkConfig
         Mark Config
@@ -1390,7 +1617,7 @@ class Config(VegaLiteSchema):
     style : StyleConfigIndex
         An object hash that defines key-value mappings to determine default properties for
         marks with a given [style](mark.html#mark-def).  The keys represent styles names;
-        the value are valid [mark configuration objects](mark.html#config).
+        the values have to be valid [mark configuration objects](mark.html#config).
     text : TextConfig
         Text-Specific Config
     tick : TickConfig
@@ -1404,6 +1631,8 @@ class Config(VegaLiteSchema):
         Title configuration, which determines default properties for all
         [titles](title.html). For a full list of title configuration options, please see the
          [corresponding section of the title documentation](title.html#config).
+    trail : LineConfig
+        Trail-Specific Config
     view : ViewConfig
         Default properties for [single view plots](spec.html#single).
     """
@@ -1418,8 +1647,8 @@ class Config(VegaLiteSchema):
                  mark=Undefined, numberFormat=Undefined, padding=Undefined, point=Undefined,
                  projection=Undefined, range=Undefined, rect=Undefined, rule=Undefined, scale=Undefined,
                  selection=Undefined, square=Undefined, stack=Undefined, style=Undefined,
-                 text=Undefined, tick=Undefined, timeFormat=Undefined, title=Undefined, view=Undefined,
-                 **kwds):
+                 text=Undefined, tick=Undefined, timeFormat=Undefined, title=Undefined, trail=Undefined,
+                 view=Undefined, **kwds):
         super(Config, self).__init__(area=area, autosize=autosize, axis=axis, axisBand=axisBand,
                                      axisBottom=axisBottom, axisLeft=axisLeft, axisRight=axisRight,
                                      axisTop=axisTop, axisX=axisX, axisY=axisY, background=background,
@@ -1430,7 +1659,7 @@ class Config(VegaLiteSchema):
                                      projection=projection, range=range, rect=rect, rule=rule,
                                      scale=scale, selection=selection, square=square, stack=stack,
                                      style=style, text=text, tick=tick, timeFormat=timeFormat,
-                                     title=title, view=view, **kwds)
+                                     title=title, trail=trail, view=view, **kwds)
 
 
 class CsvDataFormat(VegaLiteSchema):
@@ -1584,19 +1813,21 @@ class Encoding(VegaLiteSchema):
     color : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Color of the marks – either fill or stroke color based on  the `filled` property of
         mark definition. By default, `color` represents fill color for `"area"`, `"bar"`,
-        `"tick"`, `"text"`, `"circle"`, and `"square"` / stroke color for `"line"` and
-        `"point"`.  __Default value:__ If undefined, the default color depends on [mark
-        config](config.html#mark)'s `color` property.  _Note:_ 1) For fine-grained control
-        over both fill and stroke colors of the marks, please use the `fill` and `stroke`
-        channels. 2) See the scale documentation for more information about customizing
-        [color scheme](scale.html#scheme).
+        `"tick"`, `"text"`, `"trail"`, `"circle"`, and `"square"` / stroke color for
+        `"line"` and `"point"`.  __Default value:__ If undefined, the default color depends
+        on [mark config](config.html#mark)'s `color` property.  _Note:_ 1) For fine-grained
+        control over both fill and stroke colors of the marks, please use the `fill` and
+        `stroke` channels.  If either `fill` or `stroke` channel is specified, `color`
+        channel will be ignored. 2) See the scale documentation for more information about
+        customizing [color scheme](scale.html#scheme).
     detail : anyOf(FieldDef, List(FieldDef))
-        Additional levels of detail for grouping data in aggregate views and in line and
-        area marks without mapping data to a specific visual channel.
+        Additional levels of detail for grouping data in aggregate views and in line, trail,
+         and area marks without mapping data to a specific visual channel.
     fill : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Fill color of the marks. __Default value:__ If undefined, the default color depends
-        on [mark config](config.html#mark)'s `color` property.  _Note:_ The `fill` channel
-        has higher precedence than `color` and will override color value.
+        on [mark config](config.html#mark)'s `color` property.  _Note:_ When using `fill`
+        channel, `color ` channel will be ignored. To customize both fill and stroke, please
+         use `fill` and `stroke` channels (not `fill` and `color`).
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
     key : FieldDef
@@ -1619,11 +1850,12 @@ class Encoding(VegaLiteSchema):
         undefined, the default opacity depends on [mark config](config.html#mark)'s
         `opacity` property.
     order : anyOf(OrderFieldDef, List(OrderFieldDef))
-        Order of the marks. - For stacked marks, this `order` channel encodes stack order. -
-         For line marks, this `order` channel encodes order of data points in the lines.
-        This can be useful for creating [a connected
-        scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).
-         - Otherwise, this `order` channel encodes layer order of the marks.  __Note__: In
+        Order of the marks. - For stacked marks, this `order` channel encodes [stack
+        order](https://vega.github.io/vega-lite/docs/stack.html#order). - For line and trail
+         marks, this `order` channel encodes order of data points in the lines. This can be
+        useful for creating [a connected
+        scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).
+        - Otherwise, this `order` channel encodes layer order of the marks.  __Note__: In
         aggregate plots, `order` field should be `aggregate`d to avoid creating additional
         aggregation grouping.
     shape : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
@@ -1635,15 +1867,16 @@ class Encoding(VegaLiteSchema):
     size : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Size of the mark. - For `"point"`, `"square"` and `"circle"`, – the symbol size, or
         pixel area of the mark. - For `"bar"` and `"tick"` – the bar and tick's size. - For
-        `"text"` – the text's font size. - Size is currently unsupported for `"line"`,
-        `"area"`, and `"rect"`.
+        `"text"` – the text's font size. - Size is unsupported for `"line"`, `"area"`, and
+        `"rect"`. (Use `"trail"` instead of line with varying size)
     stroke : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Stroke color of the marks. __Default value:__ If undefined, the default color
-        depends on [mark config](config.html#mark)'s `color` property.  _Note:_ The `stroke`
-         channel has higher precedence than `color` and will override color value.
+        depends on [mark config](config.html#mark)'s `color` property.  _Note:_ When using
+        `stroke` channel, `color ` channel will be ignored. To customize both stroke and
+        fill, please use `stroke` and `fill` channels (not `stroke` and `color`).
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the `text` mark.
-    tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
+    tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition, List(TextFieldDef))
         The tooltip text to show upon mouse hover.
     x : anyOf(PositionFieldDef, ValueDef)
         X coordinates of the marks, or width of horizontal `"bar"` and `"area"`.
@@ -1679,21 +1912,23 @@ class EncodingWithFacet(VegaLiteSchema):
     color : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Color of the marks – either fill or stroke color based on  the `filled` property of
         mark definition. By default, `color` represents fill color for `"area"`, `"bar"`,
-        `"tick"`, `"text"`, `"circle"`, and `"square"` / stroke color for `"line"` and
-        `"point"`.  __Default value:__ If undefined, the default color depends on [mark
-        config](config.html#mark)'s `color` property.  _Note:_ 1) For fine-grained control
-        over both fill and stroke colors of the marks, please use the `fill` and `stroke`
-        channels. 2) See the scale documentation for more information about customizing
-        [color scheme](scale.html#scheme).
+        `"tick"`, `"text"`, `"trail"`, `"circle"`, and `"square"` / stroke color for
+        `"line"` and `"point"`.  __Default value:__ If undefined, the default color depends
+        on [mark config](config.html#mark)'s `color` property.  _Note:_ 1) For fine-grained
+        control over both fill and stroke colors of the marks, please use the `fill` and
+        `stroke` channels.  If either `fill` or `stroke` channel is specified, `color`
+        channel will be ignored. 2) See the scale documentation for more information about
+        customizing [color scheme](scale.html#scheme).
     column : FacetFieldDef
         Horizontal facets for trellis plots.
     detail : anyOf(FieldDef, List(FieldDef))
-        Additional levels of detail for grouping data in aggregate views and in line and
-        area marks without mapping data to a specific visual channel.
+        Additional levels of detail for grouping data in aggregate views and in line, trail,
+         and area marks without mapping data to a specific visual channel.
     fill : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Fill color of the marks. __Default value:__ If undefined, the default color depends
-        on [mark config](config.html#mark)'s `color` property.  _Note:_ The `fill` channel
-        has higher precedence than `color` and will override color value.
+        on [mark config](config.html#mark)'s `color` property.  _Note:_ When using `fill`
+        channel, `color ` channel will be ignored. To customize both fill and stroke, please
+         use `fill` and `stroke` channels (not `fill` and `color`).
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
     key : FieldDef
@@ -1716,11 +1951,12 @@ class EncodingWithFacet(VegaLiteSchema):
         undefined, the default opacity depends on [mark config](config.html#mark)'s
         `opacity` property.
     order : anyOf(OrderFieldDef, List(OrderFieldDef))
-        Order of the marks. - For stacked marks, this `order` channel encodes stack order. -
-         For line marks, this `order` channel encodes order of data points in the lines.
-        This can be useful for creating [a connected
-        scatterplot](https://vega.github.io/vega-lite/examples/layer_connected_scatterplot.html).
-         - Otherwise, this `order` channel encodes layer order of the marks.  __Note__: In
+        Order of the marks. - For stacked marks, this `order` channel encodes [stack
+        order](https://vega.github.io/vega-lite/docs/stack.html#order). - For line and trail
+         marks, this `order` channel encodes order of data points in the lines. This can be
+        useful for creating [a connected
+        scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).
+        - Otherwise, this `order` channel encodes layer order of the marks.  __Note__: In
         aggregate plots, `order` field should be `aggregate`d to avoid creating additional
         aggregation grouping.
     row : FacetFieldDef
@@ -1734,15 +1970,16 @@ class EncodingWithFacet(VegaLiteSchema):
     size : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Size of the mark. - For `"point"`, `"square"` and `"circle"`, – the symbol size, or
         pixel area of the mark. - For `"bar"` and `"tick"` – the bar and tick's size. - For
-        `"text"` – the text's font size. - Size is currently unsupported for `"line"`,
-        `"area"`, and `"rect"`.
+        `"text"` – the text's font size. - Size is unsupported for `"line"`, `"area"`, and
+        `"rect"`. (Use `"trail"` instead of line with varying size)
     stroke : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Stroke color of the marks. __Default value:__ If undefined, the default color
-        depends on [mark config](config.html#mark)'s `color` property.  _Note:_ The `stroke`
-         channel has higher precedence than `color` and will override color value.
+        depends on [mark config](config.html#mark)'s `color` property.  _Note:_ When using
+        `stroke` channel, `color ` channel will be ignored. To customize both stroke and
+        fill, please use `stroke` and `fill` channels (not `stroke` and `color`).
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the `text` mark.
-    tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
+    tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition, List(TextFieldDef))
         The tooltip text to show upon mouse hover.
     x : anyOf(PositionFieldDef, ValueDef)
         X coordinates of the marks, or width of horizontal `"bar"` and `"area"`.
@@ -1863,9 +2100,8 @@ class FacetFieldDef(VegaLiteSchema):
     ----------
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -1893,14 +2129,27 @@ class FacetFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FacetFieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 header=Undefined, sort=Undefined, timeUnit=Undefined, **kwds):
+                 header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(FacetFieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin, field=field,
-                                            header=header, sort=sort, timeUnit=timeUnit, **kwds)
+                                            header=header, sort=sort, timeUnit=timeUnit, title=title,
+                                            **kwds)
 
 
 class FacetMapping(VegaLiteSchema):
@@ -1932,9 +2181,8 @@ class FieldDef(VegaLiteSchema):
     ----------
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -1958,14 +2206,26 @@ class FieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 timeUnit=Undefined, **kwds):
+                 timeUnit=Undefined, title=Undefined, **kwds):
         super(FieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin, field=field,
-                                       timeUnit=timeUnit, **kwds)
+                                       timeUnit=timeUnit, title=title, **kwds)
 
 
 class FieldDefWithCondition(VegaLiteSchema):
@@ -1983,9 +2243,8 @@ class FieldDefWithCondition(VegaLiteSchema):
     ----------
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -2014,15 +2273,27 @@ class FieldDefWithCondition(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, timeUnit=Undefined, **kwds):
+                 field=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(FieldDefWithCondition, self).__init__(type=type, aggregate=aggregate, bin=bin,
                                                     condition=condition, field=field, timeUnit=timeUnit,
-                                                    **kwds)
+                                                    title=title, **kwds)
 
 
 class MarkPropFieldDefWithCondition(VegaLiteSchema):
@@ -2040,9 +2311,8 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
     ----------
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -2078,28 +2348,43 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     timeUnit : TimeUnit
         Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/MarkPropFieldDefWithCondition'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 **kwds):
+                 title=Undefined, **kwds):
         super(MarkPropFieldDefWithCondition, self).__init__(type=type, aggregate=aggregate, bin=bin,
                                                             condition=condition, field=field,
                                                             legend=legend, scale=scale, sort=sort,
-                                                            timeUnit=timeUnit, **kwds)
+                                                            timeUnit=timeUnit, title=title, **kwds)
 
 
 class TextFieldDefWithCondition(VegaLiteSchema):
@@ -2117,9 +2402,8 @@ class TextFieldDefWithCondition(VegaLiteSchema):
     ----------
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -2151,15 +2435,27 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/TextFieldDefWithCondition'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, **kwds):
+                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(TextFieldDefWithCondition, self).__init__(type=type, aggregate=aggregate, bin=bin,
                                                         condition=condition, field=field, format=format,
-                                                        timeUnit=timeUnit, **kwds)
+                                                        timeUnit=timeUnit, title=title, **kwds)
 
 
 class FieldEqualPredicate(VegaLiteSchema):
@@ -2424,7 +2720,7 @@ class CompositeUnitSpecAlias(VegaLiteSchema):
     ----------
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
+         `"line"`, `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
         definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     data : Data
         An object describing the data source
@@ -2454,9 +2750,9 @@ class CompositeUnitSpecAlias(VegaLiteSchema):
     name : string
         Name of the visualization for later reference.
     projection : Projection
-        An object defining properties of geographic projection.  Works with `"geoshape"`
-        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"`
-        channels.
+        An object defining properties of geographic projection, which will be applied to
+        `shape` path for `"geoshape"` marks and to `latitude` and `"longitude"` channels for
+         other marks.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
@@ -2508,7 +2804,7 @@ class FacetedCompositeUnitSpecAlias(VegaLiteSchema):
     ----------
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
+         `"line"`, `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
         definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     data : Data
         An object describing the data source
@@ -2538,9 +2834,9 @@ class FacetedCompositeUnitSpecAlias(VegaLiteSchema):
     name : string
         Name of the visualization for later reference.
     projection : Projection
-        An object defining properties of geographic projection.  Works with `"geoshape"`
-        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"`
-        channels.
+        An object defining properties of geographic projection, which will be applied to
+        `shape` path for `"geoshape"` marks and to `latitude` and `"longitude"` channels for
+         other marks.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
@@ -2649,13 +2945,15 @@ class Header(VegaLiteSchema):
     title : anyOf(string, None)
         A title for the field. If `null`, the title will be removed.  __Default value:__
         derived from the field's name and transformation function (`aggregate`, `bin` and
-        `timeUnit`).  If the field has an aggregate function, the function is displayed as a
-         part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
-        unit applied, the applied function will be denoted in parentheses (e.g., `"Profit
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
         (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
-        field name.  __Note__: You can customize the default field title format by providing
-         the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function
-        via the `compile` function's options](compile.html#field-title).
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/Header'}
     _rootschema = Root._schema
@@ -2905,13 +3203,15 @@ class Legend(VegaLiteSchema):
     title : anyOf(string, None)
         A title for the field. If `null`, the title will be removed.  __Default value:__
         derived from the field's name and transformation function (`aggregate`, `bin` and
-        `timeUnit`).  If the field has an aggregate function, the function is displayed as a
-         part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
-        unit applied, the applied function will be denoted in parentheses (e.g., `"Profit
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
         (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
-        field name.  __Note__: You can customize the default field title format by providing
-         the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function
-        via the `compile` function's options](compile.html#field-title).
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     type : enum('symbol', 'gradient')
         The type of the legend. Use `"symbol"` to create a discrete legend and `"gradient"`
         for a continuous color gradient.  __Default value:__ `"gradient"` for non-binned
@@ -3098,6 +3398,156 @@ class LegendResolveMap(VegaLiteSchema):
                                                size=size, stroke=stroke, **kwds)
 
 
+class LineConfig(VegaLiteSchema):
+    """LineConfig schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    align : HorizontalAlign
+        The horizontal alignment of the text. One of `"left"`, `"right"`, `"center"`.
+    angle : float
+        The rotation angle of the text, in degrees.
+    baseline : VerticalAlign
+        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
+        __Default value:__ `"middle"`
+    color : string
+        Default color.  Note that `fill` and `stroke` have higher precedence than `color`
+        and will override `color`.  __Default value:__ <span style="color:
+        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used in a
+        [style config](mark.html#style-config).
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
+    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
+    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
+    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
+    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+        The mouse cursor used over the mark. Any valid [CSS cursor
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used.
+    dx : float
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the _angle_ property.
+    dy : float
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the _angle_ property.
+    fill : string
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
+        value:__ (None)
+    fillOpacity : float
+        The fill opacity (value between [0,1]).  __Default value:__ `1`
+    filled : boolean
+        Whether the mark's color should be used as fill color instead of stroke color.
+        __Default value:__ `true` for all marks except `point` and `false` for `point`.
+        __Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.  __Note:__
+         This property cannot be used in a [style config](mark.html#style-config).
+    font : string
+        The typeface to set the text in (e.g., `"Helvetica Neue"`).
+    fontSize : float
+        The font size, in pixels.
+    fontStyle : FontStyle
+        The font style (e.g., `"italic"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
+    href : string
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+    interpolate : Interpolate
+        The line interpolation method to use for line and area marks. One of the following:
+        - `"linear"`: piecewise linear segments, as in a polyline. - `"linear-closed"`:
+        close the linear segments to form a polygon. - `"step"`: alternate between
+        horizontal and vertical segments, as in a step function. - `"step-before"`:
+        alternate between vertical and horizontal segments, as in a step function. -
+        `"step-after"`: alternate between horizontal and vertical segments, as in a step
+        function. - `"basis"`: a B-spline, with control point duplication on the ends. -
+        `"basis-open"`: an open B-spline; may not intersect the start or end. -
+        `"basis-closed"`: a closed B-spline, as in a loop. - `"cardinal"`: a Cardinal
+        spline, with control point duplication on the ends. - `"cardinal-open"`: an open
+        Cardinal spline; may not intersect the start or end, but will intersect other
+        control points. - `"cardinal-closed"`: a closed Cardinal spline, as in a loop. -
+        `"bundle"`: equivalent to basis, except the tension parameter is used to straighten
+        the spline. - `"monotone"`: cubic interpolation that preserves monotonicity in y.
+    limit : float
+        The maximum length of the text mark in pixels (default 0, indicating no limit). The
+        text value will be automatically truncated if the rendered size exceeds the limit.
+    opacity : float
+        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
+        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered
+        `bar` charts and `1` otherwise.
+    orient : Orient
+        The orientation of a non-stacked bar, tick, area, and line charts. The value is
+        either horizontal (default) or vertical. - For bar, rule and tick, this determines
+        whether the size of the bar and tick should be applied to x or y dimension. - For
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
+    point : anyOf(boolean, MarkProperties, enum('transparent'))
+        A flag for overlaying points on top of line or area marks, or an object defining the
+         properties of the overlayed points.  - If this property is `"transparent"`,
+        transparent points will be used (for enhancing tooltips and selections).  - If this
+        property is an empty object (`{}`) or `true`, filled points with default properties
+        will be used.  - If this property is `false`, no points would be automatically added
+         to line or area marks.  __Default value:__ `false`.
+    radius : float
+        Polar coordinate radial offset, in pixels, of the text label from the origin
+        determined by the `x` and `y` properties.
+    shape : string
+        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
+        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom SVG path.
+          __Default value:__ `"circle"`
+    size : float
+        The pixel area each the point/circle/square. For example: in the case of circles,
+        the radius is determined in part by the square root of the size value.  __Default
+        value:__ `30`
+    stroke : string
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
+        value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
+    strokeDash : List(float)
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
+    strokeDashOffset : float
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeOpacity : float
+        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+    strokeWidth : float
+        The stroke width, in pixels.
+    tension : float
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
+    text : string
+        Placeholder text if the `text` channel is not specified
+    theta : float
+        Polar coordinate angle, in radians, of the text label from the origin determined by
+        the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
+        mark `startAngle` and `endAngle` properties: angles are measured in radians, with
+        `0` indicating "north".
+    """
+    _schema = {'$ref': '#/definitions/LineConfig'}
+    _rootschema = Root._schema
+
+    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
+                 cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined, fillOpacity=Undefined,
+                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 opacity=Undefined, orient=Undefined, point=Undefined, radius=Undefined,
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+        super(LineConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
+                                         cursor=cursor, dx=dx, dy=dy, fill=fill,
+                                         fillOpacity=fillOpacity, filled=filled, font=font,
+                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                                         href=href, interpolate=interpolate, limit=limit,
+                                         opacity=opacity, orient=orient, point=point, radius=radius,
+                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                         tension=tension, text=text, theta=theta, **kwds)
+
+
 class LocalMultiTimeUnit(VegaLiteSchema):
     """LocalMultiTimeUnit schema wrapper
 
@@ -3132,10 +3582,7 @@ class LogicalAndPredicate(VegaLiteSchema):
 
     Attributes
     ----------
-
-    Dict-Only Attributes
-    --------------------
-    'and' : List(LogicalOperandPredicate)
+    and : List(LogicalOperandPredicate)
 
     """
     _schema = {'$ref': '#/definitions/LogicalAnd<Predicate>'}
@@ -3152,10 +3599,7 @@ class SelectionAnd(VegaLiteSchema):
 
     Attributes
     ----------
-
-    Dict-Only Attributes
-    --------------------
-    'and' : List(SelectionOperand)
+    and : List(SelectionOperand)
 
     """
     _schema = {'$ref': '#/definitions/SelectionAnd'}
@@ -3172,10 +3616,7 @@ class LogicalNotPredicate(VegaLiteSchema):
 
     Attributes
     ----------
-
-    Dict-Only Attributes
-    --------------------
-    'not' : LogicalOperandPredicate
+    not : LogicalOperandPredicate
 
     """
     _schema = {'$ref': '#/definitions/LogicalNot<Predicate>'}
@@ -3192,10 +3633,7 @@ class SelectionNot(VegaLiteSchema):
 
     Attributes
     ----------
-
-    Dict-Only Attributes
-    --------------------
-    'not' : SelectionOperand
+    not : SelectionOperand
 
     """
     _schema = {'$ref': '#/definitions/SelectionNot'}
@@ -3236,10 +3674,7 @@ class LogicalOrPredicate(VegaLiteSchema):
 
     Attributes
     ----------
-
-    Dict-Only Attributes
-    --------------------
-    'or' : List(LogicalOperandPredicate)
+    or : List(LogicalOperandPredicate)
 
     """
     _schema = {'$ref': '#/definitions/LogicalOr<Predicate>'}
@@ -3256,10 +3691,7 @@ class SelectionOr(VegaLiteSchema):
 
     Attributes
     ----------
-
-    Dict-Only Attributes
-    --------------------
-    'or' : List(SelectionOperand)
+    or : List(SelectionOperand)
 
     """
     _schema = {'$ref': '#/definitions/SelectionOr'}
@@ -3301,15 +3733,12 @@ class LookupTransform(VegaLiteSchema):
         Key in primary data source.
     default : string
         The default value to use if lookup fails.  __Default value:__ `null`
-
-    Dict-Only Attributes
-    --------------------
-    'as' : anyOf(string, List(string))
+    as : anyOf(string, List(string))
         The field or fields for storing the computed formula value. If `from.fields` is
         specified, the transform will use the same names for `as`. If `from.fields` is not
         specified, `as` has to be a string and we put the whole object into the data under
         the specified name.
-    'from' : LookupData
+    from : LookupData
         Secondary data reference.
     """
     _schema = {'$ref': '#/definitions/LookupTransform'}
@@ -3322,8 +3751,8 @@ class LookupTransform(VegaLiteSchema):
 class Mark(VegaLiteSchema):
     """Mark schema wrapper
 
-    enum('area', 'bar', 'line', 'point', 'text', 'tick', 'rect', 'rule', 'circle', 'square',
-    'geoshape')
+    enum('area', 'bar', 'line', 'trail', 'point', 'text', 'tick', 'rect', 'rule', 'circle',
+    'square', 'geoshape')
     All types of primitive marks.
     """
     _schema = {'$ref': '#/definitions/Mark'}
@@ -3366,7 +3795,7 @@ class MarkConfig(VegaLiteSchema):
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
@@ -3412,11 +3841,11 @@ class MarkConfig(VegaLiteSchema):
         The orientation of a non-stacked bar, tick, area, and line charts. The value is
         either horizontal (default) or vertical. - For bar, rule and tick, this determines
         whether the size of the bar and tick should be applied to x or y dimension. - For
-        area, this property determines the orient property of the Vega output. - For line,
-        this property determines the sort order of the points in the line if
-        `config.sortLineBy` is not specified. For stacked charts, this is always determined
-        by the orientation of the stack; therefore explicitly specified value will be
-        ignored.
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the `x` and `y` properties.
@@ -3429,8 +3858,11 @@ class MarkConfig(VegaLiteSchema):
         the radius is determined in part by the square root of the size value.  __Default
         value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color  __Default
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
     strokeDash : List(float)
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
@@ -3458,19 +3890,19 @@ class MarkConfig(VegaLiteSchema):
                  filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
                  fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
                  opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, **kwds):
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         super(MarkConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cursor=cursor, dx=dx, dy=dy, fill=fill,
                                          fillOpacity=fillOpacity, filled=filled, font=font,
                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
                                          href=href, interpolate=interpolate, limit=limit,
                                          opacity=opacity, orient=orient, radius=radius, shape=shape,
-                                         size=size, stroke=stroke, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                                         strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, **kwds)
+                                         size=size, stroke=stroke, strokeCap=strokeCap,
+                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                         tension=tension, text=text, theta=theta, **kwds)
 
 
 class MarkDef(VegaLiteSchema):
@@ -3490,6 +3922,10 @@ class MarkDef(VegaLiteSchema):
     baseline : VerticalAlign
         The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
         __Default value:__ `"middle"`
+    binSpacing : float
+        Offset between bars for binned field.  Ideal value for this is either 0 (Preferred
+        by statisticians) or 1 (Vega-Lite Default, D3 example style).  __Default value:__
+        `1`
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
     color : string
@@ -3511,7 +3947,7 @@ class MarkDef(VegaLiteSchema):
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
@@ -3549,6 +3985,11 @@ class MarkDef(VegaLiteSchema):
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no limit). The
         text value will be automatically truncated if the rendered size exceeds the limit.
+    line : anyOf(boolean, MarkProperties)
+        A flag for overlaying line on top of area marks, or an object defining the
+        properties of the overlayed lines.  - If this value is an empty object (`{}`) or
+        `true`, lines with default properties will be used.  - If this value is `false`, no
+        lines would be automatically added to area marks.  __Default value:__ `false`.
     opacity : float
         The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
         non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered
@@ -3557,11 +3998,18 @@ class MarkDef(VegaLiteSchema):
         The orientation of a non-stacked bar, tick, area, and line charts. The value is
         either horizontal (default) or vertical. - For bar, rule and tick, this determines
         whether the size of the bar and tick should be applied to x or y dimension. - For
-        area, this property determines the orient property of the Vega output. - For line,
-        this property determines the sort order of the points in the line if
-        `config.sortLineBy` is not specified. For stacked charts, this is always determined
-        by the orientation of the stack; therefore explicitly specified value will be
-        ignored.
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
+    point : anyOf(boolean, MarkProperties, enum('transparent'))
+        A flag for overlaying points on top of line or area marks, or an object defining the
+         properties of the overlayed points.  - If this property is `"transparent"`,
+        transparent points will be used (for enhancing tooltips and selections).  - If this
+        property is an empty object (`{}`) or `true`, filled points with default properties
+        will be used.  - If this property is `false`, no points would be automatically added
+         to line or area marks.  __Default value:__ `false`.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the `x` and `y` properties.
@@ -3574,8 +4022,11 @@ class MarkDef(VegaLiteSchema):
         the radius is determined in part by the square root of the size value.  __Default
         value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color  __Default
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
     strokeDash : List(float)
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
@@ -3609,24 +4060,187 @@ class MarkDef(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, align=Undefined, angle=Undefined, baseline=Undefined,
+                 binSpacing=Undefined, clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined,
+                 dy=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
+                 interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
+                 orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+        super(MarkDef, self).__init__(type=type, align=align, angle=angle, baseline=baseline,
+                                      binSpacing=binSpacing, clip=clip, color=color, cursor=cursor,
+                                      dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled,
+                                      font=font, fontSize=fontSize, fontStyle=fontStyle,
+                                      fontWeight=fontWeight, href=href, interpolate=interpolate,
+                                      limit=limit, line=line, opacity=opacity, orient=orient,
+                                      point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                                      strokeCap=strokeCap, strokeDash=strokeDash,
+                                      strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
+                                      strokeWidth=strokeWidth, style=style, tension=tension, text=text,
+                                      theta=theta, **kwds)
+
+
+class MarkProperties(VegaLiteSchema):
+    """MarkProperties schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    align : HorizontalAlign
+        The horizontal alignment of the text. One of `"left"`, `"right"`, `"center"`.
+    angle : float
+        The rotation angle of the text, in degrees.
+    baseline : VerticalAlign
+        The vertical alignment of the text. One of `"top"`, `"middle"`, `"bottom"`.
+        __Default value:__ `"middle"`
+    binSpacing : float
+        Offset between bars for binned field.  Ideal value for this is either 0 (Preferred
+        by statisticians) or 1 (Vega-Lite Default, D3 example style).  __Default value:__
+        `1`
+    clip : boolean
+        Whether a mark be clipped to the enclosing group’s width and height.
+    color : string
+        Default color.  Note that `fill` and `stroke` have higher precedence than `color`
+        and will override `color`.  __Default value:__ <span style="color:
+        #4682b4;">&#9632;</span> `"#4682b4"`  __Note:__ This property cannot be used in a
+        [style config](mark.html#style-config).
+    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
+    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
+    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
+    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
+    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+        The mouse cursor used over the mark. Any valid [CSS cursor
+        type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used.
+    dx : float
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the _angle_ property.
+    dy : float
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the _angle_ property.
+    fill : string
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
+        value:__ (None)
+    fillOpacity : float
+        The fill opacity (value between [0,1]).  __Default value:__ `1`
+    filled : boolean
+        Whether the mark's color should be used as fill color instead of stroke color.
+        __Default value:__ `true` for all marks except `point` and `false` for `point`.
+        __Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.  __Note:__
+         This property cannot be used in a [style config](mark.html#style-config).
+    font : string
+        The typeface to set the text in (e.g., `"Helvetica Neue"`).
+    fontSize : float
+        The font size, in pixels.
+    fontStyle : FontStyle
+        The font style (e.g., `"italic"`).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g `"bold"`, `"normal"`) or a number
+        (`100`, `200`, `300`, ..., `900` where `"normal"` = `400` and `"bold"` = `700`).
+    href : string
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+    interpolate : Interpolate
+        The line interpolation method to use for line and area marks. One of the following:
+        - `"linear"`: piecewise linear segments, as in a polyline. - `"linear-closed"`:
+        close the linear segments to form a polygon. - `"step"`: alternate between
+        horizontal and vertical segments, as in a step function. - `"step-before"`:
+        alternate between vertical and horizontal segments, as in a step function. -
+        `"step-after"`: alternate between horizontal and vertical segments, as in a step
+        function. - `"basis"`: a B-spline, with control point duplication on the ends. -
+        `"basis-open"`: an open B-spline; may not intersect the start or end. -
+        `"basis-closed"`: a closed B-spline, as in a loop. - `"cardinal"`: a Cardinal
+        spline, with control point duplication on the ends. - `"cardinal-open"`: an open
+        Cardinal spline; may not intersect the start or end, but will intersect other
+        control points. - `"cardinal-closed"`: a closed Cardinal spline, as in a loop. -
+        `"bundle"`: equivalent to basis, except the tension parameter is used to straighten
+        the spline. - `"monotone"`: cubic interpolation that preserves monotonicity in y.
+    limit : float
+        The maximum length of the text mark in pixels (default 0, indicating no limit). The
+        text value will be automatically truncated if the rendered size exceeds the limit.
+    opacity : float
+        The overall opacity (value between [0,1]).  __Default value:__ `0.7` for
+        non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered
+        `bar` charts and `1` otherwise.
+    orient : Orient
+        The orientation of a non-stacked bar, tick, area, and line charts. The value is
+        either horizontal (default) or vertical. - For bar, rule and tick, this determines
+        whether the size of the bar and tick should be applied to x or y dimension. - For
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
+    radius : float
+        Polar coordinate radial offset, in pixels, of the text label from the origin
+        determined by the `x` and `y` properties.
+    shape : string
+        The default symbol shape to use. One of: `"circle"` (default), `"square"`,
+        `"cross"`, `"diamond"`, `"triangle-up"`, or `"triangle-down"`, or a custom SVG path.
+          __Default value:__ `"circle"`
+    size : float
+        The pixel area each the point/circle/square. For example: in the case of circles,
+        the radius is determined in part by the square root of the size value.  __Default
+        value:__ `30`
+    stroke : string
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
+        value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
+    strokeDash : List(float)
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
+    strokeDashOffset : float
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeOpacity : float
+        The stroke opacity (value between [0,1]).  __Default value:__ `1`
+    strokeWidth : float
+        The stroke width, in pixels.
+    style : anyOf(string, List(string))
+        A string or array of strings indicating the name of custom styles to apply to the
+        mark. A style is a named collection of mark property defaults defined within the
+        [style configuration](mark.html#style-config). If style is an array, later styles
+        will override earlier styles. Any [mark properties](encoding.html#mark-prop)
+        explicitly defined within the `encoding` will override a style default.  __Default
+        value:__ The mark's name.  For example, a bar mark will have style `"bar"` by
+        default. __Note:__ Any specified style will augment the default style. For example,
+        a bar mark with `"style": "foo"` will receive from `config.style.bar` and
+        `config.style.foo` (the specified style `"foo"` has higher precedence).
+    tension : float
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
+    text : string
+        Placeholder text if the `text` channel is not specified
+    theta : float
+        Polar coordinate angle, in radians, of the text label from the origin determined by
+        the `x` and `y` properties. Values for `theta` follow the same convention of `arc`
+        mark `startAngle` and `endAngle` properties: angles are measured in radians, with
+        `0` indicating "north".
+    """
+    _schema = {'$ref': '#/definitions/MarkProperties'}
+    _rootschema = Root._schema
+
+    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
                  interpolate=Undefined, limit=Undefined, opacity=Undefined, orient=Undefined,
                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, **kwds):
-        super(MarkDef, self).__init__(type=type, align=align, angle=angle, baseline=baseline, clip=clip,
-                                      color=color, cursor=cursor, dx=dx, dy=dy, fill=fill,
-                                      fillOpacity=fillOpacity, filled=filled, font=font,
-                                      fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                      href=href, interpolate=interpolate, limit=limit, opacity=opacity,
-                                      orient=orient, radius=radius, shape=shape, size=size,
-                                      stroke=stroke, strokeDash=strokeDash,
-                                      strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                                      strokeWidth=strokeWidth, style=style, tension=tension, text=text,
-                                      theta=theta, **kwds)
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                 text=Undefined, theta=Undefined, **kwds):
+        super(MarkProperties, self).__init__(align=align, angle=angle, baseline=baseline,
+                                             binSpacing=binSpacing, clip=clip, color=color,
+                                             cursor=cursor, dx=dx, dy=dy, fill=fill,
+                                             fillOpacity=fillOpacity, filled=filled, font=font,
+                                             fontSize=fontSize, fontStyle=fontStyle,
+                                             fontWeight=fontWeight, href=href, interpolate=interpolate,
+                                             limit=limit, opacity=opacity, orient=orient, radius=radius,
+                                             shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                             strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                             strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                             style=style, tension=tension, text=text, theta=theta,
+                                             **kwds)
 
 
 class Month(VegaLiteSchema):
@@ -3789,9 +4403,8 @@ class OrderFieldDef(VegaLiteSchema):
     ----------
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -3817,14 +4430,26 @@ class OrderFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/OrderFieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 sort=Undefined, timeUnit=Undefined, **kwds):
+                 sort=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(OrderFieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin, field=field,
-                                            sort=sort, timeUnit=timeUnit, **kwds)
+                                            sort=sort, timeUnit=timeUnit, title=title, **kwds)
 
 
 class Orient(VegaLiteSchema):
@@ -3860,9 +4485,8 @@ class PositionFieldDef(VegaLiteSchema):
     ----------
     type : Type
         The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
-        `"ordinal"`, or `"nominal"`). It can also be a geo type (`"latitude"`,
-        `"longitude"`, and `"geojson"`) when a [geographic
-        projection](https://vega.github.io/vega-lite/docs/projection.html) is applied.
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
     aggregate : Aggregate
         Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
         `count`).  __Default value:__ `undefined` (None)
@@ -3894,12 +4518,15 @@ class PositionFieldDef(VegaLiteSchema):
         encoded](https://vega.github.io/vega-lite/docs/scale.html#disable).  __Default
         value:__ If undefined, default [scale
         properties](https://vega.github.io/vega-lite/docs/scale.html) are applied.
-    sort : anyOf(SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, SortField, None)
         Sort order for the encoded field. Supported `sort` values include `"ascending"`,
-        `"descending"` and `null` (no sorting). For fields with discrete domains, `sort` can
-         also be a [sort field definition
-        object](https://vega.github.io/vega-lite/docs/sort.html#sort-field).  __Default
-        value:__ `"ascending"`
+        `"descending"`, `null` (no sorting), or an array specifying the preferred order of
+        values. For fields with discrete domains, `sort` can also be a [sort field
+        definition object](https://vega.github.io/vega-lite/docs/sort.html#sort-field). For
+        `sort` as an [array specifying the preferred order of
+        values](https://vega.github.io/vega-lite/docs/sort.html#sort-array), the sort order
+        will obey the values in the array, followed by any unspecified values in their
+        original order.  __Default value:__ `"ascending"`
     stack : anyOf(StackOffset, None)
         Type of stacking offset if the field should be stacked. `stack` is only applicable
         for `x` and `y` channels with continuous domains. For example, `stack` of `y` can be
@@ -3923,16 +4550,28 @@ class PositionFieldDef(VegaLiteSchema):
         temporal field that gets casted as
         ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
         `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/PositionFieldDef'}
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
-                 **kwds):
+                 title=Undefined, **kwds):
         super(PositionFieldDef, self).__init__(type=type, aggregate=aggregate, axis=axis, bin=bin,
                                                field=field, scale=scale, sort=sort, stack=stack,
-                                               timeUnit=timeUnit, **kwds)
+                                               timeUnit=timeUnit, title=title, **kwds)
 
 
 class Predicate(VegaLiteSchema):
@@ -4329,7 +4968,7 @@ class Scale(VegaLiteSchema):
         color schemes may be used with [discrete](scale.html#discrete) or
         [discretizing](scale.html#discretizing) scales. Continuous color schemes are
         intended for use with [sequential](scales.html#sequential) scales.  For the full
-        list of supported scheme, please refer to the [Vega
+        list of supported schemes, please refer to the [Vega
         Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference.
     type : ScaleType
         The type of scale.  Vega-Lite supports the following categories of scale types:  1)
@@ -4394,8 +5033,8 @@ class ScaleConfig(VegaLiteSchema):
     maxSize : float
         Default max value for point size scale.
     maxStrokeWidth : float
-        Default max strokeWidth for strokeWidth  (or rule/line's size) scale.  __Default
-        value:__ `4`
+        Default max strokeWidth for the scale of strokeWidth for rule and line marks and of
+        size for trail marks.  __Default value:__ `4`
     minBandSize : float
         The default min value for mapping quantitative fields to bar and tick's
         size/bandSize scale with zero=false.  __Default value:__ `2`
@@ -4407,8 +5046,8 @@ class ScaleConfig(VegaLiteSchema):
     minSize : float
         Default minimum value for point size scale with zero=false.  __Default value:__ `9`
     minStrokeWidth : float
-        Default minimum strokeWidth for strokeWidth (or rule/line's size) scale with
-        zero=false.  __Default value:__ `1`
+        Default minimum strokeWidth for the scale of strokeWidth for rule and line marks and
+         of size for trail marks with zero=false.  __Default value:__ `1`
     pointPadding : float
         Default outer padding for `x` and `y` point-ordinal scales.  __Default value:__
         `0.5`
@@ -4538,7 +5177,7 @@ class SchemeParams(VegaLiteSchema):
     ----------
     name : string
         A color scheme name for sequential/ordinal scales (e.g., `"category10"` or
-        `"viridis"`).  For the full list of supported scheme, please refer to the [Vega
+        `"viridis"`).  For the full list of supported schemes, please refer to the [Vega
         Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference.
     extent : List(float)
         For sequential and diverging schemes only, determines the extent of the color range
@@ -4773,7 +5412,8 @@ class SortField(VegaLiteSchema):
         The data [field](field.html) to sort by.  __Default value:__ If unspecified,
         defaults to the field specified in the outer data reference.
     order : SortOrder
-        The sort order. One of `"ascending"` (default) or `"descending"`.
+        The sort order. One of `"ascending"` (default), `"descending"`, or `null` (no not
+        sort).
     """
     _schema = {'$ref': '#/definitions/SortField'}
     _rootschema = Root._schema
@@ -4785,13 +5425,13 @@ class SortField(VegaLiteSchema):
 class SortOrder(VegaLiteSchema):
     """SortOrder schema wrapper
 
-    enum('ascending', 'descending', None)
+    anyOf(VgComparatorOrder, None)
     """
     _schema = {'$ref': '#/definitions/SortOrder'}
     _rootschema = Root._schema
 
-    def __init__(self, *args):
-        super(SortOrder, self).__init__(*args)
+    def __init__(self, *args, **kwds):
+        super(SortOrder, self).__init__(*args, **kwds)
 
 
 class StackOffset(VegaLiteSchema):
@@ -4851,7 +5491,7 @@ class TextConfig(VegaLiteSchema):
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
@@ -4897,11 +5537,11 @@ class TextConfig(VegaLiteSchema):
         The orientation of a non-stacked bar, tick, area, and line charts. The value is
         either horizontal (default) or vertical. - For bar, rule and tick, this determines
         whether the size of the bar and tick should be applied to x or y dimension. - For
-        area, this property determines the orient property of the Vega output. - For line,
-        this property determines the sort order of the points in the line if
-        `config.sortLineBy` is not specified. For stacked charts, this is always determined
-        by the orientation of the stack; therefore explicitly specified value will be
-        ignored.
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the `x` and `y` properties.
@@ -4916,8 +5556,11 @@ class TextConfig(VegaLiteSchema):
         the radius is determined in part by the square root of the size value.  __Default
         value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color  __Default
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
     strokeDash : List(float)
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
@@ -4945,9 +5588,9 @@ class TextConfig(VegaLiteSchema):
                  filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
                  fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
                  opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined,
-                 shortTimeLabels=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 shortTimeLabels=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
         super(TextConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cursor=cursor, dx=dx, dy=dy, fill=fill,
                                          fillOpacity=fillOpacity, filled=filled, font=font,
@@ -4955,9 +5598,69 @@ class TextConfig(VegaLiteSchema):
                                          href=href, interpolate=interpolate, limit=limit,
                                          opacity=opacity, orient=orient, radius=radius, shape=shape,
                                          shortTimeLabels=shortTimeLabels, size=size, stroke=stroke,
-                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, **kwds)
+                                         strokeCap=strokeCap, strokeDash=strokeDash,
+                                         strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
+                                         strokeWidth=strokeWidth, tension=tension, text=text,
+                                         theta=theta, **kwds)
+
+
+class TextFieldDef(VegaLiteSchema):
+    """TextFieldDef schema wrapper
+
+    Mapping(required=[type])
+
+    Attributes
+    ----------
+    type : Type
+        The encoded field's type of measurement (`"quantitative"`, `"temporal"`,
+        `"ordinal"`, or `"nominal"`). It can also be a `"geojson"` type for encoding
+        ['geoshape'](geoshape.html).
+    aggregate : Aggregate
+        Aggregation function for the field (e.g., `mean`, `sum`, `median`, `min`, `max`,
+        `count`).  __Default value:__ `undefined` (None)
+    bin : anyOf(boolean, BinParams)
+        A flag for binning a `quantitative` field, or [an object defining binning
+        parameters](https://vega.github.io/vega-lite/docs/bin.html#params). If `true`,
+        default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be
+         applied.  __Default value:__ `false`
+    field : anyOf(string, RepeatRef)
+        __Required.__ A string defining the name of the field from which to pull a data
+        value or an object defining iterated values from the
+        [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.  __Note:__
+        Dots (`.`) and brackets (`[` and `]`) can be used to access nested objects (e.g.,
+        `"field": "foo.bar"` and `"field": "foo['bar']"`). If field names contain dots or
+        brackets but are not nested, you can use `\\` to escape dots and brackets (e.g.,
+        `"a\\.b"` and `"a\\[0\\]"`). See more details about escaping in the [field
+        documentation](https://vega.github.io/vega-lite/docs/field.html).  __Note:__ `field`
+         is not required if `aggregate` is `count`.
+    format : string
+        The [formatting pattern](https://vega.github.io/vega-lite/docs/format.html) for a
+        text field. If not defined, this will be determined automatically.
+    timeUnit : TimeUnit
+        Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field. or [a
+        temporal field that gets casted as
+        ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).  __Default value:__
+        `undefined` (None)
+    title : anyOf(string, None)
+        A title for the field. If `null`, the title will be removed.  __Default value:__
+        derived from the field's name and transformation function (`aggregate`, `bin` and
+        `timeUnit`).  If the field has an aggregate function, the function is displayed as
+        part of the title (e.g., `"Sum of Profit"`). If the field is binned or has a time
+        unit applied, the applied function is shown in parentheses (e.g., `"Profit
+        (binned)"`, `"Transaction Date (year-month)"`).  Otherwise, the title is simply the
+        field name.  __Notes__:  1) You can customize the default field title format by
+        providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle`
+        function via the `compile` function's options](compile.html#field-title).  2) If
+        both field definition's `title` and axis, header, or legend `title` are defined,
+        axis/header/legend title will be used.
+    """
+    _schema = {'$ref': '#/definitions/TextFieldDef'}
+    _rootschema = Root._schema
+
+    def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
+        super(TextFieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin, field=field,
+                                           format=format, timeUnit=timeUnit, title=title, **kwds)
 
 
 class TickConfig(VegaLiteSchema):
@@ -4995,7 +5698,7 @@ class TickConfig(VegaLiteSchema):
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
@@ -5041,11 +5744,11 @@ class TickConfig(VegaLiteSchema):
         The orientation of a non-stacked bar, tick, area, and line charts. The value is
         either horizontal (default) or vertical. - For bar, rule and tick, this determines
         whether the size of the bar and tick should be applied to x or y dimension. - For
-        area, this property determines the orient property of the Vega output. - For line,
-        this property determines the sort order of the points in the line if
-        `config.sortLineBy` is not specified. For stacked charts, this is always determined
-        by the orientation of the stack; therefore explicitly specified value will be
-        ignored.
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the `x` and `y` properties.
@@ -5058,8 +5761,11 @@ class TickConfig(VegaLiteSchema):
         the radius is determined in part by the square root of the size value.  __Default
         value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color  __Default
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
     strokeDash : List(float)
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
@@ -5089,19 +5795,21 @@ class TickConfig(VegaLiteSchema):
                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
                  limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, thickness=Undefined, **kwds):
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 thickness=Undefined, **kwds):
         super(TickConfig, self).__init__(align=align, angle=angle, bandSize=bandSize, baseline=baseline,
                                          color=color, cursor=cursor, dx=dx, dy=dy, fill=fill,
                                          fillOpacity=fillOpacity, filled=filled, font=font,
                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
                                          href=href, interpolate=interpolate, limit=limit,
                                          opacity=opacity, orient=orient, radius=radius, shape=shape,
-                                         size=size, stroke=stroke, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                                         strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, thickness=thickness, **kwds)
+                                         size=size, stroke=stroke, strokeCap=strokeCap,
+                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                         tension=tension, text=text, theta=theta, thickness=thickness,
+                                         **kwds)
 
 
 class TimeUnit(VegaLiteSchema):
@@ -5127,10 +5835,7 @@ class TimeUnitTransform(VegaLiteSchema):
         The data field to apply time unit.
     timeUnit : TimeUnit
         The timeUnit.
-
-    Dict-Only Attributes
-    --------------------
-    'as' : string
+    as : string
         The output field to write the timeUnit value.
     """
     _schema = {'$ref': '#/definitions/TimeUnitTransform'}
@@ -5279,10 +5984,7 @@ class TopLevelLayerSpec(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
         represents the width of a single view.  __See also:__ The documentation for [width
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-
-    Dict-Only Attributes
-    --------------------
-    '$schema' : string
+    $schema : string
         URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
@@ -5345,10 +6047,7 @@ class TopLevelHConcatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-
-    Dict-Only Attributes
-    --------------------
-    '$schema' : string
+    $schema : string
         URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
@@ -5412,10 +6111,7 @@ class TopLevelRepeatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-
-    Dict-Only Attributes
-    --------------------
-    '$schema' : string
+    $schema : string
         URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
@@ -5477,10 +6173,7 @@ class TopLevelVConcatSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-
-    Dict-Only Attributes
-    --------------------
-    '$schema' : string
+    $schema : string
         URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
@@ -5544,10 +6237,7 @@ class TopLevelFacetSpec(VegaLiteSchema):
         Title for the plot.
     transform : List(Transform)
         An array of data transformations such as filter and new field calculation.
-
-    Dict-Only Attributes
-    --------------------
-    '$schema' : string
+    $schema : string
         URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
@@ -5578,7 +6268,7 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         An object describing the data source
     mark : AnyMark
         A string describing the mark type (one of `"bar"`, `"circle"`, `"square"`, `"tick"`,
-         `"line"`, * `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
+         `"line"`, `"area"`, `"point"`, `"rule"`, `"geoshape"`, and `"text"`) or a [mark
         definition object](https://vega.github.io/vega-lite/docs/mark.html#mark-def).
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a string, should be one of
@@ -5627,9 +6317,9 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         "bottom": 5}` to specify padding for each side of the visualization.  __Default
         value__: `5`
     projection : Projection
-        An object defining properties of geographic projection.  Works with `"geoshape"`
-        marks and `"point"` or `"line"` marks that have `latitude` and `"longitude"`
-        channels.
+        An object defining properties of geographic projection, which will be applied to
+        `shape` path for `"geoshape"` marks and to `latitude` and `"longitude"` channels for
+         other marks.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
     title : anyOf(string, TitleParams)
@@ -5658,10 +6348,7 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
         channels](https://vega.github.io/vega-lite/docs/encoding.html#facet), this
         represents the width of a single view.  __See also:__ The documentation for [width
         and height](https://vega.github.io/vega-lite/docs/size.html) contains more examples.
-
-    Dict-Only Attributes
-    --------------------
-    '$schema' : string
+    $schema : string
         URL to [JSON schema](http://json-schema.org/) for a Vega-Lite specification. Unless
         you have a reason to change this, use
         `https://vega.github.io/schema/vega-lite/v2.json`. Setting the `$schema` property
@@ -5681,6 +6368,19 @@ class TopLevelFacetedUnitSpec(VegaLiteSchema):
                                                       padding=padding, projection=projection,
                                                       selection=selection, title=title,
                                                       transform=transform, width=width, **kwds)
+
+
+class TopLevelSpec(VegaLiteSchema):
+    """TopLevelSpec schema wrapper
+
+    anyOf(TopLevelFacetedUnitSpec, TopLevelFacetSpec, TopLevelLayerSpec, TopLevelRepeatSpec,
+    TopLevelVConcatSpec, TopLevelHConcatSpec)
+    """
+    _schema = {'$ref': '#/definitions/TopLevelSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(TopLevelSpec, self).__init__(*args, **kwds)
 
 
 class TopoDataFormat(VegaLiteSchema):
@@ -5730,7 +6430,7 @@ class Transform(VegaLiteSchema):
     """Transform schema wrapper
 
     anyOf(FilterTransform, CalculateTransform, LookupTransform, BinTransform, TimeUnitTransform,
-     AggregateTransform)
+     AggregateTransform, WindowTransform)
     """
     _schema = {'$ref': '#/definitions/Transform'}
     _rootschema = Root._schema
@@ -6087,6 +6787,18 @@ class VgCheckboxBinding(VegaLiteSchema):
         super(VgCheckboxBinding, self).__init__(input=input, element=element, **kwds)
 
 
+class VgComparatorOrder(VegaLiteSchema):
+    """VgComparatorOrder schema wrapper
+
+    enum('ascending', 'descending')
+    """
+    _schema = {'$ref': '#/definitions/VgComparatorOrder'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(VgComparatorOrder, self).__init__(*args)
+
+
 class VgEventStream(VegaLiteSchema):
     """VgEventStream schema wrapper
 
@@ -6146,7 +6858,7 @@ class VgMarkConfig(VegaLiteSchema):
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the _angle_ property.
     fill : string
-        Default Fill Color.  This has higher precedence than config.color  __Default
+        Default Fill Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
     fillOpacity : float
         The fill opacity (value between [0,1]).  __Default value:__ `1`
@@ -6187,11 +6899,11 @@ class VgMarkConfig(VegaLiteSchema):
         The orientation of a non-stacked bar, tick, area, and line charts. The value is
         either horizontal (default) or vertical. - For bar, rule and tick, this determines
         whether the size of the bar and tick should be applied to x or y dimension. - For
-        area, this property determines the orient property of the Vega output. - For line,
-        this property determines the sort order of the points in the line if
-        `config.sortLineBy` is not specified. For stacked charts, this is always determined
-        by the orientation of the stack; therefore explicitly specified value will be
-        ignored.
+        area, this property determines the orient property of the Vega output. - For line
+        and trail marks, this property determines the sort order of the points in the line
+        if `config.sortLineBy` is not specified. For stacked charts, this is always
+        determined by the orientation of the stack; therefore explicitly specified value
+        will be ignored.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the `x` and `y` properties.
@@ -6204,8 +6916,11 @@ class VgMarkConfig(VegaLiteSchema):
         the radius is determined in part by the square root of the size value.  __Default
         value:__ `30`
     stroke : string
-        Default Stroke Color.  This has higher precedence than config.color  __Default
+        Default Stroke Color.  This has higher precedence than `config.color`  __Default
         value:__ (None)
+    strokeCap : enum('butt', 'round', 'square')
+        The stroke cap for line ending style. One of `"butt"`, `"round"`, or `"square"`.
+        __Default value:__ `"square"`
     strokeDash : List(float)
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
@@ -6233,15 +6948,16 @@ class VgMarkConfig(VegaLiteSchema):
                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
                  interpolate=Undefined, limit=Undefined, opacity=Undefined, orient=Undefined,
                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, **kwds):
         super(VgMarkConfig, self).__init__(align=align, angle=angle, baseline=baseline, cursor=cursor,
                                            dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, font=font,
                                            fontSize=fontSize, fontStyle=fontStyle,
                                            fontWeight=fontWeight, href=href, interpolate=interpolate,
                                            limit=limit, opacity=opacity, orient=orient, radius=radius,
-                                           shape=shape, size=size, stroke=stroke, strokeDash=strokeDash,
-                                           strokeDashOffset=strokeDashOffset,
+                                           shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                           strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                                            strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                            tension=tension, text=text, theta=theta, **kwds)
 
@@ -6441,4 +7157,114 @@ class ViewConfig(VegaLiteSchema):
                                          stroke=stroke, strokeDash=strokeDash,
                                          strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, width=width, **kwds)
+
+
+class WindowFieldDef(VegaLiteSchema):
+    """WindowFieldDef schema wrapper
+
+    Mapping(required=[op, as])
+
+    Attributes
+    ----------
+    op : anyOf(AggregateOp, WindowOnlyOp)
+        The window or aggregation operations to apply within a window, including `rank`,
+        `lead`, `sum`, `average` or `count`. See the list of all supported operations
+        [here](https://vega.github.io/vega-lite/docs/window.html#ops).
+    field : string
+        The data field for which to compute the aggregate or window function. This can be
+        omitted for window functions that do not operate over a field such as `count`,
+        `rank`, `dense_rank`.
+    param : float
+        Parameter values for the window functions. Parameter values can be omitted for
+        operations that do not accept a parameter.  See the list of all supported operations
+         and their parameters
+        [here](https://vega.github.io/vega-lite/docs/transforms/window.html).
+    as : string
+        The output name for the window operation.
+    """
+    _schema = {'$ref': '#/definitions/WindowFieldDef'}
+    _rootschema = Root._schema
+
+    def __init__(self, op=Undefined, field=Undefined, param=Undefined, **kwds):
+        super(WindowFieldDef, self).__init__(op=op, field=field, param=param, **kwds)
+
+
+class WindowOnlyOp(VegaLiteSchema):
+    """WindowOnlyOp schema wrapper
+
+    enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist', 'ntile', 'lag',
+    'lead', 'first_value', 'last_value', 'nth_value')
+    """
+    _schema = {'$ref': '#/definitions/WindowOnlyOp'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(WindowOnlyOp, self).__init__(*args)
+
+
+class WindowSortField(VegaLiteSchema):
+    """WindowSortField schema wrapper
+
+    Mapping(required=[field])
+    A compartor for fields within the window transform
+
+    Attributes
+    ----------
+    field : string
+        The name of the field to sort.
+    order : VgComparatorOrder
+        Whether to sort the field in ascending or descending order.
+    """
+    _schema = {'$ref': '#/definitions/WindowSortField'}
+    _rootschema = Root._schema
+
+    def __init__(self, field=Undefined, order=Undefined, **kwds):
+        super(WindowSortField, self).__init__(field=field, order=order, **kwds)
+
+
+class WindowTransform(VegaLiteSchema):
+    """WindowTransform schema wrapper
+
+    Mapping(required=[window])
+
+    Attributes
+    ----------
+    window : List(WindowFieldDef)
+        The definition of the fields in the window, and what calculations to use.
+    frame : List(anyOf(None, float))
+        A frame specification as a two-element array indicating how the sliding window
+        should proceed. The array entries should either be a number indicating the offset
+        from the current data object, or null to indicate unbounded rows preceding or
+        following the current data object. The default value is `[null, 0]`, indicating that
+         the sliding window includes the current object and all preceding objects. The value
+         `[-5, 5]` indicates that the window should include five objects preceding and five
+        objects following the current object. Finally, `[null, null]` indicates that the
+        window frame should always include all data objects. The only operators affected are
+         the aggregation operations and the `first_value`, `last_value`, and `nth_value`
+        window operations. The other window operations are not affected by this.  __Default
+        value:__:  `[null, 0]` (includes the current object and all preceding objects)
+    groupby : List(string)
+        The data fields for partitioning the data objects into separate windows. If
+        unspecified, all data points will be a single group.
+    ignorePeers : boolean
+        Indicates if the sliding window frame should ignore peer values. (Peer values are
+        those considered identical by the sort criteria). The default is false, causing the
+        window frame to expand to include all peer values. If set to true, the window frame
+        will be defined by offset values only. This setting only affects those operations
+        that depend on the window frame, namely aggregation operations and the first_value,
+        last_value, and nth_value window operations.  __Default value:__ `false`
+    sort : List(WindowSortField)
+        A comparator definition for sorting data objects within a window. If two data
+        objects are considered equal by the comparator, they are considered “peer” values of
+         equal rank. If sort is not specified, the order is undefined: data objects are
+        processed in the order they are observed and none are considered peers (the
+        ignorePeers parameter is ignored and treated as if set to `true`).
+    """
+    _schema = {'$ref': '#/definitions/WindowTransform'}
+    _rootschema = Root._schema
+
+    def __init__(self, window=Undefined, frame=Undefined, groupby=Undefined, ignorePeers=Undefined,
+                 sort=Undefined, **kwds):
+        super(WindowTransform, self).__init__(window=window, frame=frame, groupby=groupby,
+                                              ignorePeers=ignorePeers, sort=sort, **kwds)
 

@@ -876,10 +876,7 @@ class aggregateTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, signal, None)), signal)
 
     """
     _schema = {'$ref': '#/defs/aggregateTransform'}
@@ -925,10 +922,7 @@ class binTransform(VegaSchema):
 
     steps : oneOf(List(anyOf(float, signal)), signal)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/binTransform'}
@@ -983,10 +977,7 @@ class countpatternTransform(VegaSchema):
 
     stopwords : anyOf(string, signal)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/countpatternTransform'}
@@ -1011,10 +1002,7 @@ class crossTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/crossTransform'}
@@ -1044,10 +1032,7 @@ class densityTransform(VegaSchema):
 
     steps : anyOf(float, signal)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/densityTransform'}
@@ -1114,10 +1099,7 @@ class flattenTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/flattenTransform'}
@@ -1140,10 +1122,7 @@ class foldTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/foldTransform'}
@@ -1168,10 +1147,7 @@ class formulaTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : anyOf(string, signal)
+    as : anyOf(string, signal)
 
     """
     _schema = {'$ref': '#/defs/formulaTransform'}
@@ -1237,10 +1213,7 @@ class joinaggregateTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, signal, None)), signal)
 
     """
     _schema = {'$ref': '#/defs/joinaggregateTransform'}
@@ -1271,12 +1244,9 @@ class lookupTransform(VegaSchema):
 
     values : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
 
+    as : oneOf(List(anyOf(string, signal)), signal)
 
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
-
-    'from' : string
+    from : string
 
     """
     _schema = {'$ref': '#/defs/lookupTransform'}
@@ -1336,10 +1306,7 @@ class projectTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, signal, None)), signal)
 
     """
     _schema = {'$ref': '#/defs/projectTransform'}
@@ -1426,10 +1393,7 @@ class windowTransform(VegaSchema):
 
     sort : compare
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, signal, None)), signal)
 
     """
     _schema = {'$ref': '#/defs/windowTransform'}
@@ -1454,10 +1418,7 @@ class identifierTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : anyOf(string, signal)
+    as : anyOf(string, signal)
 
     """
     _schema = {'$ref': '#/defs/identifierTransform'}
@@ -1490,10 +1451,7 @@ class linkpathTransform(VegaSchema):
 
     targetY : oneOf(scaleField, paramField, expr)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : anyOf(string, signal)
+    as : anyOf(string, signal)
 
     """
     _schema = {'$ref': '#/defs/linkpathTransform'}
@@ -1525,10 +1483,7 @@ class pieTransform(VegaSchema):
 
     startAngle : anyOf(float, signal)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/pieTransform'}
@@ -1559,10 +1514,7 @@ class stackTransform(VegaSchema):
 
     sort : compare
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/stackTransform'}
@@ -1591,9 +1543,11 @@ class contourTransform(VegaSchema):
 
     count : anyOf(float, signal)
 
-    nice : anyOf(float, signal)
+    nice : anyOf(boolean, signal)
 
     signal : string
+
+    smooth : anyOf(boolean, signal)
 
     thresholds : oneOf(List(anyOf(float, signal)), signal)
 
@@ -1608,11 +1562,12 @@ class contourTransform(VegaSchema):
     _rootschema = Root._schema
 
     def __init__(self, size=Undefined, type=Undefined, bandwidth=Undefined, cellSize=Undefined,
-                 count=Undefined, nice=Undefined, signal=Undefined, thresholds=Undefined,
-                 values=Undefined, x=Undefined, y=Undefined, **kwds):
+                 count=Undefined, nice=Undefined, signal=Undefined, smooth=Undefined,
+                 thresholds=Undefined, values=Undefined, x=Undefined, y=Undefined, **kwds):
         super(contourTransform, self).__init__(size=size, type=type, bandwidth=bandwidth,
                                                cellSize=cellSize, count=count, nice=nice, signal=signal,
-                                               thresholds=thresholds, values=values, x=x, y=y, **kwds)
+                                               smooth=smooth, thresholds=thresholds, values=values, x=x,
+                                               y=y, **kwds)
 
 
 class geojsonTransform(VegaSchema):
@@ -1656,10 +1611,7 @@ class geopathTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : anyOf(string, signal)
+    as : anyOf(string, signal)
 
     """
     _schema = {'$ref': '#/defs/geopathTransform'}
@@ -1686,10 +1638,7 @@ class geopointTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/geopointTransform'}
@@ -1717,10 +1666,7 @@ class geoshapeTransform(VegaSchema):
 
     signal : string
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : anyOf(string, signal)
+    as : anyOf(string, signal)
 
     """
     _schema = {'$ref': '#/defs/geoshapeTransform'}
@@ -1799,10 +1745,7 @@ class forceTransform(VegaSchema):
 
     velocityDecay : anyOf(float, signal)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/forceTransform'}
@@ -1865,10 +1808,7 @@ class packTransform(VegaSchema):
 
     sort : compare
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/packTransform'}
@@ -1901,10 +1841,7 @@ class partitionTransform(VegaSchema):
 
     sort : compare
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/partitionTransform'}
@@ -1961,10 +1898,7 @@ class treeTransform(VegaSchema):
 
     sort : compare
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/treeTransform'}
@@ -2035,10 +1969,7 @@ class treemapTransform(VegaSchema):
 
     sort : compare
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/treemapTransform'}
@@ -2075,10 +2006,7 @@ class voronoiTransform(VegaSchema):
 
     size : oneOf(List(anyOf(float, signal)), signal)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : anyOf(string, signal)
+    as : anyOf(string, signal)
 
     """
     _schema = {'$ref': '#/defs/voronoiTransform'}
@@ -2121,10 +2049,7 @@ class wordcloudTransform(VegaSchema):
 
     text : oneOf(scaleField, paramField, expr)
 
-
-    Dict-Only Attributes
-    --------------------
-    'as' : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, signal)), signal)
 
     """
     _schema = {'$ref': '#/defs/wordcloudTransform'}

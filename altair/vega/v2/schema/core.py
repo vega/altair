@@ -167,10 +167,7 @@ class mark(VegaSchema):
 
     properties : anyOf(Mapping(required=[enter]), Mapping(required=[update]))
 
-
-    Dict-Only Attributes
-    --------------------
-    'from' : Mapping(required=[])
+    from : Mapping(required=[])
 
     """
     _schema = {'$ref': '#/defs/mark'}
@@ -564,10 +561,7 @@ class crossTransform(VegaSchema):
         data elements.
     output : Mapping(required=[])
         Rename the output data fields
-
-    Dict-Only Attributes
-    --------------------
-    'with' : string
+    with : string
         The name of the secondary data set to cross with the primary data. If unspecified,
         the primary data is crossed with itself.
     """
@@ -969,10 +963,7 @@ class lookupTransform(VegaSchema):
         The default value to use if a lookup match fails.
     onKey : oneOf(string, signal)
         The key field to lookup, or null for index-based lookup.
-
-    Dict-Only Attributes
-    --------------------
-    'as' : List(string)
+    as : List(string)
         The names of the fields in which to store looked-up values.
     """
     _schema = {'$ref': '#/defs/lookupTransform'}

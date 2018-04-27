@@ -19,11 +19,11 @@ SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
 SCHEMA_VERSION = {
     'vega': {
         'v2': 'v2.6.5',
-        'v3': 'v3.2.1'
+        'v3': 'v3.3.1'
     },
     'vega-lite': {
         'v1': 'v1.3.1',
-        'v2': 'v2.3.0'
+        'v2': 'v2.4.1'
     }
 }
 

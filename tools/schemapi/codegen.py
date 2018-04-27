@@ -80,19 +80,10 @@ def docstring(classname, schema, rootschema=None, indent=4):
         doc += ['',
                 'Attributes',
                 '----------']
-        for prop in sorted(required) + sorted(kwds):
+        for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
             propinfo = info.properties[prop]
             doc += ["{0} : {1}".format(prop, propinfo.short_description),
                     "    {0}".format(propinfo.description)]
-
-        if invalid_kwds:
-            doc += ['',
-                    'Dict-Only Attributes',
-                    '--------------------']
-            for prop in sorted(invalid_kwds):
-                propinfo = info.properties[prop]
-                doc += ["'{0}' : {1}".format(prop, propinfo.short_description),
-                        "    {0}".format(propinfo.description)]
     if len(doc) > 1:
         doc += ['']
     return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)

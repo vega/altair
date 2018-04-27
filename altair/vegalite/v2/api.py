@@ -809,6 +809,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs['timeUnit'] = timeUnit
         return self._add_transform(core.TimeUnitTransform(**kwargs))
 
+    @utils.use_signature(core.WindowTransform)
+    def transform_window(self, *args, **kwargs):
+        return self._add_transform(core.WindowTransform(*args, **kwargs))
+
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
         """Copy the chart and update the resolve property with kwargs"""
