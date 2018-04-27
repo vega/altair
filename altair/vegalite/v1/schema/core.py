@@ -37,19 +37,20 @@ class ExtendedUnitSpec(VegaLiteSchema):
     Mapping(required=[mark])
     Schema for a unit Vega-Lite specification, with the syntactic sugar extensions:
 
-    - `row` and `column` are included in the encoding.
 
-    - (Future) label, box plot
+    *
+      ``row`` and ``column`` are included in the encoding.
 
-
+    *
+      (Future) label, box plot
 
     Note: the spec could contain facet.
 
     Attributes
     ----------
     mark : Mark
-        The mark type.  One of `"bar"`, `"circle"`, `"square"`, `"tick"`, `"line"`,
-        `"area"`, `"point"`, `"rule"`, and `"text"`.
+        The mark type.  One of ``"bar"``, ``"circle"``, ``"square"``, ``"tick"``,
+        ``"line"``,  ``"area"``, ``"point"``, ``"rule"``, and ``"text"``.
     config : Config
         Configuration object
     data : Data
@@ -101,8 +102,8 @@ class Encoding(VegaLiteSchema):
     ----------
     color : ChannelDefWithLegend
         Color of the marks – either fill or stroke color based on mark type.  (By default,
-        fill color for `area`, `bar`, `tick`, `text`, `circle`, and `square` /  stroke color
-         for `line` and `point`.)
+        fill color for ``area``, ``bar``, ``tick``, ``text``, ``circle``, and ``square`` /
+        stroke color for ``line`` and ``point``.)
     column : PositionChannelDef
         Horizontal facets for trellis plots.
     detail : anyOf(FieldDef, List(FieldDef))
@@ -119,25 +120,26 @@ class Encoding(VegaLiteSchema):
     row : PositionChannelDef
         Vertical facets for trellis plots.
     shape : ChannelDefWithLegend
-        The symbol's shape (only for `point` marks). The supported values are  `"circle"`
-        (default), `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`,  or
-        `"triangle-down"`, or else a custom SVG path string.
+        The symbol's shape (only for ``point`` marks). The supported values are
+        ``"circle"`` (default), ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
+          or ``"triangle-down"``, or else a custom SVG path string.
     size : ChannelDefWithLegend
-        Size of the mark.  - For `point`, `square` and `circle`  – the symbol size, or pixel
-         area of the mark.  - For `bar` and `tick` – the bar and tick's size.  - For `text`
-        – the text's font size.  - Size is currently unsupported for `line` and `area`.
+        Size of the mark.   * For ``point``, ``square`` and ``circle``  – the symbol size,
+        or pixel area of the mark.   *    For ``bar`` and ``tick`` – the bar and tick's
+        size.  *    For ``text`` – the text's font size.  *    Size is currently unsupported
+         for ``line`` and ``area``.
     text : FieldDef
-        Text of the `text` mark.
+        Text of the ``text`` mark.
     x : PositionChannelDef
-        X coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and `tick`
-        (or to width and height for `bar` and `area` marks).
+        X coordinates for ``point``, ``circle``, ``square``,  ``line``, ``rule``, ``text``,
+        and ``tick``  (or to width and height for ``bar`` and ``area`` marks).
     x2 : FieldDef
-        X2 coordinates for ranged `bar`, `rule`, `area`
+        X2 coordinates for ranged ``bar``, ``rule``, ``area``
     y : PositionChannelDef
-        Y coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and `tick`
-        (or to width and height for `bar` and `area` marks).
+        Y coordinates for ``point``, ``circle``, ``square``,  ``line``, ``rule``, ``text``,
+        and ``tick``  (or to width and height for ``bar`` and ``area`` marks).
     y2 : FieldDef
-        Y2 coordinates for ranged `bar`, `rule`, `area`
+        Y2 coordinates for ranged ``bar``, ``rule``, ``area``
     """
     _schema = {'$ref': '#/definitions/Encoding'}
     _rootschema = Root._schema
@@ -159,12 +161,12 @@ class PositionChannelDef(VegaLiteSchema):
     Attributes
     ----------
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`,
-        `count`).
+        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
+        ``max``, ``count`` ).
     axis : Axis
 
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for binning
+        Flag for binning a ``quantitative`` field, or a bin property object  for binning
         parameters.
     field : string
         Name of the field from which to pull a data value.
@@ -173,14 +175,15 @@ class PositionChannelDef(VegaLiteSchema):
     sort : anyOf(SortOrder, SortField)
 
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+        Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
+        ``hour`` ).
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name
-        (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial
-        character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case
-        insensitive.
+        The encoded field's type of measurement. This can be either a full type  name (
+        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
+        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
+        property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -227,7 +230,7 @@ class DateTime(VegaLiteSchema):
 
     If both month and quarter are provided, month has higher precedence.
 
-    `day` cannot be combined with other date.
+    ``day`` cannot be combined with other date.
 
     We accept string for month and day names.
 
@@ -236,11 +239,11 @@ class DateTime(VegaLiteSchema):
     date : float
         Integer value representing the date from 1-31.
     day : anyOf(string, float)
-        Value representing the day of week.  This can be one of: (1) integer value -- `1`
-        represents Monday; (2) case-insensitive day name (e.g., `"Monday"`);  (3)
-        case-insensitive, 3-character short day name (e.g., `"Mon"`).   <br/> **Warning:** A
-         DateTime definition object with `day`** should not be combined with `year`,
-        `quarter`, `month`, or `date`.
+        Value representing the day of week.  This can be one of: (1) integer value -- ``1``
+        represents Monday; (2) case-insensitive day name (e.g., ``"Monday"`` );  (3)
+        case-insensitive, 3-character short day name (e.g., ``"Mon"`` ).   :raw-html:`<br/>`
+         **Warning:** A DateTime definition object with ``day`` ** should not be combined
+        with ``year``, ``quarter``, ``month``, or ``date``.
     hours : float
         Integer value representing the hour of day from 0-23.
     milliseconds : float
@@ -248,9 +251,9 @@ class DateTime(VegaLiteSchema):
     minutes : float
         Integer value representing minute segment of a time from 0-59.
     month : anyOf(string, float)
-        One of: (1) integer value representing the month from `1`-`12`. `1` represents
-        January;  (2) case-insensitive month name (e.g., `"January"`);  (3)
-        case-insensitive, 3-character short month name (e.g., `"Jan"`).
+        One of: (1) integer value representing the month from ``1`` - ``12``. ``1``
+        represents January;  (2) case-insensitive month name (e.g., ``"January"`` );  (3)
+        case-insensitive, 3-character short month name (e.g., ``"Jan"`` ).
     quarter : float
         Integer value representing the quarter of the year (from 1-4).
     seconds : float
@@ -296,14 +299,14 @@ class Scale(VegaLiteSchema):
         only, the nice value should be a string indicating the desired time interval.
     padding : float
         Applies spacing among ordinal elements in the scale range. The actual effect depends
-         on how the scale is configured. If the __points__ parameter is `true`, the padding
-        value is interpreted as a multiple of the spacing between points. A reasonable value
-         is 1.0, such that the first and last point will be offset from the minimum and
-        maximum value by half the distance between points. Otherwise, padding is typically
-        in the range [0, 1] and corresponds to the fraction of space in the range interval
-        to allocate to padding. A value of 0.5 means that the range band width will be equal
-         to the padding width. For more, see the [D3 ordinal scale
-        documentation](https://github.com/mbostock/d3/wiki/Ordinal-Scales).
+         on how the scale is configured. If the **points** parameter is ``true``, the
+        padding value is interpreted as a multiple of the spacing between points. A
+        reasonable value is 1.0, such that the first and last point will be offset from the
+        minimum and maximum value by half the distance between points. Otherwise, padding is
+         typically in the range [0, 1] and corresponds to the fraction of space in the range
+         interval to allocate to padding. A value of 0.5 means that the range band width
+        will be equal to the padding width. For more, see the `D3 ordinal scale
+        documentation <https://github.com/mbostock/d3/wiki/Ordinal-Scales>`_.
     range : anyOf(List(string), List(float), string)
         The range of the scale, representing the set of visual values. For numeric values,
         the range can take the form of a two-element array with minimum and maximum values.
@@ -319,13 +322,14 @@ class Scale(VegaLiteSchema):
     useRawDomain : boolean
         Uses the source data range as scale domain instead of aggregated data for aggregate
         axis.  This property only works with aggregate functions that produce values within
-        the raw data domain (`"mean"`, `"average"`, `"stdev"`, `"stdevp"`, `"median"`,
-        `"q1"`, `"q3"`, `"min"`, `"max"`). For other aggregations that produce values
-        outside of the raw data domain (e.g. `"count"`, `"sum"`), this property is ignored.
+        the raw data domain ( ``"mean"``, ``"average"``, ``"stdev"``, ``"stdevp"``,
+        ``"median"``, ``"q1"``, ``"q3"``, ``"min"``, ``"max"`` ). For other aggregations
+        that produce values outside of the raw data domain (e.g. ``"count"``, ``"sum"`` ),
+        this property is ignored.
     zero : boolean
-        If `true`, ensures that a zero baseline value is included in the scale domain.
-        Default value: `true` for `x` and `y` channel if the quantitative field is not
-        binned  and no custom `domain` is provided; `false` otherwise.
+        If ``true``, ensures that a zero baseline value is included in the scale domain.
+        Default value: ``true`` for ``x`` and ``y`` channel if the quantitative field is not
+         binned  and no custom ``domain`` is provided; ``false`` otherwise.
     """
     _schema = {'$ref': '#/definitions/Scale'}
     _rootschema = Root._schema
@@ -498,22 +502,23 @@ class FieldDef(VegaLiteSchema):
     Attributes
     ----------
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`,
-        `count`).
+        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
+        ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for binning
+        Flag for binning a ``quantitative`` field, or a bin property object  for binning
         parameters.
     field : string
         Name of the field from which to pull a data value.
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+        Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
+        ``hour`` ).
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name
-        (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial
-        character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case
-        insensitive.
+        The encoded field's type of measurement. This can be either a full type  name (
+        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
+        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
+        property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -534,10 +539,10 @@ class ChannelDefWithLegend(VegaLiteSchema):
     Attributes
     ----------
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`,
-        `count`).
+        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
+        ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for binning
+        Flag for binning a ``quantitative`` field, or a bin property object  for binning
         parameters.
     field : string
         Name of the field from which to pull a data value.
@@ -548,14 +553,15 @@ class ChannelDefWithLegend(VegaLiteSchema):
     sort : anyOf(SortOrder, SortField)
 
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+        Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
+        ``hour`` ).
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name
-        (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial
-        character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case
-        insensitive.
+        The encoded field's type of measurement. This can be either a full type  name (
+        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
+        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
+        property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -591,24 +597,25 @@ class OrderChannelDef(VegaLiteSchema):
     Attributes
     ----------
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., `mean`, `sum`, `median`, `min`, `max`,
-        `count`).
+        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
+        ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a `quantitative` field, or a bin property object  for binning
+        Flag for binning a ``quantitative`` field, or a bin property object  for binning
         parameters.
     field : string
         Name of the field from which to pull a data value.
     sort : SortOrder
 
     timeUnit : TimeUnit
-        Time unit for a `temporal` field  (e.g., `year`, `yearmonth`, `month`, `hour`).
+        Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
+        ``hour`` ).
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name
-        (`"quantitative"`, `"temporal"`, `"ordinal"`,  and `"nominal"`)  or an initial
-        character of the type name (`"Q"`, `"T"`, `"O"`, `"N"`).  This property is case
-        insensitive.
+        The encoded field's type of measurement. This can be either a full type  name (
+        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
+        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
+        property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -653,34 +660,33 @@ class DataFormat(VegaLiteSchema):
     ----------
     feature : string
         The name of the TopoJSON object set to convert to a GeoJSON feature collection.  For
-         example, in a map of the world, there may be an object set named `"countries"`.
+         example, in a map of the world, there may be an object set named ``"countries"``.
         Using the feature property, we can extract this set and generate a GeoJSON feature
         object for each country.
     mesh : string
-        The name of the TopoJSON object set to convert to a mesh.  Similar to the `feature`
-        option, `mesh` extracts a named TopoJSON object set.  Unlike the `feature` option,
-        the corresponding geo data is returned as a single, unified mesh instance, not as
-        individual GeoJSON features.  Extracting a mesh is useful for more efficiently
-        drawing borders or other geographic elements that you do not need to associate with
-        specific regions such as individual countries, states or counties.
+        The name of the TopoJSON object set to convert to a mesh.  Similar to the
+        ``feature`` option, ``mesh`` extracts a named TopoJSON object set.  Unlike the
+        ``feature`` option, the corresponding geo data is returned as a single, unified mesh
+         instance, not as individual GeoJSON features.  Extracting a mesh is useful for more
+         efficiently drawing borders or other geographic elements that you do not need to
+        associate with specific regions such as individual countries, states or counties.
     parse : Mapping(required=[])
         A collection of parsing instructions can be used to define the data types of
         string-valued attributes in the JSON file. Each instruction is a name-value pair,
         where the name is the name of the attribute, and the value is the desired data type
-        (one of `"number"`, `"boolean"` or `"date"`). For example, `"parse":
-        {"modified_on":"date"}` ensures that the `modified_on` value in each row of the
-        input data is parsed as a Date value. (See Datalib's [`dl.read.types`
-        method](https://github.com/vega/datalib/wiki/Import#dl_read_types) for more
-        information.)
+        (one of ``"number"``, ``"boolean"`` or ``"date"`` ). For example, ``"parse":
+        {"modified_on":"date"}`` ensures that the ``modified_on`` value in each row of the
+        input data is parsed as a Date value. (See Datalib's ` ``dl.read.types`` method
+        <https://github.com/vega/datalib/wiki/Import#dl_read_types>`_ for more information.)
     property : string
         JSON only) The JSON property containing the desired data.  This parameter can be
         used when the loaded JSON file may have surrounding structure or meta-data.  For
-        example `"property": "values.features"` is equivalent to retrieving
-        `json.values.features`  from the loaded JSON object.
+        example ``"property": "values.features"`` is equivalent to retrieving
+        ``json.values.features``  from the loaded JSON object.
     type : DataFormatType
-        Type of input data: `"json"`, `"csv"`, `"tsv"`.  The default format type is
-        determined by the extension of the file url.  If no extension is detected, `"json"`
-        will be used by default.
+        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``.  The default format type is
+        determined by the extension of the file url.  If no extension is detected,
+        ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/DataFormat'}
     _rootschema = Root._schema
@@ -715,13 +721,13 @@ class Transform(VegaLiteSchema):
         before filter.
     filter : anyOf(EqualFilter, RangeFilter, OneOfFilter, List(anyOf(EqualFilter, RangeFilter,
     OneOfFilter, string)), string)
-        A string containing the filter Vega expression. Use `datum` to refer to the current
-        data object.
+        A string containing the filter Vega expression. Use ``datum`` to refer to the
+        current data object.
     filterInvalid : boolean
-        Whether to filter invalid values (`null` and `NaN`) from the data. By default
-        (`undefined`), only quantitative and temporal fields are filtered. If set to `true`,
-         all data items with null values are filtered. If `false`, all data items are
-        included.
+        Whether to filter invalid values ( ``null`` and ``NaN`` ) from the data. By default
+        ( ``undefined`` ), only quantitative and temporal fields are filtered. If set to
+        ``true``, all data items with null values are filtered. If ``false``, all data items
+         are included.
     """
     _schema = {'$ref': '#/definitions/Transform'}
     _rootschema = Root._schema
@@ -784,7 +790,7 @@ class OneOfFilter(VegaLiteSchema):
     field : string
         Field to be filtered
     oneOf : List(anyOf(DateTime, anyOf(string, float, boolean)))
-        A set of values that the `field`'s value should be a member of,  for a data item
+        A set of values that the ``field`` 's value should be a member of,  for a data item
         included in the filtered data.
     timeUnit : TimeUnit
         time unit for the field to be filtered.
@@ -805,7 +811,7 @@ class Formula(VegaLiteSchema):
     Attributes
     ----------
     expr : string
-        A string containing an expression for the formula. Use the variable `datum` to to
+        A string containing an expression for the formula. Use the variable ``datum`` to to
         refer to the current data object.
     field : string
         The field in which to store the computed formula value.
@@ -828,7 +834,7 @@ class Config(VegaLiteSchema):
         Axis Config
     background : string
         CSS color property to use as background of visualization. Default is
-        `"transparent"`.
+        ``"transparent"``.
     cell : CellConfig
         Cell Config
     countTitle : string
@@ -918,7 +924,7 @@ class MarkConfig(VegaLiteSchema):
     applyColorToBackground : boolean
         Apply color field to background color instead of the text.
     barSize : float
-        The size of the bars.  If unspecified, the default size is  `bandSize-1`,  which
+        The size of the bars.  If unspecified, the default size is  ``bandSize-1``,  which
         provides 1 pixel offset between bars.
     barThinSize : float
         The size of the bars on continuous scales.
@@ -961,13 +967,13 @@ class MarkConfig(VegaLiteSchema):
 
     orient : Orient
         The orientation of a non-stacked bar, tick, area, and line charts.  The value is
-        either horizontal (default) or vertical.  - For bar, rule and tick, this determines
-        whether the size of the bar and tick  should be applied to x or y dimension.  - For
-        area, this property determines the orient property of the Vega output.  - For line,
-        this property determines the sort order of the points in the line  if
-        `config.sortLineBy` is not specified.  For stacked charts, this is always determined
-         by the orientation of the stack;  therefore explicitly specified value will be
-        ignored.
+        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
+         whether the size of the bar and tick  should be applied to x or y dimension.   *
+            For area, this property determines the orient property of the Vega output.  *
+            For line, this property determines the sort order of the points in the line  if
+        ``config.sortLineBy`` is not specified.  For stacked charts, this is always
+        determined by the orientation of the stack;  therefore explicitly specified value
+        will be ignored.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the x and y properties.
@@ -1177,8 +1183,8 @@ class ScaleConfig(VegaLiteSchema):
     Attributes
     ----------
     bandSize : anyOf(BandSize, float)
-        Default band size for (1) `y` ordinal scale,  and (2) `x` ordinal scale when the
-        mark is not `text`.
+        Default band size for (1) ``y`` ordinal scale,  and (2) ``x`` ordinal scale when the
+         mark is not ``text``.
     barSizeRange : List(float)
         Default range for bar size scale
     fontSizeRange : List(float)
@@ -1188,13 +1194,13 @@ class ScaleConfig(VegaLiteSchema):
     opacity : List(float)
         Default range for opacity.
     padding : float
-        Default padding for `x` and `y` ordinal scales.
+        Default padding for ``x`` and ``y`` ordinal scales.
     pointSizeRange : List(float)
         Default range for bar size scale
     round : boolean
         If true, rounds numeric output values to integers.  This can be helpful for snapping
-         to the pixel grid.  (Only available for `x`, `y`, `size`, `row`, and `column`
-        scales.)
+         to the pixel grid.  (Only available for ``x``, ``y``, ``size``, ``row``, and
+        ``column`` scales.)
     ruleSizeRange : List(float)
         Default range for rule stroke widths
     sequentialColorRange : anyOf(List(string), string)
@@ -1202,15 +1208,16 @@ class ScaleConfig(VegaLiteSchema):
     shapeRange : anyOf(List(string), string)
         Default range for shape
     textBandWidth : float
-        Default band width for `x` ordinal scale when is mark is `text`.
+        Default band width for ``x`` ordinal scale when is mark is ``text``.
     tickSizeRange : List(float)
         Default range for tick spans
     useRawDomain : boolean
         Uses the source data range as scale domain instead of aggregated data for aggregate
         axis.  This property only works with aggregate functions that produce values within
-        the raw data domain (`"mean"`, `"average"`, `"stdev"`, `"stdevp"`, `"median"`,
-        `"q1"`, `"q3"`, `"min"`, `"max"`). For other aggregations that produce values
-        outside of the raw data domain (e.g. `"count"`, `"sum"`), this property is ignored.
+        the raw data domain ( ``"mean"``, ``"average"``, ``"stdev"``, ``"stdevp"``,
+        ``"median"``, ``"q1"``, ``"q3"``, ``"min"``, ``"max"`` ). For other aggregations
+        that produce values outside of the raw data domain (e.g. ``"count"``, ``"sum"`` ),
+        this property is ignored.
     """
     _schema = {'$ref': '#/definitions/ScaleConfig'}
     _rootschema = Root._schema
@@ -1244,9 +1251,9 @@ class AxisConfig(VegaLiteSchema):
     characterWidth : float
         Character width for automatically determining title max length.
     grid : boolean
-        A flag indicate if gridlines should be created in addition to ticks. If `grid` is
-        unspecified, the default value is `true` for ROW and COL. For X and Y, the default
-        value is `true` for quantitative and time fields and `false` otherwise.
+        A flag indicate if gridlines should be created in addition to ticks. If ``grid`` is
+        unspecified, the default value is ``true`` for ROW and COL. For X and Y, the default
+         value is ``true`` for quantitative and time fields and ``false`` otherwise.
     gridColor : string
         Color of gridlines.
     gridDash : List(float)
@@ -1558,8 +1565,8 @@ class UnitSpec(VegaLiteSchema):
     Attributes
     ----------
     mark : Mark
-        The mark type.  One of `"bar"`, `"circle"`, `"square"`, `"tick"`, `"line"`,
-        `"area"`, `"point"`, `"rule"`, and `"text"`.
+        The mark type.  One of ``"bar"``, ``"circle"``, ``"square"``, ``"tick"``,
+        ``"line"``,  ``"area"``, ``"point"``, ``"rule"``, and ``"text"``.
     config : Config
         Configuration object
     data : Data
@@ -1598,8 +1605,8 @@ class UnitEncoding(VegaLiteSchema):
     ----------
     color : ChannelDefWithLegend
         Color of the marks – either fill or stroke color based on mark type.  (By default,
-        fill color for `area`, `bar`, `tick`, `text`, `circle`, and `square` /  stroke color
-         for `line` and `point`.)
+        fill color for ``area``, ``bar``, ``tick``, ``text``, ``circle``, and ``square`` /
+        stroke color for ``line`` and ``point``.)
     detail : anyOf(FieldDef, List(FieldDef))
         Additional levels of detail for grouping data in aggregate views and  in line and
         area marks without mapping data to a specific visual channel.
@@ -1612,25 +1619,26 @@ class UnitEncoding(VegaLiteSchema):
     path : anyOf(OrderChannelDef, List(OrderChannelDef))
         Order of data points in line marks.
     shape : ChannelDefWithLegend
-        The symbol's shape (only for `point` marks). The supported values are  `"circle"`
-        (default), `"square"`, `"cross"`, `"diamond"`, `"triangle-up"`,  or
-        `"triangle-down"`, or else a custom SVG path string.
+        The symbol's shape (only for ``point`` marks). The supported values are
+        ``"circle"`` (default), ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
+          or ``"triangle-down"``, or else a custom SVG path string.
     size : ChannelDefWithLegend
-        Size of the mark.  - For `point`, `square` and `circle`  – the symbol size, or pixel
-         area of the mark.  - For `bar` and `tick` – the bar and tick's size.  - For `text`
-        – the text's font size.  - Size is currently unsupported for `line` and `area`.
+        Size of the mark.   * For ``point``, ``square`` and ``circle``  – the symbol size,
+        or pixel area of the mark.   *    For ``bar`` and ``tick`` – the bar and tick's
+        size.  *    For ``text`` – the text's font size.  *    Size is currently unsupported
+         for ``line`` and ``area``.
     text : FieldDef
-        Text of the `text` mark.
+        Text of the ``text`` mark.
     x : PositionChannelDef
-        X coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and `tick`
-        (or to width and height for `bar` and `area` marks).
+        X coordinates for ``point``, ``circle``, ``square``,  ``line``, ``rule``, ``text``,
+        and ``tick``  (or to width and height for ``bar`` and ``area`` marks).
     x2 : FieldDef
-        X2 coordinates for ranged `bar`, `rule`, `area`
+        X2 coordinates for ranged ``bar``, ``rule``, ``area``
     y : PositionChannelDef
-        Y coordinates for `point`, `circle`, `square`,  `line`, `rule`, `text`, and `tick`
-        (or to width and height for `bar` and `area` marks).
+        Y coordinates for ``point``, ``circle``, ``square``,  ``line``, ``rule``, ``text``,
+        and ``tick``  (or to width and height for ``bar`` and ``area`` marks).
     y2 : FieldDef
-        Y2 coordinates for ranged `bar`, `rule`, `area`
+        Y2 coordinates for ranged ``bar``, ``rule``, ``area``
     """
     _schema = {'$ref': '#/definitions/UnitEncoding'}
     _rootschema = Root._schema

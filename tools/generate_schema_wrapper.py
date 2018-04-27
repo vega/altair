@@ -8,11 +8,28 @@ from os.path import abspath, join, dirname
 import textwrap
 from urllib import request
 
+import m2r
+
 # import schemapi from here
 sys.path.insert(0, abspath(dirname(__file__)))
 from schemapi import codegen
-from schemapi.codegen import SchemaGenerator, CodeSnippet, schema_class
+from schemapi.codegen import CodeSnippet
 from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
+
+
+class SchemaGenerator(codegen.SchemaGenerator):
+    def _process_description(self, description):
+        description = m2r.convert(description)
+        description = description.replace(m2r.prolog, '')
+        description = description.replace(":raw-html-m2r:", ":raw-html:")
+        description = description.replace(r'\ ,', ',')
+        description = description.replace(r'\ ', ' ')
+        return description.strip()
+
+
+def schema_class(*args, **kwargs):
+    return SchemaGenerator(*args, **kwargs).schema_class()
+
 
 SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
                        '{library}/{version}.json')

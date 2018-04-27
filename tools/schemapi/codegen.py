@@ -88,6 +88,9 @@ class SchemaGenerator(object):
         super({classname}, self).__init__({super_arglist})
     """).lstrip()
 
+    def _process_description(self, description):
+        return description
+
     def __init__(self, classname, schema, rootschema=None,
                  basename='SchemaBase', schemarepr=None, rootschemarepr=None,
                  nodefault=()):
@@ -128,7 +131,7 @@ class SchemaGenerator(object):
                '',
                info.medium_description]
         if info.description:
-            doc += info.description.splitlines()
+            doc += self._process_description(info.description).splitlines()
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
@@ -138,7 +141,7 @@ class SchemaGenerator(object):
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
                 doc += ["{0} : {1}".format(prop, propinfo.short_description),
-                        "    {0}".format(propinfo.description)]
+                        "    {0}".format(self._process_description(propinfo.description))]
         if len(doc) > 1:
             doc += ['']
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
@@ -179,7 +182,3 @@ class SchemaGenerator(object):
         if indent:
             initfunc = ('\n' + indent * ' ').join(initfunc.splitlines())
         return initfunc
-
-
-def schema_class(*args, **kwargs):
-    return SchemaGenerator(*args, **kwargs).schema_class()
