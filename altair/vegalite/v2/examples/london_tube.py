@@ -5,8 +5,7 @@ This example shows the London tube lines against the background of the
 borough boundaries. It is based on the vega-lite example at
 https://vega.github.io/vega-lite/examples/geo_layer_line_london.html.
 """
-# category: geographic
-
+# category: maps
 import altair as alt
 from vega_datasets import data
 

@@ -3,8 +3,7 @@ Simple Stacked Area Chart
 -------------------------
 This example shows how to make a simple stacked area chart.
 """
-# category: basic charts
-
+# category: simple charts
 import altair as alt
 from vega_datasets import data
 

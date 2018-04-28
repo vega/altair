@@ -5,8 +5,7 @@ This chart visualizes the age distribution of the US population over time.
 It uses a slider widget that is bound to the year to visualize the age
 distribution over time.
 """
-# category: interactive
-
+# category: interactive charts
 import altair as alt
 from altair.expr import datum, if_
 from vega_datasets import data

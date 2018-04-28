@@ -4,7 +4,7 @@ Line Chart with Percent axis
 This example shows how to format the tick labels of the
 y-axis of a chart as percentages.
 """
-
+# category: line charts
 import altair as alt
 from altair.expr import datum
 from vega_datasets import data

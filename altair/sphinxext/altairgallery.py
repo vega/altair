@@ -2,6 +2,7 @@ import hashlib
 import os
 import json
 import random
+import collections
 from operator import itemgetter
 
 import jinja2
@@ -29,22 +30,21 @@ GALLERY_TEMPLATE = jinja2.Template(u"""
 {{ title }}
 {% for char in title %}-{% endfor %}
 
-This gallery contains a selection of examples of the types of plots Altair
-can create. Though some may seem fairly complicated at first glance, they
-are built by combining a simple set of declarative building blocks:
-see the User Guide for more information on this.
+This gallery contains a selection of examples of the plots Altair can create.
 
-{% for group in examples|groupby('category') %}
+Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
 
-.. _gallery-category-{{ group.grouper }}:
+{% for grouper, group in examples %}
 
-{{ group.grouper }}
-{% for char in group.grouper %}~{% endfor %}
+.. _gallery-category-{{ grouper }}:
+
+{{ grouper }}
+{% for char in grouper %}~{% endfor %}
 
 .. raw:: html
 
    <span class="gallery">
-   {% for example in group.list %}
+   {% for example in group %}
    <a class="imagegroup" href="{{ example.name }}.html">
      <span class="image" alt="{{ example.title }}" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png);"></span>
      <span class="image-title">{{ example.title }}</span>
@@ -56,7 +56,7 @@ see the User Guide for more information on this.
 
 .. toctree::
   :hidden:
-{% for example in group.list %}
+{% for example in group %}
   {{ example.name }}
 {%- endfor %}
 
@@ -228,10 +228,25 @@ def main(app):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
+    examples = sorted(examples, key=lambda x: x['title'])
+    examples_toc = collections.OrderedDict({
+        'Simple Charts': [],
+        'Bar Charts': [],
+        'Line Charts': [],
+        'Area Charts': [],
+        'Scatter Plots': [],
+        'Histograms': [],
+        'Maps': [],
+        'Interactive Charts': [],
+        'Other Charts': []
+    })
+    for d in examples:
+        examples_toc[d['category']].append(d)
+
     # Write the gallery index file
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
         f.write(GALLERY_TEMPLATE.render(title=gallery_title,
-                                        examples=examples,
+                                        examples=examples_toc.items(),
                                         image_dir='/_static',
                                         gallery_ref=gallery_ref))
 

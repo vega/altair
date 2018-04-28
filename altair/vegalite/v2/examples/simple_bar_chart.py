@@ -3,7 +3,7 @@ Simple Bar Chart
 ================
 This example shows a basic bar chart created with Altair.
 """
-# category: basic charts
+# category: simple charts
 import altair as alt
 import pandas as pd
 

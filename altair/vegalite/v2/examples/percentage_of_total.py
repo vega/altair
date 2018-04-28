@@ -4,7 +4,7 @@ Calculating Percentage of Total
 This chart demonstrates how to use a window transform to display data values
 as a percentage of total values.
 """
-
+# category: bar charts
 import altair as alt
 import pandas as pd
 

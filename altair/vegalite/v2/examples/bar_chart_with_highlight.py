@@ -3,7 +3,7 @@ Bar Chart with Highlight
 ------------------------
 This example shows a Bar chart that highlights values beyond a threshold.
 """
-
+# category: bar charts
 import altair as alt
 import pandas as pd
 

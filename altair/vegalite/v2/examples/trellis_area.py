@@ -3,7 +3,7 @@ Trellis Area
 -----------------
 This example shows stock prices of four large companies as a small multiples of area charts.
 """
-
+# category: area charts
 import altair as alt
 from altair.expr import datum
 from vega_datasets import data

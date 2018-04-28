@@ -3,8 +3,7 @@ Gantt Chart
 -----------------
 This example shows how to make a simple Gantt chart.
 """
-# category: basic charts
-
+# category: bar charts
 import altair as alt
 import pandas as pd
 

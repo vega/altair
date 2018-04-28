@@ -6,6 +6,7 @@ data from 2000.
 
 https://vega.github.io/vega-lite/examples/box-plot_minmax_2D_vertical_normalized.html
 """
+# category: bar charts
 import altair as alt
 from vega_datasets import data
 

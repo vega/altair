@@ -5,7 +5,7 @@ This example shows a population broken out by gender and age for a specific year
 The grouping is achieved by building a trellis plot with narrow column
 encoded on the age groups and x-axes encoded on gender.
 """
-
+# category: bar charts
 import altair as alt
 from altair.expr import datum, if_
 from vega_datasets import data

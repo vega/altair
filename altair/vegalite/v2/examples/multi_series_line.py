@@ -4,8 +4,7 @@ Multi Series Line Chart
 
 This example shows how to make a multi series line chart of the daily closing stock prices for AAPL, AMZN, GOOG, IBM, and MSFT between 2000 and 2010.
 """
-# category: basic charts
-
+# category: line charts
 import altair as alt
 from vega_datasets import data
 

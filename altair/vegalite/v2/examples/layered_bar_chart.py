@@ -3,7 +3,7 @@ Layered Bar Chart
 -----------------
 This example shows a bar chart showing the US population distribution of age groups and gender in 2000.
 """
-
+# category: bar charts
 import altair as alt
 from altair.expr import datum, if_
 from vega_datasets import data

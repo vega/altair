@@ -5,8 +5,7 @@ This example shows a map of the countries of the world using four available
 geographic projections. For more details on the projections available in
 Altair, see https://vega.github.io/vega-lite/docs/projection.html
 """
-# category: geographic
-
+# category: maps
 import altair as alt
 from vega_datasets import data
 

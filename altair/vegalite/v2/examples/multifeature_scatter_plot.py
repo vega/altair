@@ -3,8 +3,7 @@ Multifeature Scatter Plot
 =========================
 This example shows how to make a scatter plot with multiple feature encodings.
 """
-# category: basic charts
-
+# category: scatter plots
 import altair as alt
 from vega_datasets import data
 

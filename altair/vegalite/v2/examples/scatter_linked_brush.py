@@ -4,8 +4,7 @@ Faceted Scatter Plot with Linked Brushing
 This is an example of using an interval selection to control the color of
 points across multiple facets.
 """
-# category: interactive
-
+# category: interactive charts
 import altair as alt
 from vega_datasets import data
 

@@ -3,7 +3,7 @@ Binned Scatterplot
 ------------------
 This example shows how to make a binned scatterplot.
 """
-
+# category: scatter plots
 import altair as alt
 from vega_datasets import data
 

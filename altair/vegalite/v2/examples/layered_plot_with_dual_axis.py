@@ -3,7 +3,7 @@ Layered Plot with Dual-Axis
 ---------------------------
 This example shows how to combine two plots and keep their axes.
 """
-
+# category: bar charts
 import altair as alt
 from vega_datasets import data
 

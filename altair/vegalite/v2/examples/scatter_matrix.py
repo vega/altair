@@ -4,8 +4,7 @@ Scatter Matrix
 An example of using a RepeatChart to construct a multi-panel scatter plot
 with linked panning and zooming.
 """
-# category: interactive
-
+# category: scatter plots
 import altair as alt
 from vega_datasets import data
 

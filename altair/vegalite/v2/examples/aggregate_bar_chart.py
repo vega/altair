@@ -4,7 +4,7 @@ Horizontal Aggregate Bar Chart
 This example is a bar chart showing the distribution of US population
 by age in the year 2000.
 """
-
+# category: bar charts
 import altair as alt
 from altair.expr import datum
 

@@ -3,7 +3,7 @@ Falkensee
 -----------------------
 This example is a reproduction of the Falkanesee plot found in the vega-lite examples.
 """
-
+# category: line charts
 import altair as alt
 
 source = [

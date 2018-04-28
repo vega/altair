@@ -3,7 +3,7 @@ LayerChart with Bar and Tick
 ----------------------------
 This example shows how to layer two charts on top of one another.
 """
-
+# category: bar charts
 import altair as alt
 import pandas as pd
 
