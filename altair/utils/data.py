@@ -45,7 +45,10 @@ class MaxRowsError(Exception):
 
 @curry
 def limit_rows(data, max_rows=5000):
-    """Raise MaxRowsError if the data model has more than max_rows."""
+    """Raise MaxRowsError if the data model has more than max_rows.
+
+    If max_rows is None, then do not perform any check.
+    """
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
         values = data
@@ -54,8 +57,11 @@ def limit_rows(data, max_rows=5000):
             values = data['values']
         else:
             return data
-    if len(values) > max_rows:
-        raise MaxRowsError('The number of rows in your dataset is greater than the max of {}'.format(max_rows))
+    if max_rows is not None and len(values) > max_rows:
+        raise MaxRowsError('The number of rows in your dataset is greater '
+                           'than the maximum allowed ({0}). '
+                           'For information on how to plot larger datasets '
+                           'in Altair, see the documentation'.format(max_rows))
     return data
 
 
