@@ -10,8 +10,7 @@ The challenge lies in expressing such hierarchical data in a way that Altair
 can handle. We do this by merging the data into a "long form" dataframe, and
 aggregating identical metadata for the final plot.
 """
-# category: interactive
-
+# category: interactive charts
 import altair as alt
 import pandas as pd
 import numpy as np

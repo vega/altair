@@ -3,8 +3,7 @@ Repeated Choropleth Map
 =======================
 Three choropleths representing disjoint data from the same table.
 """
-# category: geographic
-
+# category: maps
 import altair as alt
 from vega_datasets import data
 

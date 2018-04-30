@@ -3,8 +3,7 @@ Strip Plot
 -----------------
 This example shows the relationship between horsepower and the numbver of cylinders using tick marks.
 """
-# category: basic charts
-
+# category: other charts
 import altair as alt
 from vega_datasets import data
 

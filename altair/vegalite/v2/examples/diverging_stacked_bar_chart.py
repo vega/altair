@@ -3,7 +3,7 @@ Diverging Stacked Bar Chart
 ---------------------------
 This example shows a diverging stacked bar chart for sentiments towards a set of eight questions, displayed as percentages with neutral responses straddling the 0% mark.
 """
-
+# category: bar charts
 import altair as alt
 
 data =     [

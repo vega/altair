@@ -3,7 +3,7 @@ Natural Disasters
 -----------------
 This example shows a visualization of global deaths from natural disasters.
 """
-
+# category: scatter plots
 import altair as alt
 from altair.expr import datum
 from vega_datasets import data

@@ -1,10 +1,9 @@
 """
 Table Binned Heatmap
------------------------
+--------------------
 This example shows how to make a heatmap.
 """
-# category: basic charts
-
+# category: other charts
 import altair as alt
 from vega_datasets import data
 

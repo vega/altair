@@ -3,7 +3,7 @@ Steam and Leaf Plot
 -------------------
 This example shows how to make a steam and leaf plot.
 """
-
+# category: other charts
 import altair as alt
 import pandas as pd
 import numpy as np

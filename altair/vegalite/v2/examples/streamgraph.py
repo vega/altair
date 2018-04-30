@@ -3,7 +3,7 @@ Streamgraph
 -----------------
 This example shows the streamgraph from vega-lite examples.
 """
-
+# category: area charts
 import altair as alt
 from vega_datasets import data
 

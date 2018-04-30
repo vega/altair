@@ -8,8 +8,7 @@ The full list of interpolation options includes 'linear',
 'basis-open', 'basis-closed', 'cardinal', 'cardinal-open',
 'cardinal-closed', 'bundle', and 'monotone'.
 """
-# category: basic charts
-
+# category: line charts
 import altair as alt
 from altair.expr import datum
 from vega_datasets import data

@@ -3,8 +3,7 @@ Choropleth Map
 ==============
 A choropleth map of unemployment rate per county in the US
 """
-# category: geographic
-
+# category: maps
 import altair as alt
 from vega_datasets import data
 

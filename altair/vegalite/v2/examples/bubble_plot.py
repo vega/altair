@@ -3,8 +3,7 @@ Bubble Plot
 -----------------
 This example shows how to make a bubble plot.
 """
-# category: basic charts
-
+# category: scatter plots
 import altair as alt
 from vega_datasets import data
 

@@ -3,7 +3,7 @@ Simple Scatter Plot with Labels
 ===============================
 This example shows a basic scatter plot with labels created with Altair.
 """
-# category: basic charts
+# category: scatter plots
 import altair as alt
 import pandas as pd
 

@@ -3,7 +3,7 @@ Horizon Graph
 -------------
 This example shows how to make a Horizon Graph with 2 layers. (See https://idl.cs.washington.edu/papers/horizon/ for more details on Horizon Graphs.)
 """
-
+# category: area charts
 import altair as alt
 from altair.expr import datum
 import pandas as pd

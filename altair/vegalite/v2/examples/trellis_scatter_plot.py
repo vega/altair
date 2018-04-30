@@ -3,8 +3,7 @@ Trellis Scatter Plot
 -----------------------
 This example shows how to make a trellis scatter plot.
 """
-# category: basic charts
-
+# category: scatter plots
 import altair as alt
 from vega_datasets import data
 
