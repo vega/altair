@@ -10,7 +10,61 @@ from altair.utils.schemapi import Undefined
 from altair.utils import parse_shorthand
 
 
-class Color(core.MarkPropFieldDefWithCondition):
+class FieldChannelMixin(object):
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        if self.shorthand is Undefined:
+            kwds = {}
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
+        else:
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
+        return super(FieldChannelMixin, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
+
+
+class ValueChannelMixin(object):
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(ValueChannelMixin, copy).to_dict(validate=validate,
+                                                      ignore=ignore,
+                                                      context=context)
+
+
+class Color(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
     """Color schema wrapper
 
     Mapping(required=[shorthand])
@@ -100,43 +154,8 @@ class Color(core.MarkPropFieldDefWithCondition):
                                     condition=condition, field=field, legend=legend, scale=scale,
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Color, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class ColorValue(core.MarkPropValueDefWithCondition):
+class ColorValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
     """ColorValue schema wrapper
 
     Mapping(required=[])
@@ -159,23 +178,8 @@ class ColorValue(core.MarkPropValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(ColorValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Column(core.FacetFieldDef):
+class Column(FieldChannelMixin, core.FacetFieldDef):
     """Column schema wrapper
 
     Mapping(required=[shorthand])
@@ -237,43 +241,8 @@ class Column(core.FacetFieldDef):
                                      header=header, sort=sort, timeUnit=timeUnit, title=title,
                                      type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Column, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Detail(core.FieldDef):
+class Detail(FieldChannelMixin, core.FieldDef):
     """Detail schema wrapper
 
     Mapping(required=[shorthand])
@@ -330,43 +299,8 @@ class Detail(core.FieldDef):
         super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                      timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Detail, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Fill(core.MarkPropFieldDefWithCondition):
+class Fill(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
     """Fill schema wrapper
 
     Mapping(required=[shorthand])
@@ -456,43 +390,8 @@ class Fill(core.MarkPropFieldDefWithCondition):
                                    condition=condition, field=field, legend=legend, scale=scale,
                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Fill, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class FillValue(core.MarkPropValueDefWithCondition):
+class FillValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
     """FillValue schema wrapper
 
     Mapping(required=[])
@@ -515,23 +414,8 @@ class FillValue(core.MarkPropValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(FillValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Href(core.FieldDefWithCondition):
+class Href(FieldChannelMixin, core.FieldDefWithCondition):
     """Href schema wrapper
 
     Mapping(required=[shorthand])
@@ -599,43 +483,8 @@ class Href(core.FieldDefWithCondition):
                                    condition=condition, field=field, timeUnit=timeUnit, title=title,
                                    type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Href, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class HrefValue(core.ValueDefWithCondition):
+class HrefValue(ValueChannelMixin, core.ValueDefWithCondition):
     """HrefValue schema wrapper
 
     Mapping(required=[])
@@ -657,23 +506,8 @@ class HrefValue(core.ValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(HrefValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Key(core.FieldDef):
+class Key(FieldChannelMixin, core.FieldDef):
     """Key schema wrapper
 
     Mapping(required=[shorthand])
@@ -730,43 +564,8 @@ class Key(core.FieldDef):
         super(Key, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                   timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Key, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Latitude(core.FieldDef):
+class Latitude(FieldChannelMixin, core.FieldDef):
     """Latitude schema wrapper
 
     Mapping(required=[shorthand])
@@ -823,43 +622,8 @@ class Latitude(core.FieldDef):
         super(Latitude, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                        timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Latitude, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Latitude2(core.FieldDef):
+class Latitude2(FieldChannelMixin, core.FieldDef):
     """Latitude2 schema wrapper
 
     Mapping(required=[shorthand])
@@ -916,43 +680,8 @@ class Latitude2(core.FieldDef):
         super(Latitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                         timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Latitude2, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Longitude(core.FieldDef):
+class Longitude(FieldChannelMixin, core.FieldDef):
     """Longitude schema wrapper
 
     Mapping(required=[shorthand])
@@ -1009,43 +738,8 @@ class Longitude(core.FieldDef):
         super(Longitude, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                         timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Longitude, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Longitude2(core.FieldDef):
+class Longitude2(FieldChannelMixin, core.FieldDef):
     """Longitude2 schema wrapper
 
     Mapping(required=[shorthand])
@@ -1102,43 +796,8 @@ class Longitude2(core.FieldDef):
         super(Longitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                          timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Longitude2, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Opacity(core.MarkPropFieldDefWithCondition):
+class Opacity(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
     """Opacity schema wrapper
 
     Mapping(required=[shorthand])
@@ -1228,43 +887,8 @@ class Opacity(core.MarkPropFieldDefWithCondition):
                                       condition=condition, field=field, legend=legend, scale=scale,
                                       sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Opacity, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class OpacityValue(core.MarkPropValueDefWithCondition):
+class OpacityValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
     """OpacityValue schema wrapper
 
     Mapping(required=[])
@@ -1287,23 +911,8 @@ class OpacityValue(core.MarkPropValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(OpacityValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Order(core.OrderFieldDef):
+class Order(FieldChannelMixin, core.OrderFieldDef):
     """Order schema wrapper
 
     Mapping(required=[shorthand])
@@ -1361,43 +970,8 @@ class Order(core.OrderFieldDef):
         super(Order, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Order, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Row(core.FacetFieldDef):
+class Row(FieldChannelMixin, core.FacetFieldDef):
     """Row schema wrapper
 
     Mapping(required=[shorthand])
@@ -1459,43 +1033,8 @@ class Row(core.FacetFieldDef):
                                   header=header, sort=sort, timeUnit=timeUnit, title=title, type=type,
                                   **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Row, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Shape(core.MarkPropFieldDefWithCondition):
+class Shape(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
     """Shape schema wrapper
 
     Mapping(required=[shorthand])
@@ -1585,43 +1124,8 @@ class Shape(core.MarkPropFieldDefWithCondition):
                                     condition=condition, field=field, legend=legend, scale=scale,
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Shape, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class ShapeValue(core.MarkPropValueDefWithCondition):
+class ShapeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
     """ShapeValue schema wrapper
 
     Mapping(required=[])
@@ -1644,23 +1148,8 @@ class ShapeValue(core.MarkPropValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(ShapeValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Size(core.MarkPropFieldDefWithCondition):
+class Size(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
     """Size schema wrapper
 
     Mapping(required=[shorthand])
@@ -1750,43 +1239,8 @@ class Size(core.MarkPropFieldDefWithCondition):
                                    condition=condition, field=field, legend=legend, scale=scale,
                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Size, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class SizeValue(core.MarkPropValueDefWithCondition):
+class SizeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
     """SizeValue schema wrapper
 
     Mapping(required=[])
@@ -1809,23 +1263,8 @@ class SizeValue(core.MarkPropValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(SizeValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Stroke(core.MarkPropFieldDefWithCondition):
+class Stroke(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
     """Stroke schema wrapper
 
     Mapping(required=[shorthand])
@@ -1915,43 +1354,8 @@ class Stroke(core.MarkPropFieldDefWithCondition):
                                      condition=condition, field=field, legend=legend, scale=scale,
                                      sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Stroke, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class StrokeValue(core.MarkPropValueDefWithCondition):
+class StrokeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
     """StrokeValue schema wrapper
 
     Mapping(required=[])
@@ -1974,23 +1378,8 @@ class StrokeValue(core.MarkPropValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(StrokeValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Text(core.TextFieldDefWithCondition):
+class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
     """Text schema wrapper
 
     Mapping(required=[shorthand])
@@ -2062,43 +1451,8 @@ class Text(core.TextFieldDefWithCondition):
                                    condition=condition, field=field, format=format, timeUnit=timeUnit,
                                    title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Text, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class TextValue(core.TextValueDefWithCondition):
+class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """TextValue schema wrapper
 
     Mapping(required=[])
@@ -2120,23 +1474,8 @@ class TextValue(core.TextValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(TextValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Tooltip(core.TextFieldDefWithCondition):
+class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
     """Tooltip schema wrapper
 
     Mapping(required=[shorthand])
@@ -2208,43 +1547,8 @@ class Tooltip(core.TextFieldDefWithCondition):
                                       condition=condition, field=field, format=format,
                                       timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Tooltip, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class TooltipValue(core.TextValueDefWithCondition):
+class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """TooltipValue schema wrapper
 
     Mapping(required=[])
@@ -2266,23 +1570,8 @@ class TooltipValue(core.TextValueDefWithCondition):
     def __init__(self, value, condition=Undefined, **kwds):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(TooltipValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class X(core.PositionFieldDef):
+class X(FieldChannelMixin, core.PositionFieldDef):
     """X schema wrapper
 
     Mapping(required=[shorthand])
@@ -2380,43 +1669,8 @@ class X(core.PositionFieldDef):
                                 field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit,
                                 title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(X, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class XValue(core.ValueDef):
+class XValue(ValueChannelMixin, core.ValueDef):
     """XValue schema wrapper
 
     Mapping(required=[value])
@@ -2433,23 +1687,8 @@ class XValue(core.ValueDef):
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(XValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class X2(core.FieldDef):
+class X2(FieldChannelMixin, core.FieldDef):
     """X2 schema wrapper
 
     Mapping(required=[shorthand])
@@ -2506,43 +1745,8 @@ class X2(core.FieldDef):
         super(X2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                  timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(X2, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class X2Value(core.ValueDef):
+class X2Value(ValueChannelMixin, core.ValueDef):
     """X2Value schema wrapper
 
     Mapping(required=[value])
@@ -2559,23 +1763,8 @@ class X2Value(core.ValueDef):
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(X2Value, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Y(core.PositionFieldDef):
+class Y(FieldChannelMixin, core.PositionFieldDef):
     """Y schema wrapper
 
     Mapping(required=[shorthand])
@@ -2673,43 +1862,8 @@ class Y(core.PositionFieldDef):
                                 field=field, scale=scale, sort=sort, stack=stack, timeUnit=timeUnit,
                                 title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Y, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class YValue(core.ValueDef):
+class YValue(ValueChannelMixin, core.ValueDef):
     """YValue schema wrapper
 
     Mapping(required=[value])
@@ -2726,23 +1880,8 @@ class YValue(core.ValueDef):
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(YValue, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
 
-
-class Y2(core.FieldDef):
+class Y2(FieldChannelMixin, core.FieldDef):
     """Y2 schema wrapper
 
     Mapping(required=[shorthand])
@@ -2799,43 +1938,8 @@ class Y2(core.FieldDef):
         super(Y2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                  timeUnit=timeUnit, title=title, type=type, **kwds)
 
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
-                if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
-                else:
-                    raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
-                                     "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
-        else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
-            kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
-        self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
-        return super(Y2, self).to_dict(
-            validate=validate,
-            ignore=ignore,
-            context=context
-        )
-
-
-class Y2Value(core.ValueDef):
+class Y2Value(ValueChannelMixin, core.ValueDef):
     """Y2Value schema wrapper
 
     Mapping(required=[value])
@@ -2851,18 +1955,3 @@ class Y2Value(core.ValueDef):
 
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
-
-    def to_dict(self, validate=True, ignore=(), context=None):
-        context = context or {}
-        condition = getattr(self, 'condition', Undefined)
-        copy = self  # don't copy unless we need to
-        if condition is not Undefined:
-            if isinstance(condition, core.SchemaBase):
-                pass
-            elif 'field' in condition and 'type' not in condition:
-                kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
-                copy.condition.update(kwds)
-        return super(Y2Value, copy).to_dict(validate=validate,
-                                                ignore=ignore,
-                                                context=context)
