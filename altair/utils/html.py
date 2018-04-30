@@ -61,14 +61,11 @@ HTML_TEMPLATE = {
 }
 
 
-def spec_to_html_mimebundle(spec, mode,
-                            vega_version,
-                            vegaembed_version,
-                            vegalite_version=None,
-                            base_url="https://cdn.jsdelivr.net/npm/",
-                            output_div='vis',
-                            embed_options=None, json_kwds=None):
-    """Conver a vega/vega-lite specification to a PNG/SVG image
+def spec_to_html(spec, mode,
+                 vega_version, vegaembed_version, vegalite_version=None,
+                 base_url="https://cdn.jsdelivr.net/npm/",
+                 output_div='vis', embed_options=None, json_kwds=None):
+    """Embed a Vega/Vega-Lite spec into an HTML page
 
     Parameters
     ----------
@@ -101,8 +98,18 @@ def spec_to_html_mimebundle(spec, mode,
     json_kwds = json_kwds or {}
 
     mode = embed_options.setdefault('mode', mode)
+
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be either 'vega' or 'vega-lite'")
+
+    if vega_version is None:
+        raise ValueError("must specify vega_version")
+
+    if vegaembed_version is None:
+        raise ValueError("must specify vegaembed_version")
+
+    if mode == 'vega-lite' and vegalite_version is None:
+        raise ValueError("must specify vega-lite version")
 
     template = HTML_TEMPLATE[mode]
 
@@ -113,4 +120,4 @@ def spec_to_html_mimebundle(spec, mode,
                                 vegaembed_version=vegaembed_version,
                                 base_url=base_url,
                                 output_div=output_div)
-    return {'text/html': spec_html}
+    return spec_html
