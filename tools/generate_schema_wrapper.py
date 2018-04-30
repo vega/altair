@@ -62,73 +62,78 @@ def load_schema():
     return json.loads(pkgutil.get_data(__name__, '{schemafile}').decode('utf-8'))
 '''
 
+CHANNEL_MIXINS = """
+class FieldChannelMixin(object):
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        if self.shorthand is Undefined:
+            kwds = {}
+        elif isinstance(self.shorthand, six.string_types):
+            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_defined = self._kwds.get('type', Undefined) is not Undefined
+            if not (type_defined or 'type' in kwds):
+                if isinstance(context.get('data', None), pd.DataFrame):
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be inferred because it does not "
+                                     "match any column in the data.".format(self.shorthand))
+                else:
+                    raise ValueError("{0} encoding field is specified without a type; "
+                                     "the type cannot be automacially inferred because "
+                                     "the data is not specified as a pandas.DataFrame."
+                                     "".format(self.shorthand))
+        else:
+            # shorthand is not a string; we pass the definition to field
+            if self.field is not Undefined:
+                raise ValueError("both shorthand and field specified in {0}"
+                                 "".format(self.__class__.__name__))
+            # field is a RepeatSpec or similar; cannot infer type
+            kwds = {'field': self.shorthand}
+
+        # set shorthand to Undefined, because it's not part of the schema
+        self.shorthand = Undefined
+        self._kwds.update({k: v for k, v in kwds.items()
+                           if self._kwds.get(k, Undefined) is Undefined})
+        return super(FieldChannelMixin, self).to_dict(
+            validate=validate,
+            ignore=ignore,
+            context=context
+        )
+
+
+class ValueChannelMixin(object):
+    def to_dict(self, validate=True, ignore=(), context=None):
+        context = context or {}
+        condition = getattr(self, 'condition', Undefined)
+        copy = self  # don't copy unless we need to
+        if condition is not Undefined:
+            if isinstance(condition, core.SchemaBase):
+                pass
+            elif 'field' in condition and 'type' not in condition:
+                kwds = parse_shorthand(condition['field'], context.get('data', None))
+                copy = self.copy()
+                copy.condition.update(kwds)
+        return super(ValueChannelMixin, copy).to_dict(validate=validate,
+                                                      ignore=ignore,
+                                                      context=context)
+"""
+
 class FieldSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent('''
-    class {classname}(core.{basename}):
+    class {classname}(FieldChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
 
         {init_code}
-
-        def to_dict(self, validate=True, ignore=(), context=None):
-            context = context or {{}}
-            if self.shorthand is Undefined:
-                kwds = {{}}
-            elif isinstance(self.shorthand, six.string_types):
-                kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-                type_defined = self._kwds.get('type', Undefined) is not Undefined
-                if not (type_defined or 'type' in kwds):
-                    if isinstance(context.get('data', None), pd.DataFrame):
-                        raise ValueError("{{0}} encoding field is specified without a type; "
-                                         "the type cannot be inferred because it does not "
-                                         "match any column in the data.".format(self.shorthand))
-                    else:
-                        raise ValueError("{{0}} encoding field is specified without a type; "
-                                         "the type cannot be automacially inferred because "
-                                         "the data is not specified as a pandas.DataFrame."
-                                         "".format(self.shorthand))
-            else:
-                # shorthand is not a string; we pass the definition to field
-                if self.field is not Undefined:
-                    raise ValueError("both shorthand and field specified in {{0}}"
-                                     "".format(self.__class__.__name__))
-                # field is a RepeatSpec or similar; cannot infer type
-                kwds = {{'field': self.shorthand}}
-
-            # set shorthand to Undefined, because it's not part of the schema
-            self.shorthand = Undefined
-            self._kwds.update({{k: v for k, v in kwds.items()
-                               if self._kwds.get(k, Undefined) is Undefined}})
-            return super({classname}, self).to_dict(
-                validate=validate,
-                ignore=ignore,
-                context=context
-            )
     ''')
 
 
 class ValueSchemaGenerator(SchemaGenerator):
     schema_class_template = textwrap.dedent('''
-    class {classname}(core.{basename}):
+    class {classname}(ValueChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
 
         {init_code}
-
-        def to_dict(self, validate=True, ignore=(), context=None):
-            context = context or {{}}
-            condition = getattr(self, 'condition', Undefined)
-            copy = self  # don't copy unless we need to
-            if condition is not Undefined:
-                if isinstance(condition, core.SchemaBase):
-                    pass
-                elif 'field' in condition and 'type' not in condition:
-                    kwds = parse_shorthand(condition['field'], context.get('data', None))
-                    copy = self.copy()
-                    copy.condition.update(kwds)
-            return super({classname}, copy).to_dict(validate=validate,
-                                                    ignore=ignore,
-                                                    context=context)
     ''')
 
 
@@ -245,6 +250,8 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
     contents = [HEADER]
     contents.extend(imports)
     contents.append('')
+
+    contents.append(CHANNEL_MIXINS)
 
     encoding = SchemaInfo(schema['definitions'][encoding_def],
                           rootschema=schema)
