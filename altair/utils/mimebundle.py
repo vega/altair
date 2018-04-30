@@ -1,5 +1,4 @@
 import base64
-import json
 
 from .headless import compile_spec
 from .html import spec_to_html
