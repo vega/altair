@@ -345,7 +345,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 dct['$schema'] = SCHEMA_URL
 
             # apply theme from theme registry
-            dct = utils.update_nested(themes.get(), dct, copy=True)
+            the_theme = themes.get()
+            dct = utils.update_nested(the_theme(), dct, copy=True)
 
         return dct
 

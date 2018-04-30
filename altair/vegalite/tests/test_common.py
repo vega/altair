@@ -2,6 +2,8 @@
 
 import pytest
 
+import pandas as pd
+
 from .. import v1, v2
 
 v1_defaults = {
@@ -27,6 +29,19 @@ basic_spec = {
         'y': {'type': 'ordinal', 'field': 'yval'}
     },
 }
+
+
+def make_basic_chart(alt):
+    data = pd.DataFrame({
+        'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+        'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
+    })
+
+    return alt.Chart(data).mark_bar().encode(
+        x='a',
+        y='b'
+    )
+
 
 spec_v1 = dict(v1_defaults, **basic_spec)
 spec_v2 = dict(v2_defaults, **basic_spec)
@@ -79,3 +94,16 @@ def test_theme_enable(alt):
     finally:
         # reset the theme to its initial value
         alt.themes.enable(active_theme)
+
+
+@pytest.mark.parametrize('alt', [v1, v2])
+def test_max_rows(alt):
+    basic_chart = make_basic_chart(alt)
+
+    with alt.data_transformers.enable('default'):
+        basic_chart.to_dict()  # this should not fail
+
+    with alt.data_transformers.enable('default', max_rows=5):
+        print(alt.data_transformers.options)
+        with pytest.raises(alt.MaxRowsError):
+            basic_chart.to_dict()  # this should not fail

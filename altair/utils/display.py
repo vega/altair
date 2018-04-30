@@ -1,18 +1,35 @@
 import json
 import pkgutil
+import textwrap
 from typing import Callable, Dict
 
 from jsonschema import validate
 
+from .plugin_registry import PluginRegistry
+
+
+# ==============================================================================
+# Renderer registry
+# ==============================================================================
+MimeBundleType = Dict[str, object]
+RendererType = Callable[..., MimeBundleType]
+
+
+class RendererRegistry(PluginRegistry[RendererType]):
+    entrypoint_err_messages = {
+        'notebook': textwrap.dedent(
+            """
+            To use the 'notebook' renderer, you must install the vega3 package
+            and the associated Jupyter extension.
+            See https://altair-viz.github.io/getting_started/installation.html
+            for more information.
+            """)
+    }
 
 # ==============================================================================
 # VegaLite v1/v2 renderer logic
 # ==============================================================================
 
-
-SpecType = dict
-MimeBundleType = Dict[str, object]
-RendererType = Callable[[SpecType], MimeBundleType]
 
 
 class Displayable(object):
@@ -53,7 +70,7 @@ class Displayable(object):
             return {}
 
 
-def default_renderer(spec, mime_type, str_repr):
+def default_renderer(spec, mime_type, str_repr, **metadata):
     """A default renderer for VegaLite 1/2 that works for modern frontends.
 
     This renderer works with modern frontends (JupyterLab, nteract) that know
@@ -61,20 +78,18 @@ def default_renderer(spec, mime_type, str_repr):
     """
     assert isinstance(spec, dict)
     bundle = {}
-    metadata = {}
     bundle['text/plain'] = str_repr
     bundle[mime_type] = spec
     return bundle, metadata
 
 
-def json_renderer(spec, str_repr):
+def json_renderer(spec, str_repr, **metadata):
     """A renderer that returns a MIME type of application/json.
 
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
     assert isinstance(spec, dict)
     bundle = {}
-    metadata = {}
     bundle['text/plain'] = str_repr
     bundle['application/json'] = spec
     return bundle, metadata
