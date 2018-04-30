@@ -1,16 +1,24 @@
 """
-Table Binned Heatmap
---------------------
-This example shows how to make a heatmap.
+Simple Heatmap
+--------------
+This example shows a simple heatmap for showing gridded data.
 """
-# category: other charts
+# category: simple charts
 import altair as alt
-from vega_datasets import data
+import numpy as np
+import pandas as pd
 
-source = data.movies.url
+# Compute x^2 + y^2 across a 2D grid
+x, y = np.meshgrid(range(-5, 5), range(-5, 5))
+z = x ** 2 + y ** 2
 
-alt.Chart(source).mark_rect().encode(
-    alt.X('IMDB_Rating:Q', bin=alt.Bin(maxbins=60)),
-    alt.Y('Rotten_Tomatoes_Rating:Q', bin=alt.Bin(maxbins=40)),
-    alt.Color('count(IMDB_Rating):Q', scale=alt.Scale(scheme='greenblue'))
+# Convert this grid to columnar data expected by Altair
+data = pd.DataFrame({'x': x.ravel(),
+                     'y': y.ravel(),
+                     'z': z.ravel()})
+
+alt.Chart(data).mark_rect().encode(
+    x='x:O',
+    y='y:O',
+    color='z:Q'
 )
