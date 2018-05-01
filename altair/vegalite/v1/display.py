@@ -1,6 +1,6 @@
 import os
 
-from ...utils import headless, html
+from ...utils.mimebundle import spec_to_mimebundle
 
 from ..display import Displayable
 from ..display import default_renderer as default_renderer_base
@@ -49,29 +49,30 @@ def json_renderer(spec, **metadata):
 
 
 def png_renderer(spec, **metadata):
-    return headless.spec_to_mimebundle(spec, format='png',
-                                       mode='vega-lite',
-                                       vega_version=VEGA_VERSION,
-                                       vegaembed_version=VEGAEMBED_VERSION,
-                                       vegalite_version=VEGALITE_VERSION,
-                                       **metadata)
+    return spec_to_mimebundle(spec, format='png',
+                              mode='vega-lite',
+                              vega_version=VEGA_VERSION,
+                              vegaembed_version=VEGAEMBED_VERSION,
+                              vegalite_version=VEGALITE_VERSION,
+                              **metadata)
 
 
 def svg_renderer(spec, **metadata):
-    return headless.spec_to_mimebundle(spec, format='svg',
-                                       mode='vega-lite',
-                                       vega_version=VEGA_VERSION,
-                                       vegaembed_version=VEGAEMBED_VERSION,
-                                       vegalite_version=VEGALITE_VERSION,
-                                       **metadata)
+    return spec_to_mimebundle(spec, format='svg',
+                              mode='vega-lite',
+                              vega_version=VEGA_VERSION,
+                              vegaembed_version=VEGAEMBED_VERSION,
+                              vegalite_version=VEGALITE_VERSION,
+                              **metadata)
 
 
 def colab_renderer(spec, **metadata):
-    return html.spec_to_html_mimebundle(spec, mode='vega-lite',
-                                        vega_version=VEGA_VERSION,
-                                        vegaembed_version=VEGAEMBED_VERSION,
-                                        vegalite_version=VEGALITE_VERSION,
-                                        **metadata)
+    return spec_to_mimebundle(spec, format='html',
+                              mode='vega-lite',
+                              vega_version=VEGA_VERSION,
+                              vegaembed_version=VEGAEMBED_VERSION,
+                              vegalite_version=VEGALITE_VERSION,
+                              **metadata)
 
 
 renderers.register('default', default_renderer)

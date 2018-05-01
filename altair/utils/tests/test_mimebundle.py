@@ -6,11 +6,11 @@ try:
 except ImportError:
     selenium = None
 
-from ..headless import spec_to_mimebundle
+from ..mimebundle import spec_to_mimebundle
 
 
 # example from https://vega.github.io/editor/#/examples/vega-lite/bar
-VEGA_LITE_SPEC = json.loads(
+VEGALITE_SPEC = json.loads(
     """
         {
     "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
@@ -158,10 +158,10 @@ VEGALITE_VERSION = '2.3.1'
 VEGA_VERSION = '3.3.1'
 
 @pytest.mark.skipif('not selenium')
-def test_spec_to_mimebundle():
+def test_spec_to_vega_mimebundle():
     try:
         bundle = spec_to_mimebundle(
-            spec=VEGA_LITE_SPEC,
+            spec=VEGALITE_SPEC,
             format='vega',
             mode='vega-lite',
             vega_version=VEGA_VERSION,
@@ -174,3 +174,22 @@ def test_spec_to_mimebundle():
         else:
             raise
     assert bundle == {'application/vnd.vega.v3+json': VEGA_SPEC}
+
+
+def test_spec_to_vegalite_mimebundle():
+    bundle = spec_to_mimebundle(
+        spec=VEGALITE_SPEC,
+        mode='vega-lite',
+        format='vega-lite',
+        vegalite_version=VEGALITE_VERSION
+    )
+    assert bundle == {'application/vnd.vegalite.v2+json': VEGALITE_SPEC}
+
+
+def test_spec_to_json_mimebundle():
+    bundle = spec_to_mimebundle(
+        spec=VEGALITE_SPEC,
+        mode='vega-lite',
+        format='json',
+    )
+    assert bundle == {'application/json': VEGALITE_SPEC}

@@ -3,8 +3,7 @@ import json
 import six
 
 from .core import write_file_or_filename
-from .headless import spec_to_mimebundle
-from .html import spec_to_html_mimebundle
+from .mimebundle import spec_to_mimebundle
 
 
 def save(chart, fp, vega_version, vegaembed_version,
@@ -76,14 +75,14 @@ def save(chart, fp, vega_version, vegaembed_version,
         json_spec = json.dumps(spec, **json_kwds)
         write_file_or_filename(fp, six.u(json_spec), mode='w')
     elif format == 'html':
-        mimebundle = spec_to_html_mimebundle(spec=spec, mode=mode,
-                                             vega_version=vega_version,
-                                             vegalite_version=vegalite_version,
-                                             vegaembed_version=vegaembed_version,
-                                             embed_options=embed_options,
-                                             json_kwds=json_kwds)
+        mimebundle = spec_to_mimebundle(spec=spec, format=format, mode=mode,
+                                        vega_version=vega_version,
+                                        vegalite_version=vegalite_version,
+                                        vegaembed_version=vegaembed_version,
+                                        embed_options=embed_options,
+                                        json_kwds=json_kwds)
         write_file_or_filename(fp, mimebundle['text/html'], mode='w')
-    elif format in ['png', 'svg']:
+    elif format in ['png', 'svg', 'html']:
         mimebundle = spec_to_mimebundle(spec=spec, format=format, mode=mode,
                                         vega_version=vega_version,
                                         vegalite_version=vegalite_version,
