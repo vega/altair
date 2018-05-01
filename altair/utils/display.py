@@ -70,26 +70,27 @@ class Displayable(object):
             return {}
 
 
-def default_renderer(spec, mime_type, str_repr, **metadata):
-    """A default renderer for VegaLite 1/2 that works for modern frontends.
+def default_renderer_base(spec, mime_type, str_repr, **options):
+    """A default renderer for Vega or VegaLite that works for modern frontends.
 
     This renderer works with modern frontends (JupyterLab, nteract) that know
     how to render the custom VegaLite MIME type listed above.
     """
     assert isinstance(spec, dict)
     bundle = {}
-    bundle['text/plain'] = str_repr
+    metadata = {}
+
     bundle[mime_type] = spec
+    bundle['text/plain'] = str_repr
+    if options:
+        metadata[mime_type] = options
     return bundle, metadata
 
 
-def json_renderer(spec, str_repr, **metadata):
+def json_renderer_base(spec, str_repr, **options):
     """A renderer that returns a MIME type of application/json.
 
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
-    assert isinstance(spec, dict)
-    bundle = {}
-    bundle['text/plain'] = str_repr
-    bundle['application/json'] = spec
-    return bundle, metadata
+    return default_renderer_base(spec, mime_type='application/json',
+                                 str_repr=str_repr, **options)

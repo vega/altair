@@ -25,15 +25,35 @@ def test_colab_renderer_embed_options(chart):
                 'embed_opt = {"mode": "vega-lite", "actions": true}' in html)
 
 
-# TODO: test notebook renderer here when it supports metadata
-@pytest.mark.parametrize('renderer', ['default'])
-def test_default_renderer_embed_options(chart, renderer):
+def test_default_renderer_embed_options(chart, renderer='default'):
     # check that metadata is passed appropriately
+    mimetype = alt.display.VEGALITE_MIME_TYPE
+    spec = chart.to_dict()
     with alt.renderers.enable(renderer, embed_options=dict(actions=False)):
         bundle, metadata = chart._repr_mimebundle_(None, None)
-        assert metadata == {'embed_options': {'actions': False}}
+        assert set(bundle.keys()) == {mimetype, 'text/plain'}
+        assert bundle[mimetype] == spec
+        assert metadata == {mimetype: {'embed_options': {'actions': False}}}
 
     # Sanity check: no metadata specified
     with alt.renderers.enable(renderer):
         bundle, metadata = chart._repr_mimebundle_(None, None)
+        assert bundle[mimetype] == spec
+        assert metadata == {}
+
+
+def test_json_renderer_embed_options(chart, renderer='json'):
+    """Test that embed_options in renderer metadata are correctly manifest in html"""
+    mimetype = 'application/json'
+    spec = chart.to_dict()
+    with alt.renderers.enable('json', option='foo'):
+        bundle, metadata = chart._repr_mimebundle_(None, None)
+        assert set(bundle.keys()) == {mimetype, 'text/plain'}
+        assert bundle[mimetype] == spec
+        assert metadata == {mimetype: {'option': 'foo'}}
+
+    # Sanity check: no options specified
+    with alt.renderers.enable(renderer):
+        bundle, metadata = chart._repr_mimebundle_(None, None)
+        assert bundle[mimetype] == spec
         assert metadata == {}

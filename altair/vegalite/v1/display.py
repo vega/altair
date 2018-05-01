@@ -3,8 +3,8 @@ import os
 from ...utils.mimebundle import spec_to_mimebundle
 
 from ..display import Displayable
-from ..display import default_renderer as default_renderer_base
-from ..display import json_renderer as json_renderer_base
+from ..display import default_renderer_base
+from ..display import json_renderer_base
 from ..display import RendererRegistry
 
 from .schema import SCHEMA_VERSION
