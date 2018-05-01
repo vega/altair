@@ -372,7 +372,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
         return self.save(fp, format=None, **kwargs)
 
-    def save(self, fp, format=None, **kwargs):
+    def save(self, fp, format=None, override_data_transformer=True, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -384,16 +384,31 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         format : string (optional)
             the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
+        override_data_transformer : boolean (optional)
+            If True (default), then the save action will be done with the
+            default data_transformer with max_rows set to None. If False,
+            then use the currently active data transformer.
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         """
         from ...utils.save import save
-        return save(self, fp=fp, format=format,
-                         vegalite_version=VEGALITE_VERSION,
-                         vega_version=VEGA_VERSION,
-                         vegaembed_version=VEGAEMBED_VERSION,
-                         **kwargs)
+
+        kwds = dict(chart=self, fp=fp, format=format,
+                    vegalite_version=VEGALITE_VERSION,
+                    vega_version=VEGA_VERSION,
+                    vegaembed_version=VEGAEMBED_VERSION,
+                    **kwargs)
+
+        # By default we override the data transformer. This makes it so
+        # that save() will succeed even for large datasets that would
+        # normally trigger a MaxBinsError
+        if override_data_transformer:
+            with data_transformers.enable('default', max_rows=None):
+                result = save(**kwds)
+        else:
+            result = save(**kwds)
+        return result
 
     # Layering and stacking
 
