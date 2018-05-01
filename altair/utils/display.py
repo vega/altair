@@ -70,7 +70,7 @@ class Displayable(object):
             return {}
 
 
-def default_renderer(spec, mime_type, str_repr, **metadata):
+def default_renderer_base(spec, mime_type, str_repr, **metadata):
     """A default renderer for VegaLite 1/2 that works for modern frontends.
 
     This renderer works with modern frontends (JupyterLab, nteract) that know
@@ -83,7 +83,7 @@ def default_renderer(spec, mime_type, str_repr, **metadata):
     return bundle, metadata
 
 
-def json_renderer(spec, str_repr, **metadata):
+def json_renderer_base(spec, str_repr, **metadata):
     """A renderer that returns a MIME type of application/json.
 
     In JupyterLab/nteract this is rendered as a nice JSON tree.
