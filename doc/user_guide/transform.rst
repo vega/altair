@@ -642,7 +642,7 @@ it is often necessary to add an axis formatter to ensure appropriate axis
 labels.
 
 
-.. _user-guide-timeunit-transform:
+.. _user-guide-window-transform:
 
 Window Transform
 ~~~~~~~~~~~~~~~~
