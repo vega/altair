@@ -32,7 +32,7 @@ will see this description::
 
 .. code-block:: none
 
-    This is a simple chart
+    description: This is a simple chart
 
 This is a simple example, but it shows you the flexibility of this approach.
 If you have a frontend that recognizes ``_repr_mimebundle_`` as a means of
