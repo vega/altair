@@ -1,15 +1,15 @@
 .. currentmodule:: altair
 
-.. _user-guide-config:
+.. _user-guide-customization:
 
-Configuring Visualizations
+Customizing Visualizations
 ==========================
 
 Altair's goal is to automatically choose useful plot settings and configurations
 so that the user is free to think about the data rather than the mechanics
 of plotting. That said, once you have a useful visualization, you will often
 want to adjust certain aspects of it. This section of the documentation
-outlines some of these adjustments.
+outlines some of the ways to make these adjustments.
 
 Global Config vs. Local Config vs. Encoding
 -------------------------------------------
@@ -57,6 +57,8 @@ There are a couple things to be aware of when using this kind of global configur
 
 2. The global configuration is only permissible at the top-level; so, for example,
    if you tried to layer the above chart with another, it would result in an error.
+
+For more information on top-level configurations, see :ref:`user-guide-configuration`.
 
 Local Config
 ~~~~~~~~~~~~

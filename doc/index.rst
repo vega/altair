@@ -32,7 +32,6 @@ beautiful and effective visualizations with a minimal amount of code.
    :maxdepth: 1
    :caption: User Guide
 
-   user_guide/renderers
    user_guide/data
    user_guide/encoding
    user_guide/marks
@@ -41,8 +40,10 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/configuration
    user_guide/compound_charts
    user_guide/saving_charts
-   user_guide/config
+   user_guide/customization
+   user_guide/faq
    user_guide/troubleshooting
+   user_guide/renderers
    user_guide/API
 
 .. toctree::

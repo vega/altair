@@ -34,6 +34,7 @@ Method                                     Description
 :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
 :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
 :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
+:meth:`~Chart.transform_window`            Compute a windowed aggregation
 =========================================  ================================================================================
 
 We will see some examples of these transforms in the following sections.
@@ -639,5 +640,56 @@ method. For example:
 Notice that because the ``timeUnit`` is not part of the encoding channel here,
 it is often necessary to add an axis formatter to ensure appropriate axis
 labels.
+
+
+.. _user-guide-timeunit-transform:
+
+Window Transform
+~~~~~~~~~~~~~~~~
+The Window transform performs calculations over sorted groups of data objects.
+These calculations including ranking, lead/lag analysis, and aggregates such
+as running sums and averages. Calculated values are written back to the
+input data stream, where they can be referenced in encodings.
+
+For example, consider the following chart showing time spent on various
+activities during a day:
+
+
+.. altair-plot::
+
+    import altair as alt
+    import pandas as pd
+
+    activities = pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exercise'],
+                               'Time': [8, 2, 4, 8, 2]})
+
+    alt.Chart(activities).mark_bar().encode(
+        x='Time:Q',
+        y='Activity:N'
+    )
+
+You might wish to plot these bars in units of percentage of total time rather than
+in units of hours. You can do this by combining a calculate transform with a
+window transform, using :meth:`~Chart.transform_window`:
+
+.. altair-plot::
+
+    alt.Chart(activities).transform_window(
+        window=[alt.WindowFieldDef(op='sum', field='Time', **{'as': 'TotalTime'})],
+        frame=[None, None]
+    ).transform_calculate(
+        PercentOfTotal="datum.Time / datum.TotalTime * 100"
+    ).mark_bar().encode(
+        x='PercentOfTotal:Q',
+        y='Activity:N'
+    )
+
+In the window transform, we specify ``frame=[None, None]``, which indicates that
+the aggregation at each point is performed on the entire dataset.
+
+Window transforms are quite flexible, and are not yet well documented within
+Altair. For more information on the arguments of the window transform, see
+:class:`WindowTransform`, or see the
+`Vega-Lite window transform examples <https://vega.github.io/vega-lite/docs/window.html>`_.
 
 .. _Vega expression: https://vega.github.io/vega/docs/expressions/

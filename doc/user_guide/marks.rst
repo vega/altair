@@ -15,17 +15,17 @@ Altair provides a number of mark properties:
 ==========  ============================  ===================================================  ====================================
 Mark Name   Method                        Description                                          Example
 ==========  ============================  ===================================================  ====================================
-area        :meth:`~Chart.mark_area`      A filled area plot.
-bar         :meth:`~Chart.mark_bar`       A bar plot.
-circle      :meth:`~Chart.mark_circle`    A scatter plot with filled circles.
-geoshape    :meth:`~Chart.mark_geoshape`  A geographic shape
-line        :meth:`~Chart.mark_line`      A line plot.
-point       :meth:`~Chart.mark_point`     A scatter plot with configurable point shapes.
-rect        :meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps
-rule        :meth:`~Chart.mark_rule`      A vertical or horizontal line spanning the axis.
-square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.
-text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text
-tick        :meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.
+area        :meth:`~Chart.mark_area`      A filled area plot.                                  :ref:`gallery_simple_stacked_area_chart`
+bar         :meth:`~Chart.mark_bar`       A bar plot.                                          :ref:`gallery_simple_bar_chart`
+circle      :meth:`~Chart.mark_circle`    A scatter plot with filled circles.                  :ref:`gallery_one_dot_per_zipcode`
+geoshape    :meth:`~Chart.mark_geoshape`  A geographic shape                                   :ref:`gallery_choropleth`
+line        :meth:`~Chart.mark_line`      A line plot.                                         :ref:`gallery_simple_line_chart`
+point       :meth:`~Chart.mark_point`     A scatter plot with configurable point shapes.       :ref:`gallery_scatter_linked_brush`
+rect        :meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps                :ref:`gallery_simple_heatmap`
+rule        :meth:`~Chart.mark_rule`      A vertical or horizontal line spanning the axis.     :ref:`gallery_candlestick_chart`
+square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.                  N/A
+text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chart_with_labels`
+tick        :meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.                  :ref:`gallery_strip_plot`
 ==========  ============================  ===================================================  ====================================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods

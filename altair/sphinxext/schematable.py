@@ -35,12 +35,13 @@ def type_description(schema):
 
 def iter_properties(cls):
     """Iterate over (property, type, description)"""
+    import m2r  # convert markdown to rst
     schema = cls.resolve_references(cls._schema)
     properties = schema.get('properties', {})
     for prop, propschema in properties.items():
         yield (prop,
                type_description(propschema),
-               propschema.get('description', ' '))
+               m2r.convert(propschema.get('description', ' ')))
 
 
 def build_rst_table(rows, titles):

@@ -236,7 +236,7 @@ over them with your mouse:
 Further Examples
 ~~~~~~~~~~~~~~~~
 Now that you understand the basics of Altair selections, you might wish to look
-through the :ref:`gallery-category-interactive` section of the example gallery
+through the :ref:`gallery-category-Interactive Charts` section of the example gallery
 for ideas about how they can be applied to more interesting charts.
 
 For more information on how to fine-tune selections, including specifying other
