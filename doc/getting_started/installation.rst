@@ -125,7 +125,7 @@ Quick Start: Altair + Colab
 Altair can be used directly in Google's Colab_. Open a notebook, and run the
 following in a notebook cell:
 
-.. code-block::
+.. code-block:: none
 
     !pip install altair
     import altair as alt

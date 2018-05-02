@@ -40,21 +40,19 @@ Encoding Channels
 Altair provides a number of encoding channels that can be useful in different
 circumstances; the following table summarizes them:
 
-*TODO: link to examples of each*
-
 Position Channels:
 
 ==========  ===================  =================================  ===================================
 Channel     Altair Class         Description                        Example
 ==========  ===================  =================================  ===================================
-x           :class:`X`           The x-axis value
-y           :class:`Y`           The y-axis value
-x2          :class:`X2`          Second x value for ranges
-y2          :class:`Y2`          Second y value for ranges
-longitude   :class:`Longitude`   Longitude for geo charts
-latitude    :class:`Latitude`    Latitude for geo charts
-longitude2  :class:`Longitude2`  Second longitude value for ranges
-latitude2   :class:`Latitude2`   Second latitude value for ranges
+x           :class:`X`           The x-axis value                   :ref:`gallery_simple_scatter`
+y           :class:`Y`           The y-axis value                   :ref:`gallery_simple_scatter`
+x2          :class:`X2`          Second x value for ranges          :ref:`gallery_error_bars_with_ci`
+y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_line_with_ci`
+longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airports`
+latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
+longitude2  :class:`Longitude2`  Second longitude value for ranges  N/A
+latitude2   :class:`Latitude2`   Second latitude value for ranges   N/A
 ==========  ===================  =================================  ===================================
 
 Mark Property Channels:
@@ -62,12 +60,12 @@ Mark Property Channels:
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
-color    :class:`Color`    The color of the mark
-fill     :class:`Fill`     The fill for the mark
-opacity  :class:`Opacity`  The opacity of the mark
-shape    :class:`Shape`    The shape of the mark
-size     :class:`Size`     The size of the mark
-stroke   :class:`Stroke`   The stroke of the mark
+color    :class:`Color`    The color of the mark     :ref:`gallery_simple_heatmap`
+fill     :class:`Fill`     The fill for the mark     N/A
+opacity  :class:`Opacity`  The opacity of the mark   :ref:`gallery_horizon_graph`
+shape    :class:`Shape`    The shape of the mark     N/A
+size     :class:`Size`     The size of the mark      :ref:`gallery_table_bubble_plot_github`
+stroke   :class:`Stroke`   The stroke of the mark    N/A
 =======  ================  ========================  =========================================
 
 Text and Tooltip Channels:
@@ -75,9 +73,9 @@ Text and Tooltip Channels:
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
-text     :class:`Text`     Text to use for the mark
-key      :class:`Key`      --
-tooltip  :class:`Tooltip`  The tooltip value
+text     :class:`Text`     Text to use for the mark  :ref:`gallery_scatter_with_labels`
+key      :class:`Key`      --                        N/A
+tooltip  :class:`Tooltip`  The tooltip value         N/A
 =======  ================  ========================  =========================================
 
 Hyperlink Channel:
@@ -85,7 +83,7 @@ Hyperlink Channel:
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
-href     :class:`Href`     Hyperlink for  points
+href     :class:`Href`     Hyperlink for  points     N/A
 =======  ================  ========================  =========================================
 
 Level of Detail Channel:
@@ -93,25 +91,25 @@ Level of Detail Channel:
 =======  ================  ===============================  =========================================
 Channel  Altair Class      Description                      Example
 =======  ================  ===============================  =========================================
-detail   :class:`Detail`   Additional property to group by
+detail   :class:`Detail`   Additional property to group by  :ref:`gallery_select_detail`
 =======  ================  ===============================  =========================================
 
 Order Channel:
 
-=======  ================  ============================================  =================
-Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-order    :class:`Order`    Sets the order of the marks
-=======  ================  ============================================  =================
+=======  ================  =============================  =====================================
+Channel  Altair Class      Description                    Example
+=======  ================  =============================  =====================================
+order    :class:`Order`    Sets the order of the marks    :ref:`gallery_connected_scatterplot`
+=======  ================  =============================  =====================================
 
 Facet Channels:
 
-=======  ================  ============================  ===================================
+=======  ================  ============================  ============================================
 Channel  Altair Class      Description                   Example
-=======  ================  ============================  ===================================
-column   :class:`Column`   The column of a faceted plot
-row      :class:`Row`      The row of a faceted plot
-=======  ================  ============================  ===================================
+=======  ================  ============================  ============================================
+column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_scatter_plot`
+row      :class:`Row`      The row of a faceted plot     :ref:`gallery_beckers_barley_trellis_plot`
+=======  ================  ============================  ============================================
 
 .. _data-types:
 
@@ -347,32 +345,32 @@ represents the mean of a third quantity, such as acceleration:
 In addition to ``count`` and ``average``, there are a large number of available
 aggregation functions built into Altair; they are listed in the following table:
 
-=========  ===========================================================================  =================================
+=========  ===========================================================================  =====================================
 Aggregate  Description                                                                  Example
-=========  ===========================================================================  =================================
-argmin     An input data object containing the minimum field value.
-argmax     An input data object containing the maximum field value.
-average    The mean (average) field value. Identical to mean.
-count      The total count of data objects in the group.
-distinct   The count of distinct field values.
-max        The maximum field value.
-mean       The mean (average) field value.
-median     The median field value
-min        The minimum field value.
-missing    The count of null or undefined field values.
-q1         The lower quartile boundary of values.
-q3         The upper quartile boundary of values.
-ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.
-ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.
-stderr     The standard error of the field values.
-stdev      The sample standard deviation of field values.
-stdevp     The population standard deviation of field values.
-sum        The sum of field values.
-valid      The count of field values that are not null or undefined.
-values     ??
-variance   The sample variance of field values
-variancep  The population variance of field values
-=========  ===========================================================================  =================================
+=========  ===========================================================================  =====================================
+argmin     An input data object containing the minimum field value.                     N/A
+argmax     An input data object containing the maximum field value.                     N/A
+average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
+count      The total count of data objects in the group.                                :ref:`gallery_table_binned_heatmap`
+distinct   The count of distinct field values.                                          N/A
+max        The maximum field value.                                                     :ref:`gallery_boxplot_max_min`
+mean       The mean (average) field value.                                              :ref:`gallery_layered_plot_with_dual_axis`
+median     The median field value                                                       :ref:`gallery_boxplot_max_min`
+min        The minimum field value.                                                     :ref:`gallery_boxplot_max_min`
+missing    The count of null or undefined field values.                                 N/A
+q1         The lower quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
+q3         The upper quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
+ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_error_bars_with_ci`
+ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_error_bars_with_ci`
+stderr     The standard error of the field values.                                      N/A
+stdev      The sample standard deviation of field values.                               N/A
+stdevp     The population standard deviation of field values.                           N/A
+sum        The sum of field values.                                                     :ref:`gallery_streamgraph`
+valid      The count of field values that are not null or undefined.                    N/A
+values     ??                                                                           N/A
+variance   The sample variance of field values.                                         N/A
+variancep  The population variance of field values.                                     N/A
+=========  ===========================================================================  =====================================
 
 
 .. _shorthand-description:
