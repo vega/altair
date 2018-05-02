@@ -102,5 +102,5 @@ We hope that others will write additional data transformers - imagine a
 transformer which saves the dataset to a JSON file on S3, which could
 be registered and enabled as::
 
-    alt.data_transformers.register('s3', lambda data: pipe(sample, to_s3('mybucket')))
+    alt.data_transformers.register('s3', lambda data: pipe(data, to_s3('mybucket')))
     alt.data_transformers.enable('s3')

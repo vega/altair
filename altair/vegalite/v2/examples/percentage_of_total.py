@@ -12,11 +12,11 @@ activities = pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exe
                            'Time': [8, 2, 4, 8, 2]})
 
 alt.Chart(activities).mark_bar().encode(
-    x='PercentOfTotal:Q',
+    alt.X('PercentOfTotal:Q', axis=alt.Axis(format='.0%')),
     y='Activity:N'
 ).transform_window(
     window=[alt.WindowFieldDef(op='sum', field='Time', **{'as': 'TotalTime'})],
     frame=[None, None]
 ).transform_calculate(
-    PercentOfTotal="datum.Time / datum.TotalTime * 100"
+    PercentOfTotal="datum.Time / datum.TotalTime"
 )
