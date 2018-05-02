@@ -24,7 +24,7 @@ point       :meth:`~Chart.mark_point`     A scatter plot with configurable point
 rect        :meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps                :ref:`gallery_simple_heatmap`
 rule        :meth:`~Chart.mark_rule`      A vertical or horizontal line spanning the axis.     :ref:`gallery_candlestick_chart`
 square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.                  N/A
-text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chat_with_labels`
+text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chart_with_labels`
 tick        :meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.                  :ref:`gallery_strip_plot`
 ==========  ============================  ===================================================  ====================================
 

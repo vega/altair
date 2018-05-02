@@ -169,7 +169,7 @@ Effect of Data Type on Color Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 As an example of this, here we will represent the same data three different ways,
 with the color encoded as a *quantitative*, *ordinal*, and *nominal* type,
-using three vertically-concatenated charts (see :ref:`vconcat`):
+using three vertically-concatenated charts (see :ref:`vconcat-chart`):
 
 .. altair-plot::
 
@@ -351,7 +351,7 @@ Aggregate  Description                                                          
 argmin     An input data object containing the minimum field value.                     N/A
 argmax     An input data object containing the maximum field value.                     N/A
 average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
-count      The total count of data objects in the group.                                :ref:`gallery_table_binned_heatmap`
+count      The total count of data objects in the group.                                :ref:`gallery_simple_heatmap`
 distinct   The count of distinct field values.                                          N/A
 max        The maximum field value.                                                     :ref:`gallery_boxplot_max_min`
 mean       The mean (average) field value.                                              :ref:`gallery_layered_plot_with_dual_axis`
