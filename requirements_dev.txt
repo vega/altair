@@ -2,6 +2,7 @@ flake8
 pytest
 jinja2
 sphinx
+m2r
 docutils
 vega_datasets
 ipython<6; python_version < '3'  # ipython 6 not compatible with python 2
