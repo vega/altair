@@ -162,7 +162,11 @@ Installation with Conda
 -----------------------
 If you wish to use conda instead of pip to install Altair and related packages,
 the ``conda-forge`` channel is the best option. Simply the above ``pip install``
-commands with the equivalent ``conda install`` commands.
+commands with the equivalent ``conda install`` commands; for example:
+
+.. code-block:: bash
+
+   $ conda install --channel conda-forge altair jupyterlab
 
 
 .. _install-dependencies:
@@ -175,7 +179,6 @@ with the above installation commands:
 
 - python 2.7, 3.5 or newer
 - entrypoints_
-- IPython_
 - jsonschema_
 - NumPy_
 - Pandas_
