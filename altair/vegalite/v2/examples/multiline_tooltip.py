@@ -1,8 +1,12 @@
 """
 Multi-Line Tooltip
 ==================
-This example shows how you can use selections and layers to create a multi-line tooltip
-that tracks the x position of the cursor.
+This example shows how you can use selections and layers to create a
+multi-line tooltip that tracks the x position of the cursor.
+
+To find the x-position of the cursor, we employ a little trick: we add some
+transparent points with only an x encoding (no y encoding) and tie a
+*nearest* selection to these, tied to the "x" field.
 """
 # category: interactive charts
 import altair as alt
