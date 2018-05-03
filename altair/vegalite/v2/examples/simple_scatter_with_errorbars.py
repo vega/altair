@@ -11,7 +11,7 @@ import altair as alt
 from altair import datum
 
 import numpy as np
-
+import pandas as pd
 
 # generate some data points with uncertainties
 np.random.seed(0)
