@@ -25,31 +25,15 @@ If you are using JupyterLab (not Jupyter notebook) and see the following output:
 
     <VegaLite 2 object>
 
-it can mean one of several things is wrong:
+This most likely means that you are using too old a version of JupyterLab.
+Altair works best with JupyterLab version 0.32 or later; check the version with::
 
-1. You are using too old a version of JupyterLab. Altair requires JupyterLab version
-   0.31 or later; check the version with::
+   $ jupyter lab --version
+   0.32.1
 
-       $ jupyter lab --version
-       0.31.10
-
-   If this is the problem, then use ``pip install -U jupyterlab`` or
-   ``conda update jupyterlab`` to update JupyterLab, depending on how you
-   first installed it.
-
-2. You have not correctly installed the ``vega3`` lab extension mentioned
-   in the installation steps above. You can list currently installed lab
-   extensions with::
-
-       $ jupyter labextension list
-
-   if ``@jupyterlab/vega3-extension`` does not appear in that list, then run
-   the following to install it::
-
-       $ jupyter labextension install @jupyterlab/vega3-extension
-
-   Once this is installed, re-launch JupyterLab and your charts should render.
-
+If this is the problem, then use ``pip install -U jupyterlab`` or
+``conda update jupyterlab`` to update JupyterLab, depending on how you
+first installed it.
 
 JavaScript output is disabled in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -61,7 +45,8 @@ If you are using JupyterLab and see the following ouput::
 it can mean one of two things is wrong
 
 1. You are using an old version of Altair. JupyterLab only works with Altair
-   version 2.0 or newer; you can check the altair version by running::
+   version 2.0 or newer; you can check the altair version by executing the
+   following in a notebook code cell::
 
        import altair as alt
        alt.__version__
@@ -70,8 +55,8 @@ it can mean one of two things is wrong
    installation instructions at :ref:`installation-jupyterlab`.
 
 2. You have enabled the wrong renderer. JupyterLab works with the default
-   renderer, but if you have used ``alt.renderers.enable(xxx)`` to enable
-   another renderer, JupyterLab will no longer work.
+   renderer, but if you have used ``alt.renderers.enable()`` to enable
+   another renderer, charts will no longer render correctly in JupyterLab.
    You can check which renderer is active by running::
 
        import altair as alt
@@ -85,6 +70,37 @@ it can mean one of two things is wrong
 
    (Note that the default renderer is enabled, well, by default, and so this
    is only necessary if you've somewhere changed the renderer explicitly).
+
+.. _jupyterlab-textual-chart-representation:
+
+JupyterLab: Textual Chart Representation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*If you are using the Notebook rather than the JupyterLab, then refer to*
+:ref:`notebook-textual-chart-representation`
+
+If you are using JupyterLab and see a textual representation of the Chart object
+similar to this::
+
+    Chart({
+      data: 'https://vega.github.io/vega-datasets/data/cars.json',
+      encoding: EncodingWithFacet({
+        x: X({
+          shorthand: 'Horsepower'
+        })
+      }),
+      mark: 'point'
+    })
+
+it probably means that you are using an older Jupyter kernel.
+You can confirm this by running::
+
+   import IPython; IPython.__version__
+   # 6.2.1
+
+Altair will not display correctly if using a kernel with IPython version 4.X or older.
+
+The easiest way to address this is to change your kernel: choose "Kernel"->"Change Kernel"
+and then use the first kernel that appears.
 
 
 .. _troubleshooting-notebook:
@@ -103,26 +119,69 @@ If you are using the notebook (not JupyterLab) and see the the following output:
 
     <Vegalite 2 object>
 
-it usually means that you have not enabled the notebook renderer. As mentioned
-in :ref:`installation-notebook`, you need to install the ``vega3`` package and
-Jupyter extension, and then enable it using::
+it means that either:
 
-    import altair as alt
-    alt.renderers.enable('notebook')
+1. You have forgotten to enable the notebook renderer. As mentioned
+   in :ref:`installation-notebook`, you need to install the ``vega3`` package and
+   Jupyter extension, and then enable it using::
 
-in order to render charts in the classic notebook.
+       import altair as alt
+       alt.renderers.enable('notebook')
 
-If the above code gives an error::
+   in order to render charts in the classic notebook.
 
-    NoSuchEntryPoint: No 'notebook' entry point found in group 'altair.vegalite.v2.renderer'
+   If the above code gives an error::
 
-This means that you have not installed the vega3 package. If you see this error,
-please make sure to follow the standard installation instructions at
-:ref:`installation-notebook`.
+       NoSuchEntryPoint: No 'notebook' entry point found in group 'altair.vegalite.v2.renderer'
+
+   This means that you have not installed the vega3 package. If you see this error,
+   please make sure to follow the standard installation instructions at
+   :ref:`installation-notebook`.
+
+2. Have too old a version of Jupyter notebook. Run::
+
+       $ jupyter notebook --version
+
+   and make certain you have version 5.3 or newer. If not, then update the notebook
+   using either ``pip install -U jupyter notebook`` or ``conda update jupyter notebook``
+   depending on how you first installed the packages.
 
 If you have done the above steps and charts still do not render, it likely means
 that you are using a different *Kernel* within your notebook. Switch to the kernel
 named *Python 2* if you are using Python 2, or *Python 3* if you are using Python 3.
+
+
+.. _notebook-textual-chart-representation:
+
+Notebook: Textual Chart Representation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*If you are using the Notebook rather than the JupyterLab, then refer to*
+:ref:`jupyterlab-textual-chart-representation`
+
+If you are using Jupyter notebook and see a textual representation of the Chart
+object similar to this::
+
+    Chart({
+      data: 'https://vega.github.io/vega-datasets/data/cars.json',
+      encoding: EncodingWithFacet({
+        x: X({
+          shorthand: 'Horsepower'
+        })
+      }),
+      mark: 'point'
+    })
+
+it probably means that you are using an older Jupyter kernel.
+You can confirm this by running::
+
+   import IPython; IPython.__version__
+   # 6.2.1
+
+Altair will not display correctly if using a kernel with IPython version 4.X or older.
+
+The easiest way to address this is to change your kernel:
+choose "Kernel"->"Change Kernel" and then select "Python 2" or "Python 3",
+depending on what version of Python you used when installing Altair.
 
 .. _troubleshooting-general:
 

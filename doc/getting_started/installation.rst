@@ -10,6 +10,10 @@ To use Altair for visualization, you need to install two sets of tools
 2. The renderer for the frontend you wish to use (i.e. `Jupyter Notebook`_,
    `JupyterLab`_, `Colab`_, or `nteract`_)
 
+3. Additionally, Altair's documentation makes use of the vega_datasets_ package,
+   and so it is included in the installation instructions below.
+
+Depending on the frontend you would like to use, the instructions differ slightly.
 See the following instructions for your chosen frontend:
 
 - :ref:`installation-jupyterlab`
@@ -23,18 +27,23 @@ Quick Start: Altair + JupyterLab
 We recommend installing Altair with JupyterLab. If you would like to use it
 with the classic notebook, see :ref:`installation-notebook`.
 
-To install JupyterLab and Altair with pip, run the following commands::
+Altair works best with JupyterLab version 0.32 or later.
 
-    $ pip install jupyterlab altair
-    $ jupyter labextension install @jupyterlab/vega3-extension  # not needed for JupyterLab 0.32 or newer
+To install JupyterLab and Altair with conda, run the following command::
+
+    $ conda install -c conda-forge altair vega_datasets jupyterlab
+
+To install JupyterLab and Altair with pip, run the following command::
+
+    $ pip install -U altair vega_datasets jupyterlab
 
 Once this is finished, run::
 
     $ jupyter lab
 
-In the browser window that launches, under "Notebook" click the first available
-kernel (it should say "Python 2" or "Python 3" depending on which Python version
-you are running).
+In the browser window that launches, select "File"->"New"->"Notebook" and then
+click "Select" without changing the kernel  (it should say "Python 2" or
+"Python 3" depending on which Python version you are running).
 
 In the notebook that opens, you can run the following code to ensure everything
 is properly set up:
@@ -52,8 +61,8 @@ is properly set up:
         color='species'
     )
 
-If the plot does not render, ensure you have installed the exact versions
-mentioned above, and if it still does not work see
+If the plot does not render, make certain you have installed the most recent
+versions of the packages above, and if it still does not work see
 :ref:`troubleshooting-jupyterlab` for help.
 
 Once things are up and running, you may wish to go through the tutorials at
@@ -65,12 +74,20 @@ indexed in the left panel, or check out the :ref:`example-gallery` for more idea
 
 Quick Start: Altair + Notebook
 ------------------------------
-Altair, the jupyter notebook, and their dependencies can be installed with ``pip``.
-Note that rendering Altair plots in the notebook also requires the vega3_ package
-to be installed and configured::
+Altair works in the Jupyter notebook, though we recommend using it in JupyterLab
+if available (see :ref:`installation-jupyterlab`).
 
-    $ pip install altair notebook vega3
-    $ jupyter nbextension install --sys-prefix --py vega3 # not needed in notebook >= 5.3
+If using the notebook, Altair works best with notebook version 5.3 or newer.
+Note that using Altair in the notebook also requires the vega3_ package
+to be installed and configured.
+
+To install the notebook and Altair with conda, run the following command::
+
+    $ conda install -c conda-forge altair vega_datasets notebook vega3
+
+To install the notebook and Altair with pip, run the following command::
+
+    $ pip install -U altair vega_datasets notebook vega3
 
 Once the packages and extensions are installed, launch the notebook by running::
 
@@ -110,8 +127,8 @@ is properly set up:
     If you neglect this step, charts will not be rendered, but instead
     displayed as a textual representation.
 
-If the plot does not render, ensure you have installed the exact versions
-mentioned above, and if it still does not work see
+If the plot does not render, ensure you have installed the most recent versions
+of the above packages, and if it still does not work see
 :ref:`troubleshooting-notebook` for help.
 
 Once things are up and running, you may wish to go through the tutorials at
@@ -127,7 +144,7 @@ following in a notebook cell:
 
 .. code-block:: none
 
-    !pip install altair
+    !pip install altair vega_datasets
     import altair as alt
     # for colab only run this command once per session
     alt.renderers.enable('colab')
@@ -156,19 +173,6 @@ Once things are up and running, you may wish to go through the tutorials at
 :ref:`starting` and :ref:`exploring-weather`, read through the User Guide
 indexed in the left panel, or check out the :ref:`example-gallery` for more ideas.
 
-.. _installation-with-conda:
-
-Installation with Conda
------------------------
-If you wish to use conda instead of pip to install Altair and related packages,
-the ``conda-forge`` channel is the best option. Simply the above ``pip install``
-commands with the equivalent ``conda install`` commands; for example:
-
-.. code-block:: bash
-
-   $ conda install --channel conda-forge altair jupyterlab
-
-
 .. _install-dependencies:
 
 Dependencies
@@ -184,7 +188,18 @@ with the above installation commands:
 - Pandas_
 - Six_
 - Toolz_
+
+To run altair's full test suite and build Altair's documentation requires a few
+additional dependencies:
+
+- flake8
+- pytest
+- jinja2
+- sphinx
+- m2r
+- docutils
 - vega_datasets_
+- ipython
 
 
 Development Install
@@ -197,6 +212,12 @@ from the root of the repository to install the master version of Altair:
 .. code-block:: bash
 
     $ pip install -e .
+
+To install development dependencies as well, run
+
+.. code-block:: bash
+
+    $ pip install -e .[dev]
 
 If you do not wish to clone the source repository, you can install the
 development version directly from GitHub using:
