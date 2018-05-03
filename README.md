@@ -207,6 +207,8 @@ visualization.
 We are also seeking contributions of additional Jupyter notebook-based examples
 in our separate GitHub repository: https://github.com/altair-viz/altair_notebooks.
 
+The altair users mailing list can be found at https://groups.google.com/forum/#!forum/altair-viz
+
 ## Whence Altair?
 
 Altair is the [brightest star](https://en.wikipedia.org/wiki/Altair) in the constellation Aquila, and along with Deneb and Vega forms the northern-hemisphere asterism known as the [Summer Triangle](https://en.wikipedia.org/wiki/Summer_Triangle).
