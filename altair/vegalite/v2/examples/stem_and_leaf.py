@@ -1,7 +1,7 @@
 """
-Steam and Leaf Plot
--------------------
-This example shows how to make a steam and leaf plot.
+Stem and Leaf Plot
+------------------
+This example shows how to make a stem and leaf plot.
 """
 # category: other charts
 import altair as alt
@@ -12,7 +12,7 @@ np.random.seed(42)
 # Generating random data
 original_data = pd.DataFrame({'samples': np.array(np.random.normal(50, 15, 100), dtype=np.int)})
 
-# Splitting steam and leaf
+# Splitting stem and leaf
 original_data['stem'] = original_data['samples'].apply(lambda x: str(x)[:-1])
 original_data['leaf'] = original_data['samples'].apply(lambda x: str(x)[-1])
 
