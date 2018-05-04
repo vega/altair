@@ -8,7 +8,6 @@ A simple scatter plot of a data set with errorbars.
 # category: simple charts
 
 import altair as alt
-from altair import datum
 
 import numpy as np
 import pandas as pd
