@@ -5,7 +5,7 @@ Simple Scatter Plot with Errorbars
 A simple scatter plot of a data set with errorbars.
 
 """
-# category: simple charts
+# category: scatter plots
 
 import altair as alt
 
