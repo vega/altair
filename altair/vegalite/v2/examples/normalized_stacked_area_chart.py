@@ -3,7 +3,7 @@ Normalized Stacked Area Chart
 -----------------------------
 This example shows how to make a normalized stacked area chart.
 """
-# category: simple charts
+# category: area charts
 import altair as alt
 from vega_datasets import data
 
