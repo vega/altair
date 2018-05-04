@@ -30,7 +30,7 @@ class MockRequest(object):
 
 class MockServer(object):
     def __init__(self, ip_port, Handler):
-        handler = Handler(MockRequest(), ip_port[0], self)
+        Handler(MockRequest(), ip_port[0], self)
 
     def serve_forever(self):
         pass
@@ -111,7 +111,7 @@ def serve(html, ip='127.0.0.1', port=8888, n_retries=50, files=None,
 
     if jupyter_warning:
         try:
-            __IPYTHON__
+            __IPYTHON__  # noqa
         except:
             pass
         else:

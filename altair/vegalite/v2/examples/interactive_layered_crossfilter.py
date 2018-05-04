@@ -1,12 +1,11 @@
 """
-Crossfilter
-===========
+Interactive Crossfilter
+=======================
 This example shows a multi-panel view of the same data, where you can interactively
 select a portion of the data in any of the panels to highlight that portion in any
 of the other panels.
 """
-# category: interactive
-
+# category: interactive charts
 import altair as alt
 from vega_datasets import data
 
@@ -38,7 +37,7 @@ highlight = base.encode(
 )
 
 # layer the two charts & repeat
-chart = alt.layer(
+alt.layer(
     background, highlight,
     data=flights
 ).transform_calculate(

@@ -1,25 +1,42 @@
 import json
-import os
-from typing import Callable, Dict, Union
+import pkgutil
+import textwrap
+from typing import Callable, Dict
 
 from jsonschema import validate
 
-
-#==============================================================================
-# VegaLite v1/v2 renderer logic
-#==============================================================================
+from .plugin_registry import PluginRegistry
 
 
-SpecType = dict
+# ==============================================================================
+# Renderer registry
+# ==============================================================================
 MimeBundleType = Dict[str, object]
-RendererType = Callable[[SpecType], MimeBundleType]
+RendererType = Callable[..., MimeBundleType]
+
+
+class RendererRegistry(PluginRegistry[RendererType]):
+    entrypoint_err_messages = {
+        'notebook': textwrap.dedent(
+            """
+            To use the 'notebook' renderer, you must install the vega3 package
+            and the associated Jupyter extension.
+            See https://altair-viz.github.io/getting_started/installation.html
+            for more information.
+            """)
+    }
+
+# ==============================================================================
+# VegaLite v1/v2 renderer logic
+# ==============================================================================
+
 
 
 class Displayable(object):
     """A base display class for VegaLite v1/v2.
 
     This class takes a VegaLite v1/v2 spec and does the following:
-    
+
     1. Optionally validates the spec against a schema.
     2. Uses the RendererPlugin to grab a renderer and call it when the
        IPython/Jupyter display method (_repr_mimebundle_) is called.
@@ -31,17 +48,18 @@ class Displayable(object):
     """
 
     renderers = None
-    schema_path = ''
+    schema_path = ('altair', '')
 
-    def __init__(self, spec, validate=False) -> None:
+    def __init__(self, spec, validate=False):
+        # type: (dict, bool) ->: None
         self.spec = spec
         self.validate = validate
         self._validate()
-    
-    def _validate(self) -> None:
+
+    def _validate(self):
+        # type: () -> None
         """Validate the spec against the schema."""
-        with open(self.schema_path) as f:
-            schema_dict = json.load(f)
+        schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode('utf-8'))
         validate(self.spec, schema_dict)
 
     def _repr_mimebundle_(self, include, exclude):
@@ -52,8 +70,8 @@ class Displayable(object):
             return {}
 
 
-def default_renderer(spec, mime_type, str_repr):
-    """A default renderer for VegaLite 1/2 that works for modern frontends.
+def default_renderer_base(spec, mime_type, str_repr, **options):
+    """A default renderer for Vega or VegaLite that works for modern frontends.
 
     This renderer works with modern frontends (JupyterLab, nteract) that know
     how to render the custom VegaLite MIME type listed above.
@@ -61,19 +79,18 @@ def default_renderer(spec, mime_type, str_repr):
     assert isinstance(spec, dict)
     bundle = {}
     metadata = {}
-    bundle['text/plain'] = str_repr
+
     bundle[mime_type] = spec
+    bundle['text/plain'] = str_repr
+    if options:
+        metadata[mime_type] = options
     return bundle, metadata
 
 
-def json_renderer(spec, str_repr):
+def json_renderer_base(spec, str_repr, **options):
     """A renderer that returns a MIME type of application/json.
-    
+
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
-    assert isinstance(spec, dict)
-    bundle = {}
-    metadata = {}
-    bundle['text/plain'] = str_repr
-    bundle['application/json'] = spec
-    return bundle, metadata
+    return default_renderer_base(spec, mime_type='application/json',
+                                 str_repr=str_repr, **options)

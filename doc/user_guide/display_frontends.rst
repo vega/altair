@@ -1,7 +1,7 @@
 .. _displaying-charts:
 
-Displaying Charts
-=================
+Displaying Charts in Various Frontends
+======================================
 
 Altair provides a high-level API for creating visualizations that are
 encoded as declarative JSON objects. To display a visualization, those JSON
@@ -12,7 +12,8 @@ can use them to display Altair visualizations.
 
 You may need to install an additional Python/npm package to display Altair
 charts for a given frontend user-interface. See instructions for:
-:ref:`display-notebook`, :ref:`display-jupyterlab` and :ref:`display-nteract`.
+:ref:`display-notebook`, :ref:`display-jupyterlab`, :ref:`display-nteract`
+and :ref:`display-colab`.
 
 .. _altair-vega-versions:
 
@@ -55,6 +56,7 @@ Altair displays visualizations using renderers. There are two aspects of rendere
   * :ref:`display-notebook`
   * :ref:`display-jupyterlab`
   * :ref:`display-nteract`
+  * :ref:`display-colab`
 
 .. _renderer-api:
 
@@ -124,8 +126,8 @@ for Vega-Lite/Vega described in :ref:`importing`.
 
 .. _display-notebook:
 
-Jupyter Notebook
-~~~~~~~~~~~~~~~~
+Displaying in the Jupyter Notebook
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To render Vega-Lite 2.x or Vega 3.x in the Jupyter Notebook (as mentioned above
 we recommend these versions), you will need to install and enable the
@@ -165,11 +167,11 @@ Once you have installed one of these packages, enable the corresponding renderer
 
 .. _display-jupyterlab:
 
-JupyterLab
-~~~~~~~~~~
+Displaying in JupyterLab
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 JupyterLab 0.31
-+++++++++++++++++
++++++++++++++++
 
 Version 0.31 of JupyterLab includes built-in support for VegaLite 1.x and Vega
 2.x. This will work with Altair's Vega-Lite 1.x API out of the box::
@@ -187,7 +189,7 @@ and then import Altair as::
     import altair as alt
 
 JupyterLab 0.32 and later
-+++++++++++++++++++++++++++
++++++++++++++++++++++++++
 
 JupyterLab versions 0.32 and later include built-in support for Vega-Lite 2.x and
 Vega 3.x. These will work out of the box with Altair imported as::
@@ -202,119 +204,27 @@ An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
 
 .. _display-nteract:
 
-nteract
-~~~~~~~
+Displaying in nteract
+~~~~~~~~~~~~~~~~~~~~~
 
 nteract will render Vega-Lite 1.x and Vega out of the box. Support for Vega-Lite 2.x
 and Vega 3.x will likely be released soon.
 
-.. _data-transformers:
+.. _display-colab:
 
-Data transformers
------------------
+Displaying in Colab
+~~~~~~~~~~~~~~~~~~~
+Google's Colab is a cloud-based notebook backed by Google Drive. Altair works
+with the public version of Colab once the package is installed and ``'colab'``
+renderer is enabled.
 
-Before a Vega-Lite or Vega specification can be passed to a renderer, it typically
-has to be transformed in a number of ways:
+At the top of your Colab session, run the following::
 
-* Pandas Dataframe has to be sanitized and serialized to JSON.
-* The rows of a Dataframe might need to be sampled or limited to a maximum number.
-* The Dataframe might be written to a ``.csv`` of ``.json`` file for performance
-  reasons.
+    !pip install altair
+    import altair as alt
+    alt.renderers.enable('colab')
 
-These data transformations are managed by the data transformation API of Altair.
-
-.. note::
-
-    The data transformation API of Altair should not be confused with the ``transform``
-    API of Vega and Vega-Lite.
-
-A data transformer is a Python function that takes a Vega-Lite data ``dict`` or
-Pandas ``DataFrame`` and returns a transformed version of either of these types::
-
-    from typing import Union
-    Data = Union[dict, pd.DataFrame]
-
-    def data_transformer(data: Data) -> Data:
-        # Transform and return the data
-        return transformed_data
-
-Built-in data transformers
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Altair includes a default set of data transformers with the following signatures.
-
-Raise a ``MaxRowsError`` if a Dataframe has more than ``max_rows`` rows::
-
-    limit_rows(data, max_rows=5000)
-
-Randomly sample a DataFrame (without replacement) before visualizing::
-
-    sample(data, n=None, frac=None)
-
-Convert a Dataframe to a separate ``.json`` file before visualization::
-
-    to_json(data, filename=None, prefix='altair-data', base_url='/', nbserver_cwd='~'):
-
-Convert a Dataframe to a separate ``.csv`` file before visualiztion::
-
-    to_csv(data, filename=None, prefix='altair-data', base_url='/', nbserver_cwd='~'):
-
-Convert a Dataframe to inline JSON values before visualization::
-
-    to_values(data):
-
-Piping
-~~~~~~
-
-Multiple data transformers can be piped together using ``pipe``::
-
-    from altair import pipe, limit_rows, to_values
-    pipe(data, limit_rows(10000), to_values)
-
-Managing data transformers
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Altair maintains a registry of data transformers, which includes a default
-data transformer that is automatically applied to all Dataframes before rendering.
-
-To see the registered transformers::
-
-    >>> import altair as alt
-    >>> alt.data_transformers.names()
-    ['default', 'json', 'csv']
-
-The default data transformer is the following::
-
-    def default_data_transformer(data):
-        return pipe(data, limit_rows, to_values)
-
-The ``json`` and ``csv`` data transformers will save a Dataframe to a temporary
-``.json`` or ``.csv`` file before rendering. There are a number of performance
-advantages to these two data transformers:
-
-* The full dataset will not be saved in the notebook document.
-* The performance of the Vega-Lite/Vega JavaScript appears to be better
-  for standalone JSON/CSV files than for inline values.
-
-There are disadvantages of the JSON/CSV data transformers:
-
-* The Dataframe will be exported to a temporary ``.json`` or ``.csv``
-  file that sits next to the notebook.
-* That notebook will not be able to re-render the visualization without
-  that temporary file (or re-running the cell).
-
-In our experience, the performance improvement is significant enough that
-we recommend using the ``json`` data transformer for any large datasets::
-
-    alt.data_transformers.enable('json')
-
-We hope that others will write additional data transformers - imagine a
-transformer which saves the dataset to a JSON file on S3, which could
-be registered and enabled as::
-
-    alt.data_transformers.register('s3', lambda data: pipe(sample, to_s3('mybucket')))
-    alt.data_transformers.enable('s3')
-
+And then you can create Altair plots normally within the notebook.
 
 
 .. _entrypoints: https://github.com/takluyver/entrypoints
@@ -322,6 +232,7 @@ be registered and enabled as::
 .. _ipyvega3: https://github.com/vega/ipyvega/tree/vega3
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
+.. _Colab: https://colab.research.google.com
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
 .. _Vega-Lite: http://vega.github.io/vega-lite
 .. _Vega: https://vega.github.io/vega/

@@ -1,19 +1,16 @@
 import os
 
-import pandas as pd
-from IPython.display import display
-
 from ...utils import PluginRegistry
 from ..display import Displayable
-from ..display import default_renderer as default_renderer_base
-from ..display import json_renderer as json_renderer_base
-from ..display import SpecType, MimeBundleType, RendererType
+from ..display import default_renderer_base
+from ..display import json_renderer_base
+from ..display import RendererType
 
 
 
-#==============================================================================
+# ==============================================================================
 # Vega 2 renderer logic
-#==============================================================================
+# ==============================================================================
 
 
 # The MIME type for Vega 2 releases.
@@ -30,7 +27,7 @@ DEFAULT_DISPLAY = """\
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
-https://altair-viz.github.io/user_guide/display.html
+https://altair-viz.github.io/user_guide/troubleshooting.html
 """
 
 renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
@@ -49,6 +46,7 @@ def json_renderer(spec):
 
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
+renderers.register('nteract', default_renderer)
 renderers.register('json', json_renderer)
 renderers.enable('default')
 
@@ -57,10 +55,10 @@ class Vega(Displayable):
     """An IPython/Jupyter display class for rendering Vega 2."""
 
     renderers = renderers
-    schema_path = os.path.join(here, 'schema', 'vega-schema.json')
+    schema_path = (__name__, 'schema/vega-schema.json')
 
 
-def vega(spec: dict, validate=True):
+def vega(spec, validate=True):
     """Render and optionally validate a Vega 2 spec.
 
     This will use the currently enabled renderer to render the spec.
@@ -72,4 +70,6 @@ def vega(spec: dict, validate=True):
     validate: bool
         Should the spec be validated against the Vega 2 schema?
     """
+    from IPython.display import display
+
     display(Vega(spec, validate=validate))

@@ -1,10 +1,37 @@
-from typing import Callable, Generic, List, TypeVar, Union, cast
+from typing import Generic, TypeVar, cast
 
 import entrypoints
-
+from toolz import curry
 
 
 PluginType = TypeVar('PluginType')
+
+
+class PluginEnabler(object):
+    """Context manager for enabling plugins
+
+    This object lets you use enable() as a context manager to
+    temporarily enable a given plugin::
+
+        with plugins.enable('name'):
+            do_something()  # 'name' plugin temporarily enabled
+        # plugins back to original state
+    """
+    def __init__(self, registry, name, **options):
+        self.registry = registry
+        self.name = name
+        self.options = options
+        self.original_state = registry._get_state()
+        self.registry._enable(name, **options)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, type, value, traceback):
+        self.registry._set_state(self.original_state    )
+
+    def __repr__(self):
+        return "{0}.enable({1!r})".format(self.registry.__class__.__name__, self.name)
 
 
 class PluginRegistry(Generic[PluginType]):
@@ -23,7 +50,12 @@ class PluginRegistry(Generic[PluginType]):
         reg = PluginRegister('my_entrypoint_group')
 
     """
-    def __init__(self, entry_point_group: str = '', plugin_type=object) -> None:
+    # this is a mapping of name to error message to allow custom error messages
+    # in case an entrypoint is not found
+    entrypoint_err_messages = {}
+
+    def __init__(self, entry_point_group='', plugin_type=object):
+        # type: (str, Any) -> None
         """Create a PluginRegistry for a named entry point group.
 
         Parameters
@@ -41,7 +73,8 @@ class PluginRegistry(Generic[PluginType]):
         self._plugins = {}      # type: dict
         self._options = {}      # type: dict
 
-    def register(self, name: str, value: Union[PluginType,None]) -> PluginType:
+    def register(self, name, value):
+        # type: (str, Union[PluginType, None]) -> PluginType
         """Register a plugin by name and value.
 
         This method is used for explicit registration of a plugin and shouldn't be
@@ -66,35 +99,88 @@ class PluginRegistry(Generic[PluginType]):
             self._plugins[name] = value
             return value
 
-
-    def names(self) -> List[str]:
+    def names(self):
+        # type: () -> List[str]
         """List the names of the registered and entry points plugins."""
         exts = list(self._plugins.keys())
         more_exts = [ep.name for ep in entrypoints.get_group_all(self.entry_point_group)]
         exts.extend(more_exts)
-        return exts
+        return sorted(set(exts))
 
+    def _get_state(self):
+        """Return a dictionary representing the current state of the registry"""
+        return {'_active': self._active,
+                '_active_name': self._active_name,
+                '_plugins': self._plugins.copy(),
+                '_options': self._options.copy()}
 
-    def enable(self, name: str) -> None:
-        """Enable a plugin by name."""
+    def _set_state(self, state):
+        """Reset the state of the registry"""
+        assert set(state.keys()) == {'_active', '_active_name',
+                                     '_plugins', '_options'}
+        for key, val in state.items():
+            setattr(self, key, val)
+
+    def _enable(self, name, **options):
+        # type: (str, **Any) -> None
         if name not in self._plugins:
-            ep = entrypoints.get_single(self.entry_point_group, name)
+            try:
+                ep = entrypoints.get_single(self.entry_point_group, name)
+            except entrypoints.NoSuchEntryPoint:
+                if name in self.entrypoint_err_messages:
+                    raise ValueError(self.entrypoint_err_messages[name])
+                else:
+                    raise
             value = cast(PluginType, ep.load())
             assert isinstance(value, self.plugin_type)
             self.register(name, value)
         self._active_name = name
         self._active = self._plugins[name]
+        self._options = options
+
+    def enable(self, name, **options):
+        # type: (str, **Any) -> PluginEnabler
+        """Enable a plugin by name.
+
+        This can be either called directly, or used as a context manager.
+
+        Parameters
+        ----------
+        name : string
+            The name of the plugin to enable
+        **options :
+            Any additional parameters will be passed to the plugin as keyword
+            arguments
+
+        Returns
+        -------
+        PluginEnabler:
+            An object that allows enable() to be used as a context manager
+        """
+        return PluginEnabler(self, name, **options)
 
     @property
-    def active(self) -> str:
+    def active(self):
+        # type: () -> str
         """Return the name of the currently active plugin"""
         return self._active_name
 
-    def get(self) -> PluginType:
-        """Return the currently active plugin."""
-        return self._active
+    @property
+    def options(self):
+        # type: () -> str
+        """Return the current options dictionary"""
+        return self._options
 
-    def __repr__(self) -> str:
+    def get(self):
+        # type: () -> PluginType
+        """Return the currently active plugin."""
+        if self._options:
+            return curry(self._active, **self._options)
+        else:
+            return self._active
+
+    def __repr__(self):
+        # type: () -> str
         return ("{0}(active={1!r}, registered={2!r})"
                 "".format(self.__class__.__name__,
                           self._active_name,

@@ -3,7 +3,7 @@ Layered Bar Chart with Line as Mean
 -----------------------------------
 This example shows mean overlay over precipitation chart.
 """
-
+# category: bar charts
 import altair as alt
 from vega_datasets import data
 
@@ -14,9 +14,9 @@ bar = alt.Chart(source).mark_bar().encode(
     alt.Y('mean(precipitation):Q')
 )
 
-rule = alt.Chart(source).mark_rule(color = 'red').encode(
+rule = alt.Chart(source).mark_rule(color='red').encode(
     y='mean(precipitation)',
     size=alt.value(3)
 )
 
-chart = bar + rule
+bar + rule

@@ -3,7 +3,7 @@ Bar Chart with Highlight
 ------------------------
 This example shows a Bar chart that highlights values beyond a threshold.
 """
-
+# category: bar charts
 import altair as alt
 import pandas as pd
 
@@ -14,14 +14,14 @@ data = pd.DataFrame({"Day": range(1, 16),
 data2 = pd.DataFrame([{"ThresholdValue": 300, "Threshold": "hazardous"}])
 
 bar1 = alt.Chart(data).mark_bar().encode(
-    x = 'Day:O',
-    y = 'Value:Q'
+    x='Day:O',
+    y='Value:Q'
 )
 
-bar2 = alt.Chart(data).mark_bar(color = "#e45755").encode(
-    x = 'Day:O',
-    y = 'baseline:Q',
-    y2 = 'Value:Q'
+bar2 = alt.Chart(data).mark_bar(color="#e45755").encode(
+    x='Day:O',
+    y='baseline:Q',
+    y2='Value:Q'
 ).transform_filter(
     "datum.Value >= 300"
 ).transform_calculate(
@@ -39,4 +39,4 @@ text = alt.Chart(data2).mark_text(
     text=alt.value('hazardous')
 )
 
-chart = bar1 + text + bar2 + rule
+bar1 + text + bar2 + rule

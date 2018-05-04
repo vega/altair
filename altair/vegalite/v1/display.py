@@ -1,20 +1,21 @@
 import os
 
-import pandas as pd
-from IPython.display import display
+from ...utils.mimebundle import spec_to_mimebundle
 
-from ...utils import PluginRegistry, headless, html
 from ..display import Displayable
-from ..display import default_renderer as default_renderer_base
-from ..display import json_renderer as json_renderer_base
-from ..display import SpecType, MimeBundleType, RendererType
-from . import api
+from ..display import default_renderer_base
+from ..display import json_renderer_base
+from ..display import RendererRegistry
+
+from .schema import SCHEMA_VERSION
+VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
+VEGA_VERSION = '2'
+VEGAEMBED_VERSION = '3'
 
 
-
-#==============================================================================
+# ==============================================================================
 # VegaLite v1 renderer logic
-#==============================================================================
+# ==============================================================================
 
 
 # The MIME type for Vega-Lite 1.x releases.
@@ -31,48 +32,52 @@ DEFAULT_DISPLAY = """\
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
-https://altair-viz.github.io/user_guide/display.html
+https://altair-viz.github.io/user_guide/troubleshooting.html
 """
 
-renderers = PluginRegistry[RendererType](entry_point_group=ENTRY_POINT_GROUP)
-
+renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
 here = os.path.dirname(os.path.realpath(__file__))
 
-
-def default_renderer(spec):
-    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY)
-
-
-def json_renderer(spec):
-    return json_renderer_base(spec, DEFAULT_DISPLAY)
+def default_renderer(spec, **metadata):
+    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY,
+                                 **metadata)
 
 
-def png_renderer(spec):
-    return headless.spec_to_image_mimebundle(spec, format='png',
-                                             mode='vega-lite',
-                                             vega_version=api.VEGA_VERSION,
-                                             vegaembed_version=api.VEGAEMBED_VERSION,
-                                             vegalite_version=api.VEGALITE_VERSION)
+def json_renderer(spec, **metadata):
+    return json_renderer_base(spec, DEFAULT_DISPLAY, **metadata)
 
 
-def svg_renderer(spec):
-    return headless.spec_to_image_mimebundle(spec, format='svg',
-                                             mode='vega-lite',
-                                             vega_version=api.VEGA_VERSION,
-                                             vegaembed_version=api.VEGAEMBED_VERSION,
-                                             vegalite_version=api.VEGALITE_VERSION)
+def png_renderer(spec, **metadata):
+    return spec_to_mimebundle(spec, format='png',
+                              mode='vega-lite',
+                              vega_version=VEGA_VERSION,
+                              vegaembed_version=VEGAEMBED_VERSION,
+                              vegalite_version=VEGALITE_VERSION,
+                              **metadata)
 
 
-def colab_renderer(spec):
-    return html.spec_to_html_mimebundle(spec, mode='vega-lite',
-                                        vega_version=api.VEGA_VERSION,
-                                        vegaembed_version=api.VEGAEMBED_VERSION,
-                                        vegalite_version=api.VEGALITE_VERSION)
+def svg_renderer(spec, **metadata):
+    return spec_to_mimebundle(spec, format='svg',
+                              mode='vega-lite',
+                              vega_version=VEGA_VERSION,
+                              vegaembed_version=VEGAEMBED_VERSION,
+                              vegalite_version=VEGALITE_VERSION,
+                              **metadata)
+
+
+def colab_renderer(spec, **metadata):
+    return spec_to_mimebundle(spec, format='html',
+                              mode='vega-lite',
+                              vega_version=VEGA_VERSION,
+                              vegaembed_version=VEGAEMBED_VERSION,
+                              vegalite_version=VEGALITE_VERSION,
+                              **metadata)
 
 
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
+renderers.register('nteract', default_renderer)
 renderers.register('json', json_renderer)
 renderers.register('png', png_renderer)
 renderers.register('svg', svg_renderer)
@@ -84,10 +89,10 @@ class VegaLite(Displayable):
     """An IPython/Jupyter display class for rendering VegaLite 1."""
 
     renderers = renderers
-    schema_path = os.path.join(here, 'schema', 'vega-lite-schema.json')
+    schema_path = (__name__, 'schema/vega-lite-schema.json')
 
 
-def vegalite(spec: dict, validate=True):
+def vegalite(spec, validate=True):
     """Render and optionally validate a VegaLite 1 spec.
 
     This will use the currently enabled renderer to render the spec.
@@ -99,4 +104,6 @@ def vegalite(spec: dict, validate=True):
     validate: bool
         Should the spec be validated against the VegaLite 1 schema?
     """
+    from IPython.display import display
+
     display(VegaLite(spec, validate=validate))

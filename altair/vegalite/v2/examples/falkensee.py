@@ -3,7 +3,7 @@ Falkensee
 -----------------------
 This example is a reproduction of the Falkanesee plot found in the vega-lite examples.
 """
-
+# category: line charts
 import altair as alt
 
 source = [
@@ -51,7 +51,8 @@ source2 = [{
             "start": "1933",
             "end": "1945",
             "event": "Nazi Rule"
-          },{
+          },
+          {
             "start": "1948",
             "end": "1989",
             "event": "GDR (East Germany)"
@@ -62,7 +63,7 @@ source = alt.pd.DataFrame(source)
 source2 = alt.pd.DataFrame(source2)
 
 
-line = alt.Chart(source).mark_line(color = '#333').encode(
+line = alt.Chart(source).mark_line(color='#333').encode(
     alt.X('year:T', axis=alt.Axis(format='%Y')),
     y='population'
 ).properties(
@@ -70,12 +71,12 @@ line = alt.Chart(source).mark_line(color = '#333').encode(
     height=400
 )
 
-point = line.mark_point(color = '#333')
+point = line.mark_point(color='#333')
 
 rect = alt.Chart(source2).mark_rect().encode(
-    x = 'start:T',
-    x2 = 'end:T',
-    color = 'event:N'
+    x='start:T',
+    x2='end:T',
+    color='event:N'
 )
 
-chart = rect + line + point
+rect + line + point

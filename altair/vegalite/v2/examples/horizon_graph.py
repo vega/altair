@@ -3,7 +3,7 @@ Horizon Graph
 -------------
 This example shows how to make a Horizon Graph with 2 layers. (See https://idl.cs.washington.edu/papers/horizon/ for more details on Horizon Graphs.)
 """
-
+# category: area charts
 import altair as alt
 from altair.expr import datum
 import pandas as pd
@@ -27,16 +27,16 @@ area1 = alt.Chart(df).mark_area(
 ).encode(
     alt.X('x', scale=alt.Scale(zero=False, nice=False)),
     alt.Y('y', scale=alt.Scale(domain=[0, 50]), axis=alt.Axis(title='y')),
-    opacity = alt.value(0.6)
+    opacity=alt.value(0.6)
 ).properties(
     width=500,
     height=75
 )
 
 area2 = area1.encode(
-    y='ny:Q'
+    alt.Y('ny:Q', scale=alt.Scale(domain=[0, 50]))
 ).transform_calculate(
     "ny", datum.y - 50
 )
 
-chart = area1 + area2
+area1 + area2

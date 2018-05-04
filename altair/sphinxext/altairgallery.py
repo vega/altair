@@ -1,15 +1,11 @@
 import hashlib
-import importlib
 import os
-import shutil
-import warnings
 import json
 import random
+import collections
 from operator import itemgetter
 
 import jinja2
-
-from subprocess import CalledProcessError
 
 from docutils import nodes
 from docutils.statemachine import ViewList
@@ -19,6 +15,7 @@ from docutils.parsers.rst.directives import flag
 from sphinx.util.nodes import nested_parse_with_titles
 
 from .utils import get_docstring_and_rest, prev_this_next, create_thumbnail
+from altair.utils.execeval import eval_block
 from altair.vegalite.v2.examples import iter_examples
 
 
@@ -33,22 +30,21 @@ GALLERY_TEMPLATE = jinja2.Template(u"""
 {{ title }}
 {% for char in title %}-{% endfor %}
 
-This gallery contains a selection of examples of the types of plots Altair
-can create. Though some may seem fairly complicated at first glance, they
-are built by combining a simple set of declarative building blocks:
-see the User Guide for more information on this.
+This gallery contains a selection of examples of the plots Altair can create.
 
-{% for group in examples|groupby('category') %}
+Some may seem fairly complicated at first glance, but they are built by combining a simple set of declarative building blocks.
 
-.. _gallery-category-{{ group.grouper }}:
+{% for grouper, group in examples %}
 
-{{ group.grouper }}
-{% for char in group.grouper %}~{% endfor %}
+.. _gallery-category-{{ grouper }}:
+
+{{ grouper }}
+{% for char in grouper %}~{% endfor %}
 
 .. raw:: html
 
    <span class="gallery">
-   {% for example in group.list %}
+   {% for example in group %}
    <a class="imagegroup" href="{{ example.name }}.html">
      <span class="image" alt="{{ example.title }}" style="background-image: url({{ image_dir }}/{{ example.name }}-thumb.png);"></span>
      <span class="image-title">{{ example.title }}</span>
@@ -60,7 +56,7 @@ see the User Guide for more information on this.
 
 .. toctree::
   :hidden:
-{% for example in group.list %}
+{% for example in group %}
   {{ example.name }}
 {%- endfor %}
 
@@ -88,7 +84,6 @@ EXAMPLE_TEMPLATE = jinja2.Template(u"""
 {{ docstring }}
 
 .. altair-plot::
-    :chart-var-name: chart
     {% if code_below %}:code-below:{% endif %}
 
     {{ code | indent(4) }}
@@ -118,14 +113,13 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
 
         example_hash = hashlib.md5(example['code'].encode()).hexdigest()
         hashes_match = (hashes.get(filename, '') == example_hash)
-        print('-> using cached {0}'.format(image_file))
 
-        if not hashes_match or not os.path.exists(image_file):
+        if hashes_match and os.path.exists(image_file):
+            print('-> using cached {0}'.format(image_file))
+        else:
             # the file changed or the image file does not exist. Generate it.
             print('-> saving {0}'.format(image_file))
-            _globals = {}
-            exec(example['code'], _globals)
-            chart = _globals['chart']
+            chart = eval_block(example['code'])
             chart.save(image_file)
             hashes[filename] = example_hash
 
@@ -166,6 +160,7 @@ class AltairMiniGalleryDirective(Directive):
     has_content = False
 
     option_spec = {'size': int,
+                   'names': str,
                    'indices': lambda x: list(map(int, x.split())),
                    'shuffle': flag,
                    'seed': int,
@@ -174,6 +169,7 @@ class AltairMiniGalleryDirective(Directive):
 
     def run(self):
         size = self.options.get('size', 15)
+        names = [name.strip() for name in self.options.get('names', '').split(',')]
         indices = self.options.get('indices', [])
         shuffle = 'shuffle' in self.options
         seed = self.options.get('seed', 42)
@@ -184,17 +180,23 @@ class AltairMiniGalleryDirective(Directive):
         app = env.app
 
         gallery_dir = app.builder.config.altair_gallery_dir
-        gallery_ref = app.builder.config.altair_gallery_ref
 
         examples = populate_examples()
 
-        if indices:
-            examples = [examples[i] for i in indices]
-        if shuffle:
-            random.seed(seed)
-            random.shuffle(examples)
-        if size:
-            examples = examples[:size]
+        if names:
+            if len(names) < size:
+                raise ValueError("altair-minigallery: if names are specified, "
+                                 "the list must be at least as long as size.")
+            mapping = {example['name']: example for example in examples}
+            examples = [mapping[name] for name in names]
+        else:
+            if indices:
+                examples = [examples[i] for i in indices]
+            if shuffle:
+                random.seed(seed)
+                random.shuffle(examples)
+            if size:
+                examples = examples[:size]
 
         include = MINIGALLERY_TEMPLATE.render(image_dir='/_static',
                                               gallery_dir=gallery_dir,
@@ -226,10 +228,25 @@ def main(app):
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
 
+    examples = sorted(examples, key=lambda x: x['title'])
+    examples_toc = collections.OrderedDict({
+        'Simple Charts': [],
+        'Bar Charts': [],
+        'Line Charts': [],
+        'Area Charts': [],
+        'Scatter Plots': [],
+        'Histograms': [],
+        'Maps': [],
+        'Interactive Charts': [],
+        'Other Charts': []
+    })
+    for d in examples:
+        examples_toc[d['category']].append(d)
+
     # Write the gallery index file
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
         f.write(GALLERY_TEMPLATE.render(title=gallery_title,
-                                        examples=examples,
+                                        examples=examples_toc.items(),
                                         image_dir='/_static',
                                         gallery_ref=gallery_ref))
 

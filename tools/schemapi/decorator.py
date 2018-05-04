@@ -1,6 +1,4 @@
 import warnings
-
-from .utils import SchemaInfo
 from . import codegen, SchemaBase, Undefined
 
 
@@ -34,18 +32,18 @@ def schemaclass(*args, init_func=True, docstring=True, property_map=True):
             warnings.warn("class is not an instance of SchemaBase.")
 
         name = cls.__name__
+        gen = codegen.SchemaGenerator(name, schema=cls._schema,
+                                      rootschema=cls._rootschema)
 
         if init_func and '__init__' not in cls.__dict__:
-            init_code = codegen.init_code(name, schema=cls._schema,
-                                          rootschema=cls._rootschema)
+            init_code = gen.init_code()
             globals_ = {name: cls, 'Undefined': Undefined}
             locals_ = {}
             exec(init_code, globals_, locals_)
             setattr(cls, '__init__', locals_['__init__'])
 
         if docstring and not cls.__doc__:
-            setattr(cls, '__doc__', codegen.docstring(name, schema=cls._schema,
-                                                      rootschema=cls._rootschema))
+            setattr(cls, '__doc__', gen.docstring())
         return cls
 
     if len(args) == 0:

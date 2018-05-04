@@ -4,7 +4,7 @@ Layering text over a heatmap
 
 An example of a layered chart of text over a heatmap using the cars dataset.
 """
-
+# category: other charts
 import altair as alt
 from altair.expr import datum
 from vega_datasets import data
@@ -26,4 +26,4 @@ text = alt.Chart(cars).mark_text(baseline='middle').encode(
                         alt.value('white'))
 )
 
-chart = heatmap + text
+heatmap + text

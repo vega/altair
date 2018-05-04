@@ -4,7 +4,7 @@ Locations of US Airports
 This is a layered geographic visualization that shows the positions of US
 airports on a background of US states.
 """
-# category: geographic
+# category: maps
 import altair as alt
 from vega_datasets import data
 
@@ -16,10 +16,9 @@ background = alt.Chart(states).mark_geoshape(
     fill='lightgray',
     stroke='white'
 ).properties(
-    projection={'type': 'albersUsa'},
     width=500,
     height=300
-)
+).project('albersUsa')
 
 # airport positions on background
 points = alt.Chart(airports).mark_circle().encode(
@@ -29,4 +28,4 @@ points = alt.Chart(airports).mark_circle().encode(
     color=alt.value('steelblue')
 )
 
-chart = background + points
+background + points

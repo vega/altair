@@ -28,7 +28,7 @@ TYPECODE_MAP = {'ordinal': 'O',
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
 
-def infer_vegalite_type(data, field=None):
+def infer_vegalite_type(data):
     """
     From an array-like input, infer the correct vega typecode
     ('ordinal', 'nominal', 'quantitative', or 'temporal')
@@ -36,14 +36,7 @@ def infer_vegalite_type(data, field=None):
     Parameters
     ----------
     data: Numpy array or Pandas Series
-    field: str column name
     """
-    # See if we can read the type from the field
-    if field is not None:
-        parsed = parse_shorthand(field)
-        if parsed.get('type'):
-            return parsed['type']
-
     # Otherwise, infer based on the dtype of the input
     typ = infer_dtype(data)
 
@@ -209,29 +202,29 @@ def parse_shorthand(shorthand, data=None):
     >>> parse_shorthand('name')
     {'field': 'name'}
 
-    >>> parse_shorthand('average(col)')
-    {'field': 'col', 'aggregate': 'average'}
+    >>> parse_shorthand('average(col)')  # doctest: +SKIP
+    {'aggregate': 'average', 'field': 'col'}
 
-    >>> parse_shorthand('foo:O')
+    >>> parse_shorthand('foo:O')  # doctest: +SKIP
     {'field': 'foo', 'type': 'ordinal'}
 
-    >>> parse_shorthand('min(foo):Q')
-    {'field': 'foo', 'aggregate': 'min', 'type': 'ordinal'}
+    >>> parse_shorthand('min(foo):Q')  # doctest: +SKIP
+    {'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'}
 
-    >>> parse_shorthand('foo', data)
+    >>> parse_shorthand('foo', data)  # doctest: +SKIP
     {'field': 'foo', 'type': 'nominal'}
 
-    >>> parse_shorthand('bar', data)
+    >>> parse_shorthand('bar', data)  # doctest: +SKIP
     {'field': 'bar', 'type': 'quantitative'}
 
-    >>> parse_shorthand('bar:O', data)
+    >>> parse_shorthand('bar:O', data)  # doctest: +SKIP
     {'field': 'bar', 'type': 'ordinal'}
 
-    >>> parse_shorthand('sum(bar)', data)
+    >>> parse_shorthand('sum(bar)', data)  # doctest: +SKIP
     {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
 
-    >>> parse_shorthand('count()', data)
-    {'aggregate': 'count', 'bar', 'type': 'quantitative'}
+    >>> parse_shorthand('count()', data)  # doctest: +SKIP
+    {'aggregate': 'count', 'type': 'quantitative'}
     """
     attrs = _parse_shorthand(shorthand)
     if isinstance(data, pd.DataFrame) and 'type' not in attrs:
@@ -250,9 +243,15 @@ def use_signature(Obj):
 
         # Supplement the docstring of f with information from Obj
         doclines = Obj.__doc__.splitlines()
-        if not f.__doc__:
-            f.__doc__ = ""
-        f.__doc__ += '\n'.join(doclines[1:])
+        if f.__doc__:
+            doc = f.__doc__ + '\n'.join(doclines[1:])
+        else:
+            doc = '\n'.join(doclines)
+        try:
+            f.__doc__ = doc
+        except AttributeError:
+            # __doc__ is not modifiable for classes in Python < 3.3
+            pass
         return f
     return decorate
 
@@ -306,9 +305,9 @@ def update_nested(original, update, copy=False):
     --------
     >>> original = {'x': {'b': 2, 'c': 4}}
     >>> update = {'x': {'b': 5, 'd': 6}, 'y': 40}
-    >>> update_nested(original, update)
+    >>> update_nested(original, update)  # doctest: +SKIP
     {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
-    >>> original
+    >>> original  # doctest: +SKIP
     {'x': {'b': 5, 'c': 4, 'd': 6}, 'y': 40}
     """
     if copy:

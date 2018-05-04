@@ -3,14 +3,14 @@ Normalized Stacked Bar Chart
 ----------------------------
 This example shows how to make a normalized stacked bar chart.
 """
-
+# category: bar charts
 import altair as alt
 from altair.expr import datum, if_
 from vega_datasets import data
 
 source = data.population.url
 
-chart = alt.Chart(source).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     alt.X('age:O', scale=alt.Scale(rangeStep=17)),
     alt.Y('sum(people):Q',
         axis=alt.Axis(title='population'),

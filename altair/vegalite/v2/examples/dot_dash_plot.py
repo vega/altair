@@ -5,7 +5,7 @@ This example shows how to make a dot-dash plot presented in Edward Tufte's book
 Visual Display of Quantitative Information on page 133. This example is based
 on https://bl.ocks.org/g3o2/bd4362574137061c243a2994ba648fb8.
 """
-
+# category: scatter plots
 import altair as alt
 from vega_datasets import data
 
@@ -40,4 +40,4 @@ y_ticks = alt.Chart(cars).mark_tick().encode(
     selection=brush
 )
 
-chart = y_ticks | (points & x_ticks)
+y_ticks | (points & x_ticks)

@@ -47,6 +47,15 @@ def read(path, encoding='utf-8'):
         return fp.read()
 
 
+def get_install_requirements(path):
+    content = read(path)
+    return [
+        req
+        for req in content.split("\n")
+        if req != '' and not req.startswith('#')
+    ]
+
+
 def version(path):
     """Obtain the packge version from a python file e.g. pkg/__init__.py
 
@@ -92,19 +101,12 @@ PACKAGE_DATA        = {'altair': [
                                   ]
                       }
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
-AUTHOR_EMAIL        = "ellisonbg@gmail.com / jakevdp@gmail.com"
+AUTHOR_EMAIL        = "jakevdp@gmail.com"
 URL                 = 'http://altair-viz.github.io'
 DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
-INSTALL_REQUIRES    = ['entrypoints',
-                       'ipython',
-                       'jsonschema',
-                       'numpy',
-                       'pandas',
-                       'pytest',
-                       'six',
-                       'toolz',
-                       'vega_datasets']
+INSTALL_REQUIRES    = get_install_requirements("requirements.txt")
+DEV_REQUIRES        = get_install_requirements("requirements_dev.txt")
 VERSION             = version('altair/__init__.py')
 
 
@@ -120,6 +122,9 @@ setup(name=NAME,
       packages=PACKAGES,
       package_data=PACKAGE_DATA,
       install_requires=INSTALL_REQUIRES,
+      extras_require={
+        'dev': DEV_REQUIRES
+      },
       classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',

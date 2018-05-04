@@ -65,11 +65,9 @@ from docutils.parsers.rst import Directive
 from docutils.parsers.rst.directives import flag, unchanged
 
 from sphinx.locale import _
-from sphinx import addnodes, directives
-from sphinx.util.nodes import set_source_info
 
 import altair as alt
-from .utils import exec_then_eval
+from altair.utils.execeval import eval_block
 
 # These default URLs can be changed in conf.py; see setup() below.
 VEGA_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega@3"
@@ -158,7 +156,7 @@ class AltairPlotDirective(Directive):
             source_literal = nodes.literal_block(code, code)
             source_literal['language'] = 'python'
 
-        #get the name of the source file we are currently processing
+        # get the name of the source file we are currently processing
         rst_source = self.state_machine.document['source']
         rst_dir = os.path.dirname(rst_source)
         rst_filename = os.path.basename(rst_source)
@@ -205,7 +203,7 @@ def html_visit_altair_plot(self, node):
     try:
         f = io.StringIO()
         with contextlib.redirect_stdout(f):
-            chart = exec_then_eval(node['code'], namespace)
+            chart = eval_block(node['code'], namespace)
         stdout = f.getvalue()
     except Exception as e:
         warnings.warn("altair-plot: {0}:{1} Code Execution failed:"

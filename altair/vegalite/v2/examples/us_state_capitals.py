@@ -4,12 +4,11 @@ U.S. state capitals overlayed on a map of the U.S
 This is a layered geographic visualization that shows US capitals
 overlayed on a map.
 """
-# category: geographic
-
+# category: maps
 import altair as alt
 from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m.url,'states')
+states = alt.topo_feature(data.us_10m.url, 'states')
 capitals = data.us_state_capitals.url
 
 # US states background
@@ -18,10 +17,9 @@ background = alt.Chart(states).mark_geoshape(
     stroke='white'
 ).properties(
     title='US State Capitols',
-    projection={'type': 'albersUsa'},
     width=700,
     height=400
-)
+).project('albersUsa')
 
 # Points and text
 hover = alt.selection(type='single', on='mouseover', nearest=True,
@@ -44,4 +42,4 @@ points = base.mark_point().encode(
     selection=hover
 )
 
-chart = background + points + text
+background + points + text

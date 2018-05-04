@@ -198,8 +198,8 @@ In this example, we explicitly loop over different x and y encodings
 to create a 2 x 2 grid of charts showing different views of the data.
 The code is straightforward, if a bit verbose.
 
-The :class:`RepeatChart` pattern makes this type of chart a bit easier
-to produce:
+The :class:`RepeatChart` pattern, accessible via the :meth:`Chart.repeat`
+method, makes this type of chart a bit easier to produce:
 
 .. altair-plot::
 
@@ -323,6 +323,10 @@ layered chart with a hover selection:
         column='species:N',
         data=iris
     )
+
+Notice that we specify the data within the facet here; this is important, because
+the top-level facet needs access to this data in order to know how to encode
+the column.
 
 Though each of the above examples have faceted the data across columns,
 faceting across rows (or across rows *and* columns) is supported as

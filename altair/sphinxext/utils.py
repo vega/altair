@@ -1,11 +1,11 @@
 from __future__ import division
 
 import ast
+import six
 import hashlib
 import itertools
 import json
 import re
-import sys
 
 
 def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):
@@ -26,56 +26,6 @@ def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):
 
     thumb = im.resize((final_width, final_height), Image.ANTIALIAS)
     thumb.save(thumb_filename)
-
-
-class _CatchDisplay(object):
-    """Class to temporarily catch sys.displayhook"""
-    def __init__(self):
-        self.output = None
-
-    def __enter__(self):
-        self.old_hook = sys.displayhook
-        sys.displayhook = self
-        return self
-
-    def __exit__(self, type, value, traceback):
-        sys.displayhook = self.old_hook
-        # Returning False will cause exceptions to propagate
-        return False
-
-    def __call__(self, output):
-        self.output = output
-
-
-def exec_then_eval(code, namespace=None, filename='<string>'):
-    """
-    Execute a multi-line block of code in the given namespace
-
-    If the final statement in the code is an expression, return
-    the result of the expression.
-    """
-    tree = ast.parse(code, filename='<ast>', mode='exec')
-    if namespace is None:
-        namespace = {}
-    catch_display = _CatchDisplay()
-
-    if isinstance(tree.body[-1], ast.Expr):
-        to_exec, to_eval = tree.body[:-1], tree.body[-1:]
-    else:
-        to_exec, to_eval = tree.body, []
-
-    for node in to_exec:
-        compiled = compile(ast.Module([node]),
-                           filename=filename, mode='exec')
-        exec(compiled, namespace)
-
-    with catch_display:
-        for node in to_eval:
-            compiled = compile(ast.Interactive([node]),
-                               filename=filename, mode='single')
-            exec(compiled, namespace)
-
-    return catch_display.output
 
 
 SYNTAX_ERROR_DOCSTRING = """
@@ -190,13 +140,13 @@ def get_docstring_and_rest(filename):
     except AttributeError:
         # this block can be removed when python 3.6 support is dropped
         if node.body and isinstance(node.body[0], ast.Expr) and \
-           isinstance(node.body[0].value, ast.Str):
+                         isinstance(node.body[0].value, ast.Str):
             docstring_node = node.body[0]
             docstring = docstring_node.value.s
             # python2.7: Code was read in bytes needs decoding to utf-8
             # unless future unicode_literals is imported in source which
             # make ast output unicode strings
-            if hasattr(docstring, 'decode') and not isinstance(docstring, unicode):
+            if hasattr(docstring, 'decode') and not isinstance(docstring, six.text_type):
                 docstring = docstring.decode('utf-8')
             lineno = docstring_node.lineno  # The last line of the string.
             # This get the content of the file after the docstring last line

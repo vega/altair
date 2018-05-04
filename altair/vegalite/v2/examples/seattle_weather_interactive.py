@@ -5,8 +5,7 @@ This chart provides an interactive exploration of Seattle weather over the
 course of the year. It includes a one-axis brush selection to easily
 see the distribution of weather types in a particular date range.
 """
-# category: interactive
-
+# category: interactive charts
 import altair as alt
 from vega_datasets import data
 
@@ -49,7 +48,7 @@ bars = alt.Chart().mark_bar().encode(
     selection=click
 )
 
-chart = alt.vconcat(points, bars,
+alt.vconcat(points, bars,
     data=data.seattle_weather.url,
     title="Seattle Weather: 2012-2015"
 )

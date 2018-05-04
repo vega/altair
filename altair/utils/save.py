@@ -1,16 +1,14 @@
 import json
-import textwrap
 
 import six
 
 from .core import write_file_or_filename
-from .headless import spec_to_image_mimebundle
-from .html import spec_to_html_mimebundle
+from .mimebundle import spec_to_mimebundle
 
 
 def save(chart, fp, vega_version, vegaembed_version,
          format=None, mode=None, vegalite_version=None,
-         opt=None, json_kwds=None):
+         embed_options=None, json_kwds=None, webdriver='chrome'):
     """Save a chart to file in a variety of formats
 
     Supported formats are [json, html, png, svg]
@@ -22,7 +20,7 @@ def save(chart, fp, vega_version, vegaembed_version,
     fp : string filename or file-like object
         file in which to write the chart.
     format : string (optional)
-        the format to write: one of ['json', 'html', 'png', 'eps'].
+        the format to write: one of ['json', 'html', 'png', 'svg'].
         If not specified, the format will be determined from the filename.
     mode : string (optional)
         Either 'vega' or 'vegalite'. If not specified, then infer the mode from
@@ -34,31 +32,33 @@ def save(chart, fp, vega_version, vegaembed_version,
         For html output, the version of vegalite.js to use
     vegaembed_version : string
         For html output, the version of vegaembed.js to use
-    opt : dict
+    embed_options : dict
         The vegaEmbed options dictionary. Default is {}
         (See https://github.com/vega/vega-embed for details)
     json_kwds : dict
         Additional keyword arguments are passed to the output method
         associated with the specified format.
+    webdriver : string {'chrome' | 'firefox'}
+        Webdriver to use.
     """
     if json_kwds is None:
         json_kwds = {}
 
-    if opt is None:
-        opt = {}
+    if embed_options is None:
+        embed_options = {}
 
     if format is None:
         if isinstance(fp, six.string_types):
             format = fp.split('.')[-1]
         else:
             raise ValueError("must specify file format: "
-                             "['png', 'eps', 'html', 'json']")
+                             "['png', 'svg', 'html', 'json']")
 
     spec = chart.to_dict()
 
     if mode is None:
-        if 'mode' in opt:
-            mode = opt['mode']
+        if 'mode' in embed_options:
+            mode = embed_options['mode']
         elif '$schema' in spec:
             mode = spec['$schema'].split('/')[-2]
         else:
@@ -73,19 +73,21 @@ def save(chart, fp, vega_version, vegaembed_version,
 
     if format == 'json':
         json_spec = json.dumps(spec, **json_kwds)
-        write_file_or_filename(fp, json_spec, mode='w')
+        write_file_or_filename(fp, six.u(json_spec), mode='w')
     elif format == 'html':
-        mimebundle = spec_to_html_mimebundle(spec=spec, mode=mode, opt=opt,
-                                             vega_version=vega_version,
-                                             vegalite_version=vegalite_version,
-                                             vegaembed_version=vegaembed_version,
-                                             json_kwds=json_kwds)
+        mimebundle = spec_to_mimebundle(spec=spec, format=format, mode=mode,
+                                        vega_version=vega_version,
+                                        vegalite_version=vegalite_version,
+                                        vegaembed_version=vegaembed_version,
+                                        embed_options=embed_options,
+                                        json_kwds=json_kwds)
         write_file_or_filename(fp, mimebundle['text/html'], mode='w')
-    elif format in ['png', 'svg']:
-        mimebundle = spec_to_image_mimebundle(spec=spec, format=format, mode=mode,
-                                              vega_version=vega_version,
-                                              vegalite_version=vegalite_version,
-                                              vegaembed_version=vegaembed_version)
+    elif format in ['png', 'svg', 'html']:
+        mimebundle = spec_to_mimebundle(spec=spec, format=format, mode=mode,
+                                        vega_version=vega_version,
+                                        vegalite_version=vegalite_version,
+                                        vegaembed_version=vegaembed_version,
+                                        webdriver=webdriver)
         if format == 'png':
             write_file_or_filename(fp, mimebundle['image/png'], mode='wb')
         else:

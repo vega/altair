@@ -1,28 +1,24 @@
-import os
-from os.path import join, dirname, abspath
+import pkgutil
 
 import pytest
 
-EXAMPLE_DIR = abspath(join(dirname(__file__), '..'))
+from altair.utils.execeval import eval_block
+from altair.vegalite.v2 import examples
 
 
 def iter_example_filenames():
-    for filename in os.listdir(EXAMPLE_DIR):
-        if filename.startswith('__'):
+    for importer, modname, ispkg in pkgutil.iter_modules(examples.__path__):
+        if ispkg or modname.startswith('_'):
             continue
-        if not filename.endswith('.py'):
-            continue
-        yield filename
+        yield modname + '.py'
 
 
 @pytest.mark.parametrize('filename', iter_example_filenames())
 def test_examples(filename):
-    with open(join(EXAMPLE_DIR, filename)) as f:
-        source = f.read()
-    globals_ = {}
-    exec(source, globals_)
+    source = pkgutil.get_data(examples.__name__, filename)
+    chart = eval_block(source)
 
-    if 'chart' not in globals_:
-        raise ValueError("Example file should define a chart variable")
-    chart = globals_['chart']
-    dct = chart.to_dict()
+    if chart is None:
+        raise ValueError("Example file should define chart in its final "
+                         "statement.")
+    chart.to_dict()

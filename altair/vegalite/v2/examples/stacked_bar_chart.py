@@ -4,13 +4,13 @@ Stacked Bar Chart
 
 This example shows how to make a stacked bar chart of the weather type in Seattle from 2012 to 2015 by month.
 """
-
+# category: bar charts
 import altair as alt
 from vega_datasets import data
 
 weather = data.seattle_weather()
 
-chart = alt.Chart(weather).mark_bar().encode(
+alt.Chart(weather).mark_bar().encode(
     alt.Color('weather:N',
         legend=alt.Legend(title='Weather type'),
         scale=alt.Scale(

@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+#
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 import collections
 import contextlib
+import inspect
 import json
 
 import jsonschema
@@ -40,14 +43,30 @@ def debug_mode(arg):
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
     def __init__(self, obj, err):
-        super(SchemaValidationError, self).__init__(**err._contents())
+        super(SchemaValidationError, self).__init__(**self._get_contents(err))
         self.obj = obj
+
+    @staticmethod
+    def _get_contents(err):
+        """Get a dictionary with the contents of a ValidationError"""
+        try:
+            # works in jsonschema 2.3 or later
+            contents = err._contents()
+        except:
+            try:
+                # works in Python >=3.4
+                spec = inspect.getfullargspec(err.__init__)
+            except AttributeError:
+                # works in Python <3.4
+                spec = inspect.getargspec(err.__init__)
+            contents = {key: getattr(err, key) for key in spec.args[1:]}
+        return contents
 
     def __unicode__(self):
         cls = self.obj.__class__
-        schema_path = ['{0}.{1}'.format(cls.__module__,cls.__name__)]
+        schema_path = ['{0}.{1}'.format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
-        schema_path = ' ->'.join(val for val in schema_path[:-1]
+        schema_path = '->'.join(val for val in schema_path[:-1]
                                 if val not in ('properties',
                                                'additionalProperties',
                                                'patternProperties'))
@@ -62,7 +81,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         __str__ = __unicode__
     else:
         def __str__(self):
-            return unicode(self).encode("utf-8")
+            return six.text_type(self).encode("utf-8")
 
 
 
@@ -108,7 +127,7 @@ class SchemaBase(object):
         object.__setattr__(self, '_kwds', kwds)
 
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
-            _ = self.to_dict(validate=True)
+            self.to_dict(validate=True)
 
     def copy(self, deep=True, ignore=()):
         """Return a copy of the object
@@ -167,7 +186,7 @@ class SchemaBase(object):
     def __repr__(self):
         if self._kwds:
             args = ("{0}: {1!r}".format(key, val)
-                    for key, val in self._kwds.items()
+                    for key, val in sorted(self._kwds.items())
                     if val is not Undefined)
             args = '\n' + ',\n'.join(args)
             return "{0}({{{1}\n}})".format(self.__class__.__name__,
@@ -344,7 +363,8 @@ class SchemaBase(object):
                                                       or cls._schema
                                                       or schema)
         while '$ref' in schema:
-            ref, schema = resolver.resolve(schema['$ref'])
+            with resolver.resolving(schema['$ref']) as resolved:
+                schema = resolved
         return schema
 
     def __dir__(self):

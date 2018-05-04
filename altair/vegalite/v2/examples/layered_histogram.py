@@ -3,24 +3,24 @@ Layered Histogram
 =================
 This example shows how to use opacity to make a layered histogram in Altair.
 """
-
+# category: histograms
 import pandas as pd
 import altair as alt
 import numpy as np
 np.random.seed(42)
 
 # Generating Data
-df = pd.DataFrame({'Trial A':np.random.normal(0, 0.8, 1000),
-                   'Trial B':np.random.normal(-2, 1, 1000),
-                   'Trial C':np.random.normal(3, 2, 1000)})
+df = pd.DataFrame({'Trial A': np.random.normal(0, 0.8, 1000),
+                   'Trial B': np.random.normal(-2, 1, 1000),
+                   'Trial C': np.random.normal(3, 2, 1000)})
 
 # Tidying Data
 df = pd.melt(df, id_vars=df.index.name,
              value_vars=df.columns,
-             var_name = 'Experiment',
+             var_name='Experiment',
              value_name='Measurement')
 
-chart = alt.Chart(df).mark_area(
+alt.Chart(df).mark_area(
     opacity=0.3,
     interpolate='step'
 ).encode(

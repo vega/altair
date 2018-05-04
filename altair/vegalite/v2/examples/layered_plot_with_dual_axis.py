@@ -3,7 +3,7 @@ Layered Plot with Dual-Axis
 ---------------------------
 This example shows how to combine two plots and keep their axes.
 """
-
+# category: bar charts
 import altair as alt
 from vega_datasets import data
 
@@ -26,4 +26,9 @@ line =  base.mark_line(color='red').encode(
     y='mean(temp_max)',
 )
 
-chart = (bar + line).resolve_scale(y='independent')
+alt.layer(
+    bar,
+    line
+).resolve_scale(
+    y='independent'
+)

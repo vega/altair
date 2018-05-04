@@ -3,7 +3,7 @@ Diverging Stacked Bar Chart
 ---------------------------
 This example shows a diverging stacked bar chart for sentiments towards a set of eight questions, displayed as percentages with neutral responses straddling the 0% mark.
 """
-
+# category: bar charts
 import altair as alt
 
 data =     [
@@ -346,21 +346,21 @@ color_scale = alt.Scale(
             range=["#c30d24", "#f3a583", "#cccccc", "#94c6da", "#1770ab"]
         )
 
-y_axis = alt.Axis(title = 'Question',
-                  offset = 5,
-                  ticks = False,
-                  minExtent = 60,
-                  domain = False)
+y_axis = alt.Axis(title='Question',
+                  offset=5,
+                  ticks=False,
+                  minExtent=60,
+                  domain=False)
 
 source = alt.pd.DataFrame(data)
 
-chart = alt.Chart(source).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     x='percentage_start:Q',
     x2='percentage_end:Q',
     y=alt.Y('question:N', axis=y_axis),
     color=alt.Color(
         'type:N',
         legend=alt.Legend( title='Response'),
-        scale = color_scale,
+        scale=color_scale,
     )
 )

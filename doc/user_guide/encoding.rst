@@ -7,9 +7,12 @@ Encodings
 
 The key to creating meaningful visualizations is to map *properties of the data*
 to *visual properties* in order to effectively communicate information.
-Altair abstracts this mapping through the idea of *channel encodings*.
-For example, here we will plot the *cars* dataset using four of the available
-channel encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
+In Alair, this mapping of visual properties to data columns is referred to
+as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
+method.
+
+For example, here we will visualize the cars dataset using four of the available
+encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
 ``color`` (the color of the marker), and ``shape`` (the shape of the point marker):
 
 .. altair-plot::
@@ -31,27 +34,25 @@ legends to represent the data.
 
 .. _encoding-channels:
 
-Channels
-~~~~~~~~
+Encoding Channels
+~~~~~~~~~~~~~~~~~
 
 Altair provides a number of encoding channels that can be useful in different
 circumstances; the following table summarizes them:
-
-*TODO: link to examples of each*
 
 Position Channels:
 
 ==========  ===================  =================================  ===================================
 Channel     Altair Class         Description                        Example
 ==========  ===================  =================================  ===================================
-x           :class:`X`           The x-axis value
-y           :class:`Y`           The y-axis value
-x2          :class:`X2`          Second x value for ranges
-y2          :class:`Y2`          Second y value for ranges
-longitude   :class:`Longitude`   Longitude for geo charts
-latitude    :class:`Latitude`    Latitude for geo charts
-longitude2  :class:`Longitude2`  Second longitude value for ranges
-latitude2   :class:`Latitude2`   Second latitude value for ranges
+x           :class:`X`           The x-axis value                   :ref:`gallery_simple_scatter`
+y           :class:`Y`           The y-axis value                   :ref:`gallery_simple_scatter`
+x2          :class:`X2`          Second x value for ranges          :ref:`gallery_error_bars_with_ci`
+y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_line_with_ci`
+longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airports`
+latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
+longitude2  :class:`Longitude2`  Second longitude value for ranges  N/A
+latitude2   :class:`Latitude2`   Second latitude value for ranges   N/A
 ==========  ===================  =================================  ===================================
 
 Mark Property Channels:
@@ -59,12 +60,12 @@ Mark Property Channels:
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
-color    :class:`Color`    The color of the mark
-fill     :class:`Fill`     The fill for the mark
-opacity  :class:`Opacity`  The opacity of the mark
-shape    :class:`Shape`    The shape of the mark
-size     :class:`Size`     The size of the mark
-stroke   :class:`Stroke`   The stroke of the mark
+color    :class:`Color`    The color of the mark     :ref:`gallery_simple_heatmap`
+fill     :class:`Fill`     The fill for the mark     N/A
+opacity  :class:`Opacity`  The opacity of the mark   :ref:`gallery_horizon_graph`
+shape    :class:`Shape`    The shape of the mark     N/A
+size     :class:`Size`     The size of the mark      :ref:`gallery_table_bubble_plot_github`
+stroke   :class:`Stroke`   The stroke of the mark    N/A
 =======  ================  ========================  =========================================
 
 Text and Tooltip Channels:
@@ -72,9 +73,9 @@ Text and Tooltip Channels:
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
-text     :class:`Text`     Text to use for the mark
-key      :class:`Key`      --
-tooltip  :class:`Tooltip`  The tooltip value
+text     :class:`Text`     Text to use for the mark  :ref:`gallery_scatter_with_labels`
+key      :class:`Key`      --                        N/A
+tooltip  :class:`Tooltip`  The tooltip value         N/A
 =======  ================  ========================  =========================================
 
 Hyperlink Channel:
@@ -82,7 +83,7 @@ Hyperlink Channel:
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
-href     :class:`Href`     Hyperlink for  points
+href     :class:`Href`     Hyperlink for  points     N/A
 =======  ================  ========================  =========================================
 
 Level of Detail Channel:
@@ -90,27 +91,25 @@ Level of Detail Channel:
 =======  ================  ===============================  =========================================
 Channel  Altair Class      Description                      Example
 =======  ================  ===============================  =========================================
-detail   :class:`Detail`   Additional property to group by
+detail   :class:`Detail`   Additional property to group by  :ref:`gallery_select_detail`
 =======  ================  ===============================  =========================================
 
-Order Channels:
+Order Channel:
 
-=======  ================  ============================================  =================
-Channel  Altair Class      Description                                   Example
-=======  ================  ============================================  =================
-order    :class:`Order`    --
-=======  ================  ============================================  =================
+=======  ================  =============================  =====================================
+Channel  Altair Class      Description                    Example
+=======  ================  =============================  =====================================
+order    :class:`Order`    Sets the order of the marks    :ref:`gallery_connected_scatterplot`
+=======  ================  =============================  =====================================
 
 Facet Channels:
 
-=======  ================  ============================  ===================================
+=======  ================  ============================  ============================================
 Channel  Altair Class      Description                   Example
-=======  ================  ============================  ===================================
-column   :class:`Column`   The column of a faceted plot
-row      :class:`Row`      The row of a faceted plot
-=======  ================  ============================  ===================================
-
-
+=======  ================  ============================  ============================================
+column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_scatter_plot`
+row      :class:`Row`      The row of a faceted plot     :ref:`gallery_beckers_barley_trellis_plot`
+=======  ================  ============================  ============================================
 
 .. _data-types:
 
@@ -170,7 +169,7 @@ Effect of Data Type on Color Scales
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 As an example of this, here we will represent the same data three different ways,
 with the color encoded as a *quantitative*, *ordinal*, and *nominal* type,
-using three vertically-concatenated charts (see :ref:`vconcat`):
+using three vertically-concatenated charts (see :ref:`vconcat-chart`):
 
 .. altair-plot::
 
@@ -243,6 +242,51 @@ data: a visual encoding that is suitable for categorical data may not be
 suitable for quantitative data, and vice versa.
 
 
+.. _encoding-channel-options:
+
+Encoding Channel Options
+~~~~~~~~~~~~~~~~~~~~~~~~
+Each encoding channel allows for a number of additional options to be expressed;
+these can control things like axis properties, scale properties, headers and
+titles, binning parameters, aggregation, sorting, and many more.
+
+The particular options that are available vary by encoding type; the various
+options are listed below.
+
+The :class:`X` and :class:`Y` encodings accept the following options:
+
+.. altair-object-table:: altair.PositionFieldDef
+
+The :class:`Color`, :class:`Fill`, :class:`Opacity`, :class:`Shape`,
+:class:`Size`, and :class:`Stroke` encodings accept the following options:
+
+.. altair-object-table:: altair.MarkPropFieldDefWithCondition
+
+The :class:`Row` and :class:`Column` encodings accept the following options:
+
+.. altair-object-table:: altair.FacetFieldDef
+
+The :class:`Text` and :class:`Tooltip` encodings accept the following options:
+
+.. altair-object-table:: altair.TextFieldDefWithCondition
+
+The :class:`Detail`, :class:`Key`, :class:`Latitude`, :class:`Latitude2`,
+:class:`Longitude`, :class:`Longitude2`, :class:`X2`
+and :class:`Y2` encodings accept the following options:
+
+.. altair-object-table:: altair.FieldDef
+
+The :class:`Href` encoding accepts the following options:
+
+.. altair-object-table:: altair.FieldDefWithCondition
+
+The :class:`Order` encoding accepts the following options:
+
+.. altair-object-table:: altair.OrderFieldDef
+
+
+
+
 .. _encoding-aggregates:
 
 Binning and Aggregation
@@ -301,32 +345,32 @@ represents the mean of a third quantity, such as acceleration:
 In addition to ``count`` and ``average``, there are a large number of available
 aggregation functions built into Altair; they are listed in the following table:
 
-=========  ===========================================================================  =================================
+=========  ===========================================================================  =====================================
 Aggregate  Description                                                                  Example
-=========  ===========================================================================  =================================
-argmin     An input data object containing the minimum field value.
-argmax     An input data object containing the maximum field value.
-average    The mean (average) field value. Identical to mean.
-count      The total count of data objects in the group.
-distinct   The count of distinct field values.
-max        The maximum field value.
-mean       The mean (average) field value.
-median     The median field value
-min        The minimum field value.
-missing    The count of null or undefined field values.
-q1         The lower quartile boundary of values.
-q3         The upper quartile boundary of values.
-ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.
-ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.
-stderr     The standard error of the field values.
-stdev      The sample standard deviation of field values.
-stdevp     The population standard deviation of field values.
-sum        The sum of field values.
-valid      The count of field values that are not null or undefined.
-values     ??
-variance   The sample variance of field values
-variancep  The population variance of field values
-=========  ===========================================================================  =================================
+=========  ===========================================================================  =====================================
+argmin     An input data object containing the minimum field value.                     N/A
+argmax     An input data object containing the maximum field value.                     N/A
+average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
+count      The total count of data objects in the group.                                :ref:`gallery_simple_heatmap`
+distinct   The count of distinct field values.                                          N/A
+max        The maximum field value.                                                     :ref:`gallery_boxplot_max_min`
+mean       The mean (average) field value.                                              :ref:`gallery_layered_plot_with_dual_axis`
+median     The median field value                                                       :ref:`gallery_boxplot_max_min`
+min        The minimum field value.                                                     :ref:`gallery_boxplot_max_min`
+missing    The count of null or undefined field values.                                 N/A
+q1         The lower quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
+q3         The upper quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
+ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_error_bars_with_ci`
+ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_error_bars_with_ci`
+stderr     The standard error of the field values.                                      N/A
+stdev      The sample standard deviation of field values.                               N/A
+stdevp     The population standard deviation of field values.                           N/A
+sum        The sum of field values.                                                     :ref:`gallery_streamgraph`
+valid      The count of field values that are not null or undefined.                    N/A
+values     ??                                                                           N/A
+variance   The sample variance of field values.                                         N/A
+variancep  The population variance of field values.                                     N/A
+=========  ===========================================================================  =====================================
 
 
 .. _shorthand-description:
@@ -350,3 +394,81 @@ Shorthand            Equivalent long-form
 ``x='sum(name):Q'``  ``alt.X('name', aggregate='sum', type='quantitative')``
 ``x='count():Q'``    ``alt.X(aggregate='count', type='quantitative')``
 ===================  =======================================================
+
+
+.. _ordering-channels:
+
+Ordering marks
+~~~~~~~~~~~~~~
+
+The `order` option and :class:`Order` channel can sort how marks are drawn on the chart.
+
+For stacked marks, this controls the order of components of the stack. Here, the elements of each bar are sorted alphabetically by the name of the nominal data in the color channel.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    alt.Chart(barley).mark_bar().encode(
+        x='variety:N',
+        y='sum(yield):Q',
+        color='site:N',
+        order=alt.Order("site", sort="ascending")
+    )
+
+The order can be reversed by changing the sort option to `descending`.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    alt.Chart(barley).mark_bar().encode(
+        x='variety:N',
+        y='sum(yield):Q',
+        color='site:N',
+        order=alt.Order("site", sort="descending")
+    )
+
+The same approach works for other mark types, like stacked areas charts.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    alt.Chart(barley).mark_area().encode(
+        x='variety:N',
+        y='sum(yield):Q',
+        color='site:N',
+        order=alt.Order("site", sort="ascending")
+    )
+
+For line marks, the `order` channel encodes the order in which data points are connected. This can be useful for creating a scatterplot that draws lines between the dots using a different field than the x and y axes.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    driving = data.driving()
+
+    points = alt.Chart(driving).mark_circle().encode(
+        alt.X('miles', scale=alt.Scale(zero=False)),
+        alt.Y('gas', scale=alt.Scale(zero=False))
+    )
+
+    lines = alt.Chart(driving).mark_line().encode(
+        alt.X('miles', scale=alt.Scale(zero=False)),
+        alt.Y('gas', scale=alt.Scale(zero=False)),
+        order='year'
+    )
+
+    points + lines

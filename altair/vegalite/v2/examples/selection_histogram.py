@@ -5,8 +5,7 @@ This chart shows an example of using an interval selection to filter the
 contents of an attached histogram, allowing the user to see the proportion
 of items in each category within the selection.
 """
-# category: interactive
-
+# category: interactive charts
 import altair as alt
 from vega_datasets import data
 
@@ -30,4 +29,4 @@ bars = alt.Chart().mark_bar().encode(
     brush.ref()
 )
 
-chart = alt.vconcat(points, bars, data=cars)
+alt.vconcat(points, bars, data=cars)

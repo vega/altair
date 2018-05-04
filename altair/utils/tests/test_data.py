@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 
 
-from altair.vegalite.data import limit_rows, MaxRowsError, sample, pipe, to_values
+from ..data import limit_rows, MaxRowsError, sample, pipe, to_values
 
 
 def _create_dataframe(N):
@@ -11,7 +11,7 @@ def _create_dataframe(N):
 
 
 def _create_data_with_values(N):
-    data = {'values': [{'x':i,'y':i+1} for i in range(N)]}
+    data = {'values': [{'x': i, 'y': i+1} for i in range(N)]}
     return data
 
 

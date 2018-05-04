@@ -2,16 +2,14 @@
 Cumulative Wikipedia Donations
 ==============================
 
-This chart shows cumulative donations to Wikipedia over the past 10 years. 
-his chart was inspired by this [reddit post](https://www.reddit.com/r/dataisbeautiful/comments/7guwd0/cumulative_wikimedia_donations_over_the_past_10/) but using lines instead of areas.
-Data comes from https://frdata.wikimedia.org/.
+This chart shows cumulative donations to Wikipedia over the past 10 years. Inspired by this [Reddit post](https://www.reddit.com/r/dataisbeautiful/comments/7guwd0/cumulative_wikimedia_donations_over_the_past_10/) but using lines instead of areas.
 """
-
+# category: line charts
 import altair as alt
 
 data = "https://frdata.wikimedia.org/donationdata-vs-day.csv"
 
-chart = alt.Chart(data).mark_line().encode(
+alt.Chart(data).mark_line().encode(
     alt.X(
         'date:T', timeUnit='monthdate',
         axis=alt.Axis(format='%B', title='Month')

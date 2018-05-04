@@ -1,8 +1,3 @@
-import pytest
-import warnings
-import json
-
-import numpy as np
 import pandas as pd
 
 from .. import parse_shorthand, update_nested

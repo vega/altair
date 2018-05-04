@@ -3,19 +3,19 @@ Natural Disasters
 -----------------
 This example shows a visualization of global deaths from natural disasters.
 """
-
+# category: scatter plots
 import altair as alt
 from altair.expr import datum
 from vega_datasets import data
 
 source = data.disasters.url
 
-chart = alt.Chart(source).mark_circle(
+alt.Chart(source).mark_circle(
     opacity=0.8,
     stroke='black',
     strokeWidth=1
 ).encode(
-    alt.X('Year:O', axis = alt.Axis(labelAngle = 0)),
+    alt.X('Year:O', axis=alt.Axis(labelAngle=0)),
     alt.Y('Entity:N'),
     alt.Size('Deaths:Q',
         scale=alt.Scale(range=[0, 5000]),

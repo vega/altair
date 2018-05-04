@@ -6,6 +6,7 @@ data from 2000.
 
 https://vega.github.io/vega-lite/examples/box-plot_minmax_2D_vertical_normalized.html
 """
+# category: bar charts
 import altair as alt
 from vega_datasets import data
 
@@ -44,4 +45,4 @@ middle_tick = alt.Chart(population).mark_tick(
     x='age:O',
 )
 
-chart = lower_plot + middle_plot + upper_plot + middle_tick
+lower_plot + middle_plot + upper_plot + middle_tick

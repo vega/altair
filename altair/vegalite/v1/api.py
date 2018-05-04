@@ -6,18 +6,15 @@ DSL mapping Vega types to IPython traitlets.
 import six
 import warnings
 
+import jsonschema
 import pandas as pd
 
-from .schema import core, channels, Undefined, SCHEMA_URL, SCHEMA_VERSION
+from .schema import core, channels, Undefined, SCHEMA_URL
 
 from .data import data_transformers, pipe
 from ... import utils
-from .display import renderers
-
-
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '2'
-VEGAEMBED_VERSION = '3'
+from .display import renderers, VEGALITE_VERSION, VEGA_VERSION, VEGAEMBED_VERSION
+from .theme import themes
 
 
 def _get_channels_mapping():
@@ -29,23 +26,22 @@ def _get_channels_mapping():
     return mapping
 
 
-#*************************************************************************
+# *************************************************************************
 # Formula wrapper
 # - makes field a required first argument of initialization
 # - allows expr trait to be an Expression and processes it properly
-#*************************************************************************
+# *************************************************************************
 
 class Formula(core.Formula):
     def __init__(self, field, expr=Undefined, **kwargs):
         super(Formula, self).__init__(field=field, expr=expr, **kwargs)
 
 
-#*************************************************************************
+# *************************************************************************
 # Top-level Objects
-#*************************************************************************
+# *************************************************************************
 
 class TopLevelMixin(object):
-    _default_spec_values = {"width": 400, "height": 300}
     _class_is_valid_at_instantiation = False
 
     def _prepare_data(self):
@@ -92,9 +88,9 @@ class TopLevelMixin(object):
             if '$schema' not in dct:
                 dct['$schema'] = SCHEMA_URL
 
-            # add default values if present
-            if copy._default_spec_values:
-                dct = utils.update_nested(copy._default_spec_values, dct, copy=True)
+            # apply theme from theme registry
+            the_theme = themes.get()
+            dct = utils.update_nested(the_theme(), dct, copy=True)
         return dct
 
     def savechart(self, fp, format=None, **kwargs):
@@ -107,7 +103,7 @@ class TopLevelMixin(object):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         **kwargs :
             Additional keyword arguments are passed to the output method
@@ -119,7 +115,7 @@ class TopLevelMixin(object):
         )
         return self.save(fp, format=None, **kwargs)
 
-    def save(self, fp, format=None, **kwargs):
+    def save(self, fp, format=None, override_data_transformer=True, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -129,18 +125,33 @@ class TopLevelMixin(object):
         fp : string filename or file-like object
             file in which to write the chart.
         format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'eps'].
+            the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
+        override_data_transformer : boolean (optional)
+            If True (default), then the save action will be done with the
+            default data_transformer with max_rows set to None. If False,
+            then use the currently active data transformer.
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
         """
         from ...utils.save import save
-        return save(self, fp=fp, format=format,
-                         vegalite_version=VEGALITE_VERSION,
-                         vega_version=VEGA_VERSION,
-                         vegaembed_version=VEGAEMBED_VERSION,
-                         **kwargs)
+
+        kwds = dict(chart=self, fp=fp, format=format,
+                    vegalite_version=VEGALITE_VERSION,
+                    vega_version=VEGA_VERSION,
+                    vegaembed_version=VEGAEMBED_VERSION,
+                    **kwargs)
+
+        # By default we override the data transformer. This makes it so
+        # that save() will succeed even for large datasets that would
+        # normally trigger a MaxBinsError
+        if override_data_transformer:
+            with data_transformers.enable('default', max_rows=None):
+                result = save(**kwds)
+        else:
+            result = save(**kwds)
+        return result
 
     # transform method
     @utils.use_signature(core.Transform)
@@ -243,9 +254,9 @@ class TopLevelMixin(object):
 
 class Chart(TopLevelMixin, core.ExtendedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
-                 width=400, height=300, **kwargs):
+                 **kwargs):
         super(Chart, self).__init__(data=data, encoding=encoding, mark=mark,
-                                    width=width, height=height, **kwargs)
+                                    **kwargs)
 
     @utils.use_signature(core.MarkConfig)
     def mark_area(self, **kwargs):
