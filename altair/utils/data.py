@@ -85,9 +85,17 @@ def to_json(data, prefix='altair-data'):
     check_data_type(data)
     ext = '.json'
     filename = _compute_filename(prefix=prefix, ext=ext)
+    data_format = {'type': 'json'}
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
-        data.to_json(filename, orient='records')
+        if not hasattr(data,'__geo_interface__'):
+            data.to_json(filename, orient='records')
+        else: #GeoPandas
+            with open(filename) as f:
+                json.dump(data.__geo_interface__, f)
+            data_format['property']='features'
+
+        
     elif isinstance(data, dict):
         if 'values' not in data:
             raise KeyError('values expected in data dict, but not present.')
@@ -96,7 +104,7 @@ def to_json(data, prefix='altair-data'):
             json.dump(values, f)
     return {
         'url': filename,
-        'format': {'type': 'json'}
+        'format': data_format
     }
 @curry
 def to_geojson_values(data, feature="features"):
@@ -132,6 +140,12 @@ def to_values(data):
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
+        if hasattr(data,'__geo_interface__'):#GeoPandas
+            return {
+                    'values':data.__geo_interface__,
+                    'format':{'type':'json','property':'features'}
+                    }
+
         return {'values': data.to_dict(orient='records')}
     elif isinstance(data, dict):
         if 'values' not in data:

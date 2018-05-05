@@ -227,9 +227,13 @@ def parse_shorthand(shorthand, data=None):
     {'aggregate': 'count', 'type': 'quantitative'}
     """
     attrs = _parse_shorthand(shorthand)
-    if isinstance(data, pd.DataFrame) and 'type' not in attrs:
+    if isinstance(data, pd.DataFrame):
         if 'field' in attrs and attrs['field'] in data.columns:
-            attrs['type'] = infer_vegalite_type(data[attrs['field']])
+                if 'type' not in attrs:
+                    attrs['type'] = infer_vegalite_type(data[attrs['field']])
+                if hasattr(data,'__geo_interface__'): #TODO: Add descripion in shorthand
+                    attrs['field']='properties.'+attrs['field']
+
     return attrs
 
 
