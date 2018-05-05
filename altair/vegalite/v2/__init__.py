@@ -17,7 +17,7 @@ from .display import VegaLite, renderers
 from .data import (
     MaxRowsError,
     pipe, curry, limit_rows,
-    sample, to_json, to_csv, to_values,
+    sample, to_json, to_csv, to_values, to_geojson_values,
     default_data_transformer,
     data_transformers
 )

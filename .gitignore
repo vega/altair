@@ -62,6 +62,7 @@ target/
 
 .ipynb_checkpoints
 .idea/*
+.vscode/*
 tools/_build
 Untitled*.ipynb
 .mypy*

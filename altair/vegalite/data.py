@@ -2,7 +2,7 @@
 from toolz.curried import curry, pipe
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
-    MaxRowsError, limit_rows, sample, to_csv, to_json, to_values,
+    MaxRowsError, limit_rows, sample, to_csv, to_json, to_values, to_geojson_values,
     check_data_type, DataTransformerRegistry
 )
 
@@ -24,5 +24,6 @@ __all__ = (
     'to_csv',
     'to_json',
     'to_values',
-    'check_data_type'
+    'check_data_type',
+    'to_geojson_values'
 )

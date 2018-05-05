@@ -98,7 +98,16 @@ def to_json(data, prefix='altair-data'):
         'url': filename,
         'format': {'type': 'json'}
     }
-
+@curry
+def to_geojson_values(data, feature="features"):
+    if not hasattr(data, '__geo_interface__'):
+        raise TypeError('Expected GeoDataFrame or __geo_interface__, got: {}'.format(type(data)))
+    if isinstance(data, pd.DataFrame):
+        data = sanitize_dataframe(data)
+    return {
+            'values':data.__geo_interface__,
+             'format':{'type':'json','property':feature}
+            }
 
 @curry
 def to_csv(data, prefix='altair-data'):
