@@ -59,7 +59,7 @@ def test_to_values():
 
 
 def test_type_error():
-    """Ensure that TypeError is raised for types other than dict/DataFrame."""
+    """Ensure that TypeError is raised for types other than dict/DataFrame/GeoDataFrame/__geo_interface__."""
     for f in (sample, limit_rows, to_values):
         with pytest.raises(TypeError):
             pipe(0, f)

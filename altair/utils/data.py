@@ -33,7 +33,7 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
 # form.
 #
 # A data model transformer has the following type signature:
-# DataModelType = Union[dict, pd.DataFrame]
+# DataModelType = Union[dict, pd.DataFrame, gpd.GeoDataFrame, geojson interface object]
 # DataModelTransformerType = Callable[[DataModelType, KwArgs], DataModelType]
 # ==============================================================================
 
@@ -57,6 +57,8 @@ def limit_rows(data, max_rows=5000):
             values = data['values']
         else:
             return data
+    else:
+        return data
     if max_rows is not None and len(values) > max_rows:
         raise MaxRowsError('The number of rows in your dataset is greater '
                            'than the maximum allowed ({0}). '
@@ -91,31 +93,25 @@ def to_json(data, prefix='altair-data'):
         if not hasattr(data,'__geo_interface__'):
             data.to_json(filename, orient='records')
         else: #GeoPandas
-            with open(filename) as f:
+            with open(filename,'w') as f:
                 json.dump(data.__geo_interface__, f)
             data_format['property']='features'
 
+    elif hasattr(data,'__geo_interface__'): # geojson object
+        with open(filename,'w') as f:
+            json.dump(data.__geo_interface__, f)
         
     elif isinstance(data, dict):
         if 'values' not in data:
             raise KeyError('values expected in data dict, but not present.')
         values = data['values']
-        with open(filename) as f:
+        with open(filename,'w') as f:
             json.dump(values, f)
     return {
         'url': filename,
         'format': data_format
     }
-@curry
-def to_geojson_values(data, feature="features"):
-    if not hasattr(data, '__geo_interface__'):
-        raise TypeError('Expected GeoDataFrame or __geo_interface__, got: {}'.format(type(data)))
-    if isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
-    return {
-            'values':data.__geo_interface__,
-             'format':{'type':'json','property':feature}
-            }
+
 
 @curry
 def to_csv(data, prefix='altair-data'):
@@ -124,12 +120,17 @@ def to_csv(data, prefix='altair-data'):
     ext = '.csv'
     filename = _compute_filename(prefix=prefix, ext=ext)
     if isinstance(data, pd.DataFrame):
+        if hasattr(data,'__geo_interface__'):#GeoPandas
+                raise NotImplementedError('use to_json or to_values with GeoDataFrame objects.')
+
         data = sanitize_dataframe(data)
         data.to_csv(filename)
         return {
             'url': filename,
             'format': {'type': 'csv'}
         }
+    elif hasattr(data,'__geo_interface__'):#GeoJSON
+            raise NotImplementedError('to_csv only works with Pandas DataFrame objects.')
     elif isinstance(data, dict):
         raise NotImplementedError('to_csv only works with Pandas DataFrame objects.')
 
@@ -147,6 +148,12 @@ def to_values(data):
                     }
 
         return {'values': data.to_dict(orient='records')}
+    elif hasattr(data,'__geo_interface__'):#GeoJSON
+            return {
+                    'values':data.__geo_interface__,
+                    'format':{'type':'json'}
+                    }
+    
     elif isinstance(data, dict):
         if 'values' not in data:
             raise KeyError('values expected in data dict, but not present.')
@@ -155,8 +162,8 @@ def to_values(data):
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)):
-        raise TypeError('Expected dict or DataFrame, got: {}'.format(type(data)))
+    if not (isinstance(data, (dict, pd.DataFrame)) or hasattr(data,'__geo_interface__')):
+        raise TypeError('Expected dict, DataFrame, GeoDataFrame or geojson inteface object , got: {}'.format(type(data)))
 
 
 # ==============================================================================

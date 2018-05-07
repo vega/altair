@@ -19,11 +19,11 @@ def _prepare_data(data):
     """Convert input data to data for use within schema"""
     if data is Undefined:
         return data
+    elif isinstance(data, pd.DataFrame) or hasattr(data, '__geo_interface__'):
+        return pipe(data, data_transformers.get())
     elif isinstance(data, (dict, core.Data, core.InlineData,
                          core.UrlData, core.NamedData)):
         return data
-    elif isinstance(data, pd.DataFrame):
-        return pipe(data, data_transformers.get())
     elif isinstance(data, six.string_types):
         return core.UrlData(data)
     else:
