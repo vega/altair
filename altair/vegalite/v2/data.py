@@ -1,5 +1,5 @@
 from ..data import (MaxRowsError, curry, default_data_transformer, limit_rows,
-                    pipe, sample, to_csv, to_json, to_values,to_geojson_values, DataTransformerRegistry)
+                    pipe, sample, to_csv, to_json, to_values, DataTransformerRegistry)
 
 
 # ==============================================================================
@@ -27,6 +27,5 @@ __all__ = (
     'to_csv',
     'to_json',
     'to_values',
-    'data_transformers',
-    'to_geojson_values'
+    'data_transformers'
 )

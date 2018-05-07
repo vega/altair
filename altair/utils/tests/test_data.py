@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 
 
-from ..data import limit_rows, MaxRowsError, sample, pipe, to_values,to_geojson_values
+from ..data import limit_rows, MaxRowsError, sample, pipe, to_values
 
 
 def _create_dataframe(N):
@@ -63,13 +63,3 @@ def test_type_error():
     for f in (sample, limit_rows, to_values):
         with pytest.raises(TypeError):
             pipe(0, f)
-
-
-def test_to_geojson_values():
-    gpd = pytest.importorskip('geopandas')
-    geo_data = gpd.GeoDataFrame({ "name": ['a','b']},
-                        geometry=[gpd.geoseries.Point((1.0, 0.0)),
-                                  gpd.geoseries.Point((0.0, 1.0))],index=['i','j'])
-    result = pipe(geo_data, to_geojson_values)
-    assert result=={'format': {'property': 'features', 'type': 'json'},
-                        'values': geo_data.__geo_interface__}
