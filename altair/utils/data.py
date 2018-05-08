@@ -33,7 +33,7 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
 # form.
 #
 # A data model transformer has the following type signature:
-# DataModelType = Union[dict, pd.DataFrame, gpd.GeoDataFrame, geojson interface object]
+# DataModelType = Union[dict, pd.DataFrame, gpd.GeoDataFrame, geojson.GeoJSON]
 # DataModelTransformerType = Callable[[DataModelType, KwArgs], DataModelType]
 # ==============================================================================
 
@@ -52,11 +52,8 @@ def limit_rows(data, max_rows=5000):
     check_data_type(data)
     if isinstance(data, pd.DataFrame):
         values = data
-    elif isinstance(data, dict):
-        if 'values' in data:
-            values = data['values']
-        else:
-            return data
+    elif isinstance(data, dict) and ('values' in data):
+        values = data['values']
     else:
         return data
     if max_rows is not None and len(values) > max_rows:
@@ -88,18 +85,18 @@ def to_json(data, prefix='altair-data'):
     ext = '.json'
     filename = _compute_filename(prefix=prefix, ext=ext)
     data_format = {'type': 'json'}
-    if isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
-        if not hasattr(data,'__geo_interface__'):
-            data.to_json(filename, orient='records')
-        else: #GeoPandas
-            with open(filename,'w') as f:
-                json.dump(data.__geo_interface__, f)
+
+    if hasattr(data,'__geo_interface__'):
+        if isinstance(data, pd.DataFrame): #GeoPandas
+            data = sanitize_dataframe(data)
             data_format['property']='features'
 
-    elif hasattr(data,'__geo_interface__'): # geojson object
         with open(filename,'w') as f:
             json.dump(data.__geo_interface__, f)
+ 
+    elif isinstance(data, pd.DataFrame): 
+        data = sanitize_dataframe(data)
+        data.to_json(filename, orient='records')
         
     elif isinstance(data, dict):
         if 'values' not in data:
@@ -119,18 +116,16 @@ def to_csv(data, prefix='altair-data'):
     check_data_type(data)
     ext = '.csv'
     filename = _compute_filename(prefix=prefix, ext=ext)
-    if isinstance(data, pd.DataFrame):
-        if hasattr(data,'__geo_interface__'):#GeoPandas
-                raise NotImplementedError('use to_json or to_values with GeoDataFrame objects.')
-
+    if hasattr(data,'__geo_interface__'):
+        raise NotImplementedError('use to_json or to_values with GeoJSON objects.')
+    
+    elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         data.to_csv(filename)
         return {
             'url': filename,
             'format': {'type': 'csv'}
         }
-    elif hasattr(data,'__geo_interface__'):#GeoJSON
-            raise NotImplementedError('to_csv only works with Pandas DataFrame objects.')
     elif isinstance(data, dict):
         raise NotImplementedError('to_csv only works with Pandas DataFrame objects.')
 
@@ -139,21 +134,21 @@ def to_csv(data, prefix='altair-data'):
 def to_values(data):
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    if isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
-        if hasattr(data,'__geo_interface__'):#GeoPandas
-            return {
-                    'values':data.__geo_interface__,
-                    'format':{'type':'json','property':'features'}
-                    }
 
-        return {'values': data.to_dict(orient='records')}
-    elif hasattr(data,'__geo_interface__'):#GeoJSON
-            return {
-                    'values':data.__geo_interface__,
-                    'format':{'type':'json'}
-                    }
+    if hasattr(data,'__geo_interface__'):
+        data_format = {'type': 'json'}
+        if isinstance(data, pd.DataFrame): #GeoPandas
+            data = sanitize_dataframe(data)
+            data_format['property']='features'
+        return {
+                'values':data.__geo_interface__,
+                'format': data_format
+                }
     
+    elif isinstance(data, pd.DataFrame):
+        data = sanitize_dataframe(data)
+        return {'values': data.to_dict(orient='records')}
+
     elif isinstance(data, dict):
         if 'values' not in data:
             raise KeyError('values expected in data dict, but not present.')
@@ -163,7 +158,7 @@ def to_values(data):
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
     if not (isinstance(data, (dict, pd.DataFrame)) or hasattr(data,'__geo_interface__')):
-        raise TypeError('Expected dict, DataFrame, GeoDataFrame or geojson inteface object , got: {}'.format(type(data)))
+        raise TypeError('Expected dict, DataFrame, GeoDataFrame or geojson, got: {}'.format(type(data)))
 
 
 # ==============================================================================

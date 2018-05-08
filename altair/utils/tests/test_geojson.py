@@ -81,7 +81,7 @@ def _create_fake_geo_interface():
         __geo_interface__=_create_geojson()
     return FakeGeoJSON()
 
-def _create_fake_geodatafarme():
+def _create_fake_geodataframe():
     class FakeGeoDataFrame(pd.DataFrame):
         __geo_interface__=_create_geojson()
         def copy(self, deep=True):
@@ -95,7 +95,7 @@ def _create_fake_geodatafarme():
 def test_to_values_geo():
     """Test the to_values data transformer."""
     
-    data = _create_fake_geodatafarme()
+    data = _create_fake_geodataframe()
     result = pipe(data, to_values)
     assert result['format'] == {'type':'json','property':'features'}
     assert result['values']==data.__geo_interface__
@@ -109,12 +109,12 @@ def test_chart_data_geotypes():
     Chart = lambda data,**arg: alt.Chart(data).mark_geoshape().project().encode(**arg)
 
     # Fake GeoPandas
-    data = _create_fake_geodatafarme()
+    data = _create_fake_geodataframe()
     dct = Chart(data,fill='prop').to_dict() 
     assert dct['data']['format'] == {'type':'json','property':'features'}
     assert dct['data']['values'] == data.__geo_interface__
 
-      # Fake GeoInteface
+    # Fake GeoInterface
     data = _create_fake_geo_interface()
     dct = Chart(data).to_dict() 
     assert dct['data']['format'] == {'type':'json'}
@@ -124,7 +124,7 @@ def test_parse_shorthand_with_geodata():
     def check(s, data, **kwargs):
         assert parse_shorthand(s, data) == kwargs
 
-    data = _create_fake_geodatafarme()
+    data = _create_fake_geodataframe()
 
     check('prop', data, field='properties.prop', type='quantitative')
     check('prop:N', data, field='properties.prop', type='nominal')
@@ -138,7 +138,7 @@ def test_parse_shorthand_with_geodata():
 def test_to_csv_geo():
     """Test the to_csv raise error with geopandas."""
     
-    data = _create_fake_geodatafarme()
+    data = _create_fake_geodataframe()
     with pytest.raises(NotImplementedError):
         pipe(data, to_csv)
 
