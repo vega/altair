@@ -119,7 +119,7 @@ To register and enable a new renderer::
     >>> alt.renderers.enable('custom_renderer')
 
 Renderers can also be registered using the `entrypoints`_ API of Python packages.
-For an example, see `ipyvega3`_.
+For an example, see `ipyvega`_.
 
 This same ``renderer`` objects exists separately on all of the Python APIs
 for Vega-Lite/Vega described in :ref:`importing`.
@@ -131,18 +131,18 @@ Displaying in the Jupyter Notebook
 
 To render Vega-Lite 2.x or Vega 3.x in the Jupyter Notebook (as mentioned above
 we recommend these versions), you will need to install and enable the
-`ipyvega3`_ Python package using conda:
+`ipyvega`_ Python package using conda:
 
 .. code-block:: bash
 
-    $ conda install vega3 --channel conda-forge
+    $ conda install vega --channel conda-forge
 
 or ``pip``:
 
 .. code-block:: bash
 
-    $ pip install jupyter pandas vega3
-    $ jupyter nbextension install --sys-prefix --py vega3 # not needed in notebook >= 5.3
+    $ pip install jupyter pandas vega
+    $ jupyter nbextension install --sys-prefix --py vega # not needed in notebook >= 5.3
 
 
 For Vega-Lite 1.x or Vega 2.x, you will need to install and enable the `ipyvega`_ Python
@@ -182,7 +182,7 @@ To add support for Vega-Lite 2.x and Vega 3.x install the following JupyterLab
 extension (which requires nodejs)::
 
     conda install -c conda-forge nodejs  # if you do not already have nodejs installed
-    jupyter labextension install @jupyterlab/vega3-extension
+    jupyter labextension install @jupyterlab/vega-extension
 
 and then import Altair as::
 
@@ -229,7 +229,7 @@ And then you can create Altair plots normally within the notebook.
 
 .. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/tree/master
-.. _ipyvega3: https://github.com/vega/ipyvega/tree/vega3
+.. _ipyvega: https://github.com/vega/ipyvega/tree/vega
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
 .. _Colab: https://colab.research.google.com
