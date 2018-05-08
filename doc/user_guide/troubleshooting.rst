@@ -122,7 +122,7 @@ If you are using the notebook (not JupyterLab) and see the the following output:
 it means that either:
 
 1. You have forgotten to enable the notebook renderer. As mentioned
-   in :ref:`installation-notebook`, you need to install the ``vega3`` package and
+   in :ref:`installation-notebook`, you need to install the ``vega`` package and
    Jupyter extension, and then enable it using::
 
        import altair as alt
@@ -134,7 +134,7 @@ it means that either:
 
        NoSuchEntryPoint: No 'notebook' entry point found in group 'altair.vegalite.v2.renderer'
 
-   This means that you have not installed the vega3 package. If you see this error,
+   This means that you have not installed the vega package. If you see this error,
    please make sure to follow the standard installation instructions at
    :ref:`installation-notebook`.
 

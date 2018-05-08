@@ -78,16 +78,16 @@ Altair works in the Jupyter notebook, though we recommend using it in JupyterLab
 if available (see :ref:`installation-jupyterlab`).
 
 If using the notebook, Altair works best with notebook version 5.3 or newer.
-Note that using Altair in the notebook also requires the vega3_ package
+Note that using Altair in the notebook also requires the vega_ package
 to be installed and configured.
 
 To install the notebook and Altair with conda, run the following command::
 
-    $ conda install -c conda-forge altair vega_datasets notebook vega3
+    $ conda install -c conda-forge altair vega_datasets notebook vega
 
 To install the notebook and Altair with pip, run the following command::
 
-    $ pip install -U altair vega_datasets notebook vega3
+    $ pip install -U altair vega_datasets notebook vega
 
 Once the packages and extensions are installed, launch the notebook by running::
 
@@ -96,7 +96,7 @@ Once the packages and extensions are installed, launch the notebook by running::
 In the browser window that launches, click the *New* drop-down menu and
 select either "Python 2" or "Python 3", depending on which version of Python
 you are using (note that the kernel you choose *must* match the kernel where
-you installed the vega3 extension).
+you installed the vega extension).
 
 In the notebook that opens, you can run the following code to ensure everything
 is properly set up:
@@ -244,4 +244,4 @@ development version directly from GitHub using:
 .. _Colab: https://colab.research.google.com
 .. _nteract: https://nteract.io
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
-.. _vega3: https://pypi.python.org/pypi/vega3/
+.. _vega: https://pypi.python.org/pypi/vega/
