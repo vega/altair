@@ -1295,3 +1295,31 @@ def topo_feature(url, feature, **kwargs):
     """
     return core.UrlData(url=url, format=core.TopoDataFormat(type='topojson',
                                                          feature=feature, **kwargs))
+def geojson_feature(data, feature, **kwargs):
+    """A convenience function for extracting features from a geojson object or url
+
+    Parameters
+    ----------
+    data : anyOf(string, geojson.GeoJSON)
+        string is interpreted as URL from which to load the data set.
+        geojson.GeoJSON is interpreted as data set itself.
+
+    feature : string
+        The JSON property containing the GeoJSON object set to convert to 
+        a GeoJSON feature collection. For example ``features[0].geometry``.
+
+    **kwargs :
+        additional keywords passed to JsonDataFormat
+
+    """
+    if isinstance(data, six.string_types):
+        return core.UrlData(url=data, format=core.JsonDataFormat(type='json',
+                                                         property=feature, **kwargs))
+    elif hasattr(data,'__geo_interface__'):
+        return core.InlineData(values=data.__geo_interface__ , format=core.JsonDataFormat(type='json',
+                                                         property=feature, **kwargs))
+    else:
+        warnings.warn("data of type {0} not recognized".format(type(data)))
+        return data
+
+

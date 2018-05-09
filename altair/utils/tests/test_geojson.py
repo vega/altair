@@ -151,3 +151,21 @@ def test_geo_pandas():
     assert dct['data']['format'] == {'type':'json','property':'features'}
     assert (gpd.GeoDataFrame.from_features(dct['data']['values']) == data).all().all()
     assert dct['encoding'] == {'fill': {'field': 'properties.prop', 'type': 'quantitative'}}
+
+def test_geojson_feature():
+    Chart = lambda data,**arg: alt.Chart(alt.geojson_feature(data,'test_prop')
+                                        ).mark_geoshape().project().encode(**arg)
+
+    # Fake GeoInterface
+    data = _create_fake_geo_interface() 
+    dct = Chart(data).to_dict() 
+
+    assert dct['data']['format'] == {'type':'json','property':'test_prop'}
+    assert dct['data']['values'] == data.__geo_interface__
+    
+    # url
+    data = "url.json"
+    dct = Chart(data).to_dict() 
+
+    assert dct['data']['format'] == {'type':'json','property':'test_prop'}
+    assert dct['data']['url'] == data
