@@ -34,8 +34,8 @@ line = alt.Chart().mark_line(interpolate='basis').encode(
 selectors = alt.Chart().mark_point().encode(
     x='x:Q',
     opacity=alt.value(0),
-).properties(
-    selection=nearest
+).add_selection(
+    nearest
 )
 
 # Draw points on the line, and highlight based on selection
@@ -52,7 +52,7 @@ text = line.mark_text(align='left', dx=5, dy=-5).encode(
 rules = alt.Chart().mark_rule(color='gray').encode(
     x='x:Q',
 ).transform_filter(
-    nearest.ref()
+    nearest
 )
 
 # Put the five layers into a chart and bind the data
