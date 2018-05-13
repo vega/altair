@@ -83,7 +83,7 @@ class Hacker:
     def __init__ (self, module, objects):
         self.new = objects
         self.old = {name: module.__dict__[name] 
-                        for name in module.__dict__.keys() & objects.keys()}
+                        for name in module.__dict__.keys() if name in objects.keys()}
         self.module = module
  
     def hack(self):
