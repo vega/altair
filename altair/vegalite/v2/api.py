@@ -466,6 +466,18 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             setattr(copy, key, val)
         return copy
 
+    def add_selection(self, *selections):
+        """Add one or more selections to the chart"""
+        if not selections:
+            return self
+        else:
+            copy = self.copy(deep=True, ignore=['data'])
+            if copy.selection is Undefined:
+                copy.selection = SelectionMapping()
+            for selection in selections:
+                copy.selection += selection
+            return copy
+
     def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
                 parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,

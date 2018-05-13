@@ -293,6 +293,20 @@ def test_resolve_methods():
     assert str(err.value).endswith("object has no attribute 'resolve'")
 
 
+def test_add_selection():
+    selections = [alt.selection_interval(),
+                  alt.selection_single(),
+                  alt.selection_multi()]
+    chart = alt.Chart().mark_point().add_selection(
+        selections[0]
+    ).add_selection(
+        selections[1],
+        selections[2]
+    )
+    expected = selections[0] + selections[1] + selections[2]
+    assert chart.selection.to_dict() == expected.to_dict()
+
+
 def test_LookupData():
     df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
     lookup = alt.LookupData(data=df, key='x')
