@@ -90,6 +90,30 @@ def test_chart_infer_types():
     assert dct['encoding']['y']['type'] == 'ordinal'
 
 
+def test_multiple_encodings():
+    encoding_dct = [{'field': 'value', 'type': 'quantitative'},
+                    {'field': 'name', 'type': 'nominal'}]
+    chart1 = alt.Chart('data.csv').mark_point().encode(
+        detail=['value:Q', 'name:N'],
+        tooltip=['value:Q', 'name:N']
+    )
+
+    chart2 = alt.Chart('data.csv').mark_point().encode(
+        alt.Detail(['value:Q', 'name:N']),
+        alt.Tooltip(['value:Q', 'name:N'])
+    )
+
+    chart3 = alt.Chart('data.csv').mark_point().encode(
+        [alt.Detail('value:Q'), alt.Detail('name:N')],
+        [alt.Tooltip('value:Q'), alt.Tooltip('name:N')]
+    )
+
+    for chart in [chart1, chart2, chart3]:
+        dct = chart.to_dict()
+        assert dct['encoding']['detail'] == encoding_dct
+        assert dct['encoding']['tooltip'] == encoding_dct
+
+
 def test_chart_operations():
     data = pd.DataFrame({'x': pd.date_range('2012', periods=10, freq='Y'),
                          'y': range(10),
