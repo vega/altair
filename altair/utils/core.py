@@ -232,6 +232,8 @@ def parse_shorthand(shorthand, data=None):
             if 'type' not in attrs:
                 attrs['type'] = infer_vegalite_type(data[attrs['field']])
             if hasattr(data,'__geo_interface__'): 
+                if 'title' not in attrs:
+                    attrs['title'] = attrs['field']
                 attrs['field']='properties.'+attrs['field']
 
     return attrs

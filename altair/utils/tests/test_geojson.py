@@ -126,9 +126,9 @@ def test_parse_shorthand_with_geodata():
 
     data = _create_fake_geodataframe()
 
-    check('prop', data, field='properties.prop', type='quantitative')
-    check('prop:N', data, field='properties.prop', type='nominal')
-    check('count(prop)', data, field='properties.prop', aggregate='count', type='quantitative')
+    check('prop', data, field='properties.prop', type='quantitative',title='prop')
+    check('prop:N', data, field='properties.prop', type='nominal',title='prop')
+    check('count(prop)', data, field='properties.prop', aggregate='count', type='quantitative',title='prop')
     
     data = _create_fake_geo_interface()
 
@@ -150,7 +150,7 @@ def test_geo_pandas():
     
     assert dct['data']['format'] == {'type':'json','property':'features'}
     assert (gpd.GeoDataFrame.from_features(dct['data']['values']) == data).all().all()
-    assert dct['encoding'] == {'fill': {'field': 'properties.prop', 'type': 'quantitative'}}
+    assert dct['encoding'] == {'fill': {'field': 'properties.prop', 'type': 'quantitative','title':'prop'}}
 
 def test_geojson_feature():
     Chart = lambda data,**arg: alt.Chart(alt.geojson_feature(data,'test_prop')
