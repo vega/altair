@@ -121,7 +121,7 @@ class Reporter(object):
             report[self._item] = item
 
         report['timestamp'] = str(datetime.now())
-        
+
         with open(self._file,'w') as f:
                 json.dump(report,f)
 
@@ -152,18 +152,19 @@ def test_geopandas_examples(filename, report_path=None):
     if report:
         report['result'] = 'fail'
 
-    try:
-      
-        vds_hack = Hacker(vds, {'data':DataLoaderHook(pd.DataFrame),
+    vds_hack = Hacker(vds, {'data':DataLoaderHook(pd.DataFrame),
                                 'DataLoader':DataLoaderHook,
                                }
-                        ).hack()
-        pd_hack = Hacker(pd, {'DataFrame':StubGeoDataFrame,
+                        )
+    pd_hack = Hacker(pd, {'DataFrame':StubGeoDataFrame,
                              'merge':wrap(pd.merge,StubGeoDataFrame),
                              'melt':wrap(pd.melt,StubGeoDataFrame)
                              }
-                        ).hack()
+                        )
+  
+    try:
         img = {}
+      
         for pref in ['gpd','pd']:
             if pref=='gpd':
                 vds_hack.hack()
