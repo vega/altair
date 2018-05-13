@@ -286,7 +286,6 @@ class TopLevelMixin(object):
             additional keyword arguments passed to the save() method
         """
         from ...utils.server import serve
-        from ...utils.html import spec_to_html
 
         html = six.StringIO()
         self.save(html, format='html', **kwargs)
