@@ -251,6 +251,51 @@ class TopLevelMixin(object):
         else:
             return renderers.get()(dct)
 
+    def display(self):
+        """Display chart in Jupyter notebook or JupyterLab"""
+        from IPython.display import display
+        display(self)
+
+    def serve(self, ip='127.0.0.1', port=8888, n_retries=50, files=None,
+              jupyter_warning=True, open_browser=True, http_server=None,
+              **kwargs):
+        """Open a browser window and display a rendering of the chart
+
+        Parameters
+        ----------
+        html : string
+            HTML to serve
+        ip : string (default = '127.0.0.1')
+            ip address at which the HTML will be served.
+        port : int (default = 8888)
+            the port at which to serve the HTML
+        n_retries : int (default = 50)
+            the number of nearby ports to search if the specified port
+            is already in use.
+        files : dictionary (optional)
+            dictionary of extra content to serve
+        jupyter_warning : bool (optional)
+            if True (default), then print a warning if this is used
+            within the Jupyter notebook
+        open_browser : bool (optional)
+            if True (default), then open a web browser to the given HTML
+        http_server : class (optional)
+            optionally specify an HTTPServer class to use for showing the
+            figure. The default is Python's basic HTTPServer.
+        **kwargs :
+            additional keyword arguments passed to the save() method
+        """
+        from ...utils.server import serve
+        from ...utils.html import spec_to_html
+
+        html = six.StringIO()
+        self.save(html, format='html', **kwargs)
+        html.seek(0)
+
+        serve(html.read(), ip=ip, port=port, n_retries=n_retries,
+              files=files, jupyter_warning=jupyter_warning,
+              open_browser=open_browser, http_server=http_server)
+
 
 class Chart(TopLevelMixin, core.ExtendedUnitSpec):
     def __init__(self, data=Undefined, encoding=Undefined, mark=Undefined,
