@@ -68,7 +68,7 @@ class FieldChannelMixin(object):
         context = context or {}
         if self.shorthand is Undefined:
             kwds = {}
-        elif isinstance(self.shorthand, list):
+        elif isinstance(self.shorthand, (tuple, list)):
             # If given a list of shorthands, then transform it to a list of classes
             kwds = self._kwds.copy()
             kwds.pop('shorthand')
