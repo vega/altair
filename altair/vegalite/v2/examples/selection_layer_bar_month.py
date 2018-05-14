@@ -16,13 +16,15 @@ bars = alt.Chart().mark_bar().encode(
     alt.X('date:O', timeUnit='month'),
     y='mean(precipitation):Q',
     opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7))
-).properties(
-    selection=brush
+).add_selection(
+    brush
 )
 
 line = alt.Chart().mark_rule(color='firebrick').encode(
     y='mean(precipitation):Q',
     size=alt.SizeValue(3)
-).transform_filter(brush.ref())
+).transform_filter(
+    brush
+)
 
 alt.layer(bars, line, data=weather)

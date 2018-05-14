@@ -33,7 +33,7 @@ background = base.properties(
 highlight = base.encode(
     color=alt.value('goldenrod')
 ).transform_filter(
-    brush.ref()
+    brush
 )
 
 # layer the two charts & repeat

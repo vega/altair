@@ -23,8 +23,9 @@ base = alt.Chart(stocks).encode(
 
 points = base.mark_circle().encode(
     opacity=alt.value(0)
+).add_selection(
+    highlight
 ).properties(
-    selection=highlight,
     width=600
 )
 

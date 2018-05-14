@@ -30,10 +30,11 @@ points = alt.Chart().mark_point().encode(
     size=alt.Size('precipitation:Q', scale=alt.Scale(range=[5, 200]))
 ).properties(
     width=600,
-    height=300,
-    selection=brush
+    height=300
+).add_selection(
+    brush
 ).transform_filter(
-    click.ref()
+    click
 )
 
 # Bottom panel is a bar chart of weather type
@@ -42,10 +43,11 @@ bars = alt.Chart().mark_bar().encode(
     y='weather:N',
     color=alt.condition(click, color, alt.value('lightgray')),
 ).transform_filter(
-    brush.ref()
+    brush
 ).properties(
     width=600,
-    selection=click
+).add_selection(
+    click
 )
 
 alt.vconcat(points, bars,
