@@ -1,9 +1,10 @@
 """
-Simple Scatter Plot
--------------------
+Simple Scatter Plot with Tooltips
+---------------------------------
 
 A simple example of an interactive scatter plot using the well-known iris
-dataset.
+dataset, with tooltips that show the species name when the mouse hovers
+over each point.
 """
 # category: simple charts
 
@@ -15,5 +16,6 @@ iris = data.iris()
 alt.Chart(iris).mark_point().encode(
     x='petalWidth',
     y='petalLength',
-    color='species'
+    color='species',
+    tooltip='species'
 ).interactive()
