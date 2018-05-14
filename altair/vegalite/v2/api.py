@@ -916,9 +916,14 @@ class EncodingMixin(object):
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
         if args:
-            mapping = _get_channels_mapping()
+            channels_mapping = _get_channels_mapping()
             for arg in args:
-                encoding = mapping.get(type(arg), None)
+                if isinstance(arg, (list, tuple)) and len(arg) > 0:
+                    type_ = type(arg[0])
+                else:
+                    type_ = type(arg)
+
+                encoding = channels_mapping.get(type_, None)
                 if encoding is None:
                     raise NotImplementedError("non-keyword arg of type {0}"
                                               "".format(type(arg)))
@@ -935,6 +940,9 @@ class EncodingMixin(object):
 
             if isinstance(obj, six.string_types):
                 obj = {'shorthand': obj}
+
+            if isinstance(obj, (list, tuple)):
+                return [_wrap_in_channel_class(subobj, prop) for subobj in obj]
 
             if 'value' in obj:
                 clsname += 'Value'
