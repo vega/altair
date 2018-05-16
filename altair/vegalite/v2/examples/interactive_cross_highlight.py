@@ -26,7 +26,7 @@ circ = rect.mark_point().encode(
         legend=alt.Legend(title='Records in Selection')
     )
 ).transform_filter(
-    pts.ref()
+    pts
 )
 
 bar = alt.Chart(data.movies.url).mark_bar().encode(

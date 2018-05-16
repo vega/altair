@@ -421,20 +421,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def __or__(self, other):
         return HConcatChart(hconcat=[self, other])
 
-    # Display-related methods
-
-    def _repr_mimebundle_(self, include, exclude):
-        """Return a MIME bundle for display in Jupyter frontends."""
-        # Catch errors explicitly to get around issues in Jupyter frontend
-        # see https://github.com/ipython/ipython/issues/11038
-        try:
-            dct = self.to_dict()
-        except Exception:
-            utils.display_traceback(in_ipython=True)
-            return {}
-        else:
-            return renderers.get()(dct)
-
     def repeat(self, row=Undefined, column=Undefined, **kwargs):
         """Return a RepeatChart built from the chart
 
@@ -465,6 +451,18 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         for key, val in kwargs.items():
             setattr(copy, key, val)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selections to the chart"""
+        if not selections:
+            return self
+        else:
+            copy = self.copy(deep=True, ignore=['data'])
+            if copy.selection is Undefined:
+                copy.selection = SelectionMapping()
+            for selection in selections:
+                copy.selection += selection
+            return copy
 
     def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
@@ -854,15 +852,78 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def resolve_scale(self, *args, **kwargs):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
+    # Display-related methods
+
+    def _repr_mimebundle_(self, include, exclude):
+        """Return a MIME bundle for display in Jupyter frontends."""
+        # Catch errors explicitly to get around issues in Jupyter frontend
+        # see https://github.com/ipython/ipython/issues/11038
+        try:
+            dct = self.to_dict()
+        except Exception:
+            utils.display_traceback(in_ipython=True)
+            return {}
+        else:
+            return renderers.get()(dct)
+
+    def display(self):
+        """Display chart in Jupyter notebook or JupyterLab"""
+        from IPython.display import display
+        display(self)
+
+    def serve(self, ip='127.0.0.1', port=8888, n_retries=50, files=None,
+              jupyter_warning=True, open_browser=True, http_server=None,
+              **kwargs):
+        """Open a browser window and display a rendering of the chart
+
+        Parameters
+        ----------
+        html : string
+            HTML to serve
+        ip : string (default = '127.0.0.1')
+            ip address at which the HTML will be served.
+        port : int (default = 8888)
+            the port at which to serve the HTML
+        n_retries : int (default = 50)
+            the number of nearby ports to search if the specified port
+            is already in use.
+        files : dictionary (optional)
+            dictionary of extra content to serve
+        jupyter_warning : bool (optional)
+            if True (default), then print a warning if this is used
+            within the Jupyter notebook
+        open_browser : bool (optional)
+            if True (default), then open a web browser to the given HTML
+        http_server : class (optional)
+            optionally specify an HTTPServer class to use for showing the
+            figure. The default is Python's basic HTTPServer.
+        **kwargs :
+            additional keyword arguments passed to the save() method
+        """
+        from ...utils.server import serve
+
+        html = six.StringIO()
+        self.save(html, format='html', **kwargs)
+        html.seek(0)
+
+        serve(html.read(), ip=ip, port=port, n_retries=n_retries,
+              files=files, jupyter_warning=jupyter_warning,
+              open_browser=open_browser, http_server=http_server)
+
 
 class EncodingMixin(object):
     @utils.use_signature(core.EncodingWithFacet)
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
         if args:
-            mapping = _get_channels_mapping()
+            channels_mapping = _get_channels_mapping()
             for arg in args:
-                encoding = mapping.get(type(arg), None)
+                if isinstance(arg, (list, tuple)) and len(arg) > 0:
+                    type_ = type(arg[0])
+                else:
+                    type_ = type(arg)
+
+                encoding = channels_mapping.get(type_, None)
                 if encoding is None:
                     raise NotImplementedError("non-keyword arg of type {0}"
                                               "".format(type(arg)))
@@ -879,6 +940,9 @@ class EncodingMixin(object):
 
             if isinstance(obj, six.string_types):
                 obj = {'shorthand': obj}
+
+            if isinstance(obj, (list, tuple)):
+                return [_wrap_in_channel_class(subobj, prop) for subobj in obj]
 
             if 'value' in obj:
                 clsname += 'Value'
