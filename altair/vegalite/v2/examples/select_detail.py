@@ -33,7 +33,7 @@ timeseries = pd.DataFrame(np.random.randn(n_times, n_objects).cumsum(0),
                           index=pd.RangeIndex(0, n_times, name='time'))
 
 # Melt the wide-form timeseries into a long-form view
-timeseries = timeseries.reset_index().melt('time')
+timeseries = timeseries.stack().to_frame('value').reset_index()
 
 # Merge the (x, y) metadata into the long-form view
 timeseries['id'] = timeseries['id'].astype(int)  # make merge not complain
