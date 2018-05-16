@@ -74,7 +74,7 @@ For example, here we save a simple scatter-plot to JSON:
 
     chart.save('chart.json')
 
-The contetns of the resulting file will look something like this:
+The contents of the resulting file will look something like this:
 
 .. code-block:: json
 

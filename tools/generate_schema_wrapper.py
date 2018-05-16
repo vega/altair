@@ -41,7 +41,7 @@ SCHEMA_VERSION = {
     },
     'vega-lite': {
         'v1': 'v1.3.1',
-        'v2': 'v2.4.1'
+        'v2': 'v2.4.3'
     }
 }
 
@@ -68,6 +68,12 @@ class FieldChannelMixin(object):
         context = context or {}
         if self.shorthand is Undefined:
             kwds = {}
+        elif isinstance(self.shorthand, (tuple, list)):
+            # If given a list of shorthands, then transform it to a list of classes
+            kwds = self._kwds.copy()
+            kwds.pop('shorthand')
+            return [self.__class__(shorthand, **kwds).to_dict()
+                    for shorthand in self.shorthand]
         elif isinstance(self.shorthand, six.string_types):
             kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined

@@ -222,8 +222,9 @@ of the selection:
         "temp_range", "datum.temp_max - datum.temp_min"
     ).properties(
         width=600,
-        height=400,
-        selection=brush
+        height=400
+    ).add_selection(
+        brush
     )
 
     bars = alt.Chart().mark_bar().encode(
@@ -233,7 +234,7 @@ of the selection:
     ).transform_calculate(
         "temp_range", "datum.temp_max - datum.temp_min"
     ).transform_filter(
-        brush.ref()
+        brush
     ).properties(
         width=600
     )

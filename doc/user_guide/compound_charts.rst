@@ -146,9 +146,8 @@ with a ``brush`` selection to add interaction:
     )
 
     lower = upper.properties(
-        selection=brush,
         height=60
-    )
+    ).add_selection(brush)
 
     alt.vconcat(upper, lower)
 
@@ -310,8 +309,8 @@ layered chart with a hover selection:
         height=180,
     )
 
-    chart = base.mark_point().properties(
-        selection=hover
+    chart = base.mark_point().add_selection(
+        hover
     )
 
     chart += base.mark_text(dy=-5).encode(
