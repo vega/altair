@@ -1,8 +1,25 @@
 # Altair Change Log
 
-## Version 2.0.0:
+## Version 2.1.0 (Unreleased):
 
-Complete rewrite of Altair, focused on supporting Vega-Lite 2.X
+- update vega & vega-embed versions in html output (#838)
+
+- update vega-lite to version 2.4.3 (#836)
+
+  - Only API change is internal: ``alt.MarkProperties`` is now ``alt.MarkConfig``
+
+- add an ``add_selection()`` method to add selections to charts (#832)
+
+- add ``chart.serve()`` and ``chart.display()`` methods for more flexiblity
+  in displaying charts.
+
+- allow multiple fields to be passed to encodings such as ``tooltip``
+  and ``detail`` (#830)
+
+
+## Version 2.0.0: May 2, 2018
+
+- Complete rewrite of Altair, focused on supporting Vega-Lite 2.X
 
 ## Version 1.2.1: October 29, 2017
 
