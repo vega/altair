@@ -977,6 +977,24 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+class OrderValue(ValueChannelMixin, core.ValueDef):
+    """OrderValue schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value of an encoding channel.
+
+    Attributes
+    ----------
+    value : anyOf(float, string, boolean)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+
+    def __init__(self, value, **kwds):
+        super(OrderValue, self).__init__(value=value, **kwds)
+
+
 class Row(FieldChannelMixin, core.FacetFieldDef):
     """Row schema wrapper
 
