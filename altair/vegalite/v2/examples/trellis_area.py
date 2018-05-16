@@ -1,6 +1,6 @@
 """
-Trellis Area
------------------
+Trellis Area Chart
+------------------
 This example shows small multiples of an area chart.
 """
 # category: area charts
