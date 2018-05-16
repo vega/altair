@@ -36,30 +36,30 @@ timeseries = pd.DataFrame(np.random.randn(n_times, n_objects).cumsum(0),
 timeseries = timeseries.reset_index().melt('time')
 
 # Merge the (x, y) metadata into the long-form view
+timeseries['id'] = timeseries['id'].astype(int)  # make merge not complain
 data = pd.merge(timeseries, locations, on='id')
 
 # Data is prepared, now make a chart
 
 selector = alt.selection_single(empty='all', fields=['id'])
 
-points = alt.Chart(data).mark_point(filled=True, size=200).encode(
+base = alt.Chart(data).properties(
+    width=250,
+    height=250
+).add_selection(selector)
+
+points = base.mark_point(filled=True, size=200).encode(
     x='mean(x)',
     y='mean(y)',
     color=alt.condition(selector, 'id:O', alt.value('lightgray'), legend=None),
-).properties(
-    selection=selector,
-    width=250, height=250
 ).interactive()
 
-timeseries = alt.Chart(data).mark_line().encode(
+timeseries = base.mark_line().encode(
     x='time',
     y=alt.Y('value', scale=alt.Scale(domain=(-15, 15))),
     color=alt.Color('id:O', legend=None)
 ).transform_filter(
     selector
-).properties(
-    selection=selector,
-    width=250, height=250
 )
 
 points | timeseries

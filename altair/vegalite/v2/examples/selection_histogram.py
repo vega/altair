@@ -17,8 +17,8 @@ points = alt.Chart().mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
-).properties(
-    selection=brush
+).add_selection(
+    brush
 )
 
 bars = alt.Chart().mark_bar().encode(
@@ -26,7 +26,7 @@ bars = alt.Chart().mark_bar().encode(
     color='Origin:N',
     x='count(Origin):Q'
 ).transform_filter(
-    brush.ref()
+    brush
 )
 
 alt.vconcat(points, bars, data=cars)

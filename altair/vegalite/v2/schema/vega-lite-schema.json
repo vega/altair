@@ -216,7 +216,7 @@
               "type": "boolean"
             },
             {
-              "$ref": "#/definitions/MarkProperties"
+              "$ref": "#/definitions/MarkConfig"
             }
           ],
           "description": "A flag for overlaying line on top of area marks, or an object defining the properties of the overlayed lines.\n\n- If this value is an empty object (`{}`) or `true`, lines with default properties will be used.\n\n- If this value is `false`, no lines would be automatically added to area marks.\n\n__Default value:__ `false`."
@@ -237,7 +237,7 @@
               "type": "boolean"
             },
             {
-              "$ref": "#/definitions/MarkProperties"
+              "$ref": "#/definitions/MarkConfig"
             },
             {
               "enum": [
@@ -1969,9 +1969,12 @@
                 "$ref": "#/definitions/OrderFieldDef"
               },
               "type": "array"
+            },
+            {
+              "$ref": "#/definitions/ValueDef"
             }
           ],
-          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
+          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).  Setting `order` to `{\"value\": null}` makes the line marks use the original order in the data sources.\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
         },
         "shape": {
           "anyOf": [
@@ -2176,9 +2179,12 @@
                 "$ref": "#/definitions/OrderFieldDef"
               },
               "type": "array"
+            },
+            {
+              "$ref": "#/definitions/ValueDef"
             }
           ],
-          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
+          "description": "Order of the marks.\n- For stacked marks, this `order` channel encodes [stack order](https://vega.github.io/vega-lite/docs/stack.html#order).\n- For line and trail marks, this `order` channel encodes order of data points in the lines. This can be useful for creating [a connected scatterplot](https://vega.github.io/vega-lite/examples/connected_scatterplot.html).  Setting `order` to `{\"value\": null}` makes the line marks use the original order in the data sources.\n- Otherwise, this `order` channel encodes layer order of the marks.\n\n__Note__: In aggregate plots, `order` field should be `aggregate`d to avoid creating additional aggregation grouping."
         },
         "row": {
           "$ref": "#/definitions/FacetFieldDef",
@@ -3927,7 +3933,7 @@
               "type": "boolean"
             },
             {
-              "$ref": "#/definitions/MarkProperties"
+              "$ref": "#/definitions/MarkConfig"
             },
             {
               "enum": [
@@ -4552,7 +4558,7 @@
               "type": "boolean"
             },
             {
-              "$ref": "#/definitions/MarkProperties"
+              "$ref": "#/definitions/MarkConfig"
             }
           ],
           "description": "A flag for overlaying line on top of area marks, or an object defining the properties of the overlayed lines.\n\n- If this value is an empty object (`{}`) or `true`, lines with default properties will be used.\n\n- If this value is `false`, no lines would be automatically added to area marks.\n\n__Default value:__ `false`."
@@ -4573,7 +4579,7 @@
               "type": "boolean"
             },
             {
-              "$ref": "#/definitions/MarkProperties"
+              "$ref": "#/definitions/MarkConfig"
             },
             {
               "enum": [
@@ -4669,220 +4675,6 @@
       "required": [
         "type"
       ],
-      "type": "object"
-    },
-    "MarkProperties": {
-      "additionalProperties": false,
-      "properties": {
-        "align": {
-          "$ref": "#/definitions/HorizontalAlign",
-          "description": "The horizontal alignment of the text. One of `\"left\"`, `\"right\"`, `\"center\"`."
-        },
-        "angle": {
-          "description": "The rotation angle of the text, in degrees.",
-          "maximum": 360,
-          "minimum": 0,
-          "type": "number"
-        },
-        "baseline": {
-          "$ref": "#/definitions/VerticalAlign",
-          "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
-        },
-        "binSpacing": {
-          "description": "Offset between bars for binned field.  Ideal value for this is either 0 (Preferred by statisticians) or 1 (Vega-Lite Default, D3 example style).\n\n__Default value:__ `1`",
-          "minimum": 0,
-          "type": "number"
-        },
-        "clip": {
-          "description": "Whether a mark be clipped to the enclosing group’s width and height.",
-          "type": "boolean"
-        },
-        "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
-          "type": "string"
-        },
-        "cursor": {
-          "description": "The mouse cursor used over the mark. Any valid [CSS cursor type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used.",
-          "enum": [
-            "auto",
-            "default",
-            "none",
-            "context-menu",
-            "help",
-            "pointer",
-            "progress",
-            "wait",
-            "cell",
-            "crosshair",
-            "text",
-            "vertical-text",
-            "alias",
-            "copy",
-            "move",
-            "no-drop",
-            "not-allowed",
-            "e-resize",
-            "n-resize",
-            "ne-resize",
-            "nw-resize",
-            "s-resize",
-            "se-resize",
-            "sw-resize",
-            "w-resize",
-            "ew-resize",
-            "ns-resize",
-            "nesw-resize",
-            "nwse-resize",
-            "col-resize",
-            "row-resize",
-            "all-scroll",
-            "zoom-in",
-            "zoom-out",
-            "grab",
-            "grabbing"
-          ],
-          "type": "string"
-        },
-        "dx": {
-          "description": "The horizontal offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
-          "type": "number"
-        },
-        "dy": {
-          "description": "The vertical offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
-          "type": "number"
-        },
-        "fill": {
-          "description": "Default Fill Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
-          "type": "string"
-        },
-        "fillOpacity": {
-          "description": "The fill opacity (value between [0,1]).\n\n__Default value:__ `1`",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
-          "type": "boolean"
-        },
-        "font": {
-          "description": "The typeface to set the text in (e.g., `\"Helvetica Neue\"`).",
-          "type": "string"
-        },
-        "fontSize": {
-          "description": "The font size, in pixels.",
-          "minimum": 0,
-          "type": "number"
-        },
-        "fontStyle": {
-          "$ref": "#/definitions/FontStyle",
-          "description": "The font style (e.g., `\"italic\"`)."
-        },
-        "fontWeight": {
-          "$ref": "#/definitions/FontWeight",
-          "description": "The font weight.\nThis can be either a string (e.g `\"bold\"`, `\"normal\"`) or a number (`100`, `200`, `300`, ..., `900` where `\"normal\"` = `400` and `\"bold\"` = `700`)."
-        },
-        "href": {
-          "description": "A URL to load upon mouse click. If defined, the mark acts as a hyperlink.",
-          "format": "uri",
-          "type": "string"
-        },
-        "interpolate": {
-          "$ref": "#/definitions/Interpolate",
-          "description": "The line interpolation method to use for line and area marks. One of the following:\n- `\"linear\"`: piecewise linear segments, as in a polyline.\n- `\"linear-closed\"`: close the linear segments to form a polygon.\n- `\"step\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"step-before\"`: alternate between vertical and horizontal segments, as in a step function.\n- `\"step-after\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"basis\"`: a B-spline, with control point duplication on the ends.\n- `\"basis-open\"`: an open B-spline; may not intersect the start or end.\n- `\"basis-closed\"`: a closed B-spline, as in a loop.\n- `\"cardinal\"`: a Cardinal spline, with control point duplication on the ends.\n- `\"cardinal-open\"`: an open Cardinal spline; may not intersect the start or end, but will intersect other control points.\n- `\"cardinal-closed\"`: a closed Cardinal spline, as in a loop.\n- `\"bundle\"`: equivalent to basis, except the tension parameter is used to straighten the spline.\n- `\"monotone\"`: cubic interpolation that preserves monotonicity in y."
-        },
-        "limit": {
-          "description": "The maximum length of the text mark in pixels (default 0, indicating no limit). The text value will be automatically truncated if the rendered size exceeds the limit.",
-          "type": "number"
-        },
-        "opacity": {
-          "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "orient": {
-          "$ref": "#/definitions/Orient",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
-        },
-        "radius": {
-          "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
-          "minimum": 0,
-          "type": "number"
-        },
-        "shape": {
-          "description": "The default symbol shape to use. One of: `\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`, or `\"triangle-down\"`, or a custom SVG path.\n\n__Default value:__ `\"circle\"`",
-          "type": "string"
-        },
-        "size": {
-          "description": "The pixel area each the point/circle/square.\nFor example: in the case of circles, the radius is determined in part by the square root of the size value.\n\n__Default value:__ `30`",
-          "minimum": 0,
-          "type": "number"
-        },
-        "stroke": {
-          "description": "Default Stroke Color.  This has higher precedence than `config.color`\n\n__Default value:__ (None)",
-          "type": "string"
-        },
-        "strokeCap": {
-          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`",
-          "enum": [
-            "butt",
-            "round",
-            "square"
-          ],
-          "type": "string"
-        },
-        "strokeDash": {
-          "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
-        },
-        "strokeDashOffset": {
-          "description": "The offset (in pixels) into which to begin drawing with the stroke dash array.",
-          "type": "number"
-        },
-        "strokeOpacity": {
-          "description": "The stroke opacity (value between [0,1]).\n\n__Default value:__ `1`",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "strokeWidth": {
-          "description": "The stroke width, in pixels.",
-          "minimum": 0,
-          "type": "number"
-        },
-        "style": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name.  For example, a bar mark will have style `\"bar\"` by default.\n__Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
-        },
-        "tension": {
-          "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "text": {
-          "description": "Placeholder text if the `text` channel is not specified",
-          "type": "string"
-        },
-        "theta": {
-          "description": "Polar coordinate angle, in radians, of the text label from the origin determined by the `x` and `y` properties. Values for `theta` follow the same convention of `arc` mark `startAngle` and `endAngle` properties: angles are measured in radians, with `0` indicating \"north\".",
-          "type": "number"
-        }
-      },
       "type": "object"
     },
     "Month": {

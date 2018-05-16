@@ -202,7 +202,7 @@ class AreaConfig(VegaLiteSchema):
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no limit). The
         text value will be automatically truncated if the rendered size exceeds the limit.
-    line : anyOf(boolean, MarkProperties)
+    line : anyOf(boolean, MarkConfig)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.   *    If this value is an empty object ( ``{}``
         ) or ``true``, lines with default properties will be used.  *    If this value is
@@ -221,7 +221,7 @@ class AreaConfig(VegaLiteSchema):
            if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
         determined by the orientation of the stack;   therefore explicitly specified value
         will be ignored.
-    point : anyOf(boolean, MarkProperties, enum('transparent'))
+    point : anyOf(boolean, MarkConfig, enum('transparent'))
         A flag for overlaying points on top of line or area marks, or an object defining the
          properties of the overlayed points.   *    If this property is ``"transparent"``,
         transparent points will be used (for enhancing tooltips and selections).  *    If
@@ -1861,15 +1861,16 @@ class Encoding(VegaLiteSchema):
         Opacity of the marks – either can be a value or a range.  **Default value:** If
         undefined, the default opacity depends on `mark config <config.html#mark>`_ 's
         ``opacity`` property.
-    order : anyOf(OrderFieldDef, List(OrderFieldDef))
+    order : anyOf(OrderFieldDef, List(OrderFieldDef), ValueDef)
         Order of the marks.   * For stacked marks, this ``order`` channel encodes `stack
         order <https://vega.github.io/vega-lite/docs/stack.html#order>`_. * For line and
         trail marks, this ``order`` channel encodes order of data points in the lines. This
         can be useful for creating `a connected scatterplot
-        <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`_. *
-        Otherwise, this ``order`` channel encodes layer order of the marks.  **Note** : In
-        aggregate plots, ``order`` field should be ``aggregate`` d to avoid creating
-        additional aggregation grouping.
+        <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`_.  Setting
+        ``order`` to ``{"value": null}`` makes the line marks use the original order in the
+        data sources. * Otherwise, this ``order`` channel encodes layer order of the marks.
+          **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to avoid
+        creating additional aggregation grouping.
     shape : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         For ``point`` marks the supported values are ``"circle"`` (default), ``"square"``,
         ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or else a
@@ -1965,15 +1966,16 @@ class EncodingWithFacet(VegaLiteSchema):
         Opacity of the marks – either can be a value or a range.  **Default value:** If
         undefined, the default opacity depends on `mark config <config.html#mark>`_ 's
         ``opacity`` property.
-    order : anyOf(OrderFieldDef, List(OrderFieldDef))
+    order : anyOf(OrderFieldDef, List(OrderFieldDef), ValueDef)
         Order of the marks.   * For stacked marks, this ``order`` channel encodes `stack
         order <https://vega.github.io/vega-lite/docs/stack.html#order>`_. * For line and
         trail marks, this ``order`` channel encodes order of data points in the lines. This
         can be useful for creating `a connected scatterplot
-        <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`_. *
-        Otherwise, this ``order`` channel encodes layer order of the marks.  **Note** : In
-        aggregate plots, ``order`` field should be ``aggregate`` d to avoid creating
-        additional aggregation grouping.
+        <https://vega.github.io/vega-lite/examples/connected_scatterplot.html>`_.  Setting
+        ``order`` to ``{"value": null}`` makes the line marks use the original order in the
+        data sources. * Otherwise, this ``order`` channel encodes layer order of the marks.
+          **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to avoid
+        creating additional aggregation grouping.
     row : FacetFieldDef
         Vertical facets for trellis plots.
     shape : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
@@ -3509,7 +3511,7 @@ class LineConfig(VegaLiteSchema):
            if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
         determined by the orientation of the stack;   therefore explicitly specified value
         will be ignored.
-    point : anyOf(boolean, MarkProperties, enum('transparent'))
+    point : anyOf(boolean, MarkConfig, enum('transparent'))
         A flag for overlaying points on top of line or area marks, or an object defining the
          properties of the overlayed points.   *    If this property is ``"transparent"``,
         transparent points will be used (for enhancing tooltips and selections).  *    If
@@ -4018,7 +4020,7 @@ class MarkDef(VegaLiteSchema):
     limit : float
         The maximum length of the text mark in pixels (default 0, indicating no limit). The
         text value will be automatically truncated if the rendered size exceeds the limit.
-    line : anyOf(boolean, MarkProperties)
+    line : anyOf(boolean, MarkConfig)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.   *    If this value is an empty object ( ``{}``
         ) or ``true``, lines with default properties will be used.  *    If this value is
@@ -4037,7 +4039,7 @@ class MarkDef(VegaLiteSchema):
            if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
         determined by the orientation of the stack;   therefore explicitly specified value
         will be ignored.
-    point : anyOf(boolean, MarkProperties, enum('transparent'))
+    point : anyOf(boolean, MarkConfig, enum('transparent'))
         A flag for overlaying points on top of line or area marks, or an object defining the
          properties of the overlayed points.   *    If this property is ``"transparent"``,
         transparent points will be used (for enhancing tooltips and selections).  *    If
@@ -4113,171 +4115,6 @@ class MarkDef(VegaLiteSchema):
                                       strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                                       strokeWidth=strokeWidth, style=style, tension=tension, text=text,
                                       theta=theta, **kwds)
-
-
-class MarkProperties(VegaLiteSchema):
-    """MarkProperties schema wrapper
-
-    Mapping(required=[])
-
-    Attributes
-    ----------
-    align : HorizontalAlign
-        The horizontal alignment of the text. One of ``"left"``, ``"right"``, ``"center"``.
-    angle : float
-        The rotation angle of the text, in degrees.
-    baseline : VerticalAlign
-        The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
-        **Default value:** ``"middle"``
-    binSpacing : float
-        Offset between bars for binned field.  Ideal value for this is either 0 (Preferred
-        by statisticians) or 1 (Vega-Lite Default, D3 example style).  **Default value:**
-        ``1``
-    clip : boolean
-        Whether a mark be clipped to the enclosing group’s width and height.
-    color : string
-        Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
-        ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
-        style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
-        The mouse cursor used over the mark. Any valid `CSS cursor type
-        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
-    dx : float
-        The horizontal offset, in pixels, between the text label and its anchor point. The
-        offset is applied after rotation by the *angle* property.
-    dy : float
-        The vertical offset, in pixels, between the text label and its anchor point. The
-        offset is applied after rotation by the *angle* property.
-    fill : string
-        Default Fill Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
-    fillOpacity : float
-        The fill opacity (value between [0,1]).  **Default value:** ``1``
-    filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke color.
-        **Default value:** ``true`` for all marks except ``point`` and ``false`` for
-        ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
-        ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
-    font : string
-        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
-    fontSize : float
-        The font size, in pixels.
-    fontStyle : FontStyle
-        The font style (e.g., ``"italic"`` ).
-    fontWeight : FontWeight
-        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
-        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
-        ``"bold"`` = ``700`` ).
-    href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
-    interpolate : Interpolate
-        The line interpolation method to use for line and area marks. One of the following:
-           * ``"linear"`` : piecewise linear segments, as in a polyline. *
-        ``"linear-closed"`` : close the linear segments to form a polygon. * ``"step"`` :
-        alternate between horizontal and vertical segments, as in a step function. *
-        ``"step-before"`` : alternate between vertical and horizontal segments, as in a step
-         function. * ``"step-after"`` : alternate between horizontal and vertical segments,
-        as in a step function. * ``"basis"`` : a B-spline, with control point duplication on
-         the ends. * ``"basis-open"`` : an open B-spline; may not intersect the start or
-        end. * ``"basis-closed"`` : a closed B-spline, as in a loop. * ``"cardinal"`` : a
-        Cardinal spline, with control point duplication on the ends. * ``"cardinal-open"`` :
-         an open Cardinal spline; may not intersect the start or end, but will intersect
-        other control points. * ``"cardinal-closed"`` : a closed Cardinal spline, as in a
-        loop. * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
-        straighten the spline. * ``"monotone"`` : cubic interpolation that preserves
-        monotonicity in y.
-    limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
-    opacity : float
-        The overall opacity (value between [0,1]).  **Default value:** ``0.7`` for
-        non-aggregate plots with ``point``, ``tick``, ``circle``, or ``square`` marks or
-        layered ``bar`` charts and ``1`` otherwise.
-    orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value is
-        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
-         whether the size of the bar and tick   should be applied to x or y dimension. * For
-         area, this property determines the orient property of the Vega output. * For line
-        and trail marks, this property determines the sort order of the points in the line
-           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
-        determined by the orientation of the stack;   therefore explicitly specified value
-        will be ignored.
-    radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the ``x`` and ``y`` properties.
-    shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.  **Default value:** ``"circle"``
-    size : float
-        The pixel area each the point/circle/square. For example: in the case of circles,
-        the radius is determined in part by the square root of the size value.  **Default
-        value:** ``30``
-    stroke : string
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
-        ``"square"``.  **Default value:** ``"square"``
-    strokeDash : List(float)
-        An array of alternating stroke, space lengths for creating dashed or dotted lines.
-    strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeOpacity : float
-        The stroke opacity (value between [0,1]).  **Default value:** ``1``
-    strokeWidth : float
-        The stroke width, in pixels.
-    style : anyOf(string, List(string))
-        A string or array of strings indicating the name of custom styles to apply to the
-        mark. A style is a named collection of mark property defaults defined within the
-        `style configuration <mark.html#style-config>`_. If style is an array, later styles
-        will override earlier styles. Any `mark properties <encoding.html#mark-prop>`_
-        explicitly defined within the ``encoding`` will override a style default.  **Default
-         value:** The mark's name.  For example, a bar mark will have style ``"bar"`` by
-        default. **Note:** Any specified style will augment the default style. For example,
-        a bar mark with ``"style": "foo"`` will receive from ``config.style.bar`` and
-        ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
-    tension : float
-        Depending on the interpolation type, sets the tension parameter (for line and area
-        marks).
-    text : string
-        Placeholder text if the ``text`` channel is not specified
-    theta : float
-        Polar coordinate angle, in radians, of the text label from the origin determined by
-        the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
-        ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
-        radians, with ``0`` indicating "north".
-    """
-    _schema = {'$ref': '#/definitions/MarkProperties'}
-    _rootschema = Root._schema
-
-    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                 clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                 fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                 interpolate=Undefined, limit=Undefined, opacity=Undefined, orient=Undefined,
-                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                 text=Undefined, theta=Undefined, **kwds):
-        super(MarkProperties, self).__init__(align=align, angle=angle, baseline=baseline,
-                                             binSpacing=binSpacing, clip=clip, color=color,
-                                             cursor=cursor, dx=dx, dy=dy, fill=fill,
-                                             fillOpacity=fillOpacity, filled=filled, font=font,
-                                             fontSize=fontSize, fontStyle=fontStyle,
-                                             fontWeight=fontWeight, href=href, interpolate=interpolate,
-                                             limit=limit, opacity=opacity, orient=orient, radius=radius,
-                                             shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
-                                             strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                             strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                             style=style, tension=tension, text=text, theta=theta,
-                                             **kwds)
 
 
 class Month(VegaLiteSchema):

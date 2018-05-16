@@ -16,6 +16,6 @@ alt.Chart(cars).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))
-).properties(
-    selection=brush
+).add_selection(
+    brush
 )
