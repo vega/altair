@@ -1,6 +1,7 @@
 import json
 import random
 import uuid
+import warnings
 
 import pandas as pd
 from toolz.curried import curry, pipe  # noqa
@@ -77,6 +78,31 @@ def sample(data, n=None, frac=None):
             values = random.sample(values, n)
             return {'values': values}
 
+def _geopandas_to_dict(data):
+    try:
+        if ('geometry' != data.geometry.name) and  ('geometry' in data.columns) :
+            warnings.warn("column name 'geometry' is reserved name for GeoDataFrame. "+
+            "Column named 'geometry' should contain actual displaying geometry or not be used. "+
+            "Data of column will not be accessible from the chart description. ")
+        if 'type' in data.columns :
+            warnings.warn("Column name 'type' is reserved name for GeoDataFrame. "+
+            "Data of column 'type' will not be accessible from the chart description.")
+        if 'id' in data.columns :
+            warnings.warn("Column name 'id' is reserved name for GeoDataFrame for index values. "+
+            "Data of column 'id' will not be accessible from the chart description.")
+        return [ dict(row,type = feature['type'],geometry = feature['geometry'], id = feature['id'])
+                    for row,feature in zip(
+                            data.drop(data.geometry.name, axis=1).to_dict('row'),
+                            data.geometry.__geo_interface__['features']
+                        )
+                    ]
+    
+    except AttributeError as err:
+        if str(err).startswith('No geometry data set yet'):
+            warnings.warn("GeoDataFrame has no geometry to display.")
+            return data.to_dict('row')
+        else:
+            raise    
 
 @curry
 def to_json(data, prefix='altair-data'):
@@ -89,10 +115,12 @@ def to_json(data, prefix='altair-data'):
     if hasattr(data,'__geo_interface__'):
         if isinstance(data, pd.DataFrame): #GeoPandas
             data = sanitize_dataframe(data)
-            data_format['property']='features'
-
-        with open(filename,'w') as f:
-            json.dump(data.__geo_interface__, f)
+            values = _geopandas_to_dict(data)
+            with open(filename,'w') as f:
+                json.dump(values, f)
+        else:
+            with open(filename,'w') as f:
+                json.dump(data.__geo_interface__, f)
  
     elif isinstance(data, pd.DataFrame): 
         data = sanitize_dataframe(data)
@@ -136,15 +164,16 @@ def to_values(data):
     check_data_type(data)
 
     if hasattr(data,'__geo_interface__'):
-        data_format = {'type': 'json'}
         if isinstance(data, pd.DataFrame): #GeoPandas
             data = sanitize_dataframe(data)
-            data_format['property']='features'
-        return {
-                'values':data.__geo_interface__,
-                'format': data_format
-                }
-    
+            return {'values': _geopandas_to_dict(data),
+                    'format': {'type': 'json'}}
+        else:
+            return {
+                    'values':data.__geo_interface__,
+                    'format': {'type': 'json'},
+                    }
+        
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {'values': data.to_dict(orient='records')}

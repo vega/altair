@@ -82,13 +82,23 @@ def _create_fake_geo_interface():
     return FakeGeoJSON()
 
 def _create_fake_geodataframe():
-    class FakeGeoDataFrame(pd.DataFrame):
+    class FakeGeoSeries:
         __geo_interface__=_create_geojson()
+        def __init__(self, geometry_name = 'geometry'):
+            self.name =  geometry_name
+    
+    class FakeGeoDataFrame(pd.DataFrame):
+        __geo_interface__ = _create_geojson()
+        geometry = FakeGeoSeries()
         def copy(self, deep=True):
             data = self._data
             if deep:
                 data = data.copy()
             return FakeGeoDataFrame(data).__finalize__(self)
+        def drop(self, labels=None, axis=0,**kwargs):
+            if (axis == 1) and  (self.geometry.name  == labels):
+                return self.copy()
+            return super(FakeGeoDataFrame,self).drop(labels, axis,**kwargs)
 
     return FakeGeoDataFrame({'prop':[1,2,3]})
  
@@ -97,8 +107,9 @@ def test_to_values_geo():
     
     data = _create_fake_geodataframe()
     result = pipe(data, to_values)
-    assert result['format'] == {'type':'json','property':'features'}
-    assert result['values']==data.__geo_interface__
+    assert result['format'] == {'type':'json'}
+    assert result['values'][1]['geometry']==data.__geo_interface__['features'][1]['geometry']
+    assert result['values'][1]['type']==data.__geo_interface__['features'][1]['type']
 
     data = _create_fake_geo_interface()
     result = pipe(data, to_values)
@@ -111,8 +122,8 @@ def test_chart_data_geotypes():
     # Fake GeoPandas
     data = _create_fake_geodataframe()
     dct = Chart(data,fill='prop').to_dict() 
-    assert dct['data']['format'] == {'type':'json','property':'features'}
-    assert dct['data']['values'] == data.__geo_interface__
+    assert dct['data']['values'][1]['geometry']==data.__geo_interface__['features'][1]['geometry']
+    assert dct['data']['values'][1]['type']==data.__geo_interface__['features'][1]['type']
 
     # Fake GeoInterface
     data = _create_fake_geo_interface()
@@ -126,9 +137,9 @@ def test_parse_shorthand_with_geodata():
 
     data = _create_fake_geodataframe()
 
-    check('prop', data, field='properties.prop', type='quantitative',title='prop')
-    check('prop:N', data, field='properties.prop', type='nominal',title='prop')
-    check('count(prop)', data, field='properties.prop', aggregate='count', type='quantitative',title='prop')
+    check('prop', data, field='prop', type='quantitative')
+    check('prop:N', data, field='prop', type='nominal')
+    check('count(prop)', data, field='prop', aggregate='count', type='quantitative')
     
     data = _create_fake_geo_interface()
 
@@ -148,9 +159,21 @@ def test_geo_pandas():
     data = gpd.GeoDataFrame.from_features(_create_geojson())
     dct = alt.Chart(data).mark_geoshape().project().encode(fill='prop').to_dict()
     
-    assert dct['data']['format'] == {'type':'json','property':'features'}
-    assert (gpd.GeoDataFrame.from_features(dct['data']['values']) == data).all().all()
-    assert dct['encoding'] == {'fill': {'field': 'properties.prop', 'type': 'quantitative','title':'prop'}}
+    assert dct['data']['format'] == {'type':'json'}
+    assert dct['encoding'] == {'fill': {'field': 'prop', 'type': 'quantitative'}}
+    data2 = gpd.GeoDataFrame.from_features({
+                                'type':'FeatureCollection',
+                                'features':[{'type':item['type'],
+                                             'geometry':item['geometry'],
+                                             'id':item['id'],
+                                             'properties':{ k: item[k] 
+                                                for k in item.keys() 
+                                                if k not in ('type','geometry')
+                                              }
+                                            } for item in dct['data']['values']]
+                                })
+
+    assert (data2[data.columns] == data).all().all()
 
 def test_geojson_feature():
     Chart = lambda data,**arg: alt.Chart(alt.geojson_feature(data,'test_prop')
