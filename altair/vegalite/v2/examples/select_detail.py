@@ -36,6 +36,7 @@ timeseries = pd.DataFrame(np.random.randn(n_times, n_objects).cumsum(0),
 timeseries = timeseries.reset_index().melt('time')
 
 # Merge the (x, y) metadata into the long-form view
+timeseries['id'] = timeseries['id'].astype(int)  # make merge not complain
 data = pd.merge(timeseries, locations, on='id')
 
 # Data is prepared, now make a chart
