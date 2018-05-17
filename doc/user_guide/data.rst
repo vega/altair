@@ -8,11 +8,13 @@ Specifying Data in Altair
 Each top-level chart object (i.e. :class:`Chart`, :class:`LayerChart`,
 and :class:`VConcatChart`, :class:`HConcatChart``, :class:`RepeatChart`,
 :class:`FacetChart`) accepts a dataset as its first argument.
-The dataset can be specified in one of three ways:
+The dataset can be specified in one of five ways:
 
 - as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
+- as a GeoPandas_ GeoDataFrame
+- as a GeoJSON_ object
 
 For example, here we specify data via a DataFrame:
 
@@ -28,7 +30,7 @@ For example, here we specify data via a DataFrame:
        y='y',
    )
 
-When data is specified as a DataFrame, the encoding is quite simple, as Altair
+When data is specified as a DataFrame (or GeoDataFrame), the encoding is quite simple, as Altair
 uses the data type information provided by Pandas to automatically determine
 the data types required in the encoding.
 
@@ -179,3 +181,5 @@ For more information on the ``melt`` method, see the `Pandas melt documentation`
 .. _Pandas pivot documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html
 .. _Pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
 .. _Reshaping and Pivot Tables: https://pandas.pydata.org/pandas-docs/stable/reshaping.html
+.. _GeoPandas: http://geopandas.org
+.. _GeoJSON: https://pypi.org/project/geojson/
