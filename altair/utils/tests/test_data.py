@@ -1,8 +1,11 @@
+import os
+
 import pytest
 import pandas as pd
 
 
-from ..data import limit_rows, MaxRowsError, sample, pipe, to_values
+from ..data import (limit_rows, MaxRowsError, sample, pipe, to_values,
+                    to_json, to_csv)
 
 
 def _create_dataframe(N):
@@ -63,3 +66,39 @@ def test_type_error():
     for f in (sample, limit_rows, to_values):
         with pytest.raises(TypeError):
             pipe(0, f)
+
+
+def test_to_json():
+    """Test to_json
+    - make certain the filename is deterministic
+    - make certain the file contents match the data
+    """
+    data = _create_dataframe(10)
+    try:
+        result1 = pipe(data, to_json)
+        result2 = pipe(data, to_json)
+        filename = result1['url']
+        output = pd.read_json(filename)
+    finally:
+        os.remove(filename)
+
+    assert result1 == result2
+    assert output.equals(data)
+
+
+def test_to_csv():
+    """Test to_csv
+    - make certain the filename is deterministic
+    - make certain the file contents match the data
+    """
+    data = _create_dataframe(10)
+    try:
+        result1 = pipe(data, to_csv)
+        result2 = pipe(data, to_csv)
+        filename = result1['url']
+        output = pd.read_csv(filename)
+    finally:
+        os.remove(filename)
+
+    assert result1 == result2
+    assert output.equals(data)
