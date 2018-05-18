@@ -22,7 +22,7 @@ class VegaDatasetsMock(object):
 
 
 try:
-    from vega_datasetss import data as datasets
+    from vega_datasets import data as datasets
 except ImportError:
     datasets = VegaDatasetsMock()
 
