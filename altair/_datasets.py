@@ -3,8 +3,6 @@
 The functions here are merely thin wrappers for data access routines in the
 vega_datasets package.
 """
-import warnings
-
 
 ERR_MESSAGE = """
 The vega_datasets package must be installed in order to use altair.datasets.
@@ -24,7 +22,7 @@ class VegaDatasetsMock(object):
 
 
 try:
-    from vega_datasets import data as datasets
+    from vega_datasetss import data as datasets
 except ImportError:
     datasets = VegaDatasetsMock()
 
