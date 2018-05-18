@@ -6,9 +6,9 @@ representing the same data.
 """
 # category: other charts
 import altair as alt
-from vega_datasets import data
 
-stocks = data.stocks()
+
+stocks = alt.datasets.stocks()
 
 alt.LayerChart(stocks).encode(
     x='date:T',

@@ -7,9 +7,9 @@ a non-parametric [bootstrap of the mean](https://github.com/vega/vega-statistics
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
 
-barley = data.barley()
+
+barley = alt.datasets.barley()
 
 points = alt.Chart(barley).mark_point(filled=True).encode(
     alt.X(

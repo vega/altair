@@ -11,9 +11,9 @@ The full list of interpolation options includes 'linear',
 # category: line charts
 import altair as alt
 from altair.expr import datum
-from vega_datasets import data
 
-stocks = data.stocks()
+
+stocks = alt.datasets.stocks()
 
 alt.Chart(stocks).mark_line(interpolate='step-after').encode(
     x='date',

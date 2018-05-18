@@ -8,9 +8,9 @@ with marginal facetted histograms, and how to share their respective
 # category: other charts
 
 import altair as alt
-from vega_datasets import data
 
-iris = data.iris()
+
+iris = alt.datasets.iris()
 
 xscale = alt.Scale(domain=(4.0, 8.0))
 yscale = alt.Scale(domain=(1.9, 4.55))

@@ -8,9 +8,9 @@ distribution over time.
 # category: interactive charts
 import altair as alt
 from altair.expr import datum, if_
-from vega_datasets import data
 
-pop = data.population.url
+
+pop = alt.datasets.population.url
 
 pink_blue = alt.Scale(domain=('Male', 'Female'),
                       range=["steelblue", "salmon"])

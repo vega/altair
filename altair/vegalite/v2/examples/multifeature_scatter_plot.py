@@ -5,9 +5,9 @@ This example shows how to make a scatter plot with multiple feature encodings.
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
 
-iris = data.iris()
+
+iris = alt.datasets.iris()
 
 alt.Chart(iris).mark_circle().encode(
     alt.X('sepalLength', scale=alt.Scale(zero=False)),

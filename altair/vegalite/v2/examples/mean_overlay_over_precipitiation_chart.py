@@ -5,9 +5,9 @@ This example shows mean overlay over precipitation chart.
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
 
-source = data.seattle_weather()
+
+source = alt.datasets.seattle_weather()
 
 bar = alt.Chart(source).mark_bar().encode(
     alt.X('date:O', timeUnit='month'),

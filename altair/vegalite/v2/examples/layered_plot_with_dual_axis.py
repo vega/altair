@@ -5,9 +5,9 @@ This example shows how to combine two plots and keep their axes.
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
 
-source = data.seattle_weather()
+
+source = alt.datasets.seattle_weather()
 
 base = alt.Chart(source).encode(
     alt.X('date:O',

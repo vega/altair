@@ -6,9 +6,9 @@ This example shows how to make a multi series line chart of the daily closing st
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
 
-stocks = data.stocks()
+
+stocks = alt.datasets.stocks()
 
 alt.Chart(stocks).mark_line().encode(
     x='date',

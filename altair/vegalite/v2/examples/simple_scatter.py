@@ -9,9 +9,9 @@ over each point.
 # category: simple charts
 
 import altair as alt
-from vega_datasets import data
 
-iris = data.iris()
+
+iris = alt.datasets.iris()
 
 alt.Chart(iris).mark_point().encode(
     x='petalWidth',

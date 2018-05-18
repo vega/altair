@@ -6,9 +6,9 @@ This example shows a geographical plot with one dot per zipcode.
 # category: maps
 import altair as alt
 from altair.expr import datum, substring
-from vega_datasets import data
 
-zipcodes = data.zipcodes.url
+
+zipcodes = alt.datasets.zipcodes.url
 
 alt.Chart(zipcodes).mark_circle(size=3).encode(
     longitude='longitude:Q',

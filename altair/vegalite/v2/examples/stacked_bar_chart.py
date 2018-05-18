@@ -6,9 +6,9 @@ This example shows how to make a stacked bar chart of the weather type in Seattl
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
 
-weather = data.seattle_weather()
+
+weather = alt.datasets.seattle_weather()
 
 alt.Chart(weather).mark_bar().encode(
     alt.Color('weather:N',

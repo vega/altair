@@ -5,9 +5,9 @@ This example shows how to make a line chart with a bootstrapped 95% confidence i
 """
 # category: line charts
 import altair as alt
-from vega_datasets import data
 
-cars = data.cars()
+
+cars = alt.datasets.cars()
 
 line = alt.Chart(cars).mark_line().encode(
     x='Year',

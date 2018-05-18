@@ -6,9 +6,9 @@ This example shows how layering can be used to build a plot. This dataset tracks
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
 
-driving = data.driving()
+
+driving = alt.datasets.driving()
 
 lines = alt.Chart(driving).mark_line().encode(
     alt.X('miles', scale=alt.Scale(zero=False)),

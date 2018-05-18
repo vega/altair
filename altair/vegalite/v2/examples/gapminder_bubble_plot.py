@@ -7,9 +7,9 @@ in Lisa Charlotte Rost's blog post ('One Chart, Twelve Charting Libraries')[http
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
 
-gapminder = data.gapminder_health_income.url
+
+gapminder = alt.datasets.gapminder_health_income.url
 
 alt.Chart(gapminder).mark_circle().encode(
     alt.X('income:Q', scale=alt.Scale(type='log')),

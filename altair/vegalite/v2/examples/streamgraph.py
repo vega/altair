@@ -5,9 +5,9 @@ This example shows the streamgraph from vega-lite examples.
 """
 # category: area charts
 import altair as alt
-from vega_datasets import data
 
-source = data.unemployment_across_industries.url
+
+source = alt.datasets.unemployment_across_industries.url
 
 alt.Chart(source).mark_area().encode(
     alt.X('date:T',

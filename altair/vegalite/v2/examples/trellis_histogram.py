@@ -6,9 +6,9 @@ https://vega.github.io/vega-lite/examples/trellis_bar_histogram.html
 """
 # category: histograms
 import altair as alt
-from vega_datasets import data
 
-source = data.cars()
+
+source = alt.datasets.cars()
 
 alt.Chart(source).mark_bar().encode(
     alt.X("Horsepower:Q", bin=True),

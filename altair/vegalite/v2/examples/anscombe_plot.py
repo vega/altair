@@ -6,9 +6,9 @@ This example shows how to use the column channel to make a trellis plot. Anscomb
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
 
-anscombe = data.anscombe()
+
+anscombe = alt.datasets.anscombe()
 
 alt.Chart(anscombe).mark_circle().encode(
     alt.X('X', scale=alt.Scale(zero=False)),

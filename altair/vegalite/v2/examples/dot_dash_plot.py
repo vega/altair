@@ -7,9 +7,9 @@ on https://bl.ocks.org/g3o2/bd4362574137061c243a2994ba648fb8.
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
 
-cars = data.cars()
+
+cars = alt.datasets.cars()
 
 brush = alt.selection(type='interval')
 
