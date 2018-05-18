@@ -208,15 +208,11 @@ For example consider this plot:
        y='y'
    )
 
-The x labels are automatically rendered in SI prefix notation (i.e. 3m = 0.03)
-which may not be desirable.
-
 To fine-tune the formatting of the tick labels and to add a custom title to
 each axis, we can pass to the :class:`X` and :class:`Y` encoding a custom
 :class:`Axis` definition.
 Here is an example of formatting the x labels as a percentage, and
 the y labels as a dollar value:
-
 
 .. altair-plot::
 

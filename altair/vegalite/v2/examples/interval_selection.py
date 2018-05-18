@@ -22,8 +22,9 @@ upper = alt.Chart().mark_area().encode(
 )
 
 lower = upper.properties(
-    selection=brush,
     height=60
+).add_selection(
+    brush
 )
 
 alt.vconcat(upper, lower, data=sp500)

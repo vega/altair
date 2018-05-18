@@ -20,24 +20,24 @@ points = alt.Chart(cars).mark_point().encode(
     x=alt.X('Miles_per_Gallon', axis=alt.Axis(title='')),
     y=alt.Y('Horsepower', axis=alt.Axis(title='')),
     color=alt.condition(brush, 'Origin', alt.value('grey'))
-).properties(
-    selection=brush
+).add_selection(
+    brush
 )
 
 x_ticks = alt.Chart(cars).mark_tick().encode(
     alt.X('Miles_per_Gallon', axis=tick_axis),
     alt.Y('Origin', axis=tick_axis_notitle),
     color=alt.condition(brush, 'Origin', alt.value('lightgrey'))
-).properties(
-    selection=brush
+).add_selection(
+    brush
 )
 
 y_ticks = alt.Chart(cars).mark_tick().encode(
     alt.X('Origin', axis=tick_axis_notitle),
     alt.Y('Horsepower', axis=tick_axis),
     color=alt.condition(brush, 'Origin', alt.value('lightgrey'))
-).properties(
-    selection=brush
+).add_selection(
+    brush
 )
 
 y_ticks | (points & x_ticks)
