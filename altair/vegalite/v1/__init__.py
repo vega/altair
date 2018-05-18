@@ -2,7 +2,8 @@
 from .schema import *
 from .api import *
 
-from ...datasets import (
+from ..._datasets import (
+    datasets,
     list_datasets,
     load_dataset
 )
