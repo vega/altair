@@ -170,27 +170,6 @@ Once you have installed one of these packages, enable the corresponding renderer
 Displaying in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-JupyterLab 0.31
-+++++++++++++++
-
-Version 0.31 of JupyterLab includes built-in support for VegaLite 1.x and Vega
-2.x. This will work with Altair's Vega-Lite 1.x API out of the box::
-
-    import altair.vegalite.v1 as alt
-
-To add support for Vega-Lite 2.x and Vega 3.x install the following JupyterLab
-extension (which requires nodejs)::
-
-    conda install -c conda-forge nodejs  # if you do not already have nodejs installed
-    jupyter labextension install @jupyterlab/vega3-extension
-
-and then import Altair as::
-
-    import altair as alt
-
-JupyterLab 0.32 and later
-+++++++++++++++++++++++++
-
 JupyterLab versions 0.32 and later include built-in support for Vega-Lite 2.x and
 Vega 3.x. These will work out of the box with Altair imported as::
 
@@ -207,8 +186,8 @@ An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
 Displaying in nteract
 ~~~~~~~~~~~~~~~~~~~~~
 
-nteract will render Vega-Lite 1.x and Vega out of the box. Support for Vega-Lite 2.x
-and Vega 3.x will likely be released soon.
+Current versions of nteract have Vega and Vega-Lite built-in, and will render
+Altair plots without any extra configuration.
 
 .. _display-colab:
 
@@ -226,6 +205,42 @@ At the top of your Colab session, run the following::
 
 And then you can create Altair plots normally within the notebook.
 
+.. _display-general:
+
+Working in non-Notebook Environments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The Vega-Lite specifications produced by Altair can be produced in any Python
+environment, but to render these specifications currently requires a javascript
+engine. For this reason, Altair works most seamlessly with the browser-based
+environments mentioned above.
+
+If you would like to render plots from another Python interface that does not have
+a built-in javascript engine, you'll need to somehow connect your charts to a
+second tool that can execute javascript.
+
+Fortunately, most people have a web browser available, and Altair provides the
+:meth:`Chart.serve` method which will seamlessly convert the plot to HTML, start
+a webserver serving that HTML, and open your system's default web browser to view
+it.
+
+For example, you can serve a chart to a web browser like this::
+
+    import altair as alt
+
+    # load a simple dataset as a pandas DataFrame
+    from vega_datasets import data
+    cars = data.cars()
+
+    chart = alt.Chart(cars).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color='Origin',
+    ).interactive()
+
+    chart.serve()
+
+The command will block the Python interpreter, and will have to be canceled with
+``Ctrl-C`` to execute any further code.
 
 .. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/tree/master

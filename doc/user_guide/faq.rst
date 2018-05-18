@@ -19,9 +19,13 @@ and nteract that know how to automatically perform this rendering (see
 to figure out how to run that javascript rendering in the most convenient way
 for you.
 
-The easiest approach would be to save a chart to HTML, and then open it in your
-favorite web browser.
-You can save any chart to an HTML file by calling ``chart.save('filename.html')``.
+The easiest approach is to use the :meth:`Chart.serve` method, which will convert
+the chart to HTML, start a webserver, and open your default browser to view the
+chart. See :ref:`display-general` for more information.
+
+If you would like to manually save the chart to an html file in order to view it
+with a browser, you can use the :meth:`Chart.save` method; for example
+``chart.save('filename.html')``.
 
 .. _faq-no-display:
 
