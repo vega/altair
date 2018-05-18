@@ -51,9 +51,8 @@ is properly set up:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    iris = data.iris()
+    iris = alt.datasets.iris()
 
     alt.Chart(iris).mark_point().encode(
         x='petalLength',
@@ -104,12 +103,11 @@ is properly set up:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
     # for the notebook only (not for JupyterLab) run this command once per session
     alt.renderers.enable('notebook')
 
-    iris = data.iris()
+    iris = alt.datasets.iris()
 
     alt.Chart(iris).mark_point().encode(
         x='petalLength',
@@ -155,9 +153,8 @@ correctly:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    iris = data.iris()
+    iris = alt.datasets.iris()
 
     alt.Chart(iris).mark_point().encode(
         x='petalLength',

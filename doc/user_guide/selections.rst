@@ -21,9 +21,8 @@ to it. Here is a simple scatter-plot created from the ``cars`` dataset:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    cars = data.cars.url
+    cars = alt.datasets.cars.url
 
     alt.Chart(cars).mark_point().encode(
         x='Miles_per_Gallon:Q',
@@ -137,7 +136,7 @@ selection:
     :output: none
 
     def make_example(selector):
-        cars = data.cars.url
+        cars = alt.datasets.cars.url
 
         return alt.Chart(cars).mark_rect().encode(
             x="Cylinders:O",

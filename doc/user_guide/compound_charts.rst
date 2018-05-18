@@ -36,8 +36,7 @@ same data; for example:
     import altair as alt
     from altair.expr import datum
 
-    from vega_datasets import data
-    stocks = data.stocks.url
+    stocks = alt.datasets.stocks.url
 
     base = alt.Chart(stocks).encode(
         x='date:T',
@@ -79,9 +78,8 @@ distribution of its points:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    iris = data.iris.url
+    iris = alt.datasets.iris.url
 
     chart1 = alt.Chart(iris).mark_point().encode(
         x='petalLength:Q',
@@ -132,8 +130,8 @@ with a ``brush`` selection to add interaction:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    sp500 = data.sp500.url
+
+    sp500 = alt.datasets.sp500.url
 
     brush = alt.selection(type='interval', encodings=['x'])
 
@@ -174,9 +172,8 @@ showing how ``repeat`` can be used to build the chart more efficiently:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    iris = data.iris.url
+    iris = alt.datasets.iris.url
 
     base = alt.Chart().mark_point().encode(
         color='species:N'
@@ -203,8 +200,8 @@ method, makes this type of chart a bit easier to produce:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    iris = data.iris.url
+
+    iris = alt.datasets.iris.url
 
     alt.Chart(iris).mark_point().encode(
         alt.X(alt.repeat("column"), type='quantitative'),
@@ -242,8 +239,8 @@ concatenation:
 
     import altair as alt
     from altair.expr import datum
-    from vega_datasets import data
-    iris = data.iris.url
+
+    iris = alt.datasets.iris.url
 
     base = alt.Chart(iris).mark_point().encode(
         x='petalLength:Q',
@@ -266,7 +263,7 @@ Using ``alt.facet`` it becomes a bit cleaner:
 
 .. altair-plot::
 
-    chart = alt.Chart(iris).mark_point().encode(
+    alt.Chart(iris).mark_point().encode(
         x='petalLength:Q',
         y='petalWidth:Q',
         color='species:N'

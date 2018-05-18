@@ -228,8 +228,7 @@ For example, you can serve a chart to a web browser like this::
     import altair as alt
 
     # load a simple dataset as a pandas DataFrame
-    from vega_datasets import data
-    cars = data.cars()
+    cars = alt.datasets.cars()
 
     chart = alt.Chart(cars).mark_point().encode(
         x='Horsepower',

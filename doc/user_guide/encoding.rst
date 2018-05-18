@@ -18,8 +18,8 @@ encodings: ``x`` (the x-axis value), ``y`` (the y-axis value),
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
-   cars = data.cars()
+
+   cars = alt.datasets.cars()
 
    alt.Chart(cars).mark_point().encode(
        x='Horsepower',
@@ -202,7 +202,7 @@ that contains integers specifying a year:
 
 .. altair-plot::
 
-    pop = data.population.url
+    pop = alt.datasets.population.url
 
     base = alt.Chart(pop).mark_bar().encode(
         alt.Y('mean(people):Q', axis=alt.Axis(title='total population'))
@@ -408,9 +408,8 @@ For stacked marks, this controls the order of components of the stack. Here, the
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    barley = data.barley()
+    barley = alt.datasets.barley()
 
     alt.Chart(barley).mark_bar().encode(
         x='variety:N',
@@ -424,9 +423,8 @@ The order can be reversed by changing the sort option to `descending`.
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    barley = data.barley()
+    barley = alt.datasets.barley()
 
     alt.Chart(barley).mark_bar().encode(
         x='variety:N',
@@ -440,9 +438,8 @@ The same approach works for other mark types, like stacked areas charts.
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    barley = data.barley()
+    barley = alt.datasets.barley()
 
     alt.Chart(barley).mark_area().encode(
         x='variety:N',
@@ -456,9 +453,8 @@ For line marks, the `order` channel encodes the order in which data points are c
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    driving = data.driving()
+    driving = alt.datasets.driving()
 
     points = alt.Chart(driving).mark_circle().encode(
         alt.X('miles', scale=alt.Scale(zero=False)),
