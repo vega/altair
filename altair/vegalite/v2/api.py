@@ -805,23 +805,66 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             The data field to apply time unit.
         timeUnit : TimeUnit
             The timeUnit.
+        **kwargs
+            transforms can also be passed by keyword argument; see Examples
 
         Returns
         -------
         self : Chart object
             returns chart to allow for chaining
 
+        Examples
+        --------
+        >>> import altair as alt
+        >>> from altair import datum, expr
+
+        >>> chart = alt.Chart().transform_timeunit(month='month(date)')
+        >>> chart.transform[0]
+        TimeUnitTransform({
+          as: 'month',
+          field: 'date',
+          timeUnit: 'month'
+        })
+
+        It's also possible to pass the ``TimeUnitTransform`` arguments directly;
+        this is most useful in cases where the desired field name is not a
+        valid python identifier:
+
+        >>> kwds = {'as': 'month', 'timeUnit': 'month', 'field': 'The Month'}
+        >>> chart = alt.Chart().transform_timeunit(**kwds)
+        >>> chart.transform[0]
+        TimeUnitTransform({
+          as: 'month',
+          field: 'The Month',
+          timeUnit: 'month'
+        })
+
+        As the first form is easier to write and understand, that is the
+        recommended method.
+
         See Also
         --------
         alt.TimeUnitTransform : underlying transform object
         """
-        if as_ is not Undefined:
+        if as_ is Undefined:
+            as_ = kwargs.pop('as', Undefined)
+        else:
             if 'as' in kwargs:
                 raise ValueError("transform_timeunit: both 'as_' and 'as' passed as arguments.")
-            kwargs['as'] = as_
-        kwargs['field'] = field
-        kwargs['timeUnit'] = timeUnit
-        return self._add_transform(core.TimeUnitTransform(**kwargs))
+        if as_ is not Undefined:
+            dct = {'as': as_, 'timeUnit': timeUnit, 'field': field}
+            self = self._add_transform(core.TimeUnitTransform(**dct))
+        for as_, shorthand in kwargs.items():
+            dct = utils.parse_shorthand(shorthand,
+                                        parse_timeunits=True,
+                                        parse_aggregates=False,
+                                        parse_types=False)
+            dct.pop('type', None)
+            dct['as'] = as_
+            if 'timeUnit' not in dct:
+                raise ValueError("'{0}' must include a valid timeUnit".format(shorthand))
+            self = self._add_transform(core.TimeUnitTransform(**dct))
+        return self
 
     @utils.use_signature(core.WindowTransform)
     def transform_window(self, *args, **kwargs):
