@@ -6,11 +6,10 @@ This example shows how to link a scatter plot and a histogram
 together such that an interval selection in the histogram will 
 plot the selected values in the scatter plot. 
 
-Note that the binning  has to be applied to *both* 
-the scatter plot and the bar chart via the `transform_bin` mehtod 
-in order for this to work! 
-
-
+Note that both subplots need to know about the `mbin` field created 
+by the `transform_bin` method. In order to achieve this, the data is
+not passed to the `Chart()` instances creating the subplots, but 
+directly in the `hconcat()` function, which joins the two plots together.
 """
 # category: interactive charts
 
@@ -25,26 +24,36 @@ m = np.random.normal(15, 1, size=100)
 
 df = pd.DataFrame({"x": x, "y":y, "m":m})
 
+# interval selection in the scatter plot
 pts = alt.selection(type="interval", encodings=["x"])
 
-points = alt.Chart(df).mark_point(filled=True, color="black").encode(
-    x = alt.X("x"),
-    y = alt.Y("y")
+# left panel: scatter plot
+points = alt.Chart().mark_point(filled=True, color="black").encode(
+    x='x',
+    y='y'
 ).transform_filter(
     pts.ref()
-).transform_bin(
- "mbin", field="m", bin=alt.Bin(maxbins=20)   
-).properties(width=300, height=300)
+).properties(
+    width=300,
+    height=300
+)
 
-mag = alt.Chart(df).mark_bar().encode(
-    x = alt.X("mbin", type="nominal"),
-    y = alt.Y("count()"),
-    color = alt.condition(pts, alt.value("black"), alt.value("lightgray"))
-).transform_bin(
-    "mbin", field="m", bin=alt.Bin(maxbins=20)
+# right panel: histogram
+mag = alt.Chart().mark_bar().encode(
+    x='mbin:N',
+    y="count()",
+    color=alt.condition(pts, alt.value("black"), alt.value("lightgray"))
 ).properties(
     selection=pts,
     width=300, 
-    height=300)
+    height=300
+)
 
-points | mag
+# build the chart:
+alt.hconcat(points, mag,
+    data=df
+).transform_bin(
+    "mbin",
+    field="m",
+    bin=alt.Bin(maxbins=20)
+)
