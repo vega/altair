@@ -6,18 +6,37 @@ tags:
   - statistics
   - Jupyter
 authors:
- - name: Jacob VanderPlas
-   orcid: 0000-0002-9623-3401
-   affiliation: 1
- - name: Brian E. Granger
-   orcid: 0000-0002-5223-6168
-   affiliation: 2
+  - name: Jacob VanderPlas
+    orcid: 0000-0002-9623-3401
+    affiliation: 1
+  - name: Brian E. Granger
+    orcid: 0000-0002-5223-6168
+    affiliation: 2
+  - name: Jeffrey Heer
+    orcid: 0000-0002-6175-1655
+    affiliation: University of Washington
+  - name: Eitan Lees
+    orcid: 0000-0003-0988-6015
+    affiliation: 4
+  - name: Dominik Moritz
+    orcid: 0000-0002-3110-1053
+    affiliation: 1
+  - name: Scott Sievert
+    orcid: 0000-0002-4275-3452
+    affiliation: 3
+  - name: Kanit Wongsuphasawat
+    orcid: 0000-0001-7231-279X
+    affiliation: University of Washington
 affiliations:
- - name: University of Washington
-   index: 1
- - name: California Polytechnic State University
-   index: 2
-date: 01 October 2017
+  - name: University of Washington
+    index: 1
+  - name: California Polytechnic State University, San Luis Obispo
+    index: 2
+  - name: University of Wisconsin, Madison
+    index: 3
+  - name: Florida State University
+    index: 4
+date: 01 June 2018
 bibliography: paper.bib
 ---
 
