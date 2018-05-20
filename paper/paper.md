@@ -14,7 +14,7 @@ authors:
     affiliation: 2
   - name: Jeffrey Heer
     orcid: 0000-0002-6175-1655
-    affiliation: University of Washington
+    affiliation: 1
   - name: Eitan Lees
     orcid: 0000-0003-0988-6015
     affiliation: 4
@@ -24,9 +24,12 @@ authors:
   - name: Scott Sievert
     orcid: 0000-0002-4275-3452
     affiliation: 3
+  - name: Ben Welsh
+    orcid: 0000-0002-5200-7269
+    affiliation: 5
   - name: Kanit Wongsuphasawat
     orcid: 0000-0001-7231-279X
-    affiliation: University of Washington
+    affiliation: 1
 affiliations:
   - name: University of Washington
     index: 1
@@ -36,6 +39,8 @@ affiliations:
     index: 3
   - name: Florida State University
     index: 4
+  - name: Los Angeles Times Data Desk
+    index: 5
 date: 01 June 2018
 bibliography: paper.bib
 ---
