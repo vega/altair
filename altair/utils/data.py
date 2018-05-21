@@ -161,5 +161,10 @@ def _data_to_csv_string(data):
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)
+    elif isinstance(data, dict):
+        if 'values' not in data:
+            raise KeyError('values expected in data dict, but not present')
+        return pd.DataFrame.from_dict(data['values']).to_csv(index=False)
     else:
-        raise NotImplementedError('to_csv only works with Pandas DataFrame objects.')
+        raise NotImplementedError("to_csv only works with data expressed as "
+                                  "a DataFrame or as a dict")
