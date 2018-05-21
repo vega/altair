@@ -460,15 +460,8 @@ For line marks, the `order` channel encodes the order in which data points are c
 
     driving = data.driving()
 
-    points = alt.Chart(driving).mark_circle().encode(
-        alt.X('miles', scale=alt.Scale(zero=False)),
-        alt.Y('gas', scale=alt.Scale(zero=False))
-    )
-
-    lines = alt.Chart(driving).mark_line().encode(
+    alt.Chart(driving).mark_line(point=True).encode(
         alt.X('miles', scale=alt.Scale(zero=False)),
         alt.Y('gas', scale=alt.Scale(zero=False)),
         order='year'
     )
-
-    points + lines
