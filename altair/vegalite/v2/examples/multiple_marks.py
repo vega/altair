@@ -10,11 +10,8 @@ from vega_datasets import data
 
 stocks = data.stocks()
 
-alt.LayerChart(stocks).encode(
+alt.Chart(stocks).mark_line(point=True).encode(
     x='date:T',
     y='price:Q',
     color='symbol:N'
-).add_layers(
-    alt.Chart().mark_point(),
-    alt.Chart().mark_line()
 )
