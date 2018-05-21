@@ -42,6 +42,13 @@ def test_parse_shorthand():
     check('count()', aggregate='count', type='quantitative')
     check('count():O', aggregate='count', type='ordinal')
 
+    # time units:
+    check('month(x)', field='x', timeUnit='month', type='temporal')
+    check('year(foo):O', field='foo', timeUnit='year', type='ordinal')
+    check('date(date):quantitative',
+          field='date', timeUnit='date', type='quantitative')
+    check('yearmonthdate(field)', field='field', timeUnit='yearmonthdate', type='temporal')
+
 
 def test_parse_shorthand_with_data():
     def check(s, data, **kwargs):
@@ -55,7 +62,8 @@ def test_parse_shorthand_with_data():
     check('y', data, field='y', type='nominal')
     check('z', data, field='z', type='temporal')
     check('count(x)', data, field='x', aggregate='count', type='quantitative')
-    check('mean(*)', data, field='*', aggregate='mean')
+    check('count()', data, aggregate='count', type='quantitative')
+    check('month(z)', data, timeUnit='month', field='z', type='temporal')
 
 
 def test_update_nested():
