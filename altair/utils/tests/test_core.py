@@ -1,5 +1,6 @@
 import pandas as pd
 
+import altair as alt
 from .. import parse_shorthand, update_nested
 
 
@@ -64,6 +65,28 @@ def test_parse_shorthand_with_data():
     check('count(x)', data, field='x', aggregate='count', type='quantitative')
     check('count()', data, aggregate='count', type='quantitative')
     check('month(z)', data, timeUnit='month', field='z', type='temporal')
+
+
+def test_parse_shorthand_all_aggregates():
+    aggregates = alt.Root._schema['definitions']['AggregateOp']['enum']
+    for aggregate in aggregates:
+        shorthand = "{aggregate}(field):Q".format(aggregate=aggregate)
+        assert parse_shorthand(shorthand) == {'aggregate': aggregate,
+                                              'field': 'field',
+                                              'type': 'quantitative'}
+
+
+def test_parse_shorthand_all_timeunits():
+    timeUnits = []
+    for loc in ['Local', 'Utc']:
+        for typ in ['Single', 'Multi']:
+            defn = loc + typ + 'TimeUnit'
+            timeUnits.extend(alt.Root._schema['definitions'][defn]['enum'])
+    for timeUnit in timeUnits:
+        shorthand = "{timeUnit}(field):Q".format(timeUnit=timeUnit)
+        assert parse_shorthand(shorthand) == {'timeUnit': timeUnit,
+                                              'field': 'field',
+                                              'type': 'quantitative'}
 
 
 def test_update_nested():
