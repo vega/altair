@@ -17,18 +17,10 @@ from .theme import themes
 # Data Utilities
 def _prepare_data(data):
     """Convert input data to data for use within schema"""
-    if data is Undefined:
-        return data
-    elif isinstance(data, (dict, core.Data, core.InlineData,
-                         core.UrlData, core.NamedData)):
-        return data
-    elif isinstance(data, pd.DataFrame):
-        return pipe(data, data_transformers.get())
-    elif isinstance(data, six.string_types):
-        return core.UrlData(data)
-    else:
-        warnings.warn("data of type {0} not recognized".format(type(data)))
-        return data
+    if isinstance(data, six.string_types):
+        data = core.UrlData(data)
+    return pipe(data, data_transformers.get())
+
 
 
 # ------------------------------------------------------------------------

@@ -18,15 +18,12 @@ These data transformations are managed by the data transformation API of Altair.
     The data transformation API of Altair should not be confused with the ``transform``
     API of Vega and Vega-Lite.
 
-A data transformer is a Python function that takes a Vega-Lite data ``dict`` or
-Pandas ``DataFrame`` and returns a transformed version of either of these types::
+A data transformer is a Python function that takes in the item passed in as the data and
+transforms it::
 
-    from typing import Union
-    Data = Union[dict, pd.DataFrame]
-
-    def data_transformer(data: Data) -> Data:
+    def data_transformer(data) :
         # Transform and return the data
-        return transformed_data
+        return fn(data)
 
 Built-in data transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

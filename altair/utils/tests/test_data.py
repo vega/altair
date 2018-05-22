@@ -61,11 +61,10 @@ def test_to_values():
     assert result=={'values': data.to_dict(orient='records')}
 
 
-def test_type_error():
-    """Ensure that TypeError is raised for types other than dict/DataFrame."""
+def test_type_check():
+    """Ensure that the data is not changed for types other than dict/DataFrame."""
     for f in (sample, limit_rows, to_values):
-        with pytest.raises(TypeError):
-            pipe(0, f)
+        assert pipe(0, f) == 0
 
 
 def test_dataframe_to_json():

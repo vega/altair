@@ -49,7 +49,10 @@ def limit_rows(data, max_rows=5000):
 
     If max_rows is None, then do not perform any check.
     """
-    check_data_type(data)
+    try:
+        check_data_type(data)
+    except TypeError:
+        return data
     if isinstance(data, pd.DataFrame):
         values = data
     elif isinstance(data, dict):
@@ -68,7 +71,10 @@ def limit_rows(data, max_rows=5000):
 @curry
 def sample(data, n=None, frac=None):
     """Reduce the size of the data model by sampling without replacement."""
-    check_data_type(data)
+    try:
+        check_data_type(data)
+    except TypeError:
+        return data
     if isinstance(data, pd.DataFrame):
         return data.sample(n=n, frac=frac)
     elif isinstance(data, dict):
@@ -116,7 +122,10 @@ def to_csv(data, prefix='altair-data', extension='csv',
 @curry
 def to_values(data):
     """Replace a DataFrame by a data model with values."""
-    check_data_type(data)
+    try:
+        check_data_type(data)
+    except TypeError:
+        return data
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {'values': data.to_dict(orient='records')}
