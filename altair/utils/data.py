@@ -1,6 +1,7 @@
 import json
 import random
 import hashlib
+import warnings
 
 import pandas as pd
 from toolz.curried import curry, pipe  # noqa
@@ -52,6 +53,7 @@ def limit_rows(data, max_rows=5000):
     try:
         check_data_type(data)
     except TypeError:
+        warnings.warn("limit_rows transformation can't work on type {0}".format(type(data)))
         return data
     if isinstance(data, pd.DataFrame):
         values = data
@@ -74,6 +76,7 @@ def sample(data, n=None, frac=None):
     try:
         check_data_type(data)
     except TypeError:
+        warnings.warn("sample transformation can't work on type {0}".format(type(data)))
         return data
     if isinstance(data, pd.DataFrame):
         return data.sample(n=n, frac=frac)
@@ -125,6 +128,7 @@ def to_values(data):
     try:
         check_data_type(data)
     except TypeError:
+        warnings.warn("to_values transformation can't work on type {0}".format(type(data)))
         return data
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
