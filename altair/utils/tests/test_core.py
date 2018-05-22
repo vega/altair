@@ -1,5 +1,6 @@
 import pandas as pd
 
+import altair as alt
 from .. import parse_shorthand, update_nested
 
 
@@ -42,6 +43,13 @@ def test_parse_shorthand():
     check('count()', aggregate='count', type='quantitative')
     check('count():O', aggregate='count', type='ordinal')
 
+    # time units:
+    check('month(x)', field='x', timeUnit='month', type='temporal')
+    check('year(foo):O', field='foo', timeUnit='year', type='ordinal')
+    check('date(date):quantitative',
+          field='date', timeUnit='date', type='quantitative')
+    check('yearmonthdate(field)', field='field', timeUnit='yearmonthdate', type='temporal')
+
 
 def test_parse_shorthand_with_data():
     def check(s, data, **kwargs):
@@ -55,7 +63,30 @@ def test_parse_shorthand_with_data():
     check('y', data, field='y', type='nominal')
     check('z', data, field='z', type='temporal')
     check('count(x)', data, field='x', aggregate='count', type='quantitative')
-    check('mean(*)', data, field='*', aggregate='mean')
+    check('count()', data, aggregate='count', type='quantitative')
+    check('month(z)', data, timeUnit='month', field='z', type='temporal')
+
+
+def test_parse_shorthand_all_aggregates():
+    aggregates = alt.Root._schema['definitions']['AggregateOp']['enum']
+    for aggregate in aggregates:
+        shorthand = "{aggregate}(field):Q".format(aggregate=aggregate)
+        assert parse_shorthand(shorthand) == {'aggregate': aggregate,
+                                              'field': 'field',
+                                              'type': 'quantitative'}
+
+
+def test_parse_shorthand_all_timeunits():
+    timeUnits = []
+    for loc in ['Local', 'Utc']:
+        for typ in ['Single', 'Multi']:
+            defn = loc + typ + 'TimeUnit'
+            timeUnits.extend(alt.Root._schema['definitions'][defn]['enum'])
+    for timeUnit in timeUnits:
+        shorthand = "{timeUnit}(field):Q".format(timeUnit=timeUnit)
+        assert parse_shorthand(shorthand) == {'timeUnit': timeUnit,
+                                              'field': 'field',
+                                              'type': 'quantitative'}
 
 
 def test_update_nested():
