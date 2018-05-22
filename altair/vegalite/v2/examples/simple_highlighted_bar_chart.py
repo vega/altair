@@ -9,15 +9,13 @@ from vega_datasets import data
 
 population = data.population()
 
-alt.Chart(population).mark_bar().transform_calculate(
-    # Using a simple boolean test to calculate a new column on the fly
-    # allows the chart creator to decide which bar they'd like to highlight.
-    "highlight",
-    alt.datum.year == 2000
-).encode(
+alt.Chart(population).mark_bar().encode(
     x="year:O",
     y="sum(people):Q",
-    # The highlight is then applied by using the calculated column
-    # to set the color.
-    color="highlight:N"
+    # The highlight will be set on the result of a conditional statement
+    color=alt.condition(
+        alt.datum.year == 1970,  # If the year is 1970 this test returns True,
+        alt.value('orange'),     # which sets the bar orange.
+        alt.value('steelblue')   # And if it's not true it sets the bar steelblue.
+    )
 )
