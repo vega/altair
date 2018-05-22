@@ -17,7 +17,7 @@ alt.Chart(population).mark_bar().transform_calculate(
 ).encode(
     x="year:O",
     y="sum(people):Q",
-    # The highlight is then applied by using the calculate column
+    # The highlight is then applied by using the calculated column
     # to set the color.
     color="highlight:N"
 )

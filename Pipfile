@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+entrypoints = "*"
+jsonschema = "*"
+numpy = "*"
+pandas = "*"
+six = "*"
+toolz = "*"
+typing = "*"
+sphinx = "*"
+"jinja2" = "*"
+numpydoc = "*"
+pillow = "*"
+sphinx-rtd-theme = "*"
+selenium = "*"
+"m2r" = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
