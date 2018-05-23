@@ -23,6 +23,7 @@ __all__ = (
     'sample',
     'to_csv',
     'to_json',
+    'to_url',
     'to_values',
     'check_data_type'
 )

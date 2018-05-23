@@ -19,16 +19,22 @@ These data transformations are managed by the data transformation API of Altair.
     API of Vega and Vega-Lite.
 
 A data transformer is a Python function that takes in the item passed in as the data and
-transforms it::
+transforms it. If it can't handle the type passed in, it should return it unchanged::
 
-    def data_transformer(data) :
-        # Transform and return the data
-        return fn(data)
+    def data_transformer(data):
+        if isinstance(data, MyType):
+            # Transform and return the data
+            return fn(data)    
+        return data
 
 Built-in data transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Altair includes a default set of data transformers with the following signatures.
+
+Convert strings into URL data::
+
+    to_url(data)
 
 Raise a ``MaxRowsError`` if a Dataframe has more than ``max_rows`` rows::
 
