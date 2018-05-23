@@ -309,7 +309,7 @@ Using ``alt.facet`` it becomes a bit cleaner:
 
 .. altair-plot::
 
-    chart = alt.Chart(iris).mark_point().encode(
+    alt.Chart(iris).mark_point().encode(
         x='petalLength:Q',
         y='petalWidth:Q',
         color='species:N'

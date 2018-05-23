@@ -597,7 +597,8 @@ and plotting only the mean monthly temperature:
     )
 
 Notice that by default timeUnit output is a continuous quantity; if you would
-instead like it to be a categorical, you can specify the ordinal type.
+instead like it to be a categorical, you can specify the ordinal (``O``) or
+nominal (``N``) type.
 This can be useful when plotting a bar chart or other discrete chart type:
 
 .. altair-plot::
