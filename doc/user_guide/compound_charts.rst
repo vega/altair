@@ -68,7 +68,7 @@ Order of Layers
 ^^^^^^^^^^^^^^^
 In a layered chart, the order of layers is determined from the order in which
 they are specified. For example, when creating a chart using ``layer1 + layer2``
-or ``alt.layerchart(layer1, layer2)``, ``layer1`` will appear below ``layer2``,
+or ``alt.layer(layer1, layer2)``, ``layer1`` will appear below ``layer2``,
 and ``layer2`` may obscure the marks of ``layer1``.
 
 For example, consider the following chart where we plot points on top of a
