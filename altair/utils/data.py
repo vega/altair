@@ -4,11 +4,13 @@ import hashlib
 import warnings
 
 import pandas as pd
+import six
 from toolz.curried import curry, pipe  # noqa
 from typing import Callable
 
 from .core import sanitize_dataframe
 from .plugin_registry import PluginRegistry
+from ..vegalite.schema import core
 
 
 # ==============================================================================
@@ -138,6 +140,12 @@ def to_values(data):
             raise KeyError('values expected in data dict, but not present.')
         return data
 
+@curry
+def to_url(data):
+    """Replace a string with with UrlData"""
+    if isinstance(data, six.string_types):
+        return core.UrlData(data)
+    return data
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""

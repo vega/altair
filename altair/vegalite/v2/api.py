@@ -17,8 +17,6 @@ from .theme import themes
 # Data Utilities
 def _prepare_data(data):
     """Convert input data to data for use within schema"""
-    if isinstance(data, six.string_types):
-        data = core.UrlData(data)
     return pipe(data, data_transformers.get())
 
 
