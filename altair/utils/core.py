@@ -90,7 +90,7 @@ def sanitize_dataframe(df):
     * Convert categoricals to strings.
     * Convert np.bool_ dtypes to Python bool objects
     * Convert np.int dtypes to Python int objects
-    * Convert floats to objects and replace NaNs by None.
+    * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
     """
     df = df.copy()
@@ -118,9 +118,11 @@ def sanitize_dataframe(df):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
         elif np.issubdtype(dtype, np.floating):
-            # For floats, convert nan->None: np.float is not JSON serializable
-            col = df[col_name].astype(object)
-            df[col_name] = col.where(col.notnull(), None)
+            # For floats, convert to Python float: np.float is not JSON serializable
+            # Also convert NaN/inf values to null, as they are not JSON serializable
+            col = df[col_name]
+            bad_values = col.isnull() | np.isinf(col)
+            df[col_name] = col.astype(object).where(~bad_values, None)
         elif str(dtype).startswith('datetime'):
             # Convert datetimes to strings
             # astype(str) will choose the appropriate resolution
