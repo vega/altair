@@ -70,3 +70,10 @@ def test_sanitize_dataframe():
     # pandas doesn't properly recognize np.array(np.nan), so change it here
     df.iloc[0, df.columns.get_loc('o')] = np.nan
     assert df.equals(df2)
+
+
+def test_sanitize_dataframe_infs():
+    df = pd.DataFrame({'x': [0, 1, 2, np.inf, -np.inf, np.nan]})
+    df_clean = sanitize_dataframe(df)
+    assert list(df_clean.dtypes) == [object]
+    assert list(df_clean['x']) == [0, 1, 2, None, None, None]
