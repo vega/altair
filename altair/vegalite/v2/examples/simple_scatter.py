@@ -1,10 +1,8 @@
 """
-Simple Scatter Plot with Tooltips
----------------------------------
-
+Simple Scatter Plot
+-------------------
 A simple example of an interactive scatter plot using the well-known iris
-dataset, with tooltips that show the species name when the mouse hovers
-over each point.
+dataset.
 """
 # category: simple charts
 
