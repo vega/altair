@@ -1180,9 +1180,9 @@ def _check_if_valid_subspec(spec, classname):
 @utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
-    def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
+    def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'RepeatChart')
-        super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
+        super(RepeatChart, self).__init__(data=data, spec=spec, repeat=repeat, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -1229,11 +1229,11 @@ def repeat(repeater):
 @utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
-    def __init__(self, hconcat=(), **kwargs):
+    def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
             _check_if_valid_subspec(spec, 'HConcatChart')
-        super(HConcatChart, self).__init__(hconcat=list(hconcat), **kwargs)
+        super(HConcatChart, self).__init__(data=data, hconcat=list(hconcat), **kwargs)
 
     def __ior__(self, other):
         _check_if_valid_subspec(other, 'HConcatChart')
@@ -1257,11 +1257,11 @@ def hconcat(*charts, **kwargs):
 @utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
-    def __init__(self, vconcat=(), **kwargs):
+    def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
             _check_if_valid_subspec(spec, 'VConcatChart')
-        super(VConcatChart, self).__init__(vconcat=list(vconcat), **kwargs)
+        super(VConcatChart, self).__init__(data=data, vconcat=list(vconcat), **kwargs)
 
     def __iand__(self, other):
         _check_if_valid_subspec(other, 'VConcatChart')
@@ -1356,9 +1356,9 @@ def layer(*charts, **kwargs):
 @utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
-    def __init__(self, spec, facet=Undefined, **kwargs):
+    def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'FacetChart')
-        super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
+        super(FacetChart, self).__init__(data=data, spec=spec, facet=facet, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
