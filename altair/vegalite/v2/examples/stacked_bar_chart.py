@@ -18,9 +18,8 @@ alt.Chart(weather).mark_bar().encode(
             range=['#e7ba42', '#c7c7c7', '#aec7e8', '#1f77b4', '#9467bd']
         ),
     ),
-    alt.X('date:N',
+    alt.X('month(date):N',
         axis=alt.Axis(title='Month of the Year'),
-        timeUnit='month',
     ),
     y='count()',
 )

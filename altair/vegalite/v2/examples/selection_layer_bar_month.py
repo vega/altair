@@ -13,7 +13,7 @@ weather = data.seattle_weather.url
 brush = alt.selection(type='interval', encodings=['x'])
 
 bars = alt.Chart().mark_bar().encode(
-    alt.X('date:O', timeUnit='month'),
+    x='month(date):O',
     y='mean(precipitation):Q',
     opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7))
 ).add_selection(
