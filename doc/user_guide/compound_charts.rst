@@ -64,11 +64,48 @@ number of charts:
 The output of both of these patterns is a :class:`LayerChart` object, which
 has properties and methods similar to the :class:`Chart` object.
 
-.. note::
+Order of Layers
+^^^^^^^^^^^^^^^
+In a layered chart, the order of layers is determined from the order in which
+they are specified. For example, when creating a chart using ``layer1 + layer2``
+or ``alt.layer(layer1, layer2)``, ``layer1`` will appear below ``layer2``,
+and ``layer2`` may obscure the marks of ``layer1``.
 
-   The bottom-layer is the chart on the left side of the ``+`` operator, or
-   the one that was passed as the first argument of ``alt.layer``. If you
-   do not see the expected output, check the order of the layers.
+For example, consider the following chart where we plot points on top of a
+heat-map:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.movies.url
+
+    heatmap = alt.Chart(source).mark_rect().encode(
+        alt.X('IMDB_Rating:Q', bin=True),
+        alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
+        alt.Color('count()', scale=alt.Scale(scheme='greenblue'))
+    )
+
+    points = alt.Chart(source).mark_circle(
+        color='black',
+        size=5,
+    ).encode(
+        x='IMDB_Rating:Q',
+        y='Rotten_Tomatoes_Rating:Q',
+    )
+
+    heatmap + points
+
+If we put the two layers in the opposite order, the points will be drawn first
+and will be obscured by the heatmap marks:
+
+.. altair-plot::
+
+    points + heatmap
+
+If you do not see the expected output when creating a layered chart, make certain
+that you are ordering the layers appropriately.
 
 
 .. _hconcat-chart:
