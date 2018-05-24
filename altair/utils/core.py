@@ -86,6 +86,7 @@ def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
+    * Convert all column names to strings
     * Raise ValueError if it has a hierarchical index.
     * Convert categoricals to strings.
     * Convert np.bool_ dtypes to Python bool objects
@@ -105,6 +106,9 @@ def sanitize_dataframe(df):
             return val.tolist()
         else:
             return val
+
+    # All column names must be strings
+    df.columns = map(str, df.columns)
 
     for col_name, dtype in df.dtypes.iteritems():
         if str(dtype) == 'category':
@@ -209,7 +213,7 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
     >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
     True
     """
-    if not shorthand:
+    if shorthand == '' or shorthand is None:
         return {}
 
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
@@ -239,9 +243,12 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
     # find matches depending on valid fields passed
     if isinstance(shorthand, dict):
         attrs = shorthand
-    else:
+    elif isinstance(shorthand, six.string_types):
         attrs = next(exp.match(shorthand).groupdict() for exp in regexps
                      if exp.match(shorthand))
+    else:
+        raise ValueError("column names must be strings, but {0} is of type {1}"
+                         "".format(shorthand, type(shorthand).__name__))
 
     # Handle short form of the type expression
     if 'type' in attrs:

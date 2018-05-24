@@ -1,5 +1,7 @@
 import pandas as pd
 
+import pytest
+
 import altair as alt
 from .. import parse_shorthand, update_nested
 
@@ -8,7 +10,16 @@ def test_parse_shorthand():
     def check(s, **kwargs):
         assert parse_shorthand(s) == kwargs
 
+    # empty shorthand leads to empty dict
     check('')
+
+    # dict shorthand is processed
+    check({'type': 'Q', 'field': 'foo'},
+          type='quantitative', field='foo')
+
+    # invalid type leads to a value error
+    with pytest.raises(ValueError):
+        check(0)
 
     # Fields alone
     check('foobar', field='foobar')
