@@ -51,17 +51,12 @@ def limit_rows(data, max_rows=5000):
 
     If max_rows is None, then do not perform any check.
     """
-    try:
-        check_data_type(data)
-    except TypeError:
-        return data
     if isinstance(data, pd.DataFrame):
         values = data
-    elif isinstance(data, dict):
-        if 'values' in data:
-            values = data['values']
-        else:
-            return data
+    elif isinstance(data, dict) and 'values' in data:
+        values = data['values']
+    else:
+        return data
     if max_rows is not None and len(values) > max_rows:
         raise MaxRowsError('The number of rows in your dataset is greater '
                            'than the maximum allowed ({0}). '
@@ -73,10 +68,6 @@ def limit_rows(data, max_rows=5000):
 @curry
 def sample(data, n=None, frac=None):
     """Reduce the size of the data model by sampling without replacement."""
-    try:
-        check_data_type(data)
-    except TypeError:
-        return data
     if isinstance(data, pd.DataFrame):
         return data.sample(n=n, frac=frac)
     elif isinstance(data, dict):
@@ -85,6 +76,7 @@ def sample(data, n=None, frac=None):
             n = n if n else int(frac*len(values))
             values = random.sample(values, n)
             return {'values': values}
+    return data
 
 
 @curry
@@ -124,10 +116,6 @@ def to_csv(data, prefix='altair-data', extension='csv',
 @curry
 def to_values(data):
     """Replace a DataFrame by a data model with values."""
-    try:
-        check_data_type(data)
-    except TypeError:
-        return data
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {'values': data.to_dict(orient='records')}
@@ -135,6 +123,7 @@ def to_values(data):
         if 'values' not in data:
             raise KeyError('values expected in data dict, but not present.')
         return data
+    return data
 
 @curry
 def to_url(data):
@@ -142,11 +131,6 @@ def to_url(data):
     if isinstance(data, six.string_types):
         return core.UrlData(data)
     return data
-
-def check_data_type(data):
-    """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)):
-        raise TypeError('Expected dict or DataFrame, got: {}'.format(type(data)))
 
 
 # ==============================================================================
@@ -159,7 +143,6 @@ def _compute_data_hash(data_str):
 
 def _data_to_json_string(data):
     """Return a JSON string representation of the input data"""
-    check_data_type(data)
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_json(orient='records')
@@ -174,7 +157,6 @@ def _data_to_json_string(data):
 
 def _data_to_csv_string(data):
     """return a CSV string representation of the input data"""
-    check_data_type(data)
     if isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)

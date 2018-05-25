@@ -2,7 +2,7 @@ import pandas as pd
 from toolz.curried import curry, pipe
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
-    MaxRowsError, sample, to_csv, to_json, to_values, check_data_type
+    MaxRowsError, sample, to_csv, to_json, to_values
 )
 
 
@@ -32,5 +32,4 @@ __all__ = (
     'to_csv',
     'to_json',
     'to_values',
-    'check_data_type'
 )
