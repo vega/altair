@@ -4,7 +4,6 @@ import warnings
 
 import jsonschema
 import six
-import pandas as pd
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
