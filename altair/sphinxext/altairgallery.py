@@ -244,6 +244,7 @@ def main(app):
         'Histograms': [],
         'Maps': [],
         'Interactive Charts': [],
+        'Case Studies': [],
         'Other Charts': []
     })
     for d in examples:
