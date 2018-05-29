@@ -36,7 +36,9 @@ Altair ships with the following renderers:
   Note that this requires the vega_ package; see :ref:`display-notebook`.
 
 **Google Colab**
-  for Colab_, you must switch to the ``colab`` renderer::
+  Colab_ requires use of the ``colab`` renderer, which will be enabled by
+  default when Altair is imported.
+  To switch back to it after another renderer has been enabled, use::
 
       alt.renderers.enable('colab')
 
