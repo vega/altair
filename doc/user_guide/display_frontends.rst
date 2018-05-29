@@ -176,7 +176,7 @@ Vega 3.x. These will work out of the box with Altair imported as::
     import altair as alt
 
 An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
-(labextension install requires nodejs)::
+(``labextension install`` requires nodejs)::
 
     conda install -c conda-forge nodejs  # if you do not already have nodejs installed
     jupyter labextension install @jupyterlab/vega2-extension
@@ -193,17 +193,9 @@ Altair plots without any extra configuration.
 
 Displaying in Colab
 ~~~~~~~~~~~~~~~~~~~
-Google's Colab is a cloud-based notebook backed by Google Drive. Altair works
-with the public version of Colab once the package is installed and ``'colab'``
-renderer is enabled.
-
-At the top of your Colab session, run the following::
-
-    !pip install altair
-    import altair as alt
-    alt.renderers.enable('colab')
-
-And then you can create Altair plots normally within the notebook.
+Google's Colab is a cloud-based notebook backed by Google Drive.
+Colab comes with Altair pre-installed and with the ``'colab'`` renderer
+enabled, so Altair will work out-of-the-box.
 
 .. _display-general:
 

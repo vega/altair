@@ -139,18 +139,10 @@ indexed in the left panel, or check out the :ref:`example-gallery` for more idea
 
 Quick Start: Altair + Colab
 ---------------------------
-Altair can be used directly in Google's Colab_. Open a notebook, and run the
-following in a notebook cell:
-
-.. code-block:: none
-
-    !pip install altair vega_datasets
-    import altair as alt
-    # for colab only run this command once per session
-    alt.renderers.enable('colab')
-
-Once you have run this, paste the following code to check if renderings are working
-correctly:
+Altair can be used directly in Google's Colab_ with no additional setup by the
+user.
+Open a new Colab_ notebook, and paste the following code to confirm that
+renderings are working correctly:
 
 .. altair-plot::
 
@@ -165,9 +157,7 @@ correctly:
         color='species'
     )
 
-If the plot does not render, ensure you have installed the exact versions
-mentioned above, and if it still does not work see
-:ref:`display-troubleshooting` for help.
+If the plot does not render, see :ref:`display-troubleshooting` for help.
 
 Once things are up and running, you may wish to go through the tutorials at
 :ref:`starting` and :ref:`exploring-weather`, read through the User Guide
