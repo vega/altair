@@ -5,7 +5,7 @@ This chart provides an interactive exploration of Seattle weather over the
 course of the year. It includes a one-axis brush selection to easily
 see the distribution of weather types in a particular date range.
 """
-# category: interactive charts
+# category: case studies
 import altair as alt
 from vega_datasets import data
 

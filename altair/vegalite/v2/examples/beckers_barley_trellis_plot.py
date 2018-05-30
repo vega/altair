@@ -3,7 +3,7 @@ Becker's Barley Trellis Plot
 ----------------------------
 This example shows how to make a Trellis Plot with the barley dataset.
 """
-# category: scatter plots
+# category: case studies
 import altair as alt
 from vega_datasets import data
 
