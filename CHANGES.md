@@ -4,6 +4,9 @@
 
 ### Enhancements
 
+- add a ``scale_factor`` argument to ``chart.save()`` to allow the
+  size/resolution of saved figures to be adjusted. (#918)
+
 - add an ``add_selection()`` method to add selections to charts (#832)
 
 - add ``chart.serve()`` and ``chart.display()`` methods for more flexiblity
