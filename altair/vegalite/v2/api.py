@@ -372,7 +372,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
         return self.save(fp, format=None, **kwargs)
 
-    def save(self, fp, format=None, override_data_transformer=True, **kwargs):
+    def save(self, fp, format=None, override_data_transformer=True,
+             scale_factor=1.0, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -388,6 +389,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             If True (default), then the save action will be done with the
             default data_transformer with max_rows set to None. If False,
             then use the currently active data transformer.
+        scale_factor : float
+            For svg or png formats, scale the image by this factor when saving.
+            This can be used to control the size or resolution of the output.
+            Default is 1.0
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
@@ -398,6 +403,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                     vegalite_version=VEGALITE_VERSION,
                     vega_version=VEGA_VERSION,
                     vegaembed_version=VEGAEMBED_VERSION,
+                    scale_factor=scale_factor,
                     **kwargs)
 
         # By default we override the data transformer. This makes it so
