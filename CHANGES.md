@@ -4,7 +4,7 @@
 
 ### Maintenance
 
-- update to Vega-Lite 2.5.2
+- update to Vega-Lite 2.5.2; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2)
 
 ### Backward-incompatible changes
 
