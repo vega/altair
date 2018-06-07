@@ -2,6 +2,14 @@
 
 ## Version 2.2.0 (Unreleased):
 
+### Maintenance
+
+- update to Vega-Lite 2.5.2
+
+### Backward-incompatible changes
+
+- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and ``alt.WindowSortField`` renamed to ``alt.SortField`` (https://github.com/vega/vega-lite/pull/3741)
+
 ## Version 2.1.0 (Released June 6, 2018):
 
 ### Enhancements
