@@ -295,6 +295,15 @@ fill unless otherwise specified:
         y='Miles_per_Gallon:Q'
     )
 
+
+If you want to restore the default theme, use:
+
+.. altair-plot::
+   :output: none
+
+   alt.themes.enable('default')
+	    
+
 For more ideas on themes, see the `Vega Themes`_ repository.
 
 
