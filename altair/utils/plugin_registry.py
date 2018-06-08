@@ -138,7 +138,7 @@ class PluginRegistry(Generic[PluginType]):
         self._active = self._plugins[name]
         self._options = options
 
-    def enable(self, name, **options):
+    def enable(self, name=None, **options):
         # type: (str, **Any) -> PluginEnabler
         """Enable a plugin by name.
 
@@ -146,8 +146,9 @@ class PluginRegistry(Generic[PluginType]):
 
         Parameters
         ----------
-        name : string
-            The name of the plugin to enable
+        name : string (optional)
+            The name of the plugin to enable. If not specified, then use the
+            current active name.
         **options :
             Any additional parameters will be passed to the plugin as keyword
             arguments
@@ -157,7 +158,10 @@ class PluginRegistry(Generic[PluginType]):
         PluginEnabler:
             An object that allows enable() to be used as a context manager
         """
+        if name is None:
+            name = self.active
         return PluginEnabler(self, name, **options)
+        
 
     @property
     def active(self):
