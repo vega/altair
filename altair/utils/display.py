@@ -19,7 +19,7 @@ class RendererRegistry(PluginRegistry[RendererType]):
     entrypoint_err_messages = {
         'notebook': textwrap.dedent(
             """
-            To use the 'notebook' renderer, you must install the vega3 package
+            To use the 'notebook' renderer, you must install the vega package
             and the associated Jupyter extension.
             See https://altair-viz.github.io/getting_started/installation.html
             for more information.

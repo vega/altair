@@ -90,6 +90,30 @@ def test_chart_infer_types():
     assert dct['encoding']['y']['type'] == 'ordinal'
 
 
+def test_multiple_encodings():
+    encoding_dct = [{'field': 'value', 'type': 'quantitative'},
+                    {'field': 'name', 'type': 'nominal'}]
+    chart1 = alt.Chart('data.csv').mark_point().encode(
+        detail=['value:Q', 'name:N'],
+        tooltip=['value:Q', 'name:N']
+    )
+
+    chart2 = alt.Chart('data.csv').mark_point().encode(
+        alt.Detail(['value:Q', 'name:N']),
+        alt.Tooltip(['value:Q', 'name:N'])
+    )
+
+    chart3 = alt.Chart('data.csv').mark_point().encode(
+        [alt.Detail('value:Q'), alt.Detail('name:N')],
+        [alt.Tooltip('value:Q'), alt.Tooltip('name:N')]
+    )
+
+    for chart in [chart1, chart2, chart3]:
+        dct = chart.to_dict()
+        assert dct['encoding']['detail'] == encoding_dct
+        assert dct['encoding']['tooltip'] == encoding_dct
+
+
 def test_chart_operations():
     data = pd.DataFrame({'x': pd.date_range('2012', periods=10, freq='Y'),
                          'y': range(10),
@@ -291,6 +315,20 @@ def test_resolve_methods():
     with pytest.raises(ValueError) as err:
         alt.Chart().resolve_axis(x='shared')
     assert str(err.value).endswith("object has no attribute 'resolve'")
+
+
+def test_add_selection():
+    selections = [alt.selection_interval(),
+                  alt.selection_single(),
+                  alt.selection_multi()]
+    chart = alt.Chart().mark_point().add_selection(
+        selections[0]
+    ).add_selection(
+        selections[1],
+        selections[2]
+    )
+    expected = selections[0] + selections[1] + selections[2]
+    assert chart.selection.to_dict() == expected.to_dict()
 
 
 def test_LookupData():

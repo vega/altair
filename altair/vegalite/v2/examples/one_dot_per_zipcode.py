@@ -3,7 +3,7 @@ One Dot Per Zipcode
 -----------------------
 This example shows a geographical plot with one dot per zipcode.
 """
-# category: maps
+# category: case studies
 import altair as alt
 from altair.expr import datum, substring
 from vega_datasets import data

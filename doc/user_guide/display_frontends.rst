@@ -119,7 +119,7 @@ To register and enable a new renderer::
     >>> alt.renderers.enable('custom_renderer')
 
 Renderers can also be registered using the `entrypoints`_ API of Python packages.
-For an example, see `ipyvega3`_.
+For an example, see `ipyvega`_.
 
 This same ``renderer`` objects exists separately on all of the Python APIs
 for Vega-Lite/Vega described in :ref:`importing`.
@@ -131,18 +131,18 @@ Displaying in the Jupyter Notebook
 
 To render Vega-Lite 2.x or Vega 3.x in the Jupyter Notebook (as mentioned above
 we recommend these versions), you will need to install and enable the
-`ipyvega3`_ Python package using conda:
+`ipyvega`_ Python package using conda:
 
 .. code-block:: bash
 
-    $ conda install vega3 --channel conda-forge
+    $ conda install vega --channel conda-forge
 
 or ``pip``:
 
 .. code-block:: bash
 
-    $ pip install jupyter pandas vega3
-    $ jupyter nbextension install --sys-prefix --py vega3 # not needed in notebook >= 5.3
+    $ pip install jupyter pandas vega
+    $ jupyter nbextension install --sys-prefix --py vega # not needed in notebook >= 5.3
 
 
 For Vega-Lite 1.x or Vega 2.x, you will need to install and enable the `ipyvega`_ Python
@@ -170,34 +170,13 @@ Once you have installed one of these packages, enable the corresponding renderer
 Displaying in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-JupyterLab 0.31
-+++++++++++++++
-
-Version 0.31 of JupyterLab includes built-in support for VegaLite 1.x and Vega
-2.x. This will work with Altair's Vega-Lite 1.x API out of the box::
-
-    import altair.vegalite.v1 as alt
-
-To add support for Vega-Lite 2.x and Vega 3.x install the following JupyterLab
-extension (which requires nodejs)::
-
-    conda install -c conda-forge nodejs  # if you do not already have nodejs installed
-    jupyter labextension install @jupyterlab/vega3-extension
-
-and then import Altair as::
-
-    import altair as alt
-
-JupyterLab 0.32 and later
-+++++++++++++++++++++++++
-
 JupyterLab versions 0.32 and later include built-in support for Vega-Lite 2.x and
 Vega 3.x. These will work out of the box with Altair imported as::
 
     import altair as alt
 
 An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
-(labextension install requires nodejs)::
+(``labextension install`` requires nodejs)::
 
     conda install -c conda-forge nodejs  # if you do not already have nodejs installed
     jupyter labextension install @jupyterlab/vega2-extension
@@ -207,29 +186,57 @@ An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
 Displaying in nteract
 ~~~~~~~~~~~~~~~~~~~~~
 
-nteract will render Vega-Lite 1.x and Vega out of the box. Support for Vega-Lite 2.x
-and Vega 3.x will likely be released soon.
+Current versions of nteract have Vega and Vega-Lite built-in, and will render
+Altair plots without any extra configuration.
 
 .. _display-colab:
 
 Displaying in Colab
 ~~~~~~~~~~~~~~~~~~~
-Google's Colab is a cloud-based notebook backed by Google Drive. Altair works
-with the public version of Colab once the package is installed and ``'colab'``
-renderer is enabled.
+Google's Colab is a cloud-based notebook backed by Google Drive.
+Colab comes with Altair pre-installed and with the ``'colab'`` renderer
+enabled, so Altair will work out-of-the-box.
 
-At the top of your Colab session, run the following::
+.. _display-general:
 
-    !pip install altair
+Working in non-Notebook Environments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The Vega-Lite specifications produced by Altair can be produced in any Python
+environment, but to render these specifications currently requires a javascript
+engine. For this reason, Altair works most seamlessly with the browser-based
+environments mentioned above.
+
+If you would like to render plots from another Python interface that does not have
+a built-in javascript engine, you'll need to somehow connect your charts to a
+second tool that can execute javascript.
+
+Fortunately, most people have a web browser available, and Altair provides the
+:meth:`Chart.serve` method which will seamlessly convert the plot to HTML, start
+a webserver serving that HTML, and open your system's default web browser to view
+it.
+
+For example, you can serve a chart to a web browser like this::
+
     import altair as alt
-    alt.renderers.enable('colab')
 
-And then you can create Altair plots normally within the notebook.
+    # load a simple dataset as a pandas DataFrame
+    from vega_datasets import data
+    cars = data.cars()
 
+    chart = alt.Chart(cars).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color='Origin',
+    ).interactive()
+
+    chart.serve()
+
+The command will block the Python interpreter, and will have to be canceled with
+``Ctrl-C`` to execute any further code.
 
 .. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/tree/master
-.. _ipyvega3: https://github.com/vega/ipyvega/tree/vega3
+.. _ipyvega: https://github.com/vega/ipyvega/tree/vega
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
 .. _Colab: https://colab.research.google.com

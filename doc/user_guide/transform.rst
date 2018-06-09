@@ -587,23 +587,24 @@ measurements in Seattle during the year 2010:
 
 The plot is too busy due to the amount of data points squeezed into the short
 time; we can make it a bit cleaner by discretizing it, for example, by month
-(``timeUnit="month"``) and plotting only the mean monthly temperature:
+and plotting only the mean monthly temperature:
 
 .. altair-plot::
 
     alt.Chart(temps).mark_line().encode(
-        alt.X('date:T', timeUnit='month'),
+        x='month(date):T',
         y='mean(temp):Q'
     )
 
 Notice that by default timeUnit output is a continuous quantity; if you would
-instead like it to be a categorical, you can specify the ordinal type.
+instead like it to be a categorical, you can specify the ordinal (``O``) or
+nominal (``N``) type.
 This can be useful when plotting a bar chart or other discrete chart type:
 
 .. altair-plot::
 
     alt.Chart(temps).mark_bar().encode(
-        alt.X('date:O', timeUnit='month'),
+        x='month(date):O',
         y='mean(temp):Q'
     )
 
@@ -614,8 +615,8 @@ to give a profile of Seattle temperatures through the year:
 .. altair-plot::
 
     alt.Chart(temps).mark_rect().encode(
-        alt.X('date:O', timeUnit='date', axis=alt.Axis(title='day')),
-        alt.Y('date:O', timeUnit='month', axis=alt.Axis(title='month')),
+        alt.X('date(date):O', title='day'),
+        alt.Y('month(date):O', title='month'),
         color='max(temp):Q'
     ).properties(
         title="2010 Daily High Temperatures in Seattle (F)"
@@ -634,7 +635,7 @@ method. For example:
         alt.X('month:T', axis=alt.Axis(format='%b')),
         y='mean(temp):Q'
     ).transform_timeunit(
-        "month", field="date", timeUnit="month"
+        month='month(date)'
     )
 
 Notice that because the ``timeUnit`` is not part of the encoding channel here,

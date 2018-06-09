@@ -1,7 +1,6 @@
 """
 Simple Scatter Plot
 -------------------
-
 A simple example of an interactive scatter plot using the well-known iris
 dataset.
 """
@@ -15,5 +14,6 @@ iris = data.iris()
 alt.Chart(iris).mark_point().encode(
     x='petalWidth',
     y='petalLength',
-    color='species'
+    color='species',
+    tooltip='species'
 ).interactive()

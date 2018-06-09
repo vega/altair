@@ -15,6 +15,12 @@ class FieldChannelMixin(object):
         context = context or {}
         if self.shorthand is Undefined:
             kwds = {}
+        elif isinstance(self.shorthand, (tuple, list)):
+            # If given a list of shorthands, then transform it to a list of classes
+            kwds = self._kwds.copy()
+            kwds.pop('shorthand')
+            return [self.__class__(shorthand, **kwds).to_dict()
+                    for shorthand in self.shorthand]
         elif isinstance(self.shorthand, six.string_types):
             kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
             type_defined = self._kwds.get('type', Undefined) is not Undefined
@@ -25,7 +31,7 @@ class FieldChannelMixin(object):
                                      "match any column in the data.".format(self.shorthand))
                 else:
                     raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
+                                     "the type cannot be automatically inferred because "
                                      "the data is not specified as a pandas.DataFrame."
                                      "".format(self.shorthand))
         else:
@@ -969,6 +975,24 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Order, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+
+
+class OrderValue(ValueChannelMixin, core.ValueDef):
+    """OrderValue schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value of an encoding channel.
+
+    Attributes
+    ----------
+    value : anyOf(float, string, boolean)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+
+    def __init__(self, value, **kwds):
+        super(OrderValue, self).__init__(value=value, **kwds)
 
 
 class Row(FieldChannelMixin, core.FacetFieldDef):

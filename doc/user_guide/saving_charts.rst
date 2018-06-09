@@ -51,6 +51,17 @@ Firefox, which requires the following:
 Once those dependencies are installed, you should be able to save charts as
 ``png`` or ``svg``.
 
+Figure Size/Resolution
+^^^^^^^^^^^^^^^^^^^^^^
+When using ``chart.save()`` above, the resolution of the resulting PNG is
+controlled by the resolution of your screen. The easiest way to produce a
+higher-resolution PNG image is to scale the image to make it larger, and thus
+to contain more pixels at a given resolution.
+
+This can be done with the ``scale_factor`` argument, which defaults to 1.0::
+
+    chart.save('chart.png', scale_factor=2.0)
+
 .. saving-json:
 
 JSON format
@@ -74,7 +85,7 @@ For example, here we save a simple scatter-plot to JSON:
 
     chart.save('chart.json')
 
-The contetns of the resulting file will look something like this:
+The contents of the resulting file will look something like this:
 
 .. code-block:: json
 

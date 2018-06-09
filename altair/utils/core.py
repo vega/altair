@@ -1,12 +1,13 @@
 """
 Utility routines
 """
-import re
-import warnings
 import collections
 from copy import deepcopy
+import itertools
+import re
 import sys
 import traceback
+import warnings
 
 import six
 import pandas as pd
@@ -26,6 +27,31 @@ TYPECODE_MAP = {'ordinal': 'O',
                 'temporal': 'T'}
 
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
+
+
+# aggregates from vega-lite version 2.4.3
+AGGREGATES = ['argmax', 'argmin', 'average', 'count', 'distinct', 'max',
+              'mean', 'median', 'min', 'missing', 'q1', 'q3', 'ci0', 'ci1',
+              'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
+              'variance', 'variancep']
+
+# timeUnits from vega-lite version 2.4.3
+TIMEUNITS = ["utcyear", "utcquarter", "utcmonth", "utcday", "utcdate",
+             "utchours", "utcminutes", "utcseconds", "utcmilliseconds",
+             "utcyearquarter", "utcyearquartermonth", "utcyearmonth",
+             "utcyearmonthdate", "utcyearmonthdatehours",
+             "utcyearmonthdatehoursminutes",
+             "utcyearmonthdatehoursminutesseconds",
+             "utcquartermonth", "utcmonthdate", "utchoursminutes",
+             "utchoursminutesseconds", "utcminutesseconds",
+             "utcsecondsmilliseconds",
+             "year", "quarter", "month", "day", "date", "hours", "minutes",
+             "seconds", "milliseconds", "yearquarter", "yearquartermonth",
+             "yearmonth", "yearmonthdate", "yearmonthdatehours",
+             "yearmonthdatehoursminutes",
+             "yearmonthdatehoursminutesseconds", "quartermonth", "monthdate",
+             "hoursminutes", "hoursminutesseconds", "minutesseconds",
+             "secondsmilliseconds"]
 
 
 def infer_vegalite_type(data):
@@ -64,7 +90,7 @@ def sanitize_dataframe(df):
     * Convert categoricals to strings.
     * Convert np.bool_ dtypes to Python bool objects
     * Convert np.int dtypes to Python int objects
-    * Convert floats to objects and replace NaNs by None.
+    * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
     """
     df = df.copy()
@@ -92,9 +118,11 @@ def sanitize_dataframe(df):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
         elif np.issubdtype(dtype, np.floating):
-            # For floats, convert nan->None: np.float is not JSON serializable
-            col = df[col_name].astype(object)
-            df[col_name] = col.where(col.notnull(), None)
+            # For floats, convert to Python float: np.float is not JSON serializable
+            # Also convert NaN/inf values to null, as they are not JSON serializable
+            col = df[col_name]
+            bad_values = col.isnull() | np.isinf(col)
+            df[col_name] = col.astype(object).where(~bad_values, None)
         elif str(dtype).startswith('datetime'):
             # Convert datetimes to strings
             # astype(str) will choose the appropriate resolution
@@ -107,69 +135,9 @@ def sanitize_dataframe(df):
     return df
 
 
-def _parse_shorthand(shorthand):
-    """
-    Parse the shorthand expression for aggregation, field, and type.
-
-    These are of the form:
-
-    - "col_name"
-    - "col_name:O"
-    - "average(col_name)"
-    - "average(col_name):O"
-
-    Parameters
-    ----------
-    shorthand: str
-        Shorthand string
-
-    Returns
-    -------
-    D : dict
-        Dictionary containing the field, aggregate, and typecode
-    """
-    if not shorthand:
-        return {}
-
-    # List taken from vega-lite v2 AggregateOp
-    valid_aggregates = ["argmax", "argmin", "average", "count", "distinct",
-                        "max", "mean", "median", "min", "missing", "q1", "q3",
-                        "ci0", "ci1", "stderr", "stdev", "stdevp", "sum",
-                        "valid", "values", "variance", "variancep"]
-    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
-
-    # build regular expressions
-    units = dict(field='(?P<field>.*)',
-                 type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
-                 count='(?P<aggregate>count)',
-                 aggregate='(?P<aggregate>{0})'.format('|'.join(valid_aggregates)))
-    patterns = [r'{count}\(\)',
-                r'{count}\(\):{type}',
-                r'{aggregate}\({field}\):{type}',
-                r'{aggregate}\({field}\)',
-                r'{field}:{type}',
-                r'{field}']
-    regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
-               for p in patterns)
-
-    # find matches depending on valid fields passed
-    match = next(exp.match(shorthand).groupdict() for exp in regexps
-                 if exp.match(shorthand))
-
-    # Handle short form of the type expression
-    type_ = match.get('type', None)
-    if type_:
-        match['type'] = INV_TYPECODE_MAP.get(type_, type_)
-
-    # counts are quantitative by default
-    if match == {'aggregate': 'count'}:
-        match['type'] = 'quantitative'
-
-    return match
-
-
-def parse_shorthand(shorthand, data=None):
-    """Parse the shorthand expression for aggregation, field, and type.
+def parse_shorthand(shorthand, data=None, parse_aggregates=True,
+                    parse_timeunits=True, parse_types=True):
+    """General tool to parse shorthand values
 
     These are of the form:
 
@@ -183,50 +151,111 @@ def parse_shorthand(shorthand, data=None):
 
     Parameters
     ----------
-    shorthand: str
-        Shorthand string of the form "agg(col):typ"
-    data : pd.DataFrame (optional)
-        Dataframe from which to infer types
+    shorthand : dict or string
+        The shorthand representation to be parsed
+    data : DataFrame, optional
+        If specified and of type DataFrame, then use these values to infer the
+        column type if not provided by the shorthand.
+    parse_aggregates : boolean
+        If True (default), then parse aggregate functions within the shorthand.
+    parse_timeunits : boolean
+        If True (default), then parse timeUnits from within the shorthand
+    parse_types : boolean
+        If True (default), then parse typecodes within the shorthand
 
     Returns
     -------
-    D : dict
-        Dictionary which always contains a 'field' key, and additionally
-        contains an 'aggregate' and 'type' key depending on the input.
+    attrs : dict
+        a dictionary of attributes extracted from the shorthand
 
     Examples
     --------
     >>> data = pd.DataFrame({'foo': ['A', 'B', 'A', 'B'],
     ...                      'bar': [1, 2, 3, 4]})
 
-    >>> parse_shorthand('name')
-    {'field': 'name'}
+    >>> parse_shorthand('name') == {'field': 'name'}
+    True
 
-    >>> parse_shorthand('average(col)')  # doctest: +SKIP
-    {'aggregate': 'average', 'field': 'col'}
+    >> parse_shorthand('name:Q') == {'field': 'name', 'type': 'quantitative'}
+    True
 
-    >>> parse_shorthand('foo:O')  # doctest: +SKIP
-    {'field': 'foo', 'type': 'ordinal'}
+    >>> parse_shorthand('average(col)') == {'aggregate': 'average', 'field': 'col'}
+    True
 
-    >>> parse_shorthand('min(foo):Q')  # doctest: +SKIP
-    {'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'}
+    >>> parse_shorthand('foo:O') == {'field': 'foo', 'type': 'ordinal'}
+    True
 
-    >>> parse_shorthand('foo', data)  # doctest: +SKIP
-    {'field': 'foo', 'type': 'nominal'}
+    >>> parse_shorthand('min(foo):Q') == {'aggregate': 'min', 'field': 'foo', 'type': 'quantitative'}
+    True
 
-    >>> parse_shorthand('bar', data)  # doctest: +SKIP
-    {'field': 'bar', 'type': 'quantitative'}
+    >>> parse_shorthand('month(col)') == {'field': 'col', 'timeUnit': 'month', 'type': 'temporal'}
+    True
 
-    >>> parse_shorthand('bar:O', data)  # doctest: +SKIP
-    {'field': 'bar', 'type': 'ordinal'}
+    >>> parse_shorthand('year(col):O') == {'field': 'col', 'timeUnit': 'year', 'type': 'ordinal'}
+    True
 
-    >>> parse_shorthand('sum(bar)', data)  # doctest: +SKIP
-    {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
+    >>> parse_shorthand('foo', data) == {'field': 'foo', 'type': 'nominal'}
+    True
 
-    >>> parse_shorthand('count()', data)  # doctest: +SKIP
-    {'aggregate': 'count', 'type': 'quantitative'}
+    >>> parse_shorthand('bar', data) == {'field': 'bar', 'type': 'quantitative'}
+    True
+
+    >>> parse_shorthand('bar:O', data) == {'field': 'bar', 'type': 'ordinal'}
+    True
+
+    >>> parse_shorthand('sum(bar)', data) == {'aggregate': 'sum', 'field': 'bar', 'type': 'quantitative'}
+    True
+
+    >>> parse_shorthand('count()', data) == {'aggregate': 'count', 'type': 'quantitative'}
+    True
     """
-    attrs = _parse_shorthand(shorthand)
+    if not shorthand:
+        return {}
+
+    valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
+
+    units = dict(field='(?P<field>.*)',
+                 type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
+                 count='(?P<aggregate>count)',
+                 aggregate='(?P<aggregate>{0})'.format('|'.join(AGGREGATES)),
+                 timeUnit='(?P<timeUnit>{0})'.format('|'.join(TIMEUNITS)))
+
+    patterns = []
+
+    if parse_aggregates:
+        patterns.extend([r'{count}\(\)',
+                         r'{aggregate}\({field}\)'])
+    if parse_timeunits:
+        patterns.extend([r'{timeUnit}\({field}\)'])
+
+    patterns.extend([r'{field}'])
+
+    if parse_types:
+        patterns = list(itertools.chain(*((p + ':{type}', p) for p in patterns)))
+
+    regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
+               for p in patterns)
+
+    # find matches depending on valid fields passed
+    if isinstance(shorthand, dict):
+        attrs = shorthand
+    else:
+        attrs = next(exp.match(shorthand).groupdict() for exp in regexps
+                     if exp.match(shorthand))
+
+    # Handle short form of the type expression
+    if 'type' in attrs:
+        attrs['type'] = INV_TYPECODE_MAP.get(attrs['type'], attrs['type'])
+
+    # counts are quantitative by default
+    if attrs == {'aggregate': 'count'}:
+        attrs['type'] = 'quantitative'
+
+    # times are temporal by default
+    if 'timeUnit' in attrs and 'type' not in attrs:
+        attrs['type'] = 'temporal'
+
+    # if data is specified and type is not, infer type from data
     if isinstance(data, pd.DataFrame) and 'type' not in attrs:
         if 'field' in attrs and attrs['field'] in data.columns:
             attrs['type'] = infer_vegalite_type(data[attrs['field']])

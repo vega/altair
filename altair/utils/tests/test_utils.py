@@ -43,10 +43,10 @@ def test_sanitize_dataframe():
                        'o': pd.Series([np.array(i) for i in range(5)])})
 
     # add some nulls
-    df.ix[0, 's'] = None
-    df.ix[0, 'f'] = np.nan
-    df.ix[0, 'd'] = pd.NaT
-    df.ix[0, 'o'] = np.array(np.nan)
+    df.iloc[0, df.columns.get_loc('s')] = None
+    df.iloc[0, df.columns.get_loc('f')] = np.nan
+    df.iloc[0, df.columns.get_loc('d')] = pd.NaT
+    df.iloc[0, df.columns.get_loc('o')] = np.array(np.nan)
 
     # JSON serialize. This will fail on non-sanitized dataframes
     df_clean = sanitize_dataframe(df)
@@ -54,6 +54,9 @@ def test_sanitize_dataframe():
 
     # Re-construct pandas dataframe
     df2 = pd.read_json(s)
+
+    # Re-order the columns to match df
+    df2 = df2[df.columns]
 
     # Re-apply original types
     for col in df:
@@ -65,5 +68,12 @@ def test_sanitize_dataframe():
             df2[col] = df2[col].astype(df[col].dtype)
 
     # pandas doesn't properly recognize np.array(np.nan), so change it here
-    df.ix[0, 'o'] = np.nan
+    df.iloc[0, df.columns.get_loc('o')] = np.nan
     assert df.equals(df2)
+
+
+def test_sanitize_dataframe_infs():
+    df = pd.DataFrame({'x': [0, 1, 2, np.inf, -np.inf, np.nan]})
+    df_clean = sanitize_dataframe(df)
+    assert list(df_clean.dtypes) == [object]
+    assert list(df_clean['x']) == [0, 1, 2, None, None, None]
