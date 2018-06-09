@@ -114,6 +114,10 @@ def sanitize_dataframe(df):
         elif str(dtype) == 'bool':
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
+        elif str(dtype).startswith('datetime'):
+            # Convert datetimes to strings
+            # astype(str) will choose the appropriate resolution
+            df[col_name] = df[col_name].astype(str).replace('NaT', '')
         elif np.issubdtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
@@ -123,10 +127,6 @@ def sanitize_dataframe(df):
             col = df[col_name]
             bad_values = col.isnull() | np.isinf(col)
             df[col_name] = col.astype(object).where(~bad_values, None)
-        elif str(dtype).startswith('datetime'):
-            # Convert datetimes to strings
-            # astype(str) will choose the appropriate resolution
-            df[col_name] = df[col_name].astype(str).replace('NaT', '')
         elif dtype == object:
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
