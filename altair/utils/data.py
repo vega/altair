@@ -1,6 +1,7 @@
 import json
 import hashlib
 import random
+import warnings
 
 import pandas as pd
 from toolz.curried import curry, pipe  # noqa
