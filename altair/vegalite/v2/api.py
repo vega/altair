@@ -915,10 +915,42 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             return renderers.get()(dct)
 
-    def display(self):
-        """Display chart in Jupyter notebook or JupyterLab"""
+    def display(self, renderer=Undefined, theme=Undefined, actions=Undefined,
+                **kwargs):
+        """Display chart in Jupyter notebook or JupyterLab
+
+        Parameters are passed as options to vega-embed within supported frontends.
+        See https://github.com/vega/vega-embed#options for details.
+
+        Parameters
+        ----------
+        renderer : string ('canvas' or 'svg')
+            The renderer to use
+        theme : string
+            The Vega theme name to use; see https://github.com/vega/vega-themes
+        actions : bool or dict
+            Specify whether action links ("Open In Vega Editor", etc.) are
+            included in the view.
+        **kwargs :
+            Additional parameters are also passed to vega-embed as options.
+        """
         from IPython.display import display
-        display(self)
+
+        if renderer is not Undefined:
+            kwargs['renderer'] = renderer
+        if theme is not Undefined:
+            kwargs['theme'] = theme
+        if actions is not Undefined:
+            kwargs['actions'] = actions
+
+        if kwargs:
+            options = renderers.options.copy()
+            options['embed_options']= options.get('embed_options', {}).copy()
+            options['embed_options'].update(kwargs)
+            with renderers.enable(**options):
+                display(self)
+        else:
+            display(self)
 
     def serve(self, ip='127.0.0.1', port=8888, n_retries=50, files=None,
               jupyter_warning=True, open_browser=True, http_server=None,
