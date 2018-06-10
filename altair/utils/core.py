@@ -232,17 +232,10 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
 
     if parse_types:
         patterns = list(itertools.chain(*((p + ':{type}', p) for p in patterns)))
-<<<<<<< HEAD
 
     regexps = (re.compile(r'\A' + p.format(**units) + r'\Z', re.DOTALL)
                for p in patterns)
 
-=======
-
-    regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
-               for p in patterns)
-
->>>>>>> altair-viz/master
     # find matches depending on valid fields passed
     if isinstance(shorthand, dict):
         attrs = shorthand
