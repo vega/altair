@@ -28,7 +28,7 @@
 
 7. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io)
 
-       cd docs
+       cd doc
        make clean
        make html
        bash sync_website.sh

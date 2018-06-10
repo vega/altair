@@ -5,7 +5,7 @@ This example shows how to make a bubble plot showing the correlation between
 health and income for 187 countries in the world (modified from an example
 in Lisa Charlotte Rost's blog post ('One Chart, Twelve Charting Libraries')[http://lisacharlotterost.github.io/2016/05/17/one-chart-code/)].
 """
-# category: scatter plots
+# category: case studies
 import altair as alt
 from vega_datasets import data
 

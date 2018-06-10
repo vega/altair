@@ -56,20 +56,22 @@ The result is a histogram of precipitation values:
 
     alt.Chart(df).mark_bar().encode(
         alt.X('precipitation', bin=True),
-        alt.Y('count()')
+        y='count()'
     )
 
 Next, let’s look at how precipitation in Seattle changes throughout the year.
 Altair natively supports dates and discretization of dates when we set the
 type to ``temporal`` (shorthand ``T``).
 For example, in the following plot, we compute the total precipitation for each month.
-To discretize the data into months, we set the keyword ``timeUnit="month"``:
+To discretize the data into months, we can use a ``month`` binning (see
+:ref:`user-guide-timeunit-transform` for more information about this and
+other ``timeUnit`` binnings):
 
 .. altair-plot::
 
     alt.Chart(df).mark_line().encode(
-        alt.X('date:T', timeUnit='month'),
-        alt.Y('average(precipitation)')
+        x='month(date:T)',
+        y='average(precipitation)'
     )
 
 This chart shows that in Seattle the precipitation in the winter is, on average,
@@ -85,8 +87,8 @@ We might also wish to see the maximum and minimum temperature in each month:
 .. altair-plot::
 
     alt.Chart(df).mark_line().encode(
-        alt.X('date:T', timeUnit='yearmonth'),
-        alt.Y('max(temp_max)'),
+        x='yearmonth(date):T',
+        y='max(temp_max)',
     )
 
 In this chart, it looks as though the maximum temperature is increasing from
@@ -97,25 +99,37 @@ maximum daily temperatures for each year:
 .. altair-plot::
 
     alt.Chart(df).mark_line().encode(
-        alt.X('date:T', timeUnit='year'),
-        alt.Y('mean(temp_max)'),
+        x='year(date):T',
+        y='mean(temp_max)',
     )
 
-And in fact, the chart indicates that yes, the annual average of the daily
+This can be a little clearer if we use a bar plot and mark the year as an
+"ordinal" (ordered category) type.
+For aesthetic reasons, let's make the bar chart horizontal by assigning the
+ordinal value to the y-axis:
+
+.. altair-plot::
+
+    alt.Chart(df).mark_bar().encode(
+        x='mean(temp_max)',
+        y='year(date):O'
+    )
+
+The chart indicates that the annual average of the daily
 high temperatures increased over the course of these four years, a fact that
 you can confirm for minimum daily temperatures as well.
 
-You might also wonder how the variability of the temperatures changes
+You might also wonder how the daily temperature range changes
 throughout the year. For this, we have to add a computation to derive a new
 field, which can be done by adding a ``calculate`` transform:
 
 .. altair-plot::
 
-    alt.Chart(df).mark_line().encode(
-        alt.X('date:T', timeUnit='year'),
-        alt.Y('mean(temp_range):Q'),
+    alt.Chart(df).mark_bar().encode(
+        x='mean(temp_range):Q',
+        y='year(date):O'
     ).transform_calculate(
-        "temp_range", "datum.temp_max - datum.temp_min"
+        temp_range="datum.temp_max - datum.temp_min"
     )
 
 Note that this calculation doesn't actually do any data manipulation in Python,
@@ -141,7 +155,7 @@ stack the bars atop each other:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        x=alt.X('date:N', timeUnit='month'),
+        x='month(date):N',
         y='count()',
         color='weather',
     )
@@ -164,7 +178,7 @@ meaning of the plot more clear:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        x=alt.X('date:N', timeUnit='month', axis=alt.Axis(title='Month of the year')),
+        x=alt.X('month(date):N', axis=alt.Axis(title='Month of the year')),
         y='count()',
         color=alt.Color('weather', legend=alt.Legend(title='Weather type'), scale=scale),
     )
@@ -207,7 +221,8 @@ by weather type:
 
 And now we can vertically concatenate this histogram to the points plot above,
 and add a brush selection tool such that the histogram reflects the content
-of the selection:
+of the selection (for more information on selections, see
+:ref:`user-guide-selections`):
 
 .. altair-plot::
 

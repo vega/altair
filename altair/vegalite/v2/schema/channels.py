@@ -31,7 +31,7 @@ class FieldChannelMixin(object):
                                      "match any column in the data.".format(self.shorthand))
                 else:
                     raise ValueError("{0} encoding field is specified without a type; "
-                                     "the type cannot be automacially inferred because "
+                                     "the type cannot be automatically inferred because "
                                      "the data is not specified as a pandas.DataFrame."
                                      "".format(self.shorthand))
         else:

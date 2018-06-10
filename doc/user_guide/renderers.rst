@@ -33,10 +33,12 @@ Altair ships with the following renderers:
 
       alt.renderers.enable('notebook')
 
-  Note that this requires the vega3_ package; see :ref:`display-notebook`.
+  Note that this requires the vega_ package; see :ref:`display-notebook`.
 
 **Google Colab**
-  for Colab_, you must switch to the ``colab`` renderer::
+  Colab_ requires use of the ``colab`` renderer, which will be enabled by
+  default when Altair is imported.
+  To switch back to it after another renderer has been enabled, use::
 
       alt.renderers.enable('colab')
 
@@ -46,4 +48,4 @@ Altair ships with the following renderers:
 .. _nteract: https://nteract.io
 .. _Colab: https://colab.research.google.com
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
-.. _vega3: https://github.com/vega/ipyvega/tree/vega3
+.. _vega: https://github.com/vega/ipyvega/tree/vega

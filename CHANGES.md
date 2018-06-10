@@ -1,12 +1,13 @@
 # Altair Change Log
 
-## Version 2.1.0 (Unreleased):
+## Version 2.2.0 (Unreleased):
 
-- update vega & vega-embed versions in html output (#838)
+## Version 2.1.0 (Released June 6, 2018):
 
-- update vega-lite to version 2.4.3 (#836)
+### Enhancements
 
-  - Only API change is internal: ``alt.MarkProperties`` is now ``alt.MarkConfig``
+- add a ``scale_factor`` argument to ``chart.save()`` to allow the
+  size/resolution of saved figures to be adjusted. (#918)
 
 - add an ``add_selection()`` method to add selections to charts (#832)
 
@@ -15,6 +16,27 @@
 
 - allow multiple fields to be passed to encodings such as ``tooltip``
   and ``detail`` (#830)
+
+- make ``timeUnit`` specifications more succinct, by parsing them in a manner
+  similar to aggregates (#866)
+
+- make ``to_json()`` and ``to_csv()`` have deterministic filenames, so in json
+  mode a single datasets will lead to a single on-disk serialization (#862)
+
+### Breaking Changes
+
+- make ``data`` the first argument for all compound chart types to match the
+  semantics of ``alt.Chart`` (this includes ``alt.FacetChart``,
+  ``alt.LayerChart``, ``alt.RepeatChart``, ``alt.VConcatChart``, and
+  ``alt.HConcatChart``) (#895).
+
+- update vega-lite to version 2.4.3 (#836)
+
+  - Only API change is internal: ``alt.MarkProperties`` is now ``alt.MarkConfig``
+
+### Maintenance
+
+- update vega to v3.3 & vega-embed to v3.11 in html output & colab renderer (#838)
 
 
 ## Version 2.0.0: May 2, 2018

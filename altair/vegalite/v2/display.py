@@ -8,8 +8,8 @@ from ..display import RendererRegistry
 
 from .schema import SCHEMA_VERSION
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '3.3'
-VEGAEMBED_VERSION = '3.9'
+VEGA_VERSION = '3.3.1'
+VEGAEMBED_VERSION = '3.14'
 
 
 # ==============================================================================

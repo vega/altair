@@ -1,7 +1,7 @@
 import json
 import random
-import uuid
 import warnings
+import hashlib
 
 import pandas as pd
 from toolz.curried import curry, pipe  # noqa
@@ -78,84 +78,38 @@ def sample(data, n=None, frac=None):
             values = random.sample(values, n)
             return {'values': values}
 
-def _geopandas_to_dict(data):
-    try:
-        if ('geometry' != data.geometry.name) and  ('geometry' in data.columns) :
-            warnings.warn("column name 'geometry' is reserved name for GeoDataFrame. "+
-            "Column named 'geometry' should contain actual displaying geometry or not be used. "+
-            "Data of column will not be accessible from the chart description. ")
-        if 'type' in data.columns :
-            warnings.warn("Column name 'type' is reserved name for GeoDataFrame. "+
-            "Data of column 'type' will not be accessible from the chart description.")
-        if 'id' in data.columns :
-            warnings.warn("Column name 'id' is reserved name for GeoDataFrame for index values. "+
-            "Data of column 'id' will not be accessible from the chart description.")
-        return [ dict(row,type = feature['type'],geometry = feature['geometry'], id = feature['id'])
-                    for row,feature in zip(
-                            data.drop(data.geometry.name, axis=1).to_dict('row'),
-                            data.geometry.__geo_interface__['features']
-                        )
-                    ]
-    
-    except AttributeError as err:
-        if str(err).startswith('No geometry data set yet'):
-            warnings.warn("GeoDataFrame has no geometry to display.")
-            return data.to_dict('row')
-        else:
-            raise    
-
 @curry
-def to_json(data, prefix='altair-data'):
-    """Write the data model to a .json file and return a url based data model."""
-    check_data_type(data)
-    ext = '.json'
-    filename = _compute_filename(prefix=prefix, ext=ext)
-    data_format = {'type': 'json'}
-
-    if hasattr(data,'__geo_interface__'):
-        if isinstance(data, pd.DataFrame): #GeoPandas
-            data = sanitize_dataframe(data)
-            values = _geopandas_to_dict(data)
-            with open(filename,'w') as f:
-                json.dump(values, f)
-        else:
-            with open(filename,'w') as f:
-                json.dump(data.__geo_interface__, f)
- 
-    elif isinstance(data, pd.DataFrame): 
-        data = sanitize_dataframe(data)
-        data.to_json(filename, orient='records')
-        
-    elif isinstance(data, dict):
-        if 'values' not in data:
-            raise KeyError('values expected in data dict, but not present.')
-        values = data['values']
-        with open(filename,'w') as f:
-            json.dump(values, f)
+def to_json(data, prefix='altair-data', extension='json',
+            filename="{prefix}-{hash}.{extension}"):
+    """
+    Write the data model to a .json file and return a url based data model.
+    """
+    data_json = _data_to_json_string(data)
+    data_hash = _compute_data_hash(data_json)
+    filename = filename.format(prefix=prefix, hash=data_hash,
+                               extension=extension)
+    with open(filename, 'w') as f:
+        f.write(data_json)
     return {
         'url': filename,
-        'format': data_format
+        'format': {'type': 'json'}
     }
 
 
 @curry
-def to_csv(data, prefix='altair-data'):
+def to_csv(data, prefix='altair-data', extension='csv',
+           filename="{prefix}-{hash}.{extension}"):
     """Write the data model to a .csv file and return a url based data model."""
-    check_data_type(data)
-    ext = '.csv'
-    filename = _compute_filename(prefix=prefix, ext=ext)
-    if hasattr(data,'__geo_interface__'):
-        raise NotImplementedError('use to_json or to_values with GeoJSON objects.')
-    
-    elif isinstance(data, pd.DataFrame):
-        data = sanitize_dataframe(data)
-        data.to_csv(filename)
-        return {
-            'url': filename,
-            'format': {'type': 'csv'}
-        }
-    elif isinstance(data, dict):
-        raise NotImplementedError('to_csv only works with Pandas DataFrame objects.')
+    data_csv = _data_to_csv_string(data)
+    data_hash = _compute_data_hash(data_csv)
+    filename = filename.format(prefix=prefix, hash=data_hash,
+                               extension=extension)
+    with open(filename, 'w') as f:
+        f.write(data_csv)
+    return {
+        'url': filename,
+        'format': {'type': 'csv'}
+    }
 
 
 @curry
@@ -166,14 +120,15 @@ def to_values(data):
     if hasattr(data,'__geo_interface__'):
         if isinstance(data, pd.DataFrame): #GeoPandas
             data = sanitize_dataframe(data)
-            return {'values': _geopandas_to_dict(data),
-                    'format': {'type': 'json'}}
+            return {
+                'values': _geopandas_to_dict(data),
+                 'format': {'type': 'json'}
+            }
         else:
             return {
-                    'values':data.__geo_interface__,
-                    'format': {'type': 'json'},
-                    }
-        
+                'values':data.__geo_interface__,
+                'format': {'type': 'json'}
+            }
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {'values': data.to_dict(orient='records')}
@@ -194,11 +149,69 @@ def check_data_type(data):
 # Private utilities
 # ==============================================================================
 
+def _compute_data_hash(data_str):
+    return hashlib.md5(data_str.encode()).hexdigest()
 
-def _compute_uuid_filename(prefix, ext):
-    return prefix + '-' + str(uuid.uuid4()) + ext
+
+def _data_to_json_string(data):
+    """Return a JSON string representation of the input data"""
+    check_data_type(data)
+    if hasattr(data,'__geo_interface__'):
+        if isinstance(data, pd.DataFrame): #GeoPandas
+            data = sanitize_dataframe(data)
+            values = _geopandas_to_dict(data)
+            return json.dumps(values)
+        else:
+            return json.dumps(data.__geo_interface__)
+    elif isinstance(data, pd.DataFrame):
+        data = sanitize_dataframe(data)
+        return data.to_json(orient='records')
+    elif isinstance(data, dict):
+        if 'values' not in data:
+            raise KeyError('values expected in data dict, but not present.')
+        return json.dumps(data['values'], sort_keys=True)
+    else:
+        raise NotImplementedError("to_json only works with data expressed as "
+                                  "a DataFrame or as a dict")
 
 
-def _compute_filename(prefix='altair-data', ext='.csv'):
-    filename = _compute_uuid_filename(prefix, ext)
-    return filename
+def _data_to_csv_string(data):
+    """return a CSV string representation of the input data"""
+    check_data_type(data)
+    if hasattr(data,'__geo_interface__'):
+        raise NotImplementedError('use to_json or to_values with GeoJSON objects.')
+    elif isinstance(data, pd.DataFrame):
+        data = sanitize_dataframe(data)
+        return data.to_csv(index=False)
+    elif isinstance(data, dict):
+        if 'values' not in data:
+            raise KeyError('values expected in data dict, but not present')
+        return pd.DataFrame.from_dict(data['values']).to_csv(index=False)
+    else:
+        raise NotImplementedError("to_csv only works with data expressed as "
+                                  "a DataFrame or as a dict")
+
+def _geopandas_to_dict(data):
+    try:
+        if ('geometry' != data.geometry.name) and  ('geometry' in data.columns) :
+            warnings.warn("column name 'geometry' is reserved name for GeoDataFrame. "+
+            "Column named 'geometry' should contain actual displaying geometry or not be used. "+
+            "Data of column will not be accessible from the chart description. ")
+        if 'type' in data.columns :
+            warnings.warn("Column name 'type' is reserved name for GeoDataFrame. "+
+            "Data of column 'type' will not be accessible from the chart description.")
+        if 'id' in data.columns :
+            warnings.warn("Column name 'id' is reserved name for GeoDataFrame for index values. "+
+            "Data of column 'id' will not be accessible from the chart description.")
+        return [ dict(row,type = feature['type'],geometry = feature['geometry'], id = feature['id'])
+                    for row,feature in zip(
+                            data.drop(data.geometry.name, axis=1).to_dict('row'),
+                            data.geometry.__geo_interface__['features']
+                        )
+                    ]
+    except AttributeError as err:
+        if str(err).startswith('No geometry data set yet'):
+            warnings.warn("GeoDataFrame has no geometry to display.")
+            return data.to_dict('row')
+        else:
+            raise    

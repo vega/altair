@@ -5,7 +5,7 @@ This chart provides an interactive exploration of Seattle weather over the
 course of the year. It includes a one-axis brush selection to easily
 see the distribution of weather types in a particular date range.
 """
-# category: interactive charts
+# category: case studies
 import altair as alt
 from vega_datasets import data
 
@@ -21,7 +21,7 @@ click = alt.selection_multi(encodings=['color'])
 
 # Top panel is scatter plot of temperature vs time
 points = alt.Chart().mark_point().encode(
-    alt.X('date:T', timeUnit='monthdate', axis=alt.Axis(title='Date')),
+    alt.X('monthdate(date):T', axis=alt.Axis(title='Date')),
     alt.Y('temp_max:Q',
         axis=alt.Axis(title='Maximum Daily Temperature (C)'),
         scale=alt.Scale(domain=[-5, 40])

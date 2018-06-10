@@ -10,9 +10,8 @@ from vega_datasets import data
 source = data.seattle_weather()
 
 base = alt.Chart(source).encode(
-    alt.X('date:O',
+    alt.X('month(date):O',
         axis=alt.Axis(format='%b'),
-        timeUnit='month',
         scale=alt.Scale(zero=False)
     )
 )

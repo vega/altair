@@ -10,7 +10,7 @@ from vega_datasets import data
 source = data.github.url
 
 alt.Chart(source).mark_circle().encode(
-    alt.X('time:O', timeUnit='hours'),
-    alt.Y('time:O', timeUnit='day'),
+    x='hours(time):O',
+    y='day(time):O',
     size='sum(count):Q'
 )

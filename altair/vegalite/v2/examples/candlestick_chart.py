@@ -10,7 +10,7 @@ import pandas as pd
 df = pd.DataFrame(
 [
       {
-        "date": "01-Jun-2009",
+        "date": "2009-06-01",
         "open": 28.7,
         "high": 30.05,
         "low": 28.45,
@@ -19,7 +19,7 @@ df = pd.DataFrame(
         "ret": -4.89396411092985
       },
       {
-        "date": "02-Jun-2009",
+        "date": "2009-06-02",
         "open": 30.04,
         "high": 30.13,
         "low": 28.3,
@@ -28,7 +28,7 @@ df = pd.DataFrame(
         "ret": -0.322580645161295
       },
       {
-        "date": "03-Jun-2009",
+        "date": "2009-06-03",
         "open": 29.62,
         "high": 31.79,
         "low": 29.62,
@@ -37,7 +37,7 @@ df = pd.DataFrame(
         "ret": 3.68663594470045
       },
       {
-        "date": "04-Jun-2009",
+        "date": "2009-06-04",
         "open": 31.02,
         "high": 31.02,
         "low": 29.92,
@@ -46,7 +46,7 @@ df = pd.DataFrame(
         "ret": 4.51010886469673
       },
       {
-        "date": "05-Jun-2009",
+        "date": "2009-06-05",
         "open": 29.39,
         "high": 30.81,
         "low": 28.85,
@@ -55,7 +55,7 @@ df = pd.DataFrame(
         "ret": 6.08424336973478
       },
       {
-        "date": "08-Jun-2009",
+        "date": "2009-06-08",
         "open": 30.84,
         "high": 31.82,
         "low": 26.41,
@@ -64,7 +64,7 @@ df = pd.DataFrame(
         "ret": 1.2539184952978
       },
       {
-        "date": "09-Jun-2009",
+        "date": "2009-06-09",
         "open": 29.77,
         "high": 29.77,
         "low": 27.79,
@@ -73,7 +73,7 @@ df = pd.DataFrame(
         "ret": -5.02431118314424
       },
       {
-        "date": "10-Jun-2009",
+        "date": "2009-06-10",
         "open": 26.9,
         "high": 29.74,
         "low": 26.9,
@@ -82,7 +82,7 @@ df = pd.DataFrame(
         "ret": -5.46623794212217
       },
       {
-        "date": "11-Jun-2009",
+        "date": "2009-06-11",
         "open": 27.36,
         "high": 28.11,
         "low": 26.81,
@@ -91,7 +91,7 @@ df = pd.DataFrame(
         "ret": -8.3743842364532
       },
       {
-        "date": "12-Jun-2009",
+        "date": "2009-06-12",
         "open": 28.08,
         "high": 28.5,
         "low": 27.73,
@@ -100,7 +100,7 @@ df = pd.DataFrame(
         "ret": -5.52763819095477
       },
       {
-        "date": "15-Jun-2009",
+        "date": "2009-06-15",
         "open": 29.7,
         "high": 31.09,
         "low": 29.64,
@@ -109,7 +109,7 @@ df = pd.DataFrame(
         "ret": 3.4920634920635
       },
       {
-        "date": "16-Jun-2009",
+        "date": "2009-06-16",
         "open": 30.81,
         "high": 32.75,
         "low": 30.07,
@@ -118,7 +118,7 @@ df = pd.DataFrame(
         "ret": 0.155038759689914
       },
       {
-        "date": "17-Jun-2009",
+        "date": "2009-06-17",
         "open": 31.19,
         "high": 32.77,
         "low": 30.64,
@@ -127,7 +127,7 @@ df = pd.DataFrame(
         "ret": 5.82822085889571
       },
       {
-        "date": "18-Jun-2009",
+        "date": "2009-06-18",
         "open": 31.54,
         "high": 31.54,
         "low": 29.6,
@@ -136,7 +136,7 @@ df = pd.DataFrame(
         "ret": 8.17610062893082
       },
       {
-        "date": "19-Jun-2009",
+        "date": "2009-06-19",
         "open": 29.16,
         "high": 29.32,
         "low": 27.56,
@@ -145,7 +145,7 @@ df = pd.DataFrame(
         "ret": 8.59872611464968
       },
       {
-        "date": "22-Jun-2009",
+        "date": "2009-06-22",
         "open": 30.4,
         "high": 32.05,
         "low": 30.3,
@@ -154,7 +154,7 @@ df = pd.DataFrame(
         "ret": 15.4907975460123
       },
       {
-        "date": "23-Jun-2009",
+        "date": "2009-06-23",
         "open": 31.3,
         "high": 31.54,
         "low": 27.83,
@@ -163,7 +163,7 @@ df = pd.DataFrame(
         "ret": 11.7370892018779
       },
       {
-        "date": "24-Jun-2009",
+        "date": "2009-06-24",
         "open": 30.58,
         "high": 30.58,
         "low": 28.79,
@@ -172,7 +172,7 @@ df = pd.DataFrame(
         "ret": -10.4234527687296
       },
       {
-        "date": "25-Jun-2009",
+        "date": "2009-06-25",
         "open": 29.45,
         "high": 29.56,
         "low": 26.3,
@@ -181,7 +181,7 @@ df = pd.DataFrame(
         "ret": 0
       },
       {
-        "date": "26-Jun-2009",
+        "date": "2009-06-26",
         "open": 27.09,
         "high": 27.22,
         "low": 25.76,
@@ -190,7 +190,7 @@ df = pd.DataFrame(
         "ret": 0
       },
       {
-        "date": "29-Jun-2009",
+        "date": "2009-06-29",
         "open": 25.93,
         "high": 27.18,
         "low": 25.29,
@@ -199,7 +199,7 @@ df = pd.DataFrame(
         "ret": 5.26315789473684
       },
       {
-        "date": "30-Jun-2009",
+        "date": "2009-06-30",
         "open": 25.36,
         "high": 27.38,
         "low": 25.02,
@@ -215,8 +215,7 @@ open_close_color = alt.condition("datum.open < datum.close",
 
 rule = alt.Chart(df).mark_rule().encode(
     alt.X(
-        'date:T',
-        timeUnit='yearmonthdate',
+        'yearmonthdate(date):T',
         scale=alt.Scale(domain=[{"month": 5, "date": 31, "year": 2009},
                                 {"month": 7, "date": 1, "year": 2009}]),
         axis=alt.Axis(format='%m/%d', title='Date in 2009')
@@ -231,7 +230,7 @@ rule = alt.Chart(df).mark_rule().encode(
 )
 
 bar = alt.Chart(df).mark_bar().encode(
-    alt.X('date:T', timeUnit='yearmonthdate'),
+    x='yearmonthdate(date):T',
     y='open',
     y2='close',
     color=open_close_color

@@ -9,6 +9,7 @@ import pandas as pd
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
 from .data import data_transformers, pipe
+from ..data import sanitize_dataframe
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
@@ -372,7 +373,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
         return self.save(fp, format=None, **kwargs)
 
-    def save(self, fp, format=None, override_data_transformer=True, **kwargs):
+    def save(self, fp, format=None, override_data_transformer=True,
+             scale_factor=1.0, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -388,6 +390,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             If True (default), then the save action will be done with the
             default data_transformer with max_rows set to None. If False,
             then use the currently active data transformer.
+        scale_factor : float
+            For svg or png formats, scale the image by this factor when saving.
+            This can be used to control the size or resolution of the output.
+            Default is 1.0
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
@@ -398,6 +404,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                     vegalite_version=VEGALITE_VERSION,
                     vega_version=VEGA_VERSION,
                     vegaembed_version=VEGAEMBED_VERSION,
+                    scale_factor=scale_factor,
                     **kwargs)
 
         # By default we override the data transformer. This makes it so
@@ -805,23 +812,66 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             The data field to apply time unit.
         timeUnit : TimeUnit
             The timeUnit.
+        **kwargs
+            transforms can also be passed by keyword argument; see Examples
 
         Returns
         -------
         self : Chart object
             returns chart to allow for chaining
 
+        Examples
+        --------
+        >>> import altair as alt
+        >>> from altair import datum, expr
+
+        >>> chart = alt.Chart().transform_timeunit(month='month(date)')
+        >>> chart.transform[0]
+        TimeUnitTransform({
+          as: 'month',
+          field: 'date',
+          timeUnit: 'month'
+        })
+
+        It's also possible to pass the ``TimeUnitTransform`` arguments directly;
+        this is most useful in cases where the desired field name is not a
+        valid python identifier:
+
+        >>> kwds = {'as': 'month', 'timeUnit': 'month', 'field': 'The Month'}
+        >>> chart = alt.Chart().transform_timeunit(**kwds)
+        >>> chart.transform[0]
+        TimeUnitTransform({
+          as: 'month',
+          field: 'The Month',
+          timeUnit: 'month'
+        })
+
+        As the first form is easier to write and understand, that is the
+        recommended method.
+
         See Also
         --------
         alt.TimeUnitTransform : underlying transform object
         """
-        if as_ is not Undefined:
+        if as_ is Undefined:
+            as_ = kwargs.pop('as', Undefined)
+        else:
             if 'as' in kwargs:
                 raise ValueError("transform_timeunit: both 'as_' and 'as' passed as arguments.")
-            kwargs['as'] = as_
-        kwargs['field'] = field
-        kwargs['timeUnit'] = timeUnit
-        return self._add_transform(core.TimeUnitTransform(**kwargs))
+        if as_ is not Undefined:
+            dct = {'as': as_, 'timeUnit': timeUnit, 'field': field}
+            self = self._add_transform(core.TimeUnitTransform(**dct))
+        for as_, shorthand in kwargs.items():
+            dct = utils.parse_shorthand(shorthand,
+                                        parse_timeunits=True,
+                                        parse_aggregates=False,
+                                        parse_types=False)
+            dct.pop('type', None)
+            dct['as'] = as_
+            if 'timeUnit' not in dct:
+                raise ValueError("'{0}' must include a valid timeUnit".format(shorthand))
+            self = self._add_transform(core.TimeUnitTransform(**dct))
+        return self
 
     @utils.use_signature(core.WindowTransform)
     def transform_window(self, *args, **kwargs):
@@ -1137,9 +1187,9 @@ def _check_if_valid_subspec(spec, classname):
 @utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
-    def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
+    def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'RepeatChart')
-        super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
+        super(RepeatChart, self).__init__(data=data, spec=spec, repeat=repeat, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -1186,11 +1236,11 @@ def repeat(repeater):
 @utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
-    def __init__(self, hconcat=(), **kwargs):
+    def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
             _check_if_valid_subspec(spec, 'HConcatChart')
-        super(HConcatChart, self).__init__(hconcat=list(hconcat), **kwargs)
+        super(HConcatChart, self).__init__(data=data, hconcat=list(hconcat), **kwargs)
 
     def __ior__(self, other):
         _check_if_valid_subspec(other, 'HConcatChart')
@@ -1214,11 +1264,11 @@ def hconcat(*charts, **kwargs):
 @utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
-    def __init__(self, vconcat=(), **kwargs):
+    def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
             _check_if_valid_subspec(spec, 'VConcatChart')
-        super(VConcatChart, self).__init__(vconcat=list(vconcat), **kwargs)
+        super(VConcatChart, self).__init__(data=data, vconcat=list(vconcat), **kwargs)
 
     def __iand__(self, other):
         _check_if_valid_subspec(other, 'VConcatChart')
@@ -1313,9 +1363,9 @@ def layer(*charts, **kwargs):
 @utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
-    def __init__(self, spec, facet=Undefined, **kwargs):
+    def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'FacetChart')
-        super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
+        super(FacetChart, self).__init__(data=data, spec=spec, facet=facet, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -1380,6 +1430,8 @@ def geojson_feature(data, feature, **kwargs):
         return core.UrlData(url=data, format=core.JsonDataFormat(type='json',
                                                          property=feature, **kwargs))
     elif hasattr(data,'__geo_interface__'):
+        if isinstance(data, pd.DataFrame): #GeoPandas
+            data = sanitize_dataframe(data)
         return core.InlineData(values=data.__geo_interface__ , format=core.JsonDataFormat(type='json',
                                                          property=feature, **kwargs))
     else:
