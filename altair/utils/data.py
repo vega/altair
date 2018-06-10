@@ -1,6 +1,9 @@
 import json
 import random
+<<<<<<< HEAD
 import warnings
+=======
+>>>>>>> altair-viz/master
 import hashlib
 
 import pandas as pd
@@ -156,6 +159,7 @@ def _compute_data_hash(data_str):
 def _data_to_json_string(data):
     """Return a JSON string representation of the input data"""
     check_data_type(data)
+<<<<<<< HEAD
     if hasattr(data,'__geo_interface__'):
         if isinstance(data, pd.DataFrame): #GeoPandas
             data = sanitize_dataframe(data)
@@ -164,6 +168,9 @@ def _data_to_json_string(data):
         else:
             return json.dumps(data.__geo_interface__)
     elif isinstance(data, pd.DataFrame):
+=======
+    if isinstance(data, pd.DataFrame):
+>>>>>>> altair-viz/master
         data = sanitize_dataframe(data)
         return data.to_json(orient='records')
     elif isinstance(data, dict):
@@ -178,9 +185,13 @@ def _data_to_json_string(data):
 def _data_to_csv_string(data):
     """return a CSV string representation of the input data"""
     check_data_type(data)
+<<<<<<< HEAD
     if hasattr(data,'__geo_interface__'):
         raise NotImplementedError('use to_json or to_values with GeoJSON objects.')
     elif isinstance(data, pd.DataFrame):
+=======
+    if isinstance(data, pd.DataFrame):
+>>>>>>> altair-viz/master
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
@@ -190,6 +201,7 @@ def _data_to_csv_string(data):
     else:
         raise NotImplementedError("to_csv only works with data expressed as "
                                   "a DataFrame or as a dict")
+<<<<<<< HEAD
 
 def _geopandas_to_dict(data):
     try:
@@ -215,3 +227,5 @@ def _geopandas_to_dict(data):
             return data.to_dict('row')
         else:
             raise    
+=======
+>>>>>>> altair-viz/master
