@@ -107,7 +107,7 @@ EXTRACT_CODE = {
 
 def compile_spec(spec, format, mode,
                  vega_version, vegaembed_version, vegalite_version,
-                 driver_timeout=10, webdriver='chrome'):
+                 driver_timeout=20, webdriver='chrome'):
     # TODO: detect & use local Jupyter caches of JS packages?
 
     if format not in ['png', 'svg', 'vega']:
