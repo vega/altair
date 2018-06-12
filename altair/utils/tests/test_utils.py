@@ -40,6 +40,8 @@ def test_sanitize_dataframe():
                        'b': np.array([True, False, True, True, False]),
                        'd': pd.date_range('2012-01-01', periods=5, freq='H'),
                        'c': pd.Series(list('ababc'), dtype='category'),
+                       'c2': pd.Series([1, 'A', 2.5, 'B', None],
+                                       dtype='category'),
                        'o': pd.Series([np.array(i) for i in range(5)]),
                        'p': pd.date_range('2012-01-01', periods=5, freq='H').tz_localize('UTC')})
 
@@ -50,8 +52,12 @@ def test_sanitize_dataframe():
     df.iloc[0, df.columns.get_loc('o')] = np.array(np.nan)
 
     # JSON serialize. This will fail on non-sanitized dataframes
+    print(df[['s', 'c2']])
     df_clean = sanitize_dataframe(df)
+    print(df_clean[['s', 'c2']])
+    print(df_clean[['s', 'c2']].to_dict())
     s = json.dumps(df_clean.to_dict(orient='records'))
+    print(s)
 
     # Re-construct pandas dataframe
     df2 = pd.read_json(s)

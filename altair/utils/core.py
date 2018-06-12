@@ -110,7 +110,8 @@ def sanitize_dataframe(df):
         if str(dtype) == 'category':
             # XXXX: work around bug in to_json for categorical types
             # https://github.com/pydata/pandas/issues/10778
-            df[col_name] = df[col_name].astype(str)
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif str(dtype) == 'bool':
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
