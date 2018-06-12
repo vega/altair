@@ -75,9 +75,9 @@ For example, here we save a simple scatter-plot to JSON:
 .. code-block:: python
 
     import altair as alt
-    from vega_datasets import data
+    url = alt.datasets.cars.url
 
-    chart = alt.Chart(data.cars.url).mark_point().encode(
+    chart = alt.Chart(url).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N'

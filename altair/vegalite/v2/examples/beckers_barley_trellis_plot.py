@@ -5,9 +5,9 @@ This example shows how to make a Trellis Plot with the barley dataset.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
 
-source = data.barley()
+
+source = alt.datasets.barley()
 
 alt.Chart(source).mark_point().encode(
     alt.X('median(yield)', scale=alt.Scale(zero=False)),

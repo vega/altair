@@ -6,9 +6,9 @@ points across multiple facets.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
 
-cars = data.cars()
+
+cars = alt.datasets.cars()
 
 brush = alt.selection(type='interval', resolve='global')
 

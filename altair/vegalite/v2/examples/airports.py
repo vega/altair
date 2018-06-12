@@ -6,10 +6,10 @@ airports on a background of US states.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m.url, feature='states')
-airports = data.airports.url
+
+states = alt.topo_feature(alt.datasets.us_10m.url, feature='states')
+airports = alt.datasets.airports.url
 
 # US states background
 background = alt.Chart(states).mark_geoshape(

@@ -7,9 +7,9 @@ y-axis of a chart as percentages.
 # category: line charts
 import altair as alt
 from altair.expr import datum
-from vega_datasets import data
 
-source = data.jobs.url
+
+source = alt.datasets.jobs.url
 
 alt.Chart(source).mark_line().encode(
     alt.X('year:O'),

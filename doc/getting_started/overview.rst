@@ -16,8 +16,7 @@ an interactive scatter plot:
     import altair as alt
 
     # load a simple dataset as a pandas DataFrame
-    from vega_datasets import data
-    cars = data.cars()
+    cars = alt.datasets.cars()
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower',

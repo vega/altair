@@ -7,9 +7,9 @@ of items in each category within the selection.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
 
-cars = data.cars.url
+
+cars = alt.datasets.cars.url
 
 brush = alt.selection(type='interval')
 

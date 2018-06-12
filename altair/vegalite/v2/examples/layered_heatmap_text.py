@@ -7,9 +7,9 @@ An example of a layered chart of text over a heatmap using the cars dataset.
 # category: other charts
 import altair as alt
 from altair.expr import datum
-from vega_datasets import data
 
-cars = data.cars.url
+
+cars = alt.datasets.cars.url
 
 heatmap = alt.Chart(cars).mark_rect().encode(
     alt.X('Cylinders:O', scale=alt.Scale(paddingInner=0)),

@@ -7,9 +7,9 @@ value within the selected interval.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
 
-weather = data.seattle_weather.url
+
+weather = alt.datasets.seattle_weather.url
 brush = alt.selection(type='interval', encodings=['x'])
 
 bars = alt.Chart().mark_bar().encode(

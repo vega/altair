@@ -7,9 +7,9 @@ of the other panels.
 """
 # category: interactive charts
 import altair as alt
-from vega_datasets import data
 
-flights = alt.UrlData(data.flights_2k.url,
+
+flights = alt.UrlData(alt.datasets.flights_2k.url,
                       format={'parse': {'date': 'date'}})
 
 brush = alt.selection(type='interval', encodings=['x'])

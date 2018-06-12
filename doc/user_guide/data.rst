@@ -59,8 +59,8 @@ Similarly, we must also specify the data type when referencing data by URL:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    url = data.cars.url
+
+    url = alt.datasets.cars.url
 
     alt.Chart(url).mark_point().encode(
         x='Horsepower:Q',

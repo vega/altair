@@ -6,10 +6,10 @@ overlayed on a map.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m.url, 'states')
-capitals = data.us_state_capitals.url
+
+states = alt.topo_feature(alt.datasets.us_10m.url, 'states')
+capitals = alt.datasets.us_state_capitals.url
 
 # US states background
 background = alt.Chart(states).mark_geoshape(

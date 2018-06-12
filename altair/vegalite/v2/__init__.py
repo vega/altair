@@ -4,7 +4,8 @@ from .api import *
 
 from . import examples
 
-from ...datasets import (
+from ..._datasets import (
+    datasets,
     list_datasets,
     load_dataset
 )

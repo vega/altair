@@ -60,9 +60,8 @@ grouped by the number of Cylinders.
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    cars = data.cars.url
+    cars = alt.datasets.cars.url
 
     alt.Chart(cars).mark_bar().encode(
         y='Cylinders:O',
@@ -112,9 +111,8 @@ An common application of a bin transform is when creating a histogram:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    movies = data.movies.url
+    movies = alt.datasets.movies.url
 
     alt.Chart(movies).mark_bar().encode(
         alt.X("IMDB_Rating:Q", bin=True),
@@ -127,9 +125,8 @@ bin a continuous field to create a discrete color map:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    cars = data.cars.url
+    cars = alt.datasets.cars.url
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
@@ -150,9 +147,8 @@ Here is the above histogram created using a top-level bin transform:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    movies = data.movies.url
+    movies = alt.datasets.movies.url
 
     alt.Chart(movies).mark_bar().encode(
         x='binned_rating:O',
@@ -166,9 +162,8 @@ And here is the transformed color scale using a top-level bin transform:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    cars = data.cars.url
+    cars = alt.datasets.cars.url
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
@@ -272,8 +267,7 @@ For example:
     import altair as alt
     from altair import datum
 
-    from vega_datasets import data
-    pop = data.population.url
+    pop = alt.datasets.population.url
 
     alt.Chart(pop).mark_area().encode(
         x='age:O',
@@ -312,8 +306,8 @@ values from year 2000 as in the above chart:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    pop = data.population.url
+
+    pop = alt.datasets.population.url
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -329,8 +323,8 @@ of specific values:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    pop = data.population.url
+
+    pop = alt.datasets.population.url
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -346,8 +340,8 @@ particular continuous range:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    pop = data.population.url
+
+    pop = alt.datasets.population.url
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -369,8 +363,8 @@ to select the data to be shown in the top chart:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
-    pop = data.population.url
+
+    pop = alt.datasets.population.url
 
     selection = alt.selection_multi(fields=['year'])
 
@@ -416,9 +410,8 @@ by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    pop = data.population.url
+    pop = alt.datasets.population.url
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -442,14 +435,13 @@ at the top level of a chart using the :meth:`Chart.transform_lookup` method.
 By way of example, imagine you have two sources of data that you would like
 to combine and plot: one is a list of names of people along with their height
 and weight, and the other is some information about which groups they belong
-to. This example data is available in ``vega_datasets``:
+to. This example data is available in ``alt.datasets``:
 
 .. altair-plot::
    :output: none
 
-   from vega_datasets import data
-   people = data.lookup_people()
-   groups = data.lookup_groups()
+   people = alt.datasets.lookup_people()
+   groups = alt.datasets.lookup_groups()
 
 We know how to visualize each of these datasets separately; for example:
 
@@ -536,10 +528,9 @@ of unemployment rates per county in the US:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    counties = alt.topo_feature(data.us_10m.url, 'counties')
-    unemp_data = data.unemployment.url
+    counties = alt.topo_feature(alt.datasets.us_10m.url, 'counties')
+    unemp_data = alt.datasets.unemployment.url
 
     alt.Chart(counties).mark_geoshape().encode(
         color='rate:Q'
@@ -586,9 +577,8 @@ measurements in Seattle during the year 2010:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    temps = data.seattle_temps.url
+    temps = alt.datasets.seattle_temps.url
 
     alt.Chart(temps).mark_line().encode(
         x='date:T',

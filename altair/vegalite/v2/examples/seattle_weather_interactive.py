@@ -7,7 +7,7 @@ see the distribution of weather types in a particular date range.
 """
 # category: case studies
 import altair as alt
-from vega_datasets import data
+
 
 scale = alt.Scale(domain=['sun', 'fog', 'drizzle', 'rain', 'snow'],
                   range=['#e7ba52', '#a7a7a7', '#aec7e8', '#1f77b4', '#9467bd'])
@@ -51,6 +51,6 @@ bars = alt.Chart().mark_bar().encode(
 )
 
 alt.vconcat(points, bars,
-    data=data.seattle_weather.url,
+    data=alt.datasets.seattle_weather.url,
     title="Seattle Weather: 2012-2015"
 )

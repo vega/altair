@@ -7,9 +7,9 @@ It is based on Hannah Fairfield's article 'Driving Shifts Into Reverse'. See htt
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
 
-driving = data.driving()
+
+driving = alt.datasets.driving()
 
 alt.Chart(driving).mark_line(point=True).encode(
     alt.X('miles', scale=alt.Scale(zero=False)),

@@ -20,8 +20,8 @@ For example, suppose we are creating a scatter plot of the ``cars`` dataset:
 .. altair-plot::
 
    import altair as alt
-   from vega_datasets import data
-   cars = data.cars.url
+
+   cars = alt.datasets.cars.url
 
    alt.Chart(cars).mark_point().encode(
        x='Acceleration:Q',
@@ -126,9 +126,8 @@ encodings. For example, consider the following plot:
 .. altair-plot::
 
     import altair as alt
-    from vega_datasets import data
 
-    cars = data.cars.url
+    cars = alt.datasets.cars.url
 
     alt.Chart(cars).mark_point().encode(
         x='Acceleration:Q',
@@ -234,9 +233,8 @@ A legend is added to the chart automatically when the `color`, `shape` or `size`
 .. altair-plot::
 
   import altair as alt
-  from vega_datasets import data
 
-  iris = data.iris()
+  iris = alt.datasets.iris()
 
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
@@ -251,9 +249,8 @@ The legend option on all of them expects a :class:`Legend` object as its input, 
 .. altair-plot::
 
   import altair as alt
-  from vega_datasets import data
 
-  iris = data.iris()
+  iris = alt.datasets.iris()
 
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
@@ -266,9 +263,8 @@ Another thing you can do is move the legend to another position with the `orient
 .. altair-plot::
 
   import altair as alt
-  from vega_datasets import data
 
-  iris = data.iris()
+  iris = alt.datasets.iris()
 
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
@@ -281,9 +277,8 @@ You can remove the legend entirely by submitting a null value.
 .. altair-plot::
 
   import altair as alt
-  from vega_datasets import data
 
-  iris = data.iris()
+  iris = alt.datasets.iris()
 
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',

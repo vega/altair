@@ -7,9 +7,9 @@ Altair, see https://vega.github.io/vega-lite/docs/projection.html
 """
 # category: maps
 import altair as alt
-from vega_datasets import data
 
-countries = alt.topo_feature(data.world_110m.url, 'countries')
+
+countries = alt.topo_feature(alt.datasets.world_110m.url, 'countries')
 
 base = alt.Chart(countries).mark_geoshape(
     fill='#666666',

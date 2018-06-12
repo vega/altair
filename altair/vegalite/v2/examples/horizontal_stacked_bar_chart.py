@@ -5,9 +5,9 @@ This is an example of a horizontal stacked bar chart using data which contains c
 """
 # category: bar charts
 import altair as alt
-from vega_datasets import data
 
-barley = data.barley()
+
+barley = alt.datasets.barley()
 
 alt.Chart(barley).mark_bar().encode(
     x='sum(yield)',

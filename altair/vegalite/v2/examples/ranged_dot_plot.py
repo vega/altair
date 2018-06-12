@@ -5,11 +5,11 @@ This example shows a ranged dot plot that uses 'layer' to convey changing life e
 """
 # category: other charts
 import altair as alt
-from vega_datasets import data
+
 
 
 chart = alt.layer(
-    data=data.countries.url
+    data=alt.datasets.countries.url
 ).transform_filter(
     filter={"field": 'country',
             "oneOf": ["China", "India", "United States", "Indonesia", "Brazil"]}

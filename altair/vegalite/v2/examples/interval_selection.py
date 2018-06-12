@@ -8,8 +8,8 @@ top chart can be selected by interacting with the bottom chart.
 # category: area charts
 
 import altair as alt
-from vega_datasets import data
-sp500 = data.sp500.url
+
+sp500 = alt.datasets.sp500.url
 
 brush = alt.selection(type='interval', encodings=['x'])
 

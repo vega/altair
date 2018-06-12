@@ -6,9 +6,9 @@ with linked panning and zooming.
 """
 # category: scatter plots
 import altair as alt
-from vega_datasets import data
 
-alt.Chart(data.cars.url).mark_circle().encode(
+
+alt.Chart(alt.datasets.cars.url).mark_circle().encode(
     alt.X(alt.repeat("column"), type='quantitative'),
     alt.Y(alt.repeat("row"), type='quantitative'),
     color='Origin:N'

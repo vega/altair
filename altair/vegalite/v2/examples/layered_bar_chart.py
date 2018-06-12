@@ -6,9 +6,9 @@ This example shows a bar chart showing the US population distribution of age gro
 # category: bar charts
 import altair as alt
 from altair.expr import datum, if_
-from vega_datasets import data
 
-source = data.population.url
+
+source = alt.datasets.population.url
 
 alt.Chart(source).mark_bar(opacity=0.7).encode(
     alt.X('age:O', scale=alt.Scale(rangeStep=17)),
