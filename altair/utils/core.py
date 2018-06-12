@@ -87,7 +87,6 @@ def sanitize_dataframe(df):
 
     * Make a copy
     * Raise ValueError if it has a hierarchical index.
-    * Convert categoricals to strings.
     * Convert np.bool_ dtypes to Python bool objects
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs/infs with None.
@@ -108,9 +107,7 @@ def sanitize_dataframe(df):
 
     for col_name, dtype in df.dtypes.iteritems():
         if str(dtype) == 'category':
-            # XXXX: work around bug in to_json for categorical types
-            # https://github.com/pydata/pandas/issues/10778
-            df[col_name] = df[col_name].astype(str)
+            continue
         elif str(dtype) == 'bool':
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
