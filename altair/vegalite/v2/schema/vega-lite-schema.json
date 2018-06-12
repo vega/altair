@@ -113,7 +113,7 @@
           "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
         },
         "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "string"
         },
         "cursor": {
@@ -177,7 +177,7 @@
           "type": "number"
         },
         "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "boolean"
         },
         "font": {
@@ -352,11 +352,11 @@
           "type": "boolean"
         },
         "format": {
-          "description": "The formatting pattern for labels. This is D3's [number format pattern](https://github.com/d3/d3-format#locale_format) for quantitative fields and D3's [time format pattern](https://github.com/d3/d3-time-format#locale_format) for time field.\n\nSee the [format documentation](format.html) for more information.\n\n__Default value:__  derived from [numberFormat](config.html#format) config for quantitative fields and from [timeFormat](config.html#format) config for temporal fields.",
+          "description": "The formatting pattern for labels. This is D3's [number format pattern](https://github.com/d3/d3-format#locale_format) for quantitative fields and D3's [time format pattern](https://github.com/d3/d3-time-format#locale_format) for time field.\n\nSee the [format documentation](https://vega.github.io/vega-lite/docs/format.html) for more information.\n\n__Default value:__  derived from [numberFormat](https://vega.github.io/vega-lite/docs/config.html#format) config for quantitative fields and from [timeFormat](https://vega.github.io/vega-lite/docs/config.html#format) config for temporal fields.",
           "type": "string"
         },
         "grid": {
-          "description": "A boolean flag indicating if grid lines should be included as part of the axis\n\n__Default value:__ `true` for [continuous scales](scale.html#continuous) that are not binned; otherwise, `false`.",
+          "description": "A boolean flag indicating if grid lines should be included as part of the axis\n\n__Default value:__ `true` for [continuous scales](https://vega.github.io/vega-lite/docs/scale.html#continuous) that are not binned; otherwise, `false`.",
           "type": "boolean"
         },
         "labelAngle": {
@@ -416,7 +416,7 @@
           "type": "number"
         },
         "offset": {
-          "description": "The offset, in pixels, by which to displace the axis from the edge of the enclosing group or data rectangle.\n\n__Default value:__ derived from the [axis config](config.html#facet-scale-config)'s `offset` (`0` by default)",
+          "description": "The offset, in pixels, by which to displace the axis from the edge of the enclosing group or data rectangle.\n\n__Default value:__ derived from the [axis config](https://vega.github.io/vega-lite/docs/config.html#facet-scale-config)'s `offset` (`0` by default)",
           "type": "number"
         },
         "orient": {
@@ -441,7 +441,7 @@
           "type": "boolean"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -500,7 +500,7 @@
           "type": "number"
         },
         "grid": {
-          "description": "A boolean flag indicating if grid lines should be included as part of the axis\n\n__Default value:__ `true` for [continuous scales](scale.html#continuous) that are not binned; otherwise, `false`.",
+          "description": "A boolean flag indicating if grid lines should be included as part of the axis\n\n__Default value:__ `true` for [continuous scales](https://vega.github.io/vega-lite/docs/scale.html#continuous) that are not binned; otherwise, `false`.",
           "type": "boolean"
         },
         "gridColor": {
@@ -720,7 +720,7 @@
           "type": "number"
         },
         "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "string"
         },
         "continuousBandSize": {
@@ -794,7 +794,7 @@
           "type": "number"
         },
         "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "boolean"
         },
         "font": {
@@ -1131,7 +1131,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -1139,7 +1139,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -1211,7 +1211,7 @@
               "$ref": "#/definitions/SortOrder"
             },
             {
-              "$ref": "#/definitions/SortField"
+              "$ref": "#/definitions/EncodingSortField"
             },
             {
               "type": "null"
@@ -1227,7 +1227,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -1235,7 +1235,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -1285,7 +1285,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -1293,7 +1293,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -1361,7 +1361,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -1369,7 +1369,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -1445,7 +1445,7 @@
               "$ref": "#/definitions/SortOrder"
             },
             {
-              "$ref": "#/definitions/SortField"
+              "$ref": "#/definitions/EncodingSortField"
             },
             {
               "type": "null"
@@ -1458,7 +1458,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -1466,7 +1466,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -1517,7 +1517,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -1525,7 +1525,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -1576,7 +1576,7 @@
         },
         "axis": {
           "$ref": "#/definitions/AxisConfig",
-          "description": "Axis configuration, which determines default properties for all `x` and `y` [axes](axis.html). For a full list of axis configuration options, please see the [corresponding section of the axis documentation](axis.html#config)."
+          "description": "Axis configuration, which determines default properties for all `x` and `y` [axes](https://vega.github.io/vega-lite/docs/axis.html). For a full list of axis configuration options, please see the [corresponding section of the axis documentation](https://vega.github.io/vega-lite/docs/axis.html#config)."
         },
         "axisBand": {
           "$ref": "#/definitions/VgAxisConfig",
@@ -1652,7 +1652,7 @@
         },
         "legend": {
           "$ref": "#/definitions/LegendConfig",
-          "description": "Legend configuration, which determines default properties for all [legends](legend.html). For a full list of legend configuration options, please see the [corresponding section of in the legend documentation](legend.html#config)."
+          "description": "Legend configuration, which determines default properties for all [legends](https://vega.github.io/vega-lite/docs/legend.html). For a full list of legend configuration options, please see the [corresponding section of in the legend documentation](https://vega.github.io/vega-lite/docs/legend.html#config)."
         },
         "line": {
           "$ref": "#/definitions/LineConfig",
@@ -1676,11 +1676,11 @@
         },
         "projection": {
           "$ref": "#/definitions/ProjectionConfig",
-          "description": "Projection configuration, which determines default properties for all [projections](projection.html). For a full list of projection configuration options, please see the [corresponding section of the projection documentation](projection.html#config)."
+          "description": "Projection configuration, which determines default properties for all [projections](https://vega.github.io/vega-lite/docs/projection.html). For a full list of projection configuration options, please see the [corresponding section of the projection documentation](https://vega.github.io/vega-lite/docs/projection.html#config)."
         },
         "range": {
           "$ref": "#/definitions/RangeConfig",
-          "description": "An object hash that defines default range arrays or schemes for using with scales.\nFor a full list of scale range configuration options, please see the [corresponding section of the scale documentation](scale.html#config)."
+          "description": "An object hash that defines default range arrays or schemes for using with scales.\nFor a full list of scale range configuration options, please see the [corresponding section of the scale documentation](https://vega.github.io/vega-lite/docs/scale.html#config)."
         },
         "rect": {
           "$ref": "#/definitions/MarkConfig",
@@ -1692,7 +1692,7 @@
         },
         "scale": {
           "$ref": "#/definitions/ScaleConfig",
-          "description": "Scale configuration determines default properties for all [scales](scale.html). For a full list of scale configuration options, please see the [corresponding section of the scale documentation](scale.html#config)."
+          "description": "Scale configuration determines default properties for all [scales](https://vega.github.io/vega-lite/docs/scale.html). For a full list of scale configuration options, please see the [corresponding section of the scale documentation](https://vega.github.io/vega-lite/docs/scale.html#config)."
         },
         "selection": {
           "$ref": "#/definitions/SelectionConfig",
@@ -1708,7 +1708,7 @@
         },
         "style": {
           "$ref": "#/definitions/StyleConfigIndex",
-          "description": "An object hash that defines key-value mappings to determine default properties for marks with a given [style](mark.html#mark-def).  The keys represent styles names; the values have to be valid [mark configuration objects](mark.html#config).  "
+          "description": "An object hash that defines key-value mappings to determine default properties for marks with a given [style](https://vega.github.io/vega-lite/docs/mark.html#mark-def).  The keys represent styles names; the values have to be valid [mark configuration objects](https://vega.github.io/vega-lite/docs/mark.html#config).  "
         },
         "text": {
           "$ref": "#/definitions/TextConfig",
@@ -1719,12 +1719,12 @@
           "description": "Tick-Specific Config "
         },
         "timeFormat": {
-          "description": "Default datetime format for axis and legend labels. The format can be set directly on each axis and legend. Use [D3's time format pattern](https://github.com/d3/d3-time-format#locale_format).\n\n__Default value:__ `'%b %d, %Y'`.",
+          "description": "Default datetime format for axis and legend labels. The format can be set directly on each axis and legend. Use [D3's time format pattern](https://github.com/d3/d3-time-format#locale_format).\n\n__Default value:__ `''` (The format will be automatically determined).",
           "type": "string"
         },
         "title": {
           "$ref": "#/definitions/VgTitleConfig",
-          "description": "Title configuration, which determines default properties for all [titles](title.html). For a full list of title configuration options, please see the [corresponding section of the title documentation](title.html#config)."
+          "description": "Title configuration, which determines default properties for all [titles](https://vega.github.io/vega-lite/docs/title.html). For a full list of title configuration options, please see the [corresponding section of the title documentation](https://vega.github.io/vega-lite/docs/title.html#config)."
         },
         "trail": {
           "$ref": "#/definitions/LineConfig",
@@ -1732,7 +1732,7 @@
         },
         "view": {
           "$ref": "#/definitions/ViewConfig",
-          "description": "Default properties for [single view plots](spec.html#single). "
+          "description": "Default properties for [single view plots](https://vega.github.io/vega-lite/docs/spec.html#single). "
         }
       },
       "type": "object"
@@ -1749,13 +1749,16 @@
               "type": "string"
             },
             {
-              "type": "object"
+              "$ref": "#/definitions/Parse"
+            },
+            {
+              "type": "null"
             }
           ],
-          "description": "If set to auto (the default), perform automatic type inference to determine the desired data types.\nAlternatively, a parsing directive object can be provided for explicit data types. Each property of the object corresponds to a field name, and the value to the desired data type (one of `\"number\"`, `\"boolean\"` or `\"date\"`).\nFor example, `\"parse\": {\"modified_on\": \"date\"}` parses the `modified_on` field in each input record a Date value.\n\nFor `\"date\"`, we parse data based using Javascript's [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).\nFor Specific date formats can be provided (e.g., `{foo: 'date:\"%m%d%Y\"'}`), using the [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format parsing is supported similarly (e.g., `{foo: 'utc:\"%m%d%Y\"'}`). See more about [UTC time](timeunit.html#utc)"
+          "description": "If set to `\"auto\"` (the default), perform automatic type inference to determine the desired data types.\nIf set to `null`, disable type inference based on the spec and only use type inference based on the data.\nAlternatively, a parsing directive object can be provided for explicit data types. Each property of the object corresponds to a field name, and the value to the desired data type (one of `\"number\"`, `\"boolean\"`, `\"date\"`, or null (do not parse the field)).\nFor example, `\"parse\": {\"modified_on\": \"date\"}` parses the `modified_on` field in each input record a Date value.\n\nFor `\"date\"`, we parse data based using Javascript's [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).\nFor Specific date formats can be provided (e.g., `{foo: 'date:\"%m%d%Y\"'}`), using the [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format parsing is supported similarly (e.g., `{foo: 'utc:\"%m%d%Y\"'}`). See more about [UTC time](https://vega.github.io/vega-lite/docs/timeunit.html#utc)"
         },
         "type": {
-          "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`.\nThe default format type is determined by the extension of the file URL.\nIf no extension is detected, `\"json\"` will be used by default.",
+          "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`, `\"dsv\"`.\nThe default format type is determined by the extension of the file URL.\nIf no extension is detected, `\"json\"` will be used by default.",
           "enum": [
             "csv",
             "tsv"
@@ -1782,6 +1785,9 @@
       "anyOf": [
         {
           "$ref": "#/definitions/CsvDataFormat"
+        },
+        {
+          "$ref": "#/definitions/DsvDataFormat"
         },
         {
           "$ref": "#/definitions/JsonDataFormat"
@@ -1878,6 +1884,45 @@
       },
       "type": "object"
     },
+    "DsvDataFormat": {
+      "additionalProperties": false,
+      "properties": {
+        "delimiter": {
+          "description": "The delimiter between records. The delimiter must be a single character (i.e., a single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are not.",
+          "maxLength": 1,
+          "minLength": 1,
+          "type": "string"
+        },
+        "parse": {
+          "anyOf": [
+            {
+              "enum": [
+                "auto"
+              ],
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/Parse"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to `\"auto\"` (the default), perform automatic type inference to determine the desired data types.\nIf set to `null`, disable type inference based on the spec and only use type inference based on the data.\nAlternatively, a parsing directive object can be provided for explicit data types. Each property of the object corresponds to a field name, and the value to the desired data type (one of `\"number\"`, `\"boolean\"`, `\"date\"`, or null (do not parse the field)).\nFor example, `\"parse\": {\"modified_on\": \"date\"}` parses the `modified_on` field in each input record a Date value.\n\nFor `\"date\"`, we parse data based using Javascript's [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).\nFor Specific date formats can be provided (e.g., `{foo: 'date:\"%m%d%Y\"'}`), using the [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format parsing is supported similarly (e.g., `{foo: 'utc:\"%m%d%Y\"'}`). See more about [UTC time](https://vega.github.io/vega-lite/docs/timeunit.html#utc)"
+        },
+        "type": {
+          "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`, `\"dsv\"`.\nThe default format type is determined by the extension of the file URL.\nIf no extension is detected, `\"json\"` will be used by default.",
+          "enum": [
+            "dsv"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "delimiter"
+      ],
+      "type": "object"
+    },
     "Encoding": {
       "additionalProperties": false,
       "properties": {
@@ -1890,7 +1935,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.  If either `fill` or `stroke` channel is specified, `color` channel will be ignored.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
+          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.  If either `fill` or `stroke` channel is specified, `color` channel will be ignored.\n2) See the scale documentation for more information about customizing [color scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme)."
         },
         "detail": {
           "anyOf": [
@@ -1915,7 +1960,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `fill` channel, `color ` channel will be ignored. To customize both fill and stroke, please use `fill` and `stroke` channels (not `fill` and `color`)."
+          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `color` property.\n\n_Note:_ When using `fill` channel, `color ` channel will be ignored. To customize both fill and stroke, please use `fill` and `stroke` channels (not `fill` and `color`)."
         },
         "href": {
           "anyOf": [
@@ -1957,7 +2002,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Opacity of the marks – either can be a value or a range.\n\n__Default value:__ If undefined, the default opacity depends on [mark config](config.html#mark)'s `opacity` property."
+          "description": "Opacity of the marks – either can be a value or a range.\n\n__Default value:__ If undefined, the default opacity depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `opacity` property."
         },
         "order": {
           "anyOf": [
@@ -1985,7 +2030,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "For `point` marks the supported values are\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\nor `\"triangle-down\"`, or else a custom SVG path string.\nFor `geoshape` marks it should be a field definition of the geojson data\n\n__Default value:__ If undefined, the default shape depends on [mark config](config.html#point-config)'s `shape` property."
+          "description": "For `point` marks the supported values are\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\nor `\"triangle-down\"`, or else a custom SVG path string.\nFor `geoshape` marks it should be a field definition of the geojson data\n\n__Default value:__ If undefined, the default shape depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#point-config)'s `shape` property."
         },
         "size": {
           "anyOf": [
@@ -2007,7 +2052,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `stroke` channel, `color ` channel will be ignored. To customize both stroke and fill, please use `stroke` and `fill` channels (not `stroke` and `color`)."
+          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `color` property.\n\n_Note:_ When using `stroke` channel, `color ` channel will be ignored. To customize both stroke and fill, please use `stroke` and `fill` channels (not `stroke` and `color`)."
         },
         "text": {
           "anyOf": [
@@ -2084,6 +2129,35 @@
       },
       "type": "object"
     },
+    "EncodingSortField": {
+      "additionalProperties": false,
+      "description": "A sort definition for sorting a discrete scale in an encoding field definition.",
+      "properties": {
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/RepeatRef"
+            }
+          ],
+          "description": "The data [field](https://vega.github.io/vega-lite/docs/field.html) to sort by.\n\n__Default value:__ If unspecified, defaults to the field specified in the outer data reference."
+        },
+        "op": {
+          "$ref": "#/definitions/AggregateOp",
+          "description": "An [aggregate operation](https://vega.github.io/vega-lite/docs/aggregate.html#ops) to perform on the field prior to sorting (e.g., `\"count\"`, `\"mean\"` and `\"median\"`).\nThis property is required in cases where the sort field and the data reference field do not match.\nThe input data objects will be aggregated, grouped by the encoded data field.\n\nFor a full list of operations, please see the documentation for [aggregate](https://vega.github.io/vega-lite/docs/aggregate.html#ops)."
+        },
+        "order": {
+          "$ref": "#/definitions/SortOrder",
+          "description": "The sort order. One of `\"ascending\"` (default), `\"descending\"`, or `null` (no not sort)."
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "type": "object"
+    },
     "EncodingWithFacet": {
       "additionalProperties": false,
       "properties": {
@@ -2096,7 +2170,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.  If either `fill` or `stroke` channel is specified, `color` channel will be ignored.\n2) See the scale documentation for more information about customizing [color scheme](scale.html#scheme)."
+          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition.\nBy default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`,\n`\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `color` property.\n\n_Note:_\n1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.  If either `fill` or `stroke` channel is specified, `color` channel will be ignored.\n2) See the scale documentation for more information about customizing [color scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme)."
         },
         "column": {
           "$ref": "#/definitions/FacetFieldDef",
@@ -2125,7 +2199,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `fill` channel, `color ` channel will be ignored. To customize both fill and stroke, please use `fill` and `stroke` channels (not `fill` and `color`)."
+          "description": "Fill color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `color` property.\n\n_Note:_ When using `fill` channel, `color ` channel will be ignored. To customize both fill and stroke, please use `fill` and `stroke` channels (not `fill` and `color`)."
         },
         "href": {
           "anyOf": [
@@ -2167,7 +2241,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Opacity of the marks – either can be a value or a range.\n\n__Default value:__ If undefined, the default opacity depends on [mark config](config.html#mark)'s `opacity` property."
+          "description": "Opacity of the marks – either can be a value or a range.\n\n__Default value:__ If undefined, the default opacity depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `opacity` property."
         },
         "order": {
           "anyOf": [
@@ -2199,7 +2273,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "For `point` marks the supported values are\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\nor `\"triangle-down\"`, or else a custom SVG path string.\nFor `geoshape` marks it should be a field definition of the geojson data\n\n__Default value:__ If undefined, the default shape depends on [mark config](config.html#point-config)'s `shape` property."
+          "description": "For `point` marks the supported values are\n`\"circle\"` (default), `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`,\nor `\"triangle-down\"`, or else a custom SVG path string.\nFor `geoshape` marks it should be a field definition of the geojson data\n\n__Default value:__ If undefined, the default shape depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#point-config)'s `shape` property."
         },
         "size": {
           "anyOf": [
@@ -2221,7 +2295,7 @@
               "$ref": "#/definitions/MarkPropValueDefWithCondition"
             }
           ],
-          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](config.html#mark)'s `color` property.\n\n_Note:_ When using `stroke` channel, `color ` channel will be ignored. To customize both stroke and fill, please use `stroke` and `fill` channels (not `stroke` and `color`)."
+          "description": "Stroke color of the marks.\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark)'s `color` property.\n\n_Note:_ When using `stroke` channel, `color ` channel will be ignored. To customize both stroke and fill, please use `stroke` and `fill` channels (not `stroke` and `color`)."
         },
         "text": {
           "anyOf": [
@@ -2414,7 +2488,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -2422,7 +2496,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -2479,7 +2553,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -2487,7 +2561,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -2544,7 +2618,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -2552,7 +2626,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -2638,7 +2712,7 @@
               "$ref": "#/definitions/SortOrder"
             },
             {
-              "$ref": "#/definitions/SortField"
+              "$ref": "#/definitions/EncodingSortField"
             },
             {
               "type": "null"
@@ -2651,7 +2725,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -2659,7 +2733,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -2720,7 +2794,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -2728,7 +2802,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -2766,8 +2840,136 @@
         }
       },
       "required": [
+        "equal",
+        "field"
+      ],
+      "type": "object"
+    },
+    "FieldGTEPredicate": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "Field to be filtered.",
+          "type": "string"
+        },
+        "gte": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/definitions/DateTime"
+            }
+          ],
+          "description": "The value that the field should be greater than or equals to."
+        },
+        "timeUnit": {
+          "$ref": "#/definitions/TimeUnit",
+          "description": "Time unit for the field to be filtered."
+        }
+      },
+      "required": [
         "field",
-        "equal"
+        "gte"
+      ],
+      "type": "object"
+    },
+    "FieldGTPredicate": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "Field to be filtered.",
+          "type": "string"
+        },
+        "gt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/definitions/DateTime"
+            }
+          ],
+          "description": "The value that the field should be greater than."
+        },
+        "timeUnit": {
+          "$ref": "#/definitions/TimeUnit",
+          "description": "Time unit for the field to be filtered."
+        }
+      },
+      "required": [
+        "field",
+        "gt"
+      ],
+      "type": "object"
+    },
+    "FieldLTEPredicate": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "Field to be filtered.",
+          "type": "string"
+        },
+        "lte": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/definitions/DateTime"
+            }
+          ],
+          "description": "The value that the field should be less than or equals to."
+        },
+        "timeUnit": {
+          "$ref": "#/definitions/TimeUnit",
+          "description": "Time unit for the field to be filtered."
+        }
+      },
+      "required": [
+        "field",
+        "lte"
+      ],
+      "type": "object"
+    },
+    "FieldLTPredicate": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "Field to be filtered.",
+          "type": "string"
+        },
+        "lt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/definitions/DateTime"
+            }
+          ],
+          "description": "The value that the field should be less than."
+        },
+        "timeUnit": {
+          "$ref": "#/definitions/TimeUnit",
+          "description": "Time unit for the field to be filtered."
+        }
+      },
+      "required": [
+        "field",
+        "lt"
       ],
       "type": "object"
     },
@@ -2775,7 +2977,7 @@
       "additionalProperties": false,
       "properties": {
         "field": {
-          "description": "Field to be filtered",
+          "description": "Field to be filtered.",
           "type": "string"
         },
         "oneOf": {
@@ -2809,7 +3011,7 @@
         },
         "timeUnit": {
           "$ref": "#/definitions/TimeUnit",
-          "description": "time unit for the field to be filtered."
+          "description": "Time unit for the field to be filtered."
         }
       },
       "required": [
@@ -2822,7 +3024,7 @@
       "additionalProperties": false,
       "properties": {
         "field": {
-          "description": "Field to be filtered",
+          "description": "Field to be filtered.",
           "type": "string"
         },
         "range": {
@@ -2846,7 +3048,7 @@
         },
         "timeUnit": {
           "$ref": "#/definitions/TimeUnit",
-          "description": "time unit for the field to be filtered."
+          "description": "Time unit for the field to be filtered."
         }
       },
       "required": [
@@ -2860,7 +3062,7 @@
       "properties": {
         "filter": {
           "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "The `filter` property must be one of the predicate definitions:\n(1) an [expression](https://vega.github.io/vega-lite/docs/types.html#expression) string,\nwhere `datum` can be used to refer to the current data object;\n(2) one of the field predicates: [equal predicate](https://vega.github.io/vega-lite/docs/filter.html#equal-predicate);\n[range predicate](filter.html#range-predicate), [one-of predicate](https://vega.github.io/vega-lite/docs/filter.html#one-of-predicate);\n(3) a [selection predicate](https://vega.github.io/vega-lite/docs/filter.html#selection-predicate);\nor (4) a logical operand that combines (1), (2), or (3)."
+          "description": "The `filter` property must be one of the predicate definitions:\n\n1) an [expression](https://vega.github.io/vega-lite/docs/types.html#expression) string,\nwhere `datum` can be used to refer to the current data object\n\n2) one of the field predicates: [`equal`](https://vega.github.io/vega-lite/docs/filter.html#equal-predicate),\n[`lt`](https://vega.github.io/vega-lite/docs/filter.html#lt-predicate),\n[`lte`](https://vega.github.io/vega-lite/docs/filter.html#lte-predicate),\n[`gt`](https://vega.github.io/vega-lite/docs/filter.html#gt-predicate),\n[`gte`](https://vega.github.io/vega-lite/docs/filter.html#gte-predicate),\n[`range`](https://vega.github.io/vega-lite/docs/filter.html#range-predicate),\nor [`oneOf`](https://vega.github.io/vega-lite/docs/filter.html#one-of-predicate).\n\n3) a [selection predicate](https://vega.github.io/vega-lite/docs/filter.html#selection-predicate)\n\n4) a logical operand that combines (1), (2), or (3)."
         }
       },
       "required": [
@@ -3274,7 +3476,7 @@
       "description": "Headers of row / column channels for faceted plots.",
       "properties": {
         "format": {
-          "description": "The formatting pattern for labels. This is D3's [number format pattern](https://github.com/d3/d3-format#locale_format) for quantitative fields and D3's [time format pattern](https://github.com/d3/d3-time-format#locale_format) for time field.\n\nSee the [format documentation](format.html) for more information.\n\n__Default value:__  derived from [numberFormat](config.html#format) config for quantitative fields and from [timeFormat](config.html#format) config for temporal fields.",
+          "description": "The formatting pattern for labels. This is D3's [number format pattern](https://github.com/d3/d3-format#locale_format) for quantitative fields and D3's [time format pattern](https://github.com/d3/d3-time-format#locale_format) for time field.\n\nSee the [format documentation](https://vega.github.io/vega-lite/docs/format.html) for more information.\n\n__Default value:__  derived from [numberFormat](https://vega.github.io/vega-lite/docs/config.html#format) config for quantitative fields and from [timeFormat](https://vega.github.io/vega-lite/docs/config.html#format) config for temporal fields.",
           "type": "string"
         },
         "labelAngle": {
@@ -3284,7 +3486,7 @@
           "type": "number"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -3306,11 +3508,15 @@
       "properties": {
         "format": {
           "$ref": "#/definitions/DataFormat",
-          "description": "An object that specifies the format for parsing the data values."
+          "description": "An object that specifies the format for parsing the data."
+        },
+        "name": {
+          "description": "Provide a placeholder name and bind data at runtime.",
+          "type": "string"
         },
         "values": {
           "$ref": "#/definitions/InlineDataset",
-          "description": "The full data set, included inline. This can be an array of objects or primitive values or a string.\nArrays of primitive values are ingested as objects with a `data` property. Strings are parsed according to the specified format type."
+          "description": "The full data set, included inline. This can be an array of objects or primitive values, an object, or a string.\nArrays of primitive values are ingested as objects with a `data` property. Strings are parsed according to the specified format type."
         }
       },
       "required": [
@@ -3513,17 +3719,20 @@
               "type": "string"
             },
             {
-              "type": "object"
+              "$ref": "#/definitions/Parse"
+            },
+            {
+              "type": "null"
             }
           ],
-          "description": "If set to auto (the default), perform automatic type inference to determine the desired data types.\nAlternatively, a parsing directive object can be provided for explicit data types. Each property of the object corresponds to a field name, and the value to the desired data type (one of `\"number\"`, `\"boolean\"` or `\"date\"`).\nFor example, `\"parse\": {\"modified_on\": \"date\"}` parses the `modified_on` field in each input record a Date value.\n\nFor `\"date\"`, we parse data based using Javascript's [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).\nFor Specific date formats can be provided (e.g., `{foo: 'date:\"%m%d%Y\"'}`), using the [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format parsing is supported similarly (e.g., `{foo: 'utc:\"%m%d%Y\"'}`). See more about [UTC time](timeunit.html#utc)"
+          "description": "If set to `\"auto\"` (the default), perform automatic type inference to determine the desired data types.\nIf set to `null`, disable type inference based on the spec and only use type inference based on the data.\nAlternatively, a parsing directive object can be provided for explicit data types. Each property of the object corresponds to a field name, and the value to the desired data type (one of `\"number\"`, `\"boolean\"`, `\"date\"`, or null (do not parse the field)).\nFor example, `\"parse\": {\"modified_on\": \"date\"}` parses the `modified_on` field in each input record a Date value.\n\nFor `\"date\"`, we parse data based using Javascript's [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).\nFor Specific date formats can be provided (e.g., `{foo: 'date:\"%m%d%Y\"'}`), using the [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format parsing is supported similarly (e.g., `{foo: 'utc:\"%m%d%Y\"'}`). See more about [UTC time](https://vega.github.io/vega-lite/docs/timeunit.html#utc)"
         },
         "property": {
           "description": "The JSON property containing the desired data.\nThis parameter can be used when the loaded JSON file may have surrounding structure or meta-data.\nFor example `\"property\": \"values.features\"` is equivalent to retrieving `json.values.features`\nfrom the loaded JSON object.",
           "type": "string"
         },
         "type": {
-          "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`.\nThe default format type is determined by the extension of the file URL.\nIf no extension is detected, `\"json\"` will be used by default.",
+          "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`, `\"dsv\"`.\nThe default format type is determined by the extension of the file URL.\nIf no extension is detected, `\"json\"` will be used by default.",
           "enum": [
             "json"
           ],
@@ -3541,7 +3750,7 @@
           "type": "number"
         },
         "format": {
-          "description": "The formatting pattern for labels. This is D3's [number format pattern](https://github.com/d3/d3-format#locale_format) for quantitative fields and D3's [time format pattern](https://github.com/d3/d3-time-format#locale_format) for time field.\n\nSee the [format documentation](format.html) for more information.\n\n__Default value:__  derived from [numberFormat](config.html#format) config for quantitative fields and from [timeFormat](config.html#format) config for temporal fields.",
+          "description": "The formatting pattern for labels. This is D3's [number format pattern](https://github.com/d3/d3-format#locale_format) for quantitative fields and D3's [time format pattern](https://github.com/d3/d3-time-format#locale_format) for time field.\n\nSee the [format documentation](https://vega.github.io/vega-lite/docs/format.html) for more information.\n\n__Default value:__  derived from [numberFormat](https://vega.github.io/vega-lite/docs/config.html#format) config for quantitative fields and from [timeFormat](https://vega.github.io/vega-lite/docs/config.html#format) config for temporal fields.",
           "type": "string"
         },
         "offset": {
@@ -3561,7 +3770,7 @@
           "type": "number"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -3820,7 +4029,7 @@
           "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
         },
         "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "string"
         },
         "cursor": {
@@ -3884,7 +4093,7 @@
           "type": "number"
         },
         "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "boolean"
         },
         "font": {
@@ -4255,7 +4464,7 @@
           "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
         },
         "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "string"
         },
         "cursor": {
@@ -4319,7 +4528,7 @@
           "type": "number"
         },
         "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "boolean"
         },
         "font": {
@@ -4455,7 +4664,7 @@
           "type": "boolean"
         },
         "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "string"
         },
         "cursor": {
@@ -4519,7 +4728,7 @@
           "type": "number"
         },
         "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "boolean"
         },
         "font": {
@@ -4651,7 +4860,7 @@
               "type": "array"
             }
           ],
-          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name.  For example, a bar mark will have style `\"bar\"` by default.\n__Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
+          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](https://vega.github.io/vega-lite/docs/encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name.  For example, a bar mark will have style `\"bar\"` by default.\n__Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
@@ -4667,9 +4876,30 @@
           "description": "Polar coordinate angle, in radians, of the text label from the origin determined by the `x` and `y` properties. Values for `theta` follow the same convention of `arc` mark `startAngle` and `endAngle` properties: angles are measured in radians, with `0` indicating \"north\".",
           "type": "number"
         },
+        "thickness": {
+          "description": "Thickness of the tick mark.\n\n__Default value:__  `1`",
+          "minimum": 0,
+          "type": "number"
+        },
         "type": {
           "$ref": "#/definitions/Mark",
           "description": "The mark type.\nOne of `\"bar\"`, `\"circle\"`, `\"square\"`, `\"tick\"`, `\"line\"`,\n`\"area\"`, `\"point\"`, `\"geoshape\"`, `\"rule\"`, and `\"text\"`."
+        },
+        "x2Offset": {
+          "description": "Offset for x2-position.",
+          "type": "number"
+        },
+        "xOffset": {
+          "description": "Offset for x-position.",
+          "type": "number"
+        },
+        "y2Offset": {
+          "description": "Offset for y2-position.",
+          "type": "number"
+        },
+        "yOffset": {
+          "description": "Offset for y-position.",
+          "type": "number"
         }
       },
       "required": [
@@ -4708,7 +4938,7 @@
           "type": "array"
         },
         "nearest": {
-          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](nearest.html) documentation for more information.",
+          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](https://vega.github.io/vega-lite/docs/nearest.html) documentation for more information.",
           "type": "boolean"
         },
         "on": {
@@ -4720,7 +4950,7 @@
           "description": "With layered and multi-view displays, a strategy that determines how\nselections' data queries are resolved when applied in a filter transform,\nconditional encoding rule, or scale domain."
         },
         "toggle": {
-          "description": "Controls whether data values should be toggled or only ever inserted into\nmulti selections. Can be `true`, `false` (for insertion only), or a\n[Vega expression](https://vega.github.io/vega/docs/expressions/).\n\n__Default value:__ `true`, which corresponds to `event.shiftKey` (i.e.,\ndata values are toggled when a user interacts with the shift-key pressed).\n\nSee the [toggle transform](toggle.html) documentation for more information.",
+          "description": "Controls whether data values should be toggled or only ever inserted into\nmulti selections. Can be `true`, `false` (for insertion only), or a\n[Vega expression](https://vega.github.io/vega/docs/expressions/).\n\n__Default value:__ `true`, which corresponds to `event.shiftKey` (i.e.,\ndata values are toggled when a user interacts with the shift-key pressed).\n\nSee the [toggle transform](https://vega.github.io/vega-lite/docs/toggle.html) documentation for more information.",
           "type": [
             "string",
             "boolean"
@@ -4764,7 +4994,7 @@
           "type": "array"
         },
         "nearest": {
-          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](nearest.html) documentation for more information.",
+          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](https://vega.github.io/vega-lite/docs/nearest.html) documentation for more information.",
           "type": "boolean"
         },
         "on": {
@@ -4776,7 +5006,7 @@
           "description": "With layered and multi-view displays, a strategy that determines how\nselections' data queries are resolved when applied in a filter transform,\nconditional encoding rule, or scale domain."
         },
         "toggle": {
-          "description": "Controls whether data values should be toggled or only ever inserted into\nmulti selections. Can be `true`, `false` (for insertion only), or a\n[Vega expression](https://vega.github.io/vega/docs/expressions/).\n\n__Default value:__ `true`, which corresponds to `event.shiftKey` (i.e.,\ndata values are toggled when a user interacts with the shift-key pressed).\n\nSee the [toggle transform](toggle.html) documentation for more information.",
+          "description": "Controls whether data values should be toggled or only ever inserted into\nmulti selections. Can be `true`, `false` (for insertion only), or a\n[Vega expression](https://vega.github.io/vega/docs/expressions/).\n\n__Default value:__ `true`, which corresponds to `event.shiftKey` (i.e.,\ndata values are toggled when a user interacts with the shift-key pressed).\n\nSee the [toggle transform](https://vega.github.io/vega-lite/docs/toggle.html) documentation for more information.",
           "type": [
             "string",
             "boolean"
@@ -4862,7 +5092,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -4870,7 +5100,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -4910,6 +5140,43 @@
         }
       ],
       "minimum": 0
+    },
+    "Parse": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "enum": [
+              "string"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "boolean"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "date"
+            ],
+            "type": "string"
+          },
+          {
+            "enum": [
+              "number"
+            ],
+            "type": "string"
+          }
+        ]
+      },
+      "type": "object"
     },
     "PositionFieldDef": {
       "additionalProperties": false,
@@ -4974,7 +5241,7 @@
               "$ref": "#/definitions/SortOrder"
             },
             {
-              "$ref": "#/definitions/SortField"
+              "$ref": "#/definitions/EncodingSortField"
             },
             {
               "type": "null"
@@ -4998,7 +5265,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -5006,7 +5273,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -5024,6 +5291,18 @@
         },
         {
           "$ref": "#/definitions/FieldOneOfPredicate"
+        },
+        {
+          "$ref": "#/definitions/FieldLTPredicate"
+        },
+        {
+          "$ref": "#/definitions/FieldGTPredicate"
+        },
+        {
+          "$ref": "#/definitions/FieldLTEPredicate"
+        },
+        {
+          "$ref": "#/definitions/FieldGTEPredicate"
         },
         {
           "$ref": "#/definitions/SelectionPredicate"
@@ -5380,7 +5659,7 @@
           "type": "number"
         },
         "clamp": {
-          "description": "If `true`, values that exceed the data domain are clamped to either the minimum or maximum range value\n\n__Default value:__ derived from the [scale config](config.html#scale-config)'s `clamp` (`true` by default).",
+          "description": "If `true`, values that exceed the data domain are clamped to either the minimum or maximum range value\n\n__Default value:__ derived from the [scale config](https://vega.github.io/vega-lite/docs/config.html#scale-config)'s `clamp` (`true` by default).",
           "type": "boolean"
         },
         "domain": {
@@ -5419,7 +5698,7 @@
               "$ref": "#/definitions/SelectionDomain"
             }
           ],
-          "description": "Customized domain values.\n\nFor _quantitative_ fields, `domain` can take the form of a two-element array with minimum and maximum values.  [Piecewise scales](scale.html#piecewise) can be created by providing a `domain` with more than two entries.\nIf the input field is aggregated, `domain` can also be a string value `\"unaggregated\"`, indicating that the domain should include the raw data values prior to the aggregation.\n\nFor _temporal_ fields, `domain` can be a two-element array minimum and maximum values, in the form of either timestamps or the [DateTime definition objects](types.html#datetime).\n\nFor _ordinal_ and _nominal_ fields, `domain` can be an array that lists valid input values.\n\nThe `selection` property can be used to [interactively determine](selection.html#scale-domains) the scale domain."
+          "description": "Customized domain values.\n\nFor _quantitative_ fields, `domain` can take the form of a two-element array with minimum and maximum values.  [Piecewise scales](https://vega.github.io/vega-lite/docs/scale.html#piecewise) can be created by providing a `domain` with more than two entries.\nIf the input field is aggregated, `domain` can also be a string value `\"unaggregated\"`, indicating that the domain should include the raw data values prior to the aggregation.\n\nFor _temporal_ fields, `domain` can be a two-element array minimum and maximum values, in the form of either timestamps or the [DateTime definition objects](https://vega.github.io/vega-lite/docs/types.html#datetime).\n\nFor _ordinal_ and _nominal_ fields, `domain` can be an array that lists valid input values.\n\nThe `selection` property can be used to [interactively determine](https://vega.github.io/vega-lite/docs/selection.html#scale-domains) the scale domain."
         },
         "exponent": {
           "description": "The exponent of the `pow` scale.",
@@ -5467,18 +5746,18 @@
           "description": "Extending the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. Nicing is useful if the domain is computed from data and may be irregular. For example, for a domain of _[0.201479…, 0.996679…]_, a nice domain might be _[0.2, 1.0]_.\n\nFor quantitative scales such as linear, `nice` can be either a boolean flag or a number. If `nice` is a number, it will represent a desired tick count. This allows greater control over the step size used to extend the bounds, guaranteeing that the returned ticks will exactly cover the domain.\n\nFor temporal fields with time and utc scales, the `nice` value can be a string indicating the desired time interval. Legal values are `\"millisecond\"`, `\"second\"`, `\"minute\"`, `\"hour\"`, `\"day\"`, `\"week\"`, `\"month\"`, and `\"year\"`. Alternatively, `time` and `utc` scales can accept an object-valued interval specifier of the form `{\"interval\": \"month\", \"step\": 3}`, which includes a desired number of interval steps. Here, the domain would snap to quarter (Jan, Apr, Jul, Oct) boundaries.\n\n__Default value:__ `true` for unbinned _quantitative_ fields; `false` otherwise."
         },
         "padding": {
-          "description": "For _[continuous](scale.html#continuous)_ scales, expands the scale domain to accommodate the specified number of pixels on each of the scale range. The scale range must represent pixels for this parameter to function as intended. Padding adjustment is performed prior to all other adjustments, including the effects of the zero, nice, domainMin, and domainMax properties.\n\nFor _[band](scale.html#band)_ scales, shortcut for setting `paddingInner` and `paddingOuter` to the same value.\n\nFor _[point](scale.html#point)_ scales, alias for `paddingOuter`.\n\n__Default value:__ For _continuous_ scales, derived from the [scale config](scale.html#config)'s `continuousPadding`.\nFor _band and point_ scales, see `paddingInner` and `paddingOuter`.",
+          "description": "For _[continuous](https://vega.github.io/vega-lite/docs/scale.html#continuous)_ scales, expands the scale domain to accommodate the specified number of pixels on each of the scale range. The scale range must represent pixels for this parameter to function as intended. Padding adjustment is performed prior to all other adjustments, including the effects of the zero, nice, domainMin, and domainMax properties.\n\nFor _[band](https://vega.github.io/vega-lite/docs/scale.html#band)_ scales, shortcut for setting `paddingInner` and `paddingOuter` to the same value.\n\nFor _[point](https://vega.github.io/vega-lite/docs/scale.html#point)_ scales, alias for `paddingOuter`.\n\n__Default value:__ For _continuous_ scales, derived from the [scale config](https://vega.github.io/vega-lite/docs/scale.html#config)'s `continuousPadding`.\nFor _band and point_ scales, see `paddingInner` and `paddingOuter`.",
           "minimum": 0,
           "type": "number"
         },
         "paddingInner": {
-          "description": "The inner padding (spacing) within each band step of band scales, as a fraction of the step size. This value must lie in the range [0,1].\n\nFor point scale, this property is invalid as point scales do not have internal band widths (only step sizes between bands).\n\n__Default value:__ derived from the [scale config](scale.html#config)'s `bandPaddingInner`.",
+          "description": "The inner padding (spacing) within each band step of band scales, as a fraction of the step size. This value must lie in the range [0,1].\n\nFor point scale, this property is invalid as point scales do not have internal band widths (only step sizes between bands).\n\n__Default value:__ derived from the [scale config](https://vega.github.io/vega-lite/docs/scale.html#config)'s `bandPaddingInner`.",
           "maximum": 1,
           "minimum": 0,
           "type": "number"
         },
         "paddingOuter": {
-          "description": "The outer padding (spacing) at the ends of the range of band and point scales,\nas a fraction of the step size. This value must lie in the range [0,1].\n\n__Default value:__ derived from the [scale config](scale.html#config)'s `bandPaddingOuter` for band scales and `pointPadding` for point scales.",
+          "description": "The outer padding (spacing) at the ends of the range of band and point scales,\nas a fraction of the step size. This value must lie in the range [0,1].\n\n__Default value:__ derived from the [scale config](https://vega.github.io/vega-lite/docs/scale.html#config)'s `bandPaddingOuter` for band scales and `pointPadding` for point scales.",
           "maximum": 1,
           "minimum": 0,
           "type": "number"
@@ -5501,10 +5780,10 @@
               "type": "string"
             }
           ],
-          "description": "The range of the scale. One of:\n\n- A string indicating a [pre-defined named scale range](scale.html#range-config) (e.g., example, `\"symbol\"`, or `\"diverging\"`).\n\n- For [continuous scales](scale.html#continuous), two-element array indicating  minimum and maximum values, or an array with more than two entries for specifying a [piecewise scale](scale.html#piecewise).\n\n- For [discrete](scale.html#discrete) and [discretizing](scale.html#discretizing) scales, an array of desired output values.\n\n__Notes:__\n\n1) For [sequential](scale.html#sequential), [ordinal](scale.html#ordinal), and discretizing color scales, you can also specify a color [`scheme`](scale.html#scheme) instead of `range`.\n\n2) Any directly specified `range` for `x` and `y` channels will be ignored. Range can be customized via the view's corresponding [size](size.html) (`width` and `height`) or via [range steps and paddings properties](#range-step) for [band](#band) and [point](#point) scales."
+          "description": "The range of the scale. One of:\n\n- A string indicating a [pre-defined named scale range](https://vega.github.io/vega-lite/docs/scale.html#range-config) (e.g., example, `\"symbol\"`, or `\"diverging\"`).\n\n- For [continuous scales](https://vega.github.io/vega-lite/docs/scale.html#continuous), two-element array indicating  minimum and maximum values, or an array with more than two entries for specifying a [piecewise scale](https://vega.github.io/vega-lite/docs/scale.html#piecewise).\n\n- For [discrete](https://vega.github.io/vega-lite/docs/scale.html#discrete) and [discretizing](https://vega.github.io/vega-lite/docs/scale.html#discretizing) scales, an array of desired output values.\n\n__Notes:__\n\n1) For [sequential](https://vega.github.io/vega-lite/docs/scale.html#sequential), [ordinal](https://vega.github.io/vega-lite/docs/scale.html#ordinal), and discretizing color scales, you can also specify a color [`scheme`](https://vega.github.io/vega-lite/docs/scale.html#scheme) instead of `range`.\n\n2) Any directly specified `range` for `x` and `y` channels will be ignored. Range can be customized via the view's corresponding [size](https://vega.github.io/vega-lite/docs/size.html) (`width` and `height`) or via [range steps and paddings properties](#range-step) for [band](#band) and [point](#point) scales."
         },
         "rangeStep": {
-          "description": "The distance between the starts of adjacent bands or points in [band](scale.html#band) and [point](scale.html#point) scales.\n\nIf `rangeStep` is `null` or if the view contains the scale's corresponding [size](size.html) (`width` for `x` scales and `height` for `y` scales), `rangeStep` will be automatically determined to fit the size of the view.\n\n__Default value:__  derived the [scale config](config.html#scale-config)'s `textXRangeStep` (`90` by default) for x-scales of `text` marks and `rangeStep` (`21` by default) for x-scales of other marks and y-scales.\n\n__Warning__: If `rangeStep` is `null` and the cardinality of the scale's domain is higher than `width` or `height`, the rangeStep might become less than one pixel and the mark might not appear correctly.",
+          "description": "The distance between the starts of adjacent bands or points in [band](https://vega.github.io/vega-lite/docs/scale.html#band) and [point](https://vega.github.io/vega-lite/docs/scale.html#point) scales.\n\nIf `rangeStep` is `null` or if the view contains the scale's corresponding [size](https://vega.github.io/vega-lite/docs/size.html) (`width` for `x` scales and `height` for `y` scales), `rangeStep` will be automatically determined to fit the size of the view.\n\n__Default value:__  derived the [scale config](https://vega.github.io/vega-lite/docs/config.html#scale-config)'s `textXRangeStep` (`90` by default) for x-scales of `text` marks and `rangeStep` (`21` by default) for x-scales of other marks and y-scales.\n\n__Warning__: If `rangeStep` is `null` and the cardinality of the scale's domain is higher than `width` or `height`, the rangeStep might become less than one pixel and the mark might not appear correctly.",
           "minimum": 0,
           "type": [
             "number",
@@ -5524,11 +5803,11 @@
               "$ref": "#/definitions/SchemeParams"
             }
           ],
-          "description": "A string indicating a color [scheme](scale.html#scheme) name (e.g., `\"category10\"` or `\"viridis\"`) or a [scheme parameter object](scale.html#scheme-params).\n\nDiscrete color schemes may be used with [discrete](scale.html#discrete) or [discretizing](scale.html#discretizing) scales. Continuous color schemes are intended for use with [sequential](scales.html#sequential) scales.\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference."
+          "description": "A string indicating a color [scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme) name (e.g., `\"category10\"` or `\"viridis\"`) or a [scheme parameter object](https://vega.github.io/vega-lite/docs/scale.html#scheme-params).\n\nDiscrete color schemes may be used with [discrete](https://vega.github.io/vega-lite/docs/scale.html#discrete) or [discretizing](https://vega.github.io/vega-lite/docs/scale.html#discretizing) scales. Continuous color schemes are intended for use with [sequential](https://vega.github.io/vega-lite/docs/scales.html#sequential) scales.\n\nFor the full list of supported schemes, please refer to the [Vega Scheme](https://vega.github.io/vega/docs/schemes/#reference) reference."
         },
         "type": {
           "$ref": "#/definitions/ScaleType",
-          "description": "The type of scale.  Vega-Lite supports the following categories of scale types:\n\n1) [**Continuous Scales**](scale.html#continuous) -- mapping continuous domains to continuous output ranges ([`\"linear\"`](scale.html#linear), [`\"pow\"`](scale.html#pow), [`\"sqrt\"`](scale.html#sqrt), [`\"log\"`](scale.html#log), [`\"time\"`](scale.html#time), [`\"utc\"`](scale.html#utc), [`\"sequential\"`](scale.html#sequential)).\n\n2) [**Discrete Scales**](scale.html#discrete) -- mapping discrete domains to discrete ([`\"ordinal\"`](scale.html#ordinal)) or continuous ([`\"band\"`](scale.html#band) and [`\"point\"`](scale.html#point)) output ranges.\n\n3) [**Discretizing Scales**](scale.html#discretizing) -- mapping continuous domains to discrete output ranges ([`\"bin-linear\"`](scale.html#bin-linear) and [`\"bin-ordinal\"`](scale.html#bin-ordinal)).\n\n__Default value:__ please see the [scale type table](scale.html#type)."
+          "description": "The type of scale.  Vega-Lite supports the following categories of scale types:\n\n1) [**Continuous Scales**](https://vega.github.io/vega-lite/docs/scale.html#continuous) -- mapping continuous domains to continuous output ranges ([`\"linear\"`](https://vega.github.io/vega-lite/docs/scale.html#linear), [`\"pow\"`](https://vega.github.io/vega-lite/docs/scale.html#pow), [`\"sqrt\"`](https://vega.github.io/vega-lite/docs/scale.html#sqrt), [`\"log\"`](https://vega.github.io/vega-lite/docs/scale.html#log), [`\"time\"`](https://vega.github.io/vega-lite/docs/scale.html#time), [`\"utc\"`](https://vega.github.io/vega-lite/docs/scale.html#utc), [`\"sequential\"`](https://vega.github.io/vega-lite/docs/scale.html#sequential)).\n\n2) [**Discrete Scales**](https://vega.github.io/vega-lite/docs/scale.html#discrete) -- mapping discrete domains to discrete ([`\"ordinal\"`](https://vega.github.io/vega-lite/docs/scale.html#ordinal)) or continuous ([`\"band\"`](https://vega.github.io/vega-lite/docs/scale.html#band) and [`\"point\"`](https://vega.github.io/vega-lite/docs/scale.html#point)) output ranges.\n\n3) [**Discretizing Scales**](https://vega.github.io/vega-lite/docs/scale.html#discretizing) -- mapping continuous domains to discrete output ranges ([`\"bin-linear\"`](https://vega.github.io/vega-lite/docs/scale.html#bin-linear) and [`\"bin-ordinal\"`](https://vega.github.io/vega-lite/docs/scale.html#bin-ordinal)).\n\n__Default value:__ please see the [scale type table](https://vega.github.io/vega-lite/docs/scale.html#type)."
         },
         "zero": {
           "description": "If `true`, ensures that a zero baseline value is included in the scale domain.\n\n__Default value:__ `true` for x and y channels if the quantitative field is not binned and no custom `domain` is provided; `false` otherwise.\n\n__Note:__ Log, time, and utc scales do not support `zero`.",
@@ -5748,15 +6027,15 @@
       "properties": {
         "interval": {
           "$ref": "#/definitions/IntervalSelectionConfig",
-          "description": "The default definition for an [`interval`](selection.html#type) selection. All properties and transformations\nfor an interval selection definition (except `type`) may be specified here.\n\nFor instance, setting `interval` to `{\"translate\": false}` disables the ability to move\ninterval selections by default."
+          "description": "The default definition for an [`interval`](https://vega.github.io/vega-lite/docs/selection.html#type) selection. All properties and transformations\nfor an interval selection definition (except `type`) may be specified here.\n\nFor instance, setting `interval` to `{\"translate\": false}` disables the ability to move\ninterval selections by default."
         },
         "multi": {
           "$ref": "#/definitions/MultiSelectionConfig",
-          "description": "The default definition for a [`multi`](selection.html#type) selection. All properties and transformations\nfor a multi selection definition (except `type`) may be specified here.\n\nFor instance, setting `multi` to `{\"toggle\": \"event.altKey\"}` adds additional values to\nmulti selections when clicking with the alt-key pressed by default."
+          "description": "The default definition for a [`multi`](https://vega.github.io/vega-lite/docs/selection.html#type) selection. All properties and transformations\nfor a multi selection definition (except `type`) may be specified here.\n\nFor instance, setting `multi` to `{\"toggle\": \"event.altKey\"}` adds additional values to\nmulti selections when clicking with the alt-key pressed by default."
         },
         "single": {
           "$ref": "#/definitions/SingleSelectionConfig",
-          "description": "The default definition for a [`single`](selection.html#type) selection. All properties and transformations\n  for a single selection definition (except `type`) may be specified here.\n\nFor instance, setting `single` to `{\"on\": \"dblclick\"}` populates single selections on double-click by default."
+          "description": "The default definition for a [`single`](https://vega.github.io/vega-lite/docs/selection.html#type) selection. All properties and transformations\n  for a single selection definition (except `type`) may be specified here.\n\nFor instance, setting `single` to `{\"on\": \"dblclick\"}` populates single selections on double-click by default."
         }
       },
       "type": "object"
@@ -5780,7 +6059,7 @@
           "additionalProperties": false,
           "properties": {
             "field": {
-              "description": "The field name to extract selected values for, when a selection is [projected](project.html)\nover multiple fields or encodings.",
+              "description": "The field name to extract selected values for, when a selection is [projected](https://vega.github.io/vega-lite/docs/project.html)\nover multiple fields or encodings.",
               "type": "string"
             },
             "selection": {
@@ -5797,7 +6076,7 @@
           "additionalProperties": false,
           "properties": {
             "encoding": {
-              "description": "The encoding channel to extract selected values for, when a selection is [projected](project.html)\nover multiple fields or encodings.",
+              "description": "The encoding channel to extract selected values for, when a selection is [projected](https://vega.github.io/vega-lite/docs/project.html)\nover multiple fields or encodings.",
               "type": "string"
             },
             "selection": {
@@ -5873,7 +6152,7 @@
               "type": "object"
             }
           ],
-          "description": "Establish a two-way binding between a single selection and input elements\n(also known as dynamic query widgets). A binding takes the form of\nVega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\nSee the [bind transform](bind.html) documentation for more information."
+          "description": "Establish a two-way binding between a single selection and input elements\n(also known as dynamic query widgets). A binding takes the form of\nVega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\nSee the [bind transform](https://vega.github.io/vega-lite/docs/bind.html) documentation for more information."
         },
         "empty": {
           "description": "By default, all data values are considered to lie within an empty selection.\nWhen set to `none`, empty selections contain no data values.",
@@ -5898,7 +6177,7 @@
           "type": "array"
         },
         "nearest": {
-          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](nearest.html) documentation for more information.",
+          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](https://vega.github.io/vega-lite/docs/nearest.html) documentation for more information.",
           "type": "boolean"
         },
         "on": {
@@ -5936,7 +6215,7 @@
               "type": "object"
             }
           ],
-          "description": "Establish a two-way binding between a single selection and input elements\n(also known as dynamic query widgets). A binding takes the form of\nVega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\nSee the [bind transform](bind.html) documentation for more information."
+          "description": "Establish a two-way binding between a single selection and input elements\n(also known as dynamic query widgets). A binding takes the form of\nVega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\nSee the [bind transform](https://vega.github.io/vega-lite/docs/bind.html) documentation for more information."
         },
         "empty": {
           "description": "By default, all data values are considered to lie within an empty selection.\nWhen set to `none`, empty selections contain no data values.",
@@ -5961,7 +6240,7 @@
           "type": "array"
         },
         "nearest": {
-          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](nearest.html) documentation for more information.",
+          "description": "When true, an invisible voronoi diagram is computed to accelerate discrete\nselection. The data value _nearest_ the mouse cursor is added to the selection.\n\nSee the [nearest transform](https://vega.github.io/vega-lite/docs/nearest.html) documentation for more information.",
           "type": "boolean"
         },
         "on": {
@@ -5987,29 +6266,19 @@
     },
     "SortField": {
       "additionalProperties": false,
+      "description": "A sort definition for transform",
       "properties": {
         "field": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "$ref": "#/definitions/RepeatRef"
-            }
-          ],
-          "description": "The data [field](field.html) to sort by.\n\n__Default value:__ If unspecified, defaults to the field specified in the outer data reference."
-        },
-        "op": {
-          "$ref": "#/definitions/AggregateOp",
-          "description": "An [aggregate operation](aggregate.html#ops) to perform on the field prior to sorting (e.g., `\"count\"`, `\"mean\"` and `\"median\"`).\nThis property is required in cases where the sort field and the data reference field do not match.\nThe input data objects will be aggregated, grouped by the encoded data field.\n\nFor a full list of operations, please see the documentation for [aggregate](aggregate.html#ops)."
+          "description": "The name of the field to sort.",
+          "type": "string"
         },
         "order": {
-          "$ref": "#/definitions/SortOrder",
-          "description": "The sort order. One of `\"ascending\"` (default), `\"descending\"`, or `null` (no not sort)."
+          "$ref": "#/definitions/VgComparatorOrder",
+          "description": "Whether to sort the field in ascending or descending order."
         }
       },
       "required": [
-        "op"
+        "field"
       ],
       "type": "object"
     },
@@ -6055,7 +6324,7 @@
           "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
         },
         "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "string"
         },
         "cursor": {
@@ -6119,7 +6388,7 @@
           "type": "number"
         },
         "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "boolean"
         },
         "font": {
@@ -6270,7 +6539,7 @@
           "description": "Time unit (e.g., `year`, `yearmonth`, `month`, `hours`) for a temporal field.\nor [a temporal field that gets casted as ordinal](https://vega.github.io/vega-lite/docs/type.html#cast).\n\n__Default value:__ `undefined` (None)"
         },
         "title": {
-          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](config.html) or [`fieldTitle` function via the `compile` function's options](compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
+          "description": "A title for the field. If `null`, the title will be removed.\n\n__Default value:__  derived from the field's name and transformation function (`aggregate`, `bin` and `timeUnit`).  If the field has an aggregate function, the function is displayed as part of the title (e.g., `\"Sum of Profit\"`). If the field is binned or has a time unit applied, the applied function is shown in parentheses (e.g., `\"Profit (binned)\"`, `\"Transaction Date (year-month)\"`).  Otherwise, the title is simply the field name.\n\n__Notes__:\n\n1) You can customize the default field title format by providing the [`fieldTitle` property in the [config](https://vega.github.io/vega-lite/docs/config.html) or [`fieldTitle` function via the `compile` function's options](https://vega.github.io/vega-lite/docs/compile.html#field-title).\n\n2) If both field definition's `title` and axis, header, or legend `title` are defined, axis/header/legend title will be used.",
           "type": [
             "string",
             "null"
@@ -6278,7 +6547,7 @@
         },
         "type": {
           "$ref": "#/definitions/Type",
-          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](geoshape.html)."
+          "description": "The encoded field's type of measurement (`\"quantitative\"`, `\"temporal\"`, `\"ordinal\"`, or `\"nominal\"`).\nIt can also be a `\"geojson\"` type for encoding ['geoshape'](https://vega.github.io/vega-lite/docs/geoshape.html)."
         }
       },
       "required": [
@@ -6309,7 +6578,7 @@
           "description": "The vertical alignment of the text. One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
         },
         "color": {
-          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Default color.  Note that `fill` and `stroke` have higher precedence than `color` and will override `color`.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "string"
         },
         "cursor": {
@@ -6373,7 +6642,7 @@
           "type": "number"
         },
         "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](mark.html#style-config).",
+          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `true` for all marks except `point` and `false` for `point`.\n\n__Applicable for:__ `bar`, `point`, `circle`, `square`, and `area` marks.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
           "type": "boolean"
         },
         "font": {
@@ -6534,7 +6803,7 @@
       "properties": {
         "anchor": {
           "$ref": "#/definitions/Anchor",
-          "description": "The anchor position for placing the title. One of `\"start\"`, `\"middle\"`, or `\"end\"`. For example, with an orientation of top these anchor positions map to a left-, center-, or right-aligned title.\n\n__Default value:__ `\"middle\"` for [single](spec.html) and [layered](layer.html) views.\n`\"start\"` for other composite views.\n\n__Note:__ [For now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only customizable only for [single](spec.html) and [layered](layer.html) views.  For other composite views, `anchor` is always `\"start\"`."
+          "description": "The anchor position for placing the title. One of `\"start\"`, `\"middle\"`, or `\"end\"`. For example, with an orientation of top these anchor positions map to a left-, center-, or right-aligned title.\n\n__Default value:__ `\"middle\"` for [single](https://vega.github.io/vega-lite/docs/spec.html) and [layered](https://vega.github.io/vega-lite/docs/layer.html) views.\n`\"start\"` for other composite views.\n\n__Note:__ [For now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only customizable only for [single](https://vega.github.io/vega-lite/docs/spec.html) and [layered](https://vega.github.io/vega-lite/docs/layer.html) views.  For other composite views, `anchor` is always `\"start\"`."
         },
         "offset": {
           "description": "The orthogonal offset in pixels by which to displace the title from its position along the edge of the chart.",
@@ -6556,7 +6825,7 @@
               "type": "array"
             }
           ],
-          "description": "A [mark style property](config.html#style) to apply to the title text mark.\n\n__Default value:__ `\"group-title\"`."
+          "description": "A [mark style property](https://vega.github.io/vega-lite/docs/config.html#style) to apply to the title text mark.\n\n__Default value:__ `\"group-title\"`."
         },
         "text": {
           "description": "The title text.",
@@ -7153,13 +7422,16 @@
               "type": "string"
             },
             {
-              "type": "object"
+              "$ref": "#/definitions/Parse"
+            },
+            {
+              "type": "null"
             }
           ],
-          "description": "If set to auto (the default), perform automatic type inference to determine the desired data types.\nAlternatively, a parsing directive object can be provided for explicit data types. Each property of the object corresponds to a field name, and the value to the desired data type (one of `\"number\"`, `\"boolean\"` or `\"date\"`).\nFor example, `\"parse\": {\"modified_on\": \"date\"}` parses the `modified_on` field in each input record a Date value.\n\nFor `\"date\"`, we parse data based using Javascript's [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).\nFor Specific date formats can be provided (e.g., `{foo: 'date:\"%m%d%Y\"'}`), using the [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format parsing is supported similarly (e.g., `{foo: 'utc:\"%m%d%Y\"'}`). See more about [UTC time](timeunit.html#utc)"
+          "description": "If set to `\"auto\"` (the default), perform automatic type inference to determine the desired data types.\nIf set to `null`, disable type inference based on the spec and only use type inference based on the data.\nAlternatively, a parsing directive object can be provided for explicit data types. Each property of the object corresponds to a field name, and the value to the desired data type (one of `\"number\"`, `\"boolean\"`, `\"date\"`, or null (do not parse the field)).\nFor example, `\"parse\": {\"modified_on\": \"date\"}` parses the `modified_on` field in each input record a Date value.\n\nFor `\"date\"`, we parse data based using Javascript's [`Date.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse).\nFor Specific date formats can be provided (e.g., `{foo: 'date:\"%m%d%Y\"'}`), using the [d3-time-format syntax](https://github.com/d3/d3-time-format#locale_format). UTC date format parsing is supported similarly (e.g., `{foo: 'utc:\"%m%d%Y\"'}`). See more about [UTC time](https://vega.github.io/vega-lite/docs/timeunit.html#utc)"
         },
         "type": {
-          "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`.\nThe default format type is determined by the extension of the file URL.\nIf no extension is detected, `\"json\"` will be used by default.",
+          "description": "Type of input data: `\"json\"`, `\"csv\"`, `\"tsv\"`, `\"dsv\"`.\nThe default format type is determined by the extension of the file URL.\nIf no extension is detected, `\"json\"` will be used by default.",
           "enum": [
             "topojson"
           ],
@@ -7209,7 +7481,11 @@
       "properties": {
         "format": {
           "$ref": "#/definitions/DataFormat",
-          "description": "An object that specifies the format for parsing the data file."
+          "description": "An object that specifies the format for parsing the data."
+        },
+        "name": {
+          "description": "Provide a placeholder name and bind data at runtime.",
+          "type": "string"
         },
         "url": {
           "description": "An URL from which to load the data set. Use the `format.type` property\nto ensure the loaded data is correctly parsed.",
@@ -7395,7 +7671,7 @@
           "type": "number"
         },
         "grid": {
-          "description": "A boolean flag indicating if grid lines should be included as part of the axis\n\n__Default value:__ `true` for [continuous scales](scale.html#continuous) that are not binned; otherwise, `false`.",
+          "description": "A boolean flag indicating if grid lines should be included as part of the axis\n\n__Default value:__ `true` for [continuous scales](https://vega.github.io/vega-lite/docs/scale.html#continuous) that are not binned; otherwise, `false`.",
           "type": "boolean"
         },
         "gridColor": {
@@ -7932,7 +8208,7 @@
       "properties": {
         "anchor": {
           "$ref": "#/definitions/Anchor",
-          "description": "The anchor position for placing the title. One of `\"start\"`, `\"middle\"`, or `\"end\"`. For example, with an orientation of top these anchor positions map to a left-, center-, or right-aligned title.\n\n__Default value:__ `\"middle\"` for [single](spec.html) and [layered](layer.html) views.\n`\"start\"` for other composite views.\n\n__Note:__ [For now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only customizable only for [single](spec.html) and [layered](layer.html) views.  For other composite views, `anchor` is always `\"start\"`."
+          "description": "The anchor position for placing the title. One of `\"start\"`, `\"middle\"`, or `\"end\"`. For example, with an orientation of top these anchor positions map to a left-, center-, or right-aligned title.\n\n__Default value:__ `\"middle\"` for [single](https://vega.github.io/vega-lite/docs/spec.html) and [layered](https://vega.github.io/vega-lite/docs/layer.html) views.\n`\"start\"` for other composite views.\n\n__Note:__ [For now](https://github.com/vega/vega-lite/issues/2875), `anchor` is only customizable only for [single](https://vega.github.io/vega-lite/docs/spec.html) and [layered](https://vega.github.io/vega-lite/docs/layer.html) views.  For other composite views, `anchor` is always `\"start\"`."
         },
         "angle": {
           "description": "Angle in degrees of title text.",
@@ -8073,24 +8349,6 @@
       ],
       "type": "string"
     },
-    "WindowSortField": {
-      "additionalProperties": false,
-      "description": "A compartor for fields within the window transform",
-      "properties": {
-        "field": {
-          "description": "The name of the field to sort.",
-          "type": "string"
-        },
-        "order": {
-          "$ref": "#/definitions/VgComparatorOrder",
-          "description": "Whether to sort the field in ascending or descending order."
-        }
-      },
-      "required": [
-        "field"
-      ],
-      "type": "object"
-    },
     "WindowTransform": {
       "additionalProperties": false,
       "properties": {
@@ -8116,9 +8374,9 @@
           "type": "boolean"
         },
         "sort": {
-          "description": "A comparator definition for sorting data objects within a window. If two data objects are considered equal by the comparator, they are considered “peer” values of equal rank. If sort is not specified, the order is undefined: data objects are processed in the order they are observed and none are considered peers (the ignorePeers parameter is ignored and treated as if set to `true`).",
+          "description": "A sort field definition for sorting data objects within a window. If two data objects are considered equal by the comparator, they are considered “peer” values of equal rank. If sort is not specified, the order is undefined: data objects are processed in the order they are observed and none are considered peers (the ignorePeers parameter is ignored and treated as if set to `true`).",
           "items": {
-            "$ref": "#/definitions/WindowSortField"
+            "$ref": "#/definitions/SortField"
           },
           "type": "array"
         },
