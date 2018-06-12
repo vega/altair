@@ -372,7 +372,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
         return self.save(fp, format=None, **kwargs)
 
-    def save(self, fp, format=None, override_data_transformer=True, **kwargs):
+    def save(self, fp, format=None, override_data_transformer=True,
+             scale_factor=1.0, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -388,6 +389,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             If True (default), then the save action will be done with the
             default data_transformer with max_rows set to None. If False,
             then use the currently active data transformer.
+        scale_factor : float
+            For svg or png formats, scale the image by this factor when saving.
+            This can be used to control the size or resolution of the output.
+            Default is 1.0
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
@@ -398,6 +403,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                     vegalite_version=VEGALITE_VERSION,
                     vega_version=VEGA_VERSION,
                     vegaembed_version=VEGAEMBED_VERSION,
+                    scale_factor=scale_factor,
                     **kwargs)
 
         # By default we override the data transformer. This makes it so
@@ -420,20 +426,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def __or__(self, other):
         return HConcatChart(hconcat=[self, other])
-
-    # Display-related methods
-
-    def _repr_mimebundle_(self, include, exclude):
-        """Return a MIME bundle for display in Jupyter frontends."""
-        # Catch errors explicitly to get around issues in Jupyter frontend
-        # see https://github.com/ipython/ipython/issues/11038
-        try:
-            dct = self.to_dict()
-        except Exception:
-            utils.display_traceback(in_ipython=True)
-            return {}
-        else:
-            return renderers.get()(dct)
 
     def repeat(self, row=Undefined, column=Undefined, **kwargs):
         """Return a RepeatChart built from the chart
@@ -465,6 +457,18 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         for key, val in kwargs.items():
             setattr(copy, key, val)
         return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selections to the chart"""
+        if not selections:
+            return self
+        else:
+            copy = self.copy(deep=True, ignore=['data'])
+            if copy.selection is Undefined:
+                copy.selection = SelectionMapping()
+            for selection in selections:
+                copy.selection += selection
+            return copy
 
     def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
@@ -807,23 +811,66 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             The data field to apply time unit.
         timeUnit : TimeUnit
             The timeUnit.
+        **kwargs
+            transforms can also be passed by keyword argument; see Examples
 
         Returns
         -------
         self : Chart object
             returns chart to allow for chaining
 
+        Examples
+        --------
+        >>> import altair as alt
+        >>> from altair import datum, expr
+
+        >>> chart = alt.Chart().transform_timeunit(month='month(date)')
+        >>> chart.transform[0]
+        TimeUnitTransform({
+          as: 'month',
+          field: 'date',
+          timeUnit: 'month'
+        })
+
+        It's also possible to pass the ``TimeUnitTransform`` arguments directly;
+        this is most useful in cases where the desired field name is not a
+        valid python identifier:
+
+        >>> kwds = {'as': 'month', 'timeUnit': 'month', 'field': 'The Month'}
+        >>> chart = alt.Chart().transform_timeunit(**kwds)
+        >>> chart.transform[0]
+        TimeUnitTransform({
+          as: 'month',
+          field: 'The Month',
+          timeUnit: 'month'
+        })
+
+        As the first form is easier to write and understand, that is the
+        recommended method.
+
         See Also
         --------
         alt.TimeUnitTransform : underlying transform object
         """
-        if as_ is not Undefined:
+        if as_ is Undefined:
+            as_ = kwargs.pop('as', Undefined)
+        else:
             if 'as' in kwargs:
                 raise ValueError("transform_timeunit: both 'as_' and 'as' passed as arguments.")
-            kwargs['as'] = as_
-        kwargs['field'] = field
-        kwargs['timeUnit'] = timeUnit
-        return self._add_transform(core.TimeUnitTransform(**kwargs))
+        if as_ is not Undefined:
+            dct = {'as': as_, 'timeUnit': timeUnit, 'field': field}
+            self = self._add_transform(core.TimeUnitTransform(**dct))
+        for as_, shorthand in kwargs.items():
+            dct = utils.parse_shorthand(shorthand,
+                                        parse_timeunits=True,
+                                        parse_aggregates=False,
+                                        parse_types=False)
+            dct.pop('type', None)
+            dct['as'] = as_
+            if 'timeUnit' not in dct:
+                raise ValueError("'{0}' must include a valid timeUnit".format(shorthand))
+            self = self._add_transform(core.TimeUnitTransform(**dct))
+        return self
 
     @utils.use_signature(core.WindowTransform)
     def transform_window(self, *args, **kwargs):
@@ -854,15 +901,110 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def resolve_scale(self, *args, **kwargs):
         return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
 
+    # Display-related methods
+
+    def _repr_mimebundle_(self, include, exclude):
+        """Return a MIME bundle for display in Jupyter frontends."""
+        # Catch errors explicitly to get around issues in Jupyter frontend
+        # see https://github.com/ipython/ipython/issues/11038
+        try:
+            dct = self.to_dict()
+        except Exception:
+            utils.display_traceback(in_ipython=True)
+            return {}
+        else:
+            return renderers.get()(dct)
+
+    def display(self, renderer=Undefined, theme=Undefined, actions=Undefined,
+                **kwargs):
+        """Display chart in Jupyter notebook or JupyterLab
+
+        Parameters are passed as options to vega-embed within supported frontends.
+        See https://github.com/vega/vega-embed#options for details.
+
+        Parameters
+        ----------
+        renderer : string ('canvas' or 'svg')
+            The renderer to use
+        theme : string
+            The Vega theme name to use; see https://github.com/vega/vega-themes
+        actions : bool or dict
+            Specify whether action links ("Open In Vega Editor", etc.) are
+            included in the view.
+        **kwargs :
+            Additional parameters are also passed to vega-embed as options.
+        """
+        from IPython.display import display
+
+        if renderer is not Undefined:
+            kwargs['renderer'] = renderer
+        if theme is not Undefined:
+            kwargs['theme'] = theme
+        if actions is not Undefined:
+            kwargs['actions'] = actions
+
+        if kwargs:
+            options = renderers.options.copy()
+            options['embed_options']= options.get('embed_options', {}).copy()
+            options['embed_options'].update(kwargs)
+            with renderers.enable(**options):
+                display(self)
+        else:
+            display(self)
+
+    def serve(self, ip='127.0.0.1', port=8888, n_retries=50, files=None,
+              jupyter_warning=True, open_browser=True, http_server=None,
+              **kwargs):
+        """Open a browser window and display a rendering of the chart
+
+        Parameters
+        ----------
+        html : string
+            HTML to serve
+        ip : string (default = '127.0.0.1')
+            ip address at which the HTML will be served.
+        port : int (default = 8888)
+            the port at which to serve the HTML
+        n_retries : int (default = 50)
+            the number of nearby ports to search if the specified port
+            is already in use.
+        files : dictionary (optional)
+            dictionary of extra content to serve
+        jupyter_warning : bool (optional)
+            if True (default), then print a warning if this is used
+            within the Jupyter notebook
+        open_browser : bool (optional)
+            if True (default), then open a web browser to the given HTML
+        http_server : class (optional)
+            optionally specify an HTTPServer class to use for showing the
+            figure. The default is Python's basic HTTPServer.
+        **kwargs :
+            additional keyword arguments passed to the save() method
+        """
+        from ...utils.server import serve
+
+        html = six.StringIO()
+        self.save(html, format='html', **kwargs)
+        html.seek(0)
+
+        serve(html.read(), ip=ip, port=port, n_retries=n_retries,
+              files=files, jupyter_warning=jupyter_warning,
+              open_browser=open_browser, http_server=http_server)
+
 
 class EncodingMixin(object):
     @utils.use_signature(core.EncodingWithFacet)
     def encode(self, *args, **kwargs):
         # First convert args to kwargs by inferring the class from the argument
         if args:
-            mapping = _get_channels_mapping()
+            channels_mapping = _get_channels_mapping()
             for arg in args:
-                encoding = mapping.get(type(arg), None)
+                if isinstance(arg, (list, tuple)) and len(arg) > 0:
+                    type_ = type(arg[0])
+                else:
+                    type_ = type(arg)
+
+                encoding = channels_mapping.get(type_, None)
                 if encoding is None:
                     raise NotImplementedError("non-keyword arg of type {0}"
                                               "".format(type(arg)))
@@ -879,6 +1021,9 @@ class EncodingMixin(object):
 
             if isinstance(obj, six.string_types):
                 obj = {'shorthand': obj}
+
+            if isinstance(obj, (list, tuple)):
+                return [_wrap_in_channel_class(subobj, prop) for subobj in obj]
 
             if 'value' in obj:
                 clsname += 'Value'
@@ -1073,9 +1218,9 @@ def _check_if_valid_subspec(spec, classname):
 @utils.use_signature(core.TopLevelRepeatSpec)
 class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
-    def __init__(self, spec=Undefined, data=Undefined, repeat=Undefined, **kwargs):
+    def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'RepeatChart')
-        super(RepeatChart, self).__init__(spec=spec, data=data, repeat=repeat, **kwargs)
+        super(RepeatChart, self).__init__(data=data, spec=spec, repeat=repeat, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
@@ -1122,11 +1267,11 @@ def repeat(repeater):
 @utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
-    def __init__(self, hconcat=(), **kwargs):
+    def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in hconcat:
             _check_if_valid_subspec(spec, 'HConcatChart')
-        super(HConcatChart, self).__init__(hconcat=list(hconcat), **kwargs)
+        super(HConcatChart, self).__init__(data=data, hconcat=list(hconcat), **kwargs)
 
     def __ior__(self, other):
         _check_if_valid_subspec(other, 'HConcatChart')
@@ -1150,11 +1295,11 @@ def hconcat(*charts, **kwargs):
 @utils.use_signature(core.TopLevelVConcatSpec)
 class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
-    def __init__(self, vconcat=(), **kwargs):
+    def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
         for spec in vconcat:
             _check_if_valid_subspec(spec, 'VConcatChart')
-        super(VConcatChart, self).__init__(vconcat=list(vconcat), **kwargs)
+        super(VConcatChart, self).__init__(data=data, vconcat=list(vconcat), **kwargs)
 
     def __iand__(self, other):
         _check_if_valid_subspec(other, 'VConcatChart')
@@ -1249,9 +1394,9 @@ def layer(*charts, **kwargs):
 @utils.use_signature(core.TopLevelFacetSpec)
 class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
-    def __init__(self, spec, facet=Undefined, **kwargs):
+    def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'FacetChart')
-        super(FacetChart, self).__init__(spec=spec, facet=facet, **kwargs)
+        super(FacetChart, self).__init__(data=data, spec=spec, facet=facet, **kwargs)
 
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive

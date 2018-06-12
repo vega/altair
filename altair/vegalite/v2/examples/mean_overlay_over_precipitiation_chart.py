@@ -10,8 +10,8 @@ from vega_datasets import data
 source = data.seattle_weather()
 
 bar = alt.Chart(source).mark_bar().encode(
-    alt.X('date:O', timeUnit='month'),
-    alt.Y('mean(precipitation):Q')
+    x='month(date):O',
+    y='mean(precipitation):Q'
 )
 
 rule = alt.Chart(source).mark_rule(color='red').encode(

@@ -4,7 +4,7 @@ U.S. state capitals overlayed on a map of the U.S
 This is a layered geographic visualization that shows US capitals
 overlayed on a map.
 """
-# category: maps
+# category: case studies
 import altair as alt
 from vega_datasets import data
 
@@ -38,8 +38,6 @@ text = base.mark_text(dy=-5, align='right').encode(
 points = base.mark_point().encode(
     color=alt.value('black'),
     size=alt.condition(~hover, alt.value(30), alt.value(100))
-).properties(
-    selection=hover
-)
+).add_selection(hover)
 
 background + points + text

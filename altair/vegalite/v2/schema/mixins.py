@@ -18,7 +18,9 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'area'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -31,7 +33,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="area", **kwds)
@@ -47,7 +50,9 @@ class MarkMethodMixin(object):
                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                 yOffset=Undefined, **kwds):
         """Set the chart's mark to 'bar'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -60,7 +65,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="bar", **kwds)
@@ -76,7 +82,9 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'line'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -89,7 +97,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="line", **kwds)
@@ -105,7 +114,9 @@ class MarkMethodMixin(object):
                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                    strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                   thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds):
         """Set the chart's mark to 'trail'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -118,7 +129,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="trail", **kwds)
@@ -134,7 +146,9 @@ class MarkMethodMixin(object):
                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                    strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                   thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                   yOffset=Undefined, **kwds):
         """Set the chart's mark to 'point'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -147,7 +161,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="point", **kwds)
@@ -163,7 +178,9 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'text'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -176,7 +193,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="text", **kwds)
@@ -192,7 +210,9 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'tick'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -205,7 +225,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="tick", **kwds)
@@ -221,7 +242,9 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rect'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -234,7 +257,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rect", **kwds)
@@ -250,7 +274,9 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rule'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -263,7 +289,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rule", **kwds)
@@ -279,7 +306,9 @@ class MarkMethodMixin(object):
                     orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
                     size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                    thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                    yOffset=Undefined, **kwds):
         """Set the chart's mark to 'circle'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -292,7 +321,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="circle", **kwds)
@@ -308,7 +338,9 @@ class MarkMethodMixin(object):
                     orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
                     size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                    thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                    yOffset=Undefined, **kwds):
         """Set the chart's mark to 'square'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -321,7 +353,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="square", **kwds)
@@ -337,7 +370,9 @@ class MarkMethodMixin(object):
                       orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
                       size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                       strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                      style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                      style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                      thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                      yOffset=Undefined, **kwds):
         """Set the chart's mark to 'geoshape'
     
         For information on additional arguments, see ``alt.MarkDef``
@@ -350,7 +385,8 @@ class MarkMethodMixin(object):
                     stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                     strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                     strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    **kwds)
+                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                    yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="geoshape", **kwds)

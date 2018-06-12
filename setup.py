@@ -11,13 +11,6 @@ seamlessly display client-side renderings in the Jupyter notebook.
 
 .. image:: https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png
 
-Please note that if you wish to use altair in the Jupyter Notebook, the
-`ipyvega`_ notebook extension must be enabled as follows::
-
-    $ pip install altair
-    $ pip install --upgrade notebook
-    $ jupyter nbextension install --sys-prefix --py vega
-
 See the `Altair Documentation`_ for tutorials, detailed installation
 instructions, and examples.
 See the `Altair Github Repository`_ for issues, bug reports, and contributions.
@@ -25,7 +18,6 @@ See the `Altair Github Repository`_ for issues, bug reports, and contributions.
 .. _Altair Github Repository: http://github.com/altair-viz/altair/
 .. _Altair Documentation: http://altair-viz.github.io/
 .. _Vega-Lite: https://github.com/vega/vega-lite
-.. _ipyvega: https://github.com/vega/ipyvega
 """
 
 import io
@@ -126,12 +118,13 @@ setup(name=NAME,
         'dev': DEV_REQUIRES
       },
       classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5'],
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6'],
      )

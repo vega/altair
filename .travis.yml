@@ -7,6 +7,10 @@ python:
   - 3.5
   - 3.6
 
+env:
+  global:
+    - TEST_DIR=/tmp/_altair/
+
 before_install:
   - pip install pip --upgrade;
 
@@ -15,4 +19,5 @@ install:
 
 script:
   - flake8 ./;
-  - python -m pytest --pyargs --doctest-modules altair;
+  - mkdir -p $TEST_DIR
+  - cd $TEST_DIR && python -m pytest --pyargs --doctest-modules altair;

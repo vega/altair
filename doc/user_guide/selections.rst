@@ -48,8 +48,8 @@ property:
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color='Origin:N'
-    ).properties(
-        selection=brush
+    ).add_selection(
+        brush
     )
 
 The result above is a chart that allows you to click and drag to create
@@ -68,8 +68,8 @@ for points outside the selection:
         x='Miles_per_Gallon:Q',
         y='Horsepower:Q',
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
-    ).properties(
-        selection=brush
+    ).add_selection(
+        brush
     )
 
 As you can see, with this simple change, the color of the points responds
@@ -89,8 +89,9 @@ tied to ``"Miles_per_Gallon"``
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
     ).properties(
         width=250,
-        height=250,
-        selection=brush
+        height=250
+    ).add_selection(
+        brush
     )
 
     chart.encode(x='Acceleration:Q') | chart.encode(x='Miles_per_Gallon:Q')
@@ -114,8 +115,9 @@ We can modify the brush definition, and leave the rest of the code unchanged:
         color=alt.condition(brush, 'Origin:N', alt.value('lightgray'))
     ).properties(
         width=250,
-        height=250,
-        selection=brush
+        height=250
+    ).add_selection(
+        brush
     )
 
     chart.encode(x='Acceleration:Q') | chart.encode(x='Miles_per_Gallon:Q')
@@ -143,8 +145,9 @@ selection:
             color=alt.condition(selector, 'count()', alt.value('lightgray'))
         ).properties(
             width=300,
-            height=180,
-            selection=selector
+            height=180
+        ).add_selection(
+            selector
         )
 
 Next we'll use this function to demonstrate the properties of various selections.
@@ -182,8 +185,8 @@ chart scales; this is how Altair plots can be made interactive:
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N'
-    ).properties(
-        selection=scales
+    ).add_selection(
+        scales
     )
 
 Because this is such a common pattern, Altair provides the :meth:`Chart.interactive`

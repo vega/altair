@@ -41,7 +41,13 @@ def test_plugin_registry_extra_options():
     assert plugins.get()(3) == 9
 
     plugins.enable('metadata_plugin', p=3)
+    assert plugins.active == 'metadata_plugin'
     assert plugins.get()(3) == 27
+
+    # enabling without changing name
+    plugins.enable(p=2)
+    assert plugins.active == 'metadata_plugin'
+    assert plugins.get()(3) == 9
 
 
 def test_plugin_registry_context():
@@ -72,3 +78,13 @@ def test_plugin_registry_context():
 
     assert plugins.active == ''
     assert plugins.options == {}
+
+    # Enabling without specifying name uses current name
+    plugins.enable('default', p=2)
+
+    with plugins.enable(p=6):
+        assert plugins.active == 'default'
+        assert plugins.options == {'p': 6}
+
+    assert plugins.active == 'default'
+    assert plugins.options == {'p': 2}

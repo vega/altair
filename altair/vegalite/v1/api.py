@@ -115,7 +115,8 @@ class TopLevelMixin(object):
         )
         return self.save(fp, format=None, **kwargs)
 
-    def save(self, fp, format=None, override_data_transformer=True, **kwargs):
+    def save(self, fp, format=None, override_data_transformer=True,
+             scale_factor=1.0, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -131,6 +132,10 @@ class TopLevelMixin(object):
             If True (default), then the save action will be done with the
             default data_transformer with max_rows set to None. If False,
             then use the currently active data transformer.
+        scale_factor : float
+            For svg or png formats, scale the image by this factor when saving.
+            This can be used to control the size or resolution of the output.
+            Default is 1.0
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
@@ -141,6 +146,7 @@ class TopLevelMixin(object):
                     vegalite_version=VEGALITE_VERSION,
                     vega_version=VEGA_VERSION,
                     vegaembed_version=VEGAEMBED_VERSION,
+                    scale_factor=scale_factor,
                     **kwargs)
 
         # By default we override the data transformer. This makes it so
@@ -250,6 +256,50 @@ class TopLevelMixin(object):
             return {}
         else:
             return renderers.get()(dct)
+
+    def display(self):
+        """Display chart in Jupyter notebook or JupyterLab"""
+        from IPython.display import display
+        display(self)
+
+    def serve(self, ip='127.0.0.1', port=8888, n_retries=50, files=None,
+              jupyter_warning=True, open_browser=True, http_server=None,
+              **kwargs):
+        """Open a browser window and display a rendering of the chart
+
+        Parameters
+        ----------
+        html : string
+            HTML to serve
+        ip : string (default = '127.0.0.1')
+            ip address at which the HTML will be served.
+        port : int (default = 8888)
+            the port at which to serve the HTML
+        n_retries : int (default = 50)
+            the number of nearby ports to search if the specified port
+            is already in use.
+        files : dictionary (optional)
+            dictionary of extra content to serve
+        jupyter_warning : bool (optional)
+            if True (default), then print a warning if this is used
+            within the Jupyter notebook
+        open_browser : bool (optional)
+            if True (default), then open a web browser to the given HTML
+        http_server : class (optional)
+            optionally specify an HTTPServer class to use for showing the
+            figure. The default is Python's basic HTTPServer.
+        **kwargs :
+            additional keyword arguments passed to the save() method
+        """
+        from ...utils.server import serve
+
+        html = six.StringIO()
+        self.save(html, format='html', **kwargs)
+        html.seek(0)
+
+        serve(html.read(), ip=ip, port=port, n_retries=n_retries,
+              files=files, jupyter_warning=jupyter_warning,
+              open_browser=open_browser, http_server=http_server)
 
 
 class Chart(TopLevelMixin, core.ExtendedUnitSpec):
