@@ -378,3 +378,30 @@ def test_chart_from_dict():
     # test that an invalid spec leads to a schema validation error
     with pytest.raises(jsonschema.ValidationError):
         alt.Chart.from_dict({'invalid': 'spec'})
+
+
+def test_consolidate_datasets(basic_chart):
+    chart = basic_chart | basic_chart
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct_consolidated = chart.to_dict()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct_standard = chart.to_dict()
+
+    assert 'datasets' in dct_consolidated
+    assert 'datasets' not in dct_standard
+
+    datasets = dct_consolidated['datasets']
+
+    # two dataset copies should be recognized as duplicates
+    assert len(datasets) == 1
+
+    # make sure data matches original & names are correct
+    name, data = datasets.popitem()
+
+    for spec in dct_standard['hconcat']:
+        assert spec['data']['values'] == data
+
+    for spec in dct_consolidated['hconcat']:
+        assert spec['data'] == {'name': name}
