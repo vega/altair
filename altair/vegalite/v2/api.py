@@ -872,9 +872,60 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             self = self._add_transform(core.TimeUnitTransform(**dct))
         return self
 
-    @utils.use_signature(core.WindowTransform)
-    def transform_window(self, *args, **kwargs):
-        return self._add_transform(core.WindowTransform(*args, **kwargs))
+    def transform_window(self, window=Undefined, frame=[None, 0], groupby=Undefined,
+                         ignorePeers=False, sort=Undefined, **kwargs):
+        """Add a WindowTransform to the schema
+
+        Attributes
+        ----------
+        window : List(WindowFieldDef)
+            The definition of the fields in the window, and what calculations to use.
+        frame : List(anyOf(None, float))
+            A frame specification as a two-element array indicating how the sliding window
+            should proceed. The array entries should either be a number indicating the offset
+            from the current data object, or null to indicate unbounded rows preceding or
+            following the current data object. The default value is ``[null, 0]``, indicating
+            that the sliding window includes the current object and all preceding objects. The
+            value ``[-5, 5]`` indicates that the window should include five objects preceding
+            and five objects following the current object. Finally, ``[null, null]`` indicates
+            that the window frame should always include all data objects. The only operators
+            affected are the aggregation operations and the ``first_value``, ``last_value``, and
+             ``nth_value`` window operations. The other window operations are not affected by
+            this.  **Default value:** :  ``[null, 0]`` (includes the current object and all
+            preceding objects)
+        groupby : List(string)
+            The data fields for partitioning the data objects into separate windows. If
+            unspecified, all data points will be a single group.
+        ignorePeers : boolean
+            Indicates if the sliding window frame should ignore peer values. (Peer values are
+            those considered identical by the sort criteria). The default is false, causing the
+            window frame to expand to include all peer values. If set to true, the window frame
+            will be defined by offset values only. This setting only affects those operations
+            that depend on the window frame, namely aggregation operations and the first_value,
+            last_value, and nth_value window operations.  **Default value:** ``false``
+        sort : List(SortField)
+            A sort field definition for sorting data objects within a window. If two data
+            objects are considered equal by the comparator, they are considered “peer” values of
+             equal rank. If sort is not specified, the order is undefined: data objects are
+            processed in the order they are observed and none are considered peers (the
+            ignorePeers parameter is ignored and treated as if set to ``true`` ).
+        **kwargs
+            transforms can also be passed by keyword argument; see Examples
+        """
+        if kwargs:
+            if window is Undefined:
+                window = []
+            for as_, shorthand in kwargs.items():
+                kwds = {'as': as_}
+                kwds.update(utils.parse_shorthand(shorthand,
+                                                  parse_aggregates=False,
+                                                  parse_window_ops=True,
+                                                  parse_timeunits=False,
+                                                  parse_types=False))
+                window.append(core.WindowFieldDef(**kwds))
+
+        return self._add_transform(core.WindowTransform(window=window, frame=frame, groupby=groupby,
+                                                        ignorePeers=ignorePeers, sort=sort))
 
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):

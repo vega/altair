@@ -35,6 +35,10 @@ AGGREGATES = ['argmax', 'argmin', 'average', 'count', 'distinct', 'max',
               'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
               'variance', 'variancep']
 
+WINDOW_AGGREGATES = ["row_number", "rank", "dense_rank", "percent_rank",
+                     "cume_dist", "ntile", "lag", "lead", "first_value",
+                     "last_value", "nth_value"]
+
 # timeUnits from vega-lite version 2.4.3
 TIMEUNITS = ["utcyear", "utcquarter", "utcmonth", "utcday", "utcdate",
              "utchours", "utcminutes", "utcseconds", "utcmilliseconds",
@@ -137,6 +141,7 @@ def sanitize_dataframe(df):
 
 
 def parse_shorthand(shorthand, data=None, parse_aggregates=True,
+                    parse_window_ops=False,
                     parse_timeunits=True, parse_types=True):
     """General tool to parse shorthand values
 
@@ -159,6 +164,8 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
         column type if not provided by the shorthand.
     parse_aggregates : boolean
         If True (default), then parse aggregate functions within the shorthand.
+    parse_window_ops : boolean
+        If True then parse window operations within the shorthand (default:False)
     parse_timeunits : boolean
         If True (default), then parse timeUnits from within the shorthand
     parse_types : boolean
@@ -219,13 +226,17 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
                  type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
                  count='(?P<aggregate>count)',
                  aggregate='(?P<aggregate>{0})'.format('|'.join(AGGREGATES)),
+                 window_op='(?P<op>{0})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
                  timeUnit='(?P<timeUnit>{0})'.format('|'.join(TIMEUNITS)))
 
     patterns = []
 
+    if parse_aggregates or parse_window_ops:
+        patterns.extend([r'{count}\(\)'])
     if parse_aggregates:
-        patterns.extend([r'{count}\(\)',
-                         r'{aggregate}\({field}\)'])
+        patterns.extend([r'{aggregate}\({field}\)'])
+    if parse_window_ops:
+        patterns.extend([r'{window_op}\({field}\)'])
     if parse_timeunits:
         patterns.extend([r'{timeUnit}\({field}\)'])
 

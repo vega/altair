@@ -686,10 +686,10 @@ window transform, using :meth:`~Chart.transform_window`:
 .. altair-plot::
 
     alt.Chart(activities).transform_window(
-        window=[alt.WindowFieldDef(op='sum', field='Time', **{'as': 'TotalTime'})],
+        TotalTime='sum(Time)',
         frame=[None, None]
     ).transform_calculate(
-        PercentOfTotal="datum.Time / datum.TotalTime * 100"
+        PercentOfTotal="100 * datum.Time / datum.TotalTime"
     ).mark_bar().encode(
         x='PercentOfTotal:Q',
         y='Activity:N'
