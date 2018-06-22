@@ -92,6 +92,19 @@ def test_parse_shorthand_all_timeunits():
                                               'type': 'quantitative'}
 
 
+def test_parse_shorthand_all_window_ops():
+    window_ops = alt.Root._schema['definitions']['WindowOnlyOp']['enum']
+    aggregates = alt.Root._schema['definitions']['AggregateOp']['enum']
+    for op in (window_ops + aggregates):
+        shorthand = "{op}(field)".format(op=op)
+        dct = parse_shorthand(shorthand,
+                              parse_aggregates=False,
+                              parse_window_ops=True,
+                              parse_timeunits=False,
+                              parse_types=False)
+        assert dct == {'field': 'field', 'op': op}
+
+
 def test_update_nested():
     original = {'x': {'b': {'foo': 2}, 'c': 4}}
     update = {'x': {'b': {'foo': 5}, 'd': 6}, 'y': 40}

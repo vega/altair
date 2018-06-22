@@ -35,6 +35,7 @@ AGGREGATES = ['argmax', 'argmin', 'average', 'count', 'distinct', 'max',
               'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
               'variance', 'variancep']
 
+# window aggregates from vega-lite version 2.5.2
 WINDOW_AGGREGATES = ["row_number", "rank", "dense_rank", "percent_rank",
                      "cume_dist", "ntile", "lag", "lead", "first_value",
                      "last_value", "nth_value"]
