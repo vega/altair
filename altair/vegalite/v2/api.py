@@ -911,6 +911,30 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             ignorePeers parameter is ignored and treated as if set to ``true`` ).
         **kwargs
             transforms can also be passed by keyword argument; see Examples
+
+        Examples
+        --------
+        A cumulative line chart
+
+        >>> import altair as alt
+        >>> import numpy as np
+        >>> import pandas as pd
+        >>> data = pd.DataFrame({'x': np.arange(100),
+        ...                      'y': np.random.randn(100)})
+        >>> chart = alt.Chart(data).mark_line().encode(
+        ...     x='x:Q',
+        ...     y='ycuml:Q'
+        ... ).transform_window(
+        ...     ycuml='sum(y)'
+        ... )
+        >>> chart.transform[0]
+        WindowTransform({
+          window: [WindowFieldDef({
+            as: 'ycuml',
+            field: 'y',
+            op: 'sum'
+          })]
+        })
         """
         if kwargs:
             if window is Undefined:
