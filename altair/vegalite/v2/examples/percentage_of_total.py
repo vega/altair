@@ -15,7 +15,7 @@ alt.Chart(activities).mark_bar().encode(
     alt.X('PercentOfTotal:Q', axis=alt.Axis(format='.0%')),
     y='Activity:N'
 ).transform_window(
-    window=[alt.WindowFieldDef(op='sum', field='Time', **{'as': 'TotalTime'})],
+    TotalTime='sum(Time)',
     frame=[None, None]
 ).transform_calculate(
     PercentOfTotal="datum.Time / datum.TotalTime"
