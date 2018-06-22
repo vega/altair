@@ -301,6 +301,13 @@ def test_transforms():
     kwds = {'as': 'foo', 'field': 'x', 'timeUnit': 'date'}
     assert chart.transform == [alt.TimeUnitTransform(**kwds)]
 
+    # window transform
+    chart = alt.Chart().transform_window(xsum='sum(x)', ymin='min(y)',
+                                         frame=[None, 0])
+    window = [alt.WindowFieldDef(**{'as': 'xsum', 'field': 'x', 'op': 'sum'}),
+              alt.WindowFieldDef(**{'as': 'ymin', 'field': 'y', 'op': 'min'})]
+    assert chart.transform == [alt.WindowTransform(frame=[None, 0], window=window)]
+
 
 def test_resolve_methods():
     chart = alt.LayerChart().resolve_axis(x='shared', y='independent')

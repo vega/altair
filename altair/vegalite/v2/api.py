@@ -872,8 +872,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             self = self._add_transform(core.TimeUnitTransform(**dct))
         return self
 
-    def transform_window(self, window=Undefined, frame=[None, 0], groupby=Undefined,
-                         ignorePeers=False, sort=Undefined, **kwargs):
+    def transform_window(self, window=Undefined, frame=Undefined, groupby=Undefined,
+                         ignorePeers=Undefined, sort=Undefined, **kwargs):
         """Add a WindowTransform to the schema
 
         Attributes
