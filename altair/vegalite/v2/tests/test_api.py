@@ -306,7 +306,14 @@ def test_transforms():
                                          frame=[None, 0])
     window = [alt.WindowFieldDef(**{'as': 'xsum', 'field': 'x', 'op': 'sum'}),
               alt.WindowFieldDef(**{'as': 'ymin', 'field': 'y', 'op': 'min'})]
-    assert chart.transform == [alt.WindowTransform(frame=[None, 0], window=window)]
+
+    # kwargs don't maintain order in Python < 3.6, so window list can
+    # be reversed
+    assert (chart.transform == [alt.WindowTransform(frame=[None, 0],
+                                                    window=window)]
+            or chart.transform == [alt.WindowTransform(frame=[None, 0],
+                                                       window=window[::-1])])
+            
 
 
 def test_resolve_methods():
