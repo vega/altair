@@ -2,7 +2,7 @@
 Cumulative Wikipedia Donations
 ==============================
 
-This chart shows cumulative donations to Wikipedia over the past 10 years. Inspired by this [Reddit post](https://www.reddit.com/r/dataisbeautiful/comments/7guwd0/cumulative_wikimedia_donations_over_the_past_10/) but using lines instead of areas.
+This chart shows cumulative donations to Wikipedia over the past 10 years. Inspired by this `Reddit post <https://www.reddit.com/r/dataisbeautiful/comments/7guwd0/cumulative_wikimedia_donations_over_the_past_10/>`_ but using lines instead of areas.
 """
 # category: case studies
 import altair as alt
