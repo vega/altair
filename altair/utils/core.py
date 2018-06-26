@@ -97,6 +97,7 @@ def sanitize_dataframe(df):
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
+    * Raise a ValueError for TimeDelta dtypes
     """
     df = df.copy()
 
@@ -124,6 +125,11 @@ def sanitize_dataframe(df):
             # Convert datetimes to strings
             # astype(str) will choose the appropriate resolution
             df[col_name] = df[col_name].astype(str).replace('NaT', '')
+        elif str(dtype).startswith('timedelta'):
+            raise ValueError('Field "{col_name}" has type "{dtype}" which is '
+                             'not supported by Altair. Please convert to '
+                             'either a timestamp or a numerical value.'
+                             ''.format(col_name=col_name, dtype=dtype))
         elif np.issubdtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)

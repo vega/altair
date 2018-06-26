@@ -80,6 +80,13 @@ def test_sanitize_dataframe():
     assert df.equals(df2)
 
 
+def test_sanitize_dataframe_timedelta():
+    df = pd.DataFrame({'r': pd.timedelta_range(start='1 day', periods=4)})
+    with pytest.raises(ValueError) as err:
+        sanitize_dataframe(df)
+    assert str(err.value).startswith('Field "r" has type "timedelta')
+
+
 def test_sanitize_dataframe_infs():
     df = pd.DataFrame({'x': [0, 1, 2, np.inf, -np.inf, np.nan]})
     df_clean = sanitize_dataframe(df)
