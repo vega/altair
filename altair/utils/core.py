@@ -35,6 +35,11 @@ AGGREGATES = ['argmax', 'argmin', 'average', 'count', 'distinct', 'max',
               'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
               'variance', 'variancep']
 
+# window aggregates from vega-lite version 2.5.2
+WINDOW_AGGREGATES = ["row_number", "rank", "dense_rank", "percent_rank",
+                     "cume_dist", "ntile", "lag", "lead", "first_value",
+                     "last_value", "nth_value"]
+
 # timeUnits from vega-lite version 2.4.3
 TIMEUNITS = ["utcyear", "utcquarter", "utcmonth", "utcday", "utcdate",
              "utchours", "utcminutes", "utcseconds", "utcmilliseconds",
@@ -92,6 +97,7 @@ def sanitize_dataframe(df):
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
+    * Raise a ValueError for TimeDelta dtypes
     """
     df = df.copy()
 
@@ -110,10 +116,20 @@ def sanitize_dataframe(df):
         if str(dtype) == 'category':
             # XXXX: work around bug in to_json for categorical types
             # https://github.com/pydata/pandas/issues/10778
-            df[col_name] = df[col_name].astype(str)
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif str(dtype) == 'bool':
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
+        elif str(dtype).startswith('datetime'):
+            # Convert datetimes to strings
+            # astype(str) will choose the appropriate resolution
+            df[col_name] = df[col_name].astype(str).replace('NaT', '')
+        elif str(dtype).startswith('timedelta'):
+            raise ValueError('Field "{col_name}" has type "{dtype}" which is '
+                             'not supported by Altair. Please convert to '
+                             'either a timestamp or a numerical value.'
+                             ''.format(col_name=col_name, dtype=dtype))
         elif np.issubdtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
@@ -123,10 +139,6 @@ def sanitize_dataframe(df):
             col = df[col_name]
             bad_values = col.isnull() | np.isinf(col)
             df[col_name] = col.astype(object).where(~bad_values, None)
-        elif str(dtype).startswith('datetime'):
-            # Convert datetimes to strings
-            # astype(str) will choose the appropriate resolution
-            df[col_name] = df[col_name].astype(str).replace('NaT', '')
         elif dtype == object:
             # Convert numpy arrays saved as objects to lists
             # Arrays are not JSON serializable
@@ -136,6 +148,7 @@ def sanitize_dataframe(df):
 
 
 def parse_shorthand(shorthand, data=None, parse_aggregates=True,
+                    parse_window_ops=False,
                     parse_timeunits=True, parse_types=True):
     """General tool to parse shorthand values
 
@@ -158,6 +171,8 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
         column type if not provided by the shorthand.
     parse_aggregates : boolean
         If True (default), then parse aggregate functions within the shorthand.
+    parse_window_ops : boolean
+        If True then parse window operations within the shorthand (default:False)
     parse_timeunits : boolean
         If True (default), then parse timeUnits from within the shorthand
     parse_types : boolean
@@ -218,13 +233,17 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
                  type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
                  count='(?P<aggregate>count)',
                  aggregate='(?P<aggregate>{0})'.format('|'.join(AGGREGATES)),
+                 window_op='(?P<op>{0})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
                  timeUnit='(?P<timeUnit>{0})'.format('|'.join(TIMEUNITS)))
 
     patterns = []
 
+    if parse_aggregates or parse_window_ops:
+        patterns.extend([r'{count}\(\)'])
     if parse_aggregates:
-        patterns.extend([r'{count}\(\)',
-                         r'{aggregate}\({field}\)'])
+        patterns.extend([r'{aggregate}\({field}\)'])
+    if parse_window_ops:
+        patterns.extend([r'{window_op}\({field}\)'])
     if parse_timeunits:
         patterns.extend([r'{timeUnit}\({field}\)'])
 

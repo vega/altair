@@ -120,7 +120,7 @@ class Color(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -142,14 +142,16 @@ class Color(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -229,14 +231,16 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -289,14 +293,16 @@ class Detail(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -356,7 +362,7 @@ class Fill(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -378,14 +384,16 @@ class Fill(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -472,14 +480,16 @@ class Href(FieldChannelMixin, core.FieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -554,14 +564,16 @@ class Key(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -612,14 +624,16 @@ class Latitude(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -670,14 +684,16 @@ class Latitude2(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -728,14 +744,16 @@ class Longitude(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -786,14 +804,16 @@ class Longitude2(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -853,7 +873,7 @@ class Opacity(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -875,14 +895,16 @@ class Opacity(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -960,14 +982,16 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1039,14 +1063,16 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1108,7 +1134,7 @@ class Shape(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -1130,14 +1156,16 @@ class Shape(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1223,7 +1251,7 @@ class Size(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -1245,14 +1273,16 @@ class Size(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1338,7 +1368,7 @@ class Stroke(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -1360,14 +1390,16 @@ class Stroke(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1457,14 +1489,16 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1553,14 +1587,16 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1635,7 +1671,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -1675,14 +1711,16 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1753,14 +1791,16 @@ class X2(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1828,7 +1868,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -1868,14 +1908,16 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1946,14 +1988,16 @@ class Y2(FieldChannelMixin, core.FieldDef):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 

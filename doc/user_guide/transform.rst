@@ -251,7 +251,9 @@ expressions and objects:
 
 1. A `Vega expression`_ expressed as a string or built using the :mod:`~expr` module
 2. A Field predicate, such as :class:`~FieldOneOfPredicate`,
-   :class:`~FieldRangePredicate`, or :class:`~FieldEqualPredicate`
+   :class:`~FieldRangePredicate`, :class:`~FieldEqualPredicate`,
+   :class:`~FieldLTPredicate`, :class:`~FieldGTPredicate`,
+   :class:`~FieldLTEPredicate`, :class:`~FieldGTEPredicate`,
 3. A Selection predicate or object created by :func:`selection`
 4. A Logical operand that combines any of the above
 
@@ -295,6 +297,14 @@ are:
   specified values.
 - :class:`~FieldRangePredicate` evaluates whether a continuous field is within
   a range of values.
+- :class:`~FieldLTPredicate` evaluates whether a continuous field is less
+  than a given value
+- :class:`~FieldGTPredicate` evaluates whether a continuous field is greater
+  than a given value
+- :class:`~FieldLTEPredicate` evaluates whether a continuous field is less
+  than or equal to a given value
+- :class:`~FieldGTEPredicate` evaluates whether a continuous field is greater
+  than or equal to a given value
 
 Here is an examaple of a :class:`~FieldEqualPredicate` used to select just the
 values from year 2000 as in the above chart:
@@ -676,10 +686,10 @@ window transform, using :meth:`~Chart.transform_window`:
 .. altair-plot::
 
     alt.Chart(activities).transform_window(
-        window=[alt.WindowFieldDef(op='sum', field='Time', **{'as': 'TotalTime'})],
+        TotalTime='sum(Time)',
         frame=[None, None]
     ).transform_calculate(
-        PercentOfTotal="datum.Time / datum.TotalTime * 100"
+        PercentOfTotal="100 * datum.Time / datum.TotalTime"
     ).mark_bar().encode(
         x='PercentOfTotal:Q',
         y='Activity:N'

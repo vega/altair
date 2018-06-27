@@ -40,7 +40,10 @@ def test_sanitize_dataframe():
                        'b': np.array([True, False, True, True, False]),
                        'd': pd.date_range('2012-01-01', periods=5, freq='H'),
                        'c': pd.Series(list('ababc'), dtype='category'),
-                       'o': pd.Series([np.array(i) for i in range(5)])})
+                       'c2': pd.Series([1, 'A', 2.5, 'B', None],
+                                       dtype='category'),
+                       'o': pd.Series([np.array(i) for i in range(5)]),
+                       'p': pd.date_range('2012-01-01', periods=5, freq='H').tz_localize('UTC')})
 
     # add some nulls
     df.iloc[0, df.columns.get_loc('s')] = None
@@ -49,8 +52,12 @@ def test_sanitize_dataframe():
     df.iloc[0, df.columns.get_loc('o')] = np.array(np.nan)
 
     # JSON serialize. This will fail on non-sanitized dataframes
+    print(df[['s', 'c2']])
     df_clean = sanitize_dataframe(df)
+    print(df_clean[['s', 'c2']])
+    print(df_clean[['s', 'c2']].to_dict())
     s = json.dumps(df_clean.to_dict(orient='records'))
+    print(s)
 
     # Re-construct pandas dataframe
     df2 = pd.read_json(s)
@@ -63,13 +70,21 @@ def test_sanitize_dataframe():
         if str(df[col].dtype).startswith('datetime'):
             # astype(datetime) introduces time-zone issues:
             # to_datetime() does not.
-            df2[col] = pd.to_datetime(df2[col])
+            utc = isinstance(df[col].dtype, pd.core.dtypes.dtypes.DatetimeTZDtype)
+            df2[col] = pd.to_datetime(df2[col], utc = utc)
         else:
             df2[col] = df2[col].astype(df[col].dtype)
 
     # pandas doesn't properly recognize np.array(np.nan), so change it here
     df.iloc[0, df.columns.get_loc('o')] = np.nan
     assert df.equals(df2)
+
+
+def test_sanitize_dataframe_timedelta():
+    df = pd.DataFrame({'r': pd.timedelta_range(start='1 day', periods=4)})
+    with pytest.raises(ValueError) as err:
+        sanitize_dataframe(df)
+    assert str(err.value).startswith('Field "r" has type "timedelta')
 
 
 def test_sanitize_dataframe_infs():

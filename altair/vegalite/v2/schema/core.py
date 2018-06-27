@@ -146,7 +146,8 @@ class AreaConfig(VegaLiteSchema):
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
         style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
     'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
     'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
@@ -170,7 +171,7 @@ class AreaConfig(VegaLiteSchema):
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
         ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
         ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : float
@@ -342,14 +343,18 @@ class Axis(VegaLiteSchema):
         The formatting pattern for labels. This is D3's `number format pattern
         <https://github.com/d3/d3-format#locale_format>`_ for quantitative fields and D3's
         `time format pattern <https://github.com/d3/d3-time-format#locale_format>`_ for time
-         field.  See the `format documentation <format.html>`_ for more information.
-        **Default value:**  derived from `numberFormat <config.html#format>`_ config for
-        quantitative fields and from `timeFormat <config.html#format>`_ config for temporal
+         field.  See the `format documentation
+        <https://vega.github.io/vega-lite/docs/format.html>`_ for more information.
+        **Default value:**  derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for quantitative
+         fields and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for temporal
         fields.
     grid : boolean
         A boolean flag indicating if grid lines should be included as part of the axis
-        **Default value:** ``true`` for `continuous scales <scale.html#continuous>`_ that
-        are not binned; otherwise, ``false``.
+        **Default value:** ``true`` for `continuous scales
+        <https://vega.github.io/vega-lite/docs/scale.html#continuous>`_ that are not binned;
+         otherwise, ``false``.
     labelAngle : float
         The rotation angle of the axis labels.  **Default value:** ``-90`` for nominal and
         ordinal fields; ``0`` otherwise.
@@ -392,7 +397,8 @@ class Axis(VegaLiteSchema):
     offset : float
         The offset, in pixels, by which to displace the axis from the edge of the enclosing
         group or data rectangle.  **Default value:** derived from the `axis config
-        <config.html#facet-scale-config>`_ 's ``offset`` ( ``0`` by default)
+        <https://vega.github.io/vega-lite/docs/config.html#facet-scale-config>`_ 's
+        ``offset`` ( ``0`` by default)
     orient : AxisOrient
         The orientation of the axis. One of ``"top"``, ``"bottom"``, ``"left"`` or
         ``"right"``. The orientation can be used to further specialize the axis type (e.g.,
@@ -418,10 +424,12 @@ class Axis(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     titleMaxLength : float
         Max length for axis title if the title is automatically generated from the field's
         description.
@@ -474,8 +482,9 @@ class AxisConfig(VegaLiteSchema):
         Stroke width of axis domain line  **Default value:**  (none, using Vega default).
     grid : boolean
         A boolean flag indicating if grid lines should be included as part of the axis
-        **Default value:** ``true`` for `continuous scales <scale.html#continuous>`_ that
-        are not binned; otherwise, ``false``.
+        **Default value:** ``true`` for `continuous scales
+        <https://vega.github.io/vega-lite/docs/scale.html#continuous>`_ that are not binned;
+         otherwise, ``false``.
     gridColor : string
         Color of gridlines.
     gridDash : List(float)
@@ -661,7 +670,8 @@ class BarConfig(VegaLiteSchema):
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
         style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     continuousBandSize : float
         The default size of the bars on continuous scales.  **Default value:** ``5``
     cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
@@ -690,7 +700,7 @@ class BarConfig(VegaLiteSchema):
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
         ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
         ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : float
@@ -1072,7 +1082,7 @@ class ConditionalPredicateFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -1104,10 +1114,12 @@ class ConditionalPredicateFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<FieldDef>'}
     _rootschema = Root._schema
@@ -1131,7 +1143,7 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -1162,7 +1174,7 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -1184,10 +1196,12 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef>'}
     _rootschema = Root._schema
@@ -1215,7 +1229,7 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -1250,10 +1264,12 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<TextFieldDef>'}
     _rootschema = Root._schema
@@ -1300,7 +1316,7 @@ class ConditionalSelectionFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -1332,10 +1348,12 @@ class ConditionalSelectionFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<FieldDef>'}
     _rootschema = Root._schema
@@ -1361,7 +1379,7 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -1392,7 +1410,7 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -1414,10 +1432,12 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef>'}
     _rootschema = Root._schema
@@ -1447,7 +1467,7 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -1482,10 +1502,12 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<TextFieldDef>'}
     _rootschema = Root._schema
@@ -1537,8 +1559,9 @@ class Config(VegaLiteSchema):
         ``pad``
     axis : AxisConfig
         Axis configuration, which determines default properties for all ``x`` and ``y``
-        `axes <axis.html>`_. For a full list of axis configuration options, please see the
-        `corresponding section of the axis documentation <axis.html#config>`_.
+        `axes <https://vega.github.io/vega-lite/docs/axis.html>`_. For a full list of axis
+        configuration options, please see the `corresponding section of the axis
+        documentation <https://vega.github.io/vega-lite/docs/axis.html#config>`_.
     axisBand : VgAxisConfig
         Specific axis config for axes with "band" scales.
     axisBottom : VgAxisConfig
@@ -1583,8 +1606,9 @@ class Config(VegaLiteSchema):
         items are included. In this case, invalid values will be interpreted as zeroes.
     legend : LegendConfig
         Legend configuration, which determines default properties for all `legends
-        <legend.html>`_. For a full list of legend configuration options, please see the
-        `corresponding section of in the legend documentation <legend.html#config>`_.
+        <https://vega.github.io/vega-lite/docs/legend.html>`_. For a full list of legend
+        configuration options, please see the `corresponding section of in the legend
+        documentation <https://vega.github.io/vega-lite/docs/legend.html#config>`_.
     line : LineConfig
         Line-Specific Config
     mark : MarkConfig
@@ -1602,21 +1626,24 @@ class Config(VegaLiteSchema):
         Point-Specific Config
     projection : ProjectionConfig
         Projection configuration, which determines default properties for all `projections
-        <projection.html>`_. For a full list of projection configuration options, please see
-         the `corresponding section of the projection documentation
-        <projection.html#config>`_.
+        <https://vega.github.io/vega-lite/docs/projection.html>`_. For a full list of
+        projection configuration options, please see the `corresponding section of the
+        projection documentation
+        <https://vega.github.io/vega-lite/docs/projection.html#config>`_.
     range : RangeConfig
         An object hash that defines default range arrays or schemes for using with scales.
         For a full list of scale range configuration options, please see the `corresponding
-        section of the scale documentation <scale.html#config>`_.
+        section of the scale documentation
+        <https://vega.github.io/vega-lite/docs/scale.html#config>`_.
     rect : MarkConfig
         Rect-Specific Config
     rule : MarkConfig
         Rule-Specific Config
     scale : ScaleConfig
-        Scale configuration determines default properties for all `scales <scale.html>`_.
-        For a full list of scale configuration options, please see the `corresponding
-        section of the scale documentation <scale.html#config>`_.
+        Scale configuration determines default properties for all `scales
+        <https://vega.github.io/vega-lite/docs/scale.html>`_. For a full list of scale
+        configuration options, please see the `corresponding section of the scale
+        documentation <https://vega.github.io/vega-lite/docs/scale.html#config>`_.
     selection : SelectionConfig
         An object hash for defining default properties for each type of selections.
     square : MarkConfig
@@ -1625,8 +1652,10 @@ class Config(VegaLiteSchema):
         Default stack offset for stackable mark.
     style : StyleConfigIndex
         An object hash that defines key-value mappings to determine default properties for
-        marks with a given `style <mark.html#mark-def>`_.  The keys represent styles names;
-        the values have to be valid `mark configuration objects <mark.html#config>`_.
+        marks with a given `style
+        <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`_.  The keys represent
+        styles names; the values have to be valid `mark configuration objects
+        <https://vega.github.io/vega-lite/docs/mark.html#config>`_.
     text : TextConfig
         Text-Specific Config
     tick : TickConfig
@@ -1634,16 +1663,18 @@ class Config(VegaLiteSchema):
     timeFormat : string
         Default datetime format for axis and legend labels. The format can be set directly
         on each axis and legend. Use `D3's time format pattern
-        <https://github.com/d3/d3-time-format#locale_format>`_.  **Default value:** ``'%b
-        %d, %Y'``.
+        <https://github.com/d3/d3-time-format#locale_format>`_.  **Default value:** ``''``
+        (The format will be automatically determined).
     title : VgTitleConfig
         Title configuration, which determines default properties for all `titles
-        <title.html>`_. For a full list of title configuration options, please see the
-        `corresponding section of the title documentation <title.html#config>`_.
+        <https://vega.github.io/vega-lite/docs/title.html>`_. For a full list of title
+        configuration options, please see the `corresponding section of the title
+        documentation <https://vega.github.io/vega-lite/docs/title.html#config>`_.
     trail : LineConfig
         Trail-Specific Config
     view : ViewConfig
-        Default properties for `single view plots <spec.html#single>`_.
+        Default properties for `single view plots
+        <https://vega.github.io/vega-lite/docs/spec.html#single>`_.
     """
     _schema = {'$ref': '#/definitions/Config'}
     _rootschema = Root._schema
@@ -1678,24 +1709,26 @@ class CsvDataFormat(VegaLiteSchema):
 
     Attributes
     ----------
-    parse : anyOf(enum('auto'), Mapping(required=[]))
-        If set to auto (the default), perform automatic type inference to determine the
-        desired data types. Alternatively, a parsing directive object can be provided for
-        explicit data types. Each property of the object corresponds to a field name, and
-        the value to the desired data type (one of ``"number"``, ``"boolean"`` or ``"date"``
-         ). For example, ``"parse": {"modified_on": "date"}`` parses the ``modified_on``
-        field in each input record a Date value.  For ``"date"``, we parse data based using
+    parse : anyOf(enum('auto'), Parse, None)
+        If set to ``"auto"`` (the default), perform automatic type inference to determine
+        the desired data types. If set to ``null``, disable type inference based on the spec
+         and only use type inference based on the data. Alternatively, a parsing directive
+        object can be provided for explicit data types. Each property of the object
+        corresponds to a field name, and the value to the desired data type (one of
+        ``"number"``, ``"boolean"``, ``"date"``, or null (do not parse the field)). For
+        example, ``"parse": {"modified_on": "date"}`` parses the ``modified_on`` field in
+        each input record a Date value.  For ``"date"``, we parse data based using
         Javascript's ` ``Date.parse()``
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`_.
          For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ),
         using the `d3-time-format syntax
         <https://github.com/d3/d3-time-format#locale_format>`_. UTC date format parsing is
         supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ). See more about `UTC time
-        <timeunit.html#utc>`_
+        <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`_
     type : enum('csv', 'tsv')
-        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``. The default format type is
-        determined by the extension of the file URL. If no extension is detected, ``"json"``
-         will be used by default.
+        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``. The default format
+        type is determined by the extension of the file URL. If no extension is detected,
+        ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/CsvDataFormat'}
     _rootschema = Root._schema
@@ -1719,7 +1752,7 @@ class Data(VegaLiteSchema):
 class DataFormat(VegaLiteSchema):
     """DataFormat schema wrapper
 
-    anyOf(CsvDataFormat, JsonDataFormat, TopoDataFormat)
+    anyOf(CsvDataFormat, DsvDataFormat, JsonDataFormat, TopoDataFormat)
     """
     _schema = {'$ref': '#/definitions/DataFormat'}
     _rootschema = Root._schema
@@ -1814,6 +1847,45 @@ class DictInlineDataset(VegaLiteSchema):
         super(DictInlineDataset, self).__init__(**kwds)
 
 
+class DsvDataFormat(VegaLiteSchema):
+    """DsvDataFormat schema wrapper
+
+    Mapping(required=[delimiter])
+
+    Attributes
+    ----------
+    delimiter : string
+        The delimiter between records. The delimiter must be a single character (i.e., a
+        single 16-bit code unit); so, ASCII delimiters are fine, but emoji delimiters are
+        not.
+    parse : anyOf(enum('auto'), Parse, None)
+        If set to ``"auto"`` (the default), perform automatic type inference to determine
+        the desired data types. If set to ``null``, disable type inference based on the spec
+         and only use type inference based on the data. Alternatively, a parsing directive
+        object can be provided for explicit data types. Each property of the object
+        corresponds to a field name, and the value to the desired data type (one of
+        ``"number"``, ``"boolean"``, ``"date"``, or null (do not parse the field)). For
+        example, ``"parse": {"modified_on": "date"}`` parses the ``modified_on`` field in
+        each input record a Date value.  For ``"date"``, we parse data based using
+        Javascript's ` ``Date.parse()``
+        <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`_.
+         For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ),
+        using the `d3-time-format syntax
+        <https://github.com/d3/d3-time-format#locale_format>`_. UTC date format parsing is
+        supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ). See more about `UTC time
+        <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`_
+    type : enum('dsv')
+        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``. The default format
+        type is determined by the extension of the file URL. If no extension is detected,
+        ``"json"`` will be used by default.
+    """
+    _schema = {'$ref': '#/definitions/DsvDataFormat'}
+    _rootschema = Root._schema
+
+    def __init__(self, delimiter=Undefined, parse=Undefined, type=Undefined, **kwds):
+        super(DsvDataFormat, self).__init__(delimiter=delimiter, parse=parse, type=type, **kwds)
+
+
 class Encoding(VegaLiteSchema):
     """Encoding schema wrapper
 
@@ -1826,20 +1898,22 @@ class Encoding(VegaLiteSchema):
         of mark definition. By default, ``color`` represents fill color for ``"area"``,
         ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
         stroke color for ``"line"`` and ``"point"``.  **Default value:** If undefined, the
-        default color depends on `mark config <config.html#mark>`_ 's ``color`` property.
+        default color depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark>`_ 's ``color`` property.
         *Note:* 1) For fine-grained control over both fill and stroke colors of the marks,
         please use the ``fill`` and ``stroke`` channels.  If either ``fill`` or ``stroke``
         channel is specified, ``color`` channel will be ignored. 2) See the scale
         documentation for more information about customizing `color scheme
-        <scale.html#scheme>`_.
+        <https://vega.github.io/vega-lite/docs/scale.html#scheme>`_.
     detail : anyOf(FieldDef, List(FieldDef))
         Additional levels of detail for grouping data in aggregate views and in line, trail,
          and area marks without mapping data to a specific visual channel.
     fill : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Fill color of the marks. **Default value:** If undefined, the default color depends
-        on `mark config <config.html#mark>`_ 's ``color`` property.  *Note:* When using
-        ``fill`` channel, ``color`` channel will be ignored. To customize both fill and
-        stroke, please use ``fill`` and ``stroke`` channels (not ``fill`` and ``color`` ).
+        on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark>`_ 's
+        ``color`` property.  *Note:* When using ``fill`` channel, ``color`` channel will be
+        ignored. To customize both fill and stroke, please use ``fill`` and ``stroke``
+        channels (not ``fill`` and ``color`` ).
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
     key : FieldDef
@@ -1859,8 +1933,8 @@ class Encoding(VegaLiteSchema):
         ``"rect"``, and  ``"rule"``.
     opacity : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Opacity of the marks – either can be a value or a range.  **Default value:** If
-        undefined, the default opacity depends on `mark config <config.html#mark>`_ 's
-        ``opacity`` property.
+        undefined, the default opacity depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark>`_ 's ``opacity`` property.
     order : anyOf(OrderFieldDef, List(OrderFieldDef), ValueDef)
         Order of the marks.   * For stacked marks, this ``order`` channel encodes `stack
         order <https://vega.github.io/vega-lite/docs/stack.html#order>`_. * For line and
@@ -1876,7 +1950,8 @@ class Encoding(VegaLiteSchema):
         ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or else a
         custom SVG path string. For ``geoshape`` marks it should be a field definition of
         the geojson data  **Default value:** If undefined, the default shape depends on
-        `mark config <config.html#point-config>`_ 's ``shape`` property.
+        `mark config <https://vega.github.io/vega-lite/docs/config.html#point-config>`_ 's
+        ``shape`` property.
     size : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Size of the mark.   * For ``"point"``, ``"square"`` and ``"circle"``, – the symbol
         size, or pixel area of the mark. * For ``"bar"`` and ``"tick"`` – the bar and tick's
@@ -1885,10 +1960,10 @@ class Encoding(VegaLiteSchema):
         varying size)
     stroke : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Stroke color of the marks. **Default value:** If undefined, the default color
-        depends on `mark config <config.html#mark>`_ 's ``color`` property.  *Note:* When
-        using ``stroke`` channel, ``color`` channel will be ignored. To customize both
-        stroke and fill, please use ``stroke`` and ``fill`` channels (not ``stroke`` and
-        ``color`` ).
+        depends on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark>`_
+        's ``color`` property.  *Note:* When using ``stroke`` channel, ``color`` channel
+        will be ignored. To customize both stroke and fill, please use ``stroke`` and
+        ``fill`` channels (not ``stroke`` and ``color`` ).
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the ``text`` mark.
     tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition, List(TextFieldDef))
@@ -1917,6 +1992,37 @@ class Encoding(VegaLiteSchema):
                                        y=y, y2=y2, **kwds)
 
 
+class EncodingSortField(VegaLiteSchema):
+    """EncodingSortField schema wrapper
+
+    Mapping(required=[op])
+    A sort definition for sorting a discrete scale in an encoding field definition.
+
+    Attributes
+    ----------
+    op : AggregateOp
+        An `aggregate operation <https://vega.github.io/vega-lite/docs/aggregate.html#ops>`_
+         to perform on the field prior to sorting (e.g., ``"count"``, ``"mean"`` and
+        ``"median"`` ). This property is required in cases where the sort field and the data
+         reference field do not match. The input data objects will be aggregated, grouped by
+         the encoded data field.  For a full list of operations, please see the
+        documentation for `aggregate
+        <https://vega.github.io/vega-lite/docs/aggregate.html#ops>`_.
+    field : anyOf(string, RepeatRef)
+        The data `field <https://vega.github.io/vega-lite/docs/field.html>`_ to sort by.
+        **Default value:** If unspecified, defaults to the field specified in the outer data
+         reference.
+    order : SortOrder
+        The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
+        not sort).
+    """
+    _schema = {'$ref': '#/definitions/EncodingSortField'}
+    _rootschema = Root._schema
+
+    def __init__(self, op=Undefined, field=Undefined, order=Undefined, **kwds):
+        super(EncodingSortField, self).__init__(op=op, field=field, order=order, **kwds)
+
+
 class EncodingWithFacet(VegaLiteSchema):
     """EncodingWithFacet schema wrapper
 
@@ -1929,12 +2035,13 @@ class EncodingWithFacet(VegaLiteSchema):
         of mark definition. By default, ``color`` represents fill color for ``"area"``,
         ``"bar"``, ``"tick"``, ``"text"``, ``"trail"``, ``"circle"``, and ``"square"`` /
         stroke color for ``"line"`` and ``"point"``.  **Default value:** If undefined, the
-        default color depends on `mark config <config.html#mark>`_ 's ``color`` property.
+        default color depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark>`_ 's ``color`` property.
         *Note:* 1) For fine-grained control over both fill and stroke colors of the marks,
         please use the ``fill`` and ``stroke`` channels.  If either ``fill`` or ``stroke``
         channel is specified, ``color`` channel will be ignored. 2) See the scale
         documentation for more information about customizing `color scheme
-        <scale.html#scheme>`_.
+        <https://vega.github.io/vega-lite/docs/scale.html#scheme>`_.
     column : FacetFieldDef
         Horizontal facets for trellis plots.
     detail : anyOf(FieldDef, List(FieldDef))
@@ -1942,9 +2049,10 @@ class EncodingWithFacet(VegaLiteSchema):
          and area marks without mapping data to a specific visual channel.
     fill : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Fill color of the marks. **Default value:** If undefined, the default color depends
-        on `mark config <config.html#mark>`_ 's ``color`` property.  *Note:* When using
-        ``fill`` channel, ``color`` channel will be ignored. To customize both fill and
-        stroke, please use ``fill`` and ``stroke`` channels (not ``fill`` and ``color`` ).
+        on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark>`_ 's
+        ``color`` property.  *Note:* When using ``fill`` channel, ``color`` channel will be
+        ignored. To customize both fill and stroke, please use ``fill`` and ``stroke``
+        channels (not ``fill`` and ``color`` ).
     href : anyOf(FieldDefWithCondition, ValueDefWithCondition)
         A URL to load upon mouse click.
     key : FieldDef
@@ -1964,8 +2072,8 @@ class EncodingWithFacet(VegaLiteSchema):
         ``"rect"``, and  ``"rule"``.
     opacity : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Opacity of the marks – either can be a value or a range.  **Default value:** If
-        undefined, the default opacity depends on `mark config <config.html#mark>`_ 's
-        ``opacity`` property.
+        undefined, the default opacity depends on `mark config
+        <https://vega.github.io/vega-lite/docs/config.html#mark>`_ 's ``opacity`` property.
     order : anyOf(OrderFieldDef, List(OrderFieldDef), ValueDef)
         Order of the marks.   * For stacked marks, this ``order`` channel encodes `stack
         order <https://vega.github.io/vega-lite/docs/stack.html#order>`_. * For line and
@@ -1983,7 +2091,8 @@ class EncodingWithFacet(VegaLiteSchema):
         ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or else a
         custom SVG path string. For ``geoshape`` marks it should be a field definition of
         the geojson data  **Default value:** If undefined, the default shape depends on
-        `mark config <config.html#point-config>`_ 's ``shape`` property.
+        `mark config <https://vega.github.io/vega-lite/docs/config.html#point-config>`_ 's
+        ``shape`` property.
     size : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Size of the mark.   * For ``"point"``, ``"square"`` and ``"circle"``, – the symbol
         size, or pixel area of the mark. * For ``"bar"`` and ``"tick"`` – the bar and tick's
@@ -1992,10 +2101,10 @@ class EncodingWithFacet(VegaLiteSchema):
         varying size)
     stroke : anyOf(MarkPropFieldDefWithCondition, MarkPropValueDefWithCondition)
         Stroke color of the marks. **Default value:** If undefined, the default color
-        depends on `mark config <config.html#mark>`_ 's ``color`` property.  *Note:* When
-        using ``stroke`` channel, ``color`` channel will be ignored. To customize both
-        stroke and fill, please use ``stroke`` and ``fill`` channels (not ``stroke`` and
-        ``color`` ).
+        depends on `mark config <https://vega.github.io/vega-lite/docs/config.html#mark>`_
+        's ``color`` property.  *Note:* When using ``stroke`` channel, ``color`` channel
+        will be ignored. To customize both stroke and fill, please use ``stroke`` and
+        ``fill`` channels (not ``stroke`` and ``color`` ).
     text : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition)
         Text of the ``text`` mark.
     tooltip : anyOf(TextFieldDefWithCondition, TextValueDefWithCondition, List(TextFieldDef))
@@ -2121,7 +2230,7 @@ class FacetFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -2157,10 +2266,12 @@ class FacetFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FacetFieldDef'}
     _rootschema = Root._schema
@@ -2202,7 +2313,7 @@ class FieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -2234,10 +2345,12 @@ class FieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDef'}
     _rootschema = Root._schema
@@ -2264,7 +2377,7 @@ class FieldDefWithCondition(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -2301,10 +2414,12 @@ class FieldDefWithCondition(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition'}
     _rootschema = Root._schema
@@ -2332,7 +2447,7 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -2368,7 +2483,7 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -2390,10 +2505,12 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/MarkPropFieldDefWithCondition'}
     _rootschema = Root._schema
@@ -2423,7 +2540,7 @@ class TextFieldDefWithCondition(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -2463,10 +2580,12 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/TextFieldDefWithCondition'}
     _rootschema = Root._schema
@@ -2481,7 +2600,7 @@ class TextFieldDefWithCondition(VegaLiteSchema):
 class FieldEqualPredicate(VegaLiteSchema):
     """FieldEqualPredicate schema wrapper
 
-    Mapping(required=[field, equal])
+    Mapping(required=[equal, field])
 
     Attributes
     ----------
@@ -2499,6 +2618,90 @@ class FieldEqualPredicate(VegaLiteSchema):
         super(FieldEqualPredicate, self).__init__(equal=equal, field=field, timeUnit=timeUnit, **kwds)
 
 
+class FieldGTEPredicate(VegaLiteSchema):
+    """FieldGTEPredicate schema wrapper
+
+    Mapping(required=[field, gte])
+
+    Attributes
+    ----------
+    field : string
+        Field to be filtered.
+    gte : anyOf(string, float, DateTime)
+        The value that the field should be greater than or equals to.
+    timeUnit : TimeUnit
+        Time unit for the field to be filtered.
+    """
+    _schema = {'$ref': '#/definitions/FieldGTEPredicate'}
+    _rootschema = Root._schema
+
+    def __init__(self, field=Undefined, gte=Undefined, timeUnit=Undefined, **kwds):
+        super(FieldGTEPredicate, self).__init__(field=field, gte=gte, timeUnit=timeUnit, **kwds)
+
+
+class FieldGTPredicate(VegaLiteSchema):
+    """FieldGTPredicate schema wrapper
+
+    Mapping(required=[field, gt])
+
+    Attributes
+    ----------
+    field : string
+        Field to be filtered.
+    gt : anyOf(string, float, DateTime)
+        The value that the field should be greater than.
+    timeUnit : TimeUnit
+        Time unit for the field to be filtered.
+    """
+    _schema = {'$ref': '#/definitions/FieldGTPredicate'}
+    _rootschema = Root._schema
+
+    def __init__(self, field=Undefined, gt=Undefined, timeUnit=Undefined, **kwds):
+        super(FieldGTPredicate, self).__init__(field=field, gt=gt, timeUnit=timeUnit, **kwds)
+
+
+class FieldLTEPredicate(VegaLiteSchema):
+    """FieldLTEPredicate schema wrapper
+
+    Mapping(required=[field, lte])
+
+    Attributes
+    ----------
+    field : string
+        Field to be filtered.
+    lte : anyOf(string, float, DateTime)
+        The value that the field should be less than or equals to.
+    timeUnit : TimeUnit
+        Time unit for the field to be filtered.
+    """
+    _schema = {'$ref': '#/definitions/FieldLTEPredicate'}
+    _rootschema = Root._schema
+
+    def __init__(self, field=Undefined, lte=Undefined, timeUnit=Undefined, **kwds):
+        super(FieldLTEPredicate, self).__init__(field=field, lte=lte, timeUnit=timeUnit, **kwds)
+
+
+class FieldLTPredicate(VegaLiteSchema):
+    """FieldLTPredicate schema wrapper
+
+    Mapping(required=[field, lt])
+
+    Attributes
+    ----------
+    field : string
+        Field to be filtered.
+    lt : anyOf(string, float, DateTime)
+        The value that the field should be less than.
+    timeUnit : TimeUnit
+        Time unit for the field to be filtered.
+    """
+    _schema = {'$ref': '#/definitions/FieldLTPredicate'}
+    _rootschema = Root._schema
+
+    def __init__(self, field=Undefined, lt=Undefined, timeUnit=Undefined, **kwds):
+        super(FieldLTPredicate, self).__init__(field=field, lt=lt, timeUnit=timeUnit, **kwds)
+
+
 class FieldOneOfPredicate(VegaLiteSchema):
     """FieldOneOfPredicate schema wrapper
 
@@ -2507,12 +2710,12 @@ class FieldOneOfPredicate(VegaLiteSchema):
     Attributes
     ----------
     field : string
-        Field to be filtered
+        Field to be filtered.
     oneOf : anyOf(List(string), List(float), List(boolean), List(DateTime))
         A set of values that the ``field`` 's value should be a member of, for a data item
         included in the filtered data.
     timeUnit : TimeUnit
-        time unit for the field to be filtered.
+        Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldOneOfPredicate'}
     _rootschema = Root._schema
@@ -2529,12 +2732,12 @@ class FieldRangePredicate(VegaLiteSchema):
     Attributes
     ----------
     field : string
-        Field to be filtered
+        Field to be filtered.
     range : List(anyOf(float, DateTime, None))
         An array of inclusive minimum and maximum values for a field value of a data item to
          be included in the filtered data.
     timeUnit : TimeUnit
-        time unit for the field to be filtered.
+        Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldRangePredicate'}
     _rootschema = Root._schema
@@ -2551,16 +2754,20 @@ class FilterTransform(VegaLiteSchema):
     Attributes
     ----------
     filter : LogicalOperandPredicate
-        The ``filter`` property must be one of the predicate definitions: (1) an `expression
+        The ``filter`` property must be one of the predicate definitions:  1) an `expression
          <https://vega.github.io/vega-lite/docs/types.html#expression>`_ string, where
-        ``datum`` can be used to refer to the current data object; (2) one of the field
-        predicates: `equal predicate
-        <https://vega.github.io/vega-lite/docs/filter.html#equal-predicate>`_ ; `range
-        predicate <filter.html#range-predicate>`_, `one-of predicate
-        <https://vega.github.io/vega-lite/docs/filter.html#one-of-predicate>`_ ; (3) a
-        `selection predicate
-        <https://vega.github.io/vega-lite/docs/filter.html#selection-predicate>`_ ; or (4) a
-         logical operand that combines (1), (2), or (3).
+        ``datum`` can be used to refer to the current data object  2) one of the field
+        predicates: ` ``equal``
+        <https://vega.github.io/vega-lite/docs/filter.html#equal-predicate>`_, ` ``lt``
+        <https://vega.github.io/vega-lite/docs/filter.html#lt-predicate>`_, ` ``lte``
+        <https://vega.github.io/vega-lite/docs/filter.html#lte-predicate>`_, ` ``gt``
+        <https://vega.github.io/vega-lite/docs/filter.html#gt-predicate>`_, ` ``gte``
+        <https://vega.github.io/vega-lite/docs/filter.html#gte-predicate>`_, ` ``range``
+        <https://vega.github.io/vega-lite/docs/filter.html#range-predicate>`_, or `
+        ``oneOf`` <https://vega.github.io/vega-lite/docs/filter.html#one-of-predicate>`_.
+        3) a `selection predicate
+        <https://vega.github.io/vega-lite/docs/filter.html#selection-predicate>`_  4) a
+        logical operand that combines (1), (2), or (3).
     """
     _schema = {'$ref': '#/definitions/FilterTransform'}
     _rootschema = Root._schema
@@ -2960,9 +3167,12 @@ class Header(VegaLiteSchema):
         The formatting pattern for labels. This is D3's `number format pattern
         <https://github.com/d3/d3-format#locale_format>`_ for quantitative fields and D3's
         `time format pattern <https://github.com/d3/d3-time-format#locale_format>`_ for time
-         field.  See the `format documentation <format.html>`_ for more information.
-        **Default value:**  derived from `numberFormat <config.html#format>`_ config for
-        quantitative fields and from `timeFormat <config.html#format>`_ config for temporal
+         field.  See the `format documentation
+        <https://vega.github.io/vega-lite/docs/format.html>`_ for more information.
+        **Default value:**  derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for quantitative
+         fields and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for temporal
         fields.
     labelAngle : float
         The rotation angle of the header labels.  **Default value:** ``0``.
@@ -2974,10 +3184,12 @@ class Header(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/Header'}
     _rootschema = Root._schema
@@ -3007,16 +3219,18 @@ class InlineData(VegaLiteSchema):
     ----------
     values : InlineDataset
         The full data set, included inline. This can be an array of objects or primitive
-        values or a string. Arrays of primitive values are ingested as objects with a
-        ``data`` property. Strings are parsed according to the specified format type.
+        values, an object, or a string. Arrays of primitive values are ingested as objects
+        with a ``data`` property. Strings are parsed according to the specified format type.
     format : DataFormat
-        An object that specifies the format for parsing the data values.
+        An object that specifies the format for parsing the data.
+    name : string
+        Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/InlineData'}
     _rootschema = Root._schema
 
-    def __init__(self, values=Undefined, format=Undefined, **kwds):
-        super(InlineData, self).__init__(values=values, format=format, **kwds)
+    def __init__(self, values=Undefined, format=Undefined, name=Undefined, **kwds):
+        super(InlineData, self).__init__(values=values, format=format, name=name, **kwds)
 
 
 class InlineDataset(VegaLiteSchema):
@@ -3166,29 +3380,31 @@ class JsonDataFormat(VegaLiteSchema):
 
     Attributes
     ----------
-    parse : anyOf(enum('auto'), Mapping(required=[]))
-        If set to auto (the default), perform automatic type inference to determine the
-        desired data types. Alternatively, a parsing directive object can be provided for
-        explicit data types. Each property of the object corresponds to a field name, and
-        the value to the desired data type (one of ``"number"``, ``"boolean"`` or ``"date"``
-         ). For example, ``"parse": {"modified_on": "date"}`` parses the ``modified_on``
-        field in each input record a Date value.  For ``"date"``, we parse data based using
+    parse : anyOf(enum('auto'), Parse, None)
+        If set to ``"auto"`` (the default), perform automatic type inference to determine
+        the desired data types. If set to ``null``, disable type inference based on the spec
+         and only use type inference based on the data. Alternatively, a parsing directive
+        object can be provided for explicit data types. Each property of the object
+        corresponds to a field name, and the value to the desired data type (one of
+        ``"number"``, ``"boolean"``, ``"date"``, or null (do not parse the field)). For
+        example, ``"parse": {"modified_on": "date"}`` parses the ``modified_on`` field in
+        each input record a Date value.  For ``"date"``, we parse data based using
         Javascript's ` ``Date.parse()``
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`_.
          For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ),
         using the `d3-time-format syntax
         <https://github.com/d3/d3-time-format#locale_format>`_. UTC date format parsing is
         supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ). See more about `UTC time
-        <timeunit.html#utc>`_
+        <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`_
     property : string
         The JSON property containing the desired data. This parameter can be used when the
         loaded JSON file may have surrounding structure or meta-data. For example
         ``"property": "values.features"`` is equivalent to retrieving
         ``json.values.features`` from the loaded JSON object.
     type : enum('json')
-        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``. The default format type is
-        determined by the extension of the file URL. If no extension is detected, ``"json"``
-         will be used by default.
+        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``. The default format
+        type is determined by the extension of the file URL. If no extension is detected,
+        ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/JsonDataFormat'}
     _rootschema = Root._schema
@@ -3211,9 +3427,12 @@ class Legend(VegaLiteSchema):
         The formatting pattern for labels. This is D3's `number format pattern
         <https://github.com/d3/d3-format#locale_format>`_ for quantitative fields and D3's
         `time format pattern <https://github.com/d3/d3-time-format#locale_format>`_ for time
-         field.  See the `format documentation <format.html>`_ for more information.
-        **Default value:**  derived from `numberFormat <config.html#format>`_ config for
-        quantitative fields and from `timeFormat <config.html#format>`_ config for temporal
+         field.  See the `format documentation
+        <https://vega.github.io/vega-lite/docs/format.html>`_ for more information.
+        **Default value:**  derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for quantitative
+         fields and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for temporal
         fields.
     offset : float
         The offset, in pixels, by which to displace the legend from the edge of the
@@ -3234,10 +3453,12 @@ class Legend(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     type : enum('symbol', 'gradient')
         The type of the legend. Use ``"symbol"`` to create a discrete legend and
         ``"gradient"`` for a continuous color gradient.  **Default value:** ``"gradient"``
@@ -3442,7 +3663,8 @@ class LineConfig(VegaLiteSchema):
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
         style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
     'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
     'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
@@ -3466,7 +3688,7 @@ class LineConfig(VegaLiteSchema):
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
         ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
         ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : float
@@ -3809,7 +4031,8 @@ class MarkConfig(VegaLiteSchema):
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
         style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
     'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
     'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
@@ -3833,7 +4056,7 @@ class MarkConfig(VegaLiteSchema):
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
         ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
         ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : float
@@ -3964,7 +4187,8 @@ class MarkDef(VegaLiteSchema):
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
         style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
     'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
     'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
@@ -3988,7 +4212,7 @@ class MarkDef(VegaLiteSchema):
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
         ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
         ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : float
@@ -4074,12 +4298,14 @@ class MarkDef(VegaLiteSchema):
     style : anyOf(string, List(string))
         A string or array of strings indicating the name of custom styles to apply to the
         mark. A style is a named collection of mark property defaults defined within the
-        `style configuration <mark.html#style-config>`_. If style is an array, later styles
-        will override earlier styles. Any `mark properties <encoding.html#mark-prop>`_
-        explicitly defined within the ``encoding`` will override a style default.  **Default
-         value:** The mark's name.  For example, a bar mark will have style ``"bar"`` by
-        default. **Note:** Any specified style will augment the default style. For example,
-        a bar mark with ``"style": "foo"`` will receive from ``config.style.bar`` and
+        `style configuration
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_. If style is an
+        array, later styles will override earlier styles. Any `mark properties
+        <https://vega.github.io/vega-lite/docs/encoding.html#mark-prop>`_ explicitly defined
+         within the ``encoding`` will override a style default.  **Default value:** The
+        mark's name.  For example, a bar mark will have style ``"bar"`` by default.
+        **Note:** Any specified style will augment the default style. For example, a bar
+        mark with ``"style": "foo"`` will receive from ``config.style.bar`` and
         ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
     tension : float
         Depending on the interpolation type, sets the tension parameter (for line and area
@@ -4091,6 +4317,16 @@ class MarkDef(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
+    thickness : float
+        Thickness of the tick mark.  **Default value:**  ``1``
+    x2Offset : float
+        Offset for x2-position.
+    xOffset : float
+        Offset for x-position.
+    y2Offset : float
+        Offset for y2-position.
+    yOffset : float
+        Offset for y-position.
     """
     _schema = {'$ref': '#/definitions/MarkDef'}
     _rootschema = Root._schema
@@ -4103,7 +4339,9 @@ class MarkDef(VegaLiteSchema):
                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                 yOffset=Undefined, **kwds):
         super(MarkDef, self).__init__(type=type, align=align, angle=angle, baseline=baseline,
                                       binSpacing=binSpacing, clip=clip, color=color, cursor=cursor,
                                       dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled,
@@ -4114,7 +4352,8 @@ class MarkDef(VegaLiteSchema):
                                       strokeCap=strokeCap, strokeDash=strokeDash,
                                       strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
                                       strokeWidth=strokeWidth, style=style, tension=tension, text=text,
-                                      theta=theta, **kwds)
+                                      theta=theta, thickness=thickness, x2Offset=x2Offset,
+                                      xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
 
 
 class Month(VegaLiteSchema):
@@ -4150,7 +4389,8 @@ class MultiSelection(VegaLiteSchema):
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.  See
-         the `nearest transform <nearest.html>`_ documentation for more information.
+         the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`_
+        documentation for more information.
     on : VgEventStream
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`_ (object or
         selector) that triggers the selection. For interval selections, the event stream
@@ -4165,8 +4405,9 @@ class MultiSelection(VegaLiteSchema):
         selections. Can be ``true``, ``false`` (for insertion only), or a `Vega expression
         <https://vega.github.io/vega/docs/expressions/>`_.  **Default value:** ``true``,
         which corresponds to ``event.shiftKey`` (i.e., data values are toggled when a user
-        interacts with the shift-key pressed).  See the `toggle transform <toggle.html>`_
-        documentation for more information.
+        interacts with the shift-key pressed).  See the `toggle transform
+        <https://vega.github.io/vega-lite/docs/toggle.html>`_ documentation for more
+        information.
     """
     _schema = {'$ref': '#/definitions/MultiSelection'}
     _rootschema = Root._schema
@@ -4197,7 +4438,8 @@ class MultiSelectionConfig(VegaLiteSchema):
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.  See
-         the `nearest transform <nearest.html>`_ documentation for more information.
+         the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`_
+        documentation for more information.
     on : VgEventStream
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`_ (object or
         selector) that triggers the selection. For interval selections, the event stream
@@ -4212,8 +4454,9 @@ class MultiSelectionConfig(VegaLiteSchema):
         selections. Can be ``true``, ``false`` (for insertion only), or a `Vega expression
         <https://vega.github.io/vega/docs/expressions/>`_.  **Default value:** ``true``,
         which corresponds to ``event.shiftKey`` (i.e., data values are toggled when a user
-        interacts with the shift-key pressed).  See the `toggle transform <toggle.html>`_
-        documentation for more information.
+        interacts with the shift-key pressed).  See the `toggle transform
+        <https://vega.github.io/vega-lite/docs/toggle.html>`_ documentation for more
+        information.
     """
     _schema = {'$ref': '#/definitions/MultiSelectionConfig'}
     _rootschema = Root._schema
@@ -4278,7 +4521,7 @@ class OrderFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -4312,10 +4555,12 @@ class OrderFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/OrderFieldDef'}
     _rootschema = Root._schema
@@ -4350,6 +4595,18 @@ class Padding(VegaLiteSchema):
         super(Padding, self).__init__(*args, **kwds)
 
 
+class Parse(VegaLiteSchema):
+    """Parse schema wrapper
+
+    Mapping(required=[])
+    """
+    _schema = {'$ref': '#/definitions/Parse'}
+    _rootschema = Root._schema
+
+    def __init__(self, **kwds):
+        super(Parse, self).__init__(**kwds)
+
+
 class PositionFieldDef(VegaLiteSchema):
     """PositionFieldDef schema wrapper
 
@@ -4360,7 +4617,7 @@ class PositionFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -4392,7 +4649,7 @@ class PositionFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, SortField, None)
+    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
          ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
          of values. For fields with discrete domains, ``sort`` can also be a `sort field
@@ -4432,10 +4689,12 @@ class PositionFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/PositionFieldDef'}
     _rootschema = Root._schema
@@ -4451,8 +4710,8 @@ class PositionFieldDef(VegaLiteSchema):
 class Predicate(VegaLiteSchema):
     """Predicate schema wrapper
 
-    anyOf(FieldEqualPredicate, FieldRangePredicate, FieldOneOfPredicate, SelectionPredicate,
-    string)
+    anyOf(FieldEqualPredicate, FieldRangePredicate, FieldOneOfPredicate, FieldLTPredicate,
+    FieldGTPredicate, FieldLTEPredicate, FieldGTEPredicate, SelectionPredicate, string)
     """
     _schema = {'$ref': '#/definitions/Predicate'}
     _rootschema = Root._schema
@@ -4742,20 +5001,23 @@ class Scale(VegaLiteSchema):
     clamp : boolean
         If ``true``, values that exceed the data domain are clamped to either the minimum or
          maximum range value  **Default value:** derived from the `scale config
-        <config.html#scale-config>`_ 's ``clamp`` ( ``true`` by default).
+        <https://vega.github.io/vega-lite/docs/config.html#scale-config>`_ 's ``clamp`` (
+        ``true`` by default).
     domain : anyOf(List(float), List(string), List(boolean), List(DateTime),
     enum('unaggregated'), SelectionDomain)
         Customized domain values.  For *quantitative* fields, ``domain`` can take the form
         of a two-element array with minimum and maximum values.  `Piecewise scales
-        <scale.html#piecewise>`_ can be created by providing a ``domain`` with more than two
-         entries. If the input field is aggregated, ``domain`` can also be a string value
-        ``"unaggregated"``, indicating that the domain should include the raw data values
-        prior to the aggregation.  For *temporal* fields, ``domain`` can be a two-element
-        array minimum and maximum values, in the form of either timestamps or the `DateTime
-        definition objects <types.html#datetime>`_.  For *ordinal* and *nominal* fields,
-        ``domain`` can be an array that lists valid input values.  The ``selection``
-        property can be used to `interactively determine <selection.html#scale-domains>`_
-        the scale domain.
+        <https://vega.github.io/vega-lite/docs/scale.html#piecewise>`_ can be created by
+        providing a ``domain`` with more than two entries. If the input field is aggregated,
+         ``domain`` can also be a string value ``"unaggregated"``, indicating that the
+        domain should include the raw data values prior to the aggregation.  For *temporal*
+        fields, ``domain`` can be a two-element array minimum and maximum values, in the
+        form of either timestamps or the `DateTime definition objects
+        <https://vega.github.io/vega-lite/docs/types.html#datetime>`_.  For *ordinal* and
+        *nominal* fields, ``domain`` can be an array that lists valid input values.  The
+        ``selection`` property can be used to `interactively determine
+        <https://vega.github.io/vega-lite/docs/selection.html#scale-domains>`_ the scale
+        domain.
     exponent : float
         The exponent of the ``pow`` scale.
     interpolate : anyOf(ScaleInterpolate, ScaleInterpolateParams)
@@ -4790,79 +5052,104 @@ class Scale(VegaLiteSchema):
         Apr, Jul, Oct) boundaries.  **Default value:** ``true`` for unbinned *quantitative*
         fields; ``false`` otherwise.
     padding : float
-        For * `continuous <scale.html#continuous>`_ * scales, expands the scale domain to
-        accommodate the specified number of pixels on each of the scale range. The scale
-        range must represent pixels for this parameter to function as intended. Padding
-        adjustment is performed prior to all other adjustments, including the effects of the
-         zero, nice, domainMin, and domainMax properties.  For * `band <scale.html#band>`_ *
+        For * `continuous <https://vega.github.io/vega-lite/docs/scale.html#continuous>`_ *
+        scales, expands the scale domain to accommodate the specified number of pixels on
+        each of the scale range. The scale range must represent pixels for this parameter to
+         function as intended. Padding adjustment is performed prior to all other
+        adjustments, including the effects of the zero, nice, domainMin, and domainMax
+        properties.  For * `band <https://vega.github.io/vega-lite/docs/scale.html#band>`_ *
          scales, shortcut for setting ``paddingInner`` and ``paddingOuter`` to the same
-        value.  For * `point <scale.html#point>`_ * scales, alias for ``paddingOuter``.
-        **Default value:** For *continuous* scales, derived from the `scale config
-        <scale.html#config>`_ 's ``continuousPadding``. For *band and point* scales, see
-        ``paddingInner`` and ``paddingOuter``.
+        value.  For * `point <https://vega.github.io/vega-lite/docs/scale.html#point>`_ *
+        scales, alias for ``paddingOuter``.  **Default value:** For *continuous* scales,
+        derived from the `scale config
+        <https://vega.github.io/vega-lite/docs/scale.html#config>`_ 's
+        ``continuousPadding``. For *band and point* scales, see ``paddingInner`` and
+        ``paddingOuter``.
     paddingInner : float
         The inner padding (spacing) within each band step of band scales, as a fraction of
         the step size. This value must lie in the range [0,1].  For point scale, this
         property is invalid as point scales do not have internal band widths (only step
         sizes between bands).  **Default value:** derived from the `scale config
-        <scale.html#config>`_ 's ``bandPaddingInner``.
+        <https://vega.github.io/vega-lite/docs/scale.html#config>`_ 's ``bandPaddingInner``.
     paddingOuter : float
         The outer padding (spacing) at the ends of the range of band and point scales, as a
         fraction of the step size. This value must lie in the range [0,1].  **Default
-        value:** derived from the `scale config <scale.html#config>`_ 's
-        ``bandPaddingOuter`` for band scales and ``pointPadding`` for point scales.
+        value:** derived from the `scale config
+        <https://vega.github.io/vega-lite/docs/scale.html#config>`_ 's ``bandPaddingOuter``
+        for band scales and ``pointPadding`` for point scales.
     range : anyOf(List(float), List(string), string)
         The range of the scale. One of:   *    A string indicating a `pre-defined named
-        scale range <scale.html#range-config>`_ (e.g., example, ``"symbol"``, or
-        ``"diverging"`` ).  *    For `continuous scales <scale.html#continuous>`_,
-        two-element array indicating  minimum and maximum values, or an array with more than
-         two entries for specifying a `piecewise scale <scale.html#piecewise>`_.  *    For
-        `discrete <scale.html#discrete>`_ and `discretizing <scale.html#discretizing>`_
-        scales, an array of desired output values.  **Notes:**  1) For `sequential
-        <scale.html#sequential>`_, `ordinal <scale.html#ordinal>`_, and discretizing color
-        scales, you can also specify a color ` ``scheme`` <scale.html#scheme>`_ instead of
-        ``range``.  2) Any directly specified ``range`` for ``x`` and ``y`` channels will be
-         ignored. Range can be customized via the view's corresponding `size <size.html>`_ (
-         ``width`` and ``height`` ) or via `range steps and paddings properties
-        <#range-step>`_ for `band <#band>`_ and `point <#point>`_ scales.
+        scale range <https://vega.github.io/vega-lite/docs/scale.html#range-config>`_ (e.g.,
+         example, ``"symbol"``, or ``"diverging"`` ).  *    For `continuous scales
+        <https://vega.github.io/vega-lite/docs/scale.html#continuous>`_, two-element array
+        indicating  minimum and maximum values, or an array with more than two entries for
+        specifying a `piecewise scale
+        <https://vega.github.io/vega-lite/docs/scale.html#piecewise>`_.  *    For `discrete
+        <https://vega.github.io/vega-lite/docs/scale.html#discrete>`_ and `discretizing
+        <https://vega.github.io/vega-lite/docs/scale.html#discretizing>`_ scales, an array
+        of desired output values.  **Notes:**  1) For `sequential
+        <https://vega.github.io/vega-lite/docs/scale.html#sequential>`_, `ordinal
+        <https://vega.github.io/vega-lite/docs/scale.html#ordinal>`_, and discretizing color
+         scales, you can also specify a color ` ``scheme``
+        <https://vega.github.io/vega-lite/docs/scale.html#scheme>`_ instead of ``range``.
+        2) Any directly specified ``range`` for ``x`` and ``y`` channels will be ignored.
+        Range can be customized via the view's corresponding `size
+        <https://vega.github.io/vega-lite/docs/size.html>`_ ( ``width`` and ``height`` ) or
+        via `range steps and paddings properties <#range-step>`_ for `band <#band>`_ and
+        `point <#point>`_ scales.
     rangeStep : anyOf(float, None)
         The distance between the starts of adjacent bands or points in `band
-        <scale.html#band>`_ and `point <scale.html#point>`_ scales.  If ``rangeStep`` is
-        ``null`` or if the view contains the scale's corresponding `size <size.html>`_ (
-        ``width`` for ``x`` scales and ``height`` for ``y`` scales), ``rangeStep`` will be
-        automatically determined to fit the size of the view.  **Default value:**  derived
-        the `scale config <config.html#scale-config>`_ 's ``textXRangeStep`` ( ``90`` by
-        default) for x-scales of ``text`` marks and ``rangeStep`` ( ``21`` by default) for
-        x-scales of other marks and y-scales.  **Warning** : If ``rangeStep`` is ``null``
-        and the cardinality of the scale's domain is higher than ``width`` or ``height``,
-        the rangeStep might become less than one pixel and the mark might not appear
-        correctly.
+        <https://vega.github.io/vega-lite/docs/scale.html#band>`_ and `point
+        <https://vega.github.io/vega-lite/docs/scale.html#point>`_ scales.  If ``rangeStep``
+         is ``null`` or if the view contains the scale's corresponding `size
+        <https://vega.github.io/vega-lite/docs/size.html>`_ ( ``width`` for ``x`` scales and
+         ``height`` for ``y`` scales), ``rangeStep`` will be automatically determined to fit
+         the size of the view.  **Default value:**  derived the `scale config
+        <https://vega.github.io/vega-lite/docs/config.html#scale-config>`_ 's
+        ``textXRangeStep`` ( ``90`` by default) for x-scales of ``text`` marks and
+        ``rangeStep`` ( ``21`` by default) for x-scales of other marks and y-scales.
+        **Warning** : If ``rangeStep`` is ``null`` and the cardinality of the scale's domain
+         is higher than ``width`` or ``height``, the rangeStep might become less than one
+        pixel and the mark might not appear correctly.
     round : boolean
         If ``true``, rounds numeric output values to integers. This can be helpful for
         snapping to the pixel grid.  **Default value:** ``false``.
     scheme : anyOf(string, SchemeParams)
-        A string indicating a color `scheme <scale.html#scheme>`_ name (e.g.,
+        A string indicating a color `scheme
+        <https://vega.github.io/vega-lite/docs/scale.html#scheme>`_ name (e.g.,
         ``"category10"`` or ``"viridis"`` ) or a `scheme parameter object
-        <scale.html#scheme-params>`_.  Discrete color schemes may be used with `discrete
-        <scale.html#discrete>`_ or `discretizing <scale.html#discretizing>`_ scales.
-        Continuous color schemes are intended for use with `sequential
-        <scales.html#sequential>`_ scales.  For the full list of supported schemes, please
-        refer to the `Vega Scheme <https://vega.github.io/vega/docs/schemes/#reference>`_
-        reference.
+        <https://vega.github.io/vega-lite/docs/scale.html#scheme-params>`_.  Discrete color
+        schemes may be used with `discrete
+        <https://vega.github.io/vega-lite/docs/scale.html#discrete>`_ or `discretizing
+        <https://vega.github.io/vega-lite/docs/scale.html#discretizing>`_ scales. Continuous
+         color schemes are intended for use with `sequential
+        <https://vega.github.io/vega-lite/docs/scales.html#sequential>`_ scales.  For the
+        full list of supported schemes, please refer to the `Vega Scheme
+        <https://vega.github.io/vega/docs/schemes/#reference>`_ reference.
     type : ScaleType
         The type of scale.  Vega-Lite supports the following categories of scale types:  1)
-        ` **Continuous Scales** <scale.html#continuous>`_ -- mapping continuous domains to
-        continuous output ranges ( ` ``"linear"`` <scale.html#linear>`_, ` ``"pow"``
-        <scale.html#pow>`_, ` ``"sqrt"`` <scale.html#sqrt>`_, ` ``"log"``
-        <scale.html#log>`_, ` ``"time"`` <scale.html#time>`_, ` ``"utc"``
-        <scale.html#utc>`_, ` ``"sequential"`` <scale.html#sequential>`_ ).  2) ` **Discrete
-         Scales** <scale.html#discrete>`_ -- mapping discrete domains to discrete ( `
-        ``"ordinal"`` <scale.html#ordinal>`_ ) or continuous ( ` ``"band"``
-        <scale.html#band>`_ and ` ``"point"`` <scale.html#point>`_ ) output ranges.  3) `
-        **Discretizing Scales** <scale.html#discretizing>`_ -- mapping continuous domains to
-         discrete output ranges ( ` ``"bin-linear"`` <scale.html#bin-linear>`_ and `
-        ``"bin-ordinal"`` <scale.html#bin-ordinal>`_ ).  **Default value:** please see the
-        `scale type table <scale.html#type>`_.
+        ` **Continuous Scales**
+        <https://vega.github.io/vega-lite/docs/scale.html#continuous>`_ -- mapping
+        continuous domains to continuous output ranges ( ` ``"linear"``
+        <https://vega.github.io/vega-lite/docs/scale.html#linear>`_, ` ``"pow"``
+        <https://vega.github.io/vega-lite/docs/scale.html#pow>`_, ` ``"sqrt"``
+        <https://vega.github.io/vega-lite/docs/scale.html#sqrt>`_, ` ``"log"``
+        <https://vega.github.io/vega-lite/docs/scale.html#log>`_, ` ``"time"``
+        <https://vega.github.io/vega-lite/docs/scale.html#time>`_, ` ``"utc"``
+        <https://vega.github.io/vega-lite/docs/scale.html#utc>`_, ` ``"sequential"``
+        <https://vega.github.io/vega-lite/docs/scale.html#sequential>`_ ).  2) ` **Discrete
+        Scales** <https://vega.github.io/vega-lite/docs/scale.html#discrete>`_ -- mapping
+        discrete domains to discrete ( ` ``"ordinal"``
+        <https://vega.github.io/vega-lite/docs/scale.html#ordinal>`_ ) or continuous ( `
+        ``"band"`` <https://vega.github.io/vega-lite/docs/scale.html#band>`_ and `
+        ``"point"`` <https://vega.github.io/vega-lite/docs/scale.html#point>`_ ) output
+        ranges.  3) ` **Discretizing Scales**
+        <https://vega.github.io/vega-lite/docs/scale.html#discretizing>`_ -- mapping
+        continuous domains to discrete output ranges ( ` ``"bin-linear"``
+        <https://vega.github.io/vega-lite/docs/scale.html#bin-linear>`_ and `
+        ``"bin-ordinal"`` <https://vega.github.io/vega-lite/docs/scale.html#bin-ordinal>`_
+        ).  **Default value:** please see the `scale type table
+        <https://vega.github.io/vega-lite/docs/scale.html#type>`_.
     zero : boolean
         If ``true``, ensures that a zero baseline value is included in the scale domain.
         **Default value:** ``true`` for x and y channels if the quantitative field is not
@@ -5080,18 +5367,21 @@ class SelectionConfig(VegaLiteSchema):
     Attributes
     ----------
     interval : IntervalSelectionConfig
-        The default definition for an ` ``interval`` <selection.html#type>`_ selection. All
+        The default definition for an ` ``interval``
+        <https://vega.github.io/vega-lite/docs/selection.html#type>`_ selection. All
         properties and transformations for an interval selection definition (except ``type``
          ) may be specified here.  For instance, setting ``interval`` to ``{"translate":
         false}`` disables the ability to move interval selections by default.
     multi : MultiSelectionConfig
-        The default definition for a ` ``multi`` <selection.html#type>`_ selection. All
+        The default definition for a ` ``multi``
+        <https://vega.github.io/vega-lite/docs/selection.html#type>`_ selection. All
         properties and transformations for a multi selection definition (except ``type`` )
         may be specified here.  For instance, setting ``multi`` to ``{"toggle":
         "event.altKey"}`` adds additional values to multi selections when clicking with the
         alt-key pressed by default.
     single : SingleSelectionConfig
-        The default definition for a ` ``single`` <selection.html#type>`_ selection. All
+        The default definition for a ` ``single``
+        <https://vega.github.io/vega-lite/docs/selection.html#type>`_ selection. All
         properties and transformations   for a single selection definition (except ``type``
         ) may be specified here.  For instance, setting ``single`` to ``{"on": "dblclick"}``
          populates single selections on double-click by default.
@@ -5184,7 +5474,8 @@ class SingleSelection(VegaLiteSchema):
         known as dynamic query widgets). A binding takes the form of Vega's `input element
         binding definition <https://vega.github.io/vega/docs/signals/#bind>`_ or can be a
         mapping between projected field/encodings and binding definitions.  See the `bind
-        transform <bind.html>`_ documentation for more information.
+        transform <https://vega.github.io/vega-lite/docs/bind.html>`_ documentation for more
+         information.
     empty : enum('all', 'none')
         By default, all data values are considered to lie within an empty selection. When
         set to ``none``, empty selections contain no data values.
@@ -5197,7 +5488,8 @@ class SingleSelection(VegaLiteSchema):
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.  See
-         the `nearest transform <nearest.html>`_ documentation for more information.
+         the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`_
+        documentation for more information.
     on : VgEventStream
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`_ (object or
         selector) that triggers the selection. For interval selections, the event stream
@@ -5230,7 +5522,8 @@ class SingleSelectionConfig(VegaLiteSchema):
         known as dynamic query widgets). A binding takes the form of Vega's `input element
         binding definition <https://vega.github.io/vega/docs/signals/#bind>`_ or can be a
         mapping between projected field/encodings and binding definitions.  See the `bind
-        transform <bind.html>`_ documentation for more information.
+        transform <https://vega.github.io/vega-lite/docs/bind.html>`_ documentation for more
+         information.
     empty : enum('all', 'none')
         By default, all data values are considered to lie within an empty selection. When
         set to ``none``, empty selections contain no data values.
@@ -5243,7 +5536,8 @@ class SingleSelectionConfig(VegaLiteSchema):
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.  See
-         the `nearest transform <nearest.html>`_ documentation for more information.
+         the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`_
+        documentation for more information.
     on : VgEventStream
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`_ (object or
         selector) that triggers the selection. For interval selections, the event stream
@@ -5279,28 +5573,21 @@ class SingleTimeUnit(VegaLiteSchema):
 class SortField(VegaLiteSchema):
     """SortField schema wrapper
 
-    Mapping(required=[op])
+    Mapping(required=[field])
+    A sort definition for transform
 
     Attributes
     ----------
-    op : AggregateOp
-        An `aggregate operation <aggregate.html#ops>`_ to perform on the field prior to
-        sorting (e.g., ``"count"``, ``"mean"`` and ``"median"`` ). This property is required
-         in cases where the sort field and the data reference field do not match. The input
-        data objects will be aggregated, grouped by the encoded data field.  For a full list
-         of operations, please see the documentation for `aggregate <aggregate.html#ops>`_.
-    field : anyOf(string, RepeatRef)
-        The data `field <field.html>`_ to sort by.  **Default value:** If unspecified,
-        defaults to the field specified in the outer data reference.
-    order : SortOrder
-        The sort order. One of ``"ascending"`` (default), ``"descending"``, or ``null`` (no
-        not sort).
+    field : string
+        The name of the field to sort.
+    order : VgComparatorOrder
+        Whether to sort the field in ascending or descending order.
     """
     _schema = {'$ref': '#/definitions/SortField'}
     _rootschema = Root._schema
 
-    def __init__(self, op=Undefined, field=Undefined, order=Undefined, **kwds):
-        super(SortField, self).__init__(op=op, field=field, order=order, **kwds)
+    def __init__(self, field=Undefined, order=Undefined, **kwds):
+        super(SortField, self).__init__(field=field, order=order, **kwds)
 
 
 class SortOrder(VegaLiteSchema):
@@ -5357,7 +5644,8 @@ class TextConfig(VegaLiteSchema):
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
         style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
     'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
     'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
@@ -5381,7 +5669,7 @@ class TextConfig(VegaLiteSchema):
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
         ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
         ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : float
@@ -5498,7 +5786,7 @@ class TextFieldDef(VegaLiteSchema):
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <geoshape.html>`_.
+        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     aggregate : Aggregate
         Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
         ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
@@ -5533,10 +5821,12 @@ class TextFieldDef(VegaLiteSchema):
         or has a time unit applied, the applied function is shown in parentheses (e.g.,
         ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
         is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config <config.html>`_ or
-         ` ``fieldTitle`` function via the ``compile`` function's options
-        <compile.html#field-title>`_.  2) If both field definition's ``title`` and axis,
-        header, or legend ``title`` are defined, axis/header/legend title will be used.
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/TextFieldDef'}
     _rootschema = Root._schema
@@ -5567,7 +5857,8 @@ class TickConfig(VegaLiteSchema):
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
         style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config <mark.html#style-config>`_.
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
     'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
     'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
@@ -5591,7 +5882,7 @@ class TickConfig(VegaLiteSchema):
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
         ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
         ``area`` marks.  **Note:** This property cannot be used in a `style config
-        <mark.html#style-config>`_.
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
     fontSize : float
@@ -5757,10 +6048,13 @@ class TitleParams(VegaLiteSchema):
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
         ``"end"``. For example, with an orientation of top these anchor positions map to a
         left-, center-, or right-aligned title.  **Default value:** ``"middle"`` for `single
-         <spec.html>`_ and `layered <layer.html>`_ views. ``"start"`` for other composite
-        views.  **Note:** `For now <https://github.com/vega/vega-lite/issues/2875>`_,
-        ``anchor`` is only customizable only for `single <spec.html>`_ and `layered
-        <layer.html>`_ views.  For other composite views, ``anchor`` is always ``"start"``.
+         <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views. ``"start"`` for other
+        composite views.  **Note:** `For now
+        <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is only customizable
+        only for `single <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views.  For other composite
+        views, ``anchor`` is always ``"start"``.
     offset : float
         The orthogonal offset in pixels by which to displace the title from its position
         along the edge of the chart.
@@ -5768,8 +6062,8 @@ class TitleParams(VegaLiteSchema):
         The orientation of the title relative to the chart. One of ``"top"`` (the default),
         ``"bottom"``, ``"left"``, or ``"right"``.
     style : anyOf(string, List(string))
-        A `mark style property <config.html#style>`_ to apply to the title text mark.
-        **Default value:** ``"group-title"``.
+        A `mark style property <https://vega.github.io/vega-lite/docs/config.html#style>`_
+        to apply to the title text mark.  **Default value:** ``"group-title"``.
     """
     _schema = {'$ref': '#/definitions/TitleParams'}
     _rootschema = Root._schema
@@ -6304,24 +6598,26 @@ class TopoDataFormat(VegaLiteSchema):
         not as individual GeoJSON features. Extracting a mesh is useful for more efficiently
          drawing borders or other geographic elements that you do not need to associate with
          specific regions such as individual countries, states or counties.
-    parse : anyOf(enum('auto'), Mapping(required=[]))
-        If set to auto (the default), perform automatic type inference to determine the
-        desired data types. Alternatively, a parsing directive object can be provided for
-        explicit data types. Each property of the object corresponds to a field name, and
-        the value to the desired data type (one of ``"number"``, ``"boolean"`` or ``"date"``
-         ). For example, ``"parse": {"modified_on": "date"}`` parses the ``modified_on``
-        field in each input record a Date value.  For ``"date"``, we parse data based using
+    parse : anyOf(enum('auto'), Parse, None)
+        If set to ``"auto"`` (the default), perform automatic type inference to determine
+        the desired data types. If set to ``null``, disable type inference based on the spec
+         and only use type inference based on the data. Alternatively, a parsing directive
+        object can be provided for explicit data types. Each property of the object
+        corresponds to a field name, and the value to the desired data type (one of
+        ``"number"``, ``"boolean"``, ``"date"``, or null (do not parse the field)). For
+        example, ``"parse": {"modified_on": "date"}`` parses the ``modified_on`` field in
+        each input record a Date value.  For ``"date"``, we parse data based using
         Javascript's ` ``Date.parse()``
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`_.
          For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ),
         using the `d3-time-format syntax
         <https://github.com/d3/d3-time-format#locale_format>`_. UTC date format parsing is
         supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ). See more about `UTC time
-        <timeunit.html#utc>`_
+        <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`_
     type : enum('topojson')
-        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``. The default format type is
-        determined by the extension of the file URL. If no extension is detected, ``"json"``
-         will be used by default.
+        Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``. The default format
+        type is determined by the extension of the file URL. If no extension is detected,
+        ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/TopoDataFormat'}
     _rootschema = Root._schema
@@ -6368,13 +6664,15 @@ class UrlData(VegaLiteSchema):
         An URL from which to load the data set. Use the ``format.type`` property to ensure
         the loaded data is correctly parsed.
     format : DataFormat
-        An object that specifies the format for parsing the data file.
+        An object that specifies the format for parsing the data.
+    name : string
+        Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/UrlData'}
     _rootschema = Root._schema
 
-    def __init__(self, url=Undefined, format=Undefined, **kwds):
-        super(UrlData, self).__init__(url=url, format=format, **kwds)
+    def __init__(self, url=Undefined, format=Undefined, name=Undefined, **kwds):
+        super(UrlData, self).__init__(url=url, format=format, name=name, **kwds)
 
 
 class UtcMultiTimeUnit(VegaLiteSchema):
@@ -6529,8 +6827,9 @@ class VgAxisConfig(VegaLiteSchema):
         Stroke width of axis domain line  **Default value:**  (none, using Vega default).
     grid : boolean
         A boolean flag indicating if grid lines should be included as part of the axis
-        **Default value:** ``true`` for `continuous scales <scale.html#continuous>`_ that
-        are not binned; otherwise, ``false``.
+        **Default value:** ``true`` for `continuous scales
+        <https://vega.github.io/vega-lite/docs/scale.html#continuous>`_ that are not binned;
+         otherwise, ``false``.
     gridColor : string
         Color of gridlines.
     gridDash : List(float)
@@ -6983,10 +7282,13 @@ class VgTitleConfig(VegaLiteSchema):
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
         ``"end"``. For example, with an orientation of top these anchor positions map to a
         left-, center-, or right-aligned title.  **Default value:** ``"middle"`` for `single
-         <spec.html>`_ and `layered <layer.html>`_ views. ``"start"`` for other composite
-        views.  **Note:** `For now <https://github.com/vega/vega-lite/issues/2875>`_,
-        ``anchor`` is only customizable only for `single <spec.html>`_ and `layered
-        <layer.html>`_ views.  For other composite views, ``anchor`` is always ``"start"``.
+         <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views. ``"start"`` for other
+        composite views.  **Note:** `For now
+        <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is only customizable
+        only for `single <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views.  For other composite
+        views, ``anchor`` is always ``"start"``.
     angle : float
         Angle in degrees of title text.
     baseline : VerticalAlign
@@ -7108,26 +7410,6 @@ class WindowOnlyOp(VegaLiteSchema):
         super(WindowOnlyOp, self).__init__(*args)
 
 
-class WindowSortField(VegaLiteSchema):
-    """WindowSortField schema wrapper
-
-    Mapping(required=[field])
-    A compartor for fields within the window transform
-
-    Attributes
-    ----------
-    field : string
-        The name of the field to sort.
-    order : VgComparatorOrder
-        Whether to sort the field in ascending or descending order.
-    """
-    _schema = {'$ref': '#/definitions/WindowSortField'}
-    _rootschema = Root._schema
-
-    def __init__(self, field=Undefined, order=Undefined, **kwds):
-        super(WindowSortField, self).__init__(field=field, order=order, **kwds)
-
-
 class WindowTransform(VegaLiteSchema):
     """WindowTransform schema wrapper
 
@@ -7160,8 +7442,8 @@ class WindowTransform(VegaLiteSchema):
         will be defined by offset values only. This setting only affects those operations
         that depend on the window frame, namely aggregation operations and the first_value,
         last_value, and nth_value window operations.  **Default value:** ``false``
-    sort : List(WindowSortField)
-        A comparator definition for sorting data objects within a window. If two data
+    sort : List(SortField)
+        A sort field definition for sorting data objects within a window. If two data
         objects are considered equal by the comparator, they are considered “peer” values of
          equal rank. If sort is not specified, the order is undefined: data objects are
         processed in the order they are observed and none are considered peers (the

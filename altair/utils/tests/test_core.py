@@ -57,14 +57,17 @@ def test_parse_shorthand_with_data():
 
     data = pd.DataFrame({'x': [1, 2, 3, 4, 5],
                          'y': ['A', 'B', 'C', 'D', 'E'],
-                         'z': pd.date_range('2018-01-01', periods=5, freq='D')})
+                         'z': pd.date_range('2018-01-01', periods=5, freq='D'),
+                         't': pd.date_range('2018-01-01', periods=5, freq='D').tz_localize('UTC')})
 
     check('x', data, field='x', type='quantitative')
     check('y', data, field='y', type='nominal')
     check('z', data, field='z', type='temporal')
+    check('t', data, field='t', type='temporal')
     check('count(x)', data, field='x', aggregate='count', type='quantitative')
     check('count()', data, aggregate='count', type='quantitative')
     check('month(z)', data, timeUnit='month', field='z', type='temporal')
+    check('month(t)', data, timeUnit='month', field='t', type='temporal')
 
 
 def test_parse_shorthand_all_aggregates():
@@ -87,6 +90,19 @@ def test_parse_shorthand_all_timeunits():
         assert parse_shorthand(shorthand) == {'timeUnit': timeUnit,
                                               'field': 'field',
                                               'type': 'quantitative'}
+
+
+def test_parse_shorthand_all_window_ops():
+    window_ops = alt.Root._schema['definitions']['WindowOnlyOp']['enum']
+    aggregates = alt.Root._schema['definitions']['AggregateOp']['enum']
+    for op in (window_ops + aggregates):
+        shorthand = "{op}(field)".format(op=op)
+        dct = parse_shorthand(shorthand,
+                              parse_aggregates=False,
+                              parse_window_ops=True,
+                              parse_timeunits=False,
+                              parse_types=False)
+        assert dct == {'field': 'field', 'op': op}
 
 
 def test_update_nested():

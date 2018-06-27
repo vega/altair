@@ -301,6 +301,20 @@ def test_transforms():
     kwds = {'as': 'foo', 'field': 'x', 'timeUnit': 'date'}
     assert chart.transform == [alt.TimeUnitTransform(**kwds)]
 
+    # window transform
+    chart = alt.Chart().transform_window(xsum='sum(x)', ymin='min(y)',
+                                         frame=[None, 0])
+    window = [alt.WindowFieldDef(**{'as': 'xsum', 'field': 'x', 'op': 'sum'}),
+              alt.WindowFieldDef(**{'as': 'ymin', 'field': 'y', 'op': 'min'})]
+
+    # kwargs don't maintain order in Python < 3.6, so window list can
+    # be reversed
+    assert (chart.transform == [alt.WindowTransform(frame=[None, 0],
+                                                    window=window)]
+            or chart.transform == [alt.WindowTransform(frame=[None, 0],
+                                                       window=window[::-1])])
+            
+
 
 def test_resolve_methods():
     chart = alt.LayerChart().resolve_axis(x='shared', y='independent')

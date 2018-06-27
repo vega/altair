@@ -2,6 +2,18 @@
 
 ## Version 2.2.0 (Unreleased):
 
+### Enhancements
+
+- more streamlined shorthand syntax for window transforms (#957)
+
+### Maintenance
+
+- update to Vega-Lite 2.5.2; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2)
+
+### Backward-incompatible changes
+
+- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and ``alt.WindowSortField`` renamed to ``alt.SortField`` (https://github.com/vega/vega-lite/pull/3741)
+
 ## Version 2.1.0 (Released June 6, 2018):
 
 ### Enhancements

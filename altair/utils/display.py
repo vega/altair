@@ -23,7 +23,13 @@ class RendererRegistry(PluginRegistry[RendererType]):
             and the associated Jupyter extension.
             See https://altair-viz.github.io/getting_started/installation.html
             for more information.
-            """)
+            """),
+        'vegascope': textwrap.dedent(
+            """
+            To use the 'vegascope' renderer, you must install the vegascope
+            package; see http://github.com/diana-hep/vegascope/
+            for more information.
+            """),
     }
 
 # ==============================================================================
