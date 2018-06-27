@@ -7,7 +7,15 @@ class TypedCallableRegistry(PluginRegistry[Callable[[int], int]]):
 
 
 class GeneralCallableRegistry(PluginRegistry):
-    pass
+    _global_settings = {'global_setting': None}
+
+    @property
+    def global_setting(self):
+        return self._global_settings['global_setting']
+
+    @global_setting.setter
+    def global_setting(self, val):
+        self._global_settings['global_setting'] = val
 
 
 def test_plugin_registry():
@@ -48,6 +56,29 @@ def test_plugin_registry_extra_options():
     plugins.enable(p=2)
     assert plugins.active == 'metadata_plugin'
     assert plugins.get()(3) == 9
+
+
+def test_plugin_registry_global_settings():
+    plugins = GeneralCallableRegistry()
+
+    # we need some default plugin, but we won't do anything with it
+    plugins.register('default', lambda x: x)
+    plugins.enable('default')
+
+    # default value of the global flag
+    assert plugins.global_setting is None
+
+    # enabling changes the global state, not the options
+    plugins.enable(global_setting=True)
+    assert plugins.global_setting is True
+    assert plugins._options == {}
+
+    # context manager changes global state temporarily
+    with plugins.enable(global_setting='temp'):
+        assert plugins.global_setting == 'temp'
+        assert plugins._options == {}
+    assert plugins.global_setting is True
+    assert plugins._options == {}
 
 
 def test_plugin_registry_context():
