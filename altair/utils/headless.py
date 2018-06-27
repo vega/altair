@@ -6,11 +6,6 @@ import contextlib
 import os
 import tempfile
 
-try:
-    import selenium.webdriver
-except ImportError:
-    selenium = None
-
 
 @contextlib.contextmanager
 def temporary_filename(**kwargs):
@@ -110,8 +105,14 @@ EXTRACT_CODE = {
 def compile_spec(spec, format, mode,
                  vega_version, vegaembed_version, vegalite_version,
                  scale_factor=1, driver_timeout=20, webdriver='chrome'):
-  
     # TODO: detect & use local Jupyter caches of JS packages?
+
+    # selenium is an optional dependency, so import it here
+    try:
+        import selenium.webdriver
+    except ImportError:
+        raise ImportError("selenium package is required "
+                          "for saving chart as {0}".format(format))
 
     if format not in ['png', 'svg', 'vega']:
         raise NotImplementedError("format must be 'svg', 'png' or 'vega'")
@@ -128,9 +129,6 @@ def compile_spec(spec, format, mode,
     if mode == 'vega-lite' and vegalite_version is None:
         raise ValueError("must specify vega-lite version")
 
-    if selenium is None:
-        raise ImportError("selenium package is required "
-                          "for saving chart as {0}".format(format))
     if webdriver == 'chrome':
         webdriver_class = selenium.webdriver.Chrome
         webdriver_options_class = selenium.webdriver.chrome.options.Options
