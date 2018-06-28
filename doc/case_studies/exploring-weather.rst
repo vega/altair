@@ -48,8 +48,7 @@ It is difficult to see patterns across continuous variables, and so to
 better see this, we can create a histogram of the precipitation data.
 For this we first discretize the precipitation values by adding a binning
 to ``x``.
-Additionally, we set our encoding channel ``y`` with the special field ``*``
-that is aggregated with ``count``.
+Additionally, we set our encoding channel ``y`` with ``count``.
 The result is a histogram of precipitation values:
 
 .. altair-plot::
@@ -70,7 +69,7 @@ other ``timeUnit`` binnings):
 .. altair-plot::
 
     alt.Chart(df).mark_line().encode(
-        x='month(date:T)',
+        x='month(date):T',
         y='average(precipitation)'
     )
 
