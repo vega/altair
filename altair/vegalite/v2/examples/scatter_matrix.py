@@ -13,8 +13,8 @@ alt.Chart(data.cars.url).mark_circle().encode(
     alt.Y(alt.repeat("row"), type='quantitative'),
     color='Origin:N'
 ).properties(
-    width=250,
-    height=250
+    width=150,
+    height=150
 ).repeat(
     row=['Horsepower', 'Acceleration', 'Miles_per_Gallon'],
     column=['Miles_per_Gallon', 'Acceleration', 'Horsepower']
