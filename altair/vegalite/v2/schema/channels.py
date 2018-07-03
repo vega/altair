@@ -120,15 +120,21 @@ class Color(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -216,8 +222,21 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     header : Header
         An object defining properties of a facet's header.
-    sort : SortOrder
-        Sort order for a facet field. This can be ``"ascending"``, ``"descending"``.
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -362,15 +381,21 @@ class Fill(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -873,15 +898,21 @@ class Opacity(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -1048,8 +1079,21 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     header : Header
         An object defining properties of a facet's header.
-    sort : SortOrder
-        Sort order for a facet field. This can be ``"ascending"``, ``"descending"``.
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -1134,15 +1178,21 @@ class Shape(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -1251,15 +1301,21 @@ class Size(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -1368,15 +1424,21 @@ class Stroke(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field. or `a temporal field that gets casted as ordinal
@@ -1671,15 +1733,21 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     stack : anyOf(StackOffset, None)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
          for ``x`` and ``y`` channels with continuous domains. For example, ``stack`` of
@@ -1868,15 +1936,21 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
          undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
-        Sort order for the encoded field. Supported ``sort`` values include ``"ascending"``,
-         ``"descending"``, ``null`` (no sorting), or an array specifying the preferred order
-         of values. For fields with discrete domains, ``sort`` can also be a `sort field
-        definition object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.  **Default value:** ``"ascending"``
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
     stack : anyOf(StackOffset, None)
         Type of stacking offset if the field should be stacked. ``stack`` is only applicable
          for ``x`` and ``y`` channels with continuous domains. For example, ``stack`` of
