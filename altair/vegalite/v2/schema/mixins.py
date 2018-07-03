@@ -11,30 +11,32 @@ class MarkMethodMixin(object):
     """A mixin class that defines mark methods"""
 
     def mark_area(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
+                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'area'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="area", **kwds)
@@ -43,30 +45,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_bar(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                 clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                 fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                 interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                 orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                 yOffset=Undefined, **kwds):
+                 clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                 dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                 fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                 limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                 xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'bar'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="bar", **kwds)
@@ -75,30 +79,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_line(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
+                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'line'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="line", **kwds)
@@ -107,30 +113,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_trail(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                   clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                   fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                   fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                   interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                   thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                   yOffset=Undefined, **kwds):
+                   clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                   limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
+                   point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'trail'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="trail", **kwds)
@@ -139,30 +147,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_point(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                   clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                   fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                   fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                   interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                   strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                   thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                   yOffset=Undefined, **kwds):
+                   clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                   limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
+                   point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                   theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'point'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="point", **kwds)
@@ -171,30 +181,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_text(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
+                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'text'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="text", **kwds)
@@ -203,30 +215,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_tick(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
+                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'tick'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="tick", **kwds)
@@ -235,30 +249,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_rect(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
+                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rect'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rect", **kwds)
@@ -267,30 +283,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_rule(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                  clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                  thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                  yOffset=Undefined, **kwds):
+                  clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
+                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rule'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rule", **kwds)
@@ -299,30 +317,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_circle(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                    clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                    fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                    fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                    interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                    strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                    thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                    yOffset=Undefined, **kwds):
+                    clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                    fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                    limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
+                    point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                    strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                    text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined,
+                    x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'circle'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="circle", **kwds)
@@ -331,30 +351,32 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_square(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                    clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                    fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                    fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                    interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                    strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                    thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                    yOffset=Undefined, **kwds):
+                    clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                    fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                    limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
+                    point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                    strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                    text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined,
+                    x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'square'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="square", **kwds)
@@ -363,30 +385,33 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_geoshape(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                      clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined,
-                      fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                      fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                      interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                      orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                      size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                      strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                      style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                      thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                      clip=Undefined, color=Undefined, cornerRadius=Undefined, cursor=Undefined,
+                      dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
+                      fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
+                      fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                      limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
+                      point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                      stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                      strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                      strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined,
+                      tension=Undefined, text=Undefined, theta=Undefined, thickness=Undefined,
+                      tooltip=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
                       yOffset=Undefined, **kwds):
         """Set the chart's mark to 'geoshape'
     
         For information on additional arguments, see ``alt.MarkDef``
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
-                    color=color, cursor=cursor, dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity,
-                    filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                    fontWeight=fontWeight, href=href, interpolate=interpolate, limit=limit, line=line,
-                    opacity=opacity, orient=orient, point=point, radius=radius, shape=shape, size=size,
-                    stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                    strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
-                    strokeWidth=strokeWidth, style=style, tension=tension, text=text, theta=theta,
-                    thickness=thickness, x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
-                    yOffset=yOffset, **kwds)
+                    color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                    ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
+                    fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
+                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
+                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
         copy = self.copy(deep=True, ignore=['data'])
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="geoshape", **kwds)
@@ -522,6 +547,16 @@ class ConfigMethodMixin(object):
         else:
             copy.config = copy.config.copy(deep=False)
         copy.config["geoshape"] = core.MarkConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.HeaderConfig)
+    def configure_header(self, *args, **kwargs):
+        copy = self.copy(deep=False)
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        else:
+            copy.config = copy.config.copy(deep=False)
+        copy.config["header"] = core.HeaderConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.LegendConfig)
