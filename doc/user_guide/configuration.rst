@@ -168,6 +168,28 @@ View Configuration
 .. altair-object-table:: altair.ViewConfig
 
 
+Removing the border
+~~~~~~~~~~~~~~~~~~~
+
+By default, charts have an outside border. Hide it by setting the `strokeOpacity` option to `0`.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    ).configure_view(
+        strokeOpacity=0
+    )
+
+
+
 .. _chart-themes:
 
 Altair Themes
