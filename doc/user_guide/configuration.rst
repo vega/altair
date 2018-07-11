@@ -171,7 +171,9 @@ View Configuration
 Removing the border
 ~~~~~~~~~~~~~~~~~~~
 
-By default, charts have an outside border. Hide it by setting the `strokeOpacity` option to `0`.
+By default, charts have both a grid and an outside border. To create a chart with no border, you will need to remove the both.
+
+As an example, let's start with a simple scatter plot.
 
 .. altair-plot::
 
@@ -184,8 +186,42 @@ By default, charts have an outside border. Hide it by setting the `strokeOpacity
         x='petalWidth',
         y='petalLength',
         color='species'
+    )
+
+First remove the grid using the :meth:`Chart.configure_axis` method.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    ).configure_axis(
+        grid=False
+    )
+
+You'll note that while the inside rules are gone, the outside border remains. Hide it by setting the `strokeOpacity` option on :meth:`Chart.configure_view` to `0`.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    ).configure_axis(
+        grid=False
     ).configure_view(
-        strokeOpacity=0
+        strokeWidth=0
     )
 
 
