@@ -2,6 +2,8 @@
 Isotype Visualization
 =====================
 Isotype Visualization shows the distribution of animals across UK and US.
+Inspired by [Only An Ocean Between, 1943](http://www.thomwhite.co.uk/?p=1303). Population Live Stock, p.13.
+This is adapted from Vega-Lite example https://vega.github.io/editor/#/examples/vega-lite/isotype_bar_chart
 '''
 # category: case studies
 import pandas as pd
