@@ -204,7 +204,7 @@ class AltairMiniGalleryDirective(Directive):
             if size:
                 examples = examples[:size]
 
-        include = MINIGALLERY_TEMPLATE.render(image_dir='/_static',
+        include = MINIGALLERY_TEMPLATE.render(image_dir='./_static',
                                               gallery_dir=gallery_dir,
                                               examples=examples,
                                               titles=titles,
@@ -254,7 +254,7 @@ def main(app):
     with open(os.path.join(target_dir, 'index.rst'), 'w') as f:
         f.write(GALLERY_TEMPLATE.render(title=gallery_title,
                                         examples=examples_toc.items(),
-                                        image_dir='/_static',
+                                        image_dir='../_static',
                                         gallery_ref=gallery_ref))
 
     # save the images to file
