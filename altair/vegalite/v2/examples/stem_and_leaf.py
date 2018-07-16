@@ -10,24 +10,19 @@ import numpy as np
 np.random.seed(42)
 
 # Generating random data
-original_data = pd.DataFrame({'samples': np.array(np.random.normal(50, 15, 100), dtype=np.int)})
+df = pd.DataFrame({'samples': np.random.normal(50, 15, 100).astype(int).astype(str)})
 
 # Splitting stem and leaf
-original_data['stem'] = original_data['samples'].apply(lambda x: str(x)[:-1])
-original_data['leaf'] = original_data['samples'].apply(lambda x: str(x)[-1])
+df['stem'] = df['samples'].str[:-1]
+df['leaf'] = df['samples'].str[-1]
 
-original_data.sort_values(by=['stem', 'leaf'], inplace=True)
-original_data.reset_index(inplace=True, drop=True)
+df = df.sort_values(by=['stem', 'leaf'])
 
 # Determining leaf position
-get_position = lambda x: 1 + pd.Series(range(len(x)))
-
-original_data['position'] = original_data.groupby('stem')\
-                                         .apply(get_position)\
-                                         .reset_index(drop=True)
+df['position'] = df.groupby('stem').cumcount().add(1)
 
 # Creating stem and leaf plot
-alt.Chart(original_data).mark_text(
+alt.Chart(df).mark_text(
     align='left',
     baseline='middle',
     dx=-5
