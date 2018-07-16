@@ -31,9 +31,9 @@ HTML_TEMPLATE = """
 <html>
 <head>
   <title>Embedding Vega-Lite</title>
-  <script src="https://cdn.jsdelivr.net/npm/vega@{vega_version}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@{vegalite_version}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@{vegaembed_version}"></script>
+  <script src="vega-v{vega_version}.js" charset="UTF-8"></script>
+  <script src="vega-lite-v{vegalite_version}.js"></script>
+  <script src="vega-embed-v{vegaembed_version}.js"></script>
 </head>
 <body>
   <div id="vis"></div>
@@ -156,15 +156,15 @@ def compile_spec(spec, format, mode,
     try:
         driver.set_page_load_timeout(driver_timeout)
 
-        with temporary_filename(suffix='.html') as htmlfile:
-            with open(htmlfile, 'w') as f:
-                f.write(html)
-            driver.get("file://" + htmlfile)
-            online = driver.execute_script("return navigator.onLine")
-            if not online:
-                raise ValueError("Internet connection required for saving "
-                                 "chart as {0}".format(format))
-            return driver.execute_async_script(EXTRACT_CODE[format],
-                                               spec, mode, scale_factor)
+        htmlfile = os.path.abspath(os.path.join(os.path.dirname(__file__), "js", "download_template.html"))
+        with open(htmlfile, 'w') as f:
+            f.write(html)
+        driver.get("file://" + htmlfile)
+        online = driver.execute_script("return navigator.onLine")
+        if not online:
+            raise ValueError("Internet connection required for saving "
+                             "chart as {0}".format(format))
+        return driver.execute_async_script(EXTRACT_CODE[format],
+                                           spec, mode, scale_factor)
     finally:
         driver.close()

@@ -1,11 +1,10 @@
 """Generate a schema wrapper from a schema"""
 import copy
+import json
 import os
 import sys
-import json
-from os.path import abspath, join, dirname
-
 import textwrap
+from os.path import abspath, join, dirname
 from urllib import request
 
 import m2r
@@ -34,6 +33,8 @@ def schema_class(*args, **kwargs):
 SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
                        '{library}/{version}.json')
 
+JS_URL_TEMPLATE = 'https://cdn.jsdelivr.net/npm/{library}@{version}'
+
 SCHEMA_VERSION = {
     'vega': {
         'v2': 'v2.6.5',
@@ -43,6 +44,9 @@ SCHEMA_VERSION = {
     'vega-lite': {
         'v1': 'v1.3.1',
         'v2': 'v2.6.0'
+    },
+    "vega-embed": {
+        "v3": "v3.14"
     }
 }
 
@@ -157,9 +161,21 @@ def schema_url(library, version):
     return SCHEMA_URL_TEMPLATE.format(library=library, version=version)
 
 
+def js_url(library, version):
+    return JS_URL_TEMPLATE.format(library=library, version=version.lstrip('v'))
+
+
 def download_schemafile(library, version, schemapath):
     url = schema_url(library, version)
     filename = os.path.join(schemapath, '{library}-schema.json'.format(library=library))
+    request.urlretrieve(url, filename)
+    return filename
+
+
+def download_jsfile(library, version, path):
+    version = SCHEMA_VERSION[library][version]
+    url = js_url(library, version)
+    filename = os.path.join(path, "{}-{}.js".format(library, version))
     request.urlretrieve(url, filename)
     return filename
 
@@ -396,6 +412,7 @@ def generate_vegalite_config_mixin(schemafile):
 def vegalite_main():
     library = 'vega-lite'
     encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
+    js_path = abspath(join(dirname(__file__), '..', 'altair', 'utils', 'js'))
 
     for version in ['v1', 'v2']:
         path = abspath(join(dirname(__file__), '..',
@@ -430,6 +447,10 @@ def vegalite_main():
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(code)
 
+        download_jsfile(library=library,
+                        version=version,
+                        path=js_path)
+
         if version != 'v1':
             # generate the mark mixin
             outfile = join(schemapath, 'mixins.py')
@@ -448,6 +469,7 @@ def vegalite_main():
 
 def vega_main():
     library = 'vega'
+    js_path = abspath(join(dirname(__file__), '..', 'altair', 'utils', 'js'))
 
     for version in ['v2', 'v3', 'v4']:
         path = abspath(join(dirname(__file__), '..',
@@ -475,8 +497,21 @@ def vega_main():
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(file_contents)
 
+        download_jsfile(library=library,
+                        version=version,
+                        path=js_path)
+
+
+def vegaembed_main():
+    library = 'vega-embed'
+    js_path = abspath(join(dirname(__file__), '..', 'altair', 'utils', 'js'))
+
+    for version in SCHEMA_VERSION[library]:
+        download_jsfile(library, version, path=js_path)
+
 
 if __name__ == '__main__':
     copy_schemapi_util()
     vegalite_main()
     vega_main()
+    vegaembed_main()
