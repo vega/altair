@@ -23,7 +23,7 @@
 
 - add an ``add_selection()`` method to add selections to charts (#832)
 
-- add ``chart.serve()`` and ``chart.display()`` methods for more flexiblity
+- add ``chart.serve()`` and ``chart.display()`` methods for more flexibility
   in displaying charts (#831)
 
 - allow multiple fields to be passed to encodings such as ``tooltip``

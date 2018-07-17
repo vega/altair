@@ -1,7 +1,7 @@
 """
 Falkensee
 -----------------------
-This example is a reproduction of the Falkanesee plot found in the vega-lite examples.
+This example is a reproduction of the Falkensee plot found in the vega-lite examples.
 """
 # category: case studies
 import altair as alt
