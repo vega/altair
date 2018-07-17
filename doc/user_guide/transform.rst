@@ -306,7 +306,7 @@ are:
 - :class:`~FieldGTEPredicate` evaluates whether a continuous field is greater
   than or equal to a given value
 
-Here is an examaple of a :class:`~FieldEqualPredicate` used to select just the
+Here is an example of a :class:`~FieldEqualPredicate` used to select just the
 values from year 2000 as in the above chart:
 
 .. altair-plot::
