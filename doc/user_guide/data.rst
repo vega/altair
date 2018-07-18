@@ -6,7 +6,7 @@ Specifying Data in Altair
 .. currentmodule:: altair
 
 Each top-level chart object (i.e. :class:`Chart`, :class:`LayerChart`,
-and :class:`VConcatChart`, :class:`HConcatChart``, :class:`RepeatChart`,
+and :class:`VConcatChart`, :class:`HConcatChart`, :class:`RepeatChart`,
 :class:`FacetChart`) accepts a dataset as its first argument.
 The dataset can be specified in one of three ways:
 
