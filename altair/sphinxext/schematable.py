@@ -1,10 +1,11 @@
 import importlib
 import warnings
+import re
 
 from docutils.parsers.rst import Directive
-from docutils.statemachine import ViewList
-from docutils import nodes
-from sphinx.util.nodes import nested_parse_with_titles
+from docutils import nodes, utils
+from sphinx import addnodes
+from recommonmark.parser import CommonMarkParser
 
 
 def type_description(schema):
@@ -23,52 +24,143 @@ def type_description(schema):
         elif schema['type'] == 'object':
             return 'dict'
         else:
-            return schema['type']
+            return "`{0}`".format(schema['type'])
     elif 'anyOf' in schema:
         return "anyOf({0})".format(', '.join(type_description(s)
-                                             for s in schema['anyOf']))
+                                            for s in schema['anyOf']))
     else:
         warnings.warn('cannot infer type for schema with keys {0}'
-                      ''.format(schema.keys()))
+                    ''.format(schema.keys()))
         return '--'
 
 
-def iter_properties(cls):
-    """Iterate over (property, type, description)"""
-    import m2r  # convert markdown to rst
-    schema = cls.resolve_references(cls._schema)
-    properties = schema.get('properties', {})
-    for prop, propschema in properties.items():
-        yield (prop,
-               type_description(propschema),
-               m2r.convert(propschema.get('description', ' ')))
-
-
-def build_rst_table(rows, titles):
-    """Build an rst table from a table of entries (i.e. list of lists)"""
+def prepare_table_header(titles, widths):
+    """Build docutil empty table """
     ncols = len(titles)
-    assert all(len(row) == ncols for row in rows)
+    assert len(widths) == ncols
 
-    lengths = [max(map(len, col)) for col in zip(*rows)]
+    tgroup = nodes.tgroup(cols=ncols)
+    for width in widths:
+        tgroup += nodes.colspec(colwidth=width)
+    header = nodes.row()
+    for title in titles:
+        header += nodes.entry('', nodes.paragraph(text=title))
+    tgroup += nodes.thead('', header)
 
-    def make_line(row, fill=' '):
-        return ' '.join(entry.ljust(length, fill)
-                        for length, entry in zip(lengths, row))
+    tbody = nodes.tbody()
+    tgroup += tbody
 
-    divider = make_line(ncols * [''], '=')
-
-    return ([divider, make_line(titles), divider] +
-            [make_line(row) for row in rows] +
-            [divider])
+    return nodes.table('', tgroup), tbody
 
 
-def construct_schema_table(cls):
-    """Construct an RST table describing the properties within a schema."""
-    props = list(iter_properties(cls))
-    names, types, defs = zip(*props)
-    defs = [defn.replace('\n', ' ') for defn in defs]
-    props = list(zip(names, types, defs))
-    return build_rst_table(props, ["Property", "Type", "Description"])
+reClassDef = re.compile (r":class:`([^`]+)`")
+reCode = re.compile (r"`([^`]+)`")
+
+def add_class_def (node, classDef):
+    """Add reference on classDef to node """
+    
+    ref = addnodes.pending_xref( 
+
+        reftarget=classDef,
+        reftype="class",
+        refdomain="py",  # py:class="None" py:module="altair" refdoc="user_guide/marks"
+        refexplicit=False,
+        # refdoc="",
+        refwarn=False
+    )
+    ref["py:class"]="None"
+    ref["py:module"]="altair"
+    
+    ref += nodes.literal(text = classDef,  classes=["xref", "py", "py-class"])
+    node += ref
+    return node
+
+def add_text (node, text):
+    """Add text with inline code to node """
+    is_text = True
+    for part in reCode.split(text):
+        if part:
+            if is_text:
+                node += nodes.Text(part,part)
+            else:
+                node +=nodes.literal(part, part ) 
+     
+        is_text = not is_text
+
+    return node
+
+
+def build_row(item):
+    """Return nodes.row with property description"""
+
+    prop, propschema, required = item
+    row = nodes.row()
+
+    # Property 
+    
+    row += nodes.entry('', nodes.paragraph(text=prop), classes=["vl-prop"])
+
+    # Type
+    str_type = type_description(propschema) 
+    par_type = nodes.paragraph()
+
+    is_text = True
+    for part in reClassDef.split(str_type):
+        if part:
+            if is_text:
+                add_text(par_type, part)
+            else:
+                add_class_def(par_type, part)
+        is_text = not is_text
+
+    # row += nodes.entry('')
+    row += nodes.entry('', par_type) #, classes=["vl-type-def"]
+
+    # Description
+    md_parser = CommonMarkParser()
+    #str_descr = "***Required.*** " if required else ""
+    str_descr = ""
+    str_descr += propschema.get('description', ' ')
+    doc_descr = utils.new_document("schema_description")   
+    md_parser.parse(str_descr, doc_descr)   
+    
+    # row += nodes.entry('', *doc_descr.children, classes="vl-decsr")
+    row += nodes.entry('', *doc_descr.children, classes=["vl-decsr"])
+
+    return row
+
+
+def build_schema_tabel(items):
+    """Return schema table of items (iterator of prop, schema.item, requred)"""
+    table, tbody = prepare_table_header(
+        ["Property", "Type", "Description"],
+        [10, 20, 50]
+    )
+    for item in items:
+        tbody += build_row(item)
+
+    return table
+
+  
+def select_items_from_schema(schema, props=None):
+    """Return iterator  (prop, schema.item, requred) on prop, return all in None"""
+    properties = schema.get('properties', {})
+    required = schema.get('required', [])
+    if not props:
+        for prop, item in properties.items():
+            yield prop, item, prop in required
+    else:
+        for prop in props:
+            try:
+                yield prop, properties[prop], prop in required
+            except KeyError:
+                warnings.warn("Can't find property:", prop)
+  
+
+def prepare_schema_tabel(schema, props=None):
+
+    items = select_items_from_schema(schema, props)
+    return build_schema_tabel(items)
 
 
 class AltairObjectTableDirective(Directive):
@@ -84,24 +176,16 @@ class AltairObjectTableDirective(Directive):
     required_arguments = 1
 
     def run(self):
+     
         objectname = self.arguments[0]
         modname, classname = objectname.rsplit('.', 1)
         module = importlib.import_module(modname)
         cls = getattr(module, classname)
+        schema = cls.resolve_references(cls._schema)
 
         # create the table from the object
-        table = construct_schema_table(cls)
-
-        # parse and return documentation
-        result = ViewList()
-        for line in table:
-            result.append(line, "<altair-class>")
-        node = nodes.paragraph()
-        node.document = self.state.document
-        nested_parse_with_titles(self.state, result, node)
-
-        return node.children
-
+        table = prepare_schema_tabel(schema)
+        return [table]
 
 def setup(app):
     app.add_directive('altair-object-table', AltairObjectTableDirective)
