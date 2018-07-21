@@ -157,14 +157,18 @@ class AreaConfig(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -173,6 +177,7 @@ class AreaConfig(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -229,8 +234,9 @@ class AreaConfig(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     line : anyOf(boolean, OverlayMarkDef)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
@@ -248,7 +254,6 @@ class AreaConfig(VegaLiteSchema):
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     orient : Orient
-<<<<<<< HEAD
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -261,18 +266,7 @@ class AreaConfig(VegaLiteSchema):
         if ``config.sortLineBy`` is not specified.
         For stacked charts, this is always determined by the orientation of the stack;
         therefore explicitly specified value will be ignored.
-    point : anyOf(boolean, MarkConfig, enum('transparent'))
-=======
-        The orientation of a non-stacked bar, tick, area, and line charts. The value is
-        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
-         whether the size of the bar and tick   should be applied to x or y dimension. * For
-         area, this property determines the orient property of the Vega output. * For line
-        and trail marks, this property determines the sort order of the points in the line
-           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
-        determined by the orientation of the stack;   therefore explicitly specified value
-        will be ignored.
     point : anyOf(boolean, OverlayMarkDef, enum('transparent'))
->>>>>>> altair-viz/master
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -303,16 +297,10 @@ class AreaConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -323,6 +311,7 @@ class AreaConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -822,27 +811,22 @@ class BarConfig(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     continuousBandSize : float
-<<<<<<< HEAD
         The default size of the bars on continuous scales.
 
         **Default value:** ``5``
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
-=======
-        The default size of the bars on continuous scales.  **Default value:** ``5``
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
->>>>>>> altair-viz/master
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     discreteBandSize : float
         The size of the bars.  If unspecified, the default size is  ``bandSize-1``,
         which provides 1 pixel offset between bars.
@@ -854,6 +838,7 @@ class BarConfig(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -910,8 +895,9 @@ class BarConfig(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -946,16 +932,10 @@ class BarConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -966,6 +946,7 @@ class BarConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -1051,14 +1032,12 @@ class BinParams(VegaLiteSchema):
 
     Attributes
     ----------
-<<<<<<< HEAD
 
-=======
     anchor : float
         A value in the binned domain at which to anchor the bins, shifting the bin
         boundaries if necessary to ensure that a boundary aligns with the anchor value.
+
         **Default Value:** the minimum bin extent value
->>>>>>> altair-viz/master
     base : float
         The number base to use for automatic bin determination (default is base 10).
 
@@ -1468,36 +1447,32 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-<<<<<<< HEAD
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
+    sort : Sort
         Sort order for the encoded field.
-        Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
-        sorting), or an array specifying the preferred order of values.
-        For fields with discrete domains, ``sort`` can also be a `sort field definition
-        object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
-=======
-    sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
->>>>>>> altair-viz/master
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1781,36 +1756,32 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-<<<<<<< HEAD
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
+    sort : Sort
         Sort order for the encoded field.
-        Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
-        sorting), or an array specifying the preferred order of values.
-        For fields with discrete domains, ``sort`` can also be a `sort field definition
-        object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
-=======
-    sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
->>>>>>> altair-viz/master
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2795,27 +2766,32 @@ class FacetFieldDef(VegaLiteSchema):
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     header : Header
         An object defining properties of a facet's header.
-<<<<<<< HEAD
-    sort : SortOrder
-        Sort order for a facet field.
-        This can be ``"ascending"``, ``"descending"``.
-=======
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
->>>>>>> altair-viz/master
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3094,36 +3070,32 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-<<<<<<< HEAD
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
+    sort : Sort
         Sort order for the encoded field.
-        Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
-        sorting), or an array specifying the preferred order of values.
-        For fields with discrete domains, ``sort`` can also be a `sort field definition
-        object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
-=======
-    sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
->>>>>>> altair-viz/master
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3503,27 +3475,41 @@ class FacetSpec(VegaLiteSchema):
     spec : anyOf(LayerSpec, CompositeUnitSpec)
         A specification of the view that gets faceted.
     align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
-        The alignment to apply to grid rows and columns. The supported string values are
-        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
-        used, in which adjacent subviews are simply placed one after the other. * For
-        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
-        column may be of variable size. * For ``"all"``, subviews will be aligned and each
-        row or column will be sized identically based on the maximum observed size. String
-        values for this property will be applied to both grid rows and columns.
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
         Alternatively, an object value of the form ``{"row": string, "column": string}`` can
-         be used to supply different alignments for rows and columns.  **Default value:**
-        ``"all"``.
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : anyOf(boolean, RowColboolean)
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  An object value of the form ``{"row": boolean, "column":
-        boolean}`` can be used to supply different centering values for rows and columns.
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
         **Default value:** ``false``
     data : Data
         An object describing the data source
@@ -3534,9 +3520,11 @@ class FacetSpec(VegaLiteSchema):
     resolve : Resolve
         Scale, axis, and legend resolutions for facets.
     spacing : anyOf(float, RowColnumber)
-        The spacing in pixels between sub-views of the composition operator. An object of
-        the form ``{"row": number, "column": number}`` can be used to set different spacing
-        values for rows and columns.  **Default value** : ``10``
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3566,14 +3554,21 @@ class HConcatSpec(VegaLiteSchema):
         A list of views that should be concatenated and put into a row.
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : boolean
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  **Default value:** ``false``
+        rows or columns.
+
+        **Default value:** ``false``
     data : Data
         An object describing the data source
     description : string
@@ -3583,8 +3578,9 @@ class HConcatSpec(VegaLiteSchema):
     resolve : Resolve
         Scale, axis, and legend resolutions for horizontally concatenated charts.
     spacing : float
-        The spacing in pixels between sub-views of the concat operator.  **Default value** :
-         ``10``
+        The spacing in pixels between sub-views of the concat operator.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3615,27 +3611,41 @@ class RepeatSpec(VegaLiteSchema):
     spec : Spec
 
     align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
-        The alignment to apply to grid rows and columns. The supported string values are
-        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
-        used, in which adjacent subviews are simply placed one after the other. * For
-        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
-        column may be of variable size. * For ``"all"``, subviews will be aligned and each
-        row or column will be sized identically based on the maximum observed size. String
-        values for this property will be applied to both grid rows and columns.
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
         Alternatively, an object value of the form ``{"row": string, "column": string}`` can
-         be used to supply different alignments for rows and columns.  **Default value:**
-        ``"all"``.
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : anyOf(boolean, RowColboolean)
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  An object value of the form ``{"row": boolean, "column":
-        boolean}`` can be used to supply different centering values for rows and columns.
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
         **Default value:** ``false``
     data : Data
         An object describing the data source
@@ -3646,9 +3656,11 @@ class RepeatSpec(VegaLiteSchema):
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
     spacing : anyOf(float, RowColnumber)
-        The spacing in pixels between sub-views of the composition operator. An object of
-        the form ``{"row": number, "column": number}`` can be used to set different spacing
-        values for rows and columns.  **Default value** : ``10``
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3893,14 +3905,21 @@ class VConcatSpec(VegaLiteSchema):
         A list of views that should be concatenated and put into a column.
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : boolean
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  **Default value:** ``false``
+        rows or columns.
+
+        **Default value:** ``false``
     data : Data
         An object describing the data source
     description : string
@@ -3910,8 +3929,9 @@ class VConcatSpec(VegaLiteSchema):
     resolve : Resolve
         Scale, axis, and legend resolutions for vertically concatenated charts.
     spacing : float
-        The spacing in pixels between sub-views of the concat operator.  **Default value** :
-         ``10``
+        The spacing in pixels between sub-views of the concat operator.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3964,7 +3984,9 @@ class Header(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for temporal
         fields.
     labelAngle : float
-        The rotation angle of the header labels.  **Default value:** ``0``.
+        The rotation angle of the header labels.
+
+        **Default value:** ``0``.
     labelColor : string
         The color of the header label, can be in hex color code or regular color name.
     labelFont : string
@@ -3973,38 +3995,52 @@ class Header(VegaLiteSchema):
         The font size of the header label, in pixels.
     labelLimit : float
         The maximum length of the header label in pixels. The text value will be
-        automatically truncated if the rendered size exceeds the limit.  **Default value:**
-        ``0``, indicating no limit
+        automatically truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     titleAnchor : string
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
         ``"end"``. For example, with an orientation of top these anchor positions map to a
-        left-, center-, or right-aligned title.  **Default value:** ``"middle"`` for `single
-         <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
-        <https://vega.github.io/vega-lite/docs/layer.html>`_ views. ``"start"`` for other
-        composite views.  **Note:** `For now
-        <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is only customizable
-        only for `single <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        left-, center-, or right-aligned title.
+
+        **Default value:** ``"middle"`` for `single
+        <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views.
+        ``"start"`` for other composite views.
+
+        **Note:** `For now <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is
+        only customizable only for `single
+        <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
         <https://vega.github.io/vega-lite/docs/layer.html>`_ views.  For other composite
         views, ``anchor`` is always ``"start"``.
     titleAngle : float
-        The rotation angle of the header title.  **Default value:** ``0``.
+        The rotation angle of the header title.
+
+        **Default value:** ``0``.
     titleBaseline : TextBaseline
         Vertical text baseline for the header title. One of ``"top"``, ``"bottom"``,
-        ``"middle"``.  **Default value:** ``"middle"``
+        ``"middle"``.
+
+        **Default value:** ``"middle"``
     titleColor : string
         Color of the header title, can be in hex color code or regular color name.
     titleFont : string
@@ -4012,13 +4048,15 @@ class Header(VegaLiteSchema):
     titleFontSize : float
         Font size of the header title.
     titleFontWeight : FontWeight
-        Font weight of the header title. This can be either a string (e.g ``"bold"``,
-        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
-        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
+        Font weight of the header title.
+        This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
+        ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
+        ).
     titleLimit : float
         The maximum length of the header title in pixels. The text value will be
-        automatically truncated if the rendered size exceeds the limit.  **Default value:**
-        ``0``, indicating no limit
+        automatically truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     """
     _schema = {'$ref': '#/definitions/Header'}
     _rootschema = Root._schema
@@ -4044,8 +4082,11 @@ class HeaderConfig(VegaLiteSchema):
 
     Attributes
     ----------
+
     labelAngle : float
-        The rotation angle of the header labels.  **Default value:** ``0``.
+        The rotation angle of the header labels.
+
+        **Default value:** ``0``.
     labelColor : string
         The color of the header label, can be in hex color code or regular color name.
     labelFont : string
@@ -4054,24 +4095,33 @@ class HeaderConfig(VegaLiteSchema):
         The font size of the header label, in pixels.
     labelLimit : float
         The maximum length of the header label in pixels. The text value will be
-        automatically truncated if the rendered size exceeds the limit.  **Default value:**
-        ``0``, indicating no limit
+        automatically truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     titleAnchor : string
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
         ``"end"``. For example, with an orientation of top these anchor positions map to a
-        left-, center-, or right-aligned title.  **Default value:** ``"middle"`` for `single
-         <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
-        <https://vega.github.io/vega-lite/docs/layer.html>`_ views. ``"start"`` for other
-        composite views.  **Note:** `For now
-        <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is only customizable
-        only for `single <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        left-, center-, or right-aligned title.
+
+        **Default value:** ``"middle"`` for `single
+        <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views.
+        ``"start"`` for other composite views.
+
+        **Note:** `For now <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is
+        only customizable only for `single
+        <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
         <https://vega.github.io/vega-lite/docs/layer.html>`_ views.  For other composite
         views, ``anchor`` is always ``"start"``.
     titleAngle : float
-        The rotation angle of the header title.  **Default value:** ``0``.
+        The rotation angle of the header title.
+
+        **Default value:** ``0``.
     titleBaseline : TextBaseline
         Vertical text baseline for the header title. One of ``"top"``, ``"bottom"``,
-        ``"middle"``.  **Default value:** ``"middle"``
+        ``"middle"``.
+
+        **Default value:** ``"middle"``
     titleColor : string
         Color of the header title, can be in hex color code or regular color name.
     titleFont : string
@@ -4079,13 +4129,15 @@ class HeaderConfig(VegaLiteSchema):
     titleFontSize : float
         Font size of the header title.
     titleFontWeight : FontWeight
-        Font weight of the header title. This can be either a string (e.g ``"bold"``,
-        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
-        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
+        Font weight of the header title.
+        This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
+        ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
+        ).
     titleLimit : float
         The maximum length of the header title in pixels. The text value will be
-        automatically truncated if the rendered size exceeds the limit.  **Default value:**
-        ``0``, indicating no limit
+        automatically truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     """
     _schema = {'$ref': '#/definitions/HeaderConfig'}
     _rootschema = Root._schema
@@ -4399,17 +4451,11 @@ class Legend(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     type : enum('symbol', 'gradient')
         The type of the legend. Use ``"symbol"`` to create a discrete legend and
-<<<<<<< HEAD
         ``"gradient"`` for a continuous color gradient.
 
         **Default value:** ``"gradient"`` for non-binned quantitative fields and temporal
         fields; ``"symbol"`` otherwise.
-    values : anyOf(List(float), List(string), List(DateTime))
-=======
-        ``"gradient"`` for a continuous color gradient.  **Default value:** ``"gradient"``
-        for non-binned quantitative fields and temporal fields; ``"symbol"`` otherwise.
     values : anyOf(List(float), List(string), List(boolean), List(DateTime))
->>>>>>> altair-viz/master
         Explicitly set the visible legend values.
     zindex : float
         A non-positive integer indicating z-index of the legend.
@@ -4628,14 +4674,18 @@ class LineConfig(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -4644,6 +4694,7 @@ class LineConfig(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -4700,15 +4751,15 @@ class LineConfig(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     orient : Orient
-<<<<<<< HEAD
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -4721,18 +4772,7 @@ class LineConfig(VegaLiteSchema):
         if ``config.sortLineBy`` is not specified.
         For stacked charts, this is always determined by the orientation of the stack;
         therefore explicitly specified value will be ignored.
-    point : anyOf(boolean, MarkConfig, enum('transparent'))
-=======
-        The orientation of a non-stacked bar, tick, area, and line charts. The value is
-        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
-         whether the size of the bar and tick   should be applied to x or y dimension. * For
-         area, this property determines the orient property of the Vega output. * For line
-        and trail marks, this property determines the sort order of the points in the line
-           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
-        determined by the orientation of the stack;   therefore explicitly specified value
-        will be ignored.
     point : anyOf(boolean, OverlayMarkDef, enum('transparent'))
->>>>>>> altair-viz/master
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -4763,16 +4803,10 @@ class LineConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -4783,6 +4817,7 @@ class LineConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -5084,14 +5119,18 @@ class MarkConfig(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -5100,6 +5139,7 @@ class MarkConfig(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -5156,8 +5196,9 @@ class MarkConfig(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -5192,16 +5233,10 @@ class MarkConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -5212,6 +5247,7 @@ class MarkConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -5298,14 +5334,18 @@ class MarkDef(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -5314,6 +5354,7 @@ class MarkDef(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -5370,8 +5411,9 @@ class MarkDef(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     line : anyOf(boolean, OverlayMarkDef)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
@@ -5389,7 +5431,6 @@ class MarkDef(VegaLiteSchema):
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     orient : Orient
-<<<<<<< HEAD
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -5402,18 +5443,7 @@ class MarkDef(VegaLiteSchema):
         if ``config.sortLineBy`` is not specified.
         For stacked charts, this is always determined by the orientation of the stack;
         therefore explicitly specified value will be ignored.
-    point : anyOf(boolean, MarkConfig, enum('transparent'))
-=======
-        The orientation of a non-stacked bar, tick, area, and line charts. The value is
-        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
-         whether the size of the bar and tick   should be applied to x or y dimension. * For
-         area, this property determines the orient property of the Vega output. * For line
-        and trail marks, this property determines the sort order of the points in the line
-           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
-        determined by the orientation of the stack;   therefore explicitly specified value
-        will be ignored.
     point : anyOf(boolean, OverlayMarkDef, enum('transparent'))
->>>>>>> altair-viz/master
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -5444,16 +5474,10 @@ class MarkDef(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -5464,6 +5488,7 @@ class MarkDef(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -5498,15 +5523,11 @@ class MarkDef(VegaLiteSchema):
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
     thickness : float
-<<<<<<< HEAD
         Thickness of the tick mark.
 
         **Default value:**  ``1``
-=======
-        Thickness of the tick mark.  **Default value:**  ``1``
     tooltip : Mapping(required=[])
         The tooltip text to show upon mouse hover.
->>>>>>> altair-viz/master
     x2Offset : float
         Offset for x2-position.
     xOffset : float
@@ -5808,30 +5829,39 @@ class OverlayMarkDef(VegaLiteSchema):
 
     Attributes
     ----------
+
     align : HorizontalAlign
         The horizontal alignment of the text. One of ``"left"``, ``"right"``, ``"center"``.
     angle : float
         The rotation angle of the text, in degrees.
     baseline : VerticalAlign
         The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
+
         **Default value:** ``"middle"``
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
     color : string
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
-        ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
-        style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
-        cannot be used in a `style config
+        ``color`` and will override ``color``.
+
+        **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
+        ``"#4682b4"``
+
+        **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -5840,17 +5870,25 @@ class OverlayMarkDef(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
-        Default Fill Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
+        Default Fill Color.  This has higher precedence than ``config.color``
+
+        **Default value:** (None)
     fillOpacity : float
-        The fill opacity (value between [0,1]).  **Default value:** ``1``
+        The fill opacity (value between [0,1]).
+
+        **Default value:** ``1``
     filled : boolean
         Whether the mark's color should be used as fill color instead of stroke color.
+
         **Default value:** ``true`` for all marks except ``point`` and ``false`` for
-        ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
-        ``area`` marks.  **Note:** This property cannot be used in a `style config
+        ``point``.
+
+        **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and ``area`` marks.
+
+        **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     font : string
         The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
@@ -5859,72 +5897,95 @@ class OverlayMarkDef(VegaLiteSchema):
     fontStyle : FontStyle
         The font style (e.g., ``"italic"`` ).
     fontWeight : FontWeight
-        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
-        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
-        ``"bold"`` = ``700`` ).
+        The font weight.
+        This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
+        ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
+        ).
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : Interpolate
         The line interpolation method to use for line and area marks. One of the following:
-           * ``"linear"`` : piecewise linear segments, as in a polyline. *
-        ``"linear-closed"`` : close the linear segments to form a polygon. * ``"step"`` :
-        alternate between horizontal and vertical segments, as in a step function. *
-        ``"step-before"`` : alternate between vertical and horizontal segments, as in a step
-         function. * ``"step-after"`` : alternate between horizontal and vertical segments,
-        as in a step function. * ``"basis"`` : a B-spline, with control point duplication on
-         the ends. * ``"basis-open"`` : an open B-spline; may not intersect the start or
-        end. * ``"basis-closed"`` : a closed B-spline, as in a loop. * ``"cardinal"`` : a
-        Cardinal spline, with control point duplication on the ends. * ``"cardinal-open"`` :
-         an open Cardinal spline; may not intersect the start or end, but will intersect
-        other control points. * ``"cardinal-closed"`` : a closed Cardinal spline, as in a
-        loop. * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
-        straighten the spline. * ``"monotone"`` : cubic interpolation that preserves
-        monotonicity in y.
+
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     opacity : float
-        The overall opacity (value between [0,1]).  **Default value:** ``0.7`` for
-        non-aggregate plots with ``point``, ``tick``, ``circle``, or ``square`` marks or
-        layered ``bar`` charts and ``1`` otherwise.
+        The overall opacity (value between [0,1]).
+
+        **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
+        ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     orient : Orient
-        The orientation of a non-stacked bar, tick, area, and line charts. The value is
-        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
-         whether the size of the bar and tick   should be applied to x or y dimension. * For
-         area, this property determines the orient property of the Vega output. * For line
-        and trail marks, this property determines the sort order of the points in the line
-           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
-        determined by the orientation of the stack;   therefore explicitly specified value
-        will be ignored.
+        The orientation of a non-stacked bar, tick, area, and line charts.
+        The value is either horizontal (default) or vertical.
+
+
+        * For bar, rule and tick, this determines whether the size of the bar and tick
+        should be applied to x or y dimension.
+        * For area, this property determines the orient property of the Vega output.
+        * For line and trail marks, this property determines the sort order of the points in
+          the line
+        if ``config.sortLineBy`` is not specified.
+        For stacked charts, this is always determined by the orientation of the stack;
+        therefore explicitly specified value will be ignored.
     radius : float
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
         The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
         ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.  **Default value:** ``"circle"``
+        SVG path.
+
+        **Default value:** ``"circle"``
     size : float
-        The pixel area each the point/circle/square. For example: in the case of circles,
-        the radius is determined in part by the square root of the size value.  **Default
-        value:** ``30``
+        The pixel area each the point/circle/square.
+        For example: in the case of circles, the radius is determined in part by the square
+        root of the size value.
+
+        **Default value:** ``30``
     stroke : string
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
+        Default Stroke Color.  This has higher precedence than ``config.color``
+
+        **Default value:** (None)
     strokeCap : StrokeCap
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
-        ``"square"``.  **Default value:** ``"square"``
+        ``"square"``.
+
+        **Default value:** ``"square"``
     strokeDash : List(float)
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
     strokeOpacity : float
-        The stroke opacity (value between [0,1]).  **Default value:** ``1``
+        The stroke opacity (value between [0,1]).
+
+        **Default value:** ``1``
     strokeWidth : float
         The stroke width, in pixels.
     style : anyOf(string, List(string))
@@ -5934,8 +5995,10 @@ class OverlayMarkDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_. If style is an
         array, later styles will override earlier styles. Any `mark properties
         <https://vega.github.io/vega-lite/docs/encoding.html#mark-prop>`_ explicitly defined
-         within the ``encoding`` will override a style default.  **Default value:** The
-        mark's name.  For example, a bar mark will have style ``"bar"`` by default.
+        within the ``encoding`` will override a style default.
+
+        **Default value:** The mark's name.  For example, a bar mark will have style
+        ``"bar"`` by default.
         **Note:** Any specified style will augment the default style. For example, a bar
         mark with ``"style": "foo"`` will receive from ``config.style.bar`` and
         ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
@@ -6069,36 +6132,32 @@ class PositionFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
-<<<<<<< HEAD
-    sort : anyOf(List(string), SortOrder, EncodingSortField, None)
+    sort : Sort
         Sort order for the encoded field.
-        Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
-        sorting), or an array specifying the preferred order of values.
-        For fields with discrete domains, ``sort`` can also be a `sort field definition
-        object <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_.
-        For ``sort`` as an `array specifying the preferred order of values
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_, the sort order will
-        obey the values in the array, followed by any unspecified values in their original
-        order.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
 
         **Default value:** ``"ascending"``
-=======
-    sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
->>>>>>> altair-viz/master
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     stack : anyOf(StackOffset, None)
         Type of stacking offset if the field should be stacked.
         ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
@@ -6468,6 +6527,7 @@ class RowColVgLayoutAlign(VegaLiteSchema):
 
     Attributes
     ----------
+
     column : VgLayoutAlign
 
     row : VgLayoutAlign
@@ -6487,6 +6547,7 @@ class RowColboolean(VegaLiteSchema):
 
     Attributes
     ----------
+
     column : boolean
 
     row : boolean
@@ -6506,6 +6567,7 @@ class RowColnumber(VegaLiteSchema):
 
     Attributes
     ----------
+
     column : float
 
     row : float
@@ -7329,14 +7391,18 @@ class TextConfig(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -7345,6 +7411,7 @@ class TextConfig(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -7401,8 +7468,9 @@ class TextConfig(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -7439,16 +7507,10 @@ class TextConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -7459,6 +7521,7 @@ class TextConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -7617,14 +7680,18 @@ class TickConfig(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -7633,6 +7700,7 @@ class TickConfig(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -7689,8 +7757,9 @@ class TickConfig(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -7725,16 +7794,10 @@ class TickConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -7745,6 +7808,7 @@ class TickConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -7765,15 +7829,11 @@ class TickConfig(VegaLiteSchema):
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
     thickness : float
-<<<<<<< HEAD
         Thickness of the tick mark.
 
         **Default value:**  ``1``
-=======
-        Thickness of the tick mark.  **Default value:**  ``1``
     tooltip : Mapping(required=[])
         The tooltip text to show upon mouse hover.
->>>>>>> altair-viz/master
     """
     _schema = {'$ref': '#/definitions/TickConfig'}
     _rootschema = Root._schema
@@ -8052,24 +8112,26 @@ class TopLevelHConcatSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
-<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
-=======
-        CSS color property to use as the background of visualization.  **Default value:**
-        none (transparent)
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : boolean
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  **Default value:** ``false``
->>>>>>> altair-viz/master
+        rows or columns.
+
+        **Default value:** ``false``
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -8094,8 +8156,9 @@ class TopLevelHConcatSpec(VegaLiteSchema):
     resolve : Resolve
         Scale, axis, and legend resolutions for horizontally concatenated charts.
     spacing : float
-        The spacing in pixels between sub-views of the concat operator.  **Default value** :
-         ``10``
+        The spacing in pixels between sub-views of the concat operator.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -8136,16 +8199,22 @@ class TopLevelRepeatSpec(VegaLiteSchema):
     spec : Spec
 
     align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
-        The alignment to apply to grid rows and columns. The supported string values are
-        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
-        used, in which adjacent subviews are simply placed one after the other. * For
-        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
-        column may be of variable size. * For ``"all"``, subviews will be aligned and each
-        row or column will be sized identically based on the maximum observed size. String
-        values for this property will be applied to both grid rows and columns.
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
         Alternatively, an object value of the form ``{"row": string, "column": string}`` can
-         be used to supply different alignments for rows and columns.  **Default value:**
-        ``"all"``.
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
@@ -8156,26 +8225,29 @@ class TopLevelRepeatSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
-<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
-=======
-        CSS color property to use as the background of visualization.  **Default value:**
-        none (transparent)
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : anyOf(boolean, RowColboolean)
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  An object value of the form ``{"row": boolean, "column":
-        boolean}`` can be used to supply different centering values for rows and columns.
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
         **Default value:** ``false``
->>>>>>> altair-viz/master
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -8200,9 +8272,11 @@ class TopLevelRepeatSpec(VegaLiteSchema):
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
     spacing : anyOf(float, RowColnumber)
-        The spacing in pixels between sub-views of the composition operator. An object of
-        the form ``{"row": number, "column": number}`` can be used to set different spacing
-        values for rows and columns.  **Default value** : ``10``
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -8250,24 +8324,26 @@ class TopLevelVConcatSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
-<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
-=======
-        CSS color property to use as the background of visualization.  **Default value:**
-        none (transparent)
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : boolean
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  **Default value:** ``false``
->>>>>>> altair-viz/master
+        rows or columns.
+
+        **Default value:** ``false``
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -8292,8 +8368,9 @@ class TopLevelVConcatSpec(VegaLiteSchema):
     resolve : Resolve
         Scale, axis, and legend resolutions for vertically concatenated charts.
     spacing : float
-        The spacing in pixels between sub-views of the concat operator.  **Default value** :
-         ``10``
+        The spacing in pixels between sub-views of the concat operator.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -8336,16 +8413,22 @@ class TopLevelFacetSpec(VegaLiteSchema):
     spec : anyOf(LayerSpec, CompositeUnitSpec)
         A specification of the view that gets faceted.
     align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
-        The alignment to apply to grid rows and columns. The supported string values are
-        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
-        used, in which adjacent subviews are simply placed one after the other. * For
-        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
-        column may be of variable size. * For ``"all"``, subviews will be aligned and each
-        row or column will be sized identically based on the maximum observed size. String
-        values for this property will be applied to both grid rows and columns.
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
         Alternatively, an object value of the form ``{"row": string, "column": string}`` can
-         be used to supply different alignments for rows and columns.  **Default value:**
-        ``"all"``.
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
@@ -8356,26 +8439,29 @@ class TopLevelFacetSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
-<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
-=======
-        CSS color property to use as the background of visualization.  **Default value:**
-        none (transparent)
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
-        calculated bounds (including axes, title, and legend) will be used. * If set to
-        ``flush``, only the specified width and height values for the sub-view will be used.
-         The ``flush`` setting can be useful when attempting to place sub-plots without axes
-         or legends into a uniform grid structure.  **Default value:** ``"full"``
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     center : anyOf(boolean, RowColboolean)
         Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.  An object value of the form ``{"row": boolean, "column":
-        boolean}`` can be used to supply different centering values for rows and columns.
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
         **Default value:** ``false``
->>>>>>> altair-viz/master
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -8398,9 +8484,11 @@ class TopLevelFacetSpec(VegaLiteSchema):
     resolve : Resolve
         Scale, axis, and legend resolutions for facets.
     spacing : anyOf(float, RowColnumber)
-        The spacing in pixels between sub-views of the composition operator. An object of
-        the form ``{"row": number, "column": number}`` can be used to set different spacing
-        values for rows and columns.  **Default value** : ``10``
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -9082,14 +9170,18 @@ class VgMarkConfig(VegaLiteSchema):
 
         **Default value:** ``"middle"``
     cornerRadius : float
-        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
     cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
     dir : Dir
         The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
         (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.  **Default value:** ``"ltr"``
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
@@ -9098,6 +9190,7 @@ class VgMarkConfig(VegaLiteSchema):
         offset is applied after rotation by the *angle* property.
     ellipsis : string
         The ellipsis string for text truncated in response to the limit parameter.
+
         **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
@@ -9144,8 +9237,9 @@ class VgMarkConfig(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
         The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
-        indicating no limit
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -9180,16 +9274,10 @@ class VgMarkConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
-<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
-    strokeCap : enum('butt', 'round', 'square')
-=======
-        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
-        value:** (None)
     strokeCap : StrokeCap
->>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -9200,6 +9288,7 @@ class VgMarkConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
     strokeJoin : StrokeJoin
         The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
         **Default value:** ``"miter"``
     strokeMiterLimit : float
         The miter limit at which to bevel a line join.
@@ -9450,11 +9539,13 @@ class ViewConfig(VegaLiteSchema):
 
         **Default value:** (none)
     strokeJoin : StrokeJoin
-        The stroke line join method. One of miter (default), round or bevel.  **Default
-        value:** 'miter'
+        The stroke line join method. One of miter (default), round or bevel.
+
+        **Default value:** 'miter'
     strokeMiterLimit : float
-        The stroke line join method. One of miter (default), round or bevel.  **Default
-        value:** 'miter'
+        The stroke line join method. One of miter (default), round or bevel.
+
+        **Default value:** 'miter'
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
