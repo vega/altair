@@ -45,11 +45,12 @@ SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
 SCHEMA_VERSION = {
     'vega': {
         'v2': 'v2.6.5',
-        'v3': 'v3.3.1'
+        'v3': 'v3.3.1',
+        'v4': 'v4.0.0'
     },
     'vega-lite': {
         'v1': 'v1.3.1',
-        'v2': 'v2.5.2'
+        'v2': 'v2.6.0'
     }
 }
 
@@ -456,7 +457,7 @@ def vegalite_main():
 def vega_main():
     library = 'vega'
 
-    for version in ['v2', 'v3']:
+    for version in ['v2', 'v3', 'v4']:
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vega', version))
         schemapath = os.path.join(path, 'schema')
