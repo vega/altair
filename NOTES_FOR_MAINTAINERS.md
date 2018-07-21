@@ -45,7 +45,7 @@ directory for each version, but please note that it will *not* update other
 pieces (for example, the core of the Altair API, including methods and
 doc strings within ``altair/vegalite/v2/api.py``.
 These additional methods have fairly good test coverage, so running the test
-suite should identify any incosistencies:
+suite should identify any inconsistencies:
 ```
 $ make test
 ```

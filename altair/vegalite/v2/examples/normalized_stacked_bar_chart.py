@@ -1,26 +1,16 @@
 """
 Normalized Stacked Bar Chart
 ----------------------------
-This example shows how to make a normalized stacked bar chart.
+This is an example of a normalized stacked bar chart using data which contains crop yields over different regions and different years in the 1930s.
 """
 # category: bar charts
 import altair as alt
-from altair.expr import datum, if_
 from vega_datasets import data
 
-source = data.population.url
+barley = data.barley()
 
-alt.Chart(source).mark_bar().encode(
-    alt.X('age:O', scale=alt.Scale(rangeStep=17)),
-    alt.Y('sum(people):Q',
-        axis=alt.Axis(title='population'),
-        stack='normalize'
-    ),
-    alt.Color('gender:N',
-        scale=alt.Scale(range=["#EA98D2", "#659CCA"])
-    )
-).transform_filter(
-    datum.year == 2000
-).transform_calculate(
-    "gender", if_(datum.sex == 2, 'Female', 'Male')
+alt.Chart(barley).mark_bar().encode(
+    x=alt.X('sum(yield)', stack="normalize"),
+    y='variety',
+    color='site'
 )

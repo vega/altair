@@ -156,19 +156,24 @@ class AreaConfig(VegaLiteSchema):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -223,9 +228,10 @@ class AreaConfig(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
-    line : anyOf(boolean, MarkConfig)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
+    line : anyOf(boolean, OverlayMarkDef)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
 
@@ -242,6 +248,7 @@ class AreaConfig(VegaLiteSchema):
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     orient : Orient
+<<<<<<< HEAD
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -255,6 +262,17 @@ class AreaConfig(VegaLiteSchema):
         For stacked charts, this is always determined by the orientation of the stack;
         therefore explicitly specified value will be ignored.
     point : anyOf(boolean, MarkConfig, enum('transparent'))
+=======
+        The orientation of a non-stacked bar, tick, area, and line charts. The value is
+        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
+         whether the size of the bar and tick   should be applied to x or y dimension. * For
+         area, this property determines the orient property of the Vega output. * For line
+        and trail marks, this property determines the sort order of the points in the line
+           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
+        determined by the orientation of the stack;   therefore explicitly specified value
+        will be ignored.
+    point : anyOf(boolean, OverlayMarkDef, enum('transparent'))
+>>>>>>> altair-viz/master
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -285,10 +303,16 @@ class AreaConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -297,6 +321,11 @@ class AreaConfig(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -313,28 +342,35 @@ class AreaConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
     """
     _schema = {'$ref': '#/definitions/AreaConfig'}
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
-                 cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined, radius=Undefined,
+                 cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
+                 ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                 href=Undefined, interpolate=Undefined, limit=Undefined, line=Undefined,
+                 opacity=Undefined, orient=Undefined, point=Undefined, radius=Undefined,
                  shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, **kwds):
         super(AreaConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
-                                         cursor=cursor, dx=dx, dy=dy, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         href=href, interpolate=interpolate, limit=limit, line=line,
+                                         cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
+                                         dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                         filled=filled, font=font, fontSize=fontSize,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                                         interpolate=interpolate, limit=limit, line=line,
                                          opacity=opacity, orient=orient, point=point, radius=radius,
                                          shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
                                          strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, **kwds)
+                                         tension=tension, text=text, theta=theta, tooltip=tooltip,
+                                         **kwds)
 
 
 class AutoSizeParams(VegaLiteSchema):
@@ -518,7 +554,7 @@ class Axis(VegaLiteSchema):
         description.
     titlePadding : float
         The padding, in pixels, between title and axis.
-    values : anyOf(List(float), List(DateTime))
+    values : anyOf(List(float), List(string), List(boolean), List(DateTime))
         Explicitly set the visible axis tick values.
     zindex : float
         A non-positive integer indicating z-index of the axis.
@@ -786,6 +822,7 @@ class BarConfig(VegaLiteSchema):
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
     continuousBandSize : float
+<<<<<<< HEAD
         The default size of the bars on continuous scales.
 
         **Default value:** ``5``
@@ -794,8 +831,18 @@ class BarConfig(VegaLiteSchema):
     'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
     'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
     'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+=======
+        The default size of the bars on continuous scales.  **Default value:** ``5``
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
+>>>>>>> altair-viz/master
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     discreteBandSize : float
         The size of the bars.  If unspecified, the default size is  ``bandSize-1``,
         which provides 1 pixel offset between bars.
@@ -805,6 +852,9 @@ class BarConfig(VegaLiteSchema):
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -859,8 +909,9 @@ class BarConfig(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -895,10 +946,16 @@ class BarConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -907,6 +964,11 @@ class BarConfig(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -923,31 +985,50 @@ class BarConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
     """
     _schema = {'$ref': '#/definitions/BarConfig'}
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                 color=Undefined, continuousBandSize=Undefined, cursor=Undefined,
-                 discreteBandSize=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                 limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                 cursor=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                 dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, tooltip=Undefined, **kwds):
         super(BarConfig, self).__init__(align=align, angle=angle, baseline=baseline,
                                         binSpacing=binSpacing, color=color,
-                                        continuousBandSize=continuousBandSize, cursor=cursor,
-                                        discreteBandSize=discreteBandSize, dx=dx, dy=dy, fill=fill,
-                                        fillOpacity=fillOpacity, filled=filled, font=font,
-                                        fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                        href=href, interpolate=interpolate, limit=limit,
-                                        opacity=opacity, orient=orient, radius=radius, shape=shape,
-                                        size=size, stroke=stroke, strokeCap=strokeCap,
-                                        strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                        strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                        tension=tension, text=text, theta=theta, **kwds)
+                                        continuousBandSize=continuousBandSize,
+                                        cornerRadius=cornerRadius, cursor=cursor, dir=dir,
+                                        discreteBandSize=discreteBandSize, dx=dx, dy=dy,
+                                        ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                        filled=filled, font=font, fontSize=fontSize,
+                                        fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                                        interpolate=interpolate, limit=limit, opacity=opacity,
+                                        orient=orient, radius=radius, shape=shape, size=size,
+                                        stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                                        strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                        strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
+                                        strokeWidth=strokeWidth, tension=tension, text=text,
+                                        theta=theta, tooltip=tooltip, **kwds)
+
+
+class Baseline(VegaLiteSchema):
+    """Baseline schema wrapper
+
+    enum('top', 'middle', 'bottom')
+    """
+    _schema = {'$ref': '#/definitions/Baseline'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(Baseline, self).__init__(*args)
 
 
 class BasicType(VegaLiteSchema):
@@ -970,7 +1051,14 @@ class BinParams(VegaLiteSchema):
 
     Attributes
     ----------
+<<<<<<< HEAD
 
+=======
+    anchor : float
+        A value in the binned domain at which to anchor the bins, shifting the bin
+        boundaries if necessary to ensure that a boundary aligns with the anchor value.
+        **Default Value:** the minimum bin extent value
+>>>>>>> altair-viz/master
     base : float
         The number base to use for automatic bin determination (default is base 10).
 
@@ -1005,10 +1093,12 @@ class BinParams(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/BinParams'}
     _rootschema = Root._schema
 
-    def __init__(self, base=Undefined, divide=Undefined, extent=Undefined, maxbins=Undefined,
-                 minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined, **kwds):
-        super(BinParams, self).__init__(base=base, divide=divide, extent=extent, maxbins=maxbins,
-                                        minstep=minstep, nice=nice, step=step, steps=steps, **kwds)
+    def __init__(self, anchor=Undefined, base=Undefined, divide=Undefined, extent=Undefined,
+                 maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined, steps=Undefined,
+                 **kwds):
+        super(BinParams, self).__init__(anchor=anchor, base=base, divide=divide, extent=extent,
+                                        maxbins=maxbins, minstep=minstep, nice=nice, step=step,
+                                        steps=steps, **kwds)
 
 
 class BinTransform(VegaLiteSchema):
@@ -1024,7 +1114,7 @@ class BinTransform(VegaLiteSchema):
         parameters.
     field : string
         The data field to bin.
-    as : string
+    as : anyOf(string, List(string))
         The output fields at which to write the start and end bin values.
     """
     _schema = {'$ref': '#/definitions/BinTransform'}
@@ -1378,6 +1468,7 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
+<<<<<<< HEAD
     sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field.
         Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
@@ -1390,6 +1481,23 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         order.
 
         **Default value:** ``"ascending"``
+=======
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
+>>>>>>> altair-viz/master
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1673,6 +1781,7 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
+<<<<<<< HEAD
     sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field.
         Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
@@ -1685,6 +1794,23 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         order.
 
         **Default value:** ``"ascending"``
+=======
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
+>>>>>>> altair-viz/master
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1900,6 +2026,11 @@ class Config(VegaLiteSchema):
           "date", "field").
     geoshape : MarkConfig
         Geoshape-Specific Config
+    header : HeaderConfig
+        Header configuration, which determines default properties for all `header
+        <https://vega.github.io/vega-lite/docs/header.html>`_. For a full list of header
+        configuration options, please see the `corresponding section of in the header
+        documentation <https://vega.github.io/vega-lite/docs/header.html#config>`_.
     invalidValues : enum('filter', None)
         Defines how Vega-Lite should handle invalid values ( ``null`` and ``NaN`` ).
 
@@ -1989,17 +2120,17 @@ class Config(VegaLiteSchema):
                  axisBottom=Undefined, axisLeft=Undefined, axisRight=Undefined, axisTop=Undefined,
                  axisX=Undefined, axisY=Undefined, background=Undefined, bar=Undefined,
                  circle=Undefined, countTitle=Undefined, datasets=Undefined, fieldTitle=Undefined,
-                 geoshape=Undefined, invalidValues=Undefined, legend=Undefined, line=Undefined,
-                 mark=Undefined, numberFormat=Undefined, padding=Undefined, point=Undefined,
-                 projection=Undefined, range=Undefined, rect=Undefined, rule=Undefined, scale=Undefined,
-                 selection=Undefined, square=Undefined, stack=Undefined, style=Undefined,
-                 text=Undefined, tick=Undefined, timeFormat=Undefined, title=Undefined, trail=Undefined,
-                 view=Undefined, **kwds):
+                 geoshape=Undefined, header=Undefined, invalidValues=Undefined, legend=Undefined,
+                 line=Undefined, mark=Undefined, numberFormat=Undefined, padding=Undefined,
+                 point=Undefined, projection=Undefined, range=Undefined, rect=Undefined, rule=Undefined,
+                 scale=Undefined, selection=Undefined, square=Undefined, stack=Undefined,
+                 style=Undefined, text=Undefined, tick=Undefined, timeFormat=Undefined, title=Undefined,
+                 trail=Undefined, view=Undefined, **kwds):
         super(Config, self).__init__(area=area, autosize=autosize, axis=axis, axisBand=axisBand,
                                      axisBottom=axisBottom, axisLeft=axisLeft, axisRight=axisRight,
                                      axisTop=axisTop, axisX=axisX, axisY=axisY, background=background,
                                      bar=bar, circle=circle, countTitle=countTitle, datasets=datasets,
-                                     fieldTitle=fieldTitle, geoshape=geoshape,
+                                     fieldTitle=fieldTitle, geoshape=geoshape, header=header,
                                      invalidValues=invalidValues, legend=legend, line=line, mark=mark,
                                      numberFormat=numberFormat, padding=padding, point=point,
                                      projection=projection, range=range, rect=rect, rule=rule,
@@ -2044,6 +2175,22 @@ class CsvDataFormat(VegaLiteSchema):
 
     def __init__(self, parse=Undefined, type=Undefined, **kwds):
         super(CsvDataFormat, self).__init__(parse=parse, type=type, **kwds)
+
+
+class Cursor(VegaLiteSchema):
+    """Cursor schema wrapper
+
+    enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress', 'wait',
+    'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
+    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
+    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
+    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    """
+    _schema = {'$ref': '#/definitions/Cursor'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(Cursor, self).__init__(*args)
 
 
 class Data(VegaLiteSchema):
@@ -2155,6 +2302,18 @@ class DictInlineDataset(VegaLiteSchema):
 
     def __init__(self, **kwds):
         super(DictInlineDataset, self).__init__(**kwds)
+
+
+class Dir(VegaLiteSchema):
+    """Dir schema wrapper
+
+    enum('ltr', 'rtl')
+    """
+    _schema = {'$ref': '#/definitions/Dir'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(Dir, self).__init__(*args)
 
 
 class DsvDataFormat(VegaLiteSchema):
@@ -2636,9 +2795,27 @@ class FacetFieldDef(VegaLiteSchema):
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     header : Header
         An object defining properties of a facet's header.
+<<<<<<< HEAD
     sort : SortOrder
         Sort order for a facet field.
         This can be ``"ascending"``, ``"descending"``.
+=======
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
+>>>>>>> altair-viz/master
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2917,6 +3094,7 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
+<<<<<<< HEAD
     sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field.
         Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
@@ -2929,6 +3107,23 @@ class MarkPropFieldDefWithCondition(VegaLiteSchema):
         order.
 
         **Default value:** ``"ascending"``
+=======
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
+>>>>>>> altair-viz/master
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3307,6 +3502,29 @@ class FacetSpec(VegaLiteSchema):
         field definitions.
     spec : anyOf(LayerSpec, CompositeUnitSpec)
         A specification of the view that gets faceted.
+    align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
+        The alignment to apply to grid rows and columns. The supported string values are
+        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
+        used, in which adjacent subviews are simply placed one after the other. * For
+        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
+        column may be of variable size. * For ``"all"``, subviews will be aligned and each
+        row or column will be sized identically based on the maximum observed size. String
+        values for this property will be applied to both grid rows and columns.
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+         be used to supply different alignments for rows and columns.  **Default value:**
+        ``"all"``.
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : anyOf(boolean, RowColboolean)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  An object value of the form ``{"row": boolean, "column":
+        boolean}`` can be used to supply different centering values for rows and columns.
+        **Default value:** ``false``
     data : Data
         An object describing the data source
     description : string
@@ -3315,6 +3533,10 @@ class FacetSpec(VegaLiteSchema):
         Name of the visualization for later reference.
     resolve : Resolve
         Scale, axis, and legend resolutions for facets.
+    spacing : anyOf(float, RowColnumber)
+        The spacing in pixels between sub-views of the composition operator. An object of
+        the form ``{"row": number, "column": number}`` can be used to set different spacing
+        values for rows and columns.  **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3323,11 +3545,13 @@ class FacetSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/FacetSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, facet=Undefined, spec=Undefined, data=Undefined, description=Undefined,
-                 name=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
-        super(FacetSpec, self).__init__(facet=facet, spec=spec, data=data, description=description,
-                                        name=name, resolve=resolve, title=title, transform=transform,
-                                        **kwds)
+    def __init__(self, facet=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
+                 center=Undefined, data=Undefined, description=Undefined, name=Undefined,
+                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
+        super(FacetSpec, self).__init__(facet=facet, spec=spec, align=align, bounds=bounds,
+                                        center=center, data=data, description=description, name=name,
+                                        resolve=resolve, spacing=spacing, title=title,
+                                        transform=transform, **kwds)
 
 
 class HConcatSpec(VegaLiteSchema):
@@ -3340,6 +3564,16 @@ class HConcatSpec(VegaLiteSchema):
 
     hconcat : List(Spec)
         A list of views that should be concatenated and put into a row.
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : boolean
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  **Default value:** ``false``
     data : Data
         An object describing the data source
     description : string
@@ -3348,6 +3582,9 @@ class HConcatSpec(VegaLiteSchema):
         Name of the visualization for later reference.
     resolve : Resolve
         Scale, axis, and legend resolutions for horizontally concatenated charts.
+    spacing : float
+        The spacing in pixels between sub-views of the concat operator.  **Default value** :
+         ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3356,11 +3593,12 @@ class HConcatSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/HConcatSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, hconcat=Undefined, data=Undefined, description=Undefined, name=Undefined,
-                 resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
-        super(HConcatSpec, self).__init__(hconcat=hconcat, data=data, description=description,
-                                          name=name, resolve=resolve, title=title, transform=transform,
-                                          **kwds)
+    def __init__(self, hconcat=Undefined, bounds=Undefined, center=Undefined, data=Undefined,
+                 description=Undefined, name=Undefined, resolve=Undefined, spacing=Undefined,
+                 title=Undefined, transform=Undefined, **kwds):
+        super(HConcatSpec, self).__init__(hconcat=hconcat, bounds=bounds, center=center, data=data,
+                                          description=description, name=name, resolve=resolve,
+                                          spacing=spacing, title=title, transform=transform, **kwds)
 
 
 class RepeatSpec(VegaLiteSchema):
@@ -3376,6 +3614,29 @@ class RepeatSpec(VegaLiteSchema):
         as a ``row`` or ``column``.
     spec : Spec
 
+    align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
+        The alignment to apply to grid rows and columns. The supported string values are
+        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
+        used, in which adjacent subviews are simply placed one after the other. * For
+        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
+        column may be of variable size. * For ``"all"``, subviews will be aligned and each
+        row or column will be sized identically based on the maximum observed size. String
+        values for this property will be applied to both grid rows and columns.
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+         be used to supply different alignments for rows and columns.  **Default value:**
+        ``"all"``.
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : anyOf(boolean, RowColboolean)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  An object value of the form ``{"row": boolean, "column":
+        boolean}`` can be used to supply different centering values for rows and columns.
+        **Default value:** ``false``
     data : Data
         An object describing the data source
     description : string
@@ -3384,6 +3645,10 @@ class RepeatSpec(VegaLiteSchema):
         Name of the visualization for later reference.
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
+    spacing : anyOf(float, RowColnumber)
+        The spacing in pixels between sub-views of the composition operator. An object of
+        the form ``{"row": number, "column": number}`` can be used to set different spacing
+        values for rows and columns.  **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3392,11 +3657,13 @@ class RepeatSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/RepeatSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, repeat=Undefined, spec=Undefined, data=Undefined, description=Undefined,
-                 name=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
-        super(RepeatSpec, self).__init__(repeat=repeat, spec=spec, data=data, description=description,
-                                         name=name, resolve=resolve, title=title, transform=transform,
-                                         **kwds)
+    def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
+                 center=Undefined, data=Undefined, description=Undefined, name=Undefined,
+                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
+        super(RepeatSpec, self).__init__(repeat=repeat, spec=spec, align=align, bounds=bounds,
+                                         center=center, data=data, description=description, name=name,
+                                         resolve=resolve, spacing=spacing, title=title,
+                                         transform=transform, **kwds)
 
 
 class Spec(VegaLiteSchema):
@@ -3624,6 +3891,16 @@ class VConcatSpec(VegaLiteSchema):
 
     vconcat : List(Spec)
         A list of views that should be concatenated and put into a column.
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : boolean
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  **Default value:** ``false``
     data : Data
         An object describing the data source
     description : string
@@ -3632,6 +3909,9 @@ class VConcatSpec(VegaLiteSchema):
         Name of the visualization for later reference.
     resolve : Resolve
         Scale, axis, and legend resolutions for vertically concatenated charts.
+    spacing : float
+        The spacing in pixels between sub-views of the concat operator.  **Default value** :
+         ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -3640,11 +3920,12 @@ class VConcatSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/VConcatSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, vconcat=Undefined, data=Undefined, description=Undefined, name=Undefined,
-                 resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
-        super(VConcatSpec, self).__init__(vconcat=vconcat, data=data, description=description,
-                                          name=name, resolve=resolve, title=title, transform=transform,
-                                          **kwds)
+    def __init__(self, vconcat=Undefined, bounds=Undefined, center=Undefined, data=Undefined,
+                 description=Undefined, name=Undefined, resolve=Undefined, spacing=Undefined,
+                 title=Undefined, transform=Undefined, **kwds):
+        super(VConcatSpec, self).__init__(vconcat=vconcat, bounds=bounds, center=center, data=data,
+                                          description=description, name=name, resolve=resolve,
+                                          spacing=spacing, title=title, transform=transform, **kwds)
 
 
 class GeoType(VegaLiteSchema):
@@ -3683,34 +3964,144 @@ class Header(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/config.html#format>`_ config for temporal
         fields.
     labelAngle : float
-        The rotation angle of the header labels.
-
-        **Default value:** ``0``.
+        The rotation angle of the header labels.  **Default value:** ``0``.
+    labelColor : string
+        The color of the header label, can be in hex color code or regular color name.
+    labelFont : string
+        The font of the header label.
+    labelFontSize : float
+        The font size of the header label, in pixels.
+    labelLimit : float
+        The maximum length of the header label in pixels. The text value will be
+        automatically truncated if the rendered size exceeds the limit.  **Default value:**
+        ``0``, indicating no limit
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.
-
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
-        field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
-        Otherwise, the title is simply the field name.
-
-        **Notes** :
-
-        1) You can customize the default field title format by providing the [fieldTitle
-        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
-        `fieldTitle function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
-
-        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
-        defined, axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.  **Default value:**
+        derived from the field's name and transformation function ( ``aggregate``, ``bin``
+        and ``timeUnit`` ).  If the field has an aggregate function, the function is
+        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
+        or has a time unit applied, the applied function is shown in parentheses (e.g.,
+        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
+        is simply the field name.  **Notes** :  1) You can customize the default field title
+         format by providing the [ ``fieldTitle`` property in the `config
+        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
+        via the ``compile`` function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
+        field definition's ``title`` and axis, header, or legend ``title`` are defined,
+        axis/header/legend title will be used.
+    titleAnchor : string
+        The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
+        ``"end"``. For example, with an orientation of top these anchor positions map to a
+        left-, center-, or right-aligned title.  **Default value:** ``"middle"`` for `single
+         <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views. ``"start"`` for other
+        composite views.  **Note:** `For now
+        <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is only customizable
+        only for `single <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views.  For other composite
+        views, ``anchor`` is always ``"start"``.
+    titleAngle : float
+        The rotation angle of the header title.  **Default value:** ``0``.
+    titleBaseline : TextBaseline
+        Vertical text baseline for the header title. One of ``"top"``, ``"bottom"``,
+        ``"middle"``.  **Default value:** ``"middle"``
+    titleColor : string
+        Color of the header title, can be in hex color code or regular color name.
+    titleFont : string
+        Font of the header title. (e.g., ``"Helvetica Neue"`` ).
+    titleFontSize : float
+        Font size of the header title.
+    titleFontWeight : FontWeight
+        Font weight of the header title. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
+    titleLimit : float
+        The maximum length of the header title in pixels. The text value will be
+        automatically truncated if the rendered size exceeds the limit.  **Default value:**
+        ``0``, indicating no limit
     """
     _schema = {'$ref': '#/definitions/Header'}
     _rootschema = Root._schema
 
-    def __init__(self, format=Undefined, labelAngle=Undefined, title=Undefined, **kwds):
-        super(Header, self).__init__(format=format, labelAngle=labelAngle, title=title, **kwds)
+    def __init__(self, format=Undefined, labelAngle=Undefined, labelColor=Undefined,
+                 labelFont=Undefined, labelFontSize=Undefined, labelLimit=Undefined, title=Undefined,
+                 titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
+                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
+                 titleFontWeight=Undefined, titleLimit=Undefined, **kwds):
+        super(Header, self).__init__(format=format, labelAngle=labelAngle, labelColor=labelColor,
+                                     labelFont=labelFont, labelFontSize=labelFontSize,
+                                     labelLimit=labelLimit, title=title, titleAnchor=titleAnchor,
+                                     titleAngle=titleAngle, titleBaseline=titleBaseline,
+                                     titleColor=titleColor, titleFont=titleFont,
+                                     titleFontSize=titleFontSize, titleFontWeight=titleFontWeight,
+                                     titleLimit=titleLimit, **kwds)
+
+
+class HeaderConfig(VegaLiteSchema):
+    """HeaderConfig schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    labelAngle : float
+        The rotation angle of the header labels.  **Default value:** ``0``.
+    labelColor : string
+        The color of the header label, can be in hex color code or regular color name.
+    labelFont : string
+        The font of the header label.
+    labelFontSize : float
+        The font size of the header label, in pixels.
+    labelLimit : float
+        The maximum length of the header label in pixels. The text value will be
+        automatically truncated if the rendered size exceeds the limit.  **Default value:**
+        ``0``, indicating no limit
+    titleAnchor : string
+        The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
+        ``"end"``. For example, with an orientation of top these anchor positions map to a
+        left-, center-, or right-aligned title.  **Default value:** ``"middle"`` for `single
+         <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views. ``"start"`` for other
+        composite views.  **Note:** `For now
+        <https://github.com/vega/vega-lite/issues/2875>`_, ``anchor`` is only customizable
+        only for `single <https://vega.github.io/vega-lite/docs/spec.html>`_ and `layered
+        <https://vega.github.io/vega-lite/docs/layer.html>`_ views.  For other composite
+        views, ``anchor`` is always ``"start"``.
+    titleAngle : float
+        The rotation angle of the header title.  **Default value:** ``0``.
+    titleBaseline : TextBaseline
+        Vertical text baseline for the header title. One of ``"top"``, ``"bottom"``,
+        ``"middle"``.  **Default value:** ``"middle"``
+    titleColor : string
+        Color of the header title, can be in hex color code or regular color name.
+    titleFont : string
+        Font of the header title. (e.g., ``"Helvetica Neue"`` ).
+    titleFontSize : float
+        Font size of the header title.
+    titleFontWeight : FontWeight
+        Font weight of the header title. This can be either a string (e.g ``"bold"``,
+        ``"normal"`` ) or a number ( ``100``, ``200``, ``300``, ..., ``900`` where
+        ``"normal"`` = ``400`` and ``"bold"`` = ``700`` ).
+    titleLimit : float
+        The maximum length of the header title in pixels. The text value will be
+        automatically truncated if the rendered size exceeds the limit.  **Default value:**
+        ``0``, indicating no limit
+    """
+    _schema = {'$ref': '#/definitions/HeaderConfig'}
+    _rootschema = Root._schema
+
+    def __init__(self, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
+                 labelFontSize=Undefined, labelLimit=Undefined, titleAnchor=Undefined,
+                 titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined,
+                 titleFont=Undefined, titleFontSize=Undefined, titleFontWeight=Undefined,
+                 titleLimit=Undefined, **kwds):
+        super(HeaderConfig, self).__init__(labelAngle=labelAngle, labelColor=labelColor,
+                                           labelFont=labelFont, labelFontSize=labelFontSize,
+                                           labelLimit=labelLimit, titleAnchor=titleAnchor,
+                                           titleAngle=titleAngle, titleBaseline=titleBaseline,
+                                           titleColor=titleColor, titleFont=titleFont,
+                                           titleFontSize=titleFontSize, titleFontWeight=titleFontWeight,
+                                           titleLimit=titleLimit, **kwds)
 
 
 class HorizontalAlign(VegaLiteSchema):
@@ -4008,11 +4399,17 @@ class Legend(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     type : enum('symbol', 'gradient')
         The type of the legend. Use ``"symbol"`` to create a discrete legend and
+<<<<<<< HEAD
         ``"gradient"`` for a continuous color gradient.
 
         **Default value:** ``"gradient"`` for non-binned quantitative fields and temporal
         fields; ``"symbol"`` otherwise.
     values : anyOf(List(float), List(string), List(DateTime))
+=======
+        ``"gradient"`` for a continuous color gradient.  **Default value:** ``"gradient"``
+        for non-binned quantitative fields and temporal fields; ``"symbol"`` otherwise.
+    values : anyOf(List(float), List(string), List(boolean), List(DateTime))
+>>>>>>> altair-viz/master
         Explicitly set the visible legend values.
     zindex : float
         A non-positive integer indicating z-index of the legend.
@@ -4230,19 +4627,24 @@ class LineConfig(VegaLiteSchema):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -4297,14 +4699,16 @@ class LineConfig(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     orient : Orient
+<<<<<<< HEAD
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -4318,6 +4722,17 @@ class LineConfig(VegaLiteSchema):
         For stacked charts, this is always determined by the orientation of the stack;
         therefore explicitly specified value will be ignored.
     point : anyOf(boolean, MarkConfig, enum('transparent'))
+=======
+        The orientation of a non-stacked bar, tick, area, and line charts. The value is
+        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
+         whether the size of the bar and tick   should be applied to x or y dimension. * For
+         area, this property determines the orient property of the Vega output. * For line
+        and trail marks, this property determines the sort order of the points in the line
+           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
+        determined by the orientation of the stack;   therefore explicitly specified value
+        will be ignored.
+    point : anyOf(boolean, OverlayMarkDef, enum('transparent'))
+>>>>>>> altair-viz/master
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -4348,10 +4763,16 @@ class LineConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -4360,6 +4781,11 @@ class LineConfig(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -4376,28 +4802,35 @@ class LineConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
     """
     _schema = {'$ref': '#/definitions/LineConfig'}
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
-                 cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, orient=Undefined, point=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
+                 ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                 href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
+                 orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, tooltip=Undefined, **kwds):
         super(LineConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
-                                         cursor=cursor, dx=dx, dy=dy, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         href=href, interpolate=interpolate, limit=limit,
-                                         opacity=opacity, orient=orient, point=point, radius=radius,
-                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                         cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
+                                         dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                         filled=filled, font=font, fontSize=fontSize,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                                         interpolate=interpolate, limit=limit, opacity=opacity,
+                                         orient=orient, point=point, radius=radius, shape=shape,
+                                         size=size, stroke=stroke, strokeCap=strokeCap,
                                          strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, **kwds)
+                                         tension=tension, text=text, theta=theta, tooltip=tooltip,
+                                         **kwds)
 
 
 class LocalMultiTimeUnit(VegaLiteSchema):
@@ -4650,19 +5083,24 @@ class MarkConfig(VegaLiteSchema):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -4717,8 +5155,9 @@ class MarkConfig(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -4753,10 +5192,16 @@ class MarkConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -4765,6 +5210,11 @@ class MarkConfig(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -4781,28 +5231,34 @@ class MarkConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
     """
     _schema = {'$ref': '#/definitions/MarkConfig'}
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
-                 cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
+                 ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                 href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
+                 orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 tooltip=Undefined, **kwds):
         super(MarkConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
-                                         cursor=cursor, dx=dx, dy=dy, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         href=href, interpolate=interpolate, limit=limit,
-                                         opacity=opacity, orient=orient, radius=radius, shape=shape,
-                                         size=size, stroke=stroke, strokeCap=strokeCap,
-                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, **kwds)
+                                         cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
+                                         dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                         filled=filled, font=font, fontSize=fontSize,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                                         interpolate=interpolate, limit=limit, opacity=opacity,
+                                         orient=orient, radius=radius, shape=shape, size=size,
+                                         stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
+                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
+                                         strokeWidth=strokeWidth, tension=tension, text=text,
+                                         theta=theta, tooltip=tooltip, **kwds)
 
 
 class MarkDef(VegaLiteSchema):
@@ -4841,19 +5297,24 @@ class MarkDef(VegaLiteSchema):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -4908,9 +5369,10 @@ class MarkDef(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
-    line : anyOf(boolean, MarkConfig)
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
+    line : anyOf(boolean, OverlayMarkDef)
         A flag for overlaying line on top of area marks, or an object defining the
         properties of the overlayed lines.
 
@@ -4927,6 +5389,7 @@ class MarkDef(VegaLiteSchema):
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
     orient : Orient
+<<<<<<< HEAD
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -4940,6 +5403,17 @@ class MarkDef(VegaLiteSchema):
         For stacked charts, this is always determined by the orientation of the stack;
         therefore explicitly specified value will be ignored.
     point : anyOf(boolean, MarkConfig, enum('transparent'))
+=======
+        The orientation of a non-stacked bar, tick, area, and line charts. The value is
+        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
+         whether the size of the bar and tick   should be applied to x or y dimension. * For
+         area, this property determines the orient property of the Vega output. * For line
+        and trail marks, this property determines the sort order of the points in the line
+           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
+        determined by the orientation of the stack;   therefore explicitly specified value
+        will be ignored.
+    point : anyOf(boolean, OverlayMarkDef, enum('transparent'))
+>>>>>>> altair-viz/master
         A flag for overlaying points on top of line or area marks, or an object defining the
         properties of the overlayed points.
 
@@ -4970,10 +5444,16 @@ class MarkDef(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -4982,6 +5462,11 @@ class MarkDef(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -5013,9 +5498,15 @@ class MarkDef(VegaLiteSchema):
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
     thickness : float
+<<<<<<< HEAD
         Thickness of the tick mark.
 
         **Default value:**  ``1``
+=======
+        Thickness of the tick mark.  **Default value:**  ``1``
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
+>>>>>>> altair-viz/master
     x2Offset : float
         Offset for x2-position.
     xOffset : float
@@ -5029,28 +5520,32 @@ class MarkDef(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, align=Undefined, angle=Undefined, baseline=Undefined,
-                 binSpacing=Undefined, clip=Undefined, color=Undefined, cursor=Undefined, dx=Undefined,
-                 dy=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
+                 binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
+                 cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
+                 fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 thickness=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
-                 yOffset=Undefined, **kwds):
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                 text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined,
+                 x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         super(MarkDef, self).__init__(type=type, align=align, angle=angle, baseline=baseline,
-                                      binSpacing=binSpacing, clip=clip, color=color, cursor=cursor,
-                                      dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, filled=filled,
-                                      font=font, fontSize=fontSize, fontStyle=fontStyle,
+                                      binSpacing=binSpacing, clip=clip, color=color,
+                                      cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
+                                      ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                      filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
                                       fontWeight=fontWeight, href=href, interpolate=interpolate,
                                       limit=limit, line=line, opacity=opacity, orient=orient,
                                       point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                                       strokeCap=strokeCap, strokeDash=strokeDash,
-                                      strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
+                                      strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                      strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
                                       strokeWidth=strokeWidth, style=style, tension=tension, text=text,
-                                      theta=theta, thickness=thickness, x2Offset=x2Offset,
-                                      xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
+                                      theta=theta, thickness=thickness, tooltip=tooltip,
+                                      x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                                      yOffset=yOffset, **kwds)
 
 
 class Month(VegaLiteSchema):
@@ -5306,6 +5801,195 @@ class Orient(VegaLiteSchema):
         super(Orient, self).__init__(*args)
 
 
+class OverlayMarkDef(VegaLiteSchema):
+    """OverlayMarkDef schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    align : HorizontalAlign
+        The horizontal alignment of the text. One of ``"left"``, ``"right"``, ``"center"``.
+    angle : float
+        The rotation angle of the text, in degrees.
+    baseline : VerticalAlign
+        The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
+        **Default value:** ``"middle"``
+    clip : boolean
+        Whether a mark be clipped to the enclosing group’s width and height.
+    color : string
+        Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
+        ``color`` and will override ``color``.  **Default value:** :raw-html:`<span
+        style="color: #4682b4;">&#9632;</span>` ``"#4682b4"``  **Note:** This property
+        cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
+    dx : float
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
+    dy : float
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
+    fill : string
+        Default Fill Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    fillOpacity : float
+        The fill opacity (value between [0,1]).  **Default value:** ``1``
+    filled : boolean
+        Whether the mark's color should be used as fill color instead of stroke color.
+        **Default value:** ``true`` for all marks except ``point`` and ``false`` for
+        ``point``.  **Applicable for:** ``bar``, ``point``, ``circle``, ``square``, and
+        ``area`` marks.  **Note:** This property cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
+    font : string
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
+    fontSize : float
+        The font size, in pixels.
+    fontStyle : FontStyle
+        The font style (e.g., ``"italic"`` ).
+    fontWeight : FontWeight
+        The font weight. This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a
+        number ( ``100``, ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and
+        ``"bold"`` = ``700`` ).
+    href : string
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+    interpolate : Interpolate
+        The line interpolation method to use for line and area marks. One of the following:
+           * ``"linear"`` : piecewise linear segments, as in a polyline. *
+        ``"linear-closed"`` : close the linear segments to form a polygon. * ``"step"`` :
+        alternate between horizontal and vertical segments, as in a step function. *
+        ``"step-before"`` : alternate between vertical and horizontal segments, as in a step
+         function. * ``"step-after"`` : alternate between horizontal and vertical segments,
+        as in a step function. * ``"basis"`` : a B-spline, with control point duplication on
+         the ends. * ``"basis-open"`` : an open B-spline; may not intersect the start or
+        end. * ``"basis-closed"`` : a closed B-spline, as in a loop. * ``"cardinal"`` : a
+        Cardinal spline, with control point duplication on the ends. * ``"cardinal-open"`` :
+         an open Cardinal spline; may not intersect the start or end, but will intersect
+        other control points. * ``"cardinal-closed"`` : a closed Cardinal spline, as in a
+        loop. * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+        straighten the spline. * ``"monotone"`` : cubic interpolation that preserves
+        monotonicity in y.
+    limit : float
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
+    opacity : float
+        The overall opacity (value between [0,1]).  **Default value:** ``0.7`` for
+        non-aggregate plots with ``point``, ``tick``, ``circle``, or ``square`` marks or
+        layered ``bar`` charts and ``1`` otherwise.
+    orient : Orient
+        The orientation of a non-stacked bar, tick, area, and line charts. The value is
+        either horizontal (default) or vertical.   * For bar, rule and tick, this determines
+         whether the size of the bar and tick   should be applied to x or y dimension. * For
+         area, this property determines the orient property of the Vega output. * For line
+        and trail marks, this property determines the sort order of the points in the line
+           if ``config.sortLineBy`` is not specified.   For stacked charts, this is always
+        determined by the orientation of the stack;   therefore explicitly specified value
+        will be ignored.
+    radius : float
+        Polar coordinate radial offset, in pixels, of the text label from the origin
+        determined by the ``x`` and ``y`` properties.
+    shape : string
+        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
+        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
+        SVG path.  **Default value:** ``"circle"``
+    size : float
+        The pixel area each the point/circle/square. For example: in the case of circles,
+        the radius is determined in part by the square root of the size value.  **Default
+        value:** ``30``
+    stroke : string
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.  **Default value:** ``"square"``
+    strokeDash : List(float)
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
+    strokeDashOffset : float
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
+    strokeOpacity : float
+        The stroke opacity (value between [0,1]).  **Default value:** ``1``
+    strokeWidth : float
+        The stroke width, in pixels.
+    style : anyOf(string, List(string))
+        A string or array of strings indicating the name of custom styles to apply to the
+        mark. A style is a named collection of mark property defaults defined within the
+        `style configuration
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_. If style is an
+        array, later styles will override earlier styles. Any `mark properties
+        <https://vega.github.io/vega-lite/docs/encoding.html#mark-prop>`_ explicitly defined
+         within the ``encoding`` will override a style default.  **Default value:** The
+        mark's name.  For example, a bar mark will have style ``"bar"`` by default.
+        **Note:** Any specified style will augment the default style. For example, a bar
+        mark with ``"style": "foo"`` will receive from ``config.style.bar`` and
+        ``config.style.foo`` (the specified style ``"foo"`` has higher precedence).
+    tension : float
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
+    text : string
+        Placeholder text if the ``text`` channel is not specified
+    theta : float
+        Polar coordinate angle, in radians, of the text label from the origin determined by
+        the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
+        ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
+        radians, with ``0`` indicating "north".
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
+    x2Offset : float
+        Offset for x2-position.
+    xOffset : float
+        Offset for x-position.
+    y2Offset : float
+        Offset for y2-position.
+    yOffset : float
+        Offset for y-position.
+    """
+    _schema = {'$ref': '#/definitions/OverlayMarkDef'}
+    _rootschema = Root._schema
+
+    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
+                 color=Undefined, cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined,
+                 dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                 text=Undefined, theta=Undefined, tooltip=Undefined, x2Offset=Undefined,
+                 xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+        super(OverlayMarkDef, self).__init__(align=align, angle=angle, baseline=baseline, clip=clip,
+                                             color=color, cornerRadius=cornerRadius, cursor=cursor,
+                                             dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
+                                             fillOpacity=fillOpacity, filled=filled, font=font,
+                                             fontSize=fontSize, fontStyle=fontStyle,
+                                             fontWeight=fontWeight, href=href, interpolate=interpolate,
+                                             limit=limit, opacity=opacity, orient=orient, radius=radius,
+                                             shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                             strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                             strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                                             strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                             style=style, tension=tension, text=text, theta=theta,
+                                             tooltip=tooltip, x2Offset=x2Offset, xOffset=xOffset,
+                                             y2Offset=y2Offset, yOffset=yOffset, **kwds)
+
+
 class Padding(VegaLiteSchema):
     """Padding schema wrapper
 
@@ -5385,6 +6069,7 @@ class PositionFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
+<<<<<<< HEAD
     sort : anyOf(List(string), SortOrder, EncodingSortField, None)
         Sort order for the encoded field.
         Supported ``sort`` values include ``"ascending"``, ``"descending"``, ``null`` (no
@@ -5397,6 +6082,23 @@ class PositionFieldDef(VegaLiteSchema):
         order.
 
         **Default value:** ``"ascending"``
+=======
+    sort : Sort
+        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
+         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
+        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
+         sorting by the values' natural order in Javascript. * `A sort field definition
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+        another field. * `An array specifying the field values in preferred order
+        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+        sort order will obey the values in the array, followed by any unspecified values in
+        their original order.  For discrete time field, values in the sort array can be
+        `date-time definition objects <types#datetime>`_. In addition, for time units
+        ``"month"`` and ``"day"``, the values can be the month or day names (case
+        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
+        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
+        supported for ``row`` and ``column``.
+>>>>>>> altair-viz/master
     stack : anyOf(StackOffset, None)
         Type of stacking offset if the field should be stacked.
         ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
@@ -5757,6 +6459,63 @@ class ResolveMode(VegaLiteSchema):
 
     def __init__(self, *args):
         super(ResolveMode, self).__init__(*args)
+
+
+class RowColVgLayoutAlign(VegaLiteSchema):
+    """RowColVgLayoutAlign schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    column : VgLayoutAlign
+
+    row : VgLayoutAlign
+
+    """
+    _schema = {'$ref': '#/definitions/RowCol<VgLayoutAlign>'}
+    _rootschema = Root._schema
+
+    def __init__(self, column=Undefined, row=Undefined, **kwds):
+        super(RowColVgLayoutAlign, self).__init__(column=column, row=row, **kwds)
+
+
+class RowColboolean(VegaLiteSchema):
+    """RowColboolean schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    column : boolean
+
+    row : boolean
+
+    """
+    _schema = {'$ref': '#/definitions/RowCol<boolean>'}
+    _rootschema = Root._schema
+
+    def __init__(self, column=Undefined, row=Undefined, **kwds):
+        super(RowColboolean, self).__init__(column=column, row=row, **kwds)
+
+
+class RowColnumber(VegaLiteSchema):
+    """RowColnumber schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+    column : float
+
+    row : float
+
+    """
+    _schema = {'$ref': '#/definitions/RowCol<number>'}
+    _rootschema = Root._schema
+
+    def __init__(self, column=Undefined, row=Undefined, **kwds):
+        super(RowColnumber, self).__init__(column=column, row=row, **kwds)
 
 
 class Scale(VegaLiteSchema):
@@ -6438,6 +7197,19 @@ class SingleTimeUnit(VegaLiteSchema):
         super(SingleTimeUnit, self).__init__(*args, **kwds)
 
 
+class Sort(VegaLiteSchema):
+    """Sort schema wrapper
+
+    anyOf(List(float), List(string), List(boolean), List(DateTime), SortOrder,
+    EncodingSortField, None)
+    """
+    _schema = {'$ref': '#/definitions/Sort'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(Sort, self).__init__(*args, **kwds)
+
+
 class SortField(VegaLiteSchema):
     """SortField schema wrapper
 
@@ -6483,6 +7255,30 @@ class StackOffset(VegaLiteSchema):
         super(StackOffset, self).__init__(*args)
 
 
+class StrokeCap(VegaLiteSchema):
+    """StrokeCap schema wrapper
+
+    enum('butt', 'round', 'square')
+    """
+    _schema = {'$ref': '#/definitions/StrokeCap'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(StrokeCap, self).__init__(*args)
+
+
+class StrokeJoin(VegaLiteSchema):
+    """StrokeJoin schema wrapper
+
+    enum('miter', 'round', 'bevel')
+    """
+    _schema = {'$ref': '#/definitions/StrokeJoin'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(StrokeJoin, self).__init__(*args)
+
+
 class StyleConfigIndex(VegaLiteSchema):
     """StyleConfigIndex schema wrapper
 
@@ -6493,6 +7289,18 @@ class StyleConfigIndex(VegaLiteSchema):
 
     def __init__(self, **kwds):
         super(StyleConfigIndex, self).__init__(**kwds)
+
+
+class TextBaseline(VegaLiteSchema):
+    """TextBaseline schema wrapper
+
+    anyOf(enum('alphabetic'), Baseline)
+    """
+    _schema = {'$ref': '#/definitions/TextBaseline'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(TextBaseline, self).__init__(*args, **kwds)
 
 
 class TextConfig(VegaLiteSchema):
@@ -6520,19 +7328,24 @@ class TextConfig(VegaLiteSchema):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -6587,8 +7400,9 @@ class TextConfig(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -6625,10 +7439,16 @@ class TextConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -6637,6 +7457,11 @@ class TextConfig(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -6653,29 +7478,35 @@ class TextConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
     """
     _schema = {'$ref': '#/definitions/TextConfig'}
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
-                 cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined,
-                 shortTimeLabels=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined, **kwds):
+                 cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
+                 ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
+                 font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
+                 href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
+                 orient=Undefined, radius=Undefined, shape=Undefined, shortTimeLabels=Undefined,
+                 size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, tooltip=Undefined, **kwds):
         super(TextConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
-                                         cursor=cursor, dx=dx, dy=dy, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         href=href, interpolate=interpolate, limit=limit,
-                                         opacity=opacity, orient=orient, radius=radius, shape=shape,
+                                         cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
+                                         dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                         filled=filled, font=font, fontSize=fontSize,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
+                                         interpolate=interpolate, limit=limit, opacity=opacity,
+                                         orient=orient, radius=radius, shape=shape,
                                          shortTimeLabels=shortTimeLabels, size=size, stroke=stroke,
                                          strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
+                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, **kwds)
+                                         theta=theta, tooltip=tooltip, **kwds)
 
 
 class TextFieldDef(VegaLiteSchema):
@@ -6785,19 +7616,24 @@ class TickConfig(VegaLiteSchema):
 
         **Note:** This property cannot be used in a `style config
         <https://vega.github.io/vega-lite/docs/mark.html#style-config>`_.
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -6852,8 +7688,9 @@ class TickConfig(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -6888,10 +7725,16 @@ class TickConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -6900,6 +7743,11 @@ class TickConfig(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -6917,33 +7765,42 @@ class TickConfig(VegaLiteSchema):
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
     thickness : float
+<<<<<<< HEAD
         Thickness of the tick mark.
 
         **Default value:**  ``1``
+=======
+        Thickness of the tick mark.  **Default value:**  ``1``
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
+>>>>>>> altair-viz/master
     """
     _schema = {'$ref': '#/definitions/TickConfig'}
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, bandSize=Undefined, baseline=Undefined,
-                 color=Undefined, cursor=Undefined, dx=Undefined, dy=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                 limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 thickness=Undefined, **kwds):
+                 color=Undefined, cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined,
+                 dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, thickness=Undefined, tooltip=Undefined, **kwds):
         super(TickConfig, self).__init__(align=align, angle=angle, bandSize=bandSize, baseline=baseline,
-                                         color=color, cursor=cursor, dx=dx, dy=dy, fill=fill,
+                                         color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir,
+                                         dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                                          fillOpacity=fillOpacity, filled=filled, font=font,
                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
                                          href=href, interpolate=interpolate, limit=limit,
                                          opacity=opacity, orient=orient, radius=radius, shape=shape,
                                          size=size, stroke=stroke, strokeCap=strokeCap,
                                          strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                          tension=tension, text=text, theta=theta, thickness=thickness,
-                                         **kwds)
+                                         tooltip=tooltip, **kwds)
 
 
 class TimeUnit(VegaLiteSchema):
@@ -7195,9 +8052,24 @@ class TopLevelHConcatSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
+<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
+=======
+        CSS color property to use as the background of visualization.  **Default value:**
+        none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : boolean
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  **Default value:** ``false``
+>>>>>>> altair-viz/master
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -7221,6 +8093,9 @@ class TopLevelHConcatSpec(VegaLiteSchema):
         **Default value** : ``5``
     resolve : Resolve
         Scale, axis, and legend resolutions for horizontally concatenated charts.
+    spacing : float
+        The spacing in pixels between sub-views of the concat operator.  **Default value** :
+         ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -7235,13 +8110,15 @@ class TopLevelHConcatSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
-                 padding=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
+    def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
+                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
+                 description=Undefined, name=Undefined, padding=Undefined, resolve=Undefined,
+                 spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
         super(TopLevelHConcatSpec, self).__init__(hconcat=hconcat, autosize=autosize,
-                                                  background=background, config=config, data=data,
-                                                  datasets=datasets, description=description, name=name,
-                                                  padding=padding, resolve=resolve, title=title,
+                                                  background=background, bounds=bounds, center=center,
+                                                  config=config, data=data, datasets=datasets,
+                                                  description=description, name=name, padding=padding,
+                                                  resolve=resolve, spacing=spacing, title=title,
                                                   transform=transform, **kwds)
 
 
@@ -7258,6 +8135,17 @@ class TopLevelRepeatSpec(VegaLiteSchema):
         as a ``row`` or ``column``.
     spec : Spec
 
+    align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
+        The alignment to apply to grid rows and columns. The supported string values are
+        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
+        used, in which adjacent subviews are simply placed one after the other. * For
+        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
+        column may be of variable size. * For ``"all"``, subviews will be aligned and each
+        row or column will be sized identically based on the maximum observed size. String
+        values for this property will be applied to both grid rows and columns.
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+         be used to supply different alignments for rows and columns.  **Default value:**
+        ``"all"``.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
@@ -7268,9 +8156,26 @@ class TopLevelRepeatSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
+<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
+=======
+        CSS color property to use as the background of visualization.  **Default value:**
+        none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : anyOf(boolean, RowColboolean)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  An object value of the form ``{"row": boolean, "column":
+        boolean}`` can be used to supply different centering values for rows and columns.
+        **Default value:** ``false``
+>>>>>>> altair-viz/master
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -7294,6 +8199,10 @@ class TopLevelRepeatSpec(VegaLiteSchema):
         **Default value** : ``5``
     resolve : Resolve
         Scale and legend resolutions for repeated charts.
+    spacing : anyOf(float, RowColnumber)
+        The spacing in pixels between sub-views of the composition operator. An object of
+        the form ``{"row": number, "column": number}`` can be used to set different spacing
+        values for rows and columns.  **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -7308,15 +8217,17 @@ class TopLevelRepeatSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, repeat=Undefined, spec=Undefined, autosize=Undefined, background=Undefined,
-                 config=Undefined, data=Undefined, datasets=Undefined, description=Undefined,
-                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
+    def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, autosize=Undefined,
+                 background=Undefined, bounds=Undefined, center=Undefined, config=Undefined,
+                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
+                 padding=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
                  transform=Undefined, **kwds):
-        super(TopLevelRepeatSpec, self).__init__(repeat=repeat, spec=spec, autosize=autosize,
-                                                 background=background, config=config, data=data,
+        super(TopLevelRepeatSpec, self).__init__(repeat=repeat, spec=spec, align=align,
+                                                 autosize=autosize, background=background,
+                                                 bounds=bounds, center=center, config=config, data=data,
                                                  datasets=datasets, description=description, name=name,
-                                                 padding=padding, resolve=resolve, title=title,
-                                                 transform=transform, **kwds)
+                                                 padding=padding, resolve=resolve, spacing=spacing,
+                                                 title=title, transform=transform, **kwds)
 
 
 class TopLevelVConcatSpec(VegaLiteSchema):
@@ -7339,9 +8250,24 @@ class TopLevelVConcatSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
+<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
+=======
+        CSS color property to use as the background of visualization.  **Default value:**
+        none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : boolean
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  **Default value:** ``false``
+>>>>>>> altair-viz/master
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -7365,6 +8291,9 @@ class TopLevelVConcatSpec(VegaLiteSchema):
         **Default value** : ``5``
     resolve : Resolve
         Scale, axis, and legend resolutions for vertically concatenated charts.
+    spacing : float
+        The spacing in pixels between sub-views of the concat operator.  **Default value** :
+         ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -7379,13 +8308,15 @@ class TopLevelVConcatSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
-                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
-                 padding=Undefined, resolve=Undefined, title=Undefined, transform=Undefined, **kwds):
+    def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
+                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
+                 description=Undefined, name=Undefined, padding=Undefined, resolve=Undefined,
+                 spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
         super(TopLevelVConcatSpec, self).__init__(vconcat=vconcat, autosize=autosize,
-                                                  background=background, config=config, data=data,
-                                                  datasets=datasets, description=description, name=name,
-                                                  padding=padding, resolve=resolve, title=title,
+                                                  background=background, bounds=bounds, center=center,
+                                                  config=config, data=data, datasets=datasets,
+                                                  description=description, name=name, padding=padding,
+                                                  resolve=resolve, spacing=spacing, title=title,
                                                   transform=transform, **kwds)
 
 
@@ -7404,6 +8335,17 @@ class TopLevelFacetSpec(VegaLiteSchema):
         field definitions.
     spec : anyOf(LayerSpec, CompositeUnitSpec)
         A specification of the view that gets faceted.
+    align : anyOf(VgLayoutAlign, RowColVgLayoutAlign)
+        The alignment to apply to grid rows and columns. The supported string values are
+        ``"all"``, ``"each"``, and ``"none"``.   * For ``"none"``, a flow layout will be
+        used, in which adjacent subviews are simply placed one after the other. * For
+        ``"each"``, subviews will be aligned into a clean grid structure, but each row or
+        column may be of variable size. * For ``"all"``, subviews will be aligned and each
+        row or column will be sized identically based on the maximum observed size. String
+        values for this property will be applied to both grid rows and columns.
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+         be used to supply different alignments for rows and columns.  **Default value:**
+        ``"all"``.
     autosize : anyOf(AutosizeType, AutoSizeParams)
         Sets how the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
@@ -7414,9 +8356,26 @@ class TopLevelFacetSpec(VegaLiteSchema):
 
         **Default value** : ``pad``
     background : string
+<<<<<<< HEAD
         CSS color property to use as the background of visualization.
 
         **Default value:** none (transparent)
+=======
+        CSS color property to use as the background of visualization.  **Default value:**
+        none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.   * If set to ``full``, the entire
+        calculated bounds (including axes, title, and legend) will be used. * If set to
+        ``flush``, only the specified width and height values for the sub-view will be used.
+         The ``flush`` setting can be useful when attempting to place sub-plots without axes
+         or legends into a uniform grid structure.  **Default value:** ``"full"``
+    center : anyOf(boolean, RowColboolean)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.  An object value of the form ``{"row": boolean, "column":
+        boolean}`` can be used to supply different centering values for rows and columns.
+        **Default value:** ``false``
+>>>>>>> altair-viz/master
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -7438,6 +8397,10 @@ class TopLevelFacetSpec(VegaLiteSchema):
         **Default value** : ``5``
     resolve : Resolve
         Scale, axis, and legend resolutions for facets.
+    spacing : anyOf(float, RowColnumber)
+        The spacing in pixels between sub-views of the composition operator. An object of
+        the form ``{"row": number, "column": number}`` can be used to set different spacing
+        values for rows and columns.  **Default value** : ``10``
     title : anyOf(string, TitleParams)
         Title for the plot.
     transform : List(Transform)
@@ -7452,15 +8415,17 @@ class TopLevelFacetSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/TopLevelFacetSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, data=Undefined, facet=Undefined, spec=Undefined, autosize=Undefined,
-                 background=Undefined, config=Undefined, datasets=Undefined, description=Undefined,
-                 name=Undefined, padding=Undefined, resolve=Undefined, title=Undefined,
+    def __init__(self, data=Undefined, facet=Undefined, spec=Undefined, align=Undefined,
+                 autosize=Undefined, background=Undefined, bounds=Undefined, center=Undefined,
+                 config=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
+                 padding=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
                  transform=Undefined, **kwds):
-        super(TopLevelFacetSpec, self).__init__(data=data, facet=facet, spec=spec, autosize=autosize,
-                                                background=background, config=config, datasets=datasets,
+        super(TopLevelFacetSpec, self).__init__(data=data, facet=facet, spec=spec, align=align,
+                                                autosize=autosize, background=background, bounds=bounds,
+                                                center=center, config=config, datasets=datasets,
                                                 description=description, name=name, padding=padding,
-                                                resolve=resolve, title=title, transform=transform,
-                                                **kwds)
+                                                resolve=resolve, spacing=spacing, title=title,
+                                                transform=transform, **kwds)
 
 
 class TopLevelFacetedUnitSpec(VegaLiteSchema):
@@ -8088,6 +9053,18 @@ class VgGenericBinding(VegaLiteSchema):
         super(VgGenericBinding, self).__init__(input=input, element=element, **kwds)
 
 
+class VgLayoutAlign(VegaLiteSchema):
+    """VgLayoutAlign schema wrapper
+
+    enum('none', 'each', 'all')
+    """
+    _schema = {'$ref': '#/definitions/VgLayoutAlign'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(VgLayoutAlign, self).__init__(*args)
+
+
 class VgMarkConfig(VegaLiteSchema):
     """VgMarkConfig schema wrapper
 
@@ -8104,19 +9081,24 @@ class VgMarkConfig(VegaLiteSchema):
         The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
 
         **Default value:** ``"middle"``
-    cursor : enum('auto', 'default', 'none', 'context-menu', 'help', 'pointer', 'progress',
-    'wait', 'cell', 'crosshair', 'text', 'vertical-text', 'alias', 'copy', 'move', 'no-drop',
-    'not-allowed', 'e-resize', 'n-resize', 'ne-resize', 'nw-resize', 's-resize', 'se-resize',
-    'sw-resize', 'w-resize', 'ew-resize', 'ns-resize', 'nesw-resize', 'nwse-resize',
-    'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.  **Default value:** ``0``
+    cursor : Cursor
         The mouse cursor used over the mark. Any valid `CSS cursor type
         <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`_ can be used.
+    dir : Dir
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.  **Default value:** ``"ltr"``
     dx : float
         The horizontal offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
     dy : float
         The vertical offset, in pixels, between the text label and its anchor point. The
         offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+        **Default value:** ``"…"``
     fill : string
         Default Fill Color.  This has higher precedence than ``config.color``
 
@@ -8161,8 +9143,9 @@ class VgMarkConfig(VegaLiteSchema):
           straighten the spline.
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     limit : float
-        The maximum length of the text mark in pixels (default 0, indicating no limit). The
-        text value will be automatically truncated if the rendered size exceeds the limit.
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.  **Default value:** ``0``,
+        indicating no limit
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -8197,10 +9180,16 @@ class VgMarkConfig(VegaLiteSchema):
 
         **Default value:** ``30``
     stroke : string
+<<<<<<< HEAD
         Default Stroke Color.  This has higher precedence than ``config.color``
 
         **Default value:** (None)
     strokeCap : enum('butt', 'round', 'square')
+=======
+        Default Stroke Color.  This has higher precedence than ``config.color``  **Default
+        value:** (None)
+    strokeCap : StrokeCap
+>>>>>>> altair-viz/master
         The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
         ``"square"``.
 
@@ -8209,6 +9198,11 @@ class VgMarkConfig(VegaLiteSchema):
         An array of alternating stroke, space lengths for creating dashed or dotted lines.
     strokeDashOffset : float
         The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -8225,27 +9219,33 @@ class VgMarkConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
+    tooltip : Mapping(required=[])
+        The tooltip text to show upon mouse hover.
     """
     _schema = {'$ref': '#/definitions/VgMarkConfig'}
     _rootschema = Root._schema
 
-    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, cursor=Undefined,
-                 dx=Undefined, dy=Undefined, fill=Undefined, fillOpacity=Undefined, font=Undefined,
-                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                 interpolate=Undefined, limit=Undefined, opacity=Undefined, orient=Undefined,
-                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, **kwds):
-        super(VgMarkConfig, self).__init__(align=align, angle=angle, baseline=baseline, cursor=cursor,
-                                           dx=dx, dy=dy, fill=fill, fillOpacity=fillOpacity, font=font,
-                                           fontSize=fontSize, fontStyle=fontStyle,
+    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, cornerRadius=Undefined,
+                 cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
+                 fill=Undefined, fillOpacity=Undefined, font=Undefined, fontSize=Undefined,
+                 fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
+                 limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, **kwds):
+        super(VgMarkConfig, self).__init__(align=align, angle=angle, baseline=baseline,
+                                           cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
+                                           dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                           font=font, fontSize=fontSize, fontStyle=fontStyle,
                                            fontWeight=fontWeight, href=href, interpolate=interpolate,
                                            limit=limit, opacity=opacity, orient=orient, radius=radius,
                                            shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
                                            strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                           strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                            strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                           tension=tension, text=text, theta=theta, **kwds)
+                                           tension=tension, text=text, theta=theta, tooltip=tooltip,
+                                           **kwds)
 
 
 class VgProjectionType(VegaLiteSchema):
@@ -8449,6 +9449,12 @@ class ViewConfig(VegaLiteSchema):
         The offset (in pixels) into which to begin drawing with the stroke dash array.
 
         **Default value:** (none)
+    strokeJoin : StrokeJoin
+        The stroke line join method. One of miter (default), round or bevel.  **Default
+        value:** 'miter'
+    strokeMiterLimit : float
+        The stroke line join method. One of miter (default), round or bevel.  **Default
+        value:** 'miter'
     strokeOpacity : float
         The stroke opacity (value between [0,1]).
 
@@ -8469,10 +9475,12 @@ class ViewConfig(VegaLiteSchema):
 
     def __init__(self, clip=Undefined, fill=Undefined, fillOpacity=Undefined, height=Undefined,
                  stroke=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, width=Undefined, **kwds):
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, width=Undefined, **kwds):
         super(ViewConfig, self).__init__(clip=clip, fill=fill, fillOpacity=fillOpacity, height=height,
                                          stroke=stroke, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeOpacity=strokeOpacity,
+                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, width=width, **kwds)
 
 
@@ -8548,7 +9556,7 @@ class WindowTransform(VegaLiteSchema):
         objects)
     groupby : List(string)
         The data fields for partitioning the data objects into separate windows. If
-        unspecified, all data points will be a single group.
+        unspecified, all data points will be in a single group.
     ignorePeers : boolean
         Indicates if the sliding window frame should ignore peer values. (Peer values are
         those considered identical by the sort criteria). The default is false, causing the

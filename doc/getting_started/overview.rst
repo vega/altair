@@ -6,7 +6,7 @@ Overview
 Altair is a declarative statistical visualization library for Python, based on
 Vega_ and Vega-Lite_.
 
-Altair offers a powerful and concise visualization grammar that enbles you to build
+Altair offers a powerful and concise visualization grammar that enables you to build
 a wide range of statistical visualizations quickly. Here is an example of using the
 Altair API to quickly visualize a dataset with
 an interactive scatter plot:

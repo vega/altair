@@ -2,6 +2,8 @@
 
 import warnings
 
+import hashlib
+import json
 import jsonschema
 import six
 import pandas as pd
@@ -15,15 +17,53 @@ from .theme import themes
 
 # ------------------------------------------------------------------------
 # Data Utilities
-def _prepare_data(data):
-    """Convert input data to data for use within schema"""
+def _dataset_name(data):
+    """Generate a unique hash of the data"""
+    def hash_(dct):
+        dct_str = json.dumps(dct, sort_keys=True)
+        return hashlib.md5(dct_str.encode()).hexdigest()
+
+    if isinstance(data, core.InlineData):
+        return 'data-' + hash_(data.values)
+    elif isinstance(data, dict) and 'values' in data:
+        return 'data-' + hash_(data['values'])
+    else:
+        raise ValueError("Cannot generate name for data {0}".format(data))
+
+
+def _prepare_data(data, context):
+    """Convert input data to data for use within schema
+
+    Parameters
+    ----------
+    data :
+        The input dataset in the form of a DataFrame, dictionary, altair data
+        object, or other type that is recognized by the data transformers.
+    context : dict
+        The to_dict context in which the data is being prepared. This is used
+        to keep track of information that needs to be passed up and down the
+        recursive serialization routine, such as global named datasets.
+    """
     if data is Undefined:
         return data
+    if isinstance(data, core.InlineData):
+        if data_transformers.consolidate_datasets:
+            name = _dataset_name(data)
+            context['datasets'][name] = data.values
+            return core.NamedData(name=name)
+        else:
+            return data
     elif isinstance(data, (dict, core.Data, core.InlineData,
-                         core.UrlData, core.NamedData)):
+                           core.UrlData, core.NamedData)):
         return data
     elif isinstance(data, pd.DataFrame):
-        return pipe(data, data_transformers.get())
+        data = pipe(data, data_transformers.get())
+        if data_transformers.consolidate_datasets and isinstance(data, dict) and 'values' in data:
+            name = _dataset_name(data)
+            context['datasets'][name] = data['values']
+            return core.NamedData(name=name)
+        else:
+            return data
     elif isinstance(data, six.string_types):
         return core.UrlData(data)
     else:
@@ -40,7 +80,8 @@ class LookupData(core.LookupData):
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
         copy = self.copy(ignore=['data'])
-        copy.data = _prepare_data(copy.data)
+        context = kwargs.get('context', {})
+        copy.data = _prepare_data(copy.data, context)
         return super(LookupData, copy).to_dict(*args, **kwargs)
 
 
@@ -310,22 +351,29 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
-        copy = self.copy()
-        original_data = getattr(copy, 'data', Undefined)
-        copy.data = _prepare_data(original_data)
-
-        # We make use of two context markers:
+        # We make use of three context markers:
         # - 'data' points to the data that should be referenced for column type
         #   inference.
         # - 'top_level' is a boolean flag that is assumed to be true; if it's
         #   true then a "$schema" arg is added to the dict.
-        context = kwargs.get('context', {}).copy()
+        # - 'datasets' is a dict of named datasets that should be inserted
+        #   in the top-level object
 
+        # note: not a deep copy because we want datasets and data arguments to
+        # be passed by reference
+        context = kwargs.get('context', {}).copy()
+        context.setdefault('datasets', {})
         is_top_level = context.get('top_level', True)
-        context['top_level'] = False
+
+        copy = self.copy()
+        original_data = getattr(copy, 'data', Undefined)
+        copy.data = _prepare_data(original_data, context)
 
         if original_data is not Undefined:
             context['data'] = original_data
+
+        # remaining to_dict calls are not at top level
+        context['top_level'] = False
         kwargs['context'] = context
 
         try:
@@ -340,6 +388,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             kwargs['validate'] = 'deep'
             dct = super(TopLevelMixin, copy).to_dict(*args, **kwargs)
 
+        # TODO: following entries are added after validation. Should they be validated?
         if is_top_level:
             # since this is top-level we add $schema if it's missing
             if '$schema' not in dct:
@@ -348,6 +397,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             # apply theme from theme registry
             the_theme = themes.get()
             dct = utils.update_nested(the_theme(), dct, copy=True)
+
+            # update datasets
+            if context['datasets']:
+                dct.setdefault('datasets', {}).update(context['datasets'])
 
         return dct
 

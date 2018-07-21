@@ -7,7 +7,7 @@ Encodings
 
 The key to creating meaningful visualizations is to map *properties of the data*
 to *visual properties* in order to effectively communicate information.
-In Alair, this mapping of visual properties to data columns is referred to
+In Altair, this mapping of visual properties to data columns is referred to
 as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
 method.
 

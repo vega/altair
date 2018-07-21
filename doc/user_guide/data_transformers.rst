@@ -45,7 +45,7 @@ Convert a Dataframe to a separate ``.json`` file before visualization::
 
     to_json(data, prefix='altair-data'):
 
-Convert a Dataframe to a separate ``.csv`` file before visualiztion::
+Convert a Dataframe to a separate ``.csv`` file before visualization::
 
     to_csv(data, prefix='altair-data'):
 
