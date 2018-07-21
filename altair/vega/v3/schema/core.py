@@ -58,6 +58,7 @@ class axis(VegaSchema):
 
     Attributes
     ----------
+
     orient : enum('top', 'bottom', 'left', 'right')
 
     scale : string
@@ -185,6 +186,7 @@ class rule(VegaSchema):
 
     Attributes
     ----------
+
     test : string
 
     """
@@ -202,6 +204,7 @@ class encodeEntry(VegaSchema):
 
     Attributes
     ----------
+
     align : oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal,
     Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
     Mapping(required=[scale, value]), Mapping(required=[scale, band]),
@@ -369,6 +372,7 @@ class guideEncode(VegaSchema):
 
     Attributes
     ----------
+
     interactive : boolean
 
     name : string
@@ -391,6 +395,7 @@ class legend(VegaSchema):
 
     Attributes
     ----------
+
     """
     _schema = {'$ref': '#/defs/legend'}
     _rootschema = Root._schema
@@ -406,6 +411,7 @@ class mark(VegaSchema):
 
     Attributes
     ----------
+
     type : marktype
 
     clip : markclip
@@ -545,6 +551,7 @@ class projection(VegaSchema):
 
     Attributes
     ----------
+
     name : string
 
     center : oneOf(signal, List(numberOrSignal))
@@ -614,6 +621,7 @@ class scope(VegaSchema):
 
     Attributes
     ----------
+
     axes : List(axis)
 
     data : List(data)
@@ -677,6 +685,7 @@ class signalNew(VegaSchema):
 
     Attributes
     ----------
+
     name : signalName
 
     bind : bind
@@ -708,6 +717,7 @@ class signalPush(VegaSchema):
 
     Attributes
     ----------
+
     name : signalName
 
     push : enum('outer')
@@ -731,6 +741,7 @@ class streamParams(VegaSchema):
 
     Attributes
     ----------
+
     between : List(stream)
 
     consume : boolean
@@ -763,6 +774,7 @@ class streamEvents(VegaSchema):
 
     Attributes
     ----------
+
     type : string
 
     source : string
@@ -858,6 +870,7 @@ class aggregateTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('aggregate')
 
     cross : anyOf(boolean, signal)
@@ -896,6 +909,7 @@ class binTransform(VegaSchema):
 
     Attributes
     ----------
+
     extent : oneOf(List(anyOf(float, signal)), signal)
 
     field : oneOf(scaleField, paramField, expr)
@@ -944,6 +958,7 @@ class collectTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('collect')
 
     signal : string
@@ -965,6 +980,7 @@ class countpatternTransform(VegaSchema):
 
     Attributes
     ----------
+
     field : oneOf(scaleField, paramField, expr)
 
     type : enum('countpattern')
@@ -996,6 +1012,7 @@ class crossTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('cross')
 
     filter : exprString
@@ -1019,6 +1036,7 @@ class densityTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('density')
 
     distribution : oneOf(Mapping(required=[function]), Mapping(required=[function]),
@@ -1051,6 +1069,7 @@ class extentTransform(VegaSchema):
 
     Attributes
     ----------
+
     field : oneOf(scaleField, paramField, expr)
 
     type : enum('extent')
@@ -1072,6 +1091,7 @@ class filterTransform(VegaSchema):
 
     Attributes
     ----------
+
     expr : exprString
 
     type : enum('filter')
@@ -1093,6 +1113,7 @@ class flattenTransform(VegaSchema):
 
     Attributes
     ----------
+
     fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
 
     type : enum('flatten')
@@ -1116,6 +1137,7 @@ class foldTransform(VegaSchema):
 
     Attributes
     ----------
+
     fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
 
     type : enum('fold')
@@ -1139,6 +1161,7 @@ class formulaTransform(VegaSchema):
 
     Attributes
     ----------
+
     expr : exprString
 
     type : enum('formula')
@@ -1165,6 +1188,7 @@ class imputeTransform(VegaSchema):
 
     Attributes
     ----------
+
     field : oneOf(scaleField, paramField, expr)
 
     key : oneOf(scaleField, paramField, expr)
@@ -1199,6 +1223,7 @@ class joinaggregateTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('joinaggregate')
 
     fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
@@ -1232,6 +1257,7 @@ class lookupTransform(VegaSchema):
 
     Attributes
     ----------
+
     fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
 
     key : oneOf(scaleField, paramField, expr)
@@ -1265,6 +1291,7 @@ class pivotTransform(VegaSchema):
 
     Attributes
     ----------
+
     field : oneOf(scaleField, paramField, expr)
 
     type : enum('pivot')
@@ -1300,6 +1327,7 @@ class projectTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('project')
 
     fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
@@ -1323,6 +1351,7 @@ class sampleTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('sample')
 
     signal : string
@@ -1344,6 +1373,7 @@ class sequenceTransform(VegaSchema):
 
     Attributes
     ----------
+
     start : anyOf(float, signal)
 
     stop : anyOf(float, signal)
@@ -1371,6 +1401,7 @@ class windowTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('window')
 
     fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
@@ -1382,9 +1413,9 @@ class windowTransform(VegaSchema):
     ignorePeers : anyOf(boolean, signal)
 
     ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist',
-     'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'values', 'count',
+    'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'values', 'count',
     '__count__', 'missing', 'valid', 'sum', 'mean', 'average', 'variance', 'variancep', 'stdev',
-     'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax',
+    'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax',
     'min', 'max'), signal)), signal)
 
     params : oneOf(List(anyOf(float, signal, None)), signal)
@@ -1414,6 +1445,7 @@ class identifierTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('identifier')
 
     signal : string
@@ -1435,6 +1467,7 @@ class linkpathTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('linkpath')
 
     orient : anyOf(enum('horizontal', 'vertical', 'radial'), signal)
@@ -1471,6 +1504,7 @@ class pieTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('pie')
 
     endAngle : anyOf(float, signal)
@@ -1502,6 +1536,7 @@ class stackTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('stack')
 
     field : oneOf(scaleField, paramField, expr)
@@ -1533,6 +1568,7 @@ class contourTransform(VegaSchema):
 
     Attributes
     ----------
+
     size : oneOf(List(anyOf(float, signal)), signal)
 
     type : enum('contour')
@@ -1577,6 +1613,7 @@ class geojsonTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('geojson')
 
     fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
@@ -1601,6 +1638,7 @@ class geopathTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('geopath')
 
     field : oneOf(scaleField, paramField, expr)
@@ -1630,6 +1668,7 @@ class geopointTransform(VegaSchema):
 
     Attributes
     ----------
+
     fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
 
     projection : string
@@ -1656,6 +1695,7 @@ class geoshapeTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('geoshape')
 
     field : oneOf(scaleField, paramField, expr)
@@ -1685,6 +1725,7 @@ class graticuleTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('graticule')
 
     extent : oneOf(List(Mapping(required=[])), signal)
@@ -1723,6 +1764,7 @@ class forceTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('force')
 
     alpha : anyOf(float, signal)
@@ -1767,6 +1809,7 @@ class nestTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('nest')
 
     generate : anyOf(boolean, signal)
@@ -1794,6 +1837,7 @@ class packTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('pack')
 
     field : oneOf(scaleField, paramField, expr)
@@ -1827,6 +1871,7 @@ class partitionTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('partition')
 
     field : oneOf(scaleField, paramField, expr)
@@ -1860,6 +1905,7 @@ class stratifyTransform(VegaSchema):
 
     Attributes
     ----------
+
     key : oneOf(scaleField, paramField, expr)
 
     parentKey : oneOf(scaleField, paramField, expr)
@@ -1884,6 +1930,7 @@ class treeTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('tree')
 
     field : oneOf(scaleField, paramField, expr)
@@ -1917,6 +1964,7 @@ class treelinksTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('treelinks')
 
     key : oneOf(scaleField, paramField, expr)
@@ -1938,6 +1986,7 @@ class treemapTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('treemap')
 
     field : oneOf(scaleField, paramField, expr)
@@ -1994,6 +2043,7 @@ class voronoiTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('voronoi')
 
     x : oneOf(scaleField, paramField, expr)
@@ -2025,6 +2075,7 @@ class wordcloudTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('wordcloud')
 
     font : anyOf(string, signal, expr, paramField)
@@ -2072,6 +2123,7 @@ class crossfilterTransform(VegaSchema):
 
     Attributes
     ----------
+
     fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
 
     query : oneOf(List(Mapping(required=[])), signal)
@@ -2096,6 +2148,7 @@ class resolvefilterTransform(VegaSchema):
 
     Attributes
     ----------
+
     filter : Mapping(required=[])
 
     ignore : anyOf(float, signal)
@@ -2145,6 +2198,7 @@ class paramField(VegaSchema):
 
     Attributes
     ----------
+
     field : string
 
     """
@@ -2188,6 +2242,7 @@ class stringModifiers(VegaSchema):
 
     Attributes
     ----------
+
     scale : scale
 
     """
@@ -2205,6 +2260,7 @@ class numberModifiers(VegaSchema):
 
     Attributes
     ----------
+
     band : anyOf(float, boolean)
 
     exponent : oneOf(float, numberValue)
@@ -2233,7 +2289,7 @@ class value(VegaSchema):
     """value schema wrapper
 
     oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
+    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
     Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
@@ -2250,7 +2306,7 @@ class numberValue(VegaSchema):
     """numberValue schema wrapper
 
     oneOf(List(allOf(rule, allOf(numberModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
+    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
     Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(numberModifiers,
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
@@ -2267,7 +2323,7 @@ class stringValue(VegaSchema):
     """stringValue schema wrapper
 
     oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
+    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
     Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
@@ -2284,7 +2340,7 @@ class booleanValue(VegaSchema):
     """booleanValue schema wrapper
 
     oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
+    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
     Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
@@ -2301,7 +2357,7 @@ class arrayValue(VegaSchema):
     """arrayValue schema wrapper
 
     oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
+    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
     Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
@@ -2318,7 +2374,7 @@ class nullableStringValue(VegaSchema):
     """nullableStringValue schema wrapper
 
     oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
+    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
     Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
@@ -2335,7 +2391,7 @@ class fontWeightValue(VegaSchema):
     """fontWeightValue schema wrapper
 
     oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-     Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
+    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
     Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
     anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
@@ -2355,6 +2411,7 @@ class colorRGB(VegaSchema):
 
     Attributes
     ----------
+
     b : numberValue
 
     g : numberValue
@@ -2376,6 +2433,7 @@ class colorHSL(VegaSchema):
 
     Attributes
     ----------
+
     h : numberValue
 
     l : numberValue
@@ -2397,6 +2455,7 @@ class colorLAB(VegaSchema):
 
     Attributes
     ----------
+
     a : numberValue
 
     b : numberValue
@@ -2418,6 +2477,7 @@ class colorHCL(VegaSchema):
 
     Attributes
     ----------
+
     c : numberValue
 
     h : numberValue
@@ -2451,6 +2511,7 @@ class expr(VegaSchema):
 
     Attributes
     ----------
+
     expr : string
 
     """
@@ -2492,6 +2553,7 @@ class from_(VegaSchema):
 
     Attributes
     ----------
+
     data : string
 
     """
@@ -2509,6 +2571,7 @@ class facet(VegaSchema):
 
     Attributes
     ----------
+
     facet : oneOf(Mapping(required=[name, data, field]), Mapping(required=[name, data,
     groupby]))
 
@@ -2626,6 +2689,7 @@ class signal(VegaSchema):
 
     Attributes
     ----------
+
     signal : string
 
     """
