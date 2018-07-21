@@ -90,6 +90,8 @@ PACKAGE_DATA        = {'altair': [
                                   'vega/v3/schema/*.json',
                                   'vegalite/v1/schema/*.json',
                                   'vegalite/v2/schema/*.json'
+                                  'utils/js/*.js'
+                                  'utils/js/download_template.html'
                                   ]
                       }
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
