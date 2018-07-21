@@ -2,6 +2,7 @@
 from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
 
 import textwrap
+import re
 
 
 class CodeSnippet(object):
@@ -131,13 +132,15 @@ class SchemaGenerator(object):
                '',
                info.medium_description]
         if info.description:
-            doc += self._process_description(info.description).splitlines()
+            doc += self._process_description( #remove condition description
+                re.sub(r"\n\{\n(\n|.)*\n\}",'',info.description)).splitlines()
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
             doc += ['',
                     'Attributes',
-                    '----------']
+                    '----------',
+                    '']
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
                 doc += ["{0} : {1}".format(prop, propinfo.short_description),

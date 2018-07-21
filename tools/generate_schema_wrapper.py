@@ -3,6 +3,7 @@ import copy
 import os
 import sys
 import json
+import re
 from os.path import abspath, join, dirname
 
 import textwrap
@@ -16,14 +17,21 @@ from schemapi import codegen
 from schemapi.codegen import CodeSnippet
 from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
 
+reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))",re.M)
+reSpecial = re.compile(r"[*_]{2,3}|`",re.M)
 
-class SchemaGenerator(codegen.SchemaGenerator):
+class SchemaGenerator(codegen.SchemaGenerator):   
     def _process_description(self, description):
+        description = ''.join([
+            reSpecial.sub('',d) if i%2 else d 
+            for i,d in enumerate(reLink.split(description))
+        ]) # remove formatting from links   
         description = m2r.convert(description)
         description = description.replace(m2r.prolog, '')
         description = description.replace(":raw-html-m2r:", ":raw-html:")
         description = description.replace(r'\ ,', ',')
         description = description.replace(r'\ ', ' ')
+        description += '\n'
         return description.strip()
 
 
