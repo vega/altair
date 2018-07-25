@@ -75,89 +75,117 @@ class Color(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If ``null``, the legend for the
-        encoding channel will be removed.  **Default value:** If undefined, default `legend
-        properties <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
+        An object defining properties of the legend.
+        If ``null``, the legend for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `legend properties
+        <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -174,13 +202,10 @@ class ColorValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef,
     List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
@@ -200,66 +225,94 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     header : Header
         An object defining properties of a facet's header.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -279,49 +332,66 @@ class Detail(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -336,89 +406,117 @@ class Fill(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If ``null``, the legend for the
-        encoding channel will be removed.  **Default value:** If undefined, default `legend
-        properties <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
+        An object defining properties of the legend.
+        If ``null``, the legend for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `legend properties
+        <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -435,13 +533,10 @@ class FillValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef,
     List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
@@ -459,62 +554,75 @@ class Href(FieldChannelMixin, core.FieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -530,13 +638,10 @@ class HrefValue(ValueChannelMixin, core.ValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalFieldDef, ConditionalValueDef, List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
@@ -556,49 +661,66 @@ class Key(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -616,49 +738,66 @@ class Latitude(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -676,49 +815,66 @@ class Latitude2(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -736,49 +892,66 @@ class Longitude(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -796,49 +969,66 @@ class Longitude2(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -853,89 +1043,117 @@ class Opacity(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If ``null``, the legend for the
-        encoding channel will be removed.  **Default value:** If undefined, default `legend
-        properties <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
+        An object defining properties of the legend.
+        If ``null``, the legend for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `legend properties
+        <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -952,13 +1170,10 @@ class OpacityValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef,
     List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
@@ -978,51 +1193,68 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     sort : SortOrder
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1040,6 +1272,7 @@ class OrderValue(ValueChannelMixin, core.ValueDef):
 
     Attributes
     ----------
+
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -1057,66 +1290,94 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     header : Header
         An object defining properties of a facet's header.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1133,89 +1394,117 @@ class Shape(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If ``null``, the legend for the
-        encoding channel will be removed.  **Default value:** If undefined, default `legend
-        properties <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
+        An object defining properties of the legend.
+        If ``null``, the legend for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `legend properties
+        <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1232,13 +1521,10 @@ class ShapeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef,
     List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
@@ -1256,89 +1542,117 @@ class Size(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If ``null``, the legend for the
-        encoding channel will be removed.  **Default value:** If undefined, default `legend
-        properties <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
+        An object defining properties of the legend.
+        If ``null``, the legend for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `legend properties
+        <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1355,13 +1669,10 @@ class SizeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef,
     List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
@@ -1379,89 +1690,117 @@ class Stroke(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(Legend, None)
-        An object defining properties of the legend. If ``null``, the legend for the
-        encoding channel will be removed.  **Default value:** If undefined, default `legend
-        properties <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
+        An object defining properties of the legend.
+        If ``null``, the legend for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `legend properties
+        <https://vega.github.io/vega-lite/docs/legend.html>`_ are applied.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1478,13 +1817,10 @@ class StrokeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalMarkPropFieldDef, ConditionalValueDef,
     List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
@@ -1502,65 +1838,78 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`_ for a
         text field. If not defined, this will be determined automatically.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1577,13 +1926,10 @@ class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalTextFieldDef, ConditionalValueDef, List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
@@ -1600,65 +1946,78 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
-    {
-       condition: {value: ...},
-       field: ...,
-       ...
-    }
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     condition : anyOf(ConditionalValueDef, List(ConditionalValueDef))
-        One or more value definition(s) with a selection predicate.  **Note:** A field
-        definition's ``condition`` property can only contain `value definitions
-        <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_ since Vega-Lite
-        only allows at most one encoded field per encoding channel.
+        One or more value definition(s) with a selection predicate.
+
+        **Note:** A field definition's ``condition`` property can only contain `value
+        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`_
+        since Vega-Lite only allows at most one encoded field per encoding channel.
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`_ for a
         text field. If not defined, this will be determined automatically.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1675,13 +2034,10 @@ class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
 
     Mapping(required=[])
     A ValueDef with Condition<ValueDef | FieldDef>
-    {
-       condition: {field: ...} | {value: ...},
-       value: ...,
-    }
 
     Attributes
     ----------
+
     condition : anyOf(ConditionalTextFieldDef, ConditionalValueDef, List(ConditionalValueDef))
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(float, string, boolean)
@@ -1700,95 +2056,134 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     axis : anyOf(Axis, None)
-        An object defining properties of axis's gridlines, ticks and labels. If ``null``,
-        the axis for the encoding channel will be removed.  **Default value:** If undefined,
-         default `axis properties <https://vega.github.io/vega-lite/docs/axis.html>`_ are
-        applied.
+        An object defining properties of axis's gridlines, ticks and labels.
+        If ``null``, the axis for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `axis properties
+        <https://vega.github.io/vega-lite/docs/axis.html>`_ are applied.
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     stack : anyOf(StackOffset, None)
-        Type of stacking offset if the field should be stacked. ``stack`` is only applicable
-         for ``x`` and ``y`` channels with continuous domains. For example, ``stack`` of
-        ``y`` can be used to customize stacking for a vertical bar chart.  ``stack`` can be
-        one of the following values:   * `"zero"`: stacking with baseline offset at zero
-        value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`_ chart). * ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`_.
-        :raw-html:`<br/>`   - ``"center"`` - stacking with center baseline (for `streamgraph
-         <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`_ ). * ``null`` -
-        No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`_ and area
-        chart.  **Default value:** ``zero`` for plots with all of the following conditions
-        are true: (1) the mark is ``bar`` or ``area`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
-        unaggregated field that is different from x and y.  Otherwise, ``null`` by default.
+        Type of stacking offset if the field should be stacked.
+        ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
+        For example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
+        chart.
+
+        ``stack`` can be one of the following values:
+
+
+        * `"zero"`: stacking with baseline offset at zero value of the scale (for creating
+          typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
+          `area <https://vega.github.io/vega-lite/docs/stack.html#area>`_ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`_. :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`_ ).
+        * ``null`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`_ and area
+          chart.
+
+        **Default value:** ``zero`` for plots with all of the following conditions are true:
+        (1) the mark is ``bar`` or ``area`` ;
+        (2) the stacked measure channel (x or y) has a linear scale;
+        (3) At least one of non-position channels mapped to an unaggregated field that is
+        different from x and y.  Otherwise, ``null`` by default.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1808,6 +2203,7 @@ class XValue(ValueChannelMixin, core.ValueDef):
 
     Attributes
     ----------
+
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -1826,49 +2222,66 @@ class X2(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -1886,6 +2299,7 @@ class X2Value(ValueChannelMixin, core.ValueDef):
 
     Attributes
     ----------
+
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -1903,95 +2317,134 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     axis : anyOf(Axis, None)
-        An object defining properties of axis's gridlines, ticks and labels. If ``null``,
-        the axis for the encoding channel will be removed.  **Default value:** If undefined,
-         default `axis properties <https://vega.github.io/vega-lite/docs/axis.html>`_ are
-        applied.
+        An object defining properties of axis's gridlines, ticks and labels.
+        If ``null``, the axis for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `axis properties
+        <https://vega.github.io/vega-lite/docs/axis.html>`_ are applied.
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     scale : anyOf(Scale, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
-         (pixels, colors, sizes) of the encoding channels.  If ``null``, the scale will be
-        `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.  **Default value:** If
-         undefined, default `scale properties
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`_.
+
+        **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`_ are applied.
     sort : Sort
-        Sort order for the encoded field.  For continuous fields (quantitative or temporal),
-         ``sort`` can be either ``"ascending"`` or ``"descending"``.  For discrete fields,
-        ``sort`` can be one of the following:   * ``"ascending"`` or ``"descending"`` -- for
-         sorting by the values' natural order in Javascript. * `A sort field definition
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
-        another field. * `An array specifying the field values in preferred order
-        <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
-        sort order will obey the values in the array, followed by any unspecified values in
-        their original order.  For discrete time field, values in the sort array can be
-        `date-time definition objects <types#datetime>`_. In addition, for time units
-        ``"month"`` and ``"day"``, the values can be the month or day names (case
-        insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ). * ``null``
-        indicating no sort.  **Default value:** ``"ascending"``  **Note:** ``null`` is not
-        supported for ``row`` and ``column``.
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`_ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`_. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`_. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
     stack : anyOf(StackOffset, None)
-        Type of stacking offset if the field should be stacked. ``stack`` is only applicable
-         for ``x`` and ``y`` channels with continuous domains. For example, ``stack`` of
-        ``y`` can be used to customize stacking for a vertical bar chart.  ``stack`` can be
-        one of the following values:   * `"zero"`: stacking with baseline offset at zero
-        value of the scale (for creating typical stacked
-        [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
-        <https://vega.github.io/vega-lite/docs/stack.html#area>`_ chart). * ``"normalize"``
-        - stacking with normalized domain (for creating `normalized stacked bar and area
-        charts <https://vega.github.io/vega-lite/docs/stack.html#normalized>`_.
-        :raw-html:`<br/>`   - ``"center"`` - stacking with center baseline (for `streamgraph
-         <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`_ ). * ``null`` -
-        No-stacking. This will produce layered `bar
-        <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`_ and area
-        chart.  **Default value:** ``zero`` for plots with all of the following conditions
-        are true: (1) the mark is ``bar`` or ``area`` ; (2) the stacked measure channel (x
-        or y) has a linear scale; (3) At least one of non-position channels mapped to an
-        unaggregated field that is different from x and y.  Otherwise, ``null`` by default.
+        Type of stacking offset if the field should be stacked.
+        ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
+        For example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
+        chart.
+
+        ``stack`` can be one of the following values:
+
+
+        * `"zero"`: stacking with baseline offset at zero value of the scale (for creating
+          typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
+          `area <https://vega.github.io/vega-lite/docs/stack.html#area>`_ chart).
+        * ``"normalize"`` - stacking with normalized domain (for creating `normalized
+          stacked bar and area charts
+          <https://vega.github.io/vega-lite/docs/stack.html#normalized>`_. :raw-html:`<br/>`
+        - ``"center"`` - stacking with center baseline (for `streamgraph
+        <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`_ ).
+        * ``null`` - No-stacking. This will produce layered `bar
+          <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`_ and area
+          chart.
+
+        **Default value:** ``zero`` for plots with all of the following conditions are true:
+        (1) the mark is ``bar`` or ``area`` ;
+        (2) the stacked measure channel (x or y) has a linear scale;
+        (3) At least one of non-position channels mapped to an unaggregated field that is
+        different from x and y.  Otherwise, ``null`` by default.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -2011,6 +2464,7 @@ class YValue(ValueChannelMixin, core.ValueDef):
 
     Attributes
     ----------
+
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -2029,49 +2483,66 @@ class Y2(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : Aggregate
-        Aggregation function for the field (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).  **Default value:** ``undefined`` (None)
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
     bin : anyOf(boolean, BinParams)
         A flag for binning a ``quantitative`` field, or `an object defining binning
-        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_. If ``true``,
-        default `binning parameters <https://vega.github.io/vega-lite/docs/bin.html>`_ will
-        be applied.  **Default value:** ``false``
+        parameters <https://vega.github.io/vega-lite/docs/bin.html#params>`_.
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`_ will be applied.
+
+        **Default value:** ``false``
     field : anyOf(string, RepeatRef)
         **Required.** A string defining the name of the field from which to pull a data
-        value or an object defining iterated values from the ` ``repeat``
-        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.  **Note:** Dots (
-        ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested objects (e.g.,
-         ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ). If field names contain dots
-         or brackets but are not nested, you can use ``\\`` to escape dots and brackets
-        (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ). See more details about escaping in the
-        `field documentation <https://vega.github.io/vega-lite/docs/field.html>`_.
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`_ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`_.
+
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : TimeUnit
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field. or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.  **Default value:**
-        ``undefined`` (None)
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`_.
+
+        **Default value:** ``undefined`` (None)
     title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.  **Default value:**
-        derived from the field's name and transformation function ( ``aggregate``, ``bin``
-        and ``timeUnit`` ).  If the field has an aggregate function, the function is
-        displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the field is binned
-        or has a time unit applied, the applied function is shown in parentheses (e.g.,
-        ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).  Otherwise, the title
-        is simply the field name.  **Notes** :  1) You can customize the default field title
-         format by providing the [ ``fieldTitle`` property in the `config
-        <https://vega.github.io/vega-lite/docs/config.html>`_ or ` ``fieldTitle`` function
-        via the ``compile`` function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.  2) If both
-        field definition's ``title`` and axis, header, or legend ``title`` are defined,
-        axis/header/legend title will be used.
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the [fieldTitle
+        property in the `config <https://vega.github.io/vega-lite/docs/config.html>`_ or
+        `fieldTitle function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`_.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
     type : Type
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ). It can also be a ``"geojson"`` type for encoding
-        `'geoshape' <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`_.
     """
     _class_is_valid_at_instantiation = False
 
@@ -2089,6 +2560,7 @@ class Y2Value(ValueChannelMixin, core.ValueDef):
 
     Attributes
     ----------
+
     value : anyOf(float, string, boolean)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).

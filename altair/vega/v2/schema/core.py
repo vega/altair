@@ -44,6 +44,7 @@ class axis(VegaSchema):
 
     Attributes
     ----------
+
     scale : string
 
     type : enum('x', 'y')
@@ -133,6 +134,7 @@ class legend(VegaSchema):
 
     Attributes
     ----------
+
     """
     _schema = {'$ref': '#/defs/legend'}
     _rootschema = Root._schema
@@ -148,6 +150,7 @@ class mark(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('rect', 'symbol', 'path', 'arc', 'area', 'line', 'rule', 'image', 'text',
     'group')
 
@@ -186,6 +189,7 @@ class container(VegaSchema):
 
     Attributes
     ----------
+
     axes : List(axis)
 
     legends : List(legend)
@@ -294,6 +298,7 @@ class propset(VegaSchema):
 
     Attributes
     ----------
+
     align : oneOf(Mapping(required=[rule]), List(allOf(rule, allOf(stringModifiers,
     oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
     Mapping(required=[band]))))), allOf(stringModifiers, oneOf(signal,
@@ -426,6 +431,7 @@ class signal(VegaSchema):
 
     Attributes
     ----------
+
     name : not Mapping(required=[])
 
     expr : string
@@ -486,6 +492,7 @@ class aggregateTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('aggregate')
 
     groupby : List(oneOf(string, signal))
@@ -508,6 +515,7 @@ class binTransform(VegaSchema):
 
     Attributes
     ----------
+
     field : oneOf(string, signal)
         The name of the field to bin values from.
     type : enum('bin')
@@ -528,7 +536,7 @@ class binTransform(VegaSchema):
         Rename the output data fields
     step : oneOf(float, signal)
         An exact step size to use between bins. If provided, options such as maxbins will be
-         ignored.
+        ignored.
     steps : oneOf(List(float), signal)
         An array of allowable step sizes to choose from.
     """
@@ -551,6 +559,7 @@ class crossTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('cross')
 
     diagonal : oneOf(boolean, signal)
@@ -580,6 +589,7 @@ class countpatternTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('countpattern')
 
     case : oneOf(enum('lower', 'upper', 'none'), signal)
@@ -610,6 +620,7 @@ class linkpathTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('linkpath')
 
     output : Mapping(required=[])
@@ -646,6 +657,7 @@ class facetTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('facet')
 
     groupby : List(oneOf(string, signal))
@@ -672,6 +684,7 @@ class filterTransform(VegaSchema):
 
     Attributes
     ----------
+
     test : string
         A string containing an expression (in JavaScript syntax) for the filter predicate.
     type : enum('filter')
@@ -692,6 +705,7 @@ class foldTransform(VegaSchema):
 
     Attributes
     ----------
+
     fields : oneOf(List(oneOf(string, signal)), signal)
 
     type : enum('fold')
@@ -714,6 +728,7 @@ class forceTransform(VegaSchema):
 
     Attributes
     ----------
+
     links : string
         The name of the link (edge) data set.
     type : enum('force')
@@ -773,6 +788,7 @@ class formulaTransform(VegaSchema):
 
     Attributes
     ----------
+
     expr : string
         A string containing an expression (in JavaScript syntax) for the formula.
     field : string
@@ -796,6 +812,7 @@ class geoTransform(VegaSchema):
 
     Attributes
     ----------
+
     lat : oneOf(string, signal)
         The input latitude values.
     lon : oneOf(string, signal)
@@ -841,6 +858,7 @@ class geopathTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('geopath')
 
     center : oneOf(List(oneOf(float, signal)), signal)
@@ -883,6 +901,7 @@ class hierarchyTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('hierarchy')
 
     children : oneOf(string, signal)
@@ -923,6 +942,7 @@ class imputeTransform(VegaSchema):
 
     Attributes
     ----------
+
     field : oneOf(string, signal)
         The data field to impute.
     groupby : oneOf(List(oneOf(string, signal)), signal)
@@ -953,6 +973,7 @@ class lookupTransform(VegaSchema):
 
     Attributes
     ----------
+
     keys : List(oneOf(string, signal))
         One or more fields in the primary data set to match against the secondary data set.
     on : string
@@ -983,6 +1004,7 @@ class pieTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('pie')
 
     endAngle : oneOf(float, signal)
@@ -1014,6 +1036,7 @@ class rankTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('rank')
 
     field : oneOf(string, signal)
@@ -1040,6 +1063,7 @@ class sortTransform(VegaSchema):
 
     Attributes
     ----------
+
     by : oneOf(string, List(string))
         A list of fields to use as sort criteria.
     type : enum('sort')
@@ -1060,6 +1084,7 @@ class stackTransform(VegaSchema):
 
     Attributes
     ----------
+
     field : oneOf(string, signal)
         The data field that determines the thickness/height of stacks.
     groupby : oneOf(List(oneOf(string, signal)), signal)
@@ -1089,6 +1114,7 @@ class treeifyTransform(VegaSchema):
 
     Attributes
     ----------
+
     groupby : oneOf(List(oneOf(string, signal)), signal)
         An ordered list of fields by which to group tuples into a tree.
     type : enum('treeify')
@@ -1110,6 +1136,7 @@ class treemapTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('treemap')
 
     children : oneOf(string, signal)
@@ -1154,6 +1181,7 @@ class voronoiTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('voronoi')
 
     clipExtent : oneOf(List(oneOf(List(oneOf(float, signal)), signal)), signal)
@@ -1181,6 +1209,7 @@ class wordcloudTransform(VegaSchema):
 
     Attributes
     ----------
+
     type : enum('wordcloud')
 
     font : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])), signal)
@@ -1188,7 +1217,7 @@ class wordcloudTransform(VegaSchema):
     fontScale : oneOf(None, List(oneOf(float, signal)))
         The minimum and maximum scaled font sizes, or null to prevent scaling.
     fontSize : oneOf(float, oneOf(Mapping(required=[field]), Mapping(required=[value])), string,
-     signal)
+    signal)
         The font size to use for a word.
     fontStyle : oneOf(string, oneOf(Mapping(required=[field]), Mapping(required=[value])),
     signal)
@@ -1303,6 +1332,7 @@ class stringModifiers(VegaSchema):
 
     Attributes
     ----------
+
     scale : scale
 
     """
@@ -1320,6 +1350,7 @@ class numberModifiers(VegaSchema):
 
     Attributes
     ----------
+
     mult : float
 
     offset : float
@@ -1430,6 +1461,7 @@ class signal(VegaSchema):
 
     Attributes
     ----------
+
     signal : string
 
     """
@@ -1459,6 +1491,7 @@ class data(VegaSchema):
 
     Attributes
     ----------
+
     data : oneOf(string, Mapping(required=[fields]))
 
     field : oneOf(string, List(string), Mapping(required=[parent]),

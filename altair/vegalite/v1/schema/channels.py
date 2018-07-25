@@ -77,16 +77,19 @@ class Row(FieldChannelMixin, core.PositionChannelDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     axis : Axis
 
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     scale : Scale
@@ -99,10 +102,13 @@ class Row(FieldChannelMixin, core.PositionChannelDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -123,16 +129,19 @@ class Column(FieldChannelMixin, core.PositionChannelDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     axis : Axis
 
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     scale : Scale
@@ -145,10 +154,13 @@ class Column(FieldChannelMixin, core.PositionChannelDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -169,16 +181,19 @@ class X(FieldChannelMixin, core.PositionChannelDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     axis : Axis
 
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     scale : Scale
@@ -191,10 +206,13 @@ class X(FieldChannelMixin, core.PositionChannelDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -215,16 +233,19 @@ class Y(FieldChannelMixin, core.PositionChannelDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     axis : Axis
 
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     scale : Scale
@@ -237,10 +258,13 @@ class Y(FieldChannelMixin, core.PositionChannelDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -261,14 +285,17 @@ class X2(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     timeUnit : TimeUnit
@@ -277,10 +304,13 @@ class X2(FieldChannelMixin, core.FieldDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -299,14 +329,17 @@ class Y2(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     timeUnit : TimeUnit
@@ -315,10 +348,13 @@ class Y2(FieldChannelMixin, core.FieldDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -337,14 +373,17 @@ class Color(FieldChannelMixin, core.ChannelDefWithLegend):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     legend : Legend
@@ -359,10 +398,13 @@ class Color(FieldChannelMixin, core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -383,14 +425,17 @@ class Opacity(FieldChannelMixin, core.ChannelDefWithLegend):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     legend : Legend
@@ -405,10 +450,13 @@ class Opacity(FieldChannelMixin, core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -429,14 +477,17 @@ class Size(FieldChannelMixin, core.ChannelDefWithLegend):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     legend : Legend
@@ -451,10 +502,13 @@ class Size(FieldChannelMixin, core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -475,14 +529,17 @@ class Shape(FieldChannelMixin, core.ChannelDefWithLegend):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     legend : Legend
@@ -497,10 +554,13 @@ class Shape(FieldChannelMixin, core.ChannelDefWithLegend):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -521,14 +581,17 @@ class Detail(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     timeUnit : TimeUnit
@@ -537,10 +600,13 @@ class Detail(FieldChannelMixin, core.FieldDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -559,14 +625,17 @@ class Text(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     timeUnit : TimeUnit
@@ -575,10 +644,13 @@ class Text(FieldChannelMixin, core.FieldDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -597,14 +669,17 @@ class Label(FieldChannelMixin, core.FieldDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     timeUnit : TimeUnit
@@ -613,10 +688,13 @@ class Label(FieldChannelMixin, core.FieldDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -635,14 +713,17 @@ class Path(FieldChannelMixin, core.OrderChannelDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     sort : SortOrder
@@ -653,10 +734,13 @@ class Path(FieldChannelMixin, core.OrderChannelDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """
@@ -677,14 +761,17 @@ class Order(FieldChannelMixin, core.OrderChannelDef):
 
     Attributes
     ----------
+
     shorthand : string
         shorthand for field, aggregate, and type
     aggregate : AggregateOp
-        Aggregation function for the field  (e.g., ``mean``, ``sum``, ``median``, ``min``,
-        ``max``, ``count`` ).
+        Aggregation function for the field
+
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
     bin : anyOf(Bin, boolean)
-        Flag for binning a ``quantitative`` field, or a bin property object  for binning
-        parameters.
+        Flag for binning a ``quantitative`` field, or a bin property object
+
+        for binning parameters.
     field : string
         Name of the field from which to pull a data value.
     sort : SortOrder
@@ -695,10 +782,13 @@ class Order(FieldChannelMixin, core.OrderChannelDef):
     title : string
         Title for axis or legend.
     type : Type
-        The encoded field's type of measurement. This can be either a full type  name (
-        ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )  or an
-        initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).  This
-        property is case insensitive.
+        The encoded field's type of measurement. This can be either a full type
+
+        name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
+
+        or an initial character of the type name ( ``"Q"``, ``"T"``, ``"O"``, ``"N"`` ).
+
+        This property is case insensitive.
     value : anyOf(string, float, boolean)
         A constant value in visual domain.
     """

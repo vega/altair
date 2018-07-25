@@ -173,6 +173,7 @@ class NamedSelection(SelectionMapping):
         >>> sel = alt.selection_interval(name='interval')
         >>> sel.ref()
         {'selection': 'interval'}
+
         """
         return {"selection": self._get_name()}
 
@@ -418,6 +419,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
+        
         """
         warnings.warn(
             "Chart.savechart is deprecated in favor of Chart.save",
@@ -449,6 +451,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         **kwargs :
             Additional keyword arguments are passed to the output method
             associated with the specified format.
+        
         """
         from ...utils.save import save
 
@@ -497,6 +500,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         -------
         chart : RepeatChart
             a repeated chart.
+        
         """
         repeat = core.Repeat(row=row, column=column)
         return RepeatChart(spec=self, repeat=repeat, **kwargs)
@@ -544,10 +548,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             `"albers"` and `"Albers"` indicate the same projection type. You can find all valid
             projection types [in the
             documentation](https://vega.github.io/vega-lite/docs/projection.html#projection-types).
-              __Default value:__ `mercator`
+
+            **Default value:** `mercator`
         center : List(float)
             Sets the projection’s center to the specified center, a two-element array of
-            longitude and latitude in degrees.  __Default value:__ `[0, 0]`
+            longitude and latitude in degrees.  
+            
+            **Default value:** `[0, 0]`
         clipAngle : float
             Sets the projection’s clipping circle radius to the specified angle in degrees. If
             `null`, switches to [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting
@@ -582,10 +589,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             Sets the projection’s three-axis rotation to the specified angles, which must be a
             two- or three-element array of numbers [`lambda`, `phi`, `gamma`] specifying the
             rotation angles in degrees about each spherical axis. (These correspond to yaw,
-            pitch and roll.)  __Default value:__ `[0, 0, 0]`
+            pitch and roll.) 
+            
+            **Default value:** `[0, 0, 0]`
         spacing : float
 
         tilt : float
+        
         """
         projection = core.Projection(center=center, clipAngle=clipAngle, clipExtent=clipExtent,
                                      coefficient=coefficient, distance=distance, fraction=fraction,
@@ -661,6 +671,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.AggregateTransform : underlying transform object
+        
         """
         if aggregate is Undefined:
             aggregate = []
@@ -717,6 +728,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.BinTransform : underlying transform object
+        
         """
         if as_ is not Undefined:
             if 'as' in kwargs:
@@ -773,6 +785,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.CalculateTransform : underlying transform object
+        
         """
         if as_ is Undefined:
             as_ = kwargs.pop('as', Undefined)
@@ -809,6 +822,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.FilterTransform : underlying transform object
+        
         """
         if isinstance(filter, NamedSelection):
             filter = filter.ref()
@@ -839,6 +853,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.LookupTransform : underlying transform object
+        
         """
         if as_ is not Undefined:
             if 'as' in kwargs:
@@ -904,6 +919,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.TimeUnitTransform : underlying transform object
+        
         """
         if as_ is Undefined:
             as_ = kwargs.pop('as', Undefined)
@@ -944,7 +960,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             that the window frame should always include all data objects. The only operators
             affected are the aggregation operations and the ``first_value``, ``last_value``, and
              ``nth_value`` window operations. The other window operations are not affected by
-            this.  **Default value:** :  ``[null, 0]`` (includes the current object and all
+            this.  
+            
+            **Default value:** :  ``[null, 0]`` (includes the current object and all
             preceding objects)
         groupby : List(string)
             The data fields for partitioning the data objects into separate windows. If
@@ -955,7 +973,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             window frame to expand to include all peer values. If set to true, the window frame
             will be defined by offset values only. This setting only affects those operations
             that depend on the window frame, namely aggregation operations and the first_value,
-            last_value, and nth_value window operations.  **Default value:** ``false``
+            last_value, and nth_value window operations.  
+            
+            **Default value:** ``false``
         sort : List(SortField)
             A sort field definition for sorting data objects within a window. If two data
             objects are considered equal by the comparator, they are considered “peer” values of
@@ -988,6 +1008,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             op: 'sum'
           })]
         })
+        
         """
         if kwargs:
             if window is Undefined:
@@ -1061,6 +1082,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             included in the view.
         **kwargs :
             Additional parameters are also passed to vega-embed as options.
+        
         """
         from IPython.display import display
 
@@ -1108,6 +1130,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             figure. The default is Python's basic HTTPServer.
         **kwargs :
             additional keyword arguments passed to the save() method
+        
         """
         from ...utils.server import serve
 
@@ -1223,8 +1246,9 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         content sizing and automatic resizing. `"fit"` is only supported for single and
         layered views that don't use `rangeStep`.  __Default value__: `pad`
     background : string
-        CSS color property to use as the background of visualization.  __Default value:__
-        none (transparent)
+        CSS color property to use as the background of visualization. 
+
+        **Default value:** none (transparent)
     config : Config
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -1295,6 +1319,7 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         -------
         chart :
             copy of self, with interactive axes added
+        
         """
         encodings = []
         if bind_x:
@@ -1367,6 +1392,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         -------
         chart :
             copy of self, with interactive axes added
+        
         """
         copy = self.copy()
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
@@ -1491,6 +1517,7 @@ class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
         -------
         chart :
             copy of self, with interactive axes added
+        
         """
         if not self.layer:
             raise ValueError("LayerChart: cannot call interactive() until a "
@@ -1543,6 +1570,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         -------
         chart :
             copy of self, with interactive axes added
+        
         """
         copy = self.copy()
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)

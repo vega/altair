@@ -369,12 +369,25 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
             leading_space = len(line) - len(stripped)
             indent = indent_level + leading_space
             wrapper = textwrap.TextWrapper(width=width - indent,
-                                           initial_indent=indent * ' ',
-                                           subsequent_indent=indent * ' ',
-                                           break_long_words=False,
-                                           break_on_hyphens=False,
-                                           drop_whitespace=False)
-            final_lines.extend(wrapper.wrap(stripped))
+                                            initial_indent= indent * ' ',
+                                            subsequent_indent=indent * ' ',
+                                            break_long_words=False,
+                                            break_on_hyphens=False,
+                                            drop_whitespace=True)
+            list_wrapper = textwrap.TextWrapper(width=width - indent,
+                                                initial_indent= indent * ' '+'* ',
+                                                subsequent_indent=indent * ' '+ '  ',
+                                                break_long_words=False,
+                                                break_on_hyphens=False,
+                                                drop_whitespace=True)
+            for line in stripped.split("\n"):
+                if line == '':
+                    final_lines.append('')
+                elif line.startswith('* '):
+                    final_lines.extend(list_wrapper.wrap(line[2:]))
+                else: 
+                    final_lines.extend(wrapper.wrap(line.lstrip()))
+
         # If this is the last line, put in an indent
         elif i + 1 == len(lines):
             final_lines.append(indent_level * ' ')
