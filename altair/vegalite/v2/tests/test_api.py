@@ -40,15 +40,27 @@ def test_chart_data_types():
 
     # Dict Data
     data = {"values": [{"x": 1, "y": 2}, {"x": 2, "y": 3}]}
-    dct = Chart(data).to_dict()
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = Chart(data).to_dict()
     assert dct['data'] == data
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = Chart(data).to_dict()
+    name = dct['data']['name']
+    assert dct['datasets'][name] == data['values']
 
     # DataFrame data
     data = pd.DataFrame({"x": range(5), "y": range(5)})
-    dct = Chart(data).to_dict()
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = Chart(data).to_dict()
     assert dct['data']['values'] == data.to_dict(orient='records')
 
-    # Altair data object
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = Chart(data).to_dict()
+    name = dct['data']['name']
+    assert dct['datasets'][name] == data.to_dict(orient='records')
+
+    # Named data object
     data = alt.NamedData(name='Foo')
     dct = Chart(data).to_dict()
     assert dct['data'] == {'name': 'Foo'}
@@ -226,8 +238,17 @@ def test_facet_parse_data():
         row='row',
         column='column:O'
     )
-    dct = chart.to_dict()
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = chart.to_dict()
     assert 'values' in dct['data']
+    assert 'data' not in dct['spec']
+    assert dct['facet'] == {'column': {'field': 'column', 'type': 'ordinal'},
+                            'row': {'field': 'row', 'type': 'nominal'}}
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = chart.to_dict()
+    assert 'datasets' in dct
+    assert 'name' in dct['data']
     assert 'data' not in dct['spec']
     assert dct['facet'] == {'column': {'field': 'column', 'type': 'ordinal'},
                             'row': {'field': 'row', 'type': 'nominal'}}
@@ -313,7 +334,7 @@ def test_transforms():
                                                     window=window)]
             or chart.transform == [alt.WindowTransform(frame=[None, 0],
                                                        window=window[::-1])])
-            
+
 
 
 def test_resolve_methods():
@@ -348,7 +369,9 @@ def test_add_selection():
 def test_LookupData():
     df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
     lookup = alt.LookupData(data=df, key='x')
-    dct = lookup.to_dict()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = lookup.to_dict()
     assert dct['key'] == 'x'
     assert dct['data'] == {'values': [{'x': 1, 'y': 4},
                                       {'x': 2, 'y': 5},
