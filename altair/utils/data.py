@@ -16,7 +16,7 @@ from .plugin_registry import PluginRegistry
 DataTransformerType = Callable
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
-    _global_settings = {'consolidate_datasets': False}
+    _global_settings = {'consolidate_datasets': True}
 
     @property
     def consolidate_datasets(self):
