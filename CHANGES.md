@@ -4,6 +4,10 @@
 
 ### Enhancements
 
+- all inline datasets are now converted to named datasets and stored at the
+  top level of the chart. This behavior can be disabled by setting
+  ``alt.data_transformers.consolidate_datasets = False`` (#951 & #1046)
+
 - more streamlined shorthand syntax for window transforms (#957)
 
 ### Maintenance
