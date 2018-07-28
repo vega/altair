@@ -122,9 +122,13 @@ def sanitize_dataframe(df):
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
         elif str(dtype).startswith('datetime'):
-            # Convert datetimes to strings
-            # astype(str) will choose the appropriate resolution
-            df[col_name] = df[col_name].astype(str).replace('NaT', '')
+            # Convert datetimes to strings. This needs to be a full ISO string
+            # with time, which is why we cannot use ``col.astype(str)``.
+            # This is because Javascript parses date-only times in UTC, but
+            # parses full ISO-8601 dates as local time, and dates in Vega and
+            # Vega-Lite are displayed in local time by default.
+            # (see https://github.com/altair-viz/altair/issues/1027)
+            df[col_name] = df[col_name].apply(lambda x: x.isoformat()).replace('NaT', '')
         elif str(dtype).startswith('timedelta'):
             raise ValueError('Field "{col_name}" has type "{dtype}" which is '
                              'not supported by Altair. Please convert to '
