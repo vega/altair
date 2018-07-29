@@ -102,6 +102,21 @@ Altair will not display correctly if using a kernel with IPython version 4.X or 
 The easiest way to address this is to change your kernel: choose "Kernel"->"Change Kernel"
 and then use the first kernel that appears.
 
+.. _jupyterlab-notebook-backend:
+
+JupyterLab: require is not defined
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you are using JupyterLab and see the error::
+
+    Javascript Error: require is not defined
+
+This likely means that you have enabled the notebook renderer, which is not
+supported in JupyterLab: that is, you have somewhere run
+``alt.renderers.enable('notebook')``.
+JupyterLab supports Altair's default renderer, which you can re-enable using::
+
+    alt.renderers.enable('default')
+
 
 .. _troubleshooting-notebook:
 
