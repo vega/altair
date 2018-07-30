@@ -27,7 +27,6 @@ methods of top-level objects:
 =========================================  ================================================================================
 Method                                     Description
 =========================================  ================================================================================
-:meth:`~Chart.transform`                   Generic transform; passes keywords to any of the following methods.
 :meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
 :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
 :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
