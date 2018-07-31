@@ -544,8 +544,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Available projection types are
         ['albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant',
-         'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equirectangular',
-         'gnomonic', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
+        'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equirectangular',
+        'gnomonic', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
 
         Attributes
         ----------

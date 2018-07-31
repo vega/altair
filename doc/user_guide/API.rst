@@ -115,6 +115,7 @@ Low-Level Schema Wrappers
    AxisOrient
    AxisResolveMap
    BarConfig
+   Baseline
    BasicType
    BinParams
    BinTransform
@@ -136,13 +137,17 @@ Low-Level Schema Wrappers
    ConditionalValueDef
    Config
    CsvDataFormat
+   Cursor
    Data
    DataFormat
    Datasets
    DateTime
    Day
    DictInlineDataset
+   Dir
+   DsvDataFormat
    Encoding
+   EncodingSortField
    EncodingWithFacet
    FacetFieldDef
    FacetMapping
@@ -151,6 +156,10 @@ Low-Level Schema Wrappers
    FieldDef
    FieldDefWithCondition
    FieldEqualPredicate
+   FieldGTEPredicate
+   FieldGTPredicate
+   FieldLTEPredicate
+   FieldLTPredicate
    FieldOneOfPredicate
    FieldRangePredicate
    FilterTransform
@@ -161,6 +170,7 @@ Low-Level Schema Wrappers
    GeoType
    HConcatSpec
    Header
+   HeaderConfig
    HorizontalAlign
    InlineData
    InlineDataset
@@ -187,7 +197,6 @@ Low-Level Schema Wrappers
    MarkDef
    MarkPropFieldDefWithCondition
    MarkPropValueDefWithCondition
-   MarkProperties
    Month
    MultiSelection
    MultiSelectionConfig
@@ -196,7 +205,9 @@ Low-Level Schema Wrappers
    NiceTime
    OrderFieldDef
    Orient
+   OverlayMarkDef
    Padding
+   Parse
    PositionFieldDef
    Predicate
    Projection
@@ -210,6 +221,9 @@ Low-Level Schema Wrappers
    Resolve
    ResolveMode
    Root
+   RowColVgLayoutAlign
+   RowColboolean
+   RowColnumber
    Scale
    ScaleConfig
    ScaleInterpolate
@@ -231,11 +245,15 @@ Low-Level Schema Wrappers
    SingleSelection
    SingleSelectionConfig
    SingleTimeUnit
+   Sort
    SortField
    SortOrder
    Spec
    StackOffset
+   StrokeCap
+   StrokeJoin
    StyleConfigIndex
+   TextBaseline
    TextConfig
    TextFieldDef
    TextFieldDefWithCondition
@@ -270,6 +288,7 @@ Low-Level Schema Wrappers
    VgComparatorOrder
    VgEventStream
    VgGenericBinding
+   VgLayoutAlign
    VgMarkConfig
    VgProjectionType
    VgRadioBinding
@@ -280,5 +299,4 @@ Low-Level Schema Wrappers
    ViewConfig
    WindowFieldDef
    WindowOnlyOp
-   WindowSortField
    WindowTransform
