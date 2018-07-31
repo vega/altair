@@ -3,3 +3,6 @@ _build
 # gallery is auto-generated; don't version-control it
 gallery
 _images
+
+# generated class documentation
+user_guide/generated
