@@ -53,6 +53,14 @@ help:
 clean:
 	rm -rf $(BUILDDIR)/*
 
+.PHONY: clean-generated
+clean-generated:
+	rm -rf user_guide/generated/
+
+.PHONY: clean-images
+clean-images:
+	rm -rf _images
+
 .PHONY: html
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
