@@ -214,11 +214,12 @@ including constructing a Pandas dataframe from the data values:
     )
 
 The key is to realize that ``"encoding"`` properties are usually set using the
-:meth:`~Chart.encode` method, types are usually inferred from short-hand type
-codes, ``"transform"`` and ``"config"``
+:meth:`~Chart.encode` method, encoding types are usually computed from
+short-hand type codes, ``"transform"`` and ``"config"`` properties come from
+the ``transform_*()`` and ``configure_*()`` methods, and so on.
 
-This is the process by which Altair contributors constructed many of the initial
-examples in the
+This approach is the process by which Altair contributors constructed many
+of the initial examples in the
 `Altair Example Gallery <https://altair-viz.github.io/gallery/index.html>`_,
 drawing inspiration from the
 `Vega-Lite Example Gallery <https://vega.github.io/vega-lite/examples/>`_.
