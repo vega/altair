@@ -1290,6 +1290,25 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
 
     @classmethod
     def from_dict(cls, dct, validate=True):
+        """Construct class from a dictionary representation
+
+        Parameters
+        ----------
+        dct : dictionary
+            The dict from which to construct the class
+        validate : boolean
+            If True (default), then validate the input against the schema.
+
+        Returns
+        -------
+        obj : Chart object
+            The wrapped schema
+
+        Raises
+        ------
+        jsonschema.ValidationError :
+            if validate=True and dct does not conform to the schema
+        """
         # First try from_dict for the Chart type
         try:
             return super(Chart, cls).from_dict(dct, validate=validate)

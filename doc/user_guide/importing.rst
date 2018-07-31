@@ -32,5 +32,5 @@ create Vega plots using a very low-level Python interface that mirrors the
 schema itself.
 
 
-.. Vega-Lite: http://vega.github.io/vega-lite/
-.. Vega: http://vega.github.io/vega/
+.. _Vega-Lite: http://vega.github.io/vega-lite/
+.. _Vega: http://vega.github.io/vega/
