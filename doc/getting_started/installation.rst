@@ -227,7 +227,6 @@ development version directly from GitHub using:
 .. _vega_datasets: https://github.com/altair-viz/vega_datasets
 
 .. _Vega-Lite: http://vega.github.io/vega-lite
-.. _Vega: https://vega.github.io/vega/
 .. _conda: http://conda.pydata.org
 .. _Altair source repository: http://github.com/altair-viz/altair
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
