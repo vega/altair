@@ -31,6 +31,8 @@ class SchemaGenerator(codegen.SchemaGenerator):
         description = description.replace(":raw-html-m2r:", ":raw-html:")
         description = description.replace(r'\ ,', ',')
         description = description.replace(r'\ ', ' ')
+        # turn explicit references into anonymous references
+        description = description.replace('>`_', '>`__')
         description += '\n'
         return description.strip()
 

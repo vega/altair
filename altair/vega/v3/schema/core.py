@@ -22,7 +22,7 @@ class VegaSchema(SchemaBase):
 class Root(VegaSchema):
     """Root schema wrapper
 
-    allOf(scope, Mapping(required=[]))
+    allOf(:class:`scope`, Mapping(required=[]))
     """
     _schema = load_schema()
     _rootschema = _schema
@@ -67,7 +67,7 @@ class axis(VegaSchema):
 
     encode : Mapping(required=[])
 
-    format : stringOrSignal
+    format : :class:`stringOrSignal`
 
     grid : boolean
 
@@ -85,25 +85,25 @@ class axis(VegaSchema):
 
     labels : boolean
 
-    maxExtent : oneOf(float, numberValue)
+    maxExtent : oneOf(float, :class:`numberValue`)
 
-    minExtent : oneOf(float, numberValue)
+    minExtent : oneOf(float, :class:`numberValue`)
 
-    offset : oneOf(float, numberValue)
+    offset : oneOf(float, :class:`numberValue`)
 
-    position : oneOf(float, numberValue)
+    position : oneOf(float, :class:`numberValue`)
 
-    tickCount : tickCount
+    tickCount : :class:`tickCount`
 
     tickSize : float
 
     ticks : boolean
 
-    title : stringOrSignal
+    title : :class:`stringOrSignal`
 
-    titlePadding : oneOf(float, numberValue)
+    titlePadding : oneOf(float, :class:`numberValue`)
 
-    values : oneOf(List(Mapping(required=[])), signal)
+    values : oneOf(List(Mapping(required=[])), :class:`signal`)
 
     zindex : float
 
@@ -205,111 +205,111 @@ class encodeEntry(VegaSchema):
     Attributes
     ----------
 
-    align : oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal,
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
-    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
-    Mapping(required=[offset]))))), allOf(stringModifiers, anyOf(oneOf(signal,
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
-    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
-    Mapping(required=[offset]))))
+    align : oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`,
+    anyOf(oneOf(:class:`signal`, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
+    band]), Mapping(required=[offset]))))), allOf(:class:`stringModifiers`,
+    anyOf(oneOf(:class:`signal`, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
+    band]), Mapping(required=[offset]))))
 
-    angle : numberValue
+    angle : :class:`numberValue`
 
-    baseline : oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal,
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
-    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
-    Mapping(required=[offset]))))), allOf(stringModifiers, anyOf(oneOf(signal,
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
-    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
-    Mapping(required=[offset]))))
+    baseline : oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`,
+    anyOf(oneOf(:class:`signal`, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
+    band]), Mapping(required=[offset]))))), allOf(:class:`stringModifiers`,
+    anyOf(oneOf(:class:`signal`, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
+    band]), Mapping(required=[offset]))))
 
-    clip : booleanValue
+    clip : :class:`booleanValue`
 
-    cursor : stringValue
+    cursor : :class:`stringValue`
 
-    dir : stringValue
+    dir : :class:`stringValue`
 
-    dx : numberValue
+    dx : :class:`numberValue`
 
-    dy : numberValue
+    dy : :class:`numberValue`
 
-    ellipsis : stringValue
+    ellipsis : :class:`stringValue`
 
-    endAngle : numberValue
+    endAngle : :class:`numberValue`
 
-    fill : colorValue
+    fill : :class:`colorValue`
 
-    fillOpacity : numberValue
+    fillOpacity : :class:`numberValue`
 
-    font : stringValue
+    font : :class:`stringValue`
 
-    fontSize : numberValue
+    fontSize : :class:`numberValue`
 
-    fontStyle : stringValue
+    fontStyle : :class:`stringValue`
 
-    fontWeight : fontWeightValue
+    fontWeight : :class:`fontWeightValue`
 
-    height : numberValue
+    height : :class:`numberValue`
 
-    innerRadius : numberValue
+    innerRadius : :class:`numberValue`
 
-    interpolate : stringValue
+    interpolate : :class:`stringValue`
 
-    limit : numberValue
+    limit : :class:`numberValue`
 
-    opacity : numberValue
+    opacity : :class:`numberValue`
 
-    orient : oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal,
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
-    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
-    Mapping(required=[offset]))))), allOf(stringModifiers, anyOf(oneOf(signal,
-    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
-    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
-    Mapping(required=[offset]))))
+    orient : oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`,
+    anyOf(oneOf(:class:`signal`, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
+    band]), Mapping(required=[offset]))))), allOf(:class:`stringModifiers`,
+    anyOf(oneOf(:class:`signal`, Mapping(required=[value]), Mapping(required=[field]),
+    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
+    band]), Mapping(required=[offset]))))
 
-    outerRadius : numberValue
+    outerRadius : :class:`numberValue`
 
-    path : stringValue
+    path : :class:`stringValue`
 
-    radius : numberValue
+    radius : :class:`numberValue`
 
-    shape : anyOf(string, stringValue)
+    shape : anyOf(string, :class:`stringValue`)
 
-    size : numberValue
+    size : :class:`numberValue`
 
-    startAngle : numberValue
+    startAngle : :class:`numberValue`
 
-    stroke : colorValue
+    stroke : :class:`colorValue`
 
-    strokeDash : arrayValue
+    strokeDash : :class:`arrayValue`
 
-    strokeDashOffset : numberValue
+    strokeDashOffset : :class:`numberValue`
 
-    strokeOpacity : numberValue
+    strokeOpacity : :class:`numberValue`
 
-    strokeWidth : numberValue
+    strokeWidth : :class:`numberValue`
 
-    tension : numberValue
+    tension : :class:`numberValue`
 
-    text : stringValue
+    text : :class:`stringValue`
 
-    theta : numberValue
+    theta : :class:`numberValue`
 
-    url : stringValue
+    url : :class:`stringValue`
 
-    width : numberValue
+    width : :class:`numberValue`
 
-    x : numberValue
+    x : :class:`numberValue`
 
-    x2 : numberValue
+    x2 : :class:`numberValue`
 
-    xc : numberValue
+    xc : :class:`numberValue`
 
-    y : numberValue
+    y : :class:`numberValue`
 
-    y2 : numberValue
+    y2 : :class:`numberValue`
 
-    yc : numberValue
+    yc : :class:`numberValue`
 
     """
     _schema = {'$ref': '#/defs/encodeEntry'}
@@ -356,7 +356,7 @@ class encode(VegaSchema):
 class layout(VegaSchema):
     """layout schema wrapper
 
-    oneOf(Mapping(required=[]), signal)
+    oneOf(Mapping(required=[]), :class:`signal`)
     """
     _schema = {'$ref': '#/defs/layout'}
     _rootschema = Root._schema
@@ -377,7 +377,7 @@ class guideEncode(VegaSchema):
 
     name : string
 
-    style : style
+    style : :class:`style`
 
     """
     _schema = {'$ref': '#/defs/guideEncode'}
@@ -412,27 +412,27 @@ class mark(VegaSchema):
     Attributes
     ----------
 
-    type : marktype
+    type : :class:`marktype`
 
-    clip : markclip
+    clip : :class:`markclip`
 
-    encode : encode
+    encode : :class:`encode`
 
-    interactive : booleanOrSignal
+    interactive : :class:`booleanOrSignal`
 
     key : string
 
     name : string
 
-    on : onMarkTrigger
+    on : :class:`onMarkTrigger`
 
     role : string
 
-    sort : compare
+    sort : :class:`compare`
 
-    style : style
+    style : :class:`style`
 
-    transform : List(transformMark)
+    transform : List(:class:`transformMark`)
 
     """
     _schema = {'$ref': '#/defs/mark'}
@@ -449,7 +449,7 @@ class mark(VegaSchema):
 class markGroup(VegaSchema):
     """markGroup schema wrapper
 
-    allOf(Mapping(required=[type]), mark, scope, Mapping(required=[]))
+    allOf(Mapping(required=[type]), :class:`mark`, :class:`scope`, Mapping(required=[]))
     """
     _schema = {'$ref': '#/defs/markGroup'}
     _rootschema = Root._schema
@@ -470,7 +470,7 @@ class markGroup(VegaSchema):
 class markVisual(VegaSchema):
     """markVisual schema wrapper
 
-    allOf(not Mapping(required=[]), mark, Mapping(required=[]))
+    allOf(not Mapping(required=[]), :class:`mark`, Mapping(required=[]))
     """
     _schema = {'$ref': '#/defs/markVisual'}
     _rootschema = Root._schema
@@ -486,7 +486,7 @@ class markVisual(VegaSchema):
 class listener(VegaSchema):
     """listener schema wrapper
 
-    oneOf(signal, Mapping(required=[scale]), stream)
+    oneOf(:class:`signal`, Mapping(required=[scale]), :class:`stream`)
     """
     _schema = {'$ref': '#/defs/listener'}
     _rootschema = Root._schema
@@ -554,31 +554,32 @@ class projection(VegaSchema):
 
     name : string
 
-    center : oneOf(signal, List(numberOrSignal))
+    center : oneOf(:class:`signal`, List(:class:`numberOrSignal`))
 
-    clipAngle : numberOrSignal
+    clipAngle : :class:`numberOrSignal`
 
-    clipExtent : oneOf(signal, List(oneOf(signal, List(numberOrSignal))))
+    clipExtent : oneOf(:class:`signal`, List(oneOf(:class:`signal`,
+    List(:class:`numberOrSignal`))))
 
-    extent : oneOf(signal, List(oneOf(signal, List(numberOrSignal))))
+    extent : oneOf(:class:`signal`, List(oneOf(:class:`signal`, List(:class:`numberOrSignal`))))
 
     fit : oneOf(Mapping(required=[]), List(Mapping(required=[])))
 
-    parallels : oneOf(signal, List(numberOrSignal))
+    parallels : oneOf(:class:`signal`, List(:class:`numberOrSignal`))
 
-    pointRadius : numberOrSignal
+    pointRadius : :class:`numberOrSignal`
 
-    precision : numberOrSignal
+    precision : :class:`numberOrSignal`
 
-    rotate : oneOf(signal, List(numberOrSignal))
+    rotate : oneOf(:class:`signal`, List(:class:`numberOrSignal`))
 
-    scale : numberOrSignal
+    scale : :class:`numberOrSignal`
 
-    size : oneOf(signal, List(numberOrSignal))
+    size : oneOf(:class:`signal`, List(:class:`numberOrSignal`))
 
-    translate : oneOf(signal, List(numberOrSignal))
+    translate : oneOf(:class:`signal`, List(:class:`numberOrSignal`))
 
-    type : stringOrSignal
+    type : :class:`stringOrSignal`
 
     """
     _schema = {'$ref': '#/defs/projection'}
@@ -622,25 +623,25 @@ class scope(VegaSchema):
     Attributes
     ----------
 
-    axes : List(axis)
+    axes : List(:class:`axis`)
 
-    data : List(data)
+    data : List(:class:`data`)
 
-    encode : encode
+    encode : :class:`encode`
 
-    layout : layout
+    layout : :class:`layout`
 
-    legends : List(legend)
+    legends : List(:class:`legend`)
 
-    marks : List(oneOf(markGroup, markVisual))
+    marks : List(oneOf(:class:`markGroup`, :class:`markVisual`))
 
-    projections : List(projection)
+    projections : List(:class:`projection`)
 
-    scales : List(scale)
+    scales : List(:class:`scale`)
 
-    signals : List(signal)
+    signals : List(:class:`signal`)
 
-    title : title
+    title : :class:`title`
 
     """
     _schema = {'$ref': '#/defs/scope'}
@@ -657,7 +658,7 @@ class scope(VegaSchema):
 class signal(VegaSchema):
     """signal schema wrapper
 
-    oneOf(signalPush, signalNew)
+    oneOf(:class:`signalPush`, :class:`signalNew`)
     """
     _schema = {'$ref': '#/defs/signal'}
     _rootschema = Root._schema
@@ -686,17 +687,17 @@ class signalNew(VegaSchema):
     Attributes
     ----------
 
-    name : signalName
+    name : :class:`signalName`
 
-    bind : bind
+    bind : :class:`bind`
 
     description : string
 
-    on : onEvents
+    on : :class:`onEvents`
 
     react : boolean
 
-    update : exprString
+    update : :class:`exprString`
 
     value : Mapping(required=[])
 
@@ -718,13 +719,13 @@ class signalPush(VegaSchema):
     Attributes
     ----------
 
-    name : signalName
+    name : :class:`signalName`
 
     push : enum('outer')
 
     description : string
 
-    on : onEvents
+    on : :class:`onEvents`
 
     """
     _schema = {'$ref': '#/defs/signalPush'}
@@ -742,13 +743,13 @@ class streamParams(VegaSchema):
     Attributes
     ----------
 
-    between : List(stream)
+    between : List(:class:`stream`)
 
     consume : boolean
 
     debounce : float
 
-    filter : oneOf(exprString, List(exprString))
+    filter : oneOf(:class:`exprString`, List(:class:`exprString`))
 
     markname : string
 
@@ -790,7 +791,7 @@ class streamEvents(VegaSchema):
 class stream(VegaSchema):
     """stream schema wrapper
 
-    allOf(streamParams, oneOf(streamEvents, Mapping(required=[stream]),
+    allOf(:class:`streamParams`, oneOf(:class:`streamEvents`, Mapping(required=[stream]),
     Mapping(required=[merge])))
     """
     _schema = {'$ref': '#/defs/stream'}
@@ -829,15 +830,20 @@ class title(VegaSchema):
 class transform(VegaSchema):
     """transform schema wrapper
 
-    oneOf(aggregateTransform, binTransform, collectTransform, countpatternTransform,
-    crossTransform, densityTransform, extentTransform, filterTransform, flattenTransform,
-    foldTransform, formulaTransform, imputeTransform, joinaggregateTransform, lookupTransform,
-    pivotTransform, projectTransform, sampleTransform, sequenceTransform, windowTransform,
-    identifierTransform, linkpathTransform, pieTransform, stackTransform, contourTransform,
-    geojsonTransform, geopathTransform, geopointTransform, geoshapeTransform,
-    graticuleTransform, forceTransform, nestTransform, packTransform, partitionTransform,
-    stratifyTransform, treeTransform, treelinksTransform, treemapTransform, voronoiTransform,
-    wordcloudTransform, crossfilterTransform, resolvefilterTransform)
+    oneOf(:class:`aggregateTransform`, :class:`binTransform`, :class:`collectTransform`,
+    :class:`countpatternTransform`, :class:`crossTransform`, :class:`densityTransform`,
+    :class:`extentTransform`, :class:`filterTransform`, :class:`flattenTransform`,
+    :class:`foldTransform`, :class:`formulaTransform`, :class:`imputeTransform`,
+    :class:`joinaggregateTransform`, :class:`lookupTransform`, :class:`pivotTransform`,
+    :class:`projectTransform`, :class:`sampleTransform`, :class:`sequenceTransform`,
+    :class:`windowTransform`, :class:`identifierTransform`, :class:`linkpathTransform`,
+    :class:`pieTransform`, :class:`stackTransform`, :class:`contourTransform`,
+    :class:`geojsonTransform`, :class:`geopathTransform`, :class:`geopointTransform`,
+    :class:`geoshapeTransform`, :class:`graticuleTransform`, :class:`forceTransform`,
+    :class:`nestTransform`, :class:`packTransform`, :class:`partitionTransform`,
+    :class:`stratifyTransform`, :class:`treeTransform`, :class:`treelinksTransform`,
+    :class:`treemapTransform`, :class:`voronoiTransform`, :class:`wordcloudTransform`,
+    :class:`crossfilterTransform`, :class:`resolvefilterTransform`)
     """
     _schema = {'$ref': '#/defs/transform'}
     _rootschema = Root._schema
@@ -849,12 +855,15 @@ class transform(VegaSchema):
 class transformMark(VegaSchema):
     """transformMark schema wrapper
 
-    oneOf(binTransform, collectTransform, extentTransform, formulaTransform,
-    joinaggregateTransform, lookupTransform, sampleTransform, windowTransform,
-    identifierTransform, linkpathTransform, pieTransform, stackTransform, geojsonTransform,
-    geopathTransform, geopointTransform, geoshapeTransform, forceTransform, packTransform,
-    partitionTransform, stratifyTransform, treeTransform, treemapTransform, voronoiTransform,
-    wordcloudTransform, crossfilterTransform, resolvefilterTransform)
+    oneOf(:class:`binTransform`, :class:`collectTransform`, :class:`extentTransform`,
+    :class:`formulaTransform`, :class:`joinaggregateTransform`, :class:`lookupTransform`,
+    :class:`sampleTransform`, :class:`windowTransform`, :class:`identifierTransform`,
+    :class:`linkpathTransform`, :class:`pieTransform`, :class:`stackTransform`,
+    :class:`geojsonTransform`, :class:`geopathTransform`, :class:`geopointTransform`,
+    :class:`geoshapeTransform`, :class:`forceTransform`, :class:`packTransform`,
+    :class:`partitionTransform`, :class:`stratifyTransform`, :class:`treeTransform`,
+    :class:`treemapTransform`, :class:`voronoiTransform`, :class:`wordcloudTransform`,
+    :class:`crossfilterTransform`, :class:`resolvefilterTransform`)
     """
     _schema = {'$ref': '#/defs/transformMark'}
     _rootschema = Root._schema
@@ -873,23 +882,26 @@ class aggregateTransform(VegaSchema):
 
     type : enum('aggregate')
 
-    cross : anyOf(boolean, signal)
+    cross : anyOf(boolean, :class:`signal`)
 
-    drop : anyOf(boolean, signal)
+    drop : anyOf(boolean, :class:`signal`)
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)),
+    :class:`signal`)
 
-    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum',
     'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0',
-    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)), signal)
+    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)),
+    :class:`signal`)
 
     signal : string
 
-    as : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`, None)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/aggregateTransform'}
@@ -910,33 +922,33 @@ class binTransform(VegaSchema):
     Attributes
     ----------
 
-    extent : oneOf(List(anyOf(float, signal)), signal)
+    extent : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     type : enum('bin')
 
-    anchor : anyOf(float, signal)
+    anchor : anyOf(float, :class:`signal`)
 
-    base : anyOf(float, signal)
+    base : anyOf(float, :class:`signal`)
 
-    divide : oneOf(List(anyOf(float, signal)), signal)
+    divide : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    maxbins : anyOf(float, signal)
+    maxbins : anyOf(float, :class:`signal`)
 
-    minstep : anyOf(float, signal)
+    minstep : anyOf(float, :class:`signal`)
 
-    name : anyOf(string, signal)
+    name : anyOf(string, :class:`signal`)
 
-    nice : anyOf(boolean, signal)
+    nice : anyOf(boolean, :class:`signal`)
 
     signal : string
 
-    step : anyOf(float, signal)
+    step : anyOf(float, :class:`signal`)
 
-    steps : oneOf(List(anyOf(float, signal)), signal)
+    steps : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/binTransform'}
@@ -963,7 +975,7 @@ class collectTransform(VegaSchema):
 
     signal : string
 
-    sort : compare
+    sort : :class:`compare`
 
     """
     _schema = {'$ref': '#/defs/collectTransform'}
@@ -981,19 +993,19 @@ class countpatternTransform(VegaSchema):
     Attributes
     ----------
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     type : enum('countpattern')
 
-    case : anyOf(enum('upper', 'lower', 'mixed'), signal)
+    case : anyOf(enum('upper', 'lower', 'mixed'), :class:`signal`)
 
-    pattern : anyOf(string, signal)
+    pattern : anyOf(string, :class:`signal`)
 
     signal : string
 
-    stopwords : anyOf(string, signal)
+    stopwords : anyOf(string, :class:`signal`)
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/countpatternTransform'}
@@ -1015,11 +1027,11 @@ class crossTransform(VegaSchema):
 
     type : enum('cross')
 
-    filter : exprString
+    filter : :class:`exprString`
 
     signal : string
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/crossTransform'}
@@ -1042,15 +1054,15 @@ class densityTransform(VegaSchema):
     distribution : oneOf(Mapping(required=[function]), Mapping(required=[function]),
     Mapping(required=[function, field]), Mapping(required=[function]))
 
-    extent : oneOf(List(anyOf(float, signal)), signal)
+    extent : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    method : anyOf(string, signal)
+    method : anyOf(string, :class:`signal`)
 
     signal : string
 
-    steps : anyOf(float, signal)
+    steps : anyOf(float, :class:`signal`)
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/densityTransform'}
@@ -1070,7 +1082,7 @@ class extentTransform(VegaSchema):
     Attributes
     ----------
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     type : enum('extent')
 
@@ -1092,7 +1104,7 @@ class filterTransform(VegaSchema):
     Attributes
     ----------
 
-    expr : exprString
+    expr : :class:`exprString`
 
     type : enum('filter')
 
@@ -1114,13 +1126,14 @@ class flattenTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
     type : enum('flatten')
 
     signal : string
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/flattenTransform'}
@@ -1138,13 +1151,14 @@ class foldTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
     type : enum('fold')
 
     signal : string
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/foldTransform'}
@@ -1162,15 +1176,15 @@ class formulaTransform(VegaSchema):
     Attributes
     ----------
 
-    expr : exprString
+    expr : :class:`exprString`
 
     type : enum('formula')
 
-    initonly : anyOf(boolean, signal)
+    initonly : anyOf(boolean, :class:`signal`)
 
     signal : string
 
-    as : anyOf(string, signal)
+    as : anyOf(string, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/formulaTransform'}
@@ -1189,17 +1203,18 @@ class imputeTransform(VegaSchema):
     Attributes
     ----------
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     type : enum('impute')
 
-    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    keyvals : oneOf(List(Mapping(required=[])), signal)
+    keyvals : oneOf(List(Mapping(required=[])), :class:`signal`)
 
-    method : anyOf(enum('value', 'mean', 'median', 'max', 'min'), signal)
+    method : anyOf(enum('value', 'mean', 'median', 'max', 'min'), :class:`signal`)
 
     signal : string
 
@@ -1226,19 +1241,22 @@ class joinaggregateTransform(VegaSchema):
 
     type : enum('joinaggregate')
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)),
+    :class:`signal`)
 
-    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum',
     'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0',
-    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)), signal)
+    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)),
+    :class:`signal`)
 
     signal : string
 
-    as : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`, None)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/joinaggregateTransform'}
@@ -1258,9 +1276,10 @@ class lookupTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     type : enum('lookup')
 
@@ -1268,9 +1287,10 @@ class lookupTransform(VegaSchema):
 
     signal : string
 
-    values : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    values : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     from : string
 
@@ -1292,21 +1312,22 @@ class pivotTransform(VegaSchema):
     Attributes
     ----------
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     type : enum('pivot')
 
-    value : oneOf(scaleField, paramField, expr)
+    value : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    limit : anyOf(float, signal)
+    limit : anyOf(float, :class:`signal`)
 
     op : anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'mean',
     'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1',
-    'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), signal)
+    'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)
 
     signal : string
 
@@ -1330,11 +1351,12 @@ class projectTransform(VegaSchema):
 
     type : enum('project')
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
     signal : string
 
-    as : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`, None)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/projectTransform'}
@@ -1356,7 +1378,7 @@ class sampleTransform(VegaSchema):
 
     signal : string
 
-    size : anyOf(float, signal)
+    size : anyOf(float, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/sampleTransform'}
@@ -1374,15 +1396,15 @@ class sequenceTransform(VegaSchema):
     Attributes
     ----------
 
-    start : anyOf(float, signal)
+    start : anyOf(float, :class:`signal`)
 
-    stop : anyOf(float, signal)
+    stop : anyOf(float, :class:`signal`)
 
     type : enum('sequence')
 
     signal : string
 
-    step : anyOf(float, signal)
+    step : anyOf(float, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/sequenceTransform'}
@@ -1404,27 +1426,29 @@ class windowTransform(VegaSchema):
 
     type : enum('window')
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr, None)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`, None)),
+    :class:`signal`)
 
-    frame : oneOf(List(anyOf(float, signal, None)), signal)
+    frame : oneOf(List(anyOf(float, :class:`signal`, None)), :class:`signal`)
 
-    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    ignorePeers : anyOf(boolean, signal)
+    ignorePeers : anyOf(boolean, :class:`signal`)
 
     ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist',
     'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'values', 'count',
     '__count__', 'missing', 'valid', 'sum', 'mean', 'average', 'variance', 'variancep', 'stdev',
     'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax',
-    'min', 'max'), signal)), signal)
+    'min', 'max'), :class:`signal`)), :class:`signal`)
 
-    params : oneOf(List(anyOf(float, signal, None)), signal)
+    params : oneOf(List(anyOf(float, :class:`signal`, None)), :class:`signal`)
 
     signal : string
 
-    sort : compare
+    sort : :class:`compare`
 
-    as : oneOf(List(anyOf(string, signal, None)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`, None)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/windowTransform'}
@@ -1450,7 +1474,7 @@ class identifierTransform(VegaSchema):
 
     signal : string
 
-    as : anyOf(string, signal)
+    as : anyOf(string, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/identifierTransform'}
@@ -1470,21 +1494,21 @@ class linkpathTransform(VegaSchema):
 
     type : enum('linkpath')
 
-    orient : anyOf(enum('horizontal', 'vertical', 'radial'), signal)
+    orient : anyOf(enum('horizontal', 'vertical', 'radial'), :class:`signal`)
 
-    shape : anyOf(enum('line', 'arc', 'curve', 'diagonal', 'orthogonal'), signal)
+    shape : anyOf(enum('line', 'arc', 'curve', 'diagonal', 'orthogonal'), :class:`signal`)
 
     signal : string
 
-    sourceX : oneOf(scaleField, paramField, expr)
+    sourceX : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    sourceY : oneOf(scaleField, paramField, expr)
+    sourceY : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    targetX : oneOf(scaleField, paramField, expr)
+    targetX : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    targetY : oneOf(scaleField, paramField, expr)
+    targetY : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    as : anyOf(string, signal)
+    as : anyOf(string, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/linkpathTransform'}
@@ -1507,17 +1531,17 @@ class pieTransform(VegaSchema):
 
     type : enum('pie')
 
-    endAngle : anyOf(float, signal)
+    endAngle : anyOf(float, :class:`signal`)
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     signal : string
 
-    sort : anyOf(boolean, signal)
+    sort : anyOf(boolean, :class:`signal`)
 
-    startAngle : anyOf(float, signal)
+    startAngle : anyOf(float, :class:`signal`)
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/pieTransform'}
@@ -1539,17 +1563,18 @@ class stackTransform(VegaSchema):
 
     type : enum('stack')
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    groupby : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    offset : anyOf(enum('zero', 'center', 'normalize'), signal)
+    offset : anyOf(enum('zero', 'center', 'normalize'), :class:`signal`)
 
     signal : string
 
-    sort : compare
+    sort : :class:`compare`
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/stackTransform'}
@@ -1569,29 +1594,29 @@ class contourTransform(VegaSchema):
     Attributes
     ----------
 
-    size : oneOf(List(anyOf(float, signal)), signal)
+    size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
     type : enum('contour')
 
-    bandwidth : anyOf(float, signal)
+    bandwidth : anyOf(float, :class:`signal`)
 
-    cellSize : anyOf(float, signal)
+    cellSize : anyOf(float, :class:`signal`)
 
-    count : anyOf(float, signal)
+    count : anyOf(float, :class:`signal`)
 
-    nice : anyOf(boolean, signal)
+    nice : anyOf(boolean, :class:`signal`)
 
     signal : string
 
-    smooth : anyOf(boolean, signal)
+    smooth : anyOf(boolean, :class:`signal`)
 
-    thresholds : oneOf(List(anyOf(float, signal)), signal)
+    thresholds : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    values : oneOf(List(anyOf(float, signal)), signal)
+    values : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    x : oneOf(scaleField, paramField, expr)
+    x : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    y : oneOf(scaleField, paramField, expr)
+    y : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     """
     _schema = {'$ref': '#/defs/contourTransform'}
@@ -1616,9 +1641,10 @@ class geojsonTransform(VegaSchema):
 
     type : enum('geojson')
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    geojson : oneOf(scaleField, paramField, expr)
+    geojson : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     signal : string
 
@@ -1641,15 +1667,15 @@ class geopathTransform(VegaSchema):
 
     type : enum('geopath')
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    pointRadius : anyOf(float, signal, expr, paramField)
+    pointRadius : anyOf(float, :class:`signal`, :class:`expr`, :class:`paramField`)
 
     projection : string
 
     signal : string
 
-    as : anyOf(string, signal)
+    as : anyOf(string, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/geopathTransform'}
@@ -1669,7 +1695,8 @@ class geopointTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
     projection : string
 
@@ -1677,7 +1704,7 @@ class geopointTransform(VegaSchema):
 
     signal : string
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/geopointTransform'}
@@ -1698,15 +1725,15 @@ class geoshapeTransform(VegaSchema):
 
     type : enum('geoshape')
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    pointRadius : anyOf(float, signal, expr, paramField)
+    pointRadius : anyOf(float, :class:`signal`, :class:`expr`, :class:`paramField`)
 
     projection : string
 
     signal : string
 
-    as : anyOf(string, signal)
+    as : anyOf(string, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/geoshapeTransform'}
@@ -1728,21 +1755,21 @@ class graticuleTransform(VegaSchema):
 
     type : enum('graticule')
 
-    extent : oneOf(List(Mapping(required=[])), signal)
+    extent : oneOf(List(Mapping(required=[])), :class:`signal`)
 
-    extentMajor : oneOf(List(Mapping(required=[])), signal)
+    extentMajor : oneOf(List(Mapping(required=[])), :class:`signal`)
 
-    extentMinor : oneOf(List(Mapping(required=[])), signal)
+    extentMinor : oneOf(List(Mapping(required=[])), :class:`signal`)
 
-    precision : anyOf(float, signal)
+    precision : anyOf(float, :class:`signal`)
 
     signal : string
 
-    step : oneOf(List(anyOf(float, signal)), signal)
+    step : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    stepMajor : oneOf(List(anyOf(float, signal)), signal)
+    stepMajor : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    stepMinor : oneOf(List(anyOf(float, signal)), signal)
+    stepMinor : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/graticuleTransform'}
@@ -1767,27 +1794,27 @@ class forceTransform(VegaSchema):
 
     type : enum('force')
 
-    alpha : anyOf(float, signal)
+    alpha : anyOf(float, :class:`signal`)
 
-    alphaMin : anyOf(float, signal)
+    alphaMin : anyOf(float, :class:`signal`)
 
-    alphaTarget : anyOf(float, signal)
+    alphaTarget : anyOf(float, :class:`signal`)
 
     forces : List(oneOf(Mapping(required=[force]), Mapping(required=[force]),
     Mapping(required=[force]), Mapping(required=[force]), Mapping(required=[force]),
     Mapping(required=[force])))
 
-    iterations : anyOf(float, signal)
+    iterations : anyOf(float, :class:`signal`)
 
-    restart : anyOf(boolean, signal)
+    restart : anyOf(boolean, :class:`signal`)
 
     signal : string
 
-    static : anyOf(boolean, signal)
+    static : anyOf(boolean, :class:`signal`)
 
-    velocityDecay : anyOf(float, signal)
+    velocityDecay : anyOf(float, :class:`signal`)
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/forceTransform'}
@@ -1812,11 +1839,12 @@ class nestTransform(VegaSchema):
 
     type : enum('nest')
 
-    generate : anyOf(boolean, signal)
+    generate : anyOf(boolean, :class:`signal`)
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    keys : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    keys : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
     signal : string
 
@@ -1840,19 +1868,19 @@ class packTransform(VegaSchema):
 
     type : enum('pack')
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    padding : anyOf(float, signal)
+    padding : anyOf(float, :class:`signal`)
 
-    radius : oneOf(scaleField, paramField, expr)
+    radius : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     signal : string
 
-    size : oneOf(List(anyOf(float, signal)), signal)
+    size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    sort : compare
+    sort : :class:`compare`
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/packTransform'}
@@ -1874,19 +1902,19 @@ class partitionTransform(VegaSchema):
 
     type : enum('partition')
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    padding : anyOf(float, signal)
+    padding : anyOf(float, :class:`signal`)
 
-    round : anyOf(boolean, signal)
+    round : anyOf(boolean, :class:`signal`)
 
     signal : string
 
-    size : oneOf(List(anyOf(float, signal)), signal)
+    size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    sort : compare
+    sort : :class:`compare`
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/partitionTransform'}
@@ -1906,9 +1934,9 @@ class stratifyTransform(VegaSchema):
     Attributes
     ----------
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    parentKey : oneOf(scaleField, paramField, expr)
+    parentKey : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     type : enum('stratify')
 
@@ -1933,19 +1961,19 @@ class treeTransform(VegaSchema):
 
     type : enum('tree')
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    method : anyOf(enum('tidy', 'cluster'), signal)
+    method : anyOf(enum('tidy', 'cluster'), :class:`signal`)
 
-    nodeSize : oneOf(List(anyOf(float, signal)), signal)
+    nodeSize : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
     signal : string
 
-    size : oneOf(List(anyOf(float, signal)), signal)
+    size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    sort : compare
+    sort : :class:`compare`
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/treeTransform'}
@@ -1967,7 +1995,7 @@ class treelinksTransform(VegaSchema):
 
     type : enum('treelinks')
 
-    key : oneOf(scaleField, paramField, expr)
+    key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     signal : string
 
@@ -1989,36 +2017,36 @@ class treemapTransform(VegaSchema):
 
     type : enum('treemap')
 
-    field : oneOf(scaleField, paramField, expr)
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     method : anyOf(enum('squarify', 'resquarify', 'binary', 'dice', 'slice', 'slicedice'),
-    signal)
+    :class:`signal`)
 
-    padding : anyOf(float, signal)
+    padding : anyOf(float, :class:`signal`)
 
-    paddingBottom : anyOf(float, signal)
+    paddingBottom : anyOf(float, :class:`signal`)
 
-    paddingInner : anyOf(float, signal)
+    paddingInner : anyOf(float, :class:`signal`)
 
-    paddingLeft : anyOf(float, signal)
+    paddingLeft : anyOf(float, :class:`signal`)
 
-    paddingOuter : anyOf(float, signal)
+    paddingOuter : anyOf(float, :class:`signal`)
 
-    paddingRight : anyOf(float, signal)
+    paddingRight : anyOf(float, :class:`signal`)
 
-    paddingTop : anyOf(float, signal)
+    paddingTop : anyOf(float, :class:`signal`)
 
-    ratio : anyOf(float, signal)
+    ratio : anyOf(float, :class:`signal`)
 
-    round : anyOf(boolean, signal)
+    round : anyOf(boolean, :class:`signal`)
 
     signal : string
 
-    size : oneOf(List(anyOf(float, signal)), signal)
+    size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    sort : compare
+    sort : :class:`compare`
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/treemapTransform'}
@@ -2046,17 +2074,17 @@ class voronoiTransform(VegaSchema):
 
     type : enum('voronoi')
 
-    x : oneOf(scaleField, paramField, expr)
+    x : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    y : oneOf(scaleField, paramField, expr)
+    y : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    extent : oneOf(List(Mapping(required=[])), signal)
+    extent : oneOf(List(Mapping(required=[])), :class:`signal`)
 
     signal : string
 
-    size : oneOf(List(anyOf(float, signal)), signal)
+    size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    as : anyOf(string, signal)
+    as : anyOf(string, :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/voronoiTransform'}
@@ -2078,29 +2106,29 @@ class wordcloudTransform(VegaSchema):
 
     type : enum('wordcloud')
 
-    font : anyOf(string, signal, expr, paramField)
+    font : anyOf(string, :class:`signal`, :class:`expr`, :class:`paramField`)
 
-    fontSize : anyOf(float, signal, expr, paramField)
+    fontSize : anyOf(float, :class:`signal`, :class:`expr`, :class:`paramField`)
 
-    fontSizeRange : oneOf(List(anyOf(float, signal)), signal, None)
+    fontSizeRange : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`, None)
 
-    fontStyle : anyOf(string, signal, expr, paramField)
+    fontStyle : anyOf(string, :class:`signal`, :class:`expr`, :class:`paramField`)
 
-    fontWeight : anyOf(string, signal, expr, paramField)
+    fontWeight : anyOf(string, :class:`signal`, :class:`expr`, :class:`paramField`)
 
-    padding : anyOf(float, signal, expr, paramField)
+    padding : anyOf(float, :class:`signal`, :class:`expr`, :class:`paramField`)
 
-    rotate : anyOf(float, signal, expr, paramField)
+    rotate : anyOf(float, :class:`signal`, :class:`expr`, :class:`paramField`)
 
     signal : string
 
-    size : oneOf(List(anyOf(float, signal)), signal)
+    size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
-    spiral : anyOf(string, signal)
+    spiral : anyOf(string, :class:`signal`)
 
-    text : oneOf(scaleField, paramField, expr)
+    text : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    as : oneOf(List(anyOf(string, signal)), signal)
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
 
     """
     _schema = {'$ref': '#/defs/wordcloudTransform'}
@@ -2124,9 +2152,10 @@ class crossfilterTransform(VegaSchema):
     Attributes
     ----------
 
-    fields : oneOf(List(oneOf(scaleField, paramField, expr)), signal)
+    fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
 
-    query : oneOf(List(Mapping(required=[])), signal)
+    query : oneOf(List(Mapping(required=[])), :class:`signal`)
 
     type : enum('crossfilter')
 
@@ -2151,7 +2180,7 @@ class resolvefilterTransform(VegaSchema):
 
     filter : Mapping(required=[])
 
-    ignore : anyOf(float, signal)
+    ignore : anyOf(float, :class:`signal`)
 
     type : enum('resolvefilter')
 
@@ -2170,7 +2199,7 @@ class tickCount(VegaSchema):
     """tickCount schema wrapper
 
     oneOf(float, enum('millisecond', 'second', 'minute', 'hour', 'day', 'week', 'month',
-    'year'), Mapping(required=[interval]), signal)
+    'year'), Mapping(required=[interval]), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/tickCount'}
     _rootschema = Root._schema
@@ -2212,7 +2241,7 @@ class paramField(VegaSchema):
 class field(VegaSchema):
     """field schema wrapper
 
-    oneOf(string, oneOf(signal, Mapping(required=[datum]), Mapping(required=[group]),
+    oneOf(string, oneOf(:class:`signal`, Mapping(required=[datum]), Mapping(required=[group]),
     Mapping(required=[parent])))
     """
     _schema = {'$ref': '#/refs/field'}
@@ -2225,7 +2254,7 @@ class field(VegaSchema):
 class scale(VegaSchema):
     """scale schema wrapper
 
-    oneOf(string, oneOf(signal, Mapping(required=[datum]), Mapping(required=[group]),
+    oneOf(string, oneOf(:class:`signal`, Mapping(required=[datum]), Mapping(required=[group]),
     Mapping(required=[parent])))
     """
     _schema = {'$ref': '#/refs/scale'}
@@ -2243,7 +2272,7 @@ class stringModifiers(VegaSchema):
     Attributes
     ----------
 
-    scale : scale
+    scale : :class:`scale`
 
     """
     _schema = {'$ref': '#/refs/stringModifiers'}
@@ -2263,17 +2292,17 @@ class numberModifiers(VegaSchema):
 
     band : anyOf(float, boolean)
 
-    exponent : oneOf(float, numberValue)
+    exponent : oneOf(float, :class:`numberValue`)
 
     extra : boolean
 
-    mult : oneOf(float, numberValue)
+    mult : oneOf(float, :class:`numberValue`)
 
-    offset : oneOf(float, numberValue)
+    offset : oneOf(float, :class:`numberValue`)
 
     round : boolean
 
-    scale : scale
+    scale : :class:`scale`
 
     """
     _schema = {'$ref': '#/refs/numberModifiers'}
@@ -2288,12 +2317,13 @@ class numberModifiers(VegaSchema):
 class value(VegaSchema):
     """value schema wrapper
 
-    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
-    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
-    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
-    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
-    band]), Mapping(required=[offset]))))
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/value'}
     _rootschema = Root._schema
@@ -2305,12 +2335,13 @@ class value(VegaSchema):
 class numberValue(VegaSchema):
     """numberValue schema wrapper
 
-    oneOf(List(allOf(rule, allOf(numberModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
-    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(numberModifiers,
-    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
-    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
-    band]), Mapping(required=[offset]))))
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`numberModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`numberModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/numberValue'}
     _rootschema = Root._schema
@@ -2322,12 +2353,13 @@ class numberValue(VegaSchema):
 class stringValue(VegaSchema):
     """stringValue schema wrapper
 
-    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
-    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
-    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
-    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
-    band]), Mapping(required=[offset]))))
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/stringValue'}
     _rootschema = Root._schema
@@ -2339,12 +2371,13 @@ class stringValue(VegaSchema):
 class booleanValue(VegaSchema):
     """booleanValue schema wrapper
 
-    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
-    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
-    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
-    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
-    band]), Mapping(required=[offset]))))
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/booleanValue'}
     _rootschema = Root._schema
@@ -2356,12 +2389,13 @@ class booleanValue(VegaSchema):
 class arrayValue(VegaSchema):
     """arrayValue schema wrapper
 
-    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
-    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
-    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
-    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
-    band]), Mapping(required=[offset]))))
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/arrayValue'}
     _rootschema = Root._schema
@@ -2373,12 +2407,13 @@ class arrayValue(VegaSchema):
 class nullableStringValue(VegaSchema):
     """nullableStringValue schema wrapper
 
-    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
-    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
-    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
-    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
-    band]), Mapping(required=[offset]))))
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/nullableStringValue'}
     _rootschema = Root._schema
@@ -2390,12 +2425,13 @@ class nullableStringValue(VegaSchema):
 class fontWeightValue(VegaSchema):
     """fontWeightValue schema wrapper
 
-    oneOf(List(allOf(rule, allOf(stringModifiers, anyOf(oneOf(signal, Mapping(required=[value]),
-    Mapping(required=[field]), Mapping(required=[range])), Mapping(required=[scale, value]),
-    Mapping(required=[scale, band]), Mapping(required=[offset]))))), allOf(stringModifiers,
-    anyOf(oneOf(signal, Mapping(required=[value]), Mapping(required=[field]),
-    Mapping(required=[range])), Mapping(required=[scale, value]), Mapping(required=[scale,
-    band]), Mapping(required=[offset]))))
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/fontWeightValue'}
     _rootschema = Root._schema
@@ -2412,11 +2448,11 @@ class colorRGB(VegaSchema):
     Attributes
     ----------
 
-    b : numberValue
+    b : :class:`numberValue`
 
-    g : numberValue
+    g : :class:`numberValue`
 
-    r : numberValue
+    r : :class:`numberValue`
 
     """
     _schema = {'$ref': '#/refs/colorRGB'}
@@ -2434,11 +2470,11 @@ class colorHSL(VegaSchema):
     Attributes
     ----------
 
-    h : numberValue
+    h : :class:`numberValue`
 
-    l : numberValue
+    l : :class:`numberValue`
 
-    s : numberValue
+    s : :class:`numberValue`
 
     """
     _schema = {'$ref': '#/refs/colorHSL'}
@@ -2456,11 +2492,11 @@ class colorLAB(VegaSchema):
     Attributes
     ----------
 
-    a : numberValue
+    a : :class:`numberValue`
 
-    b : numberValue
+    b : :class:`numberValue`
 
-    l : numberValue
+    l : :class:`numberValue`
 
     """
     _schema = {'$ref': '#/refs/colorLAB'}
@@ -2478,11 +2514,11 @@ class colorHCL(VegaSchema):
     Attributes
     ----------
 
-    c : numberValue
+    c : :class:`numberValue`
 
-    h : numberValue
+    h : :class:`numberValue`
 
-    l : numberValue
+    l : :class:`numberValue`
 
     """
     _schema = {'$ref': '#/refs/colorHCL'}
@@ -2495,7 +2531,7 @@ class colorHCL(VegaSchema):
 class colorValue(VegaSchema):
     """colorValue schema wrapper
 
-    oneOf(nullableStringValue, Mapping(required=[gradient]), Mapping(required=[color]))
+    oneOf(:class:`nullableStringValue`, Mapping(required=[gradient]), Mapping(required=[color]))
     """
     _schema = {'$ref': '#/refs/colorValue'}
     _rootschema = Root._schema
@@ -2588,7 +2624,7 @@ class facet(VegaSchema):
 class markclip(VegaSchema):
     """markclip schema wrapper
 
-    oneOf(booleanOrSignal, Mapping(required=[path]), Mapping(required=[sphere]))
+    oneOf(:class:`booleanOrSignal`, Mapping(required=[path]), Mapping(required=[sphere]))
     """
     _schema = {'$ref': '#/refs/markclip'}
     _rootschema = Root._schema
@@ -2624,7 +2660,7 @@ class marktype(VegaSchema):
 class sortOrder(VegaSchema):
     """sortOrder schema wrapper
 
-    oneOf(enum('ascending', 'descending'), signal)
+    oneOf(enum('ascending', 'descending'), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/sortOrder'}
     _rootschema = Root._schema
@@ -2636,7 +2672,7 @@ class sortOrder(VegaSchema):
 class scaleField(VegaSchema):
     """scaleField schema wrapper
 
-    oneOf(string, signal)
+    oneOf(string, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/scaleField'}
     _rootschema = Root._schema
@@ -2648,7 +2684,7 @@ class scaleField(VegaSchema):
 class scaleInterpolate(VegaSchema):
     """scaleInterpolate schema wrapper
 
-    oneOf(string, signal, Mapping(required=[type]))
+    oneOf(string, :class:`signal`, Mapping(required=[type]))
     """
     _schema = {'$ref': '#/refs/scaleInterpolate'}
     _rootschema = Root._schema
@@ -2703,7 +2739,7 @@ class signal(VegaSchema):
 class booleanOrSignal(VegaSchema):
     """booleanOrSignal schema wrapper
 
-    oneOf(boolean, signal)
+    oneOf(boolean, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/booleanOrSignal'}
     _rootschema = Root._schema
@@ -2715,7 +2751,7 @@ class booleanOrSignal(VegaSchema):
 class numberOrSignal(VegaSchema):
     """numberOrSignal schema wrapper
 
-    oneOf(float, signal)
+    oneOf(float, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/numberOrSignal'}
     _rootschema = Root._schema
@@ -2727,7 +2763,7 @@ class numberOrSignal(VegaSchema):
 class stringOrSignal(VegaSchema):
     """stringOrSignal schema wrapper
 
-    oneOf(string, signal)
+    oneOf(string, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/stringOrSignal'}
     _rootschema = Root._schema
