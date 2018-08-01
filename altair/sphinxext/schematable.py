@@ -10,7 +10,7 @@ from recommonmark.parser import CommonMarkParser
 
 def type_description(schema):
     """Return a concise type description for the given schema"""
-    if schema == {}:
+    if not schema or schema.keys() == {'description'}:
         return 'any'
     elif "$ref" in schema:
         return ":class:`{0}`".format(schema['$ref'].split('/')[-1])
