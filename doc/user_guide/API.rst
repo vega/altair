@@ -14,7 +14,7 @@ Top-Level Objects
 .. currentmodule:: altair
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/toplevel/
    :nosignatures:
 
    Chart
@@ -29,7 +29,7 @@ Encoding Channels
 .. currentmodule:: altair
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/channels/
    :nosignatures:
 
    Color
@@ -73,7 +73,7 @@ API Functions
 .. currentmodule:: altair
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/api/
    :nosignatures:
 
    layer
@@ -98,7 +98,7 @@ Low-Level Schema Wrappers
 .. currentmodule:: altair
 
 .. autosummary::
-   :toctree: generated/
+   :toctree: generated/core/
    :nosignatures:
 
    Aggregate
