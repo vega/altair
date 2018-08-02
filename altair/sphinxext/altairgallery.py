@@ -4,6 +4,7 @@ import json
 import random
 import collections
 from operator import itemgetter
+import warnings
 
 import jinja2
 
@@ -14,7 +15,8 @@ from docutils.parsers.rst.directives import flag
 
 from sphinx.util.nodes import nested_parse_with_titles
 
-from .utils import get_docstring_and_rest, prev_this_next, create_thumbnail
+from .utils import (get_docstring_and_rest, prev_this_next,
+                    create_thumbnail, create_generic_image)
 from altair.utils.execeval import eval_block
 from altair.vegalite.v2.examples import iter_examples
 
@@ -126,8 +128,12 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
             # the file changed or the image file does not exist. Generate it.
             print('-> saving {0}'.format(image_file))
             chart = eval_block(example['code'])
-            chart.save(image_file)
-            hashes[filename] = example_hash
+            try:
+                chart.save(image_file)
+                hashes[filename] = example_hash
+            except ImportError:
+                warnings.warn("Could not import selenium: using generic image")
+                create_generic_image(image_file)
 
             with open(hash_file, 'w') as f:
                 json.dump(hashes, f)
