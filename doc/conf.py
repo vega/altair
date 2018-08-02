@@ -43,8 +43,12 @@ extensions = [
 
 altair_plot_links = {'editor': True, 'source': False, 'export': False}
 
-autodoc_default_flags = ['members']
+autodoc_default_flags = ['members', 'inherited-members']
+
 autodoc_member_order = 'groupwise'
+
+# generate autosummary even if no references
+autosummary_generate = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

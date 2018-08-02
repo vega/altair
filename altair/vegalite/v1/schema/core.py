@@ -22,7 +22,7 @@ class VegaLiteSchema(SchemaBase):
 class Root(VegaLiteSchema):
     """Root schema wrapper
 
-    anyOf(ExtendedUnitSpec, FacetSpec, LayerSpec)
+    anyOf(:class:`ExtendedUnitSpec`, :class:`FacetSpec`, :class:`LayerSpec`)
     """
     _schema = load_schema()
     _rootschema = _schema
@@ -47,27 +47,27 @@ class ExtendedUnitSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    mark : Mark
+    mark : :class:`Mark`
         The mark type.
 
         One of ``"bar"``, ``"circle"``, ``"square"``, ``"tick"``, ``"line"``,
 
         ``"area"``, ``"point"``, ``"rule"``, and ``"text"``.
-    config : Config
+    config : :class:`Config`
         Configuration object
-    data : Data
+    data : :class:`Data`
         An object describing the data source
     description : string
         An optional description of this mark for commenting purpose.
 
         This property has no effect on the output visualization.
-    encoding : Encoding
+    encoding : :class:`Encoding`
         A key-value mapping between encoding channels and definition of fields.
     height : float
 
     name : string
         Name of the visualization for later reference.
-    transform : Transform
+    transform : :class:`Transform`
         An object describing filter and new field calculation.
     width : float
 
@@ -104,36 +104,36 @@ class Encoding(VegaLiteSchema):
     Attributes
     ----------
 
-    color : ChannelDefWithLegend
+    color : :class:`ChannelDefWithLegend`
         Color of the marks – either fill or stroke color based on mark type.
 
         (By default, fill color for ``area``, ``bar``, ``tick``, ``text``, ``circle``, and
         ``square`` /
 
         stroke color for ``line`` and ``point``.)
-    column : PositionChannelDef
+    column : :class:`PositionChannelDef`
         Horizontal facets for trellis plots.
-    detail : anyOf(FieldDef, List(FieldDef))
+    detail : anyOf(:class:`FieldDef`, List(:class:`FieldDef`))
         Additional levels of detail for grouping data in aggregate views and
 
         in line and area marks without mapping data to a specific visual channel.
-    label : FieldDef
+    label : :class:`FieldDef`
 
-    opacity : ChannelDefWithLegend
+    opacity : :class:`ChannelDefWithLegend`
         Opacity of the marks – either can be a value or in a range.
-    order : anyOf(OrderChannelDef, List(OrderChannelDef))
+    order : anyOf(:class:`OrderChannelDef`, List(:class:`OrderChannelDef`))
         Layer order for non-stacked marks, or stack order for stacked marks.
-    path : anyOf(OrderChannelDef, List(OrderChannelDef))
+    path : anyOf(:class:`OrderChannelDef`, List(:class:`OrderChannelDef`))
         Order of data points in line marks.
-    row : PositionChannelDef
+    row : :class:`PositionChannelDef`
         Vertical facets for trellis plots.
-    shape : ChannelDefWithLegend
+    shape : :class:`ChannelDefWithLegend`
         The symbol's shape (only for ``point`` marks). The supported values are
 
         ``"circle"`` (default), ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
 
         or ``"triangle-down"``, or else a custom SVG path string.
-    size : ChannelDefWithLegend
+    size : :class:`ChannelDefWithLegend`
         Size of the mark.
 
 
@@ -147,23 +147,23 @@ class Encoding(VegaLiteSchema):
         For ``text`` – the text's font size.
 
         Size is currently unsupported for ``line`` and ``area``.
-    text : FieldDef
+    text : :class:`FieldDef`
         Text of the ``text`` mark.
-    x : PositionChannelDef
+    x : :class:`PositionChannelDef`
         X coordinates for ``point``, ``circle``, ``square``,
 
         ``line``, ``rule``, ``text``, and ``tick``
 
         (or to width and height for ``bar`` and ``area`` marks).
-    x2 : FieldDef
+    x2 : :class:`FieldDef`
         X2 coordinates for ranged ``bar``, ``rule``, ``area``
-    y : PositionChannelDef
+    y : :class:`PositionChannelDef`
         Y coordinates for ``point``, ``circle``, ``square``,
 
         ``line``, ``rule``, ``text``, and ``tick``
 
         (or to width and height for ``bar`` and ``area`` marks).
-    y2 : FieldDef
+    y2 : :class:`FieldDef`
         Y2 coordinates for ranged ``bar``, ``rule``, ``area``
     """
     _schema = {'$ref': '#/definitions/Encoding'}
@@ -186,28 +186,28 @@ class PositionChannelDef(VegaLiteSchema):
     Attributes
     ----------
 
-    aggregate : AggregateOp
+    aggregate : :class:`AggregateOp`
         Aggregation function for the field
 
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-    axis : Axis
+    axis : :class:`Axis`
 
-    bin : anyOf(Bin, boolean)
+    bin : anyOf(:class:`Bin`, boolean)
         Flag for binning a ``quantitative`` field, or a bin property object
 
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    scale : Scale
+    scale : :class:`Scale`
 
-    sort : anyOf(SortOrder, SortField)
+    sort : anyOf(:class:`SortOrder`, :class:`SortField`)
 
-    timeUnit : TimeUnit
+    timeUnit : :class:`TimeUnit`
         Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
         ``hour`` ).
     title : string
         Title for axis or legend.
-    type : Type
+    type : :class:`Type`
         The encoded field's type of measurement. This can be either a full type
 
         name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
@@ -312,19 +312,19 @@ class Scale(VegaLiteSchema):
     Attributes
     ----------
 
-    bandSize : anyOf(BandSize, float)
+    bandSize : anyOf(:class:`BandSize`, float)
 
     clamp : boolean
         If true, values that exceed the data domain are clamped to either the minimum or
         maximum range value
-    domain : anyOf(List(string), List(float), List(DateTime))
+    domain : anyOf(List(string), List(float), List(:class:`DateTime`))
         The domain of the scale, representing the set of data values. For quantitative data,
         this can take the form of a two-element array with minimum and maximum values. For
         ordinal/categorical data, this may be an array of valid input values.
     exponent : float
         Sets the exponent of the scale transformation. For pow scale types only, otherwise
         ignored.
-    nice : anyOf(NiceTime, boolean)
+    nice : anyOf(:class:`NiceTime`, boolean)
         If specified, modifies the scale domain to use a more human-friendly value range. If
         specified as a true boolean, modifies the scale domain to use a more human-friendly
         number range (e.g., 7 instead of 6.96). If specified as a string, modifies the scale
@@ -339,7 +339,7 @@ class Scale(VegaLiteSchema):
         in the range [0, 1] and corresponds to the fraction of space in the range interval
         to allocate to padding. A value of 0.5 means that the range band width will be equal
         to the padding width. For more, see the `D3 ordinal scale documentation
-        <https://github.com/mbostock/d3/wiki/Ordinal-Scales>`_.
+        <https://github.com/mbostock/d3/wiki/Ordinal-Scales>`__.
     range : anyOf(List(string), List(float), string)
         The range of the scale, representing the set of visual values. For numeric values,
         the range can take the form of a two-element array with minimum and maximum values.
@@ -350,7 +350,7 @@ class Scale(VegaLiteSchema):
     round : boolean
         If true, rounds numeric output values to integers. This can be helpful for snapping
         to the pixel grid.
-    type : ScaleType
+    type : :class:`ScaleType`
 
     useRawDomain : boolean
         Uses the source data range as scale domain instead of aggregated data for aggregate
@@ -438,9 +438,9 @@ class SortField(VegaLiteSchema):
 
     field : string
         The field name to aggregate over.
-    op : AggregateOp
+    op : :class:`AggregateOp`
         The sort aggregation operator
-    order : SortOrder
+    order : :class:`SortOrder`
 
     """
     _schema = {'$ref': '#/definitions/SortField'}
@@ -542,22 +542,22 @@ class FieldDef(VegaLiteSchema):
     Attributes
     ----------
 
-    aggregate : AggregateOp
+    aggregate : :class:`AggregateOp`
         Aggregation function for the field
 
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-    bin : anyOf(Bin, boolean)
+    bin : anyOf(:class:`Bin`, boolean)
         Flag for binning a ``quantitative`` field, or a bin property object
 
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    timeUnit : TimeUnit
+    timeUnit : :class:`TimeUnit`
         Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
         ``hour`` ).
     title : string
         Title for axis or legend.
-    type : Type
+    type : :class:`Type`
         The encoded field's type of measurement. This can be either a full type
 
         name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
@@ -585,28 +585,28 @@ class ChannelDefWithLegend(VegaLiteSchema):
     Attributes
     ----------
 
-    aggregate : AggregateOp
+    aggregate : :class:`AggregateOp`
         Aggregation function for the field
 
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-    bin : anyOf(Bin, boolean)
+    bin : anyOf(:class:`Bin`, boolean)
         Flag for binning a ``quantitative`` field, or a bin property object
 
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    legend : Legend
+    legend : :class:`Legend`
 
-    scale : Scale
+    scale : :class:`Scale`
 
-    sort : anyOf(SortOrder, SortField)
+    sort : anyOf(:class:`SortOrder`, :class:`SortField`)
 
-    timeUnit : TimeUnit
+    timeUnit : :class:`TimeUnit`
         Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
         ``hour`` ).
     title : string
         Title for axis or legend.
-    type : Type
+    type : :class:`Type`
         The encoded field's type of measurement. This can be either a full type
 
         name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
@@ -649,24 +649,24 @@ class OrderChannelDef(VegaLiteSchema):
     Attributes
     ----------
 
-    aggregate : AggregateOp
+    aggregate : :class:`AggregateOp`
         Aggregation function for the field
 
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-    bin : anyOf(Bin, boolean)
+    bin : anyOf(:class:`Bin`, boolean)
         Flag for binning a ``quantitative`` field, or a bin property object
 
         for binning parameters.
     field : string
         Name of the field from which to pull a data value.
-    sort : SortOrder
+    sort : :class:`SortOrder`
 
-    timeUnit : TimeUnit
+    timeUnit : :class:`TimeUnit`
         Time unit for a ``temporal`` field  (e.g., ``year``, ``yearmonth``, ``month``,
         ``hour`` ).
     title : string
         Title for axis or legend.
-    type : Type
+    type : :class:`Type`
         The encoded field's type of measurement. This can be either a full type
 
         name ( ``"quantitative"``, ``"temporal"``, ``"ordinal"``,  and ``"nominal"`` )
@@ -695,7 +695,7 @@ class Data(VegaLiteSchema):
     Attributes
     ----------
 
-    format : DataFormat
+    format : :class:`DataFormat`
         An object that specifies the format for the data file or values.
     url : string
         A URL from which to load the data set. Use the format.type property
@@ -745,7 +745,8 @@ class DataFormat(VegaLiteSchema):
         (one of ``"number"``, ``"boolean"`` or ``"date"`` ). For example, ``"parse":
         {"modified_on":"date"}`` ensures that the ``modified_on`` value in each row of the
         input data is parsed as a Date value. (See Datalib's `dl.read.types method
-        <https://github.com/vega/datalib/wiki/Import#dl_read_types>`_ for more information.)
+        <https://github.com/vega/datalib/wiki/Import#dl_read_types>`__ for more
+        information.)
     property : string
         JSON only) The JSON property containing the desired data.
 
@@ -756,7 +757,7 @@ class DataFormat(VegaLiteSchema):
         ``json.values.features``
 
         from the loaded JSON object.
-    type : DataFormatType
+    type : :class:`DataFormatType`
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``.
 
         The default format type is determined by the extension of the file url.
@@ -792,11 +793,12 @@ class Transform(VegaLiteSchema):
     Attributes
     ----------
 
-    calculate : List(Formula)
+    calculate : List(:class:`Formula`)
         Calculate new field(s) using the provided expresssion(s). Calculation are applied
         before filter.
-    filter : anyOf(EqualFilter, RangeFilter, OneOfFilter, List(anyOf(EqualFilter, RangeFilter,
-    OneOfFilter, string)), string)
+    filter : anyOf(:class:`EqualFilter`, :class:`RangeFilter`, :class:`OneOfFilter`,
+    List(anyOf(:class:`EqualFilter`, :class:`RangeFilter`, :class:`OneOfFilter`, string)),
+    string)
         A string containing the filter Vega expression. Use ``datum`` to refer to the
         current data object.
     filterInvalid : boolean
@@ -821,11 +823,11 @@ class EqualFilter(VegaLiteSchema):
     Attributes
     ----------
 
-    equal : anyOf(DateTime, anyOf(string, float, boolean))
+    equal : anyOf(:class:`DateTime`, anyOf(string, float, boolean))
         Value that the field should be equal to.
     field : string
         Field to be filtered.
-    timeUnit : TimeUnit
+    timeUnit : :class:`TimeUnit`
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/EqualFilter'}
@@ -845,11 +847,11 @@ class RangeFilter(VegaLiteSchema):
 
     field : string
         Field to be filtered
-    range : List(anyOf(DateTime, float))
+    range : List(anyOf(:class:`DateTime`, float))
         Array of inclusive minimum and maximum values
 
         for a field value of a data item to be included in the filtered data.
-    timeUnit : TimeUnit
+    timeUnit : :class:`TimeUnit`
         time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/RangeFilter'}
@@ -869,11 +871,11 @@ class OneOfFilter(VegaLiteSchema):
 
     field : string
         Field to be filtered
-    oneOf : List(anyOf(DateTime, anyOf(string, float, boolean)))
+    oneOf : List(anyOf(:class:`DateTime`, anyOf(string, float, boolean)))
         A set of values that the ``field`` 's value should be a member of,
 
         for a data item included in the filtered data.
-    timeUnit : TimeUnit
+    timeUnit : :class:`TimeUnit`
         time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/OneOfFilter'}
@@ -913,26 +915,26 @@ class Config(VegaLiteSchema):
     Attributes
     ----------
 
-    axis : AxisConfig
+    axis : :class:`AxisConfig`
         Axis Config
     background : string
         CSS color property to use as background of visualization. Default is
         ``"transparent"``.
-    cell : CellConfig
+    cell : :class:`CellConfig`
         Cell Config
     countTitle : string
         Default axis and legend title for count fields.
-    facet : FacetConfig
+    facet : :class:`FacetConfig`
         Facet Config
-    legend : LegendConfig
+    legend : :class:`LegendConfig`
         Legend Config
-    mark : MarkConfig
+    mark : :class:`MarkConfig`
         Mark Config
     numberFormat : string
         D3 Number format for axis labels and text tables. For example "s" for SI units.
-    overlay : OverlayConfig
+    overlay : :class:`OverlayConfig`
         Mark Overlay Config
-    scale : ScaleConfig
+    scale : :class:`ScaleConfig`
         Scale Config
     timeFormat : string
         Default datetime format for axis and legend labels. The format can be set directly
@@ -1002,7 +1004,7 @@ class MarkConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    align : HorizontalAlign
+    align : :class:`HorizontalAlign`
         The horizontal alignment of the text. One of left, right, center.
     angle : float
         The rotation angle of the text, in degrees.
@@ -1014,7 +1016,7 @@ class MarkConfig(VegaLiteSchema):
         which provides 1 pixel offset between bars.
     barThinSize : float
         The size of the bars on continuous scales.
-    baseline : VerticalAlign
+    baseline : :class:`VerticalAlign`
         The vertical alignment of the text. One of top, middle, bottom.
     color : string
         Default color.
@@ -1042,21 +1044,21 @@ class MarkConfig(VegaLiteSchema):
         The typeface to set the text in (e.g., Helvetica Neue).
     fontSize : float
         The font size, in pixels.
-    fontStyle : FontStyle
+    fontStyle : :class:`FontStyle`
         The font style (e.g., italic).
-    fontWeight : FontWeight
+    fontWeight : :class:`FontWeight`
         The font weight (e.g., bold).
     format : string
         The formatting pattern for text value. If not defined, this will be determined
         automatically.
-    interpolate : Interpolate
+    interpolate : :class:`Interpolate`
         The line interpolation method to use. One of linear, step-before, step-after, basis,
         basis-open, cardinal, cardinal-open, monotone.
     lineSize : float
         Size of line mark.
     opacity : float
 
-    orient : Orient
+    orient : :class:`Orient`
         The orientation of a non-stacked bar, tick, area, and line charts.
 
         The value is either horizontal (default) or vertical.
@@ -1081,7 +1083,7 @@ class MarkConfig(VegaLiteSchema):
         determined by the x and y properties.
     ruleSize : float
         Size of rule mark.
-    shape : anyOf(Shape, string)
+    shape : anyOf(:class:`Shape`, string)
         The symbol shape to use. One of circle (default), square, cross, diamond,
         triangle-up, or triangle-down, or a custom SVG path.
     shortTimeLabels : boolean
@@ -1089,7 +1091,7 @@ class MarkConfig(VegaLiteSchema):
     size : float
         The pixel area each the point. For example: in the case of circles, the radius is
         determined in part by the square root of the size value.
-    stacked : StackOffset
+    stacked : :class:`StackOffset`
 
     stroke : string
         Default Stroke Color.  This has higher precedence than config.color
@@ -1249,13 +1251,13 @@ class OverlayConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    area : AreaOverlay
+    area : :class:`AreaOverlay`
         Type of overlay for area mark (line or linepoint)
     line : boolean
         Whether to overlay line with point.
-    lineStyle : MarkConfig
+    lineStyle : :class:`MarkConfig`
         Default style for the overlayed point.
-    pointStyle : MarkConfig
+    pointStyle : :class:`MarkConfig`
         Default style for the overlayed point.
     """
     _schema = {'$ref': '#/definitions/OverlayConfig'}
@@ -1286,7 +1288,7 @@ class ScaleConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    bandSize : anyOf(BandSize, float)
+    bandSize : anyOf(:class:`BandSize`, float)
         Default band size for (1) ``y`` ordinal scale,
 
         and (2) ``x`` ordinal scale when the mark is not ``text``.
@@ -1564,13 +1566,13 @@ class FacetConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    axis : AxisConfig
+    axis : :class:`AxisConfig`
         Facet Axis Config
-    cell : CellConfig
+    cell : :class:`CellConfig`
         Facet Cell Config
-    grid : FacetGridConfig
+    grid : :class:`FacetGridConfig`
         Facet Grid Config
-    scale : FacetScaleConfig
+    scale : :class:`FacetScaleConfig`
         Facet Scale Config
     """
     _schema = {'$ref': '#/definitions/FacetConfig'}
@@ -1630,13 +1632,13 @@ class FacetSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    facet : Facet
+    facet : :class:`Facet`
 
-    spec : anyOf(UnitSpec, LayerSpec)
+    spec : anyOf(:class:`UnitSpec`, :class:`LayerSpec`)
 
-    config : Config
+    config : :class:`Config`
         Configuration object
-    data : Data
+    data : :class:`Data`
         An object describing the data source
     description : string
         An optional description of this mark for commenting purpose.
@@ -1644,7 +1646,7 @@ class FacetSpec(VegaLiteSchema):
         This property has no effect on the output visualization.
     name : string
         Name of the visualization for later reference.
-    transform : Transform
+    transform : :class:`Transform`
         An object describing filter and new field calculation.
     """
     _schema = {'$ref': '#/definitions/FacetSpec'}
@@ -1664,9 +1666,9 @@ class Facet(VegaLiteSchema):
     Attributes
     ----------
 
-    column : PositionChannelDef
+    column : :class:`PositionChannelDef`
 
-    row : PositionChannelDef
+    row : :class:`PositionChannelDef`
 
     """
     _schema = {'$ref': '#/definitions/Facet'}
@@ -1684,27 +1686,27 @@ class UnitSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    mark : Mark
+    mark : :class:`Mark`
         The mark type.
 
         One of ``"bar"``, ``"circle"``, ``"square"``, ``"tick"``, ``"line"``,
 
         ``"area"``, ``"point"``, ``"rule"``, and ``"text"``.
-    config : Config
+    config : :class:`Config`
         Configuration object
-    data : Data
+    data : :class:`Data`
         An object describing the data source
     description : string
         An optional description of this mark for commenting purpose.
 
         This property has no effect on the output visualization.
-    encoding : UnitEncoding
+    encoding : :class:`UnitEncoding`
         A key-value mapping between encoding channels and definition of fields.
     height : float
 
     name : string
         Name of the visualization for later reference.
-    transform : Transform
+    transform : :class:`Transform`
         An object describing filter and new field calculation.
     width : float
 
@@ -1728,32 +1730,32 @@ class UnitEncoding(VegaLiteSchema):
     Attributes
     ----------
 
-    color : ChannelDefWithLegend
+    color : :class:`ChannelDefWithLegend`
         Color of the marks – either fill or stroke color based on mark type.
 
         (By default, fill color for ``area``, ``bar``, ``tick``, ``text``, ``circle``, and
         ``square`` /
 
         stroke color for ``line`` and ``point``.)
-    detail : anyOf(FieldDef, List(FieldDef))
+    detail : anyOf(:class:`FieldDef`, List(:class:`FieldDef`))
         Additional levels of detail for grouping data in aggregate views and
 
         in line and area marks without mapping data to a specific visual channel.
-    label : FieldDef
+    label : :class:`FieldDef`
 
-    opacity : ChannelDefWithLegend
+    opacity : :class:`ChannelDefWithLegend`
         Opacity of the marks – either can be a value or in a range.
-    order : anyOf(OrderChannelDef, List(OrderChannelDef))
+    order : anyOf(:class:`OrderChannelDef`, List(:class:`OrderChannelDef`))
         Layer order for non-stacked marks, or stack order for stacked marks.
-    path : anyOf(OrderChannelDef, List(OrderChannelDef))
+    path : anyOf(:class:`OrderChannelDef`, List(:class:`OrderChannelDef`))
         Order of data points in line marks.
-    shape : ChannelDefWithLegend
+    shape : :class:`ChannelDefWithLegend`
         The symbol's shape (only for ``point`` marks). The supported values are
 
         ``"circle"`` (default), ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
 
         or ``"triangle-down"``, or else a custom SVG path string.
-    size : ChannelDefWithLegend
+    size : :class:`ChannelDefWithLegend`
         Size of the mark.
 
 
@@ -1767,23 +1769,23 @@ class UnitEncoding(VegaLiteSchema):
         For ``text`` – the text's font size.
 
         Size is currently unsupported for ``line`` and ``area``.
-    text : FieldDef
+    text : :class:`FieldDef`
         Text of the ``text`` mark.
-    x : PositionChannelDef
+    x : :class:`PositionChannelDef`
         X coordinates for ``point``, ``circle``, ``square``,
 
         ``line``, ``rule``, ``text``, and ``tick``
 
         (or to width and height for ``bar`` and ``area`` marks).
-    x2 : FieldDef
+    x2 : :class:`FieldDef`
         X2 coordinates for ranged ``bar``, ``rule``, ``area``
-    y : PositionChannelDef
+    y : :class:`PositionChannelDef`
         Y coordinates for ``point``, ``circle``, ``square``,
 
         ``line``, ``rule``, ``text``, and ``tick``
 
         (or to width and height for ``bar`` and ``area`` marks).
-    y2 : FieldDef
+    y2 : :class:`FieldDef`
         Y2 coordinates for ranged ``bar``, ``rule``, ``area``
     """
     _schema = {'$ref': '#/definitions/UnitEncoding'}
@@ -1805,11 +1807,11 @@ class LayerSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    layers : List(UnitSpec)
+    layers : List(:class:`UnitSpec`)
         Unit specs that will be layered.
-    config : Config
+    config : :class:`Config`
         Configuration object
-    data : Data
+    data : :class:`Data`
         An object describing the data source
     description : string
         An optional description of this mark for commenting purpose.
@@ -1819,7 +1821,7 @@ class LayerSpec(VegaLiteSchema):
 
     name : string
         Name of the visualization for later reference.
-    transform : Transform
+    transform : :class:`Transform`
         An object describing filter and new field calculation.
     width : float
 

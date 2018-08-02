@@ -11,150 +11,292 @@ full guidelines on their use.
 
 Top-Level Objects
 -----------------
+.. currentmodule:: altair
 
-.. autoclass:: altair.Chart
-   :members:
-   :inherited-members:
+.. autosummary::
+   :toctree: generated/toplevel/
+   :nosignatures:
 
-.. autoclass:: altair.LayerChart
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.HConcatChart
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.VConcatChart
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.FacetChart
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.RepeatChart
-   :members:
-   :inherited-members:
+   Chart
+   LayerChart
+   HConcatChart
+   VConcatChart
+   FacetChart
+   RepeatChart
 
 Encoding Channels
 -----------------
+.. currentmodule:: altair
 
-.. autoclass:: altair.Color
-   :members:
-   :inherited-members:
+.. autosummary::
+   :toctree: generated/channels/
+   :nosignatures:
 
-.. autoclass:: altair.ColorValue
-   :members:
-   :inherited-members:
+   Color
+   ColorValue
+   Column
+   Detail
+   Fill
+   FillValue
+   Href
+   HrefValue
+   Key
+   Latitude
+   Latitude2
+   Longitude
+   Longitude2
+   Opacity
+   OpacityValue
+   Order
+   Row
+   Shape
+   ShapeValue
+   Size
+   SizeValue
+   Stroke
+   StrokeValue
+   Text
+   TextValue
+   Tooltip
+   TooltipValue
+   X
+   XValue
+   X2
+   X2Value
+   Y
+   YValue
+   Y2
+   Y2Value
 
-.. autoclass:: altair.Column
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Detail
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Href
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.HrefValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Opacity
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.OpacityValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Order
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Row
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Shape
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.ShapeValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Size
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.SizeValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Text
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.TextValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Tooltip
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.TooltipValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.X
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.XValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.X2
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.X2Value
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Y
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.YValue
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Y2
-   :members:
-   :inherited-members:
-
-.. autoclass:: altair.Y2Value
-   :members:
-   :inherited-members:
-
-
-Other Objects
+API Functions
 -------------
+.. currentmodule:: altair
 
-.. automodule:: altair
-   :members:
-   :imported-members:
-   :exclude-members: Chart,LayerChart,FacetChart,HConcatChart,VConcatChart,FacetChart,RepeatChart
+.. autosummary::
+   :toctree: generated/api/
+   :nosignatures:
 
-Vega Expressions
-----------------
+   layer
+   vconcat
+   hconcat
+   repeat
+   value
+   selection
+   selection_interval
+   selection_multi
+   selection_single
+   binding
+   binding_checkbox
+   binding_radio
+   binding_range
+   binding_select
+   condition
+   topo_feature
 
-.. automodule:: altair.expr
-   :members:
-   :imported-members:
+Low-Level Schema Wrappers
+-------------------------
+.. currentmodule:: altair
+
+.. autosummary::
+   :toctree: generated/core/
+   :nosignatures:
+
+   Aggregate
+   AggregateOp
+   AggregateTransform
+   AggregatedFieldDef
+   Anchor
+   AnyMark
+   AreaConfig
+   AutoSizeParams
+   AutosizeType
+   Axis
+   AxisConfig
+   AxisOrient
+   AxisResolveMap
+   BarConfig
+   Baseline
+   BasicType
+   BinParams
+   BinTransform
+   BrushConfig
+   CalculateTransform
+   CompositeUnitSpec
+   CompositeUnitSpecAlias
+   ConditionalFieldDef
+   ConditionalMarkPropFieldDef
+   ConditionalPredicateFieldDef
+   ConditionalPredicateMarkPropFieldDef
+   ConditionalPredicateTextFieldDef
+   ConditionalPredicateValueDef
+   ConditionalSelectionFieldDef
+   ConditionalSelectionMarkPropFieldDef
+   ConditionalSelectionTextFieldDef
+   ConditionalSelectionValueDef
+   ConditionalTextFieldDef
+   ConditionalValueDef
+   Config
+   CsvDataFormat
+   Cursor
+   Data
+   DataFormat
+   Datasets
+   DateTime
+   Day
+   DictInlineDataset
+   Dir
+   DsvDataFormat
+   Encoding
+   EncodingSortField
+   EncodingWithFacet
+   FacetFieldDef
+   FacetMapping
+   FacetSpec
+   FacetedCompositeUnitSpecAlias
+   FieldDef
+   FieldDefWithCondition
+   FieldEqualPredicate
+   FieldGTEPredicate
+   FieldGTPredicate
+   FieldLTEPredicate
+   FieldLTPredicate
+   FieldOneOfPredicate
+   FieldRangePredicate
+   FilterTransform
+   FontStyle
+   FontWeight
+   FontWeightNumber
+   FontWeightString
+   GeoType
+   HConcatSpec
+   Header
+   HeaderConfig
+   HorizontalAlign
+   InlineData
+   InlineDataset
+   Interpolate
+   IntervalSelection
+   IntervalSelectionConfig
+   JsonDataFormat
+   LayerSpec
+   Legend
+   LegendConfig
+   LegendOrient
+   LegendResolveMap
+   LineConfig
+   LocalMultiTimeUnit
+   LocalSingleTimeUnit
+   LogicalAndPredicate
+   LogicalNotPredicate
+   LogicalOperandPredicate
+   LogicalOrPredicate
+   LookupData
+   LookupTransform
+   Mark
+   MarkConfig
+   MarkDef
+   MarkPropFieldDefWithCondition
+   MarkPropValueDefWithCondition
+   Month
+   MultiSelection
+   MultiSelectionConfig
+   MultiTimeUnit
+   NamedData
+   NiceTime
+   OrderFieldDef
+   Orient
+   OverlayMarkDef
+   Padding
+   Parse
+   PositionFieldDef
+   Predicate
+   Projection
+   ProjectionConfig
+   ProjectionType
+   RangeConfig
+   RangeConfigValue
+   Repeat
+   RepeatRef
+   RepeatSpec
+   Resolve
+   ResolveMode
+   Root
+   RowColVgLayoutAlign
+   RowColboolean
+   RowColnumber
+   Scale
+   ScaleConfig
+   ScaleInterpolate
+   ScaleInterpolateParams
+   ScaleResolveMap
+   ScaleType
+   SchemaBase
+   SchemeParams
+   SelectionAnd
+   SelectionConfig
+   SelectionDef
+   SelectionDomain
+   SelectionNot
+   SelectionOperand
+   SelectionOr
+   SelectionPredicate
+   SelectionResolution
+   SingleDefChannel
+   SingleSelection
+   SingleSelectionConfig
+   SingleTimeUnit
+   Sort
+   SortField
+   SortOrder
+   Spec
+   StackOffset
+   StrokeCap
+   StrokeJoin
+   StyleConfigIndex
+   TextBaseline
+   TextConfig
+   TextFieldDef
+   TextFieldDefWithCondition
+   TextValueDefWithCondition
+   TickConfig
+   TimeUnit
+   TimeUnitTransform
+   TitleOrient
+   TitleParams
+   TopLevelFacetSpec
+   TopLevelFacetedUnitSpec
+   TopLevelHConcatSpec
+   TopLevelLayerSpec
+   TopLevelRepeatSpec
+   TopLevelSpec
+   TopLevelVConcatSpec
+   TopoDataFormat
+   Transform
+   Type
+   Undefined
+   UrlData
+   UtcMultiTimeUnit
+   UtcSingleTimeUnit
+   VConcatSpec
+   ValueDef
+   ValueDefWithCondition
+   VegaLiteSchema
+   VerticalAlign
+   VgAxisConfig
+   VgBinding
+   VgCheckboxBinding
+   VgComparatorOrder
+   VgEventStream
+   VgGenericBinding
+   VgLayoutAlign
+   VgMarkConfig
+   VgProjectionType
+   VgRadioBinding
+   VgRangeBinding
+   VgScheme
+   VgSelectBinding
+   VgTitleConfig
+   ViewConfig
+   WindowFieldDef
+   WindowOnlyOp
+   WindowTransform

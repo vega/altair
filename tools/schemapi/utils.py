@@ -167,7 +167,11 @@ class SchemaInfo(object):
 
     @property
     def short_description(self):
-        return self.title or self.medium_description
+        if self.title:
+            # use RST syntax for generated sphinx docs
+            return ":class:`{0}`".format(self.title)
+        else:
+            return self.medium_description
 
     @property
     def medium_description(self):
