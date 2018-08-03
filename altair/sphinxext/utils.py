@@ -28,6 +28,21 @@ def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):
     thumb.save(thumb_filename)
 
 
+def create_generic_image(filename, shape=(200, 300), gradient=True):
+    """Create a generic image"""
+    from PIL import Image
+    import numpy as np
+    
+    assert len(shape) == 2
+    
+    arr = np.zeros((shape[0], shape[1], 3))
+    if gradient:
+        # gradient from gray to white
+        arr += np.linspace(128, 255, shape[1])[:, None]
+    im = Image.fromarray(arr.astype('uint8'))
+    im.save(filename)
+
+
 SYNTAX_ERROR_DOCSTRING = """
 SyntaxError
 ===========
