@@ -471,12 +471,10 @@ Sorting Legends and Axes
 
 Specific channels can take a  :class:`sort` property which determines the order of the scale being used for the channel. Supported `sort` values depend on the field's scale type. 
 
-*Sorting Encoded Channels*
+Channels with `quantitative` or `ordinal` data types that result in  ``continuous`` scales, ``sort`` can have the following values:
 
-Channels with `quantitative` or `ordinal` data types that result in  `continuous` scales, `sort` can have the following values:
-
-- `ascending` (Default)- the field is sorted by the field's value in ascending order. 
-- `descending` - the field is sorted by the field's value in descending order. 
+- ``ascending`` (Default)- the field is sorted by the field's value in ascending order. 
+- ``descending`` - the field is sorted by the field's value in descending order. 
 
 For channels encoded with a `nominal` categorical data type that results in a discrete scale can use the above values and an explicit list defining the sort order. 
 
@@ -499,7 +497,7 @@ The following example shows a continuous scale on y-axis and other sorts on the 
         ).properties(title='Explicit'),
     )
 
-*Sorting Legends*
+**Sorting Legends**
 
 Legends can also be sorted in the same way by adding the sort property to the channel that creates the legend:
 
