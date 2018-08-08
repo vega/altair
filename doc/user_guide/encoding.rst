@@ -486,7 +486,7 @@ The following example shows a continuous scale on y-axis and other sorts on the 
 
     barley = data.barley()
 
-    base = alt.Chart(barley, height=100).mark_point().encode(
+    base = alt.Chart(barley, height=100).mark_point(filled=True).encode(
     y=alt.Y(field='yield', type='quantitative', aggregate='mean', sort='descending')
     )
 
@@ -509,9 +509,12 @@ The following example shows a plot where the legend sort is different from the x
 
     barley = data.barley()
 
-    base = alt.Chart(barley, height=100).mark_point().encode(
+    alt.Chart(barley, height=100).mark_point(filled=True).encode(
         y=alt.Y(field='yield', type='quantitative', aggregate='mean', sort='descending'),
         x=alt.X(field='site', type='nominal', sort='ascending'),
         color=alt.Color(field='site', type='nominal', sort=['Morris','Duluth','Grand Rapids','University Farm','Waseca', 'Crookston']
         )
     )
+
+
+As shown, the x-axis is sorted alphabetically ascending while the color legend is sorted as specified with "Morris" first. 
