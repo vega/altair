@@ -290,3 +290,88 @@ You can remove the legend entirely by submitting a null value.
       y='petalLength',
       color=alt.Color('species', legend=None),
   )
+
+Adjusting the width of Bar Marks
+--------------------------------
+The width of the bars in a bar plot are controlled through the `size` property in the `mark_bar()`:
+
+.. altair-plot::
+
+  import altair as alt
+  import pandas as pd
+
+  data = pd.DataFrame({'name': ['a', 'b'], 'value': [4, 10]})
+
+  alt.Chart(data).mark_bar(size=10).encode(
+      x='name:O',
+      y='value:Q'
+  )
+
+But since `mark_bar(size=10)` only controls the width of the bars, it might become possible that the width of the chart is not adjusted accordingly:
+
+.. altair-plot::
+
+  import altair as alt
+  import pandas as pd
+
+  data = pd.DataFrame({'name': ['a', 'b'], 'value': [4, 10]})
+
+  alt.Chart(data).mark_bar(size=30).encode(
+      x='name:O',
+      y='value:Q'
+  )
+
+The width of the chart containing the bar plot can be controlled through two mechanisms:
+
+1. Setting the `width` of chart, so the width of the bars are adjusted to fit the width of the chart.
+
+2. Setting the `rangeStep` of the bars, so the width of the chart becomes the number of bars multiply the `rangeStep`.
+
+Note: if both mechanisms are applied the `width` of the chart gets priority and `rangeStep` is ignored.
+
+An example using the first mechanism (using `width`):
+
+.. altair-plot::
+  import altair as alt
+  import pandas as pd
+
+  data = pd.DataFrame({'name': ['a', 'b'], 'value': [4, 10]})
+
+  alt.Chart(data).mark_bar(size=30).encode(
+      x='name:O',
+      y='value:Q'
+  ).properties(width=100)
+
+The width of the bars are set using `mark_bar(size=30)` and the width of the chart is set using `properties(width=100)`
+
+An example using the second mechanism (using `rangeStep`):
+
+.. altair-plot::
+  import altair as alt
+  import pandas as pd
+
+  data = pd.DataFrame({'name': ['a', 'b'], 'value': [4, 10]})
+
+  alt.Chart(data).mark_bar(size=30).encode(
+      alt.X('name:N', scale=alt.Scale(rangeStep=100)),
+      y='value:Q'
+  )
+
+The width of the bars are set using `mark_bar(size=30)` and the width of the chart is set using `alt.Scale(rangeStep=100)`
+
+And an example that shows that `rangeStep` is ignored (overridden in Vega-lite to `null`) if both mechanism are applied in the same specification:
+
+.. altair-plot::
+  import altair as alt
+  import pandas as pd
+
+  data = pd.DataFrame({'name': ['a', 'b'], 'value': [4, 10]})
+
+  alt.Chart(data).mark_bar(size=30).encode(
+      alt.X('name:N', scale=alt.Scale(rangeStep=100)),
+      y='value:Q'
+  ).properties(width=100)
+
+The width of the bars are set using `mark_bar(size=30)`, the width of the chart is set using `alt.Scale(rangeStep=100)` and the width of the chart is set using `properties(width=100)`.
+
+Looking to the plot it becomes clear that the `rangeStep` property is ignored indeed.
