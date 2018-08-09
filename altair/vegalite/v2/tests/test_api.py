@@ -336,6 +336,24 @@ def test_transforms():
                                                        window=window[::-1])])
 
 
+def test_filter_transform_selection_predicates():
+    selector1 = alt.selection_interval(name='s1')
+    selector2 = alt.selection_interval(name='s2')
+    base = alt.Chart('data.txt').mark_point()
+
+    chart = base.transform_filter(selector1)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': 's1'}}]
+
+    chart = base.transform_filter(~selector1)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'not': 's1'}}}]
+
+    chart = base.transform_filter(selector1 & selector2)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'and': ['s1', 's2']}}}]
+
+    chart = base.transform_filter(selector1 | selector2)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'or': ['s1', 's2']}}}]
+
+
 
 def test_resolve_methods():
     chart = alt.LayerChart().resolve_axis(x='shared', y='independent')

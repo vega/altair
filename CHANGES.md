@@ -18,6 +18,11 @@
 
 - ``alt.SortField`` renamed to ``alt.EncodingSortField`` and ``alt.WindowSortField`` renamed to ``alt.SortField`` (https://github.com/vega/vega-lite/pull/3741)
 
+### Bug Fixes
+
+- Fixed serialization of logical operands on selections within
+  ``transform_filter()``: (#1075)
+
 ## Version 2.1.0 (Released June 6, 2018):
 
 ### Enhancements
