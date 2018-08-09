@@ -830,8 +830,12 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         alt.FilterTransform : underlying transform object
 
         """
+        selection_predicates = (core.SelectionNot, core.SelectionOr,
+                                core.SelectionAnd, core.SelectionOperand)
         if isinstance(filter, NamedSelection):
-            filter = filter.ref()
+            filter = {'selection': filter._get_name()}
+        elif isinstance(filter, selection_predicates):
+            filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
     def transform_lookup(self, as_=Undefined, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
