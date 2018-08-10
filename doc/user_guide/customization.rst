@@ -336,10 +336,6 @@ The width of the bars are set using ``mark_bar(size=30)`` and the width of the c
 An example using the second mechanism (using ``rangeStep``):
 
 .. altair-plot::
-  import altair as alt
-  import pandas as pd
-
-  data = pd.DataFrame({'name': ['a', 'b'], 'value': [4, 10]})
 
   alt.Chart(data).mark_bar(size=30).encode(
       alt.X('name:N', scale=alt.Scale(rangeStep=100)),
