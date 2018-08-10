@@ -465,3 +465,56 @@ For line marks, the `order` channel encodes the order in which data points are c
         alt.Y('gas', scale=alt.Scale(zero=False)),
         order='year'
     )
+
+Sorting Legends and Axes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Specific channels can take a  :class:`sort` property which determines the order of the scale being used for the channel. Supported `sort` values depend on the field's scale type. 
+
+Channels with `quantitative` or `ordinal` data types that result in  ``continuous`` scales, ``sort`` can have the following values:
+
+- ``ascending`` (Default)- the field is sorted by the field's value in ascending order. 
+- ``descending`` - the field is sorted by the field's value in descending order. 
+
+For channels encoded with a `nominal` categorical data type that results in a discrete scale can use the above values and an explicit list defining the sort order. 
+
+The following example shows a continuous scale on y-axis and other sorts on the x-axis: 
+
+.. altair-plot::
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    base = alt.Chart(barley, height=100).mark_point(filled=True).encode(
+    y=alt.Y(field='yield', type='quantitative', aggregate='mean', sort='descending')
+    )
+
+    alt.hconcat(
+        base.encode(x=alt.X(field='site', type='nominal', sort='ascending')).properties(title='Ascending Alpha'),
+        base.encode(x=alt.X(field='site', type='nominal', sort='descending')).properties(title='Descending Alpha'),
+        base.encode(x=alt.X(field='site', type='nominal', sort=['Duluth','Grand Rapids','Morris','University Farm','Waseca','Crookston'])
+        ).properties(title='Explicit'),
+    )
+
+**Sorting Legends**
+
+Legends can also be sorted in the same way by adding the sort property to the channel that creates the legend:
+
+The following example shows a plot where the legend sort is different from the x-axis sort: 
+
+.. altair-plot::
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    alt.Chart(barley, height=100).mark_point(filled=True).encode(
+        y=alt.Y(field='yield', type='quantitative', aggregate='mean', sort='descending'),
+        x=alt.X(field='site', type='nominal', sort='ascending'),
+        color=alt.Color(field='site', type='nominal', sort=['Morris','Duluth','Grand Rapids','University Farm','Waseca', 'Crookston']
+        )
+    )
+
+
+As shown, the x-axis is sorted alphabetically ascending while the color legend is sorted as specified with "Morris" first. 
