@@ -236,6 +236,79 @@ over them with your mouse:
     multi_mouseover = alt.selection_multi(on='mouseover', toggle=False, empty='none')
     make_example(multi_mouseover)
 
+Selection Targets: Fields and Encodings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For any but the simplest selections, the user needs to think about exactly
+what is targeted by the selection, and this can be controlled with either the
+``fields`` or ``encodings`` arguments. These control what data properties are
+used to determine which points are part of the selection.
+
+For example, here we create a small chart that acts as an interactive legend,
+by targeting the Origin field using ``fields=['Origin']``. Clicking on points
+in the upper-left plot (the legend) will propagate a selection for all points
+with a matching ``Origin``.
+
+.. altair-plot::
+
+    selection = alt.selection_multi(fields=['Origin'])
+    color = alt.condition(selection,
+                          alt.Color('Origin:N', legend=None),
+                          alt.value('lightgray'))
+
+    scatter = alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color=color,
+        tooltip='Name:N'
+    )
+
+    legend = alt.Chart(cars).mark_point().encode(
+        y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
+        color=color
+    ).add_selection(
+        selection
+    )
+
+    scatter | legend
+
+The above could be equivalently replace ``fields=['Origin']`` with
+``encodings=['color']``, because in this case the chart maps ``color`` to
+``'Origin'``.
+
+Similarly, we can specify multiple fields and/or encodings that must be
+matched in order for a datum to be included in a selection.
+For example, we could modify the above chart to create a two-dimensional
+clickable legend that will select points by both Origin and number of
+cylinders:
+
+.. altair-plot::
+   
+    selection = alt.selection_multi(fields=['Origin', 'Cylinders'])
+    color = alt.condition(selection,
+                          alt.Color('Origin:N', legend=None),
+                          alt.value('lightgray'))
+
+    scatter = alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color=color,
+        tooltip='Name:N'
+    )
+
+    legend = alt.Chart(cars).mark_rect().encode(
+        y=alt.Y('Origin:N', axis=alt.Axis(orient='right')),
+        x='Cylinders:O',
+        color=color
+    ).add_selection(
+        selection
+    )
+
+    scatter | legend
+
+By fine-tuning the behavior of selections in this way, they can be used to
+create a wide variety of linked interactive chart types.
+
+
 Further Examples
 ~~~~~~~~~~~~~~~~
 Now that you understand the basics of Altair selections, you might wish to look
