@@ -1,12 +1,16 @@
 language: python
 
 cache: pip
-
-python:
-  - 2.7
-  - 3.5
-  - 3.6
-  - 3.7
+  
+# Enable 3.7 without globally enabling sudo and xenial
+matrix:
+  include:
+    - python: 2.7
+    - python: 3.5
+    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
 
 env:
   global:
