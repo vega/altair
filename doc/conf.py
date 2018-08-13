@@ -112,7 +112,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+# pygments_style = 'colorful'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -318,5 +318,5 @@ numpydoc_show_class_members = False
 # For the altairplot extension
 altairplot_links = {'editor': True, 'source': True, 'export': True}
 altairplot_vega_js_url = "https://cdn.jsdelivr.net/npm/vega@3.3"
-altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@2.4"
-altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@3.14"
+altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@2.6"
+altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@3.18"
