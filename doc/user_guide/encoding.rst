@@ -113,8 +113,8 @@ row      :class:`Row`      The row of a faceted plot     :ref:`gallery_beckers_b
 
 .. _data-types:
 
-Data Types
-~~~~~~~~~~
+Encoding Data Types
+~~~~~~~~~~~~~~~~~~~
 The details of any mapping depend on the *type* of the data. Altair recognizes
 four main data types:
 
