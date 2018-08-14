@@ -52,7 +52,7 @@ with the data specified as a JSON-style list of records:
 notice the extra markup required in the encoding; because Altair cannot infer
 the types within a :class:`Data` object, we must specify them manually
 (here we use :ref:`shorthand-description` to specify *ordinal* (``O``) for ``x``
-and *quantitative* (``Q``) for ``y``; see :ref:`data-types` below).
+and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
 
 Similarly, we must also specify the data type when referencing data by URL:
 
