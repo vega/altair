@@ -625,11 +625,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Parameters
         ----------
-        aggregate : List(AggregatedFieldDef)
+        aggregate : List(:class:`AggregatedFieldDef`)
             Array of objects that define fields to aggregate.
         groupby : List(string)
-            The data fields to group by. If not specified, a single group
-            containing all data objects will be used.
+            The data fields to group by. If not specified, a single group containing all data
+            objects will be used.
         **kwds :
             additional keywords are converted to aggregates using standard
             shorthand parsing.
@@ -696,11 +696,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Attributes
         ----------
-        as_ : string
+        as_ : anyOf(string, List(string))
             The output fields at which to write the start and end bin values.
-        bin : anyOf(boolean, BinParams)
-            An object indicating bin properties, or simply `true` for using
-            default bin parameters.
+        bin : anyOf(boolean, :class:`BinParams`)
+            An object indicating bin properties, or simply ``true`` for using default bin
+            parameters.
         field : string
             The data field to bin.
 
@@ -751,10 +751,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Attributes
         ----------
         as_ : string
-            The output fields at which to write the start and end bin values.
+            The field for storing the computed formula value.
         calculate : string or alt.expr expression
-            An expression string. Use the variable `datum` to refer to the
-            current data object.
+            A `expression <https://vega.github.io/vega-lite/docs/types.html#expression>`__
+            string. Use the variable ``datum`` to refer to the current data object.
+
         **kwargs
             transforms can also be passed by keyword argument; see Examples
 
@@ -812,7 +813,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Attributes
         ----------
-        filter : a filter expression
+        filter : a filter expression or :class:`LogicalOperandPredicate`
             The `filter` property must be one of the predicate definitions:
             (1) a string or alt.expr expression
             (2) a range predicate
@@ -843,17 +844,17 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Attributes
         ----------
-        as_ : string or List(string)
+        as_ : anyOf(string, List(string))
             The field or fields for storing the computed formula value.
-            If `from.fields` is specified, the transform will use the same names for `as`.
-            If `from.fields` is not specified, `as` has to be a string and we put
-            the whole object into the data under the specified name.
-        from_ : LookupData
+            If ``from.fields`` is specified, the transform will use the same names for ``as``.
+            If ``from.fields`` is not specified, ``as`` has to be a string and we put the whole
+            object into the data under the specified name.
+        from_ : :class:`LookupData`
             Secondary data reference.
         lookup : string
             Key in primary data source.
         default : string
-            The default value to use if lookup fails
+            The default value to use if lookup fails. **Default value:** ``null``
 
         Returns
         -------
@@ -884,10 +885,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Attributes
         ----------
         as_ : string
-            The output fields at which to write the start and end bin values.
+            The output field to write the timeUnit value.
         field : string
             The data field to apply time unit.
-        timeUnit : TimeUnit
+        timeUnit : :class:`TimeUnit`
             The timeUnit.
         **kwargs
             transforms can also be passed by keyword argument; see Examples
@@ -957,7 +958,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Attributes
         ----------
-        window : List(WindowFieldDef)
+        window : List(:class:`WindowFieldDef`)
             The definition of the fields in the window, and what calculations to use.
         frame : List(anyOf(None, float))
             A frame specification as a two-element array indicating how the sliding window
@@ -969,14 +970,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             and five objects following the current object. Finally, ``[null, null]`` indicates
             that the window frame should always include all data objects. The only operators
             affected are the aggregation operations and the ``first_value``, ``last_value``, and
-             ``nth_value`` window operations. The other window operations are not affected by
+            ``nth_value`` window operations. The other window operations are not affected by
             this.
 
-            **Default value:** :  ``[null, 0]`` (includes the current object and all
-            preceding objects)
+            **Default value:** :  ``[null, 0]`` (includes the current object and all preceding
+            objects)
         groupby : List(string)
             The data fields for partitioning the data objects into separate windows. If
-            unspecified, all data points will be a single group.
+            unspecified, all data points will be in a single group.
         ignorePeers : boolean
             Indicates if the sliding window frame should ignore peer values. (Peer values are
             those considered identical by the sort criteria). The default is false, causing the
@@ -986,10 +987,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             last_value, and nth_value window operations.
 
             **Default value:** ``false``
-        sort : List(SortField)
+        sort : List(:class:`SortField`)
             A sort field definition for sorting data objects within a window. If two data
             objects are considered equal by the comparator, they are considered “peer” values of
-             equal rank. If sort is not specified, the order is undefined: data objects are
+            equal rank. If sort is not specified, the order is undefined: data objects are
             processed in the order they are observed and none are considered peers (the
             ignorePeers parameter is ignored and treated as if set to ``true`` ).
         **kwargs
