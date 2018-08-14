@@ -87,7 +87,7 @@ VGL_TEMPLATE = jinja2.Template("""
         "renderer": "{{ renderer }}",
         "actions": {{ actions}}
       };
-      vegaEmbed('#{{ div_id }}', {{ spec }}).catch(console.err);
+      vegaEmbed('#{{ div_id }}', spec, opt).catch(console.err);
   });
 </script>
 </div>
@@ -109,7 +109,7 @@ DEFAULT_ALTAIRPLOT_LINKS = {'editor': True, 'source': True, 'export': True}
 
 def validate_links(links):
     if links.strip().lower() == 'none':
-        return {}
+        return False
 
     links = links.strip().split()
     diff = set(links) - set(DEFAULT_ALTAIRPLOT_LINKS.keys())
