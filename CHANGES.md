@@ -4,6 +4,8 @@
 
 ### Enhancements
 
+- better handling of datetimes and timezones (#1053)
+
 - all inline datasets are now converted to named datasets and stored at the
   top level of the chart. This behavior can be disabled by setting
   ``alt.data_transformers.consolidate_datasets = False`` (#951 & #1046)
@@ -12,16 +14,21 @@
 
 ### Maintenance
 
-- update to Vega-Lite 2.6.0; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2) [2.6.0](https://github.com/vega/vega-lite/releases/tag/v2.6.0)
+- update from Vega-Lite 2.4.3 to Vega-Lite 2.6.0; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2) [2.6.0](https://github.com/vega/vega-lite/releases/tag/v2.6.0)
 
 ### Backward-incompatible changes
 
-- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and ``alt.WindowSortField`` renamed to ``alt.SortField`` (https://github.com/vega/vega-lite/pull/3741)
+- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and
+  ``alt.WindowSortField`` renamed to ``alt.SortField`` (#3741)
 
 ### Bug Fixes
 
 - Fixed serialization of logical operands on selections within
   ``transform_filter()``: (#1075)
+
+- Fixed sphinx issue which embedded chart specs twice (#1088)
+
+- Avoid Selenium import until it is actually needed (#982)
 
 ## Version 2.1.0 (Released June 6, 2018):
 
@@ -75,7 +82,7 @@ This version of Altair is based on Vega-Lite 1.2.1.
   ([#216](https://github.com/altair-viz/altair/pull/216)).
 
 - Change default import in all code and docs to `import altair as alt`
-  
+
 - Check for missing and misspelled column names upon exporting or rendering,
   and raise `FieldError` ([#399](https://github.com/altair-viz/altair/pull/399))
   if any problems are found. This can be disabled by setting `Chart.validated_columns=False`.
