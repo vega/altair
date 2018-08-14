@@ -111,7 +111,7 @@ column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_s
 row      :class:`Row`      The row of a faceted plot     :ref:`gallery_beckers_barley_trellis_plot`
 =======  ================  ============================  ============================================
 
-.. _data-types:
+.. _encoding-data-types:
 
 Encoding Data Types
 ~~~~~~~~~~~~~~~~~~~
@@ -380,7 +380,7 @@ Encoding Shorthands
 
 For convenience, Altair allows the specification of the variable name along
 with the aggregate and type within a simple shorthand string syntax.
-This makes use of the type shorthand codes listed in :ref:`data-types`
+This makes use of the type shorthand codes listed in :ref:`encoding-data-types`
 as well as the aggregate names listed in :ref:`encoding-aggregates`.
 The following table shows examples of the shorthand specification alongside
 the long-form equivalent:

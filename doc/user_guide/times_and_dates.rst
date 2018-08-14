@@ -10,25 +10,78 @@ fact that users are writing Python code, which outputs JSON-serialized
 timestamps, which are interpreted by Javascript, and then rendered by your
 browser. At each of these steps, there are things that can go wrong, but
 Altair and Vega-Lite do their best to ensure that dates are interpreted and
-visualized in a way that limits surprises.
+visualized in a consistent way.
 
-.. note:: Warning about the Safari Browser
 
-   The discussion below applies to all major browsers except Safari. The Safari
-   browser treats date encodings somewhat differently than other major browsers:
-   where Chrome, Firefox, and others interpret the dates output by Altair as
-   reflecting the user's local time, Safari treats them as
-   `Coordinated Universal Time (UTC)`_. The result is that when viewed in Safari,
-   visualized dates will differ from their inputs due to a time zone correction,
-   unless you explicitly use UTC (see :ref:`explicit-utc-time`)
+.. note-browser-compliance:
+
+Note on Browser Compliance
+--------------------------
+
+.. note:: Warning about non-ES6 Browsers
+
+   The discussion below applies to modern browsers which support `ECMAScript 6`_,
+   in which time strings like ``"2018-01-01T12:00:00"`` without a trailing ``"Z"``
+   are treated as local time rather than `Coordinated Universal Time (UTC)`_.
+   For example, recent versions of Chrome and Firefox are ES6-compliant,
+   while Safari 11 is not.
+   If you are using a non-ES6 browser, this means that times displayed in Altair
+   charts may be rendered with a timezone offset, unless you explicitly use
+   UTC time (see :ref:`explicit-utc-time`).
+
+The following chart will help you determine if your browser parses dates in the
+way that Altair expects:
+
+.. altair-plot::
+    :links: none
+
+    import altair as alt
+    import pandas as pd
+
+    df = pd.DataFrame({'local': ['2018-01-01T00:00:00'],
+                       'utc': ['2018-01-01T00:00:00Z']})
+
+    alt.Chart(df).transform_calculate(
+        compliant="hours(datum.local) != hours(datum.utc) ? true : false",
+    ).mark_text(size=20, baseline='middle').encode(
+        text=alt.condition('datum.compliant', alt.value('OK'), alt.value('not OK')),
+        color=alt.condition('datum.compliant', alt.value('green'), alt.value('red'))
+    ).properties(width=80, height=50)
+
+If the above output contains a red "not OK":
+
+.. altair-plot::
+   :hide-code:
+   :links: none
+
+   alt.Chart(df).mark_text(size=10, baseline='middle').encode(
+       alt.TextValue('not OK'),
+       alt.ColorValue('red')
+   ).properties(width=40, height=25)
+
+it means that your browser's date parsing is not ES6-compliant.
+If it contains a green "OK":
+
+.. altair-plot::
+   :hide-code:
+   :links: none
+
+   alt.Chart(df).mark_text(size=10, baseline='middle').encode(
+       alt.TextValue('OK'),
+       alt.ColorValue('green')
+   ).properties(width=40, height=25)
+
+then it means that your browser parses dates as Altair expects, either because
+it is ES6-compliant or because your computer locale happens to nbe set to
+the UTC+0 (GMT) timezone.
 
 Altair and Pandas Datetimes
 ---------------------------
 
-Altair is designed to work best with `Pandas timeseries`_. A standard date/time
-column in a Pandas dataframe will be both interpreted and displayed as local
-user time. For example, here is a dataset containing hourly temperatures
-measured in Seattle:
+Altair is designed to work best with `Pandas timeseries`_. A standard
+timezone-agnostic date/time column in a Pandas dataframe will be both
+interpreted and displayed as local user time. For example, here is a dataset
+containing hourly temperatures measured in Seattle:
 
 .. altair-plot::
     :output: repr
@@ -40,7 +93,7 @@ measured in Seattle:
     temps.head()
 
 We can see from the ``dtypes`` attribute that the times are encoded as a standard
-64-bit datetime:
+64-bit datetime, without any specified timezone:
 
 .. altair-plot::
     :output: repr
@@ -78,23 +131,26 @@ x-axis, and day of the month on the y-axis:
         alt.Color('temp:Q', title='temperature (F)')
     )
 
-Extracting time units within the spec can lead to much more flexible and compelling
-charts.
+Unless you are using a non-ES6 browser (See :ref:`note-browser-compliance`),
+you will notice that the chart created by this code reflects hours starting
+at 00:00:00 on January 1st, just as in the data we input.
+This is because both the input timestamps and the plot outputs are using
+local time.
 
 Specifying Time Zones
 ---------------------
-If you are viewing the above visualizations in a supported browser (see note
-about Safari above), the times are both serialized and rendered in local time,
-so that the ``January 1st 00:00:00`` row renders in the chart as ``00:00`` on
-``January 1st``.
+If you are viewing the above visualizations in a supported browser (see
+:ref:`note-browser-compliance` above), the times are both serialized and
+rendered in local time, so that the ``January 1st 00:00:00`` row renders in
+the chart as ``00:00`` on ``January 1st``.
 
 In Altair, simple dates without an explicit timezone are treated as local time,
 and in Vega-Lite, unless otherwise specified, times are rendered in the local
 time of the browser that does the rendering.
 
-If you would like your dates to be time-zone aware, you can set the timezone
-explicitly in the input dataframe. Since Seattle is in the ``US/Pacific``
-timezone, we can localize the timestamps in Pandas as follows:
+If you would like your dates to instead be time-zone aware, you can set the
+timezone explicitly in the input dataframe. Since Seattle is in the
+``US/Pacific`` timezone, we can localize the timestamps in Pandas as follows:
 
 .. altair-plot::
    :output: repr
@@ -142,8 +198,8 @@ regardless of the system location:
         alt.Color('temp:Q', title='temperature (F)')
     )
 
-To make your charts as portable as possible (even in browsers like Safari that
-do not parse local times the way other browsers do), you can explicitly work
+To make your charts as portable as possible (even in non-ES6 browsers which parse
+timezone-agnostic times as UTC), you can explicitly work
 in UTC time, both on the Pandas side and on the Vega-Lite side:
 
 
@@ -157,11 +213,13 @@ in UTC time, both on the Pandas side and on the Vega-Lite side:
        alt.Color('temp:Q', title='temperature (F)')
    )
 
-This is somewhat less convenient than the default behavior for non-timezone-aware
-data, in which both Pandas and Vega-Lite assume times are local (except in Safari),
+This is somewhat less convenient than the default behavior for timezone-agnostic
+dates, in which both Pandas and Vega-Lite assume times are local
+(except in non-ES6 browsers; see :ref:`note-browser-compliance`),
 but it gets around browser incompatibilities by explicitly working in UTC, which
-gives similar results in all browsers.
+gives similar results even in older browsers.
 
 
 .. _Coordinated Universal Time (UTC): https://en.wikipedia.org/wiki/Coordinated_Universal_Time
 .. _Pandas timeseries: https://pandas.pydata.org/pandas-docs/stable/timeseries.html
+.. _ECMAScript 6: http://www.ecma-international.org/ecma-262/6.0/
