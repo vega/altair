@@ -13,7 +13,7 @@ Altair and Vega-Lite do their best to ensure that dates are interpreted and
 visualized in a consistent way.
 
 
-.. note-browser-compliance:
+.. _note-browser-compliance:
 
 Note on Browser Compliance
 --------------------------
