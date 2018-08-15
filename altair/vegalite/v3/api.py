@@ -861,6 +861,30 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
+    def transform_fold(self, fold, as_=Undefined, **kwargs):
+        """
+        Add a FoldTransform to the schema.
+
+        Attributes
+        ----------
+        fold : List(string)
+            An array of data fields indicating the properties to fold.
+        as_ : List([string, string])
+            The output field names for the key and value properties produced by the fold
+            transform.
+            **Default value:** ``["key", "value"]``
+        """
+        kwargs['fold'] = list(fold)
+
+        if as_ is not Undefined:
+            kwargs['as'] = list(as_)
+        else:
+            if 'as' in kwargs:
+                raise ValueError("transform_fold: both 'as_' and 'as' passed as arguments.")
+            kwargs['as'] = as_
+
+        return self._add_transform(core.FoldTransform(**kwargs))
+
     def transform_lookup(self, as_=Undefined, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
         """Add a LookupTransform to the schema
 

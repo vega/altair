@@ -307,6 +307,13 @@ def test_transforms():
     chart = alt.Chart().transform_filter("datum.a < 4")
     assert chart.transform == [alt.FilterTransform(filter="datum.a < 4")]
 
+    # fold transform
+    chart = alt.Chart().transform_fold(pd.Series(['a', 'b']),
+                                       ['name', 'price'])
+    kwds = {'as': ['name', 'price'],
+            'fold': ['a', 'b']}
+    assert chart.transform == [alt.FoldTransform(**kwds)]
+
     # lookup transform
     lookup_data = alt.LookupData(alt.UrlData('foo.csv'), 'id', ['rate'])
     chart = alt.Chart().transform_lookup(from_=lookup_data, as_='a',
