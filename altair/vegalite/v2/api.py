@@ -17,18 +17,50 @@ from .theme import themes
 
 # ------------------------------------------------------------------------
 # Data Utilities
-def _dataset_name(data):
-    """Generate a unique hash of the data"""
-    def hash_(dct):
-        dct_str = json.dumps(dct, sort_keys=True)
-        return hashlib.md5(dct_str.encode()).hexdigest()
+def _dataset_name(values):
+    """Generate a unique hash of the data
+
+    Parameters
+    ----------
+    values : list or dict
+        A list/dict representation of data values.
+
+    Returns
+    -------
+    name : string
+        A unique name generated from the hash of the values.
+    """
+    if isinstance(values, core.InlineDataset):
+        values = values.to_dict()
+    values_json = json.dumps(values, sort_keys=True)
+    hsh = hashlib.md5(values_json.encode()).hexdigest()
+    return 'data-' + hsh
+
+
+def _consolidate_data(data, context):
+    """If data is specified inline, then move it to context['datasets']
+
+    This function will modify context in-place, and return a new version of data
+    """
+    values = Undefined
+    kwds = {}
 
     if isinstance(data, core.InlineData):
-        return 'data-' + hash_(data.values)
-    elif isinstance(data, dict) and 'values' in data:
-        return 'data-' + hash_(data['values'])
-    else:
-        raise ValueError("Cannot generate name for data {0}".format(data))
+        if data.name is Undefined and data.values is not Undefined:
+            values = data.values
+            kwds = {'format': data.format}
+
+    elif isinstance(data, dict):
+        if 'name' not in data and 'values' in data:
+            values = data['values']
+            kwds = {k:v for k,v in data.items() if k != 'values'}
+
+    if values is not Undefined:
+        name = _dataset_name(values)
+        data = core.NamedData(name=name, **kwds)
+        context.setdefault('datasets', {})[name] = values
+
+    return data
 
 
 def _prepare_data(data, context):
@@ -46,35 +78,25 @@ def _prepare_data(data, context):
     """
     if data is Undefined:
         return data
-    if isinstance(data, core.InlineData):
-        if data_transformers.consolidate_datasets:
-            name = _dataset_name(data)
-            context.setdefault('datasets', {})[name] = data.values
-            return core.NamedData(name=name)
-        else:
-            return data
-    elif isinstance(data, dict) and 'values' in data:
-        if data_transformers.consolidate_datasets:
-            name = _dataset_name(data)
-            context.setdefault('datasets', {})[name] = data['values']
-            return core.NamedData(name=name)
-        else:
-            return data
-    elif isinstance(data, pd.DataFrame):
+
+    # convert dataframes to dict
+    if isinstance(data, pd.DataFrame):
         data = pipe(data, data_transformers.get())
-        if data_transformers.consolidate_datasets and isinstance(data, dict) and 'values' in data:
-            name = _dataset_name(data)
-            context.setdefault('datasets', {})[name] = data['values']
-            return core.NamedData(name=name)
-        else:
-            return data
-    elif isinstance(data, (dict, core.Data, core.UrlData, core.NamedData)):
-        return data
-    elif isinstance(data, six.string_types):
-        return core.UrlData(data)
-    else:
+
+    # convert string input to a URLData
+    if isinstance(data, six.string_types):
+        data = core.UrlData(data)
+
+    # consolidate inline data to top-level datasets
+    if data_transformers.consolidate_datasets:
+        data = _consolidate_data(data, context)
+
+    # if data is still not a recognized type, then return
+    if not isinstance(data, (dict, core.Data, core.UrlData,
+                             core.InlineData, core.NamedData)):
         warnings.warn("data of type {0} not recognized".format(type(data)))
-        return data
+
+    return data
 
 
 # ------------------------------------------------------------------------
