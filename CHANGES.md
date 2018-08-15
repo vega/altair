@@ -1,14 +1,12 @@
 # Altair Change Log
 
-## Version 2.3.0 (Unreleased)
-
-### Enhancements
-
-### Maintenance
-
-### Backward-incompatible changes
+## Version 2.2.1 (Released August 15, 2018)
 
 ### Bug Fixes
+
+- appropriate handling of InlineData in dataset consolidation (#1092)
+
+- fix admonition formatting in documentation page (#1094)
 
 ## Version 2.2.0 (Released August 14, 2018):
 
