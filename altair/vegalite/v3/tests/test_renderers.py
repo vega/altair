@@ -2,7 +2,7 @@
 
 import pytest
 
-import altair.vegalite.v2 as alt
+import altair.vegalite.v3 as alt
 
 
 @pytest.fixture

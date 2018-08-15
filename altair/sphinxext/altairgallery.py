@@ -18,10 +18,10 @@ from sphinx.util.nodes import nested_parse_with_titles
 from .utils import (get_docstring_and_rest, prev_this_next,
                     create_thumbnail, create_generic_image)
 from altair.utils.execeval import eval_block
-from altair.vegalite.v2.examples import iter_examples
+from altair.vegalite.v3.examples import iter_examples
 
 
-EXAMPLE_MODULE = 'altair.vegalite.v2.examples'
+EXAMPLE_MODULE = 'altair.vegalite.v3.examples'
 
 
 GALLERY_TEMPLATE = jinja2.Template(u"""

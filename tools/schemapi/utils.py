@@ -331,7 +331,9 @@ class SchemaInfo(object):
         return (self.type == 'array')
 
     def schema_type(self):
-        if self.is_empty():
+        if self.is_list():
+            return 'list'
+        elif self.is_empty():
             return 'empty'
         elif self.is_compound():
             for key in ['anyOf', 'oneOf', 'allOf']:

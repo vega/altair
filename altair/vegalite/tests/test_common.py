@@ -4,14 +4,9 @@ import pytest
 
 import pandas as pd
 
-from .. import v1, v2
+from .. import v2, v3
 
-v1_defaults = {
-    'width': 400,
-    'height': 300
-}
-
-v2_defaults = {
+defaults = {
     'config': {
         'view': {
             'height': 300,
@@ -43,11 +38,10 @@ def make_basic_chart(alt):
     )
 
 
-spec_v1 = dict(v1_defaults, **basic_spec)
-spec_v2 = dict(v2_defaults, **basic_spec)
+spec = dict(defaults, **basic_spec)
 
 
-@pytest.mark.parametrize('alt,basic_spec', [(v1, spec_v1), (v2, spec_v2)])
+@pytest.mark.parametrize('alt,basic_spec', [(v2, spec), (v3, spec)])
 def test_basic_chart_to_dict(alt, basic_spec):
     chart = alt.Chart('data.csv').mark_line().encode(
         alt.X('xval:Q'),
@@ -63,7 +57,7 @@ def test_basic_chart_to_dict(alt, basic_spec):
     assert dct == basic_spec
 
 
-@pytest.mark.parametrize('alt,basic_spec', [(v1, spec_v1), (v2, spec_v2)])
+@pytest.mark.parametrize('alt,basic_spec', [(v2, spec), (v3, spec)])
 def test_basic_chart_from_dict(alt, basic_spec):
     chart = alt.Chart.from_dict(basic_spec)
     dct = chart.to_dict()
@@ -75,7 +69,7 @@ def test_basic_chart_from_dict(alt, basic_spec):
     assert dct == basic_spec
 
 
-@pytest.mark.parametrize('alt', [v1, v2])
+@pytest.mark.parametrize('alt', [v2, v3])
 def test_theme_enable(alt):
     active_theme = alt.themes.active
 
@@ -96,7 +90,7 @@ def test_theme_enable(alt):
         alt.themes.enable(active_theme)
 
 
-@pytest.mark.parametrize('alt', [v1, v2])
+@pytest.mark.parametrize('alt', [v2, v3])
 def test_max_rows(alt):
     basic_chart = make_basic_chart(alt)
 
