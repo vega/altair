@@ -182,7 +182,10 @@ class SchemaInfo(object):
                          'boolean': 'boolean',
                          'array': 'list',
                          'null': 'None'}
-        if self.is_empty():
+        if self.is_list():
+            return '[{0}]'.format(', '.join(self.child(s).short_description
+                                            for s in self.schema))
+        elif self.is_empty():
             return 'any object'
         elif self.is_enum():
             return 'enum({0})'.format(', '.join(map(repr, self.enum)))
@@ -283,6 +286,9 @@ class SchemaInfo(object):
     def description(self):
         return self.raw_schema.get('description',
                                    self.schema.get('description', ''))
+
+    def is_list(self):
+        return isinstance(self.schema, list)
 
     def is_reference(self):
         return '$ref' in self.raw_schema
@@ -389,7 +395,7 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
                     final_lines.append('')
                 elif line.startswith('* '):
                     final_lines.extend(list_wrapper.wrap(line[2:]))
-                else: 
+                else:
                     final_lines.extend(wrapper.wrap(line.lstrip()))
 
         # If this is the last line, put in an indent
