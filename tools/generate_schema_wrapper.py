@@ -20,12 +20,12 @@ from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))",re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`",re.M)
 
-class SchemaGenerator(codegen.SchemaGenerator):   
+class SchemaGenerator(codegen.SchemaGenerator):
     def _process_description(self, description):
         description = ''.join([
-            reSpecial.sub('',d) if i%2 else d 
+            reSpecial.sub('',d) if i%2 else d
             for i,d in enumerate(reLink.split(description))
-        ]) # remove formatting from links   
+        ]) # remove formatting from links
         description = m2r.convert(description)
         description = description.replace(m2r.prolog, '')
         description = description.replace(":raw-html-m2r:", ":raw-html:")
@@ -46,12 +46,10 @@ SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
 
 SCHEMA_VERSION = {
     'vega': {
-        'v2': 'v2.6.5',
         'v3': 'v3.3.1',
         'v4': 'v4.0.0'
     },
     'vega-lite': {
-        'v1': 'v1.3.1',
         'v2': 'v2.6.0'
     }
 }
@@ -405,12 +403,14 @@ def generate_vegalite_config_mixin(schemafile):
 
 def vegalite_main():
     library = 'vega-lite'
-    encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
+    encoding_def = 'EncodingWithFacet'
 
-    for version in ['v1', 'v2']:
+    for version in SCHEMA_VERSION[library].keys():
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vegalite', version))
         schemapath = os.path.join(path, 'schema')
+        if not os.path.exists(schemapath):
+            os.makedirs(schemapath)
         schemafile = download_schemafile(library=library,
                                          version=version,
                                          schemapath=schemapath)
@@ -436,7 +436,7 @@ def vegalite_main():
         # Generate the channel wrappers
         outfile = join(schemapath, 'channels.py')
         print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
-        code = generate_vegalite_channel_wrappers(schemafile, encoding_def=encoding_defs[version])
+        code = generate_vegalite_channel_wrappers(schemafile, encoding_def=encoding_def)
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(code)
 
@@ -459,10 +459,12 @@ def vegalite_main():
 def vega_main():
     library = 'vega'
 
-    for version in ['v2', 'v3', 'v4']:
+    for version in SCHEMA_VERSION[library].keys():
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vega', version))
         schemapath = os.path.join(path, 'schema')
+        if not os.path.exists(schemapath):
+            os.makedirs(schemapath)
         schemafile = download_schemafile(library=library,
                                          version=version,
                                          schemapath=schemapath)
