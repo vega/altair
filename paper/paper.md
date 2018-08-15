@@ -21,12 +21,16 @@ authors:
   - name: Dominik Moritz
     orcid: 0000-0002-3110-1053
     affiliation: 1
+  - name:  Ilia Timofeev
+    orcid: 0000-0003-1795-943X
+    affiliation: 4
   - name: Ben Welsh
     orcid: 0000-0002-5200-7269
-    affiliation: 4
+    affiliation: 5
   - name: Kanit Wongsuphasawat
     orcid: 0000-0001-7231-279X
     affiliation: 1
+    
 affiliations:
   - name: University of Washington
     index: 1
@@ -34,8 +38,10 @@ affiliations:
     index: 2
   - name: Florida State University
     index: 3
-  - name: Los Angeles Times Data Desk
+  - name: TTS Consulting
     index: 4
+  - name: Los Angeles Times Data Desk
+    index: 5
 date: 07 August 2018
 bibliography: paper.bib
 ---
