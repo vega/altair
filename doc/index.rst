@@ -50,6 +50,7 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/renderers
    user_guide/internals
    user_guide/API
+   user_guide/ecosystem
 
 .. toctree::
    :maxdepth: 1
