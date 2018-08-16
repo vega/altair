@@ -85,13 +85,6 @@ def find_packages(top=HERE):
 DESCRIPTION         = "Altair: A declarative statistical visualization library for Python."
 NAME                = "altair"
 PACKAGES            = find_packages()
-PACKAGE_DATA        = {'altair': [
-                                  'vega/v2/schema/*.json',
-                                  'vega/v3/schema/*.json',
-                                  'vegalite/v1/schema/*.json',
-                                  'vegalite/v2/schema/*.json'
-                                  ]
-                      }
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
 AUTHOR_EMAIL        = "jakevdp@gmail.com"
 URL                 = 'http://altair-viz.github.io'
@@ -112,7 +105,7 @@ setup(name=NAME,
       download_url=DOWNLOAD_URL,
       license=LICENSE,
       packages=PACKAGES,
-      package_data=PACKAGE_DATA,
+      include_package_data=True,
       install_requires=INSTALL_REQUIRES,
       extras_require={
         'dev': DEV_REQUIRES
