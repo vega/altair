@@ -456,7 +456,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self.save(fp, format=None, **kwargs)
 
     def save(self, fp, format=None, override_data_transformer=True,
-             scale_factor=1.0, **kwargs):
+             scale_factor=1.0,
+             vegalite_version=VEGALITE_VERSION,
+             vega_version=VEGA_VERSION,
+             vegaembed_version=VEGAEMBED_VERSION,
+             **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
@@ -484,15 +488,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         from ...utils.save import save
 
         kwds = dict(chart=self, fp=fp, format=format,
-                    vegalite_version=VEGALITE_VERSION,
-                    vega_version=VEGA_VERSION,
-                    vegaembed_version=VEGAEMBED_VERSION,
                     scale_factor=scale_factor,
+                    vegalite_version=vegalite_version,
+                    vega_version=vega_version,
+                    vegaembed_version=vegaembed_version,
                     **kwargs)
 
         # By default we override the data transformer. This makes it so
         # that save() will succeed even for large datasets that would
-        # normally trigger a MaxBinsError
+        # normally trigger a MaxRowsError
         if override_data_transformer:
             with data_transformers.enable('default', max_rows=None):
                 result = save(**kwds)
