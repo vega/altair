@@ -1,14 +1,10 @@
 # Altair Change Log
 
-## Version 2.3.0 (Unreleased)
-
-### Enhancements
-
-### Backward-incompatible changes
-
-### Maintenance
+## Version 2.2.2 (Released August 17, 2018)
 
 ### Bug Fixes
+
+- fix missing JSON resource in ``altair.vega.v4`` (#1097)
 
 ## Version 2.2.1 (Released August 15, 2018)
 
