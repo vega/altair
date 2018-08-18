@@ -2,6 +2,8 @@ import pytest
 import warnings
 import json
 
+import six
+
 import numpy as np
 import pandas as pd
 
@@ -92,3 +94,9 @@ def test_sanitize_dataframe_infs():
     df_clean = sanitize_dataframe(df)
     assert list(df_clean.dtypes) == [object]
     assert list(df_clean['x']) == [0, 1, 2, None, None, None]
+
+
+def test_sanitize_dataframe_colnames():
+    df = pd.DataFrame(list(zip([1,2,3], [4,5, 6])))
+    df_clean = sanitize_dataframe(df)
+    assert all(isinstance(col, six.string_types) for col in df_clean.columns)
