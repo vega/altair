@@ -4,6 +4,7 @@ import json
 
 import numpy as np
 import pandas as pd
+import six
 
 from .. import infer_vegalite_type, sanitize_dataframe
 
@@ -78,6 +79,20 @@ def test_sanitize_dataframe():
     # pandas doesn't properly recognize np.array(np.nan), so change it here
     df.iloc[0, df.columns.get_loc('o')] = np.nan
     assert df.equals(df2)
+
+
+def test_sanitize_dataframe_colnames():
+    df = pd.DataFrame(np.arange(12).reshape(4, 3))
+
+    # Test that RangeIndex is converted to strings
+    df = sanitize_dataframe(df)
+    assert [isinstance(col, six.string_types) for col in df.columns]
+
+    # Test that non-string columns result in an error
+    df.columns = [4, 'foo', 'bar']
+    with pytest.raises(ValueError) as err:
+        sanitize_dataframe(df)
+    assert str(err.value).startswith('Dataframe contains invalid column name: 4.')
 
 
 def test_sanitize_dataframe_timedelta():
