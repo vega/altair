@@ -52,7 +52,7 @@ with the data specified as a JSON-style list of records:
 notice the extra markup required in the encoding; because Altair cannot infer
 the types within a :class:`Data` object, we must specify them manually
 (here we use :ref:`shorthand-description` to specify *ordinal* (``O``) for ``x``
-and *quantitative* (``Q``) for ``y``; see :ref:`data-types` below).
+and *quantitative* (``Q``) for ``y``; see :ref:`encoding-data-types`).
 
 Similarly, we must also specify the data type when referencing data by URL:
 
@@ -68,6 +68,39 @@ Similarly, we must also specify the data type when referencing data by URL:
     )
 
 We will further discuss encodings and associated types in :ref:`user-guide-encoding`, next.
+
+
+.. _data-in-index:
+
+Including Index Data
+~~~~~~~~~~~~~~~~~~~~
+By design Altair only accesses dataframe columns, not dataframe indices.
+At times, relevant data appears in the index. For example:
+
+.. altair-plot::
+   :output: repr
+
+   import numpy as np
+   rand = np.random.RandomState(0)
+
+   data = pd.DataFrame({'value': rand.randn(100).cumsum()},
+                       index=pd.date_range('2018', freq='D', periods=100))
+   data.head()
+   
+If you would like the index to be available to the chart, you can explicitly
+turn it into a column using the ``reset_index()`` method of Pandas dataframes:
+
+.. altair-plot::
+
+   alt.Chart(data.reset_index()).mark_line().encode(
+       x='index:T',
+       y='value:Q'
+   )
+
+If the index object does not have a ``name`` attribute set, the resulting
+column will be called ``"index"``.
+More information is available in the
+`Pandas documentation <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.reset_index.html>`_.
 
 
 .. _data-long-vs-wide:
@@ -94,15 +127,15 @@ The wide-form version of the data might be arranged as follows:
     :output: repr
     :chart-var-name: wide_form
 
-    wide_form = pd.DataFrame({'AAPL': [189.95, 182.22, 198.08],
+    wide_form = pd.DataFrame({'Date': ['2007-10-01', '2007-11-01', '2007-12-01'],
+                              'AAPL': [189.95, 182.22, 198.08],
                               'AMZN': [89.15, 90.56, 92.64],
-                              'GOOG': [707.00, 693.00, 691.48]},
-                             index=['2007-10-01', '2007-11-01', '2007-12-01'])
+                              'GOOG': [707.00, 693.00, 691.48]})
     print(wide_form)
 
 Notice that each row corresponds to a single time-stamp (here time is the
 independent variable), while metadata for each observation
-(i.e. date and company name) is stored within the row and column labels.
+(i.e. company name) is stored within the column labels.
 
 The long-form version of the same data might look like this:
 
@@ -146,32 +179,33 @@ Wide-form data can be similarly visualized using e.g. layering
 Converting Between Long-form and Wide-form
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Conversion between wide-form and long-form data is not part of the Altair schema,
-and must be done with an external tool.
+and must be done as an external preprocessing step.
 In Python, this kind of data manipulation can be done using Pandas_, as discussed
 in detail in the `Reshaping and Pivot Tables`_ section of the Pandas documentation.
 
-Briefly, for converting long-form data to wide-form data, the ``pivot`` method of
-dataframes can be used:
+For converting wide-form data to the long-form data used by Altair, the ``melt``
+method of dataframes can be used. The first argument to ``melt`` is the column
+or list of columns to treat as index variables; the remaining columns will
+be combined into an indicator variable and a value variable whose names can
+be optionally specified:
 
 .. altair-plot::
     :output: repr
-    :chart-var-name: wide_form
+
+    wide_form.melt('Date', var_name='company', value_name='price')
+
+For more information on the ``melt`` method, see the `Pandas melt documentation`_.
+
+In case you would like to undo this operation and convert from long-form back
+to wide-form, the ``pivot`` method of dataframes is useful.
+
+.. altair-plot::
+    :output: stdout
 
     wide_form = long_form.pivot(index='Date', columns='company', values='price')
     print(wide_form)
 
 For more information on the ``pivot`` method, see the `Pandas pivot documentation`_.
-
-For converting wide-form data to the long-form data used by Altair, the ``melt``
-method of dataframes can be used, after first turning the index into a column
-using the ``reset_index`` method:
-
-.. altair-plot::
-    :output: repr
-
-    wide_form.reset_index().melt('Date')
-
-For more information on the ``melt`` method, see the `Pandas melt documentation`_.
 
 
 

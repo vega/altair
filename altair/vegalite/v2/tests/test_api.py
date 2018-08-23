@@ -336,6 +336,24 @@ def test_transforms():
                                                        window=window[::-1])])
 
 
+def test_filter_transform_selection_predicates():
+    selector1 = alt.selection_interval(name='s1')
+    selector2 = alt.selection_interval(name='s2')
+    base = alt.Chart('data.txt').mark_point()
+
+    chart = base.transform_filter(selector1)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': 's1'}}]
+
+    chart = base.transform_filter(~selector1)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'not': 's1'}}}]
+
+    chart = base.transform_filter(selector1 & selector2)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'and': ['s1', 's2']}}}]
+
+    chart = base.transform_filter(selector1 | selector2)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'or': ['s1', 's2']}}}]
+
+
 
 def test_resolve_methods():
     chart = alt.LayerChart().resolve_axis(x='shared', y='independent')
@@ -442,3 +460,35 @@ def test_consolidate_datasets(basic_chart):
 
     for spec in dct_consolidated['hconcat']:
         assert spec['data'] == {'name': name}
+
+
+def test_consolidate_InlineData():
+    data = alt.InlineData(
+        values=[{'a': 1, 'b': 1}, {'a': 2, 'b': 2}],
+        format={'type': 'csv'}
+    )
+    chart = alt.Chart(data).mark_point()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = chart.to_dict()
+    assert dct['data']['format'] == data.format
+    assert dct['data']['values'] == data.values
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = chart.to_dict()
+    assert dct['data']['format'] == data.format
+    assert list(dct['datasets'].values())[0] == data.values
+
+    data = alt.InlineData(
+        values=[],
+        name='runtime_data'
+    )
+    chart = alt.Chart(data).mark_point()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = chart.to_dict()
+    assert dct['data'] == data.to_dict()
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = chart.to_dict()
+    assert dct['data'] == data.to_dict()

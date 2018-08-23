@@ -171,7 +171,7 @@ View Configuration
 Removing the border
 ~~~~~~~~~~~~~~~~~~~
 
-By default, charts have both a grid and an outside border. To create a chart with no border, you will need to remove the both.
+By default, charts have both a grid and an outside border. To create a chart with no border, you will need to remove them both.
 
 As an example, let's start with a simple scatter plot.
 

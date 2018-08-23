@@ -87,7 +87,7 @@ VGL_TEMPLATE = jinja2.Template("""
         "renderer": "{{ renderer }}",
         "actions": {{ actions}}
       };
-      vegaEmbed('#{{ div_id }}', {{ spec }}).catch(console.err);
+      vegaEmbed('#{{ div_id }}', spec, opt).catch(console.err);
   });
 </script>
 </div>
@@ -109,7 +109,7 @@ DEFAULT_ALTAIRPLOT_LINKS = {'editor': True, 'source': True, 'export': True}
 
 def validate_links(links):
     if links.strip().lower() == 'none':
-        return {}
+        return False
 
     links = links.strip().split()
     diff = set(links) - set(DEFAULT_ALTAIRPLOT_LINKS.keys())
@@ -230,7 +230,6 @@ def html_visit_altair_plot(self, node):
             output_literal = nodes.literal_block(stdout, stdout)
             output_literal['language'] = 'none'
             node.extend([output_literal])
-            self.visit_admonition(node)
     elif output == 'repr':
         if chart is None:
             raise nodes.SkipNode
@@ -239,7 +238,6 @@ def html_visit_altair_plot(self, node):
             repr_literal = nodes.literal_block(rep, rep)
             repr_literal['language'] = 'none'
             node.extend([repr_literal])
-            self.visit_admonition(node)
     elif output == 'plot':
         if isinstance(chart, alt.TopLevelMixin):
             # Last line should be a chart; convert to spec dict

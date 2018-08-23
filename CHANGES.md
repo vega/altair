@@ -1,8 +1,34 @@
 # Altair Change Log
 
-## Version 2.2.0 (Unreleased):
+## Version 2.3.0 (Unreleased)
 
 ### Enhancements
+
+### Backward-incompatible changes
+
+### Maintenance
+
+### Bug fixes
+
+## Version 2.2.2 (Released August 17, 2018)
+
+### Bug Fixes
+
+- fix missing JSON resource in ``altair.vega.v4`` (#1097)
+
+## Version 2.2.1 (Released August 15, 2018)
+
+### Bug Fixes
+
+- appropriate handling of InlineData in dataset consolidation (#1092)
+
+- fix admonition formatting in documentation page (#1094)
+
+## Version 2.2.0 (Released August 14, 2018):
+
+### Enhancements
+
+- better handling of datetimes and timezones (#1053)
 
 - all inline datasets are now converted to named datasets and stored at the
   top level of the chart. This behavior can be disabled by setting
@@ -12,11 +38,21 @@
 
 ### Maintenance
 
-- update to Vega-Lite 2.6.0; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2) [2.6.0](https://github.com/vega/vega-lite/releases/tag/v2.6.0)
+- update from Vega-Lite 2.4.3 to Vega-Lite 2.6.0; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2) [2.6.0](https://github.com/vega/vega-lite/releases/tag/v2.6.0)
 
 ### Backward-incompatible changes
 
-- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and ``alt.WindowSortField`` renamed to ``alt.SortField`` (https://github.com/vega/vega-lite/pull/3741)
+- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and
+  ``alt.WindowSortField`` renamed to ``alt.SortField`` (#3741)
+
+### Bug Fixes
+
+- Fixed serialization of logical operands on selections within
+  ``transform_filter()``: (#1075)
+
+- Fixed sphinx issue which embedded chart specs twice (#1088)
+
+- Avoid Selenium import until it is actually needed (#982)
 
 ## Version 2.1.0 (Released June 6, 2018):
 
@@ -70,7 +106,7 @@ This version of Altair is based on Vega-Lite 1.2.1.
   ([#216](https://github.com/altair-viz/altair/pull/216)).
 
 - Change default import in all code and docs to `import altair as alt`
-  
+
 - Check for missing and misspelled column names upon exporting or rendering,
   and raise `FieldError` ([#399](https://github.com/altair-viz/altair/pull/399))
   if any problems are found. This can be disabled by setting `Chart.validated_columns=False`.

@@ -8,7 +8,7 @@ import json
 import re
 
 
-def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):
+def create_thumbnail(image_filename, thumb_filename, window_size=(280, 160)):
     """Create a thumbnail whose shortest dimension matches the window"""
     from PIL import Image
     im = Image.open(image_filename)
@@ -32,9 +32,9 @@ def create_generic_image(filename, shape=(200, 300), gradient=True):
     """Create a generic image"""
     from PIL import Image
     import numpy as np
-    
+
     assert len(shape) == 2
-    
+
     arr = np.zeros((shape[0], shape[1], 3))
     if gradient:
         # gradient from gray to white
