@@ -3,7 +3,7 @@
 .. _user-guide-interactions:
 
 Interactions
-------------
+============
 
 One of the unique features of Altair, inherited from Vega-Lite, is a
 declarative grammar of not just visualization, but *interaction*. There are three
@@ -345,7 +345,7 @@ With interval selections, the bind property can be set to the value of :"scales"
 
 Further Examples
 ~~~~~~~~~~~~~~~~
-Now that you understand the basics of Altair selections, you might wish to look
+Now that you understand the basics of Altair selections and bindings, you might wish to look
 through the :ref:`gallery-category-Interactive Charts` section of the example gallery
 for ideas about how they can be applied to more interesting charts.
 
