@@ -40,7 +40,7 @@ base = alt.Chart(movies_df, width=200, height=200).mark_point(filled=True).trans
 ).transform_filter(
     alt.FieldOneOfPredicate(field='MPAA_Rating', oneOf=ratings)
 ).encode(
-    x=alt.X('Worldwide_Gross:Q', scale=alt.Scale(domain=(100000,10**10), clamp=True, type="log")),
+    x=alt.X('Worldwide_Gross:Q', scale=alt.Scale(domain=(100000,10**9), clamp=True)),
     y='IMDB_Rating:Q',
     tooltip="Title:N"
 )
