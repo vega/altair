@@ -3,60 +3,55 @@ Multiple Interations
 ==================
 This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows: 
 
-* Dropdown: Allows the user to highlight cars from a particular country
-* Slider: Filters the display so that only cars from a certain year of manufacture are shown
-* Checkbox: toggles whether to size the points by the cars weight or not
+* Dropdown: Filters the movies by genre
+* Radio Buttons: Highlights certain films by Worldwide Gross
 * Mouse Drag and Scroll: Zooms the x and y scales to allow for panning. 
+
 
 
 """
 # category: interactive charts
+
 import altair as alt
 from vega_datasets import data
 
 
-cars = data.cars.url
+movies = data.movies.url
 
-input_dropdown = alt.binding_select(options=['Europe','Japan','USA'])
-dropdown_selection = alt.selection_single(fields=['Origin'], bind=input_dropdown, name='Country of ')
-color = alt.condition(selection,
-                    alt.Color('Origin:N', legend=None),
-                    alt.value('lightgray'))
+ratings = ['G', 'NC-17', 'PG', 'PG-13', 'R']
+genres = ['Action', 'Adventure', 'Black Comedy', 'Comedy',
+       'Concert/Performance', 'Documentary', 'Drama', 'Horror', 'Musical',
+       'Romantic Comedy', 'Thriller/Suspense', 'Western']
 
-scales_selection = alt.selection_interval(bind="scales")
 
-year_slider = alt.binding_range(min=1969, max=1981, step=1)
-slider_selection = alt.selection_single(bind=year_slider, fields=['Year'], name="Manufacture_")
 
-input_checkbox = alt.binding_checkbox()
-checkbox_selection = alt.selection_single( bind=input_checkbox, name="Highlight Heavy Vehicles")
+rating_radio = alt.binding_radio(options=ratings)
 
-size = alt.condition(checkbox_selection,
-                    alt.SizeValue(40), 
-                    alt.Size('Weight_in_lbs:Q', bin=True, legend=None)
-                    )
 
-scatter = alt.Chart(cars).mark_point(filled=True
-    ).transform_calculate(
-    Year="year(datum.Year)").transform_calculate(
-    Heavy=alt.expr.inrange("dataum.Weight_in_lbs", 4000,10000)
-).encode(
-    x='Horsepower:Q',
-    y='Miles_per_Gallon:Q',
-    color=color,
-    tooltip='Name:N',
-    size=size
-).add_selection(
-    selection
-).add_selection(
-    scales_selection
-).add_selection(
-    slider_selection
-).add_selection(
-    checkbox_selection
+rating_select = alt.selection_single(fields=['MPAA_Rating'], bind=rating_radio)
+rating_color_condition = alt.condition(rating_select,
+                      alt.Color('MPAA_Rating:N', legend=None),
+                      alt.value('lightgray'))
+
+genre_dropdown = alt.binding_select(options=genres)
+genre_select = alt.selection_single(fields=['Major_Genre'], bind=genre_dropdown)
+
+
+alt.Chart(movies).mark_point().transform_calculate(
+    Rounded_IMDB_Rating = "floor(datum.IMDB_Rating)"
 ).transform_filter(
-    slider_selection
+    alt.datum.IMDB_Rating > 0
+).transform_filter(
+    alt.FieldOneOfPredicate(field='MPAA_Rating', oneOf=ratings)).encode(
+x=alt.X('Worldwide_Gross:Q'),
+y='IMDB_Rating:Q',
+color=rating_color_condition
+
+).add_selection(
+    rating_select
+).add_selection(
+    genre_select
+).transform_filter(
+    genre_select
 )
 
-
-scatter
