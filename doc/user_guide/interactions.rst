@@ -9,9 +9,9 @@ One of the unique features of Altair, inherited from Vega-Lite, is a
 declarative grammar of not just visualization, but *interaction*. There are three
 core concepts of this grammar:
 
-- the :class:`selection` object which captures interactions from the mouse or through other inputs to effect the chart. Inputs can either be events like moust clicks or drags. Inputs can also be elemnts like a drop-down, radio button or slider. Selections can be used alone but if you want to have change any element of your chart you will need to connect them to a *condition*. 
-- the :class:`condition` function takes the selection input and changes an element of the chart based on that input. 
-- the :class:`bind` property of a selection which establishes a two-way binding between the selection and an input element of your chart. 
+- the :func:`selection` object which captures interactions from the mouse or through other inputs to effect the chart. Inputs can either be events like moust clicks or drags. Inputs can also be elemnts like a drop-down, radio button or slider. Selections can be used alone but if you want to have change any element of your chart you will need to connect them to a *condition*. 
+- the :func:`condition` function takes the selection input and changes an element of the chart based on that input. 
+- the ``bind`` property of a selection which establishes a two-way binding between the selection and an input element of your chart. 
 
 Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data. 
 
@@ -339,13 +339,14 @@ With single selections, an input element can be added to the chart to establish 
 For instance, using our example from above a dropdown can be used to highlight cars from a specific :origin: :
 
 .. altair-plot::
+
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'])
     selection = alt.selection_single(fields=['Origin'], bind=input_dropdown, name='Country of ')
     color = alt.condition(selection,
                         alt.Color('Origin:N', legend=None),
                         alt.value('lightgray'))
 
-    scatter = alt.Chart(cars).mark_point().encode(
+    alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color=color,
@@ -355,7 +356,7 @@ For instance, using our example from above a dropdown can be used to highlight c
     )
 
 
-    scatter
+    
 
 The above example shows all three elements at work. The :input_dropdown: is :bind: to the :selection: which is called from the :condition: encoded through the data. 
 
@@ -365,9 +366,9 @@ The following are the input elements supported in vega-lite:
 ========================= ===========================================================================  ===============================================
 Input Element             Description                                                                   Example
 ========================= ===========================================================================  ===============================================
-:class:`binding_checkbox` Renders as checkboxes allowing for multiple selections of items.                     N/A
-:class:`binding_radio`    Radio buttons that force only a single selection                                     N/A
-:class:`binding_select`   Drop down box for selecting a single item from a list                                N/A
+:class:`binding_checkbox` Renders as checkboxes allowing for multiple selections of items.                    :ref:`multiple_interactions`
+:class:`binding_radio`    Radio buttons that force only a single selection                                    :ref:`multiple_interactions`
+:class:`binding_select`   Drop down box for selecting a single item from a list                               :ref:`multiple_interactions`
 :class:`binding_range`    Shown as a slider to allow for selection along a scale.                             :ref:`gallery_us_population_over_time`
 ========================= ===========================================================================  ===============================================
 
@@ -375,13 +376,14 @@ Input Element             Description                                           
 Bindings and input elements can also be used to filter data on the client side. Reducing noise in the chart and allowing the user to see just certain selected elements:
 
 .. altair-plot::
+
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'])
     selection = alt.selection_single(fields=['Origin'], bind=input_dropdown, name='Country of ')
     color = alt.condition(selection,
                         alt.Color('Origin:N', legend=None),
                         alt.value('lightgray'))
 
-    scatter = alt.Chart(cars).mark_point().encode(
+    alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N',
@@ -393,19 +395,18 @@ Bindings and input elements can also be used to filter data on the client side. 
     )
 
 
-    scatter
-
 Scale Binding
 ^^^^^^^^^^^^^
 With interval selections, the bind property can be set to the value of :"scales":. In these cases, the binding will automatically respond to the panning and zooming along the chart:
 
 .. altair-plot::
+
     selection = alt.selection_interval(bind="scales")
     color = alt.condition(selection,
                         alt.Color('Origin:N', legend=None),
                         alt.value('lightgray'))
 
-    scatter = alt.Chart(cars).mark_point().encode(
+    alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
         color='Origin:N',
@@ -413,7 +414,7 @@ With interval selections, the bind property can be set to the value of :"scales"
     ).add_selection(
         selection
     )
-    scatter
+    
 
 
 
