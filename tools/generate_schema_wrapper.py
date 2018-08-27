@@ -51,7 +51,7 @@ SCHEMA_VERSION = {
     },
     'vega-lite': {
         'v2': 'v2.6.0',
-        'v3': 'v3.0.0-rc4'
+        'v3': 'v3.0.0-rc5'
     }
 }
 
