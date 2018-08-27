@@ -69,7 +69,7 @@ def save(chart, fp, vega_version, vegaembed_version,
 
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be 'vega' or 'vega-lite', "
-                         "not '{0}'".format(mode))
+                         "not '{}'".format(mode))
 
     if mode == 'vega-lite' and vegalite_version is None:
         raise ValueError("must specify vega-lite version")
@@ -97,4 +97,4 @@ def save(chart, fp, vega_version, vegaembed_version,
         else:
             write_file_or_filename(fp, mimebundle['image/svg+xml'], mode='w')
     else:
-        raise ValueError("unrecognized format: '{0}'".format(format))
+        raise ValueError("unrecognized format: '{}'".format(format))

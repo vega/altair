@@ -295,5 +295,5 @@ def test_schema_validation_error():
 
     assert message.startswith('Invalid specification')
     assert 'test_schemapi.MySchema->a' in message
-    assert "validating {0!r}".format(the_err.validator) in message
+    assert "validating {!r}".format(the_err.validator) in message
     assert the_err.message in message

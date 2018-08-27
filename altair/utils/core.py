@@ -82,7 +82,7 @@ def infer_vegalite_type(data):
                  'timedelta64', 'date', 'time', 'period']:
         return 'temporal'
     else:
-        warnings.warn("I don't know how to infer vegalite type from '{0}'.  "
+        warnings.warn("I don't know how to infer vegalite type from '{}'.  "
                       "Defaulting to nominal.".format(typ))
         return 'nominal'
 
@@ -234,11 +234,11 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
     units = dict(field='(?P<field>.*)',
-                 type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
+                 type='(?P<type>{})'.format('|'.join(valid_typecodes)),
                  count='(?P<aggregate>count)',
-                 aggregate='(?P<aggregate>{0})'.format('|'.join(AGGREGATES)),
-                 window_op='(?P<op>{0})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
-                 timeUnit='(?P<timeUnit>{0})'.format('|'.join(TIMEUNITS)))
+                 aggregate='(?P<aggregate>{})'.format('|'.join(AGGREGATES)),
+                 window_op='(?P<op>{})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
+                 timeUnit='(?P<timeUnit>{})'.format('|'.join(TIMEUNITS)))
 
     patterns = []
 

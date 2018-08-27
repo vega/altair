@@ -94,7 +94,7 @@ def _prepare_data(data, context):
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data, core.UrlData,
                              core.InlineData, core.NamedData)):
-        warnings.warn("data of type {0} not recognized".format(type(data)))
+        warnings.warn("data of type {} not recognized".format(type(data)))
 
     return data
 
@@ -255,7 +255,7 @@ def selection(name=None, type=Undefined, **kwds):
         The selection object that can be used in chart creation.
     """
     if name is None:
-        name = "selector{0:03d}".format(selection.counter)
+        name = "selector{:03d}".format(selection.counter)
         selection.counter += 1
     return NamedSelection(**{name: core.SelectionDef(type=type, **kwds)})
 
@@ -344,7 +344,7 @@ def condition(predicate, if_true, if_false, **kwargs):
     elif isinstance(predicate, dict):
         condition = predicate
     else:
-        raise NotImplementedError("condition predicate of type {0}"
+        raise NotImplementedError("condition predicate of type {}"
                                   "".format(type(predicate)))
 
     if isinstance(if_true, core.SchemaBase):
@@ -974,7 +974,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             dct.pop('type', None)
             dct['as'] = as_
             if 'timeUnit' not in dct:
-                raise ValueError("'{0}' must include a valid timeUnit".format(shorthand))
+                raise ValueError("'{}' must include a valid timeUnit".format(shorthand))
             self = self._add_transform(core.TimeUnitTransform(**dct))
         return self
 
@@ -1066,7 +1066,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def _set_resolve(self, **kwargs):
         """Copy the chart and update the resolve property with kwargs"""
         if not hasattr(self, 'resolve'):
-            raise ValueError("{0} object has no attribute "
+            raise ValueError("{} object has no attribute "
                              "'resolve'".format(self.__class__))
         copy = self.copy()
         if copy.resolve is Undefined:
@@ -1194,10 +1194,10 @@ class EncodingMixin(object):
 
                 encoding = channels_mapping.get(type_, None)
                 if encoding is None:
-                    raise NotImplementedError("non-keyword arg of type {0}"
+                    raise NotImplementedError("non-keyword arg of type {}"
                                               "".format(type(arg)))
                 if encoding in kwargs:
-                    raise ValueError("encode: encoding {0} specified twice"
+                    raise ValueError("encode: encoding {} specified twice"
                                      "".format(encoding))
                 kwargs[encoding] = arg
 
@@ -1219,7 +1219,7 @@ class EncodingMixin(object):
             try:
                 cls = getattr(channels, clsname)
             except AttributeError:
-                raise ValueError("Unrecognized encoding channel '{0}'".format(prop))
+                raise ValueError("Unrecognized encoding channel '{}'".format(prop))
 
             try:
                 # Don't force validation here; some objects won't be valid until

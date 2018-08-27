@@ -60,7 +60,7 @@ class SchemaValidationError(jsonschema.ValidationError):
 
     def __unicode__(self):
         cls = self.obj.__class__
-        schema_path = ['{0}.{1}'.format(cls.__module__, cls.__name__)]
+        schema_path = ['{}.{}'.format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
         schema_path = '->'.join(val for val in schema_path[:-1]
                                 if val not in ('properties',
@@ -68,9 +68,9 @@ class SchemaValidationError(jsonschema.ValidationError):
                                                'patternProperties'))
         return """Invalid specification
 
-        {0}, validating {1!r}
+        {}, validating {!r}
 
-        {2}
+        {}
         """.format(schema_path, self.validator, self.message)
 
     if six.PY3:
@@ -109,7 +109,7 @@ class SchemaBase(object):
         # - a single arg with no kwds, for, e.g. {'type': 'string'}
         # - zero args with zero or more kwds for {'type': 'object'}
         if self._schema is None:
-            raise ValueError("Cannot instantiate object of type {0}: "
+            raise ValueError("Cannot instantiate object of type {}: "
                              "_schema class attribute is not defined."
                              "".format(self.__class__))
 
@@ -181,14 +181,14 @@ class SchemaBase(object):
 
     def __repr__(self):
         if self._kwds:
-            args = ("{0}: {1!r}".format(key, val)
+            args = ("{}: {!r}".format(key, val)
                     for key, val in sorted(self._kwds.items())
                     if val is not Undefined)
             args = '\n' + ',\n'.join(args)
             return "{0}({{{1}\n}})".format(self.__class__.__name__,
                                             args.replace('\n', '\n  '))
         else:
-            return "{0}({1!r})".format(self.__class__.__name__, self._args[0])
+            return "{}({!r})".format(self.__class__.__name__, self._args[0])
 
     def __eq__(self, other):
         return (type(self) is type(other)
@@ -241,7 +241,7 @@ class SchemaBase(object):
             result = _todict({k: v for k, v in self._kwds.items()
                               if k not in ignore})
         else:
-            raise ValueError("{0} instance has both a value and properties : "
+            raise ValueError("{} instance has both a value and properties : "
                              "cannot serialize to dict".format(self.__class__))
         if validate:
             try:
