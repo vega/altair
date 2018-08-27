@@ -26,18 +26,18 @@ class FieldChannelMixin(object):
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
+                    raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be inferred because it does not "
                                      "match any column in the data.".format(self.shorthand))
                 else:
-                    raise ValueError("{0} encoding field is specified without a type; "
+                    raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be automatically inferred because "
                                      "the data is not specified as a pandas.DataFrame."
                                      "".format(self.shorthand))
         else:
             # shorthand is not a string; we pass the definition to field
             if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
+                raise ValueError("both shorthand and field specified in {}"
                                  "".format(self.__class__.__name__))
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {'field': self.shorthand}

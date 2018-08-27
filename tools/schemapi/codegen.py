@@ -128,7 +128,7 @@ class SchemaGenerator(object):
         #       values, etc.
         # TODO: use _get_args here for more information on allOf objects
         info = SchemaInfo(self.schema, self.rootschema)
-        doc = ["{0} schema wrapper".format(self.classname),
+        doc = ["{} schema wrapper".format(self.classname),
                '',
                info.medium_description]
         if info.description:
@@ -143,8 +143,8 @@ class SchemaGenerator(object):
                     '']
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
-                doc += ["{0} : {1}".format(prop, propinfo.short_description),
-                        "    {0}".format(self._process_description(propinfo.description))]
+                doc += ["{} : {}".format(prop, propinfo.short_description),
+                        "    {}".format(self._process_description(propinfo.description))]
         if len(doc) > 1:
             doc += ['']
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
@@ -167,7 +167,7 @@ class SchemaGenerator(object):
             args.append('*args')
             super_args.append('*args')
 
-        args.extend('{0}=Undefined'.format(p)
+        args.extend('{}=Undefined'.format(p)
                     for p in sorted(required) + sorted(kwds))
         super_args.extend('{0}={0}'.format(p)
                           for p in sorted(nodefault) + sorted(required) + sorted(kwds))

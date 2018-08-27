@@ -183,7 +183,7 @@ def copy_schemapi_util():
     destination_path = abspath(join(dirname(__file__), '..', 'altair',
                                     'utils', 'schemapi.py'))
 
-    print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
+    print("Copying\n {}\n  -> {}".format(source_path, destination_path))
     with open(source_path, 'r', encoding='utf8') as source:
         with open(destination_path, 'w', encoding='utf8') as dest:
             dest.write(HEADER)
@@ -195,7 +195,7 @@ def copy_schemapi_util():
     destination_path = abspath(join(dirname(__file__), '..', 'altair',
                                     'utils', 'tests', 'test_schemapi.py'))
 
-    print("Copying\n {0}\n  -> {1}".format(source_path, destination_path))
+    print("Copying\n {}\n  -> {}".format(source_path, destination_path))
     with open(source_path, 'r', encoding='utf8') as source:
         with open(destination_path, 'w', encoding='utf8') as dest:
             dest.write(HEADER)
@@ -243,8 +243,8 @@ def generate_vega_schema_wrapper(schema_file):
                                  schemarepr=CodeSnippet('load_schema()')))
     for deflist in ['defs', 'refs']:
         for name in rootschema[deflist]:
-            defschema = {'$ref': '#/{0}/{1}'.format(deflist, name)}
-            defschema_repr = {'$ref': '#/{0}/{1}'.format(deflist,name)}
+            defschema = {'$ref': '#/{}/{}'.format(deflist, name)}
+            defschema_repr = {'$ref': '#/{}/{}'.format(deflist,name)}
             contents.append(schema_class(get_valid_identifier(name),
                                          schema=defschema, schemarepr=defschema_repr,
                                          rootschema=rootschema, basename=basename,
@@ -333,7 +333,7 @@ def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
     required -= {'type'}
     kwds -= {'type'}
 
-    def_args = ['self'] + ['{0}=Undefined'.format(p)
+    def_args = ['self'] + ['{}=Undefined'.format(p)
                            for p in (sorted(required) + sorted(kwds))]
     dict_args = ['{0}={0}'.format(p)
                  for p in (sorted(required) + sorted(kwds))]
@@ -417,25 +417,25 @@ def vegalite_main():
 
         # Generate __init__.py file
         outfile = join(schemapath, '__init__.py')
-        print("Writing {0}".format(outfile))
+        print("Writing {}".format(outfile))
         with open(outfile, 'w', encoding='utf8') as f:
             f.write("# flake8: noqa\n")
             f.write("from .core import *\nfrom .channels import *\n")
-            f.write("SCHEMA_VERSION = {0!r}\n"
+            f.write("SCHEMA_VERSION = {!r}\n"
                     "".format(SCHEMA_VERSION[library][version]))
-            f.write("SCHEMA_URL = {0!r}\n"
+            f.write("SCHEMA_URL = {!r}\n"
                     "".format(schema_url(library, version)))
 
         # Generate the core schema wrappers
         outfile = join(schemapath, 'core.py')
-        print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
         file_contents = generate_vegalite_schema_wrapper(schemafile)
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(file_contents)
 
         # Generate the channel wrappers
         outfile = join(schemapath, 'channels.py')
-        print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
         code = generate_vegalite_channel_wrappers(schemafile, encoding_def=encoding_defs[version])
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(code)
@@ -443,7 +443,7 @@ def vegalite_main():
         if version != 'v1':
             # generate the mark mixin
             outfile = join(schemapath, 'mixins.py')
-            print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+            print("Generating\n {}\n  ->{}".format(schemafile, outfile))
             mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile)
             config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
             imports = sorted(set(mark_imports + config_imports))
@@ -469,18 +469,18 @@ def vega_main():
 
         # Generate __init__.py file
         outfile = join(schemapath, '__init__.py')
-        print("Writing {0}".format(outfile))
+        print("Writing {}".format(outfile))
         with open(outfile, 'w', encoding='utf8') as f:
             f.write("# flake8: noqa\n")
             f.write("from .core import *\n\n")
-            f.write("SCHEMA_VERSION = {0!r}\n"
+            f.write("SCHEMA_VERSION = {!r}\n"
                     "".format(SCHEMA_VERSION[library][version]))
-            f.write("SCHEMA_URL = {0!r}\n"
+            f.write("SCHEMA_URL = {!r}\n"
                     "".format(schema_url(library, version)))
 
         # Generate the core schema wrappers
         outfile = join(schemapath, 'core.py')
-        print("Generating\n {0}\n  ->{1}".format(schemafile, outfile))
+        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
         file_contents = generate_vega_schema_wrapper(schemafile)
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(file_contents)

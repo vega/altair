@@ -386,10 +386,10 @@ class Chart(TopLevelMixin, core.ExtendedUnitSpec):
             for arg in args:
                 encoding = mapping.get(type(arg), None)
                 if encoding is None:
-                    raise NotImplementedError("non-keyword arg of type {0}"
+                    raise NotImplementedError("non-keyword arg of type {}"
                                               "".format(type(arg)))
                 if encoding in kwargs:
-                    raise ValueError("encode: encoding {0} specified twice"
+                    raise ValueError("encode: encoding {} specified twice"
                                      "".format(encoding))
                 kwargs[encoding] = arg
 

@@ -48,7 +48,7 @@ def spec_to_mimebundle(spec, format, mode=None,
     if mode == 'vega' and format == 'vega':
         if vega_version is None:
             raise ValueError("Must specify vega_version")
-        return {'application/vnd.vega.v{0}+json'.format(vega_version[0]): spec}
+        return {'application/vnd.vega.v{}+json'.format(vega_version[0]): spec}
     elif format in ['png', 'svg', 'vega']:
         render = compile_spec(spec, format=format, mode=mode,
                               vega_version=vega_version,
@@ -61,7 +61,7 @@ def spec_to_mimebundle(spec, format, mode=None,
             return {'image/svg+xml': render}
         elif format == 'vega':
             assert mode == 'vega-lite'  # TODO: handle vega->vega conversion more gracefully
-            return {'application/vnd.vega.v{0}+json'.format(vega_version[0]): render}
+            return {'application/vnd.vega.v{}+json'.format(vega_version[0]): render}
     elif format == 'html':
         html = spec_to_html(spec, mode=mode,
                             vega_version=vega_version,
@@ -74,7 +74,7 @@ def spec_to_mimebundle(spec, format, mode=None,
             raise ValueError("Cannot convert a vega spec to vegalite")
         if vegalite_version is None:
             raise ValueError("Must specify vegalite_version")
-        return {'application/vnd.vegalite.v{0}+json'.format(vegalite_version[0]): spec}
+        return {'application/vnd.vegalite.v{}+json'.format(vegalite_version[0]): spec}
     elif format == 'json':
         return {'application/json': spec}
     else:

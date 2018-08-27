@@ -118,12 +118,12 @@ def serve(html, ip='127.0.0.1', port=8888, n_retries=50, files=None,
             print(JUPYTER_WARNING)
 
     # Start the server
-    print("Serving to http://{0}:{1}/    [Ctrl-C to exit]".format(ip, port))
+    print("Serving to http://{}:{}/    [Ctrl-C to exit]".format(ip, port))
     sys.stdout.flush()
 
     if open_browser:
         # Use a thread to open a web browser pointing to the server
-        b = lambda: webbrowser.open('http://{0}:{1}'.format(ip, port))
+        b = lambda: webbrowser.open('http://{}:{}'.format(ip, port))
         threading.Thread(target=b).start()
 
     try:

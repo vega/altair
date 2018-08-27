@@ -112,7 +112,7 @@ def compile_spec(spec, format, mode,
         import selenium.webdriver
     except ImportError:
         raise ImportError("selenium package is required "
-                          "for saving chart as {0}".format(format))
+                          "for saving chart as {}".format(format))
 
     if format not in ['png', 'svg', 'vega']:
         raise NotImplementedError("format must be 'svg', 'png' or 'vega'")
@@ -163,7 +163,7 @@ def compile_spec(spec, format, mode,
             online = driver.execute_script("return navigator.onLine")
             if not online:
                 raise ValueError("Internet connection required for saving "
-                                 "chart as {0}".format(format))
+                                 "chart as {}".format(format))
             return driver.execute_async_script(EXTRACT_CODE[format],
                                                spec, mode, scale_factor)
     finally:

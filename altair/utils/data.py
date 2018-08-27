@@ -67,7 +67,7 @@ def limit_rows(data, max_rows=5000):
             return data
     if max_rows is not None and len(values) > max_rows:
         raise MaxRowsError('The number of rows in your dataset is greater '
-                           'than the maximum allowed ({0}). '
+                           'than the maximum allowed ({}). '
                            'For information on how to plot larger datasets '
                            'in Altair, see the documentation'.format(max_rows))
     return data

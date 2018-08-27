@@ -132,7 +132,7 @@ def get_docstring_and_rest(filename):
 
     if not isinstance(node, ast.Module):
         raise TypeError("This function only supports modules. "
-                        "You provided {0}".format(node.__class__.__name__))
+                        "You provided {}".format(node.__class__.__name__))
     try:
         # In python 3.7 module knows its docstring.
         # Everything else will raise an attribute error

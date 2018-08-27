@@ -31,7 +31,7 @@ class PluginEnabler(object):
         self.registry._set_state(self.original_state)
 
     def __repr__(self):
-        return "{0}.enable({1!r})".format(self.registry.__class__.__name__, self.name)
+        return "{}.enable({!r})".format(self.registry.__class__.__name__, self.name)
 
 
 class PluginRegistry(Generic[PluginType]):
@@ -193,7 +193,7 @@ class PluginRegistry(Generic[PluginType]):
 
     def __repr__(self):
         # type: () -> str
-        return ("{0}(active={1!r}, registered={2!r})"
+        return ("{}(active={!r}, registered={!r})"
                 "".format(self.__class__.__name__,
                           self._active_name,
                           list(self.names())))

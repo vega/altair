@@ -155,7 +155,7 @@ class SchemaInfo(object):
                 rval = "{...}"
             elif key == 'properties':
                 rval = '{\n    ' + '\n    '.join(sorted(map(repr, val))) + '\n  }'
-            keys.append('"{0}": {1}'.format(key, rval))
+            keys.append('"{}": {}'.format(key, rval))
         return "SchemaInfo({\n  " + '\n  '.join(keys) + "\n})"
 
     @property
@@ -169,7 +169,7 @@ class SchemaInfo(object):
     def short_description(self):
         if self.title:
             # use RST syntax for generated sphinx docs
-            return ":class:`{0}`".format(self.title)
+            return ":class:`{}`".format(self.title)
         else:
             return self.medium_description
 
@@ -185,34 +185,34 @@ class SchemaInfo(object):
         if self.is_empty():
             return 'any object'
         elif self.is_enum():
-            return 'enum({0})'.format(', '.join(map(repr, self.enum)))
+            return 'enum({})'.format(', '.join(map(repr, self.enum)))
         elif self.is_anyOf():
-            return 'anyOf({0})'.format(', '.join(s.short_description
+            return 'anyOf({})'.format(', '.join(s.short_description
                                                  for s in self.anyOf))
         elif self.is_oneOf():
-            return 'oneOf({0})'.format(', '.join(s.short_description
+            return 'oneOf({})'.format(', '.join(s.short_description
                                                  for s in self.oneOf))
         elif self.is_allOf():
-            return 'allOf({0})'.format(', '.join(s.short_description
+            return 'allOf({})'.format(', '.join(s.short_description
                                                  for s in self.allOf))
         elif self.is_not():
-            return 'not {0}'.format(self.not_.short_description)
+            return 'not {}'.format(self.not_.short_description)
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
                 subschema.schema['type'] = typ_
                 options.append(subschema.short_description)
-            return "anyOf({0})".format(', '.join(options))
+            return "anyOf({})".format(', '.join(options))
         elif self.is_object():
-            return "Mapping(required=[{0}])".format(', '.join(self.required))
+            return "Mapping(required=[{}])".format(', '.join(self.required))
         elif self.is_array():
-            return "List({0})".format(self.child(self.items).short_description)
+            return "List({})".format(self.child(self.items).short_description)
         elif self.type in _simple_types:
             return _simple_types[self.type]
         elif not self.type:
             import warnings
-            warnings.warn("no short_description for schema\n{0}"
+            warnings.warn("no short_description for schema\n{}"
                           "".format(self.schema))
             return 'any'
 
@@ -338,7 +338,7 @@ class SchemaInfo(object):
         elif self.is_value():
             return 'value'
         else:
-            raise ValueError("Unknown type with keys {0}".format(self.schema))
+            raise ValueError("Unknown type with keys {}".format(self.schema))
 
     def property_name_map(self):
         """

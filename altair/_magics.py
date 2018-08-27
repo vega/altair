@@ -59,7 +59,7 @@ def _prepare_data(data, data_transformers):
     elif isinstance(data, six.string_types):
         return {'url': data}
     else:
-        warnings.warn("data of type {0} not recognized".format(type(data)))
+        warnings.warn("data of type {} not recognized".format(type(data)))
         return data
 
 
@@ -70,7 +70,7 @@ def _get_variable(name):
         raise ValueError("Magic command must be run within an IPython "
                          "environemnt, in which get_ipython() is defined.")
     if name not in ip.user_ns:
-        raise NameError("argument '{0}' does not match the "
+        raise NameError("argument '{}' does not match the "
                         "name of any defined variable".format(name))
     return ip.user_ns[name]
 
@@ -106,12 +106,12 @@ def vega(line, cell):
         elif len(s) == 2:
             return s[0], s[1]
         else:
-            raise ValueError("invalid identifier: '{0}'".format(s))
+            raise ValueError("invalid identifier: '{}'".format(s))
 
     try:
         data = list(map(namevar, args.data))
     except ValueError:
-        raise ValueError("Could not parse arguments: '{0}'".format(line))
+        raise ValueError("Could not parse arguments: '{}'".format(line))
 
     if args.json:
         spec = json.loads(cell)

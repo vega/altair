@@ -162,7 +162,7 @@ class FunctionExpression(Expression):
 
 class ConstExpression(Expression):
     def __init__(self, name, doc):
-        self.__doc__ = """{0}: {1}""".format(name, doc)
+        self.__doc__ = """{}: {}""".format(name, doc)
         super(ConstExpression, self).__init__(name=name, doc=doc)
 
     def __repr__(self):
@@ -174,7 +174,7 @@ class ValueExpression(Expression):
         super(ValueExpression, self).__init__(name=name)
 
     def __repr__(self):
-        return "datum.{0}".format(self.name)
+        return "datum.{}".format(self.name)
 
 
 class GetItemExpression(Expression):
@@ -182,4 +182,4 @@ class GetItemExpression(Expression):
         super(GetItemExpression, self).__init__(name=name)
 
     def __repr__(self):
-        return "datum['{0}']".format(self.name)
+        return "datum['{}']".format(self.name)

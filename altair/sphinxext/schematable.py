@@ -13,23 +13,23 @@ def type_description(schema):
     if not schema or schema.keys() == {'description'}:
         return 'any'
     elif "$ref" in schema:
-        return ":class:`{0}`".format(schema['$ref'].split('/')[-1])
+        return ":class:`{}`".format(schema['$ref'].split('/')[-1])
     elif 'enum' in schema:
-        return "[{0}]".format(', '.join(repr(s) for s in schema['enum']))
+        return "[{}]".format(', '.join(repr(s) for s in schema['enum']))
     elif 'type' in schema:
         if isinstance(schema['type'], list):
-            return '[{0}]'.format(', '.join(schema['type']))
+            return '[{}]'.format(', '.join(schema['type']))
         elif schema['type'] == 'array':
-            return 'array({0})'.format(type_description(schema.get('items', {})))
+            return 'array({})'.format(type_description(schema.get('items', {})))
         elif schema['type'] == 'object':
             return 'dict'
         else:
-            return "`{0}`".format(schema['type'])
+            return "`{}`".format(schema['type'])
     elif 'anyOf' in schema:
-        return "anyOf({0})".format(', '.join(type_description(s)
+        return "anyOf({})".format(', '.join(type_description(s)
                                             for s in schema['anyOf']))
     else:
-        warnings.warn('cannot infer type for schema with keys {0}'
+        warnings.warn('cannot infer type for schema with keys {}'
                     ''.format(schema.keys()))
         return '--'
 
