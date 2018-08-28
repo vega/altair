@@ -16,14 +16,7 @@ from vega_datasets import data
 import urllib, json
 import pandas as pd
 
-movies = data.movies.url
-
-raw = urllib.request.urlopen(movies)
-movie_json = json.loads(raw.read())
-
-movies_df = pd.DataFrame(movie_json) #Note need to download the data first to coerce the dates
-
-movies_df["Release_Date_dt"] = pd.to_datetime(movies_df.Release_Date, format="%d-%b-%y", errors='coerce')
+movies = alt.UrlData(data.movies.url, format=alt.DataFormat(parse={"Release_Date":"date"}))
 
 ratings = ['G', 'NC-17', 'PG', 'PG-13', 'R']
 
@@ -31,10 +24,10 @@ genres = ['Action', 'Adventure', 'Black Comedy', 'Comedy',
        'Concert/Performance', 'Documentary', 'Drama', 'Horror', 'Musical',
        'Romantic Comedy', 'Thriller/Suspense', 'Western']
 
-base = alt.Chart(movies_df, width=200, height=200).mark_point(filled=True).transform_calculate(
+base = alt.Chart(movies, width=200, height=200).mark_point(filled=True).transform_calculate(
     Rounded_IMDB_Rating = "floor(datum.IMDB_Rating)",
     Hundred_Million_Production =  "datum.Production_Budget > 100000000.0 ? 100 : 10",
-    Release_Year = "year(datum.Release_Date_dt)"
+    Release_Year = "year(datum.Release_Date)"
 ).transform_filter(
     alt.datum.IMDB_Rating > 0
 ).transform_filter(
