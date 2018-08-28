@@ -2,8 +2,8 @@
 
 .. _user-guide-interactions:
 
-Interactions
-============
+Bindings, Selections, Conditions: Making Charts Interactive
+===========================================================
 
 One of the unique features of Altair, inherited from Vega-Lite, is a
 declarative grammar of not just visualization, but *interaction*. There are three
@@ -366,9 +366,9 @@ The following are the input elements supported in vega-lite:
 ========================= ===========================================================================  ===============================================
 Input Element             Description                                                                   Example
 ========================= ===========================================================================  ===============================================
-:class:`binding_checkbox` Renders as checkboxes allowing for multiple selections of items.                    :ref:`multiple_interactions`
-:class:`binding_radio`    Radio buttons that force only a single selection                                    :ref:`multiple_interactions`
-:class:`binding_select`   Drop down box for selecting a single item from a list                               :ref:`multiple_interactions`
+:class:`binding_checkbox` Renders as checkboxes allowing for multiple selections of items.                    :ref:`gallery_multiple_interactions`
+:class:`binding_radio`    Radio buttons that force only a single selection                                    :ref:`gallery_multiple_interactions`
+:class:`binding_select`   Drop down box for selecting a single item from a list                               :ref:`gallery_multiple_interactions`
 :class:`binding_range`    Shown as a slider to allow for selection along a scale.                             :ref:`gallery_us_population_over_time`
 ========================= ===========================================================================  ===============================================
 
