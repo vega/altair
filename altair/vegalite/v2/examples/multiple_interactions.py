@@ -13,8 +13,7 @@ This example shows how multiple user inputs can be layered onto a chart. The fou
 # category: interactive charts
 import altair as alt
 from vega_datasets import data
-import urllib, json
-import pandas as pd
+
 
 movies = alt.UrlData(data.movies.url, format=alt.DataFormat(parse={"Release_Date":"date"}))
 
