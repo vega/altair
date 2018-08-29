@@ -323,8 +323,6 @@ cylinders:
 By fine-tuning the behavior of selections in this way, they can be used to
 create a wide variety of linked interactive chart types.
 
-
-
 Binding: Adding Data Driven Inputs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 With an understanding of the selection types and conditions, you can now add data-driven input elements to the charts using the  :class:`bind`. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, selections can be bound two-ways:
