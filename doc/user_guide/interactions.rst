@@ -1,19 +1,31 @@
 .. currentmodule:: altair
 
-.. _user-guide-selections:
+.. _user-guide-interactions:
+
+Bindings, Selections, Conditions: Making Charts Interactive
+===========================================================
+
+One of the unique features of Altair, inherited from Vega-Lite, is a
+declarative grammar of not just visualization, but *interaction*. There are three
+core concepts of this grammar:
+
+- the :func:`selection` object which captures interactions from the mouse or through other inputs to effect the chart. Inputs can either be events like moust clicks or drags. Inputs can also be elemnts like a drop-down, radio button or slider. Selections can be used alone but if you want to have change any element of your chart you will need to connect them to a *condition*. 
+- the :func:`condition` function takes the selection input and changes an element of the chart based on that input. 
+- the ``bind`` property of a selection which establishes a two-way binding between the selection and an input element of your chart. 
+
+Interactive charts can use one or more of these elements to create rich interactivity between the viewer and the data. 
+
 
 Selections: Building Blocks of Interactions
--------------------------------------------
-One of the unique features of Altair, inherited from Vega-Lite, is a
-declarative grammar of not just visualization, but *interaction*. The
-core concept of this grammar is the *selection* object.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 Selections in Altair come in a few flavors, and they can be *bound* to
 particular charts or sub-charts in your visualization, then referenced
 in other parts of the visualization.
 
 Example: Linked-Brush Scatter-Plot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As a motivation, let's create a simple chart and then add some selections
 to it. Here is a simple scatter-plot created from the ``cars`` dataset:
@@ -54,6 +66,9 @@ property:
 
 The result above is a chart that allows you to click and drag to create
 a selection region, and to move this region once the region is created.
+
+Conditions: Making the chart respond
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is neat, but the selection doesn't actually *do* anything yet.
 To use this selection, we need to reference it in some way within
@@ -308,10 +323,102 @@ cylinders:
 By fine-tuning the behavior of selections in this way, they can be used to
 create a wide variety of linked interactive chart types.
 
+Binding: Adding Data Driven Inputs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+With an understanding of the selection types and conditions, you can now add data-driven input elements to the charts using the  :class:`bind`. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, selections can be bound two-ways:
+
+1. Single selections can be bound directly to an input elements. *For example, a radio button.*
+2. Interval selections which can be bound to scale. *for example, zooming in on a map.*
+
+Input Element Binding
+^^^^^^^^^^^^^^^^^^^^^
+With single selections, an input element can be added to the chart to establish a binding between the input and the selection. 
+
+For instance, using our example from above a dropdown can be used to highlight cars from a specific ``origin`` :
+
+.. altair-plot::
+
+    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'])
+    selection = alt.selection_single(fields=['Origin'], bind=input_dropdown, name='Country of ')
+    color = alt.condition(selection,
+                        alt.Color('Origin:N', legend=None),
+                        alt.value('lightgray'))
+
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color=color,
+        tooltip='Name:N'
+    ).add_selection(
+        selection
+    )
+
+
+    
+
+The above example shows all three elements at work. The :input_dropdown: is :bind: to the :selection: which is called from the :condition: encoded through the data. 
+
+The following are the input elements supported in vega-lite: 
+
+
+========================= ===========================================================================  ===============================================
+Input Element             Description                                                                   Example
+========================= ===========================================================================  ===============================================
+:class:`binding_checkbox` Renders as checkboxes allowing for multiple selections of items.                    :ref:`gallery_multiple_interactions`
+:class:`binding_radio`    Radio buttons that force only a single selection                                    :ref:`gallery_multiple_interactions`
+:class:`binding_select`   Drop down box for selecting a single item from a list                               :ref:`gallery_multiple_interactions`
+:class:`binding_range`    Shown as a slider to allow for selection along a scale.                             :ref:`gallery_us_population_over_time`
+========================= ===========================================================================  ===============================================
+
+
+Bindings and input elements can also be used to filter data on the client side. Reducing noise in the chart and allowing the user to see just certain selected elements:
+
+.. altair-plot::
+
+    input_dropdown = alt.binding_select(options=['Europe','Japan','USA'])
+    selection = alt.selection_single(fields=['Origin'], bind=input_dropdown, name='Country of ')
+    color = alt.condition(selection,
+                        alt.Color('Origin:N', legend=None),
+                        alt.value('lightgray'))
+
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N',
+        tooltip='Name:N'
+    ).add_selection(
+        selection
+    ).transform_filter(
+        selection
+    )
+
+
+Scale Binding
+^^^^^^^^^^^^^
+With interval selections, the bind property can be set to the value of :"scales":. In these cases, the binding will automatically respond to the panning and zooming along the chart:
+
+.. altair-plot::
+
+    selection = alt.selection_interval(bind="scales")
+    color = alt.condition(selection,
+                        alt.Color('Origin:N', legend=None),
+                        alt.value('lightgray'))
+
+    alt.Chart(cars).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N',
+        tooltip='Name:N'
+    ).add_selection(
+        selection
+    )
+    
+
+
 
 Further Examples
 ~~~~~~~~~~~~~~~~
-Now that you understand the basics of Altair selections, you might wish to look
+Now that you understand the basics of Altair selections and bindings, you might wish to look
 through the :ref:`gallery-category-Interactive Charts` section of the example gallery
 for ideas about how they can be applied to more interesting charts.
 
