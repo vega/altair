@@ -336,7 +336,7 @@ Input Element Binding
 ^^^^^^^^^^^^^^^^^^^^^
 With single selections, an input element can be added to the chart to establish a binding between the input and the selection. 
 
-For instance, using our example from above a dropdown can be used to highlight cars from a specific :origin: :
+For instance, using our example from above a dropdown can be used to highlight cars from a specific ``origin`` :
 
 .. altair-plot::
 

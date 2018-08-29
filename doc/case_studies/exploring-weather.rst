@@ -221,7 +221,7 @@ by weather type:
 And now we can vertically concatenate this histogram to the points plot above,
 and add a brush selection tool such that the histogram reflects the content
 of the selection (for more information on selections, see
-:ref:`user-guide-selections`):
+:ref:`user-guide-interactions`):
 
 .. altair-plot::
 
