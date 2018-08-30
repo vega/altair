@@ -84,7 +84,7 @@ With this convention, your example will build automatically and be placed on the
 
 When updating the user guide the following conventions are helpful: 
 
-* Add the directive ``.. currentmodule:: altair`` somewhere near the top of your documentation page so that you inform the renderer how to link to docstrings in the classes and functions. pip
+* Add the directive ``.. currentmodule:: altair`` somewhere near the top of your documentation page so that you inform the renderer how to link to docstrings in the classes and functions.
 * When referring to an Altair class or function preface it with ``:class:`` or ``:func:`` and the rendering engine will automatically link it to the appropriate section in the API reference. 
 * Link to examples using the following syntax 
     ```
