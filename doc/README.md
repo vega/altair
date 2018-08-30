@@ -4,13 +4,13 @@ Altair documentation is written in [reStructuredText](http://docutils.sourceforg
 
 ## Building the Documentation locally
 
-Using a virtual environment, you will need to build the both the requirements for the altair package,  the `docs/requirements.txt`, and install altair locally from the branch you are updating: 
+Assuming you have followed all the steps for a [development install](../README.md), you will need to also install the dependencies for documentation listed in  `docs/requirements.txt` and install altair locally from the branch you are updating: 
 
 ```
 cd altair
-pip install -r requirements.txt
-pip install -e . 
-pip install -r doc/requirements.txt
+pip install -r requirements.txt 
+pip install -e . # See Altair Readme for further information about installing Altair for development. 
+pip install -r doc/requirements.txt # Documentation install 
 ```
 In addition, the sphinx documentation builder needs access to Selenium to support generating images of sample visualizations. You may have selenium already installed but if you do not it can also be installed via pip but is not in the requirements file because of its size and dependencies. 
 
@@ -52,7 +52,12 @@ Please use `make <target>' where <target> is one of
   dummy      to check syntax errors of document sources
 
 ```
-For most updates, run `make html` and the documentation will generate in a sub folder `_build`. You can open `_build/html/index.html` to view the documenation as local static files which should give you a good preview of how any updates will look. 
+For most updates, run `make html` and the documentation will generate in a sub folder `_build`. You can open `_build/html/index.html` to view the documenation as local static files which should give you a good preview of how any updates will look. Even better, use the command below to serve the static files and you will be able to navigate the whole documentation website. 
+
+```
+cd doc/_buld/_html
+python -m http.server  # python 3 required
+```
 
 ## Documentation Conventions
 
