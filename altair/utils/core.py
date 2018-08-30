@@ -91,6 +91,8 @@ def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
+    * Convert RangeIndex columns to strings
+    * Raise ValueError if column names are not strings
     * Raise ValueError if it has a hierarchical index.
     * Convert categoricals to strings.
     * Convert np.bool_ dtypes to Python bool objects
@@ -101,9 +103,17 @@ def sanitize_dataframe(df):
     """
     df = df.copy()
 
-    if isinstance(df.index, pd.core.index.MultiIndex):
+    if isinstance(df.columns, pd.RangeIndex):
+        df.columns = df.columns.astype(str)
+
+    for col in df.columns:
+        if not isinstance(col, six.string_types):
+            raise ValueError('Dataframe contains invalid column name: {0!r}. '
+                             'Column names must be strings'.format(col))
+
+    if isinstance(df.index, pd.MultiIndex):
         raise ValueError('Hierarchical indices not supported')
-    if isinstance(df.columns, pd.core.index.MultiIndex):
+    if isinstance(df.columns, pd.MultiIndex):
         raise ValueError('Hierarchical indices not supported')
 
     def to_list_if_array(val):

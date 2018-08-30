@@ -4,6 +4,9 @@
 
 ### Enhancements
 
+- Better errors for non-string column names, as well as automatic conversion
+  of ``pandas.RangeIndex`` columns to strings (#1107)
+
 ### Backward-incompatible changes
 
 ### Maintenance
