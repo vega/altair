@@ -4,7 +4,7 @@ Altair documentation is written in [reStructuredText](http://docutils.sourceforg
 
 ## Building the Documentation locally
 
-Assuming you have followed all the steps for a [development install](../README.md), you will need to also install the dependencies for documentation listed in  `docs/requirements.txt` and install altair locally from the branch you are updating: 
+Assuming you have followed all the steps for a [development install](../README.md#development-install), you will need to also install the dependencies for documentation listed in  `docs/requirements.txt` and install altair locally from the branch you are updating: 
 
 ```
 cd altair
