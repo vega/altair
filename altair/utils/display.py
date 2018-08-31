@@ -6,6 +6,7 @@ from typing import Callable, Dict
 from jsonschema import validate
 
 from .plugin_registry import PluginRegistry
+from .mimebundle import spec_to_mimebundle
 
 
 # ==============================================================================
@@ -100,3 +101,22 @@ def json_renderer_base(spec, str_repr, **options):
     """
     return default_renderer_base(spec, mime_type='application/json',
                                  str_repr=str_repr, **options)
+
+
+class HTMLRenderer(object):
+    """Object to render charts as HTML, with a unique output div each time"""
+    def __init__(self, output_div='altair-viz-{}', **kwargs):
+        self._output_div = output_div
+        self._output_count = 0
+        self.kwargs = kwargs
+
+    @property
+    def output_div(self):
+        self._output_count += 1
+        return self._output_div.format(self._output_count)
+
+    def __call__(self, spec, **metadata):
+        kwargs = self.kwargs.copy()
+        kwargs.update(metadata)
+        return spec_to_mimebundle(spec, format='html',
+                                  output_div=self.output_div, **kwargs)
