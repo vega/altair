@@ -73,13 +73,34 @@ def colab_renderer(spec, **metadata):
                               vegalite_version=VEGALITE_VERSION,
                               **metadata)
 
+class KaggleRenderer(object):
+    """Kaggle renderer outputs the chart as a requirejs snippet"""
+    def __init__(self):
+        self._chart_count = 0
+
+    @property
+    def output_div(self):
+        self._chart_count += 1
+        return "altair-viz-{}".format(self._chart_count)
+
+    def __call__(self, spec, **metadata):
+        return spec_to_mimebundle(spec, format='html',
+                                  mode='vega-lite',
+                                  vega_version=VEGA_VERSION,
+                                  vegaembed_version=VEGAEMBED_VERSION,
+                                  vegalite_version=VEGALITE_VERSION,
+                                  requirejs=True, fullhtml=False,
+                                  output_div=self.output_div,
+                                  **metadata)
+
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
 renderers.register('nteract', default_renderer)
+renderers.register('colab', colab_renderer)
+renderers.register('kaggle', KaggleRenderer())
 renderers.register('json', json_renderer)
 renderers.register('png', png_renderer)
 renderers.register('svg', svg_renderer)
-renderers.register('colab', colab_renderer)
 renderers.enable('default')
 
 
