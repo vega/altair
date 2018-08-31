@@ -15,14 +15,14 @@ def test_colab_renderer_embed_options(chart):
     with alt.renderers.enable('colab', embed_options=dict(actions=False)):
         bundle = chart._repr_mimebundle_(None, None)
         html = bundle['text/html']
-        assert ('embed_opt = {"actions": false, "mode": "vega-lite"}' in html or
-                'embed_opt = {"mode": "vega-lite", "actions": false}' in html)
+        assert ('embedOpt = {"actions": false, "mode": "vega-lite"}' in html or
+                'embedOpt = {"mode": "vega-lite", "actions": false}' in html)
 
     with alt.renderers.enable('colab', embed_options=dict(actions=True)):
         bundle = chart._repr_mimebundle_(None, None)
         html = bundle['text/html']
-        assert ('embed_opt = {"actions": true, "mode": "vega-lite"}' in html or
-                'embed_opt = {"mode": "vega-lite", "actions": true}' in html)
+        assert ('embedOpt = {"actions": true, "mode": "vega-lite"}' in html or
+                'embedOpt = {"mode": "vega-lite", "actions": true}' in html)
 
 
 def test_default_renderer_embed_options(chart, renderer='default'):

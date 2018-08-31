@@ -1,6 +1,5 @@
 flake8
 pytest
-jinja2
 sphinx
 m2r
 docutils
