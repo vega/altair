@@ -5,11 +5,11 @@ from .core import (
     use_signature,
     update_subtraits,
     update_nested,
-    write_file_or_filename,
     display_traceback,
     SchemaBase,
     Undefined
 )
+from .html import spec_to_html
 from .plugin_registry import PluginRegistry
 
 
@@ -20,7 +20,6 @@ __all__ = (
     'use_signature',
     'update_subtraits',
     'update_nested',
-    'write_file_or_filename',
     'display_traceback',
     'SchemaBase',
     'Undefined',

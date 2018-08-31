@@ -2,8 +2,16 @@ import json
 
 import six
 
-from .core import write_file_or_filename
 from .mimebundle import spec_to_mimebundle
+
+
+def write_file_or_filename(fp, content, mode='w'):
+    """Write content to fp, whether fp is a string or a file-like object"""
+    if isinstance(fp, six.string_types):
+        with open(fp, mode) as f:
+            f.write(content)
+    else:
+        fp.write(content)
 
 
 def save(chart, fp, vega_version, vegaembed_version,
