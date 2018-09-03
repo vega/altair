@@ -291,6 +291,52 @@ You can remove the legend entirely by submitting a null value.
       color=alt.Color('species', legend=None),
   )
 
+
+Customizing Colors
+------------------
+
+By default, the type of data will impact the color scheme use.  See the :ref:`type-legend-scale` section for
+more information.  The mapping of data to color can be customized with the `scale` argument
+to the :class:`Color` class.
+
+Vega includes a set of named color schemes for both categorical and sequential data.  
+See the `Vega documentation <https://vega.github.io/vega/docs/schemes/>`_
+for a full gallery of color schemes.  These schemes
+can be passed to the `scheme` argument of the :class:`Scale` class.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', scale=alt.Scale(scheme='dark2'))
+  )
+
+To make a custom mapping of discrete values to colors, use the
+`domain` and `range` paramaters of the :class:`Scale` class for
+values and colors respectively.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+  domain = ['setosa', 'versicolor', 'virginica']
+  rng = ['red', 'green', 'blue']
+
+  alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', scale=alt.Scale(domain=domain, range=rng))
+  )
+
+
 Adjusting the width of Bar Marks
 --------------------------------
 The width of the bars in a bar plot are controlled through the ``size`` property in the :meth:`~Chart.mark_bar()`:
