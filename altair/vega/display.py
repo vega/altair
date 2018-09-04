@@ -1,5 +1,5 @@
 from ..utils.display import Displayable, default_renderer_base, json_renderer_base
-from ..utils.display import MimeBundleType, RendererType
+from ..utils.display import MimeBundleType, RendererType, HTMLRenderer
 
 
 __all__ = (
@@ -7,5 +7,6 @@ __all__ = (
     "default_renderer_base",
     "json_renderer_base",
     "MimeBundleType",
-    "RendererType"
+    "RendererType",
+    "HTMLRenderer",
 )

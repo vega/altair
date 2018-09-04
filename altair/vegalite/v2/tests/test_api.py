@@ -211,7 +211,7 @@ def test_save(format, basic_chart):
 
     elif format == 'html':
         content = out.read()
-        assert content.startswith('\n<!DOCTYPE html>')
+        assert content.startswith('<!DOCTYPE html>')
 
 
 def test_facet_parse():

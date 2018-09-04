@@ -432,6 +432,17 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         return dct
 
+    def to_html(self, base_url="https://cdn.jsdelivr.net/npm/",
+                output_div='vis', embed_options=None, json_kwds=None,
+                fullhtml=True, requirejs=False):
+        return utils.spec_to_html(self.to_dict(), mode='vega-lite',
+                                  vegalite_version=VEGALITE_VERSION,
+                                  vegaembed_version=VEGAEMBED_VERSION,
+                                  vega_version=VEGA_VERSION,
+                                  base_url=base_url, output_div=output_div,
+                                  embed_options=embed_options, json_kwds=json_kwds,
+                                  fullhtml=fullhtml, requirejs=requirejs)
+
     def savechart(self, fp, format=None, **kwargs):
         """Save a chart to file in a variety of formats
 

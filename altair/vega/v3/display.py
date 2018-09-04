@@ -5,6 +5,11 @@ from ..display import Displayable
 from ..display import default_renderer_base
 from ..display import json_renderer_base
 from ..display import RendererType
+from ..display import HTMLRenderer
+
+from .schema import SCHEMA_VERSION
+VEGA_VERSION = SCHEMA_VERSION.lstrip('v')
+VEGAEMBED_VERSION = '3'
 
 
 
@@ -44,9 +49,24 @@ def json_renderer(spec):
     return json_renderer_base(spec, DEFAULT_DISPLAY)
 
 
+colab_renderer = HTMLRenderer(mode='vega',
+                              fullhtml=True, requirejs=False,
+                              output_div='altair-viz',
+                              vega_version=VEGA_VERSION,
+                              vegaembed_version=VEGAEMBED_VERSION)
+
+
+kaggle_renderer = HTMLRenderer(mode='vega',
+                               fullhtml=False, requirejs=True,
+                               vega_version=VEGA_VERSION,
+                               vegaembed_version=VEGAEMBED_VERSION)
+
+
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
 renderers.register('nteract', default_renderer)
+renderers.register('colab', colab_renderer)
+renderers.register('kaggle', kaggle_renderer)
 renderers.register('json', json_renderer)
 renderers.enable('default')
 

@@ -386,15 +386,6 @@ def update_nested(original, update, copy=False):
     return original
 
 
-def write_file_or_filename(fp, content, mode='w'):
-    """Write content to fp, whether fp is a string or a file-like object"""
-    if isinstance(fp, six.string_types):
-        with open(fp, mode) as f:
-            f.write(content)
-    else:
-        fp.write(content)
-
-
 def display_traceback(in_ipython=True):
     exc_info = sys.exc_info()
 
