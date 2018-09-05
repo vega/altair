@@ -73,18 +73,19 @@ colab_renderer = HTMLRenderer(mode='vega-lite',
                               vegaembed_version=VEGAEMBED_VERSION,
                               vegalite_version=VEGALITE_VERSION)
 
-kaggle_renderer = HTMLRenderer(mode='vega-lite',
-                               fullhtml=False, requirejs=True,
-                               vega_version=VEGA_VERSION,
-                               vegaembed_version=VEGAEMBED_VERSION,
-                               vegalite_version=VEGALITE_VERSION)
+requirejs_renderer = HTMLRenderer(mode='vega-lite',
+                                 fullhtml=False, requirejs=True,
+                                 vega_version=VEGA_VERSION,
+                                 vegaembed_version=VEGAEMBED_VERSION,
+                                 vegalite_version=VEGALITE_VERSION)
 
 
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
 renderers.register('nteract', default_renderer)
 renderers.register('colab', colab_renderer)
-renderers.register('kaggle', kaggle_renderer)
+renderers.register('kaggle', requirejs_renderer)
+renderers.register('nbviewer', requirejs_renderer)
 renderers.register('json', json_renderer)
 renderers.register('png', png_renderer)
 renderers.register('svg', svg_renderer)

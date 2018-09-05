@@ -70,7 +70,7 @@ requirejs.config({
                           + '</div>');
           throw error;
       }
-      const el = document.getElementById('{{ output_div }}');
+      var el = document.getElementById('{{ output_div }}');
       vegaEmbed("#{{ output_div }}", spec, embedOpt)
         .catch(error => showError(el, error));
     {%- if requirejs %}
