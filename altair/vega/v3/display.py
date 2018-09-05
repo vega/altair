@@ -59,8 +59,7 @@ colab_renderer = HTMLRenderer(mode='vega',
 requirejs_renderer = HTMLRenderer(mode='vega',
                                  fullhtml=False, requirejs=True,
                                  vega_version=VEGA_VERSION,
-                                 vegaembed_version=VEGAEMBED_VERSION,
-                                 vegalite_version=VEGALITE_VERSION)
+                                 vegaembed_version=VEGAEMBED_VERSION)
 
 
 renderers.register('default', default_renderer)
@@ -88,7 +87,7 @@ def vega(spec, validate=True):
     Parameters
     ==========
     spec: dict
-        A fully compliant VegaLite 1 spec, with the data portion fully processed.
+        A fully compliant Vega 3 spec, with the data portion fully processed.
     validate: bool
         Should the spec be validated against the Vega 3 schema?
     """

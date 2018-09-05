@@ -59,8 +59,7 @@ colab_renderer = HTMLRenderer(mode='vega',
 requirejs_renderer = HTMLRenderer(mode='vega',
                                  fullhtml=False, requirejs=True,
                                  vega_version=VEGA_VERSION,
-                                 vegaembed_version=VEGAEMBED_VERSION,
-                                 vegalite_version=VEGALITE_VERSION)
+                                 vegaembed_version=VEGAEMBED_VERSION)
 
 
 renderers.register('default', default_renderer)
