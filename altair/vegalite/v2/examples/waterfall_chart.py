@@ -13,7 +13,6 @@ data = pd.DataFrame([
     {"costs": "Fixed costs", "start": 3, "end": 8},
     {"costs": "Other costs", "start": 8, "end": 10},
     {"costs": "Total costs", "start": 0, "end": 10}
-
 ])
 
 waterfall_bars = alt.Chart(data).mark_bar(size=100).encode(
