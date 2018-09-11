@@ -9,15 +9,17 @@ import pandas as pd
 from altair import datum
 
 data = pd.DataFrame([
-    {"task": "A", "start": 0, "end": 3},
-    {"task": "B", "start": 3, "end": 8},
-    {"task": "C", "start": 8, "end": 10}
+    {"costs": "Advertising costs", "start": 0, "end": 3},
+    {"costs": "Fixed costs", "start": 3, "end": 8},
+    {"costs": "Other costs", "start": 8, "end": 10},
+    {"costs": "Total costs", "start": 0, "end": 10}
+
 ])
 
 waterfall_bars = alt.Chart(data).mark_bar(size=100).encode(
     y2=alt.Y2('end:Q'),
     y=alt.Y('start:Q', axis=alt.Axis(grid=False)),
-    x=alt.X('task:N')
+    x=alt.X('costs:N')
 )
 
 ticks = alt.Chart(data).mark_tick(
@@ -26,11 +28,13 @@ ticks = alt.Chart(data).mark_tick(
     xOffset=100
 ).encode(
     y='end:Q',
-    x='task:N'
+    x='costs:N'
 ).transform_filter(
-    datum.task != "C"
+    datum.costs != "Total costs"
 )
 
-(waterfall_bars + ticks).properties(
+(waterfall_bars + ticks).configure_axisX(
+    labelAngle=0
+).properties(
     width=500
 )
