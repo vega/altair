@@ -1,7 +1,14 @@
 import base64
+import six
 
 from .headless import compile_spec
 from .html import spec_to_html
+
+
+if six.PY3:
+    decodebytes = base64.decodebytes
+else:
+    decodebytes = base64.b64decode
 
 
 def spec_to_mimebundle(spec, format, mode=None,
@@ -55,7 +62,7 @@ def spec_to_mimebundle(spec, format, mode=None,
                               vegaembed_version=vegaembed_version,
                               vegalite_version=vegalite_version, **kwargs)
         if format == 'png':
-            render = base64.decodebytes(render.split(',', 1)[1].encode())
+            render = decodebytes(render.split(',', 1)[1].encode())
             return {'image/png': render}
         elif format == 'svg':
             return {'image/svg+xml': render}
