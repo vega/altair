@@ -55,7 +55,7 @@ def spec_to_mimebundle(spec, format, mode=None,
                               vegaembed_version=vegaembed_version,
                               vegalite_version=vegalite_version, **kwargs)
         if format == 'png':
-            render = base64.decodebytes(render.split(',', 1)[1].encode())
+            render = base64.b64decode(render.split(',', 1)[1].encode())
             return {'image/png': render}
         elif format == 'svg':
             return {'image/svg+xml': render}
