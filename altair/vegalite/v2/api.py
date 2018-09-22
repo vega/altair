@@ -337,7 +337,7 @@ def condition(predicate, if_true, if_false, **kwargs):
                        core.FieldEqualPredicate, core.FieldOneOfPredicate,
                        core.FieldRangePredicate, core.FieldLTPredicate,
                        core.FieldGTPredicate, core.FieldLTEPredicate,
-                       core.FieldGTEPredicate)
+                       core.FieldGTEPredicate, core.SelectionPredicate)
 
     if isinstance(predicate, NamedSelection):
         condition = {'selection': predicate._get_name()}
