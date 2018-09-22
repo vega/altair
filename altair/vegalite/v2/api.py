@@ -333,7 +333,11 @@ def condition(predicate, if_true, if_false, **kwargs):
                             core.SelectionAnd, core.SelectionOperand)
     test_predicates = (six.string_types, expr.Expression, core.Predicate,
                        core.LogicalOperandPredicate, core.LogicalNotPredicate,
-                       core.LogicalOrPredicate, core.LogicalAndPredicate)
+                       core.LogicalOrPredicate, core.LogicalAndPredicate,
+                       core.FieldEqualPredicate, core.FieldOneOfPredicate,
+                       core.FieldRangePredicate, core.FieldLTPredicate,
+                       core.FieldGTPredicate, core.FieldLTEPredicate,
+                       core.FieldGTEPredicate, core.SelectionPredicate)
 
     if isinstance(predicate, NamedSelection):
         condition = {'selection': predicate._get_name()}
