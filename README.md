@@ -13,9 +13,6 @@ Interactive Data Lab](http://idl.cs.washington.edu/).*
 
 ## Altair Documentation
 
-**Note: Altair's documentation is currently in a very incomplete form; we are
-in the process of creating more comprehensive documentation. Stay tuned!**
-
 See [Altair's Documentation Site](http://altair-viz.github.io),
 as well as Altair's [Tutorial Notebooks](http://github.com/altair-viz/altair_notebooks).
 
