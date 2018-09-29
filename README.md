@@ -94,10 +94,11 @@ interactive tutorial and examples:
 
 https://github.com/altair-viz/altair_notebooks
 
-To launch a live notebook server with those notebook using [binder](https://beta.mybinder.org/),
-click on the following badge:
+To launch a live notebook server with those notebook using [binder](https://mybinder.org/) or
+[Colab](http://colab.research.google.com), click on one of the following badges:
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
 
 ## Project philosophy
 
