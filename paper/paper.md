@@ -74,7 +74,7 @@ provides a clean integration point for non-programming based visualization user-
 grammar of interactions [@2017-vega-lite] that allow users to specify interactive charts in an few lines of code.
 
 In addition to [static documentation](https://altair-viz.github.io/), Altair includes a set of Jupyter Notebooks with
-examples and an interactive tutorial. These notebooks can be by anyone with only a web-browser through
+examples and an interactive tutorial. These notebooks can be read by anyone with only a web-browser through
 [binder](https://mybinder.org/).
 
 What example to show?
