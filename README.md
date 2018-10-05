@@ -1,6 +1,10 @@
 # Altair
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
+[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
+
+[http://altair-viz.github.io](http://altair-viz.github.io)
 
 <a href="https://altair-viz.github.io"><img src="https://altair-viz.github.io/_static/altair-logo-light.png" align="left" hspace="40" vspace="6" alt="Altair logo" width="150px"></a>
 
@@ -38,6 +42,16 @@ alt.Chart(cars).mark_point().encode(
 ```
 
 ![Altair Visualization](images/cars.png?raw=true)
+
+## Getting your Questions Answered
+
+If you have a question that is not addressed in the documentation, there are several ways to ask:
+
+- open a [Github Issue](https://github.com/altair-viz/altair/issues)
+- post a [StackOverflow Question](https://stackoverflow.com/questions/tagged/altair) (be sure to use the `altair` tag)
+- ask on the [Altair Google Group](https://groups.google.com/forum/#!forum/altair-viz)
+
+We'll do our best to get your question answered
 
 ## A Python API for statistical visualizations
 
