@@ -56,8 +56,8 @@ properties (position, color, size, etc.).
 
 Altair is based on the Vega-Lite visualization grammar [@2017-vega-lite], which allows a wide range of statistical
 visualizations to be expressed using a small number of grammar primitives. Vega-Lite implements a view composition
-algebra in conjunction with a novel grammar of interactions [@2017-vega-lite] that allow users to specify interactive
-charts in an few lines of code. Vega-Lite is declarative; visualizations are specified using JSON data that follows the
+algebra in conjunction with a novel grammar of interactions that allow users to specify interactive charts in an few
+lines of code. Vega-Lite is declarative; visualizations are specified using JSON data that follows the
 [Vega-Lite JSON schema](https://github.com/vega/schema). As a Python library, Altair provides an API oriented towards
 scientists and data scientists doing exploratory data analysis [@1977-exploratory]. Altair's Python API emits Vega-Lite
 JSON data, which is then rendered in a user-interface such as the Jupyter Notebook, JupyterLab, or nteract using the
@@ -65,10 +65,10 @@ JSON data, which is then rendered in a user-interface such as the Jupyter Notebo
 specification [@2016-reactive-vega-architecture], which is then parsed and executed using a reactive runtime that
 internally makes use of D3.js [@2011-d3]. 
 
-The declarative nature of the Vega-Lite visualization grammar [@2005-grammar], and its encoding in a formal JSON schema,
-provide Altair with a number of benefits. First, much of the Altair Python code and tests are generated
-from the Vega-Lite JSON schema, ensuring strict conformance with the Vega-Lite specification. Second, the JSON data
-produced by Altair and consumed by Vega-Lite provides a natural serialization and file format for statistical
+The declarative nature of the Vega-Lite visualization grammar [@2005-grammar, @2017-vega-lite], and its encoding in a
+formal JSON schema, provide Altair with a number of benefits. First, much of the Altair Python code and tests are
+generated from the Vega-Lite JSON schema, ensuring strict conformance with the Vega-Lite specification. Second, the JSON
+data produced by Altair and consumed by Vega-Lite provides a natural serialization and file format for statistical
 visualizations. This is leveraged by JupyterLab, which provides built-in rendering of these files. Third, the JSON data 
 provides a clean integration point for non-programming based visualization user-interfaces such as Voyager
 [@2016-voyager,@2017-voyager2].
