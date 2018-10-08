@@ -372,7 +372,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         )
         return self.save(fp, format=None, **kwargs)
 
-    def save(self, fp, format=None, override_data_transformer=False, **kwargs):
+    def save(self, fp, format=None, **kwargs):
         """Save a chart to file in a variety of formats
 
         Supported formats are json, html, png, svg
