@@ -403,11 +403,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # By default we override the data transformer. This makes it so
         # that save() will succeed even for large datasets that would
         # normally trigger a MaxBinsError
-        if override_data_transformer:
+        if data_transformers.active != 'default':
+            result = save(**kwds)
+        else:
             with data_transformers.enable('default', max_rows=None):
                 result = save(**kwds)
-        else:
-            result = save(**kwds)
         return result
 
     # Layering and stacking
