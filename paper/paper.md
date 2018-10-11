@@ -30,6 +30,9 @@ authors:
   - name: Ben Welsh
     orcid: 0000-0002-5200-7269
     affiliation: 5
+  - name: Scott Sievert
+    orcid: 0000-0002-4275-3452
+    affiliation: 6
     
 affiliations:
   - name: University of Washington
@@ -42,6 +45,8 @@ affiliations:
     index: 4
   - name: Los Angeles Times Data Desk
     index: 5
+  - name: University of Wisconsin--Madison
+    index: 6
 date: 07 August 2018
 bibliography: paper.bib
 ---
