@@ -5,12 +5,10 @@ This example shows how to make a stem and leaf plot.
 """
 # category: other charts
 import altair as alt
-import pandas as pd
-import numpy as np
-np.random.seed(42)
 
 # Generating random data
-df = pd.DataFrame({'samples': np.random.normal(50, 15, 100).astype(int).astype(str)})
+alt.pd.np.random.seed(42)
+df = alt.pd.DataFrame({'samples': alt.pd.np.random.normal(50, 15, 100).astype(int).astype(str)})
 
 # Splitting stem and leaf
 df['stem'] = df['samples'].str[:-1]

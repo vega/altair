@@ -5,9 +5,8 @@ This example shows a basic horizontal bar chart with labels created with Altair.
 """
 # category: bar charts
 import altair as alt
-import pandas as pd
 
-data = pd.DataFrame({
+data = alt.pd.DataFrame({
     'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
     'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
 })
@@ -21,8 +20,6 @@ text = bars.mark_text(
     align='left',
     baseline='middle',
     dx=3
-).encode(
-    text='b'
-)
+).encode(text='b')
 
 bars + text

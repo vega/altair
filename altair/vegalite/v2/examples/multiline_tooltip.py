@@ -14,12 +14,10 @@ and tie a *nearest* selection to these, tied to the "x" field.
 """
 # category: interactive charts
 import altair as alt
-import pandas as pd
-import numpy as np
 
-np.random.seed(42)
-data = pd.DataFrame(np.cumsum(np.random.randn(100, 3), 0).round(2),
-                    columns=['A', 'B', 'C'], index=pd.RangeIndex(100, name='x'))
+alt.pd.np.random.seed(42)
+data = alt.pd.DataFrame(alt.pd.np.cumsum(alt.pd.np.random.randn(100, 3), 0).round(2),
+                    columns=['A', 'B', 'C'], index=alt.pd.RangeIndex(100, name='x'))
 data = data.reset_index().melt('x', var_name='category', value_name='y')
 
 # Create a selection that chooses the nearest point & selects based on x-value

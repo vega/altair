@@ -5,9 +5,8 @@ This example shows a basic scatter plot with labels created with Altair.
 """
 # category: scatter plots
 import altair as alt
-import pandas as pd
 
-data = pd.DataFrame({
+data = alt.pd.DataFrame({
     'x': [1, 3, 5, 7, 9],
     'y': [1, 3, 5, 7, 9],
     'label': ['A', 'B', 'C', 'D', 'E']

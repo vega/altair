@@ -5,9 +5,8 @@ This example shows how to make a Horizon Graph with 2 layers. (See https://idl.c
 """
 # category: area charts
 import altair as alt
-import pandas as pd
 
-df = pd.DataFrame([
+df = alt.pd.DataFrame([
     {"x": 1,  "y": 28}, {"x": 2,  "y": 55},
     {"x": 3,  "y": 43}, {"x": 4,  "y": 91},
     {"x": 5,  "y": 81}, {"x": 6,  "y": 53},

@@ -12,32 +12,30 @@ aggregating identical metadata for the final plot.
 """
 # category: interactive charts
 import altair as alt
-import pandas as pd
-import numpy as np
 
-np.random.seed(0)
+alt.pd.np.random.seed(0)
 
 n_objects = 20
 n_times = 50
 
 # Create one (x, y) pair of metadata per object
-locations = pd.DataFrame({
+locations = alt.pd.DataFrame({
     'id': range(n_objects),
-    'x': np.random.randn(n_objects),
-    'y': np.random.randn(n_objects)
+    'x': alt.pd.np.random.randn(n_objects),
+    'y': alt.pd.np.random.randn(n_objects)
 })
 
 # Create a 50-element time-series for each object
-timeseries = pd.DataFrame(np.random.randn(n_times, n_objects).cumsum(0),
+timeseries = alt.pd.DataFrame(alt.pd.np.random.randn(n_times, n_objects).cumsum(0),
                           columns=locations['id'],
-                          index=pd.RangeIndex(0, n_times, name='time'))
+                          index=alt.pd.RangeIndex(0, n_times, name='time'))
 
 # Melt the wide-form timeseries into a long-form view
 timeseries = timeseries.reset_index().melt('time')
 
 # Merge the (x, y) metadata into the long-form view
 timeseries['id'] = timeseries['id'].astype(int)  # make merge not complain
-data = pd.merge(timeseries, locations, on='id')
+data = alt.pd.merge(timeseries, locations, on='id')
 
 # Data is prepared, now make a chart
 

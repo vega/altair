@@ -6,9 +6,8 @@ as a percentage of total values.
 """
 # category: bar charts
 import altair as alt
-import pandas as pd
 
-activities = pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exercise'],
+activities = alt.pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exercise'],
                            'Time': [8, 2, 4, 8, 2]})
 
 alt.Chart(activities).mark_bar().encode(
