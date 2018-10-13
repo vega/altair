@@ -6,7 +6,6 @@ y-axis of a chart as percentages.
 """
 # category: line charts
 import altair as alt
-from altair.expr import datum
 from vega_datasets import data
 
 source = data.jobs.url
@@ -18,5 +17,5 @@ alt.Chart(source).mark_line().encode(
 ).properties(
     title='Percent of work-force working as Welders'
 ).transform_filter(
-    datum.job == 'Welder'
+    alt.datum.job == 'Welder'
 )
