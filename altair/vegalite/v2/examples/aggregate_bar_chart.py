@@ -6,7 +6,6 @@ by age in the year 2000.
 """
 # category: bar charts
 import altair as alt
-from altair.expr import datum
 from vega_datasets import data
 
 source = data.population()
@@ -18,5 +17,5 @@ alt.Chart(source).mark_bar().encode(
     height=300,
     width=300
 ).transform_filter(
-    datum.year == 2000
+    alt.datum.year == 2000
 )

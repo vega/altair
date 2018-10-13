@@ -5,7 +5,6 @@ This example shows a visualization of global deaths from natural disasters.
 """
 # category: case studies
 import altair as alt
-from altair.expr import datum
 from vega_datasets import data
 
 source = data.disasters()
@@ -26,5 +25,5 @@ alt.Chart(source).mark_circle(
     width=480,
     height=350
 ).transform_filter(
-    datum.Entity != 'All natural disasters'
+    alt.datum.Entity != 'All natural disasters'
 )

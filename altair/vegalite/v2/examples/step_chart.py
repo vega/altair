@@ -10,7 +10,6 @@ The full list of interpolation options includes 'linear',
 """
 # category: line charts
 import altair as alt
-from altair.expr import datum
 from vega_datasets import data
 
 source = data.stocks()
@@ -19,5 +18,5 @@ alt.Chart(source).mark_line(interpolate='step-after').encode(
     x='date',
     y='price'
 ).transform_filter(
-    datum.symbol == 'GOOG'
+    alt.datum.symbol == 'GOOG'
 )

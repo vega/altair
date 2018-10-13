@@ -6,7 +6,6 @@ An example of a layered chart of text over a heatmap using the cars dataset.
 """
 # category: other charts
 import altair as alt
-from altair.expr import datum
 from vega_datasets import data
 
 source = data.cars()
@@ -21,7 +20,7 @@ text = alt.Chart(source).mark_text(baseline='middle').encode(
     x='Cylinders:O',
     y='Origin:O',
     text='count()',
-    color=alt.condition(datum['count_*'] > 100,
+    color=alt.condition(alt.datum['count_*'] > 100,
                         alt.value('black'),
                         alt.value('white'))
 )

@@ -7,7 +7,6 @@ encoded on the age groups and x-axes encoded on gender.
 """
 # category: bar charts
 import altair as alt
-from altair.expr import datum, if_
 from vega_datasets import data
 
 source = data.population()
@@ -22,7 +21,7 @@ alt.Chart(source).mark_bar(stroke='transparent').encode(
 ).configure_axis(
     domainWidth=0.8
 ).transform_filter(
-    datum.year == 2000
+    alt.datum.year == 2000
 ).transform_calculate(
-    'gender', if_(datum.sex == 2, 'Female', 'Male')
+    'gender', alt.expr.if_(alt.datum.sex == 2, 'Female', 'Male')
 )

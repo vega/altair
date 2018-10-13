@@ -7,13 +7,12 @@ sorted by `['MSFT', 'AAPL', 'IBM', 'AMZN']`
 '''
 # category: area charts
 import altair as alt
-from altair.expr import datum
 from vega_datasets import data
 
 source = data.stocks()
 
 alt.Chart(source).transform_filter(
-    datum.symbol != 'GOOG'
+    alt.datum.symbol != 'GOOG'
 ).mark_area().encode(
     x='date:T',
     y='price:Q',

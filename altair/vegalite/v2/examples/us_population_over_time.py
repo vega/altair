@@ -7,7 +7,6 @@ distribution over time.
 """
 # category: case studies
 import altair as alt
-from altair.expr import datum, if_
 from vega_datasets import data
 
 source = data.population()
@@ -28,7 +27,7 @@ alt.Chart(source).mark_bar().encode(
 ).add_selection(
     select_year
 ).transform_calculate(
-    "sex", if_(datum.sex == 1, "Male", "Female")
+    "sex", alt.expr.if_(alt.datum.sex == 1, "Male", "Female")
 ).transform_filter(
     select_year
 )
