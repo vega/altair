@@ -26,4 +26,4 @@ lower = upper.properties(
     height=60
 ).add_selection(brush)
 
-alt.vconcat(upper, lower, data=sp500)
+alt.vconcat(upper, lower, data=source)

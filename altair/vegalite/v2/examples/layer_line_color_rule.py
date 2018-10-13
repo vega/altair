@@ -20,7 +20,7 @@ line = alt.Chart(source).mark_line().encode(
     title="Daily closing prices with their aggregate prices"
 ).interactive(bind_y=False)
 
-rule = alt.Chart(stocks).mark_rule().encode(
+rule = alt.Chart(source).mark_rule().encode(
     alt.Y('average(price)'),
     color='symbol',
     size=alt.value(2)
