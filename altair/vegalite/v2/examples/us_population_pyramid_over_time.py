@@ -7,7 +7,6 @@ distribution over time.
 '''
 # category: case studies
 import altair as alt
-from altair.expr import datum, if_
 from vega_datasets import data
 
 pop = data.population.url
@@ -20,7 +19,7 @@ base = alt.Chart(pop).add_selection(
 ).transform_filter(
     select_year
 ).transform_calculate(
-    gender=if_(datum.sex == 1, 'Male', 'Female')
+    gender=alt.expr.if_(alt.datum.sex == 1, 'Male', 'Female')
 )
 
 title = alt.Axis(title='population')
@@ -28,7 +27,7 @@ color_scale = alt.Scale(domain=['Male', 'Female'],
                         range=['#1f77b4', '#e377c2'])
 
 left = base.transform_filter(
-    datum.gender == 'Female'
+    alt.datum.gender == 'Female'
 ).encode(
     y=alt.X('age:O', axis=None),
     x=alt.X('sum(people):Q', axis=title, sort=alt.SortOrder('descending')),
@@ -41,7 +40,7 @@ middle = base.encode(
 ).mark_text().properties(width=20)
 
 right = base.transform_filter(
-    datum.gender == 'Male'
+    alt.datum.gender == 'Male'
 ).encode(
     y=alt.X('age:O', axis=None),
     x=alt.X('sum(people):Q', axis=title),
