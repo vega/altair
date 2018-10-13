@@ -7,7 +7,8 @@ This example shows the 2010 daily max temperature (F) in Seattle, WA.
 import altair as alt
 from vega_datasets import data
 
-source = data.seattle_temps()
+# Since the data is more than 5,000 rows we'll import it from a URL
+source = data.seattle_temps.url
 
 alt.Chart(source).mark_rect().encode(
     alt.X('date:O', timeUnit='date') ,
