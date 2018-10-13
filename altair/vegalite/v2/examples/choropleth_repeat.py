@@ -7,7 +7,7 @@ Three choropleths representing disjoint data from the same table.
 import altair as alt
 from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m(), 'states')
+states = alt.topo_feature(data.us_10m.url, 'states')
 pop_eng_hur = data.population_engineers_hurricanes()
 variable_list = ['population', 'engineers', 'hurricanes']
 
