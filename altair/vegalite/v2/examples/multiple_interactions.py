@@ -14,11 +14,11 @@ This example shows how multiple user inputs can be layered onto a chart. The fou
 import altair as alt
 from vega_datasets import data
 
-
-movies = alt.UrlData(data.movies(), format=alt.DataFormat(parse={"Release_Date":"date"}))
-
+movies = alt.UrlData(
+    data.movies.url,
+    format=alt.DataFormat(parse={"Release_Date":"date"})
+)
 ratings = ['G', 'NC-17', 'PG', 'PG-13', 'R']
-
 genres = ['Action', 'Adventure', 'Black Comedy', 'Comedy',
        'Concert/Performance', 'Documentary', 'Drama', 'Horror', 'Musical',
        'Romantic Comedy', 'Thriller/Suspense', 'Western']

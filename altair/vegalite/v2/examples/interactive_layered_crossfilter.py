@@ -10,7 +10,7 @@ import altair as alt
 from vega_datasets import data
 
 source = alt.UrlData(
-    data.flights_2k(),
+    data.flights_2k.url,
     format={'parse': {'date': 'date'}}
 )
 
