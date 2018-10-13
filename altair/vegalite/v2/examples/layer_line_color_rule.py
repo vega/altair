@@ -9,9 +9,9 @@ with a layered rule showing the average values.
 import altair as alt
 from vega_datasets import data
 
-stocks = data.stocks()
+source = data.stocks()
 
-line = alt.Chart(stocks).mark_line().encode(
+line = alt.Chart(source).mark_line().encode(
     x='date',
     y='price',
     color='symbol'

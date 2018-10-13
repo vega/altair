@@ -22,11 +22,11 @@ that some of its noisiest authorities insisted on its being received, for good
 or for evil, in the superlative degree of comparison only.
 """
 
-data = pd.DataFrame(
+source = pd.DataFrame(
     {'letters': np.array([c for c in text if c.isalpha()])}
 )
-                     
-alt.Chart(data).transform_aggregate(
+
+alt.Chart(source).transform_aggregate(
     count='count()',
     groupby=['letters']
 ).transform_window(

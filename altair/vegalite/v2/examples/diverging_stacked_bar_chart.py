@@ -6,7 +6,7 @@ This example shows a diverging stacked bar chart for sentiments towards a set of
 # category: bar charts
 import altair as alt
 
-data =     [
+source = alt.pd.DataFrame([
       {
         "question": "Question 1",
         "type": "Strongly disagree",
@@ -334,25 +334,26 @@ data =     [
         "percentage_start": 0,
         "percentage_end": 100
       }
-    ]
-
+])
 
 color_scale = alt.Scale(
-            domain=["Strongly disagree",
-            "Disagree",
-            "Neither agree nor disagree",
-            "Agree",
-            "Strongly agree"],
-            range=["#c30d24", "#f3a583", "#cccccc", "#94c6da", "#1770ab"]
-        )
+    domain=[
+        "Strongly disagree",
+        "Disagree",
+        "Neither agree nor disagree",
+        "Agree",
+        "Strongly agree"
+    ],
+    range=["#c30d24", "#f3a583", "#cccccc", "#94c6da", "#1770ab"]
+)
 
-y_axis = alt.Axis(title='Question',
-                  offset=5,
-                  ticks=False,
-                  minExtent=60,
-                  domain=False)
-
-source = alt.pd.DataFrame(data)
+y_axis = alt.Axis(
+    title='Question',
+    offset=5,
+    ticks=False,
+    minExtent=60,
+    domain=False
+)
 
 alt.Chart(source).mark_bar().encode(
     x='percentage_start:Q',

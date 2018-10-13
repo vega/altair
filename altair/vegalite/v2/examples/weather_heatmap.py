@@ -7,11 +7,11 @@ This example shows the 2010 daily max temperature (F) in Seattle, WA.
 import altair as alt
 from vega_datasets import data
 
-df = data.seattle_temps.url
+source = data.seattle_temps()
 
-alt.Chart(df).mark_rect().encode(
+alt.Chart(source).mark_rect().encode(
     alt.X('date:O', timeUnit='date') ,
-    alt.Y('date:O', timeUnit='month'), 
+    alt.Y('date:O', timeUnit='month'),
     alt.Color('temp:Q', aggregate='max'),
     tooltip=[alt.Tooltip('date:T', timeUnit='monthdate', title='Date'),
              alt.Tooltip('temp:Q', aggregate='max', title='Max Temp')]

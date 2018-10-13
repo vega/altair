@@ -9,14 +9,14 @@ on https://bl.ocks.org/g3o2/bd4362574137061c243a2994ba648fb8.
 import altair as alt
 from vega_datasets import data
 
-cars = data.cars()
+source = data.cars()
 
 brush = alt.selection(type='interval')
 
 tick_axis = alt.Axis(labels=False, domain=False, ticks=False)
 tick_axis_notitle = alt.Axis(labels=False, domain=False, ticks=False, title='')
 
-points = alt.Chart(cars).mark_point().encode(
+points = alt.Chart(source).mark_point().encode(
     x=alt.X('Miles_per_Gallon', axis=alt.Axis(title='')),
     y=alt.Y('Horsepower', axis=alt.Axis(title='')),
     color=alt.condition(brush, 'Origin', alt.value('grey'))

@@ -8,11 +8,11 @@ points across multiple facets.
 import altair as alt
 from vega_datasets import data
 
-cars = data.cars()
+source = data.cars()
 
 brush = alt.selection(type='interval', resolve='global')
 
-base = alt.Chart(cars).mark_point().encode(
+base = alt.Chart(source).mark_point().encode(
     y='Miles_per_Gallon',
     color=alt.condition(brush, 'Origin', alt.ColorValue('gray'))
 ).add_selection(

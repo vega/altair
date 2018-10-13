@@ -7,9 +7,9 @@ This example shows how to make a normalized stacked area chart.
 import altair as alt
 from vega_datasets import data
 
-iowa = data.iowa_electricity()
+source = data.iowa_electricity()
 
-alt.Chart(iowa).mark_area().encode(
+alt.Chart(source).mark_area().encode(
     x="year:T",
     y=alt.Y("net_generation:Q", stack="normalize"),
     color="source:N"

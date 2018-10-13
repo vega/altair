@@ -7,7 +7,7 @@ This example shows how to make a heatmap from binned quantitative data.
 import altair as alt
 from vega_datasets import data
 
-source = data.movies.url
+source = data.movies()
 
 alt.Chart(source).mark_rect().encode(
     alt.X('IMDB_Rating:Q', bin=alt.Bin(maxbins=60)),

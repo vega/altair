@@ -9,7 +9,7 @@ This is adapted from Vega-Lite example https://vega.github.io/editor/#/examples/
 import pandas as pd
 import altair as alt
 
-df =  pd.DataFrame([
+source = pd.DataFrame([
       {'country': 'Great Britain', 'animal': 'cattle', 'col': 3},
       {'country': 'Great Britain', 'animal': 'cattle', 'col': 2},
       {'country': 'Great Britain', 'animal': 'cattle', 'col': 1},
@@ -66,7 +66,7 @@ color_scale = alt.Scale(
     range=['rgb(162,160,152)', 'rgb(194,81,64)', 'rgb(93,93,93)', 'rgb(91,131,149)']
 )
 
-alt.Chart(df).mark_point(filled=True).encode(
+alt.Chart(source).mark_point(filled=True).encode(
     alt.X('col:O', axis=None),
     alt.Y('animal:O', axis=None),
     alt.Row('country:N', header=alt.Header(title='')),

@@ -8,9 +8,9 @@ import altair as alt
 from altair.expr import datum, substring
 from vega_datasets import data
 
-zipcodes = data.zipcodes.url
+source = data.zipcodes()
 
-alt.Chart(zipcodes).mark_circle(size=3).encode(
+alt.Chart(source).mark_circle(size=3).encode(
     longitude='longitude:Q',
     latitude='latitude:Q',
     color='digit:N'

@@ -9,15 +9,15 @@ import altair as alt
 from altair.expr import datum
 from vega_datasets import data
 
-cars = data.cars.url
+source = data.cars()
 
-heatmap = alt.Chart(cars).mark_rect().encode(
+heatmap = alt.Chart(source).mark_rect().encode(
     alt.X('Cylinders:O', scale=alt.Scale(paddingInner=0)),
     alt.Y('Origin:O', scale=alt.Scale(paddingInner=0)),
     color='count()'
 )
 
-text = alt.Chart(cars).mark_text(baseline='middle').encode(
+text = alt.Chart(source).mark_text(baseline='middle').encode(
     x='Cylinders:O',
     y='Origin:O',
     text='count()',

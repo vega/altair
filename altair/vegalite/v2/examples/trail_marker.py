@@ -9,9 +9,9 @@ This shows a simple example of the trail mark using stock prices.
 import altair as alt
 from vega_datasets import data
 
-stocks = data.stocks.url
+source = data.stocks()
 
-alt.Chart(stocks).mark_trail().encode(
+alt.Chart(source).mark_trail().encode(
     x='date:T',
     y='price:Q',
     size='price:Q',

@@ -8,7 +8,7 @@ import altair as alt
 from altair.expr import datum, if_
 from vega_datasets import data
 
-source = data.population.url
+source = data.population()
 
 alt.Chart(source).mark_bar(opacity=0.7).encode(
     alt.X('age:O', scale=alt.Scale(rangeStep=17)),

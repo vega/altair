@@ -7,7 +7,7 @@ This example shows github contributions by the day of week and hour of the day.
 import altair as alt
 from vega_datasets import data
 
-source = data.github.url
+source = data.github()
 
 alt.Chart(source).mark_circle().encode(
     x='hours(time):O',

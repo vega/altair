@@ -8,8 +8,8 @@ overlayed on a map.
 import altair as alt
 from vega_datasets import data
 
-states = alt.topo_feature(data.us_10m.url, 'states')
-capitals = data.us_state_capitals.url
+states = alt.topo_feature(data.us_10m(), 'states')
+capitals = data.us_state_capitals()
 
 # US states background
 background = alt.Chart(states).mark_geoshape(

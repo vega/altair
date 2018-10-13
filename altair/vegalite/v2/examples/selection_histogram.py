@@ -9,7 +9,7 @@ of items in each category within the selection.
 import altair as alt
 from vega_datasets import data
 
-cars = data.cars.url
+source = data.cars()
 
 brush = alt.selection(type='interval')
 
@@ -29,4 +29,4 @@ bars = alt.Chart().mark_bar().encode(
     brush
 )
 
-alt.vconcat(points, bars, data=cars)
+alt.vconcat(points, bars, data=source)

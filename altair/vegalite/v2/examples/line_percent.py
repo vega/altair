@@ -9,7 +9,7 @@ import altair as alt
 from altair.expr import datum
 from vega_datasets import data
 
-source = data.jobs.url
+source = data.jobs()
 
 alt.Chart(source).mark_line().encode(
     alt.X('year:O'),

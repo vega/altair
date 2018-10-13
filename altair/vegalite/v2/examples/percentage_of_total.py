@@ -8,10 +8,10 @@ as a percentage of total values.
 import altair as alt
 import pandas as pd
 
-activities = pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exercise'],
+source = pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exercise'],
                            'Time': [8, 2, 4, 8, 2]})
 
-alt.Chart(activities).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     alt.X('PercentOfTotal:Q', axis=alt.Axis(format='.0%')),
     y='Activity:N'
 ).transform_window(

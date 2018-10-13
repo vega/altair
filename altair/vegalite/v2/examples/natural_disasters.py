@@ -8,7 +8,7 @@ import altair as alt
 from altair.expr import datum
 from vega_datasets import data
 
-source = data.disasters.url
+source = data.disasters()
 
 alt.Chart(source).mark_circle(
     opacity=0.8,
