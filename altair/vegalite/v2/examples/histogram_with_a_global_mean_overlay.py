@@ -7,15 +7,17 @@ This example shows a histogram with a global mean overlay.
 import altair as alt
 from vega_datasets import data
 
-source = data.movies.url
+source = data.movies()
 
-bar = alt.Chart(source).mark_bar().encode(
-    alt.X('IMDB_Rating:Q', bin=True, axis=None),
-    alt.Y('count()')
+base = alt.Chart(source)
+
+bar = base.mark_bar().encode(
+    x=alt.X('IMDB_Rating', bin=True, axis=None),
+    y='count()'
 )
 
-rule = alt.Chart(source).mark_rule(color='red').encode(
-    x='mean(IMDB_Rating):Q',
+rule = base.mark_rule(color='red').encode(
+    x='mean(IMDB_Rating)',
     size=alt.value(5)
 )
 
