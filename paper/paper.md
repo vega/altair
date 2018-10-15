@@ -1,5 +1,5 @@
 ---
-title: 'Altair: interactive statistical visualizations for Python'
+title: 'Altair: Interactive Statistical Visualizations for Python'
 tags:
   - Python
   - visualization
