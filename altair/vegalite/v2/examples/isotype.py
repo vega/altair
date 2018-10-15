@@ -6,10 +6,9 @@ Inspired by [Only An Ocean Between, 1943](http://www.thomwhite.co.uk/?p=1303). P
 This is adapted from Vega-Lite example https://vega.github.io/editor/#/examples/vega-lite/isotype_bar_chart
 '''
 # category: case studies
-import pandas as pd
 import altair as alt
 
-df =  pd.DataFrame([
+df = alt.pd.DataFrame([
       {'country': 'Great Britain', 'animal': 'cattle', 'col': 3},
       {'country': 'Great Britain', 'animal': 'cattle', 'col': 2},
       {'country': 'Great Britain', 'animal': 'cattle', 'col': 1},

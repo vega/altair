@@ -5,9 +5,8 @@ This example shows how to make a simple Gantt chart.
 """
 # category: bar charts
 import altair as alt
-import pandas as pd
 
-data = pd.DataFrame([
+data = alt.pd.DataFrame([
     {"task": "A", "start": 1, "end": 3},
     {"task": "B", "start": 3, "end": 8},
     {"task": "C", "start": 8, "end": 10}

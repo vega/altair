@@ -4,27 +4,25 @@ Polynomial Fit Plot
 This example shows how to overlay data with a fitted polynomial
 """
 # category: scatter plots
-import numpy as np
-import pandas as pd
 import altair as alt
 
 # Generate some random data
-rng = np.random.RandomState(1)
+rng = alt.pd.np.random.RandomState(1)
 x = rng.rand(40) ** 2
 y = 10 - 1. / (x + 0.1) + rng.randn(40)
-df = pd.DataFrame({'x': x, 'y': y})
+df = alt.pd.DataFrame({'x': x, 'y': y})
 
 # Define the degree of the polynomial fit
 degree_list = [1, 3, 5]
 
 # Build a dataframe with the fitted data
-poly_data = pd.DataFrame({'xfit': np.linspace(df['x'].min(), df['x'].max(), 500)})
+poly_data = alt.pd.DataFrame({'xfit': alt.pd.np.linspace(df['x'].min(), df['x'].max(), 500)})
 
 for degree in degree_list:
-    poly_data[str(degree)] = np.poly1d(np.polyfit(df['x'], df['y'], degree))(poly_data['xfit'])
+    poly_data[str(degree)] = alt.pd.np.poly1d(alt.pd.np.polyfit(df['x'], df['y'], degree))(poly_data['xfit'])
 
 # Tidy the dataframe so 'degree' is a variable
-poly_data = pd.melt(poly_data,
+poly_data = alt.pd.melt(poly_data,
                     id_vars=['xfit'],
                     value_vars=[str(deg) for deg in degree_list],
                     var_name='degree', value_name='yfit')

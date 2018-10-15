@@ -5,9 +5,8 @@ A candlestick chart inspired from Protovis (http://mbostock.github.io/protovis/e
 """
 # category: bar charts
 import altair as alt
-import pandas as pd
 
-df = pd.DataFrame(
+df = alt.pd.DataFrame(
 [
       {
         "date": "2009-06-01",

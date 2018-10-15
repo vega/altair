@@ -2,27 +2,25 @@
 Scatter Plot and Histogram with Interval Selection
 ==================================================
 
-This example shows how to link a scatter plot and a histogram 
-together such that an interval selection in the histogram will 
-plot the selected values in the scatter plot. 
+This example shows how to link a scatter plot and a histogram
+together such that an interval selection in the histogram will
+plot the selected values in the scatter plot.
 
-Note that both subplots need to know about the `mbin` field created 
+Note that both subplots need to know about the `mbin` field created
 by the `transform_bin` method. In order to achieve this, the data is
-not passed to the `Chart()` instances creating the subplots, but 
+not passed to the `Chart()` instances creating the subplots, but
 directly in the `hconcat()` function, which joins the two plots together.
 """
 # category: interactive charts
 
 import altair as alt
-import pandas as pd
-import numpy as np
 
-x = np.random.normal(size=100)
-y = np.random.normal(size=100)
+x = alt.pd.np.random.normal(size=100)
+y = alt.pd.np.random.normal(size=100)
 
-m = np.random.normal(15, 1, size=100)
+m = alt.pd.np.random.normal(15, 1, size=100)
 
-df = pd.DataFrame({"x": x, "y":y, "m":m})
+df = alt.pd.DataFrame({"x": x, "y":y, "m":m})
 
 # interval selection in the scatter plot
 pts = alt.selection(type="interval", encodings=["x"])
@@ -45,7 +43,7 @@ mag = alt.Chart().mark_bar().encode(
     color=alt.condition(pts, alt.value("black"), alt.value("lightgray"))
 ).properties(
     selection=pts,
-    width=300, 
+    width=300,
     height=300
 )
 

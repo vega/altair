@@ -7,8 +7,6 @@ the first paragraph of Dickens' *A Tale of Two Cities* by number of occurances.
 """
 # category: case studies
 import altair as alt
-import pandas as pd
-import numpy as np
 
 # Excerpt from A Tale of Two Cities; public domain text
 text = """
@@ -22,10 +20,10 @@ that some of its noisiest authorities insisted on its being received, for good
 or for evil, in the superlative degree of comparison only.
 """
 
-data = pd.DataFrame(
-    {'letters': np.array([c for c in text if c.isalpha()])}
+data = alt.pd.DataFrame(
+    {'letters': alt.pd.np.array([c for c in text if c.isalpha()])}
 )
-                     
+
 alt.Chart(data).transform_aggregate(
     count='count()',
     groupby=['letters']
