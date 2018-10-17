@@ -98,3 +98,5 @@ on the bar chart. The selections drive filters in the other plot. The code for t
 
 We thank the many contributors that created examples, wrote documentation, and reported bugs. You can find an up-to-date
 list of contributors at https://github.com/altair-viz/altair/graphs/contributors.
+
+# References
