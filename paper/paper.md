@@ -56,7 +56,7 @@ bibliography: paper.bib
 Altair is a declarative statistical visualization library for Python.
 Statistical visualization is a constrained subset of data visualization focused on the creation of visualizations
 that are helpful in statistical modeling. The constrained model of statistical visualization is usually expressed
-in terms of a visualization grammar [2005-grammar] that specifies how input data is transformed and mapped to visual
+in terms of a visualization grammar [@2005-grammar] that specifies how input data is transformed and mapped to visual
 properties (position, color, size, etc.).
 
 Altair is based on the Vega-Lite visualization grammar [@2017-vega-lite], which allows a wide range of statistical
