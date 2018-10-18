@@ -96,7 +96,7 @@ on the bar chart. The selections drive filters in the other plot. The code for t
 
 # Acknowledgements
 
-We thank the many contributors that created examples, wrote documentation, and reported bugs. You can find an up-to-date
-list of contributors at https://github.com/altair-viz/altair/graphs/contributors.
+We thank the many contributors that created examples, wrote documentation, and reported bugs. You can find [an up-to-date
+list of contributors is on GitHub](https://github.com/altair-viz/altair/graphs/contributors).
 
 # References
