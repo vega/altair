@@ -1,8 +1,8 @@
 """
-Faceted Scatter Plot with Linked Brushing
------------------------------------------
+Multi-panel Scatter Plot with Linked Brushing
+---------------------------------------------
 This is an example of using an interval selection to control the color of
-points across multiple facets.
+points across multiple panels.
 """
 # category: interactive charts
 import altair as alt
