@@ -5,8 +5,9 @@ How to layer a tick chart on top of a bar chart.
 """
 # category: bar charts
 import altair as alt
+import pandas as pd
 
-source = alt.pd.DataFrame({
+source = pd.DataFrame({
     'project': ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     'score': [25, 57, 23, 19, 8, 47, 8],
     'goal': [25, 47, 30, 27, 38, 19, 4]

@@ -7,15 +7,17 @@ A simple scatter plot of a data set with errorbars.
 """
 # category: scatter plots
 import altair as alt
+import pandas as pd
+import numpy as np
 
 # generate some data points with uncertainties
-alt.pd.np.random.seed(0)
+np.random.seed(0)
 x = [1, 2, 3, 4, 5]
-y = alt.pd.np.random.normal(10, 0.5, size=len(x))
+y = np.random.normal(10, 0.5, size=len(x))
 yerr = 0.2
 
 # set up data frame
-source = alt.pd.DataFrame({"x":x, "y":y, "yerr":yerr})
+source = pd.DataFrame({"x":x, "y":y, "yerr":yerr})
 
 # the base chart
 base = alt.Chart(source)
