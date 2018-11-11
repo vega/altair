@@ -9,7 +9,7 @@ distribution over time.
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 pink_blue = alt.Scale(domain=('Male', 'Female'),
                       range=["steelblue", "salmon"])

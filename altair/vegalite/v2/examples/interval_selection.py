@@ -10,7 +10,7 @@ top chart can be selected by interacting with the bottom chart.
 import altair as alt
 from vega_datasets import data
 
-source = data.sp500()
+source = data.sp500.url
 
 brush = alt.selection(type='interval', encodings=['x'])
 

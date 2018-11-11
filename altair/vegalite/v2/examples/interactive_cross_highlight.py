@@ -9,7 +9,7 @@ see a detail of the distribution in the upper panel.
 import altair as alt
 from vega_datasets import data
 
-source = data.movies()
+source = data.movies.url
 
 pts = alt.selection(type="single", encodings=['x'])
 

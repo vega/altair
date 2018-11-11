@@ -7,7 +7,7 @@ This example shows a visualization of global deaths from natural disasters.
 import altair as alt
 from vega_datasets import data
 
-source = data.disasters()
+source = data.disasters.url
 
 alt.Chart(source).mark_circle(
     opacity=0.8,

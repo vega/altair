@@ -9,7 +9,7 @@ distribution over time.
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 slider = alt.binding_range(min=1850, max=2000, step=10)
 select_year = alt.selection_single(name='year', fields=['year'], bind=slider)

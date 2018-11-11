@@ -7,7 +7,7 @@ This example shows a ranged dot plot that uses 'layer' to convey changing life e
 import altair as alt
 from vega_datasets import data
 
-source = data.countries()
+source = data.countries.url
 
 chart = alt.layer(
     data=source

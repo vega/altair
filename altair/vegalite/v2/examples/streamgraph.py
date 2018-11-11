@@ -7,7 +7,7 @@ This example shows the streamgraph from vega-lite examples.
 import altair as alt
 from vega_datasets import data
 
-source = data.unemployment_across_industries()
+source = data.unemployment_across_industries.url
 
 alt.Chart(source).mark_area().encode(
     alt.X('yearmonth(date):T',

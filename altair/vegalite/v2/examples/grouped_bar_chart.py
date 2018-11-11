@@ -9,7 +9,7 @@ encoded on the age groups and x-axes encoded on gender.
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 alt.Chart(source).mark_bar(stroke='transparent').encode(
     alt.X('gender:N', scale=alt.Scale(rangeStep=12), axis=alt.Axis(title='')),

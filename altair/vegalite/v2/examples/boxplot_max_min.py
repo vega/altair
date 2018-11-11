@@ -10,7 +10,7 @@ https://vega.github.io/vega-lite/examples/box-plot_minmax_2D_vertical_normalized
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 # Define aggregate fields
 lower_box = 'q1(people):Q'

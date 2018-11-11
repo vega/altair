@@ -7,7 +7,7 @@ This example shows a basic bar chart with a single bar singled out for a highlig
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 alt.Chart(source).mark_bar().encode(
     x="year:O",

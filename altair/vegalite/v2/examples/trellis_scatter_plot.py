@@ -7,7 +7,7 @@ This example shows how to make a trellis scatter plot.
 import altair as alt
 from vega_datasets import data
 
-source = data.movies()
+source = data.movies.url
 
 alt.Chart(source).mark_point().encode(
     x='Worldwide_Gross:Q',

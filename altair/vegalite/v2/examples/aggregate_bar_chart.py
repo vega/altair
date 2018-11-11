@@ -8,7 +8,7 @@ by age in the year 2000.
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 alt.Chart(source).mark_bar().encode(
     x=alt.X('sum(people):Q', axis=alt.Axis(title='population')),
