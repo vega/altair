@@ -10,9 +10,9 @@ easier to hover over them.
 import altair as alt
 from vega_datasets import data
 
-cars = data.cars()
+source = data.cars()
 
-alt.Chart(cars).mark_circle(size=60).encode(
+alt.Chart(source).mark_circle(size=60).encode(
     x='Horsepower',
     y='Miles_per_Gallon',
     color='Origin',

@@ -1,11 +1,11 @@
 """
 Multiple Interations
 ====================
-This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows: 
+This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows:
 
 * Dropdown: Filters the movies by genre
 * Radio Buttons: Highlights certain films by Worldwide Gross
-* Mouse Drag and Scroll: Zooms the x and y scales to allow for panning. 
+* Mouse Drag and Scroll: Zooms the x and y scales to allow for panning.
 
 
 
@@ -14,11 +14,11 @@ This example shows how multiple user inputs can be layered onto a chart. The fou
 import altair as alt
 from vega_datasets import data
 
-
-movies = alt.UrlData(data.movies.url, format=alt.DataFormat(parse={"Release_Date":"date"}))
-
+movies = alt.UrlData(
+    data.movies.url,
+    format=alt.DataFormat(parse={"Release_Date":"date"})
+)
 ratings = ['G', 'NC-17', 'PG', 'PG-13', 'R']
-
 genres = ['Action', 'Adventure', 'Black Comedy', 'Comedy',
        'Concert/Performance', 'Documentary', 'Drama', 'Horror', 'Musical',
        'Romantic Comedy', 'Thriller/Suspense', 'Western']
@@ -75,7 +75,7 @@ highlight_ratings = base.add_selection(
 # Boolean selection for format changes
 input_checkbox = alt.binding_checkbox()
 checkbox_selection = alt.selection_single(bind=input_checkbox, name="Big Budget Films")
-                  
+
 size_checkbox_condition = alt.condition(checkbox_selection,
                                         alt.SizeValue(25),
                                         alt.Size('Hundred_Million_Production:Q')

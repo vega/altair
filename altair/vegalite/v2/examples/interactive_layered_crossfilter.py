@@ -9,8 +9,10 @@ of the other panels.
 import altair as alt
 from vega_datasets import data
 
-flights = alt.UrlData(data.flights_2k.url,
-                      format={'parse': {'date': 'date'}})
+source = alt.UrlData(
+    data.flights_2k.url,
+    format={'parse': {'date': 'date'}}
+)
 
 brush = alt.selection(type='interval', encodings=['x'])
 
@@ -25,23 +27,19 @@ base = alt.Chart().mark_bar().encode(
 )
 
 # blue background with selection
-background = base.properties(
-    selection=brush
-)
+background = base.properties(selection=brush)
 
 # yellow highlights on the transformed data
 highlight = base.encode(
     color=alt.value('goldenrod')
-).transform_filter(
-    brush
-)
+).transform_filter(brush)
 
 # layer the two charts & repeat
 alt.layer(
-    background, highlight,
-    data=flights
+    background,
+    highlight,
+    data=source
 ).transform_calculate(
-    "time", "hours(datum.date)"
-).repeat(
-    column=["distance", "delay", "time"]
-)
+    "time",
+    "hours(datum.date)"
+).repeat(column=["distance", "delay", "time"])

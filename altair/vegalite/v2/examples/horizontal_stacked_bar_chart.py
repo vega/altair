@@ -7,9 +7,9 @@ This is an example of a horizontal stacked bar chart using data which contains c
 import altair as alt
 from vega_datasets import data
 
-barley = data.barley()
+source = data.barley()
 
-alt.Chart(barley).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     x='sum(yield)',
     y='variety',
     color='site'

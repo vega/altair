@@ -7,7 +7,7 @@ A candlestick chart inspired from Protovis (http://mbostock.github.io/protovis/e
 import altair as alt
 import pandas as pd
 
-df = pd.DataFrame(
+source = pd.DataFrame(
 [
       {
         "date": "2009-06-01",
@@ -213,7 +213,7 @@ open_close_color = alt.condition("datum.open < datum.close",
                                  alt.value("#06982d"),
                                  alt.value("#ae1325"))
 
-rule = alt.Chart(df).mark_rule().encode(
+rule = alt.Chart(source).mark_rule().encode(
     alt.X(
         'yearmonthdate(date):T',
         scale=alt.Scale(domain=[{"month": 5, "date": 31, "year": 2009},
@@ -229,7 +229,7 @@ rule = alt.Chart(df).mark_rule().encode(
     color=open_close_color
 )
 
-bar = alt.Chart(df).mark_bar().encode(
+bar = alt.Chart(source).mark_bar().encode(
     x='yearmonthdate(date):T',
     y='open',
     y2='close',

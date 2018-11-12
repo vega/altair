@@ -9,7 +9,7 @@ distribution over time.
 import altair as alt
 from vega_datasets import data
 
-pop = data.population.url
+source = data.population.url
 
 pink_blue = alt.Scale(domain=('Male', 'Female'),
                       range=["steelblue", "salmon"])
@@ -17,7 +17,7 @@ pink_blue = alt.Scale(domain=('Male', 'Female'),
 slider = alt.binding_range(min=1900, max=2000, step=10)
 select_year = alt.selection_single(name="year", fields=['year'], bind=slider)
 
-alt.Chart(pop).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     x=alt.X('sex:N', axis=alt.Axis(title=None)),
     y=alt.Y('people:Q', scale=alt.Scale(domain=(0, 12000000))),
     color=alt.Color('sex:N', scale=pink_blue),

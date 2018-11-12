@@ -7,9 +7,9 @@ This example shows a basic bar chart with a single bar singled out for a highlig
 import altair as alt
 from vega_datasets import data
 
-population = data.population.url
+source = data.population.url
 
-alt.Chart(population).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     x="year:O",
     y="sum(people):Q",
     # The highlight will be set on the result of a conditional statement

@@ -18,9 +18,9 @@ import pandas as pd
 import numpy as np
 
 np.random.seed(42)
-data = pd.DataFrame(np.cumsum(np.random.randn(100, 3), 0).round(2),
+source = pd.DataFrame(np.cumsum(np.random.randn(100, 3), 0).round(2),
                     columns=['A', 'B', 'C'], index=pd.RangeIndex(100, name='x'))
-data = data.reset_index().melt('x', var_name='category', value_name='y')
+source = source.reset_index().melt('x', var_name='category', value_name='y')
 
 # Create a selection that chooses the nearest point & selects based on x-value
 nearest = alt.selection(type='single', nearest=True, on='mouseover',
@@ -61,4 +61,4 @@ rules = alt.Chart().mark_rule(color='gray').encode(
 
 # Put the five layers into a chart and bind the data
 alt.layer(line, selectors, points, rules, text,
-          data=data, width=600, height=300)
+          data=source, width=600, height=300)

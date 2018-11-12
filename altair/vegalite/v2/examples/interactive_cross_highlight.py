@@ -9,6 +9,8 @@ see a detail of the distribution in the upper panel.
 import altair as alt
 from vega_datasets import data
 
+source = data.movies.url
+
 pts = alt.selection(type="single", encodings=['x'])
 
 rect = alt.Chart(data.movies.url).mark_rect().encode(
@@ -29,7 +31,7 @@ circ = rect.mark_point().encode(
     pts
 )
 
-bar = alt.Chart(data.movies.url).mark_bar().encode(
+bar = alt.Chart(source).mark_bar().encode(
     x='Major_Genre:N',
     y='count()',
     color=alt.condition(pts, alt.ColorValue("steelblue"), alt.ColorValue("grey"))

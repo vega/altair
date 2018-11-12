@@ -11,10 +11,10 @@ import numpy as np
 import pandas as pd
 
 x = np.arange(100)
-data = pd.DataFrame({'x': x,
+source = pd.DataFrame({'x': x,
                      'sin(x)': np.sin(x / 5)})
 
-alt.Chart(data).mark_line().encode(
+alt.Chart(source).mark_line().encode(
     x='x',
     y='sin(x)'
 )

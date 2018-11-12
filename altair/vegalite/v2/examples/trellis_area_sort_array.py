@@ -9,8 +9,9 @@ sorted by `['MSFT', 'AAPL', 'IBM', 'AMZN']`
 import altair as alt
 from vega_datasets import data
 
+source = data.stocks()
 
-alt.Chart(data.stocks.url).transform_filter(
+alt.Chart(source).transform_filter(
     alt.datum.symbol != 'GOOG'
 ).mark_area().encode(
     x='date:T',

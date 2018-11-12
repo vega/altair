@@ -9,7 +9,7 @@ value within the selected interval.
 import altair as alt
 from vega_datasets import data
 
-weather = data.seattle_weather.url
+source = data.seattle_weather()
 brush = alt.selection(type='interval', encodings=['x'])
 
 bars = alt.Chart().mark_bar().encode(
@@ -27,4 +27,4 @@ line = alt.Chart().mark_rule(color='firebrick').encode(
     brush
 )
 
-alt.layer(bars, line, data=weather)
+alt.layer(bars, line, data=source)

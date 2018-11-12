@@ -13,11 +13,11 @@ x, y = np.meshgrid(range(-5, 5), range(-5, 5))
 z = x ** 2 + y ** 2
 
 # Convert this grid to columnar data expected by Altair
-data = pd.DataFrame({'x': x.ravel(),
+source = pd.DataFrame({'x': x.ravel(),
                      'y': y.ravel(),
                      'z': z.ravel()})
 
-alt.Chart(data).mark_rect().encode(
+alt.Chart(source).mark_rect().encode(
     x='x:O',
     y='y:O',
     color='z:Q'
