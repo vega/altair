@@ -1,7 +1,7 @@
 """
-LayerChart with Bar and Tick
-----------------------------
-This example shows how to layer two charts on top of one another.
+Bar and Tick Chart
+------------------
+How to layer a tick chart on top of a bar chart.
 """
 # category: bar charts
 import altair as alt
@@ -10,25 +10,25 @@ import pandas as pd
 source = pd.DataFrame({
     'project': ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
     'score': [25, 57, 23, 19, 8, 47, 8],
-    'goal': [25, 47, 30, 27, 38, 19, 4]}
-)
+    'goal': [25, 47, 30, 27, 38, 19, 4]
+})
 
-a = alt.Chart().mark_bar().encode(
+base = alt.Chart(source)
+
+bar = base.mark_bar().encode(
     x='project',
     y='score'
 )
 
-b = alt.Chart().mark_tick(
+tick = base.mark_tick(
     color='red',
+    thickness=2
 ).encode(
     x='project',
     y='goal'
 )
 
-alt.layer(a, b).properties(
-    data=source
-).configure_tick(
-    thickness=2,
+(bar + tick).configure_tick(
     bandSize=35  # controls the width of the tick
 ).configure_scale(
     rangeStep=40  # controls the width of the bar

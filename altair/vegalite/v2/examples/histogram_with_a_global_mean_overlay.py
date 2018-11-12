@@ -9,12 +9,14 @@ from vega_datasets import data
 
 source = data.movies.url
 
-bar = alt.Chart(source).mark_bar().encode(
-    alt.X('IMDB_Rating:Q', bin=True, axis=None),
-    alt.Y('count()')
+base = alt.Chart(source)
+
+bar = base.mark_bar().encode(
+    x=alt.X('IMDB_Rating:Q', bin=True, axis=None),
+    y='count()'
 )
 
-rule = alt.Chart(source).mark_rule(color='red').encode(
+rule = base.mark_rule(color='red').encode(
     x='mean(IMDB_Rating):Q',
     size=alt.value(5)
 )

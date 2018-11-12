@@ -6,11 +6,9 @@ A simple scatter plot of a data set with errorbars.
 
 """
 # category: scatter plots
-
 import altair as alt
-
-import numpy as np
 import pandas as pd
+import numpy as np
 
 # generate some data points with uncertainties
 np.random.seed(0)
@@ -21,21 +19,27 @@ yerr = 0.2
 # set up data frame
 source = pd.DataFrame({"x":x, "y":y, "yerr":yerr})
 
+# the base chart
+base = alt.Chart(source)
+
 # generate the points
-points = alt.Chart(source).mark_point(filled=True, size=50).encode(
-    alt.X("x",
-          scale=alt.Scale(domain=(0,6)),
-          axis=alt.Axis(title='x')
+points = base.mark_point(filled=True, size=50).encode(
+    x=alt.X(
+        "x",
+        scale=alt.Scale(domain=(0,6)),
+        axis=alt.Axis(title='x')
     ),
-    y=alt.Y('y',
-            scale=alt.Scale(zero=False, domain=(10, 11)),
-            axis=alt.Axis(title="y")),
+    y=alt.Y(
+        'y',
+        scale=alt.Scale(zero=False, domain=(10, 11)),
+        axis=alt.Axis(title="y")
+    ),
     color=alt.value('black')
 )
 
 # generate the error bars
-errorbars = alt.Chart(source).mark_rule().encode(
-    x=alt.X("x"),
+errorbars = base.mark_rule().encode(
+    x="x",
     y="ymin:Q",
     y2="ymax:Q"
 ).transform_calculate(

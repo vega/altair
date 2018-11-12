@@ -6,11 +6,12 @@ with marginal facetted histograms, and how to share their respective
 - x,some y-limits.
 """
 # category: other charts
-
 import altair as alt
 from vega_datasets import data
 
 source = data.iris()
+
+base = alt.Chart(source)
 
 xscale = alt.Scale(domain=(4.0, 8.0))
 yscale = alt.Scale(domain=(1.9, 4.55))
@@ -18,13 +19,13 @@ yscale = alt.Scale(domain=(1.9, 4.55))
 area_args = {'opacity': .3, 'interpolate': 'step'}
 blank_axis = alt.Axis(title='')
 
-points = alt.Chart(source).mark_circle().encode(
+points = base.mark_circle().encode(
     alt.X('sepalLength', scale=xscale),
     alt.Y('sepalWidth', scale=yscale),
     color='species',
 )
 
-top_hist = alt.Chart(source).mark_area(**area_args).encode(
+top_hist = base.mark_area(**area_args).encode(
     alt.X('sepalLength:Q',
           # when using bins, the axis scale is set through
           # the bin extent, so we do not specify the scale here
@@ -37,7 +38,7 @@ top_hist = alt.Chart(source).mark_area(**area_args).encode(
     alt.Color('species:N'),
 ).properties(height=60)
 
-right_hist = alt.Chart(source).mark_area(**area_args).encode(
+right_hist = base.mark_area(**area_args).encode(
     alt.Y('sepalWidth:Q',
           bin=alt.Bin(maxbins=20, extent=yscale.domain),
           stack=None,

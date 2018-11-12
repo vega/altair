@@ -11,7 +11,9 @@ from vega_datasets import data
 
 source = data.barley()
 
-points = alt.Chart(source).mark_point(filled=True).encode(
+base = alt.Chart(source)
+
+points = base.mark_point(filled=True).encode(
     alt.X(
         'mean(yield)',
         scale=alt.Scale(zero=False),
@@ -21,7 +23,7 @@ points = alt.Chart(source).mark_point(filled=True).encode(
     color=alt.value('black')
 )
 
-error_bars = alt.Chart(source).mark_rule().encode(
+error_bars = base.mark_rule().encode(
     x='ci0(yield)',
     x2='ci1(yield)',
     y='variety'
