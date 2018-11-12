@@ -240,6 +240,9 @@ by which a field can be specified within the full schema, and it is too difficul
 to account for all corner cases. Improving the user experience in this is a
 priority; see https://github.com/vega/vega-lite/issues/3576.
 
+For interactive charts, an empty plot can also be caused by your adblocker.
+Disabling the adblocker should fix this.
+
 Chart does not display at all
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 For all renderers, the chart is only displayed if the **last line of the cell
