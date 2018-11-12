@@ -7,12 +7,12 @@ This example shows a basic sorted bar chart.
 import altair as alt
 import pandas as pd
 
-data = pd.DataFrame({
+source = pd.DataFrame({
     'a': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
     'b': [28, 55, 43, 91, 81, 53, 19, 87, 52]
 })
 
-alt.Chart(data).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     x=alt.X('a', sort=alt.EncodingSortField(field='b', op='sum', order='descending')),
     y='b'
 )

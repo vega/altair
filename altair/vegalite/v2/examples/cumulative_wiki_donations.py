@@ -7,9 +7,9 @@ This chart shows cumulative donations to Wikipedia over the past 10 years. Inspi
 # category: case studies
 import altair as alt
 
-data = "https://frdata.wikimedia.org/donationdata-vs-day.csv"
+source = "https://frdata.wikimedia.org/donationdata-vs-day.csv"
 
-alt.Chart(data).mark_line().encode(
+alt.Chart(source).mark_line().encode(
     alt.X('monthdate(date):T', axis=alt.Axis(format='%B', title='Month')),
     alt.Y(
         'max(ytdsum):Q', stack=None,

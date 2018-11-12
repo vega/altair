@@ -10,12 +10,12 @@ https://bl.ocks.org/amitkaps/fe4238e716db53930b2f1a70d3401701
 import altair as alt
 from vega_datasets import data
 
-stocks = data.stocks.url
+source = data.stocks()
 
 highlight = alt.selection(type='single', on='mouseover',
                           fields=['symbol'], nearest=True)
 
-base = alt.Chart(stocks).encode(
+base = alt.Chart(source).encode(
     x='date:T',
     y='price:Q',
     color='symbol:N'

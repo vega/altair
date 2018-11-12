@@ -10,7 +10,9 @@ a google search for the car name.
 import altair as alt
 from vega_datasets import data
 
-alt.Chart(data.cars.url).transform_calculate(
+source = data.cars()
+
+alt.Chart(source).transform_calculate(
     url='https://www.google.com/search?q=' + alt.datum.Name
 ).mark_point().encode(
     x='Horsepower:Q',

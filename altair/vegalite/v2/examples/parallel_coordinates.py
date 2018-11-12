@@ -13,10 +13,10 @@ This example shows a parallel coordinates chart with the Iris dataset.
 import altair as alt
 from vega_datasets import data
 
-iris = data.iris()
-iris_transformed = iris.reset_index().melt(['species', 'index'])
+source = data.iris()
+source_transformed = source.reset_index().melt(['species', 'index'])
 
-alt.Chart(iris_transformed).mark_line().encode(
+alt.Chart(source_transformed).mark_line().encode(
     x='variable:N',
     y='value:Q',
     color='species:N',

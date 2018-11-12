@@ -6,7 +6,6 @@ install:
 test :
 	python -m pytest --pyargs --doctest-modules altair
 
-
 test-coverage:
 	python -m pytest --pyargs --doctest-modules --cov=altair --cov-report term altair
 

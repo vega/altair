@@ -8,8 +8,8 @@ airports on a background of US states.
 import altair as alt
 from vega_datasets import data
 
+airports = data.airports()
 states = alt.topo_feature(data.us_10m.url, feature='states')
-airports = data.airports.url
 
 # US states background
 background = alt.Chart(states).mark_geoshape(

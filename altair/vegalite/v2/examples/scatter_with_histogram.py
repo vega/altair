@@ -22,7 +22,7 @@ y = np.random.normal(size=100)
 
 m = np.random.normal(15, 1, size=100)
 
-df = pd.DataFrame({"x": x, "y":y, "m":m})
+source = pd.DataFrame({"x": x, "y":y, "m":m})
 
 # interval selection in the scatter plot
 pts = alt.selection(type="interval", encodings=["x"])
@@ -50,8 +50,10 @@ mag = alt.Chart().mark_bar().encode(
 )
 
 # build the chart:
-alt.hconcat(points, mag,
-    data=df
+alt.hconcat(
+    points,
+    mag,
+    data=source
 ).transform_bin(
     "mbin",
     field="m",

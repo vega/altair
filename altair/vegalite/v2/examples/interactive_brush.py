@@ -9,13 +9,11 @@ range.
 import altair as alt
 from vega_datasets import data
 
-cars = data.cars.url
+source = data.cars()
 brush = alt.selection(type='interval')
 
-alt.Chart(cars).mark_point().encode(
+alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))
-).add_selection(
-    brush
-)
+).add_selection(brush)

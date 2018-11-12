@@ -9,9 +9,9 @@ dataset.
 import altair as alt
 from vega_datasets import data
 
-iris = data.iris()
+source = data.iris()
 
-alt.Chart(iris).mark_point().encode(
+alt.Chart(source).mark_point().encode(
     x='petalWidth',
     y='petalLength',
     color='species',

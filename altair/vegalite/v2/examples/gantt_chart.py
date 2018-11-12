@@ -7,13 +7,13 @@ This example shows how to make a simple Gantt chart.
 import altair as alt
 import pandas as pd
 
-data = pd.DataFrame([
+source = pd.DataFrame([
     {"task": "A", "start": 1, "end": 3},
     {"task": "B", "start": 3, "end": 8},
     {"task": "C", "start": 8, "end": 10}
 ])
 
-alt.Chart(data).mark_bar().encode(
+alt.Chart(source).mark_bar().encode(
     x='start',
     x2='end',
     y='task'
