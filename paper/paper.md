@@ -61,7 +61,7 @@ properties (position, color, size, etc.).
 
 Altair is based on the Vega-Lite visualization grammar [@2017-vega-lite], which allows a wide range of statistical
 visualizations to be expressed using a small number of grammar primitives. Vega-Lite implements a view composition
-algebra in conjunction with a novel grammar of interactions that allow users to specify interactive charts in an few
+algebra in conjunction with a novel grammar of interactions that allow users to specify interactive charts in a few
 lines of code. Vega-Lite is declarative; visualizations are specified using JSON data that follows the
 [Vega-Lite JSON schema](https://github.com/vega/schema). As a Python library, Altair provides an API oriented towards
 scientists and data scientists doing exploratory data analysis [@1977-exploratory]. Altair's Python API emits Vega-Lite
