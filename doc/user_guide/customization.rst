@@ -21,7 +21,7 @@ For example, suppose we are creating a scatter plot of the ``cars`` dataset:
 
    import altair as alt
    from vega_datasets import data
-   cars = data.cars.url
+   cars = data.cars()
 
    alt.Chart(cars).mark_point().encode(
        x='Acceleration:Q',
@@ -128,7 +128,7 @@ encodings. For example, consider the following plot:
     import altair as alt
     from vega_datasets import data
 
-    cars = data.cars.url
+    cars = data.cars()
 
     alt.Chart(cars).mark_point().encode(
         x='Acceleration:Q',

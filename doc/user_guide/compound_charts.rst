@@ -37,7 +37,7 @@ same data; for example:
     from altair.expr import datum
 
     from vega_datasets import data
-    stocks = data.stocks.url
+    stocks = data.stocks()
 
     base = alt.Chart(stocks).encode(
         x='date:T',
@@ -79,7 +79,7 @@ heat-map:
     import altair as alt
     from vega_datasets import data
 
-    source = data.movies.url
+    source = data.movies()
 
     heatmap = alt.Chart(source).mark_rect().encode(
         alt.X('IMDB_Rating:Q', bin=True),
@@ -124,7 +124,7 @@ distribution of its points:
     import altair as alt
     from vega_datasets import data
 
-    iris = data.iris.url
+    iris = data.iris()
 
     chart1 = alt.Chart(iris).mark_point().encode(
         x='petalLength:Q',
@@ -176,7 +176,7 @@ with a ``brush`` selection to add interaction:
 
     import altair as alt
     from vega_datasets import data
-    sp500 = data.sp500.url
+    sp500 = data.sp500()
 
     brush = alt.selection(type='interval', encodings=['x'])
 
@@ -219,7 +219,7 @@ showing how ``repeat`` can be used to build the chart more efficiently:
     import altair as alt
     from vega_datasets import data
 
-    iris = data.iris.url
+    iris = data.iris()
 
     base = alt.Chart().mark_point().encode(
         color='species:N'
@@ -247,7 +247,7 @@ method, makes this type of chart a bit easier to produce:
 
     import altair as alt
     from vega_datasets import data
-    iris = data.iris.url
+    iris = data.iris()
 
     alt.Chart(iris).mark_point().encode(
         alt.X(alt.repeat("column"), type='quantitative'),
@@ -286,7 +286,7 @@ concatenation:
     import altair as alt
     from altair.expr import datum
     from vega_datasets import data
-    iris = data.iris.url
+    iris = data.iris()
 
     base = alt.Chart(iris).mark_point().encode(
         x='petalLength:Q',

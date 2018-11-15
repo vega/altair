@@ -264,7 +264,7 @@ output displayed. This turns out to be true of Altair charts as well:
 
     import altair as alt
     from vega_datasets import data
-    cars = data.cars.url
+    cars = data.cars()
 
     chart = alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',

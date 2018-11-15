@@ -251,7 +251,7 @@ added to its specification:
     import altair as alt
     from vega_datasets import data
 
-    chart = alt.Chart(data.cars.url).mark_point().encode(
+    chart = alt.Chart(data.cars()).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q'
     )
@@ -347,7 +347,7 @@ fill unless otherwise specified:
     alt.themes.enable('black_marks')
 
     # draw the chart
-    cars = data.cars.url
+    cars = data.cars()
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q'

@@ -61,7 +61,7 @@ grouped by the number of Cylinders.
     import altair as alt
     from vega_datasets import data
 
-    cars = data.cars.url
+    cars = data.cars()
 
     alt.Chart(cars).mark_bar().encode(
         y='Cylinders:O',
@@ -113,7 +113,7 @@ An common application of a bin transform is when creating a histogram:
     import altair as alt
     from vega_datasets import data
 
-    movies = data.movies.url
+    movies = data.movies()
 
     alt.Chart(movies).mark_bar().encode(
         alt.X("IMDB_Rating:Q", bin=True),
@@ -128,7 +128,7 @@ bin a continuous field to create a discrete color map:
     import altair as alt
     from vega_datasets import data
 
-    cars = data.cars.url
+    cars = data.cars()
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
@@ -151,7 +151,7 @@ Here is the above histogram created using a top-level bin transform:
     import altair as alt
     from vega_datasets import data
 
-    movies = data.movies.url
+    movies = data.movies()
 
     alt.Chart(movies).mark_bar().encode(
         x='binned_rating:O',
@@ -167,7 +167,7 @@ And here is the transformed color scale using a top-level bin transform:
     import altair as alt
     from vega_datasets import data
 
-    cars = data.cars.url
+    cars = data.cars()
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
@@ -272,7 +272,7 @@ For example:
     from altair import datum
 
     from vega_datasets import data
-    pop = data.population.url
+    pop = data.population()
 
     alt.Chart(pop).mark_area().encode(
         x='age:O',
@@ -312,7 +312,7 @@ values from year 2000 as in the above chart:
 
     import altair as alt
     from vega_datasets import data
-    pop = data.population.url
+    pop = data.population()
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -329,7 +329,7 @@ of specific values:
 
     import altair as alt
     from vega_datasets import data
-    pop = data.population.url
+    pop = data.population()
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -346,7 +346,7 @@ particular continuous range:
 
     import altair as alt
     from vega_datasets import data
-    pop = data.population.url
+    pop = data.population()
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -369,7 +369,7 @@ to select the data to be shown in the top chart:
 
     import altair as alt
     from vega_datasets import data
-    pop = data.population.url
+    pop = data.population()
 
     selection = alt.selection_multi(fields=['year'])
 
@@ -417,7 +417,7 @@ by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
     import altair as alt
     from vega_datasets import data
 
-    pop = data.population.url
+    pop = data.population()
 
     alt.Chart(pop).mark_line().encode(
         x='age:O',
@@ -537,8 +537,8 @@ of unemployment rates per county in the US:
     import altair as alt
     from vega_datasets import data
 
-    counties = alt.topo_feature(data.us_10m.url, 'counties')
-    unemp_data = data.unemployment.url
+    counties = alt.topo_feature(data.us_10m(), 'counties')
+    unemp_data = data.unemployment()
 
     alt.Chart(counties).mark_geoshape().encode(
         color='rate:Q'
@@ -587,7 +587,7 @@ measurements in Seattle during the year 2010:
     import altair as alt
     from vega_datasets import data
 
-    temps = data.seattle_temps.url
+    temps = data.seattle_temps()
 
     alt.Chart(temps).mark_line().encode(
         x='date:T',

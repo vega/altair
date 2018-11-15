@@ -202,7 +202,7 @@ that contains integers specifying a year:
 
 .. altair-plot::
 
-    pop = data.population.url
+    pop = data.population()
 
     base = alt.Chart(pop).mark_bar().encode(
         alt.Y('mean(people):Q', axis=alt.Axis(title='total population'))

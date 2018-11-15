@@ -40,7 +40,7 @@ arguments to represent points as red semi-transparent filled circles:
    import altair as alt
    from vega_datasets import data
 
-   url = data.cars.url
+   url = data.cars()
 
    alt.Chart(url).mark_circle(
        color='red',
