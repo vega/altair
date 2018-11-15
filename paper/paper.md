@@ -76,7 +76,7 @@ generated from the Vega-Lite JSON schema, ensuring strict conformance with the V
 data produced by Altair and consumed by Vega-Lite provides a natural serialization and file format for statistical
 visualizations. This is leveraged by JupyterLab, which provides built-in rendering of these files. Third, the JSON data 
 provides a clean integration point for non-programming based visualization user-interfaces such as Voyager
-[@2016-voyager,@2017-voyager2].
+[@2016-voyager;@2017-voyager2].
 
 In addition to [static documentation](https://altair-viz.github.io/), Altair includes a set of Jupyter Notebooks with
 examples and an interactive tutorial. These notebooks can be read by anyone with only a web-browser through
