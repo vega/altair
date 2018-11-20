@@ -12,17 +12,30 @@ def chart():
 
 def test_colab_renderer_embed_options(chart):
     """Test that embed_options in renderer metadata are correctly manifest in html"""
-    with alt.renderers.enable('colab', embed_options=dict(actions=False)):
+    def assert_actions_true(chart):
+        bundle = chart._repr_mimebundle_(None, None)
+        html = bundle['text/html']
+        assert ('embedOpt = {"actions": true, "mode": "vega-lite"}' in html or
+                'embedOpt = {"mode": "vega-lite", "actions": true}' in html)
+
+    def assert_actions_false(chart):
         bundle = chart._repr_mimebundle_(None, None)
         html = bundle['text/html']
         assert ('embedOpt = {"actions": false, "mode": "vega-lite"}' in html or
                 'embedOpt = {"mode": "vega-lite", "actions": false}' in html)
 
-    with alt.renderers.enable('colab', embed_options=dict(actions=True)):
-        bundle = chart._repr_mimebundle_(None, None)
-        html = bundle['text/html']
-        assert ('embedOpt = {"actions": true, "mode": "vega-lite"}' in html or
-                'embedOpt = {"mode": "vega-lite", "actions": true}' in html)
+    with alt.renderers.enable('colab', embed_options=dict(actions=False)):
+        assert_actions_false(chart)
+
+    with alt.renderers.enable('colab'):
+        with alt.renderers.enable(embed_options=dict(actions=True)):
+            assert_actions_true(chart)
+
+        with alt.renderers.set_embed_options(actions=False):
+            assert_actions_false(chart)
+
+        with alt.renderers.set_embed_options(actions=True):
+            assert_actions_true(chart)
 
 
 def test_default_renderer_embed_options(chart, renderer='default'):
