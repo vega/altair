@@ -33,10 +33,53 @@ class RendererRegistry(PluginRegistry[RendererType]):
             """),
     }
 
+    def set_embed_options(self, defaultStyle=None, renderer=None,
+                          width=None, height=None, padding=None,
+                          scaleFactor=None, actions=None, **kwargs):
+        """Set options for embeddings of Vega & Vega-Lite charts.
+
+        Options are fully documented at https://github.com/vega/vega-embed.
+        Similar to the `enable()` method, this can be used as either
+        a persistent global switch, or as a temporary local setting using
+        a context manager (i.e. a `with` statement).
+
+        Parameters
+        ----------
+        defaultStyle : bool or string
+            Specify a default stylesheet for embed actions.
+        renderer : string
+            The renderer to use for the view. One of "canvas" (default) or "svg"
+        width : integer
+            The view width in pixels
+        height : integer
+            The view height in pixels
+        padding : integer
+            The view padding in pixels
+        scaleFactor : number
+            The number by which to multiply the width and height (default 1)
+            of an exported PNG or SVG image.
+        actions : bool or dict
+            Determines if action links ("Export as PNG/SVG", "View Source",
+            "View Vega" (only for Vega-Lite), "Open in Vega Editor") are
+            included with the embedded view. If the value is true, all action
+            links will be shown and none if the value is false. This property
+            can take a key-value mapping object that maps keys (export, source,
+            compiled, editor) to boolean values for determining if
+            each action link should be shown.
+        **kwargs :
+            Additional options are passed directly to embed options.
+        """
+        options = {'defaultStyle': defaultStyle, 'renderer': renderer,
+                   'width': width, 'height': height, 'padding': padding,
+                   'scaleFactor': scaleFactor, 'actions': actions}
+        kwargs.update({key: val for key, val in options.items()
+                       if val is not None})
+        return self.enable(None, embed_options=kwargs)
+
+
 # ==============================================================================
 # VegaLite v1/v2 renderer logic
 # ==============================================================================
-
 
 
 class Displayable(object):
