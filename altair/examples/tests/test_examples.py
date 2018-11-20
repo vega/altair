@@ -3,7 +3,7 @@ import pkgutil
 import pytest
 
 from altair.utils.execeval import eval_block
-from altair.vegalite.v2 import examples
+from altair import examples
 
 
 def iter_example_filenames():

@@ -2,6 +2,7 @@
 __version__ = '2.3.0dev0'
 
 from .vegalite import *
+from . import examples
 
 def load_ipython_extension(ipython):
     from ._magics import vega, vegalite
