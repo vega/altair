@@ -6,7 +6,7 @@ This example shows a bar chart that highlights values beyond a threshold.
 import altair as alt
 from vega_datasets import data
 
-source = data.wheat()
+source = data.wheat.url
 threshold = pd.DataFrame([{"threshold": 90}])
 
 bars = alt.Chart(source).mark_bar().encode(

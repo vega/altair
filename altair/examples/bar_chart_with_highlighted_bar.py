@@ -7,7 +7,7 @@ This example shows a basic bar chart with a single bar highlighted.
 import altair as alt
 from vega_datasets import data
 
-source = data.wheat()
+source = data.wheat.url
 
 alt.Chart(source).mark_bar().encode(
     x='year:O',
