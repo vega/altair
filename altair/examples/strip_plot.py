@@ -1,7 +1,7 @@
 """
-Strip Plot
+Simple Strip Plot
 -----------------
-This example shows the relationship between horsepower and the numbver of cylinders using tick marks.
+A simple example of how to make a strip plot. 
 """
 # category: simple charts
 import altair as alt
