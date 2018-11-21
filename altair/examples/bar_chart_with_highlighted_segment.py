@@ -4,6 +4,7 @@ Bar Chart with Highlighted Segment
 This example shows a bar chart that highlights values beyond a threshold.
 """
 import altair as alt
+import pandas as pd
 from vega_datasets import data
 
 source = data.wheat.url
