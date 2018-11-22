@@ -1,12 +1,9 @@
 """
 Box Plot with Min/Max Whiskers
 ------------------------------
-This example shows how to make a basic box plot using US Population
-data from 2000.
-
-https://vega.github.io/vega-lite/examples/box-plot_minmax_2D_vertical_normalized.html
+This example shows how to make a basic box plot using US Population data from 2000.
 """
-# category: bar charts
+# category: other charts
 import altair as alt
 from vega_datasets import data
 
