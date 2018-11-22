@@ -17,6 +17,4 @@ line =  base.mark_line(color='red').encode(
     y='wages:Q'
 )
 
-(bar + line).resolve_scale(
-    y='independent'
-).properties(width=600)
+(bar + line).properties(width=600)
