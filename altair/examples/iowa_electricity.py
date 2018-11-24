@@ -12,7 +12,6 @@ source = data.iowa_electricity()
 alt.Chart(source, title="Iowa's renewable energy boom").mark_area().encode(
     x=alt.X(
         "year:T",
-        timeUnit="year",
         axis=alt.Axis(title="Year")
     ),
     y=alt.Y(
