@@ -27,4 +27,4 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
         title="",
         sort=alt.EncodingSortField(field='yield', op='sum', order='descending'),
     )
-)
+).configure_view(stroke="transparent")
