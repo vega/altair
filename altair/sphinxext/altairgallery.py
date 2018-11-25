@@ -158,7 +158,7 @@ def populate_examples(**kwds):
             get_docstring_and_rest(example['filename'])
         example.update(kwds)
         if category is None:
-            category = 'general'
+            category = 'other charts'
         example.update({'docstring': docstring,
                         'title': docstring.strip().split('\n')[0],
                         'code': code,
