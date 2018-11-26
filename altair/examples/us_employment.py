@@ -9,7 +9,7 @@ import pandas as pd
 from vega_datasets import data
 
 source = data.us_employment()
-presidents = alt.pd.DataFrame([
+presidents = pd.DataFrame([
     {
         "start": "2006-01-01",
         "end": "2009-01-19",
