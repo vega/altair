@@ -17,7 +17,7 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
     ),
     alt.Y(
         'variety:N',
-        sort=alt.EncodingSortField(field='yield:Q', op='sum', order='descending'),
+        sort=alt.EncodingSortField(field='yield', op='sum', order='descending'),
         scale=alt.Scale(rangeStep=20),
         axis=alt.Axis(title="", grid=True)
     ),
@@ -25,6 +25,6 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
     row=alt.Row(
         'site:N',
         title="",
-        sort=alt.EncodingSortField(field='yield:Q', op='sum', order='descending'),
+        sort=alt.EncodingSortField(field='yield', op='sum', order='descending'),
     )
 ).configure_view(stroke="transparent")
