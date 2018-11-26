@@ -8,7 +8,7 @@ import altair as alt
 import pandas as pd
 from vega_datasets import data
 
-source = "https://vega.github.io/vega-datasets/data/us-employment.csv"
+source = data.us_employment()
 presidents = alt.pd.DataFrame([
     {
         "start": "2006-01-01",
