@@ -171,3 +171,28 @@ be registered and enabled as::
 
     alt.data_transformers.register('s3', lambda data: pipe(data, to_s3('mybucket')))
     alt.data_transformers.enable('s3')
+
+
+Storing JSON data in a separate directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When creating many charts with ``alt.data_transformers.enable('json')`` the
+working directory can get a bit cluttered. To avoid this we can build a simple
+custom data transformer that stores all JSON files in separate directory.::
+
+    import os
+    import altair as alt
+
+
+    def json_dir(data, data_dir='altairdata'):
+        os.makedirs(data_dir, exist_ok=True)
+        return alt.pipe(data, alt.to_json(filename=data_dir + '/{prefix}-{hash}.{extension}') )
+
+
+    alt.data_transformers.register('json_dir', json_dir)
+    alt.data_transformers.enable('json_dir', data_dir='mydata')
+
+After enabling this data transformer, the JSON files will be stored in what ``data_dir``
+was set to when enabling the transformer or 'altairdata' by default. All we had to do
+was to prefix the ``filename`` argument of the ``alt.to_json`` function with our
+desired directory and make sure that the directory actually exists.
