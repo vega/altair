@@ -10,18 +10,21 @@ from vega_datasets import data
 source = data.barley()
 
 alt.Chart(source).mark_bar().encode(
+    # The length of the bars
     x=alt.X(
         'yield:Q',
         axis=alt.Axis(grid=False)
     ),
+    # The field used to define the subelements of each group
     y=alt.Y(
         'year:N',
         axis=alt.Axis(title="")
     ),
     color='year:N',
-    row='variety:N'
+    # The field used to group the subelements
+    row=alt.Row('variety')
 ).configure_view(
-    stroke='transparent'  # Removes trellis frames so multiple charts appear as one
+    stroke='transparent'
 ).transform_filter(
     alt.datum.site == 'Morris'
 )
