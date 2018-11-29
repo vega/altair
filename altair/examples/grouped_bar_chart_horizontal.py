@@ -1,7 +1,7 @@
 """
 Horizontal Grouped Bar Chart
 ----------------------------
-This example shows a grouped bar chart achieved by making cosmetic changes to a trellis plot.
+This example shows a horizontal grouped bar chart achieved by making cosmetic changes to a trellis plot.
 """
 # category: bar charts
 import altair as alt
@@ -10,19 +10,19 @@ from vega_datasets import data
 source = data.barley()
 
 alt.Chart(source).mark_bar().encode(
-    # The field used to define the subelements of each group
-    x=alt.X(
-        'year:N',
-        axis=alt.Axis(title="")
-    ),
     # The length of the bars
-    y=alt.Y(
+    x=alt.X(
         'yield:Q',
         axis=alt.Axis(grid=False)
     ),
+    # The field used to define the subelements of each group
+    y=alt.Y(
+        'year:N',
+        axis=alt.Axis(title="")
+    ),
     color='year:N',
     # The field used to group the subelements
-    column='variety'
+    row='variety'
 ).configure_view(
     stroke='transparent'
 ).transform_filter(
