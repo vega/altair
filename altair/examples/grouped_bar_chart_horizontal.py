@@ -22,7 +22,7 @@ alt.Chart(source).mark_bar().encode(
     ),
     color='year:N',
     # The field used to group the subelements
-    row='variety'
+    row='variety:N'
 ).configure_view(
     stroke='transparent'  # Remove the trellis frames so multiple charts appear as one.
 ).transform_filter(
