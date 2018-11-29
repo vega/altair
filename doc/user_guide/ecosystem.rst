@@ -39,7 +39,7 @@ pdvega is a library that allows you to quickly create interactive Vega-Lite_ plo
 
 
 .. List of links.
-.. _pdvega: https://github.com/jakevdp/pdvega
+.. _pdvega: https://github.com/altair-viz/pdvega
 .. _Vega-Lite: https://vega.github.io/vega-lite/
 .. _Jupyter: http://jupyter.org/
 
