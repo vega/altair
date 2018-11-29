@@ -24,7 +24,7 @@ alt.Chart(source).mark_bar().encode(
     # The field used to group the subelements
     column='variety'
 ).configure_view(
-    stroke='transparent'
+    stroke='transparent'  # Remove the trellis frames so multiple charts appear as one.
 ).transform_filter(
     alt.datum.site == 'Morris'
 )
