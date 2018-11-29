@@ -1,7 +1,7 @@
 """
 Grouped Bar Chart
 -----------------
-This example shows a grouped bar chart achieved by making some cosmetic changes to a trellis plot.
+This example shows a grouped bar chart achieved by making cosmetic changes to a trellis plot.
 """
 # category: bar charts
 import altair as alt
