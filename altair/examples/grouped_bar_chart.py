@@ -1,6 +1,6 @@
 """
-Horizontal Grouped Bar Chart
-----------------------------
+Grouped Bar Chart
+-----------------
 This example shows a grouped bar chart achieved by making cosmetic changes to a trellis plot.
 """
 # category: bar charts

@@ -24,7 +24,7 @@ authors:
   - name: Eitan Lees
     orcid: 0000-0003-0988-6015
     affiliation: 3
-  - name:  Ilia Timofeev
+  - name: Ilia Timofeev
     orcid: 0000-0003-1795-943X
     affiliation: 4
   - name: Ben Welsh

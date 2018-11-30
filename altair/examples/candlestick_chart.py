@@ -3,7 +3,7 @@ Candlestick Chart
 =================
 A candlestick chart inspired from Protovis (http://mbostock.github.io/protovis/ex/candlestick.html). This example shows the performance of the Chicago Board Options Exchange Volatility Index (VIX) in the summer of 2009. The thick bar represents the opening and closing prices, while the thin bar shows intraday high and low prices; if the index closed higher on a given day, the bars are colored green rather than red.
 """
-# category: bar charts
+# category: other charts
 import altair as alt
 import pandas as pd
 

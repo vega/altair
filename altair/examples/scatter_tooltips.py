@@ -1,6 +1,6 @@
 """
-Scatter Plot with Tooltips
---------------------------
+Simple Scatter Plot with Tooltips
+---------------------------------
 A scatter plot of the cars dataset, with tooltips showing selected column
 values when you hover over points. We make the points larger so that it is
 easier to hover over them.
