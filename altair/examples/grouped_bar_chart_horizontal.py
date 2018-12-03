@@ -1,7 +1,7 @@
 """
-Grouped Bar Chart
------------------
-This example shows a grouped bar chart.
+Horizontal Grouped Bar Chart
+----------------------------
+This example shows a horizontal grouped bar chart.
 """
 # category: bar charts
 import altair as alt
@@ -10,8 +10,8 @@ from vega_datasets import data
 source = data.barley()
 
 alt.Chart(source).mark_bar().encode(
-    x='year:O',
-    y='sum(yield):Q',
+    x='sum(yield):Q',
+    y='year:O',
     color='year:N',
-    column='site:N'
+    row='site:N'
 )
