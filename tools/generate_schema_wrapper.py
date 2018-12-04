@@ -17,6 +17,19 @@ from schemapi import codegen
 from schemapi.codegen import CodeSnippet
 from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
 
+# Map of version name to github branch name.
+SCHEMA_VERSION = {
+    'vega': {
+        'v2': 'v2.6.5',
+        'v3': 'v3.3.1',
+        'v4': 'v4.0.0',
+    },
+    'vega-lite': {
+        'v1': 'v1.3.1',
+        'v2': 'v2.6.0',
+    }
+}
+
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))",re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`",re.M)
 
@@ -43,19 +56,6 @@ def schema_class(*args, **kwargs):
 
 SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
                        '{library}/{version}.json')
-
-SCHEMA_VERSION = {
-    'vega': {
-        'v2': 'v2.6.5',
-        'v3': 'v3.3.1',
-        'v4': 'v4.0.0'
-    },
-    'vega-lite': {
-        'v1': 'v1.3.1',
-        'v2': 'v2.6.0'
-    }
-}
-
 
 BASE_SCHEMA = """
 class {basename}(SchemaBase):
@@ -90,18 +90,18 @@ class FieldChannelMixin(object):
             type_defined = self._kwds.get('type', Undefined) is not Undefined
             if not (type_defined or 'type' in kwds):
                 if isinstance(context.get('data', None), pd.DataFrame):
-                    raise ValueError("{0} encoding field is specified without a type; "
+                    raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be inferred because it does not "
                                      "match any column in the data.".format(self.shorthand))
                 else:
-                    raise ValueError("{0} encoding field is specified without a type; "
+                    raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be automatically inferred because "
                                      "the data is not specified as a pandas.DataFrame."
                                      "".format(self.shorthand))
         else:
             # shorthand is not a string; we pass the definition to field
             if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {0}"
+                raise ValueError("both shorthand and field specified in {}"
                                  "".format(self.__class__.__name__))
             # field is a RepeatSpec or similar; cannot infer type
             kwds = {'field': self.shorthand}
@@ -253,8 +253,7 @@ def generate_vega_schema_wrapper(schema_file):
     return '\n'.join(contents)
 
 
-def generate_vegalite_channel_wrappers(schemafile, imports=None,
-                                       encoding_def='Encoding'):
+def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     # TODO: generate __all__ for top of file
     with open(schemafile, encoding='utf8') as f:
         schema = json.load(f)
@@ -269,6 +268,8 @@ def generate_vegalite_channel_wrappers(schemafile, imports=None,
     contents.append('')
 
     contents.append(CHANNEL_MIXINS)
+
+    encoding_def='Encoding' if version == 'v1' else 'EncodingWithFacet'
 
     encoding = SchemaInfo(schema['definitions'][encoding_def],
                           rootschema=schema)
@@ -405,9 +406,8 @@ def generate_vegalite_config_mixin(schemafile):
 
 def vegalite_main():
     library = 'vega-lite'
-    encoding_defs = {'v1': 'Encoding', 'v2': 'EncodingWithFacet'}
 
-    for version in ['v1', 'v2']:
+    for version in SCHEMA_VERSION[library]:
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vegalite', version))
         schemapath = os.path.join(path, 'schema')
@@ -436,7 +436,7 @@ def vegalite_main():
         # Generate the channel wrappers
         outfile = join(schemapath, 'channels.py')
         print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-        code = generate_vegalite_channel_wrappers(schemafile, encoding_def=encoding_defs[version])
+        code = generate_vegalite_channel_wrappers(schemafile, version=version)
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(code)
 
@@ -459,7 +459,7 @@ def vegalite_main():
 def vega_main():
     library = 'vega'
 
-    for version in ['v2', 'v3', 'v4']:
+    for version in SCHEMA_VERSION[library]:
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vega', version))
         schemapath = os.path.join(path, 'schema')
