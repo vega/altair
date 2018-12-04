@@ -97,7 +97,6 @@ def spec_to_html(spec, mode,
     ----------
     spec : dict
         a dictionary representing a vega-lite plot spec.
-    fullhtml : boo
     mode : string {'vega' | 'vega-lite'}
         The rendering mode. This value is overridden by embed_options['mode'],
         if it is present.
@@ -112,7 +111,8 @@ def spec_to_html(spec, mode,
     output_div : string (optional)
         The id of the div element where the plot will be shown.
     embed_options : dict (optional)
-        Dictionary of options to pass to the vega-embed script.
+        Dictionary of options to pass to the vega-embed script. Default
+        entry is {'mode': mode}.
     json_kwds : dict (optional)
         Dictionary of keywords to pass to json.dumps().
     fullhtml : boolean (optional)
