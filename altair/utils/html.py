@@ -90,7 +90,7 @@ def spec_to_html(spec, mode,
                  vega_version, vegaembed_version, vegalite_version=None,
                  base_url="https://cdn.jsdelivr.net/npm/",
                  output_div='vis', embed_options=None, json_kwds=None,
-                 fullhtml=True, requirejs=False, default_style=True):
+                 fullhtml=True, requirejs=False):
     """Embed a Vega/Vega-Lite spec into an HTML page
 
     Parameters
@@ -111,7 +111,8 @@ def spec_to_html(spec, mode,
     output_div : string (optional)
         The id of the div element where the plot will be shown.
     embed_options : dict (optional)
-        Dictionary of options to pass to the vega-embed script.
+        Dictionary of options to pass to the vega-embed script. Default
+        entries are {'mode': mode, 'defaultStyle': True}.
     json_kwds : dict (optional)
         Dictionary of keywords to pass to json.dumps().
     fullhtml : boolean (optional)
@@ -120,10 +121,6 @@ def spec_to_html(spec, mode,
     requirejs : boolean (optional)
         If False (default) then load libraries from base_url using <script>
         tags. If True, then load libraries using requirejs
-    default_style : boolean (optional)
-        If True (default) then use the default vega-embed menu style. Otherwise
-        use the older type-based style. This value is overridden by
-        embed_options['defaultStyle'], if present.
 
     Returns
     -------
@@ -134,7 +131,7 @@ def spec_to_html(spec, mode,
     json_kwds = json_kwds or {}
 
     mode = embed_options.setdefault('mode', mode)
-    default_style = embed_options.setdefault('defaultStyle', default_style)
+    embed_options.setdefault('defaultStyle', True)
 
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be either 'vega' or 'vega-lite'")
