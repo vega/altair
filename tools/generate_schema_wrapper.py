@@ -411,6 +411,8 @@ def vegalite_main():
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vegalite', version))
         schemapath = os.path.join(path, 'schema')
+        if not os.path.exists(schemapath):
+            os.makedirs(schemapath)
         schemafile = download_schemafile(library=library,
                                          version=version,
                                          schemapath=schemapath)
