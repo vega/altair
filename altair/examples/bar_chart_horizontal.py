@@ -7,7 +7,7 @@ This example is a bar chart drawn horizontally by putting the quantitative value
 import altair as alt
 from vega_datasets import data
 
-source = data.wheat.url
+source = data.wheat()
 
 alt.Chart(source).mark_bar().encode(
     x='wheat:Q',

@@ -7,7 +7,7 @@ import altair as alt
 import pandas as pd
 from vega_datasets import data
 
-source = data.wheat.url
+source = data.wheat()
 threshold = pd.DataFrame([{"threshold": 90}])
 
 bars = alt.Chart(source).mark_bar().encode(
