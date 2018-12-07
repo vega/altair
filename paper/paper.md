@@ -70,7 +70,7 @@ JSON data, which is then rendered in a user-interface such as the Jupyter Notebo
 specification [@2016-reactive-vega-architecture], which is then parsed and executed using a reactive runtime that
 internally makes use of D3.js [@2011-d3]. 
 
-The declarative nature of the Vega-Lite visualization grammar [@2005-grammar, @2017-vega-lite], and its encoding in a
+The declarative nature of the Vega-Lite visualization grammar [@2005-grammar; @2017-vega-lite], and its encoding in a
 formal JSON schema, provide Altair with a number of benefits. First, much of the Altair Python code and tests are
 generated from the Vega-Lite JSON schema, ensuring strict conformance with the Vega-Lite specification. Second, the JSON
 data produced by Altair and consumed by Vega-Lite provides a natural serialization and file format for statistical
