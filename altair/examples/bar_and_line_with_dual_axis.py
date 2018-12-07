@@ -7,7 +7,7 @@ This example shows how to combine two plots and keep their axes.
 import altair as alt
 from vega_datasets import data
 
-source = data.wheat.url
+source = data.wheat()
 
 base = alt.Chart(source).encode(x='year:O')
 

@@ -7,7 +7,7 @@ This example shows a basic horizontal bar chart with labels created with Altair.
 import altair as alt
 from vega_datasets import data
 
-source = data.wheat.url
+source = data.wheat()
 
 bars = alt.Chart(source).mark_bar().encode(
     x='wheat:Q',
