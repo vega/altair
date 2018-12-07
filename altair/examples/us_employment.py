@@ -22,9 +22,18 @@ presidents = pd.DataFrame([
     }
 ])
 
-bars = alt.Chart(source, title="The U.S. employment crash during the Great Recession").mark_bar().encode(
-    x=alt.X("month:T", axis=alt.Axis(title="")),
-    y=alt.Y("nonfarm_change:Q", axis=alt.Axis(title="Change in non-farm employment (in thousands)")),
+bars = alt.Chart(
+    source,
+    title="The U.S. employment crash during the Great Recession"
+).mark_bar().encode(
+    x=alt.X(
+        "month:T",
+        axis=alt.Axis(title="")
+    ),
+    y=alt.Y(
+        "nonfarm_change:Q",
+        axis=alt.Axis(title="Change in non-farm employment (in thousands)")
+    ),
     color=alt.condition(
         alt.datum.nonfarm_change > 0,
         alt.value("steelblue"),
