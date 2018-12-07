@@ -2,16 +2,29 @@
 
 ## Version 2.3.0 (Unreleased)
 
+Includes many reworked examples in the example gallery.
+
 ### Enhancements
 
 - Better errors for non-string column names, as well as automatic conversion
   of ``pandas.RangeIndex`` columns to strings (#1107)
 
+- Renderers now have set_embed_options() method (#1203)
+
+- Added kaggle renderer & more HTML output options (#1123)
+
 ### Backward-incompatible changes
 
 ### Maintenance
 
+- fix typing requirement in Python 3.6+ (#1185)
+
+- Added support & CI testing for Python 3.7 (#1008)
+
 ### Bug fixes
+
+- Selection predicates now recognize all valid entries (#1143)
+- Python 2 support for `chart.save()` (#1134)
 
 ## Version 2.2.2 (Released August 17, 2018)
 
