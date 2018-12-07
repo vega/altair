@@ -1,6 +1,6 @@
 # Altair Change Log
 
-## Version 2.3.0 (Unreleased)
+## Version 2.3.0 (Released December 7, 2018)
 
 Includes many reworked examples in the example gallery.
 
