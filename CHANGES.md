@@ -1,5 +1,15 @@
 # Altair Change Log
 
+## Version 2.4.0 (Unreleased)
+
+### Enhancements
+
+### Backward-incompatible Changes
+
+### Maintenance
+
+### Bug Fixes
+
 ## Version 2.3.0 (Released December 7, 2018)
 
 Includes many reworked examples in the example gallery.
