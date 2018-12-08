@@ -27,10 +27,10 @@ alt.Chart(source).mark_text(
     baseline='middle',
     dx=-5
 ).encode(
-    alt.X('position:Q',
-        axis=alt.Axis(title='', ticks=False, labels=False, grid=False)
+    alt.X('position:Q', title='',
+        axis=alt.Axis(ticks=False, labels=False, grid=False)
     ),
-    alt.Y('stem:N', axis=alt.Axis(title='', tickSize=0)),
+    alt.Y('stem:N', title='', axis=alt.Axis(tickSize=0)),
     text='leaf:N'
 ).configure_axis(
     labelFontSize=20

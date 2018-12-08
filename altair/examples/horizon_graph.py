@@ -25,7 +25,7 @@ area1 = alt.Chart(source).mark_area(
     interpolate='monotone'
 ).encode(
     alt.X('x', scale=alt.Scale(zero=False, nice=False)),
-    alt.Y('y', scale=alt.Scale(domain=[0, 50]), axis=alt.Axis(title='y')),
+    alt.Y('y', scale=alt.Scale(domain=[0, 50]), title='y'),
     opacity=alt.value(0.6)
 ).properties(
     width=500,

@@ -205,7 +205,7 @@ that contains integers specifying a year:
     pop = data.population.url
 
     base = alt.Chart(pop).mark_bar().encode(
-        alt.Y('mean(people):Q', axis=alt.Axis(title='total population'))
+        alt.Y('mean(people):Q', title='total population')
     ).properties(
         width=200,
         height=200

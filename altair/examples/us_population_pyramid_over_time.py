@@ -22,28 +22,30 @@ base = alt.Chart(source).add_selection(
     gender=alt.expr.if_(alt.datum.sex == 1, 'Male', 'Female')
 )
 
-title = alt.Axis(title='population')
+
 color_scale = alt.Scale(domain=['Male', 'Female'],
                         range=['#1f77b4', '#e377c2'])
 
 left = base.transform_filter(
     alt.datum.gender == 'Female'
 ).encode(
-    y=alt.X('age:O', axis=None),
-    x=alt.X('sum(people):Q', axis=title, sort=alt.SortOrder('descending')),
+    y=alt.Y('age:O', axis=None),
+    x=alt.X('sum(people):Q',
+            title='population',
+            sort=alt.SortOrder('descending')),
     color=alt.Color('gender:N', scale=color_scale, legend=None)
 ).mark_bar().properties(title='Female')
 
 middle = base.encode(
-    y=alt.X('age:O', axis=None),
+    y=alt.Y('age:O', axis=None),
     text=alt.Text('age:Q'),
 ).mark_text().properties(width=20)
 
 right = base.transform_filter(
     alt.datum.gender == 'Male'
 ).encode(
-    y=alt.X('age:O', axis=None),
-    x=alt.X('sum(people):Q', axis=title),
+    y=alt.Y('age:O', axis=None),
+    x=alt.X('sum(people):Q', title='population'),
     color=alt.Color('gender:N', scale=color_scale, legend=None)
 ).mark_bar().properties(title='Male')
 

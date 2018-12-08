@@ -14,8 +14,8 @@ base = alt.Chart(source)
 points = base.mark_point(filled=True).encode(
     alt.X(
         'mean(yield)',
+        title='Barley Yield',
         scale=alt.Scale(zero=False),
-        axis=alt.Axis(title='Barley Yield')
     ),
     y='variety',
     color=alt.value('black')

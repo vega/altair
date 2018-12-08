@@ -222,8 +222,8 @@ rule = alt.Chart(source).mark_rule().encode(
     ),
     alt.Y(
         'low',
+        title='Price',
         scale=alt.Scale(zero=False),
-        axis=alt.Axis(title='Price')
     ),
     alt.Y2('high'),
     color=open_close_color
