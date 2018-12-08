@@ -23,9 +23,9 @@ click = alt.selection_multi(encodings=['color'])
 
 # Top panel is scatter plot of temperature vs time
 points = alt.Chart().mark_point().encode(
-    alt.X('monthdate(date):T', axis=alt.Axis(title='Date')),
+    alt.X('monthdate(date):T', title='Date'),
     alt.Y('temp_max:Q',
-        axis=alt.Axis(title='Maximum Daily Temperature (C)'),
+        title='Maximum Daily Temperature (C)',
         scale=alt.Scale(domain=[-5, 40])
     ),
     color=alt.condition(brush, color, alt.value('lightgray')),

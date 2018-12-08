@@ -25,14 +25,14 @@ base = alt.Chart(source)
 # generate the points
 points = base.mark_point(filled=True, size=50).encode(
     x=alt.X(
-        "x",
-        scale=alt.Scale(domain=(0,6)),
-        axis=alt.Axis(title='x')
+        'x',
+        title='x',
+        scale=alt.Scale(domain=(0,6))
     ),
     y=alt.Y(
         'y',
-        scale=alt.Scale(zero=False, domain=(10, 11)),
-        axis=alt.Axis(title="y")
+        title='y',
+        scale=alt.Scale(zero=False, domain=(10, 11))
     ),
     color=alt.value('black')
 )

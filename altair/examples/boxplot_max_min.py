@@ -19,7 +19,7 @@ upper_whisker = 'max(people):Q'
 
 # Compose each layer individually
 lower_plot = base.mark_rule().encode(
-    y=alt.Y(lower_whisker, axis=alt.Axis(title="population")),
+    y=alt.Y(lower_whisker, title="population"),
     y2=lower_box,
     x='age:O'
 )

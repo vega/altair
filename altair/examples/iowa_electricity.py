@@ -12,12 +12,13 @@ source = data.iowa_electricity()
 alt.Chart(source, title="Iowa's renewable energy boom").mark_area().encode(
     x=alt.X(
         "year:T",
-        axis=alt.Axis(title="Year")
+        title="Year"
     ),
     y=alt.Y(
         "net_generation:Q",
         stack="normalize",
-        axis=alt.Axis(title="Share of net generation", format=".0%"),
+        title="Share of net generation",
+        axis=alt.Axis(format=".0%"),
     ),
     color=alt.Color(
         "source:N",

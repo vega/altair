@@ -228,8 +228,8 @@ color string:
 .. altair-plot::
 
     alt.Chart(data).mark_bar(color='firebrick').encode(
-        alt.Y('a', axis=alt.Axis(title='category')),
-        alt.X('average(b)', axis=alt.Axis(title='avg(b) by category'))
+        alt.Y('a', title='category'),
+        alt.X('average(b)', title='avg(b) by category')
     )
 
 
