@@ -7,7 +7,7 @@ This example shows how to make a basic box plot using US Population data from 20
 import altair as alt
 from vega_datasets import data
 
-source = data.population()
+source = data.population.url
 
 base = alt.Chart(source)
 
