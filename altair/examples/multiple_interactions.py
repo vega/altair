@@ -1,5 +1,5 @@
 """
-Multiple Interations
+Multiple Interactions
 ====================
 This example shows how multiple user inputs can be layered onto a chart. The four inputs have functionality as follows:
 
