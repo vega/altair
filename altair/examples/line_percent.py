@@ -8,11 +8,12 @@ import altair as alt
 import pandas as pd
 from vega_datasets import data
 
-source = pd.read_json(data.jobs.url)
-welders = source[source.job == 'Welder']
+source = data.jobs.url
 
-alt.Chart(welders).mark_line().encode(
+alt.Chart(source).mark_line().encode(
     alt.X('year:O'),
     alt.Y('perc:Q', axis=alt.Axis(format='%')),
     color='sex:N'
+).transform_filter(
+    alt.datum.job == 'Welder'
 )
