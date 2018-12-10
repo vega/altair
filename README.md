@@ -212,9 +212,23 @@ py.test --pyargs altair
 See [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md)
 
 ## Citing Altair
+
 [![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
 
-If you use Altair in an academic work, please consider citing http://joss.theoj.org/papers/10.21105/joss.01057
+If you use Altair in an academic work, please consider citing http://joss.theoj.org/papers/10.21105/joss.01057 as
+
+```bib
+@article{Altair2018,
+  doi = {10.21105/joss.01057},
+  url = {https://doi.org/10.21105/joss.01057},
+  year  = {2018},
+  month = {dec},
+  publisher = {The Open Journal},
+  author = {Jacob VanderPlas and Brian Granger and Jeffrey Heer and Dominik Moritz and Kanit Wongsuphasawat and Arvind Satyanarayan and Eitan Lees and Ilia Timofeev and Ben Welsh and Scott Sievert},
+  title = {Altair: Interactive Statistical Visualizations for Python},
+  journal = {Journal of Open Source Software}
+}
+```
 
 ## Whence Altair?
 
