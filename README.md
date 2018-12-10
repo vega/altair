@@ -224,7 +224,7 @@ If you use Altair in an academic work, please consider citing http://joss.theoj.
   year  = {2018},
   month = {dec},
   publisher = {The Open Journal},
-  author = {Jacob VanderPlas and Brian Granger and Jeffrey Heer and Dominik Moritz and Kanit Wongsuphasawat and Eitan Lees and Ilia Timofeev and Ben Welsh and Scott Sievert},
+  author = {Jacob VanderPlas and Brian Granger and Jeffrey Heer and Dominik Moritz and Kanit Wongsuphasawat and Arvind Satyanarayan and Eitan Lees and Ilia Timofeev and Ben Welsh and Scott Sievert},
   title = {Altair: Interactive Statistical Visualizations for Python},
   journal = {Journal of Open Source Software}
 }
