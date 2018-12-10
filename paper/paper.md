@@ -21,32 +21,37 @@ authors:
   - name: Kanit Wongsuphasawat
     orcid: 0000-0001-7231-279X
     affiliation: 1
+  - name: Arvind Satyanarayan
+    orcid: 0000-0001-5564-635X
+    affiliation: 3
   - name: Eitan Lees
     orcid: 0000-0003-0988-6015
-    affiliation: 3
+    affiliation: 4
   - name: Ilia Timofeev
     orcid: 0000-0003-1795-943X
-    affiliation: 4
+    affiliation: 5
   - name: Ben Welsh
     orcid: 0000-0002-5200-7269
-    affiliation: 5
+    affiliation: 6
   - name: Scott Sievert
     orcid: 0000-0002-4275-3452
-    affiliation: 6
+    affiliation: 7
     
 affiliations:
   - name: University of Washington
     index: 1
   - name: California Polytechnic State University, San Luis Obispo
     index: 2
-  - name: Florida State University
+  - name: MIT CSAIL
     index: 3
-  - name: TTS Consulting
+  - name: Florida State University
     index: 4
-  - name: Los Angeles Times Data Desk
+  - name: TTS Consulting
     index: 5
-  - name: University of Wisconsin--Madison
+  - name: Los Angeles Times Data Desk
     index: 6
+  - name: University of Wisconsin--Madison
+    index: 7
 date: 07 August 2018
 bibliography: paper.bib
 ---
