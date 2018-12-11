@@ -295,14 +295,20 @@ You can remove the legend entirely by submitting a null value.
 Customizing Colors
 ------------------
 
-By default, the type of data will impact the color scheme use.  See the :ref:`type-legend-scale` section for
-more information.  The mapping of data to color can be customized with the `scale` argument
-to the :class:`Color` class.
+As discussed in :ref:`type-legend-scale`, Altair chooses a suitable default color
+scheme based on the type of the data that the color encodes. These defaults can
+be customized using the `scale` argument of the :class:`Color` class.
 
-Vega includes a set of named color schemes for both categorical and sequential data.  
-See the `Vega documentation <https://vega.github.io/vega/docs/schemes/>`_
-for a full gallery of color schemes.  These schemes
-can be passed to the `scheme` argument of the :class:`Scale` class.
+The :class:`Scale` class passed to the `scale` argument provides a number of options
+for customizing the color scale; we will discuss a few of them here.
+
+Color Schemes
+~~~~~~~~~~~~~
+Altair  includes a set of named color schemes for both categorical and sequential
+data, defined by the vega project; see the
+`Vega documentation <https://vega.github.io/vega/docs/schemes/>`_
+for a full gallery of available color schemes.  These schemes
+can be passed to the `scheme` argument of the :class:`Scale` class:
 
 .. altair-plot::
 
@@ -317,6 +323,9 @@ can be passed to the `scheme` argument of the :class:`Scale` class.
       color=alt.Color('species', scale=alt.Scale(scheme='dark2'))
   )
 
+Color Domain and Range
+~~~~~~~~~~~~~~~~~~~~~~
+
 To make a custom mapping of discrete values to colors, use the
 `domain` and `range` paramaters of the :class:`Scale` class for
 values and colors respectively.
@@ -328,14 +337,37 @@ values and colors respectively.
 
   iris = data.iris()
   domain = ['setosa', 'versicolor', 'virginica']
-  rng = ['red', 'green', 'blue']
+  range_ = ['red', 'green', 'blue']
 
   alt.Chart(iris).mark_point().encode(
       x='petalWidth',
       y='petalLength',
-      color=alt.Color('species', scale=alt.Scale(domain=domain, range=rng))
+      color=alt.Color('species', scale=alt.Scale(domain=domain, range=range_))
   )
 
+Raw Color Values
+~~~~~~~~~~~~~~~~
+The ``scale`` is what maps the raw input values into an appropriate color encoding
+for displaying the data. If your data entries consist of raw color names or codes,
+you can set ``scale=None`` to use those colors directly:
+
+.. altair-plot::
+
+  import pandas as pd
+  import altair as alt
+
+  data = pd.DataFrame({
+      'x': range(6),
+      'color': ['red', 'steelblue', 'chartreuse', '#F4D03F', '#D35400', '#7D3C98']
+  })
+
+  alt.Chart(data).mark_point(
+      filled=True,
+      size=100
+  ).encode(
+      x='x',
+      color=alt.Color('color', scale=None)
+  )
 
 Adjusting the width of Bar Marks
 --------------------------------
