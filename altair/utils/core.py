@@ -304,16 +304,18 @@ def use_signature(Obj):
         f._uses_signature = Obj
 
         # Supplement the docstring of f with information from Obj
-        doclines = Obj.__doc__.splitlines()
-        if f.__doc__:
-            doc = f.__doc__ + '\n'.join(doclines[1:])
-        else:
-            doc = '\n'.join(doclines)
-        try:
-            f.__doc__ = doc
-        except AttributeError:
-            # __doc__ is not modifiable for classes in Python < 3.3
-            pass
+        if Obj.__doc__:
+            doclines = Obj.__doc__.splitlines()
+            if f.__doc__:
+                doc = f.__doc__ + '\n'.join(doclines[1:])
+            else:
+                doc = '\n'.join(doclines)
+            try:
+                f.__doc__ = doc
+            except AttributeError:
+                # __doc__ is not modifiable for classes in Python < 3.3
+                pass
+        
         return f
     return decorate
 
