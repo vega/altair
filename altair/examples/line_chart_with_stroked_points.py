@@ -7,16 +7,15 @@ This chart shows a line chart with stroked points marking each value.
 import altair as alt
 from vega_datasets import data
 
-source = data.iowa_electricity()
+source = data.wheat()
 
 base = alt.Chart(source).encode(
-    x="year",
-    y="net_generation",
-    color="source"
+    x="year:O",
+    y="wheat:Q"
 )
 
 line = base.mark_line()
 
-point = base.mark_point(fill="white")
+point = base.mark_point(fill="white", stroke="steelblue")
 
-line + point
+(line + point).properties(width=600)
