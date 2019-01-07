@@ -3,6 +3,7 @@ Iowa's renewable energy boom
 ----------------------------
 This example is a fully developed line chart that uses a window transformation. It was inspired by `Gregor Aisch's work at datawrapper <https://www.datawrapper.de/_/OHgEm/>_`.
 """
+# category: case studies
 import altair as alt
 from vega_datasets import data
 
