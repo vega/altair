@@ -1,6 +1,6 @@
 """
 Multiple-Series Line Chart
------------------------
+--------------------------
 
 This example shows how to make a line chart with multiple series of data.
 """
