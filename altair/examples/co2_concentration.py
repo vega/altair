@@ -7,7 +7,7 @@ This example is a fully developed line chart that uses a window transformation. 
 import altair as alt
 from vega_datasets import data
 
-source = data.co2_concentration()
+source = data.co2_concentration.url
 
 base = alt.Chart(
     source,
@@ -19,15 +19,10 @@ base = alt.Chart(
 ).transform_calculate(
     scaled_date="(datum.year % 10) + (month(datum.Date)/12)"
 ).transform_window(
-    window=[
-        {'op': 'first_value', 'as': 'first_date', 'field': 'scaled_date'},
-        {'op': 'last_value', 'as': 'last_date', 'field': 'scaled_date'}
-    ],
-    sort=[
-        {"field": "scaled_date", "order": "ascending"},
-        {"field": "scaled_date", "order": "ascending"}
-    ],
-    groupby=["decade"],
+    first_date='first_value(scaled_date)',
+    last_date='last_value(scaled_date)',
+    sort=[{"field": "scaled_date", "order": "ascending"}],
+    groupby=['decade'],
     frame=[None, None]
 ).transform_calculate(
   end="datum.first_date === datum.scaled_date ? 'first' : datum.last_date === datum.scaled_date ? 'last' : null"
@@ -51,13 +46,15 @@ line = base.mark_line().encode(
     )
 )
 
-start_year = base.transform_filter(
-  {"field": "end", "equal": "first"}
-).mark_text(baseline="top").encode(text="year:N")
+text = base.encode(text="year:N")
 
-end_year = base.transform_filter(
-  {"field": "end", "equal": "last"}
-).mark_text(baseline="bottom").encode(text="year:N")
+start_year = text.transform_filter(
+  alt.datum.end == 'first'
+).mark_text(baseline="top")
+
+end_year = text.transform_filter(
+  alt.datum.end == 'last'
+).mark_text(baseline="bottom")
 
 (line + start_year + end_year).configure_text(
     align="left",
