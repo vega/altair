@@ -1,17 +1,17 @@
 """
-Multi Series Line Chart
+Multiple-Series Line Chart
 -----------------------
 
-This example shows how to make a multi series line chart of the daily closing stock prices for AAPL, AMZN, GOOG, IBM, and MSFT between 2000 and 2010.
+This example shows how to make a line chart with multiple series of data.
 """
 # category: line charts
 import altair as alt
 from vega_datasets import data
 
-source = data.stocks()
+source = data.iowa_electricity()
 
 alt.Chart(source).mark_line().encode(
-    x='date',
-    y='price',
-    color='symbol'
+    x="year",
+    y="net_generation",
+    color="source"
 )
