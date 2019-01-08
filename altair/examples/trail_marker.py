@@ -1,19 +1,16 @@
 """
-Trail Marker
-------------
-The ``trail`` marker is like the ``line`` marker, but it allows properties of
-the line (such as thickness) to vary along the length of the line.
-This shows a simple example of the trail mark using stock prices.
+Line Chart with Varying Size
+----------------------------
+This is example of using the ``trail`` marker to vary the size of a line.
 """
-# category: other charts
+# category: line charts
 import altair as alt
 from vega_datasets import data
 
-source = data.stocks()
+source = data.wheat()
 
 alt.Chart(source).mark_trail().encode(
-    x='date:T',
-    y='price:Q',
-    size='price:Q',
-    color='symbol:N'
+    x='year:T',
+    y='wheat:Q',
+    size='wheat:Q'
 )
