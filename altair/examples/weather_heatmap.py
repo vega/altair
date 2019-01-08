@@ -1,7 +1,7 @@
 """
 Seattle Weather Heatmap
 -----------------------
-This example shows the 2010 daily max temperature (F) in Seattle, WA.
+This example shows the 2010 daily high temperature (F) in Seattle, WA.
 """
 # category: line charts
 import altair as alt
@@ -12,7 +12,7 @@ source = data.seattle_temps.url
 
 alt.Chart(
     source,
-    title="2010 Daily Max Temperature (F) in Seattle, WA"
+    title="2010 Daily High Temperature (F) in Seattle, WA"
 ).mark_rect().encode(
     x=alt.X('date:O', timeUnit='date'),
     y=alt.Y('date:O', timeUnit='month'),
