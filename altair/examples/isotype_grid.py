@@ -1,5 +1,5 @@
 """
-Isotype grid
+Isotype Grid
 ------------
 This example is a grid of isotype figures.
 """
