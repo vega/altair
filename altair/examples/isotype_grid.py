@@ -10,7 +10,7 @@ import pandas as pd
 data = pd.DataFrame([dict(id=i) for i in range(1, 101)])
 
 alt.Chart(data).transform_calculate(
-    col="ceil (datum.id/10)"
+    col="ceil(datum.id/10)"
 ).transform_calculate(
     row="datum.id - datum.col*10"
 ).mark_point(filled=True, size=50).encode(
