@@ -1,6 +1,7 @@
 # Altair
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
+[![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
 [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
 
@@ -209,6 +210,25 @@ py.test --pyargs altair
 ## Feedback and Contribution
 
 See [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIBUTING.md)
+
+## Citing Altair
+
+[![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
+
+If you use Altair in an academic work, please consider citing http://joss.theoj.org/papers/10.21105/joss.01057 as
+
+```bib
+@article{Altair2018,
+  doi = {10.21105/joss.01057},
+  url = {https://doi.org/10.21105/joss.01057},
+  year  = {2018},
+  month = {dec},
+  publisher = {The Open Journal},
+  author = {Jacob VanderPlas and Brian Granger and Jeffrey Heer and Dominik Moritz and Kanit Wongsuphasawat and Arvind Satyanarayan and Eitan Lees and Ilia Timofeev and Ben Welsh and Scott Sievert},
+  title = {Altair: Interactive Statistical Visualizations for Python},
+  journal = {Journal of Open Source Software}
+}
+```
 
 ## Whence Altair?
 

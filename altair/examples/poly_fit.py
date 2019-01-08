@@ -31,8 +31,8 @@ poly_data = pd.melt(poly_data,
 
 # Plot the data points on an interactive axis
 points = alt.Chart(df).mark_circle(color='black').encode(
-    x=alt.X('x', axis=alt.Axis(title='x')),
-    y=alt.Y('y', axis=alt.Axis(title='y')),
+    x=alt.X('x', title='x'),
+    y=alt.Y('y', title='y')
 ).interactive()
 
 # Plot the best fit polynomials

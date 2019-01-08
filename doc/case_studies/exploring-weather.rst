@@ -177,7 +177,7 @@ meaning of the plot more clear:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        x=alt.X('month(date):N', axis=alt.Axis(title='Month of the year')),
+        x=alt.X('month(date):N', title='Month of the year'),
         y='count()',
         color=alt.Color('weather', legend=alt.Legend(title='Weather type'), scale=scale),
     )
@@ -191,8 +191,8 @@ and to allow interactive panning and zooming with the mouse:
 .. altair-plot::
 
     alt.Chart(df).mark_point().encode(
-        alt.X('temp_max', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
-        alt.Y('temp_range:Q', axis=alt.Axis(title='Daily Temperature Range (C)')),
+        alt.X('temp_max', title='Maximum Daily Temperature (C)'),
+        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
         alt.Color('weather', scale=scale),
         alt.Size('precipitation', scale=alt.Scale(range=[1, 200]))
     ).transform_calculate(
@@ -228,8 +228,8 @@ of the selection (for more information on selections, see
     brush = alt.selection(type='interval')
 
     points = alt.Chart().mark_point().encode(
-        alt.X('temp_max:Q', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
-        alt.Y('temp_range:Q', axis=alt.Axis(title='Daily Temperature Range (C)')),
+        alt.X('temp_max:Q', title='Maximum Daily Temperature (C)'),
+        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
         color=alt.condition(brush, 'weather:N', alt.value('lightgray'), scale=scale),
         size=alt.Size('precipitation:Q', scale=alt.Scale(range=[1, 200]))
     ).transform_calculate(

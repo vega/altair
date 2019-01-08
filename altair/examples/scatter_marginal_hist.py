@@ -17,7 +17,6 @@ xscale = alt.Scale(domain=(4.0, 8.0))
 yscale = alt.Scale(domain=(1.9, 4.55))
 
 area_args = {'opacity': .3, 'interpolate': 'step'}
-blank_axis = alt.Axis(title='')
 
 points = base.mark_circle().encode(
     alt.X('sepalLength', scale=xscale),
@@ -32,9 +31,9 @@ top_hist = base.mark_area(**area_args).encode(
           # (which would be ignored anyway)
           bin=alt.Bin(maxbins=20, extent=xscale.domain),
           stack=None,
-          axis=blank_axis,
+          title=''
          ),
-    alt.Y('count()', stack=None, axis=blank_axis),
+    alt.Y('count()', stack=None, title=''),
     alt.Color('species:N'),
 ).properties(height=60)
 
@@ -42,9 +41,9 @@ right_hist = base.mark_area(**area_args).encode(
     alt.Y('sepalWidth:Q',
           bin=alt.Bin(maxbins=20, extent=yscale.domain),
           stack=None,
-          axis=blank_axis,
+          title='',
          ),
-    alt.X('count()', stack=None, axis=blank_axis),
+    alt.X('count()', stack=None, title=''),
     alt.Color('species:N'),
 ).properties(width=60)
 

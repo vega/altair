@@ -10,11 +10,8 @@ import altair as alt
 source = "https://frdata.wikimedia.org/donationdata-vs-day.csv"
 
 alt.Chart(source).mark_line().encode(
-    alt.X('monthdate(date):T', axis=alt.Axis(format='%B', title='Month')),
-    alt.Y(
-        'max(ytdsum):Q', stack=None,
-        axis=alt.Axis(title='Cumulative Donations')
-    ),
+    alt.X('monthdate(date):T', title='Month', axis=alt.Axis(format='%B')),
+    alt.Y('max(ytdsum):Q', title='Cumulative Donations', stack=None),
     alt.Color('year(date):O', legend=alt.Legend(title='Year')),
     alt.Order('year(data):O')
 )

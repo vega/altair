@@ -21,32 +21,37 @@ authors:
   - name: Kanit Wongsuphasawat
     orcid: 0000-0001-7231-279X
     affiliation: 1
+  - name: Arvind Satyanarayan
+    orcid: 0000-0001-5564-635X
+    affiliation: 3
   - name: Eitan Lees
     orcid: 0000-0003-0988-6015
-    affiliation: 3
+    affiliation: 4
   - name: Ilia Timofeev
     orcid: 0000-0003-1795-943X
-    affiliation: 4
+    affiliation: 5
   - name: Ben Welsh
     orcid: 0000-0002-5200-7269
-    affiliation: 5
+    affiliation: 6
   - name: Scott Sievert
     orcid: 0000-0002-4275-3452
-    affiliation: 6
+    affiliation: 7
     
 affiliations:
   - name: University of Washington
     index: 1
   - name: California Polytechnic State University, San Luis Obispo
     index: 2
-  - name: Florida State University
+  - name: MIT CSAIL
     index: 3
-  - name: TTS Consulting
+  - name: Florida State University
     index: 4
-  - name: Los Angeles Times Data Desk
+  - name: TTS Consulting
     index: 5
-  - name: University of Wisconsin--Madison
+  - name: Los Angeles Times Data Desk
     index: 6
+  - name: University of Wisconsin--Madison
+    index: 7
 date: 07 August 2018
 bibliography: paper.bib
 ---
@@ -70,7 +75,7 @@ JSON data, which is then rendered in a user-interface such as the Jupyter Notebo
 specification [@2016-reactive-vega-architecture], which is then parsed and executed using a reactive runtime that
 internally makes use of D3.js [@2011-d3]. 
 
-The declarative nature of the Vega-Lite visualization grammar [@2005-grammar, @2017-vega-lite], and its encoding in a
+The declarative nature of the Vega-Lite visualization grammar [@2005-grammar; @2017-vega-lite], and its encoding in a
 formal JSON schema, provide Altair with a number of benefits. First, much of the Altair Python code and tests are
 generated from the Vega-Lite JSON schema, ensuring strict conformance with the Vega-Lite specification. Second, the JSON
 data produced by Altair and consumed by Vega-Lite provides a natural serialization and file format for statistical

@@ -2,51 +2,51 @@
 Isotype Visualization
 =====================
 Isotype Visualization shows the distribution of animals across UK and US.
-Inspired by [Only An Ocean Between, 1943](http://www.thomwhite.co.uk/?p=1303). Population Live Stock, p.13.
+Inspired by `Only An Ocean Between, 1943 <http://www.thomwhite.co.uk/?p=1303>`_. Population Live Stock, p.13.
 This is adapted from Vega-Lite example https://vega.github.io/editor/#/examples/vega-lite/isotype_bar_chart
 '''
 # category: case studies
-import pandas as pd
 import altair as alt
+import pandas as pd
 
 source = pd.DataFrame([
-      {'country': 'Great Britain', 'animal': 'cattle', 'col': 3},
-      {'country': 'Great Britain', 'animal': 'cattle', 'col': 2},
-      {'country': 'Great Britain', 'animal': 'cattle', 'col': 1},
-      {'country': 'Great Britain', 'animal': 'pigs', 'col': 2},
-      {'country': 'Great Britain', 'animal': 'pigs', 'col': 1},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 10},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 9},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 8},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 7},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 6},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 5},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 4},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 3},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 2},
-      {'country': 'Great Britain', 'animal': 'sheep', 'col': 1},
-      {'country': 'United States', 'animal': 'cattle', 'col': 9},
-      {'country': 'United States', 'animal': 'cattle', 'col': 8},
-      {'country': 'United States', 'animal': 'cattle', 'col': 7},
-      {'country': 'United States', 'animal': 'cattle', 'col': 6},
-      {'country': 'United States', 'animal': 'cattle', 'col': 5},
-      {'country': 'United States', 'animal': 'cattle', 'col': 4},
-      {'country': 'United States', 'animal': 'cattle', 'col': 3},
-      {'country': 'United States', 'animal': 'cattle', 'col': 2},
-      {'country': 'United States', 'animal': 'cattle', 'col': 1},
-      {'country': 'United States', 'animal': 'pigs', 'col': 6},
-      {'country': 'United States', 'animal': 'pigs', 'col': 5},
-      {'country': 'United States', 'animal': 'pigs', 'col': 4},
-      {'country': 'United States', 'animal': 'pigs', 'col': 3},
-      {'country': 'United States', 'animal': 'pigs', 'col': 2},
-      {'country': 'United States', 'animal': 'pigs', 'col': 1},
-      {'country': 'United States', 'animal': 'sheep', 'col': 7},
-      {'country': 'United States', 'animal': 'sheep', 'col': 6},
-      {'country': 'United States', 'animal': 'sheep', 'col': 5},
-      {'country': 'United States', 'animal': 'sheep', 'col': 4},
-      {'country': 'United States', 'animal': 'sheep', 'col': 3},
-      {'country': 'United States', 'animal': 'sheep', 'col': 2},
-      {'country': 'United States', 'animal': 'sheep', 'col': 1}
+      {'country': 'Great Britain', 'animal': 'cattle'},
+      {'country': 'Great Britain', 'animal': 'cattle'},
+      {'country': 'Great Britain', 'animal': 'cattle'},
+      {'country': 'Great Britain', 'animal': 'pigs'},
+      {'country': 'Great Britain', 'animal': 'pigs'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'Great Britain', 'animal': 'sheep'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'cattle'},
+      {'country': 'United States', 'animal': 'pigs'},
+      {'country': 'United States', 'animal': 'pigs'},
+      {'country': 'United States', 'animal': 'pigs'},
+      {'country': 'United States', 'animal': 'pigs'},
+      {'country': 'United States', 'animal': 'pigs'},
+      {'country': 'United States', 'animal': 'pigs'},
+      {'country': 'United States', 'animal': 'sheep'},
+      {'country': 'United States', 'animal': 'sheep'},
+      {'country': 'United States', 'animal': 'sheep'},
+      {'country': 'United States', 'animal': 'sheep'},
+      {'country': 'United States', 'animal': 'sheep'},
+      {'country': 'United States', 'animal': 'sheep'},
+      {'country': 'United States', 'animal': 'sheep'}
     ])
 
 domains = ['person', 'cattle', 'pigs', 'sheep']
@@ -66,12 +66,13 @@ color_scale = alt.Scale(
     range=['rgb(162,160,152)', 'rgb(194,81,64)', 'rgb(93,93,93)', 'rgb(91,131,149)']
 )
 
-alt.Chart(source).mark_point(filled=True).encode(
-    alt.X('col:O', axis=None),
+alt.Chart(source).mark_point(filled=True, opacity=1, size=200).encode(
+    alt.X('x:O', axis=None),
     alt.Y('animal:O', axis=None),
     alt.Row('country:N', header=alt.Header(title='')),
     alt.Shape('animal:N', legend=None, scale=shape_scale),
     alt.Color('animal:N', legend=None, scale=color_scale),
-    alt.OpacityValue(1),
-    alt.SizeValue(200)
+).transform_window(
+    x='rank()',
+    groupby=['country', 'animal']
 ).properties(width=800, height=200)
