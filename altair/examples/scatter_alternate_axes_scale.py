@@ -33,4 +33,4 @@ chart3 = base_chart.encode(
 chart4 = base_chart.encode(
     y=alt.Y('y', type='quantitative', scale=alt.Scale(type='log')),
 ).properties(title='log base 10')
-display(chart1 | chart2 | chart3 | chart4)
+chart1 | chart2 | chart3 | chart4
