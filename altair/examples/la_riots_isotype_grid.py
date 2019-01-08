@@ -15,22 +15,37 @@ source = source.sort_values("race")
 # Add an incremental id to the data
 source['id'] = source.reset_index().index + 1
 
+# An isotype SVG of a person
+person = (
+    "M1.7 -1.7h-0.8c0.3 -0.2 0.6 -0.5 0.6 -0.9c0 -0.6 "
+    "-0.4 -1 -1 -1c-0.6 0 -1 0.4 -1 1c0 0.4 0.2 0.7 0.6 "
+    "0.9h-0.8c-0.4 0 -0.7 0.3 -0.7 0.6v1.9c0 0.3 0.3 0.6 "
+    "0.6 0.6h0.2c0 0 0 0.1 0 0.1v1.9c0 0.3 0.2 0.6 0.3 "
+    "0.6h1.3c0.2 0 0.3 -0.3 0.3 -0.6v-1.8c0 0 0 -0.1 0 "
+    "-0.1h0.2c0.3 0 0.6 -0.3 0.6 -0.6v-2c0.2 -0.3 -0.1 "
+    "-0.6 -0.4 -0.6z"
+)
+
 alt.Chart(
     source,
     title="L.A. Riots Deaths by Race"
 ).transform_calculate(
-    col="ceil(datum.id/10)"
+    row="ceil(datum.id/7)"
 ).transform_calculate(
-    row="datum.id - datum.col*10"
-).mark_point(filled=True, size=90).encode(
+    col="datum.id - datum.row*7"
+).transform_calculate(
+    label="'   ' + datum.race"
+).mark_point(filled=True, size=70).encode(
     x=alt.X("col:O", axis=None),
     y=alt.Y("row:O", axis=None),
-    shape=alt.ShapeValue("M1.7 -1.7h-0.8c0.3 -0.2 0.6 -0.5 0.6 -0.9c0 -0.6 -0.4 -1 -1 -1c-0.6 0 -1 0.4 -1 1c0 0.4 0.2 0.7 0.6 0.9h-0.8c-0.4 0 -0.7 0.3 -0.7 0.6v1.9c0 0.3 0.3 0.6 0.6 0.6h0.2c0 0 0 0.1 0 0.1v1.9c0 0.3 0.2 0.6 0.3 0.6h1.3c0.2 0 0.3 -0.3 0.3 -0.6v-1.8c0 0 0 -0.1 0 -0.1h0.2c0.3 0 0.6 -0.3 0.6 -0.6v-2c0.2 -0.3 -0.1 -0.6 -0.4 -0.6z"),
+    shape=alt.ShapeValue(person),
     color=alt.Color(
-        "race:N",
-        legend=alt.Legend(title="", padding=30)
+        "label:N",
+        legend=alt.Legend(title="", padding=25)
     )
 ).properties(
-    width=400,
-    height=400
-).configure_view(strokeWidth=0)
+    width=200,
+    height=300
+).configure_view(
+    strokeWidth=0
+)
