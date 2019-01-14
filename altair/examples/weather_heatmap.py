@@ -3,7 +3,7 @@ Seattle Weather Heatmap
 -----------------------
 This example shows the 2010 daily high temperature (F) in Seattle, WA.
 """
-# category: line charts
+# category: case studies
 import altair as alt
 from vega_datasets import data
 
