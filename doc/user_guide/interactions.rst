@@ -9,7 +9,7 @@ One of the unique features of Altair, inherited from Vega-Lite, is a
 declarative grammar of not just visualization, but *interaction*. There are three
 core concepts of this grammar:
 
-- the :func:`selection` object which captures interactions from the mouse or through other inputs to effect the chart. Inputs can either be events like moust clicks or drags. Inputs can also be elemnts like a drop-down, radio button or slider. Selections can be used alone but if you want to have change any element of your chart you will need to connect them to a *condition*. 
+- the :func:`selection` object which captures interactions from the mouse or through other inputs to effect the chart. Inputs can either be events like mouse clicks or drags. Inputs can also be elements like a drop-down, radio button or slider. Selections can be used alone but if you want to change any element of your chart you will need to connect them to a *condition*. 
 - the :func:`condition` function takes the selection input and changes an element of the chart based on that input. 
 - the ``bind`` property of a selection which establishes a two-way binding between the selection and an input element of your chart. 
 
