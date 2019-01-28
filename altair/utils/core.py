@@ -15,8 +15,12 @@ import numpy as np
 
 try:
     from pandas.api.types import infer_dtype
-except ImportError: # Pandas before 0.20.0
+    # keywords required; see https://github.com/altair-viz/altair/issues/1314
+    _infer_dtype_kwds = {'skipna': False}
+except ImportError:
+    # This is the appropriate import for pandas < 0.20.0
     from pandas.lib import infer_dtype
+    _infer_dtype_kwds = {}  # no keywords allowed in pandas < 0.20
 
 from .schemapi import SchemaBase, Undefined
 
@@ -69,7 +73,7 @@ def infer_vegalite_type(data):
     data: Numpy array or Pandas Series
     """
     # Otherwise, infer based on the dtype of the input
-    typ = infer_dtype(data)
+    typ = infer_dtype(data, **_infer_dtype_kwds)
 
     # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
 
