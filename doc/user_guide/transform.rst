@@ -656,8 +656,8 @@ labels.
 
 Window Transform
 ~~~~~~~~~~~~~~~~
-The Window transform performs calculations over sorted groups of data objects.
-These calculations including ranking, lead/lag analysis, and aggregates such
+The window transform performs calculations over sorted groups of data objects.
+These calculations include ranking, lead/lag analysis, and aggregates such
 as running sums and averages. Calculated values are written back to the
 input data stream, where they can be referenced in encodings.
 
