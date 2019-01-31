@@ -67,3 +67,6 @@ Untitled*.ipynb
 .mypy*
 .pytest_cache
 *.DS_Store
+
+# VSCode
+.vscode
