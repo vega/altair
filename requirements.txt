@@ -5,4 +5,4 @@ numpy
 pandas
 six
 toolz
-typing;python_version<"3.5"
+typing>=3.6;python_version<"3.5"
