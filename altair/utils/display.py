@@ -101,7 +101,7 @@ class Displayable(object):
     schema_path = ('altair', '')
 
     def __init__(self, spec, validate=False):
-        # type: (dict, bool) ->: None
+        # type: (dict, bool) -> None
         self.spec = spec
         self.validate = validate
         self._validate()

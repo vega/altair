@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar, cast
+from typing import Any, Union, List, Generic, TypeVar, cast
 
 import entrypoints
 from toolz import curry
@@ -72,7 +72,7 @@ class PluginRegistry(Generic[PluginType]):
         """
         self.entry_point_group = entry_point_group
         self.plugin_type = plugin_type
-        self._active = None     # type: None
+        self._active = None     # type: str
         self._active_name = ''  # type: str
         self._plugins = {}      # type: dict
         self._options = {}      # type: dict
