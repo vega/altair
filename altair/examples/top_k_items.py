@@ -15,7 +15,7 @@ source = data.movies.url
 
 # Top 10 movies by IMBD ratings
 alt.Chart(
-    movies,
+    source,
 ).mark_bar().encode(
     x=alt.X(
         'Title:N', 
