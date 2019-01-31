@@ -1,6 +1,6 @@
 """
 Top K Items
--------------
+-----------
 This example shows how to use the window and transformation filter to display
 the Top items of a long list of items in decreasing order.
 The sorting of the x-axis is needed for vega-lite and for the example does
