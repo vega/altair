@@ -22,7 +22,7 @@ alt.Chart(
         sort=alt.EncodingSortField(field="IMDB_Rating", op="mean", order='descending')
     ),
     y=alt.Y('IMDB_Rating'),
-    color=alt.Color('IMDB_Rating')
+    color=alt.Color('IMDB_Rating:Q')
     
 ).transform_window(
     rank='rank(IMDB_Rating)',
