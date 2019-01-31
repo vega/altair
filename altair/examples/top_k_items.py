@@ -11,7 +11,7 @@ Here we sort the top 10 highest ranking movies of IMDB.
 import altair as alt
 
 from vega_datasets import data
-movies = data.movies()
+source = data.movies.url
 
 # Top 10 movies by IMBD ratings
 alt.Chart(
