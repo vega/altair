@@ -701,9 +701,6 @@ last_value    None       Assigns a value from the last data object in the curren
 nth_value     Number     Assigns a value from the nth data object in the current sliding window frame. If no such object exists, assigns ``null``. Requires a non-negative integer parameter that indicates the offset from the start of the window frame. This operation must have a corresponding entry in the `fields` parameter array.
 ============  =========  =========================================================================================================================================================================================================================================================================================================================
 
-Window transforms are quite flexible, and are not yet well documented within
-Altair. For more information on the arguments of the window transform, see
-:class:`WindowTransform`, or see the
-`Vega-Lite window transform examples <https://vega.github.io/vega-lite/docs/window.html>`_.
+For more information about the arguments to the window transform, see :class:`WindowTransform` and `the Vega-Lite documentation <https://vega.github.io/vega-lite/docs/window.html>`_.
 
 .. _Vega expression: https://vega.github.io/vega/docs/expressions/
