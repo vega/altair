@@ -656,50 +656,49 @@ labels.
 
 Window Transform
 ~~~~~~~~~~~~~~~~
-The Window transform performs calculations over sorted groups of data objects.
-These calculations including ranking, lead/lag analysis, and aggregates such
-as running sums and averages. Calculated values are written back to the
-input data stream, where they can be referenced in encodings.
+The window transform performs calculations over sorted groups of data objects.
+These calculations include ranking, lead/lag analysis, and aggregates such as cumulative sums and averages.
+Calculated values are written back to the input data stream, where they can be referenced by encodings.
 
-For example, consider the following chart showing time spent on various
-activities during a day:
-
+For example, consider the following cumulative frequency distribution:
 
 .. altair-plot::
 
     import altair as alt
-    import pandas as pd
+    from vega_datasets import data
 
-    activities = pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exercise'],
-                               'Time': [8, 2, 4, 8, 2]})
+    alt.Chart(data.movies.url).transform_window(
+        sort=[{'field': 'IMDB_Rating'}],
+        frame=[None, 0],
+        cumulative_count='count(*)',
+    ).mark_area().encode(x='IMDB_Rating:Q', y='cumulative_count:Q')
 
-    alt.Chart(activities).mark_bar().encode(
-        x='Time:Q',
-        y='Activity:N'
-    )
+First, we pass a sort field definition, which indicates how data objects should be sorted within the window.
+Here, movies should be sorted by their IMDB rating.
+Next, we pass the frame, which indicates how many data objects before and after the current data object should be included within the window.
+Here, all movies up to and including the current movie should be included.
+Finally, we pass a window field definition, which indicates how data objects should be aggregated within the window.
+Here, the number of movies should be counted.
 
-You might wish to plot these bars in units of percentage of total time rather than
-in units of hours. You can do this by combining a calculate transform with a
-window transform, using :meth:`~Chart.transform_window`:
+There are many aggregation functions built into Altair.
+As well as those given in :ref:`encoding-aggregates`, we can use the following within window field definitions:
 
-.. altair-plot::
+============  =========  =========================================================================================================================================================================================================================================================================================================================
+Aggregate     Parameter  Description
+============  =========  =========================================================================================================================================================================================================================================================================================================================
+row_number    None       Assigns each data object a consecutive row number, starting from 1.
+rank          None       Assigns a rank order value to each data object in a window, starting from 1. Peer values are assigned the same rank. Subsequent rank scores incorporate the number of prior values. For example, if the first two values tie for rank 1, the third value is assigned rank 3.
+dense_rank    None       Assigns dense rank order values to each data object in a window, starting from 1. Peer values are assigned the same rank. Subsequent rank scores do not incorporate the number of prior values. For example, if the first two values tie for rank 1, the third value is assigned rank 2.
+percent_rank  None       Assigns a percentage rank order value to each data object in a window. The percent is calculated as (rank - 1) / (group_size - 1).
+cume_dist     None       Assigns a cumulative distribution value between 0 and 1 to each data object in a window.
+ntile         Number     Assigns a quantile (e.g., percentile) value to each data object in a window. Accepts an integer parameter indicating the number of buckets to use (e.g., 100 for percentiles, 5 for quintiles).
+lag           Number     Assigns a value from the data object that precedes the current object by a specified number of positions. If no such object exists, assigns ``null``. Accepts an offset parameter (default ``1``) that indicates the number of positions. This operation must have a corresponding entry in the `fields` parameter array.
+lead          Number     Assigns a value from the data object that follows the current object by a specified number of positions. If no such object exists, assigns ``null``. Accepts an offset parameter (default ``1``) that indicates the number of positions. This operation must have a corresponding entry in the `fields` parameter array.
+first_value   None       Assigns a value from the first data object in the current sliding window frame. This operation must have a corresponding entry in the `fields` parameter array.
+last_value    None       Assigns a value from the last data object in the current sliding window frame. This operation must have a corresponding entry in the `fields` parameter array.
+nth_value     Number     Assigns a value from the nth data object in the current sliding window frame. If no such object exists, assigns ``null``. Requires a non-negative integer parameter that indicates the offset from the start of the window frame. This operation must have a corresponding entry in the `fields` parameter array.
+============  =========  =========================================================================================================================================================================================================================================================================================================================
 
-    alt.Chart(activities).transform_window(
-        TotalTime='sum(Time)',
-        frame=[None, None]
-    ).transform_calculate(
-        PercentOfTotal="100 * datum.Time / datum.TotalTime"
-    ).mark_bar().encode(
-        x='PercentOfTotal:Q',
-        y='Activity:N'
-    )
-
-In the window transform, we specify ``frame=[None, None]``, which indicates that
-the aggregation at each point is performed on the entire dataset.
-
-Window transforms are quite flexible, and are not yet well documented within
-Altair. For more information on the arguments of the window transform, see
-:class:`WindowTransform`, or see the
-`Vega-Lite window transform examples <https://vega.github.io/vega-lite/docs/window.html>`_.
+For more information about the arguments to the window transform, see :class:`WindowTransform` and `the Vega-Lite documentation <https://vega.github.io/vega-lite/docs/window.html>`_.
 
 .. _Vega expression: https://vega.github.io/vega/docs/expressions/
