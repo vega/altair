@@ -667,9 +667,7 @@ For example, consider the following cumulative frequency distribution:
     import altair as alt
     from vega_datasets import data
 
-    movies = data.movies()
-
-    alt.Chart(movies).transform_window(
+    alt.Chart(data.movies.url).transform_window(
         sort=[{'field': 'IMDB_Rating'}],
         frame=[None, 0],
         cumulative_count='count(*)',
