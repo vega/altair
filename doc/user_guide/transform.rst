@@ -682,6 +682,25 @@ Here, all movies up to and including the current movie should be included.
 Finally, we pass a window field definition, which indicates how data objects should be aggregated within the window.
 Here, the number of movies should be counted.
 
+There are many aggregation functions built into Altair.
+As well as those given in :ref:`encoding-aggregates`, we can use the following within window field definitions:
+
+============  =========  =========================================================================================================================================================================================================================================================================================================================
+Aggregate     Parameter  Description
+============  =========  =========================================================================================================================================================================================================================================================================================================================
+row_number    None       Assigns each data object a consecutive row number, starting from 1.
+rank          None       Assigns a rank order value to each data object in a window, starting from 1. Peer values are assigned the same rank. Subsequent rank scores incorporate the number of prior values. For example, if the first two values tie for rank 1, the third value is assigned rank 3.
+dense_rank    None       Assigns dense rank order values to each data object in a window, starting from 1. Peer values are assigned the same rank. Subsequent rank scores do not incorporate the number of prior values. For example, if the first two values tie for rank 1, the third value is assigned rank 2.
+percent_rank  None       Assigns a percentage rank order value to each data object in a window. The percent is calculated as (rank - 1) / (group_size - 1).
+cume_dist     None       Assigns a cumulative distribution value between 0 and 1 to each data object in a window.
+ntile         Number     Assigns a quantile (e.g., percentile) value to each data object in a window. Accepts an integer parameter indicating the number of buckets to use (e.g., 100 for percentiles, 5 for quintiles).
+lag           Number     Assigns a value from the data object that precedes the current object by a specified number of positions. If no such object exists, assigns ``null``. Accepts an offset parameter (default ``1``) that indicates the number of positions. This operation must have a corresponding entry in the `fields` parameter array.
+lead          Number     Assigns a value from the data object that follows the current object by a specified number of positions. If no such object exists, assigns ``null``. Accepts an offset parameter (default ``1``) that indicates the number of positions. This operation must have a corresponding entry in the `fields` parameter array.
+first_value   None       Assigns a value from the first data object in the current sliding window frame. This operation must have a corresponding entry in the `fields` parameter array.
+last_value    None       Assigns a value from the last data object in the current sliding window frame. This operation must have a corresponding entry in the `fields` parameter array.
+nth_value     Number     Assigns a value from the nth data object in the current sliding window frame. If no such object exists, assigns ``null``. Requires a non-negative integer parameter that indicates the offset from the start of the window frame. This operation must have a corresponding entry in the `fields` parameter array.
+============  =========  =========================================================================================================================================================================================================================================================================================================================
+
 Window transforms are quite flexible, and are not yet well documented within
 Altair. For more information on the arguments of the window transform, see
 :class:`WindowTransform`, or see the
