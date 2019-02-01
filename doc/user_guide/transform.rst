@@ -663,6 +663,7 @@ Calculated values are written back to the input data stream, where they can be r
 For example, consider the following cumulative frequency distribution:
 
 .. altair-plot::
+
     import altair as alt
     from vega_datasets import data
 
