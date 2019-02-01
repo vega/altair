@@ -661,41 +661,26 @@ These calculations include ranking, lead/lag analysis, and aggregates such
 as running sums and averages. Calculated values are written back to the
 input data stream, where they can be referenced in encodings.
 
-For example, consider the following chart showing time spent on various
-activities during a day:
-
+For example, consider the following cumulative frequency distribution:
 
 .. altair-plot::
-
     import altair as alt
-    import pandas as pd
+    from vega_datasets import data
 
-    activities = pd.DataFrame({'Activity': ['Sleeping', 'Eating', 'TV', 'Work', 'Exercise'],
-                               'Time': [8, 2, 4, 8, 2]})
+    movies = data.movies()
 
-    alt.Chart(activities).mark_bar().encode(
-        x='Time:Q',
-        y='Activity:N'
-    )
+    alt.Chart(movies).transform_window(
+        sort=[{'field': 'IMDB_Rating'}],
+        frame=[None, 0],
+        cumulative_count='count(*)',
+    ).mark_area().encode(x='IMDB_Rating:Q', y='cumulative_count:Q')
 
-You might wish to plot these bars in units of percentage of total time rather than
-in units of hours. You can do this by combining a calculate transform with a
-window transform, using :meth:`~Chart.transform_window`:
-
-.. altair-plot::
-
-    alt.Chart(activities).transform_window(
-        TotalTime='sum(Time)',
-        frame=[None, None]
-    ).transform_calculate(
-        PercentOfTotal="100 * datum.Time / datum.TotalTime"
-    ).mark_bar().encode(
-        x='PercentOfTotal:Q',
-        y='Activity:N'
-    )
-
-In the window transform, we specify ``frame=[None, None]``, which indicates that
-the aggregation at each point is performed on the entire dataset.
+First, we pass a sort field definition, which indicates how data objects should be sorted within the window.
+Here, movies should be sorted by their IMDB rating.
+Next, we pass the frame, which indicates how many data objects before and after the current data object should be included within the window.
+Here, all movies up to and including the current movie should be included.
+Finally, we pass a window field definition, which indicates how data objects should be aggregated within the window.
+Here, the number of movies should be counted.
 
 Window transforms are quite flexible, and are not yet well documented within
 Altair. For more information on the arguments of the window transform, see
