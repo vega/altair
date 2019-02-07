@@ -699,6 +699,38 @@ last_value    None       Assigns a value from the last data object in the curren
 nth_value     Number     Assigns a value from the nth data object in the current sliding window frame. If no such object exists, assigns ``null``. Requires a non-negative integer parameter that indicates the offset from the start of the window frame. This operation must have a corresponding entry in the `fields` parameter array.
 ============  =========  =========================================================================================================================================================================================================================================================================================================================
 
+Notice that when we use an aggregation function within an aggregate transform, the data objects are collapsed.
+However, when we use an aggregation function within a window transform, the data objects are augmented.
+It's by augmenting, rather than collapsing, that we can compute statistics, such as `z-scores`_.
+For example, consider the following time series of stock prices:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    alt.Chart(data.stocks.url).mark_line().encode(x='date:T', y='price:Q', color='symbol:N')
+
+It's hard to see the overall pattern in the above example, because Google's stock price is much higher than the other stock prices.
+If we plot the z-scores of the stock prices, rather than the stock prices themselves, then the overall pattern becomes clearer:
+
+.. altair-plot::
+
+    import altair as alt
+    from altair import expr
+    from vega_datasets import data
+
+    alt.Chart(data.stocks.url).transform_window(
+        mean_price='mean(price)',
+        stdev_price='stdev(price)',
+        frame=[None, None], groupby=['symbol'],
+    ).transform_calculate(
+        z_score=(expr.datum.price - expr.datum.mean_price) / expr.datum.stdev_price,
+    ).mark_line().encode(x='date:T', y='z_score:Q', color='symbol:N')
+
+By using two aggregation functions (``mean`` and ``stdev``) within the window transform, we are able to compute the z-scores within the calculate transform.
+
 For more information about the arguments to the window transform, see :class:`WindowTransform` and `the Vega-Lite documentation <https://vega.github.io/vega-lite/docs/window.html>`_.
 
 .. _Vega expression: https://vega.github.io/vega/docs/expressions/
+.. _z-scores: https://en.wikipedia.org/w/index.php?title=Z-score
