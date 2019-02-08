@@ -730,7 +730,8 @@ If we plot the z-scores of the stock prices, rather than the stock prices themse
     alt.Chart(data.stocks.url).transform_window(
         mean_price='mean(price)',
         stdev_price='stdev(price)',
-        frame=[None, None], groupby=['symbol'],
+        frame=[None, None],
+        groupby=['symbol'],
     ).transform_calculate(
         z_score=(alt.datum.price - alt.datum.mean_price) / alt.datum.stdev_price,
     ).mark_line().encode(
