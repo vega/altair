@@ -702,9 +702,10 @@ last_value    None       Assigns a value from the last data object in the curren
 nth_value     Number     Assigns a value from the nth data object in the current sliding window frame. If no such object exists, assigns ``null``. Requires a non-negative integer parameter that indicates the offset from the start of the window frame. This operation must have a corresponding entry in the `fields` parameter array.
 ============  =========  =========================================================================================================================================================================================================================================================================================================================
 
-Notice that when we use an aggregation function within an aggregate transform, the data objects are collapsed.
-However, when we use an aggregation function within a window transform, the data objects are augmented.
-It's by augmenting, rather than collapsing, that we can compute statistics, such as `z-scores`_.
+Notice that using an aggregate transform is like using an SQL ``GROUP BY``:
+the input data objects are replaced by the output data objects, which contain the results of applying the aggregation function.
+However, using a window transform is like broadcasting the results to the input data objects.
+By using a window transform, and preserving the input data objects, we can compute statistics, such as `z-scores`_.
 For example, consider the following time series of stock prices:
 
 .. altair-plot::
