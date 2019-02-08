@@ -732,7 +732,7 @@ If we plot the z-scores of the stock prices, rather than the stock prices themse
         stdev_price='stdev(price)',
         frame=[None, None], groupby=['symbol'],
     ).transform_calculate(
-        z_score=(expr.datum.price - expr.datum.mean_price) / expr.datum.stdev_price,
+        z_score=(alt.datum.price - alt.datum.mean_price) / alt.datum.stdev_price,
     ).mark_line().encode(
         x='date:T',
         y='z_score:Q',
