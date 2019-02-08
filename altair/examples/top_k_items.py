@@ -29,3 +29,4 @@ alt.Chart(
     sort=[alt.SortField('IMDB_Rating', order='descending')]
 ).transform_filter(
     (alt.datum.rank < 10)
+)
