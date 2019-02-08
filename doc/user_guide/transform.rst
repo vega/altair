@@ -671,7 +671,10 @@ For example, consider the following cumulative frequency distribution:
         sort=[{'field': 'IMDB_Rating'}],
         frame=[None, 0],
         cumulative_count='count(*)',
-    ).mark_area().encode(x='IMDB_Rating:Q', y='cumulative_count:Q')
+    ).mark_area().encode(
+        x='IMDB_Rating:Q',
+        y='cumulative_count:Q',
+    )
 
 First, we pass a sort field definition, which indicates how data objects should be sorted within the window.
 Here, movies should be sorted by their IMDB rating.
@@ -709,7 +712,11 @@ For example, consider the following time series of stock prices:
     import altair as alt
     from vega_datasets import data
 
-    alt.Chart(data.stocks.url).mark_line().encode(x='date:T', y='price:Q', color='symbol:N')
+    alt.Chart(data.stocks.url).mark_line().encode(
+        x='date:T',
+        y='price:Q',
+        color='symbol:N',
+    )
 
 It's hard to see the overall pattern in the above example, because Google's stock price is much higher than the other stock prices.
 If we plot the z-scores of the stock prices, rather than the stock prices themselves, then the overall pattern becomes clearer:
@@ -726,7 +733,11 @@ If we plot the z-scores of the stock prices, rather than the stock prices themse
         frame=[None, None], groupby=['symbol'],
     ).transform_calculate(
         z_score=(expr.datum.price - expr.datum.mean_price) / expr.datum.stdev_price,
-    ).mark_line().encode(x='date:T', y='z_score:Q', color='symbol:N')
+    ).mark_line().encode(
+        x='date:T',
+        y='z_score:Q',
+        color='symbol:N',
+    )
 
 By using two aggregation functions (``mean`` and ``stdev``) within the window transform, we are able to compute the z-scores within the calculate transform.
 
