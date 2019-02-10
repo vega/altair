@@ -723,7 +723,6 @@ If we plot the `z-scores`_ of the stock prices, rather than the stock prices the
 .. altair-plot::
 
     import altair as alt
-    from altair import expr
     from vega_datasets import data
 
     alt.Chart(data.stocks.url).transform_window(
