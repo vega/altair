@@ -702,10 +702,8 @@ last_value    None       Assigns a value from the last data object in the curren
 nth_value     Number     Assigns a value from the nth data object in the current sliding window frame. If no such object exists, assigns ``null``. Requires a non-negative integer parameter that indicates the offset from the start of the window frame. This operation must have a corresponding entry in the `fields` parameter array.
 ============  =========  =========================================================================================================================================================================================================================================================================================================================
 
-Notice that using an aggregate transform is like using an SQL ``GROUP BY``:
-the input data objects are replaced by the output data objects, which contain the results of applying the aggregation function.
-However, using a window transform is like broadcasting the results to the input data objects.
-By using a window transform, and preserving the input data objects, we can compute statistics, such as `z-scores`_.
+While an aggregate transform computes a single value that summarises all data objects, a window transform adds a new property to each data object.
+This new property is computed from the neighbouring data objects: that is, from the data objects delimited by the window field definition.
 For example, consider the following time series of stock prices:
 
 .. altair-plot::
@@ -720,7 +718,7 @@ For example, consider the following time series of stock prices:
     )
 
 It's hard to see the overall pattern in the above example, because Google's stock price is much higher than the other stock prices.
-If we plot the z-scores of the stock prices, rather than the stock prices themselves, then the overall pattern becomes clearer:
+If we plot the `z-scores`_ of the stock prices, rather than the stock prices themselves, then the overall pattern becomes clearer:
 
 .. altair-plot::
 
