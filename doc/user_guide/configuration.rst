@@ -205,7 +205,7 @@ First remove the grid using the :meth:`Chart.configure_axis` method.
         grid=False
     )
 
-You'll note that while the inside rules are gone, the outside border remains. Hide it by setting the `strokeWidth` or the `strokeOpcacity` options on :meth:`Chart.configure_view` to `0`.
+You'll note that while the inside rules are gone, the outside border remains. Hide it by setting the `strokeWidth` or the `strokeOpacity` options on :meth:`Chart.configure_view` to `0`.
 
 .. altair-plot::
 
