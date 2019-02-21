@@ -1,5 +1,11 @@
 # Altair Change Log
 
+## Version 2.5.0 (Unreleased)
+
+## Enhancements
+
+## Bug Fixes
+
 ## Version 2.4.1 (Released February 21, 2019)
 
 ### Enhancements
