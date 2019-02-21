@@ -1,14 +1,14 @@
 # Altair Change Log
 
-## Version 2.4.0 (Unreleased)
+## Version 2.3.1 (Released February 21, 2019)
 
 ### Enhancements
 
-### Backward-incompatible Changes
-
-### Maintenance
+- Several documentation cleanups & new examples
 
 ### Bug Fixes
+
+- Fix incompatibility with pandas version 0.24 (#1315)
 
 ## Version 2.3.0 (Released December 7, 2018)
 
