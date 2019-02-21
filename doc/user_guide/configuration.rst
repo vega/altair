@@ -205,7 +205,7 @@ First remove the grid using the :meth:`Chart.configure_axis` method.
         grid=False
     )
 
-You'll note that while the inside rules are gone, the outside border remains. Hide it by setting the `strokeOpacity` option on :meth:`Chart.configure_view` to `0`.
+You'll note that while the inside rules are gone, the outside border remains. Hide it by setting the `strokeWidth` or the `strokeOpcacity` options on :meth:`Chart.configure_view` to `0`.
 
 .. altair-plot::
 
@@ -224,6 +224,25 @@ You'll note that while the inside rules are gone, the outside border remains. Hi
         strokeWidth=0
     )
 
+
+It is also possible to completely remove all borders and axes by combining the above option with setting `axis` to `None` during encoding.
+
+..altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        alt.X('petalWidth', axis=None),
+        alt.Y('petalLength', axis=None),
+        color='species'
+    ).configure_axis(
+        grid=False
+    ).configure_view(
+        strokeWidth=0
+    )
 
 
 .. _chart-themes:
