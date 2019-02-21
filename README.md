@@ -42,7 +42,7 @@ alt.Chart(cars).mark_point().encode(
 )
 ```
 
-![Altair Visualization](http://github.com/altair-viz/altair/images/cars.png?raw=true)
+![Altair Visualization](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png)
 
 ## Getting your Questions Answered
 
