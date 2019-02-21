@@ -111,41 +111,14 @@ pass it to the chart by URL. You can do this manually if you wish:
                   'y': {'field': 'y', 'type': 'quantitative'}},
      'mark': 'line'}
 
+For other strategies for effectively working with large datasets in Altair, see
+:ref:`altair-faq-max-rows`
 
-Alternatively, Altair provides a JSON data transformer that will automatically
-store your data to disk and reference it by URL when a chart is rendered:
-
-.. altair-plot::
-   :output: none
-
-   chart = alt.Chart(data).mark_line().encode(
-    x='x:Q',
-    y='y:Q'
-   )
-
-   with alt.data_transformers.enable('json'):
-       pprint(chart.to_dict())
-
-
-.. code-block:: none
-
-    {'$schema': 'https://vega.github.io/schema/vega-lite/v2.4.1.json',
-     'config': {'view': {'height': 300, 'width': 400}},
-     'data': {'format': {'type': 'json'},
-              'url': 'altair-data-da466e59-a1e3-4659-a9a7-e64d09c85aa7.json'},
-     'encoding': {'x': {'field': 'x', 'type': 'quantitative'},
-                  'y': {'field': 'y', 'type': 'quantitative'}},
-     'mark': 'line'}
-
-With either of these approaches, the data is now stored externally in a JSON
-file rather than being embedded in the notebook,
+With this type of approach, the data is now stored as an external file
+rather than being embedded in the notebook,
 leading to much more compact plot specifications.
 The disadvantage, of course, is a loss of portability: if the notebook is
 ever moved, the data file must accompany it or the plot may not display.
-
-In the future, we plan to explore the idea of named datasets that can be
-transparently embedded once in the notebook metadata and referenced by name
-in plots throughout, but that is not implemented yet.
 
 
 .. _altair-faq-max-rows:
@@ -182,17 +155,52 @@ in the notebook, but rather pass it to the chart by URL.
 This not only addresses the issue of large notebooks, but also leads to better
 interactivity performance with large datasets.
 
-As noted above, Altair has a ``JSON`` data transformer that will do
-this transparently::
+Vega Datasets
+^^^^^^^^^^^^^
+If you are working with one of the vega datasets, you can pass the data by URL
+using the ``url`` attribute:
+
+.. code-block:: python
+
+   from vega_datasets import data
+   source = data.cars.url
+
+   alt.Chart(source).mark_point() # etc.
+
+Local Filesystem
+^^^^^^^^^^^^^^^^
+You may also save data to a local filesystem and reference the data by
+file path. As noted above, Altair has ``JSON`` and ``CSV`` data data_transformers
+that will do this transparently when enabled::
 
     alt.data_transformers.enable('json')
+    # or
+    alt.data_transformers.enable('csv')
 
 With this data transformer enabled, each time you make a plot the data will be
 serialized to disk and referenced by URL, rather than being embedded in the
 notebook output.
-
-Another approach is to manually save the data to file and reference it that way
+You may also manually save the data to file and reference it that way
 (see :ref:`altair-faq-large-notebook`).
+
+Note that the filesystem approach may not work on some cloud-based Jupyter notebook services.
+
+Local Data Server
+^^^^^^^^^^^^^^^^^
+It is also possible to serve your data from a local threaded server to avoid writing
+datasets to disk. The `altair_data_server <https://github.com/altair-viz/altair_data_server>`_
+package makes this easy. First install the package:
+
+.. code-block:: none
+
+   pip install altair_data_server
+
+And then enable the data transformer::
+
+    import altair as alt
+    alt.data_transformers.enable('data_server')
+
+Note that this may not approach on some cloud-based Jupyter notebook services.
 
 Disabling MaxRows
 ~~~~~~~~~~~~~~~~~
