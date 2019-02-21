@@ -1,9 +1,9 @@
 """
-Scatter Plots with alternate Y axis scale
------------------------------------------
+Controlling Axis Scale
+----------------------
 A few examples that make use of alternate Y axis scales.
 """
-# category: simple charts
+# category: other charts
 
 import altair as alt
 import numpy as np
