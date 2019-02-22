@@ -2,7 +2,7 @@
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 [![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
-[![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altair-viz/altair_notebooks/master?urlpath=lab/tree/notebooks/Index.ipynb)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
 
 [http://altair-viz.github.io](http://altair-viz.github.io)
