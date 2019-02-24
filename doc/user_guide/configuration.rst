@@ -16,12 +16,16 @@ These methods and their arguments will be outlined below:
 
 - :ref:`config-chart` :meth:`Chart.configure`
 - :ref:`config-axis` :meth:`Chart.configure_axis`
+- :ref:`config-header` :meth:`Chart.configure_header`
 - :ref:`config-legend` :meth:`Chart.configure_legend`
+- :ref:`config-mark` :meth:`Chart.configure_mark`
 - :ref:`config-scale` :meth:`Chart.configure_scale`
 - :ref:`config-range` :meth:`Chart.configure_range`
 - :ref:`config-projection` :meth:`Chart.configure_projection`
 - :ref:`config-selection` :meth:`Chart.configure_selection`
+- :ref:`config-title` :meth:`Chart.configure_title`
 - :ref:`config-view` :meth:`Chart.configure_view`
+
 
 
 
@@ -69,6 +73,14 @@ They have the following properties:
 .. altair-object-table:: altair.AxisConfig
 
 
+.. _config-header:
+
+Header Configuration
+--------------------
+:meth:`Chart.configure_header`
+
+.. altair-object-table:: altair.HeaderConfig
+
 
 .. _config-legend:
 
@@ -108,6 +120,7 @@ For configurations specific to particular mark types, use:
 - :meth:`Chart.configure_square`
 - :meth:`Chart.configure_text`
 - :meth:`Chart.configure_tick`
+- :meth:`Chart.configure_trail`
 
 Each of the above methods accepts the following properties:
 
@@ -157,6 +170,14 @@ Selection Configuration
 
 .. altair-object-table:: altair.SelectionConfig
 
+
+.. _config-title:
+
+Title Configuration
+-------------------
+:meth:`Chart.configure_title`
+
+.. altair-object-table:: altair.VgTitleConfig
 
 
 .. _config-view:
