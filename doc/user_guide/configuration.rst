@@ -13,7 +13,6 @@ overridden by specific style settings associated with chart elements.
 
 These methods and their arguments will be outlined below:
 
-
 - :ref:`config-chart` :meth:`Chart.configure`
 - :ref:`config-axis` :meth:`Chart.configure_axis`
 - :ref:`config-header` :meth:`Chart.configure_header`
@@ -26,7 +25,8 @@ These methods and their arguments will be outlined below:
 - :ref:`config-title` :meth:`Chart.configure_title`
 - :ref:`config-view` :meth:`Chart.configure_view`
 
-
+For more discussion of approaches to chart customization, see
+:ref:`user-guide-customization`.
 
 
 .. _config-chart:
@@ -37,7 +37,6 @@ The :meth:`Chart.configure` method adds a :class:`Config` instance to the chart,
 and has the following attributes:
 
 .. altair-object-table:: altair.Config
-
 
 
 .. _config-axis:

@@ -33,6 +33,9 @@ of the points to 20%. There are three possible approaches to these:
 
 Global Config
 ~~~~~~~~~~~~~
+*See :ref:`user-guide-configuration` for a full
+discussion of global configuration options*
+
 First, every chart type has a ``"config"`` property at the top level that acts
 as a sort of theme for the whole chart and all of its sub-charts.
 Here you can specify things like axes properties, mark properties, selection
