@@ -33,6 +33,9 @@ of the points to 20%. There are three possible approaches to these:
 
 Global Config
 ~~~~~~~~~~~~~
+*See :ref:`user-guide-configuration` for a full
+discussion of global configuration options*
+
 First, every chart type has a ``"config"`` property at the top level that acts
 as a sort of theme for the whole chart and all of its sub-charts.
 Here you can specify things like axes properties, mark properties, selection
@@ -290,6 +293,85 @@ You can remove the legend entirely by submitting a null value.
       y='petalLength',
       color=alt.Color('species', legend=None),
   )
+
+Removing the Chart Border
+-------------------------
+Basic Altair charts are drawn with both a grid and an outside border.
+To create a chart with no border, you will need to remove them both.
+
+As an example, let's start with a simple scatter plot.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    )
+
+First remove the grid using the :meth:`Chart.configure_axis` method.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    ).configure_axis(
+        grid=False
+    )
+
+You'll note that while the inside rules are gone, the outside border remains.
+Hide it by setting the `strokeWidth` or the `strokeOpacity` options on
+:meth:`Chart.configure_view` to `0`:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    ).configure_axis(
+        grid=False
+    ).configure_view(
+        strokeWidth=0
+    )
+
+
+It is also possible to completely remove all borders and axes by
+combining the above option with setting `axis` to `None` during encoding.
+
+..altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        alt.X('petalWidth', axis=None),
+        alt.Y('petalLength', axis=None),
+        color='species'
+    ).configure_axis(
+        grid=False
+    ).configure_view(
+        strokeWidth=0
+    )
 
 
 Customizing Colors
