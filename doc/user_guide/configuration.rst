@@ -77,7 +77,33 @@ They have the following properties:
 
 Header Configuration
 --------------------
-:meth:`Chart.configure_header`
+The :meth:`Chart.configure_header` method allows configuration of facet headers,
+including the font, color, size, and position of the title and labels.
+Here is an example:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.cars.url
+
+    chart = alt.Chart(source).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N',
+        column='Origin:N'
+    ).properties(
+        width=180,
+        height=180
+    )
+
+    chart.configure_header(
+        titleColor='green',
+        titleFontSize=14,
+        labelColor='red',
+        labelFontSize=14
+    )
 
 .. altair-object-table:: altair.HeaderConfig
 
@@ -86,11 +112,34 @@ Header Configuration
 
 Legend Configuration
 --------------------
-Legend properties can be configured using :meth:`Chart.configure_legend`,
-which has the following properties:
+The :meth:`Chart.configure_legend` allows you to customize the appearance of chart
+legends, including location, fonts, bounding boxes, colors, and more.
+Here is an example:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.cars.url
+
+    chart = alt.Chart(source).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+        color='Origin:N'
+    )
+
+    chart.configure_legend(
+        strokeColor='gray',
+        fillColor='#EEEEEE',
+        padding=10,
+        cornerRadius=10,
+        orient='top-right'
+    )
+
+Additional properties are  summarized in the following table:
 
 .. altair-object-table:: altair.LegendConfig
-
 
 
 .. _config-mark:
@@ -175,7 +224,33 @@ Selection Configuration
 
 Title Configuration
 -------------------
-:meth:`Chart.configure_title`
+The :meth:`Chart.configure_title` method allows configuration of the chart
+title, including the font, color, placement, and orientation.
+Here is an example 
+here is an example:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.cars.url
+
+    chart = alt.Chart(source).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+    ).properties(
+        title='Cars Data'
+    )
+
+    chart.configure_title(
+        fontSize=20,
+        font='Courier',
+        anchor='start',
+        color='gray'
+    )
+
+Additional title configuration options are listed in the following table:
 
 .. altair-object-table:: altair.VgTitleConfig
 
@@ -184,7 +259,32 @@ Title Configuration
 
 View Configuration
 ------------------
-:meth:`Chart.configure_view`
+The :meth:`Chart.configure_view` method allows you to configure aspecs of the
+chart's *view*, i.e. the area of the screen in which the data and scales are
+drawn. Here is an example to demonstrate some of the visual features that can
+be controlled:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.cars.url
+
+    chart = alt.Chart(source).mark_point().encode(
+        x='Horsepower:Q',
+        y='Miles_per_Gallon:Q',
+    )
+
+    chart.configure_view(
+        height=200,
+        width=200,
+        strokeWidth=4,
+        fill='#FFEEDD',
+        stroke='red',
+    )
+
+Additional properties are summarized in the following table:
 
 .. altair-object-table:: altair.ViewConfig
 
