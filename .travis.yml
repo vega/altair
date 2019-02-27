@@ -18,6 +18,7 @@ env:
 
 before_install:
   - pip install pip --upgrade;
+  - pip install -U pytest;
 
 install:
   - pip install -e .[dev];
