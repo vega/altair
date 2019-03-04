@@ -170,12 +170,10 @@ using the ``url`` attribute:
 Local Filesystem
 ^^^^^^^^^^^^^^^^
 You may also save data to a local filesystem and reference the data by
-file path. As noted above, Altair has ``JSON`` and ``CSV`` data data_transformers
-that will do this transparently when enabled::
+file path. Altair has a ``JSON`` data transformer that will do this
+transparently when enabled::
 
     alt.data_transformers.enable('json')
-    # or
-    alt.data_transformers.enable('csv')
 
 With this data transformer enabled, each time you make a plot the data will be
 serialized to disk and referenced by URL, rather than being embedded in the
@@ -183,7 +181,11 @@ notebook output.
 You may also manually save the data to file and reference it that way
 (see :ref:`altair-faq-large-notebook`).
 
-Note that the filesystem approach may not work on some cloud-based Jupyter notebook services.
+There is a similar CSV data transformer, but it must be used more carefully
+because CSV does not preserve data types as JSON does.
+
+Note that the filesystem approach may not work on some cloud-based Jupyter
+notebook services.
 
 Local Data Server
 ^^^^^^^^^^^^^^^^^
