@@ -26,7 +26,7 @@ gpdvega is a bridge between GeoPandas_, a geospatial extension of Pandas_, and A
 nx_altair_
 ----------
 
-nx_altair is a library for drawing NetworkX_ graphs using Altair. It offers a similar draw API as NetworkX but returns Altair Charts instead. This allows users to apply Altair's rich interactive API to networks graphs. See the `docs <https://Zsailer.readthedocs.io/nx_altair/>`__.
+nx_altair is a library for drawing NetworkX_ graphs using Altair. It offers a similar draw API as NetworkX but returns Altair Charts instead. This allows users to apply Altair's rich interactive API to networks graphs. See the `docs <https://github.com/Zsailer/nx_altair/blob/master/examples/nx_altair-tutorial.ipynb>`__.
 
 .. List of links.
 .. _nx_altair: https://github.com/Zsailer/nx_altair
@@ -35,7 +35,7 @@ nx_altair is a library for drawing NetworkX_ graphs using Altair. It offers a si
 pdvega_
 -------
 
-pdvega is a library that allows you to quickly create interactive Vega-Lite_ plots from Pandas_ dataframes, using an API that is nearly identical to Pandas' built-in visualization tools, and designed for easy use within the Jupyter_ notebook. See the `docs <https://jakevdp.github.io/pdvega/>`__.
+pdvega is a library that allows you to quickly create interactive Vega-Lite_ plots from Pandas_ dataframes, using an API that is nearly identical to Pandas' built-in visualization tools, and designed for easy use within the Jupyter_ notebook. See the `docs <https://altair-viz.github.io/pdvega/>`__.
 
 
 .. List of links.
