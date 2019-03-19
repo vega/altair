@@ -1,6 +1,6 @@
 """
 Grouped Bar Chart with Error Bars
----------------------------
+---------------------------------
 This example shows a grouped bar chart with error bars.
 """
 # category: bar charts
@@ -15,11 +15,10 @@ bars = alt.Chart().mark_bar().encode(
     color='year:N',
 )
 
-error_bars = bars.mark_rule().encode(
+error_bars = alt.Chart().mark_rule().encode(
     x='year:O',
     y='ci0(yield):Q',
-    y2='ci1(yield):Q',
-    color = alt.value('black')
+    y2='ci1(yield):Q'
 )
 
 alt.layer(bars, error_bars, data=source).facet(
