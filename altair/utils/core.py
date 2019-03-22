@@ -44,22 +44,22 @@ WINDOW_AGGREGATES = ["row_number", "rank", "dense_rank", "percent_rank",
                      "cume_dist", "ntile", "lag", "lead", "first_value",
                      "last_value", "nth_value"]
 
-# timeUnits from vega-lite version 2.4.3
+# timeUnits from vega-lite version 3.0.0
 TIMEUNITS = ["utcyear", "utcquarter", "utcmonth", "utcday", "utcdate",
              "utchours", "utcminutes", "utcseconds", "utcmilliseconds",
              "utcyearquarter", "utcyearquartermonth", "utcyearmonth",
              "utcyearmonthdate", "utcyearmonthdatehours",
              "utcyearmonthdatehoursminutes",
              "utcyearmonthdatehoursminutesseconds",
-             "utcquartermonth", "utcmonthdate", "utchoursminutes",
-             "utchoursminutesseconds", "utcminutesseconds",
+             "utcquartermonth", "utcmonthdate", "utcmonthdatehours",
+             "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds",
              "utcsecondsmilliseconds",
              "year", "quarter", "month", "day", "date", "hours", "minutes",
              "seconds", "milliseconds", "yearquarter", "yearquartermonth",
              "yearmonth", "yearmonthdate", "yearmonthdatehours",
              "yearmonthdatehoursminutes",
              "yearmonthdatehoursminutesseconds", "quartermonth", "monthdate",
-             "hoursminutes", "hoursminutesseconds", "minutesseconds",
+             "monthdatehours", "hoursminutes", "hoursminutesseconds", "minutesseconds",
              "secondsmilliseconds"]
 
 
