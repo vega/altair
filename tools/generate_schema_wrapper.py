@@ -15,7 +15,7 @@ import m2r
 sys.path.insert(0, abspath(dirname(__file__)))
 from schemapi import codegen
 from schemapi.codegen import CodeSnippet
-from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist
+from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist, resolve_references
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
@@ -23,10 +23,12 @@ SCHEMA_VERSION = {
         'v2': 'v2.6.5',
         'v3': 'v3.3.1',
         'v4': 'v4.0.0',
+        # 'v5': 'v5.3.1',
     },
     'vega-lite': {
         'v1': 'v1.3.1',
         'v2': 'v2.6.0',
+        # 'v3': 'v3.0.0-rc13',
     }
 }
 
@@ -269,7 +271,12 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
 
     contents.append(CHANNEL_MIXINS)
 
-    encoding_def='Encoding' if version == 'v1' else 'EncodingWithFacet'
+    if version == 'v1':
+        encoding_def = 'Encoding'
+    elif version == 'v2':
+        encoding_def = 'EncodingWithFacet'
+    else:
+        encoding_def = 'FacetedEncoding'
 
     encoding = SchemaInfo(schema['definitions'][encoding_def],
                           rootschema=schema)
@@ -293,7 +300,10 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
             else:
                 Generator = FieldSchemaGenerator
                 nodefault = []
-                defschema = copy.deepcopy(schema['definitions'][basename])
+                defschema = copy.deepcopy(resolve_references(defschema, schema))
+
+                # For Encoding field definitions, we patch the schema by adding the
+                # shorthand property.
                 defschema['properties']['shorthand'] = {'type': 'string',
                                                         'description': 'shorthand for field, aggregate, and type'}
                 defschema['required'] = ['shorthand']
@@ -465,6 +475,8 @@ def vega_main():
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vega', version))
         schemapath = os.path.join(path, 'schema')
+        if not os.path.exists(schemapath):
+            os.makedirs(schemapath)
         schemafile = download_schemafile(library=library,
                                          version=version,
                                          schemapath=schemapath)
