@@ -3,7 +3,7 @@ from ..data import (MaxRowsError, curry, default_data_transformer, limit_rows,
 
 
 # ==============================================================================
-# VegaLite 1 data transformers
+# VegaLite 2 data transformers
 # ==============================================================================
 
 

@@ -13,6 +13,11 @@ from altair.utils import parse_shorthand
 class FieldChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
+
+        if self.shorthand is not Undefined and self.field is not Undefined:
+            raise ValueError("both shorthand and field specified in {}"
+                             "".format(self.__class__.__name__))
+
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, (tuple, list)):
@@ -23,8 +28,15 @@ class FieldChannelMixin(object):
                     for shorthand in self.shorthand]
         elif isinstance(self.shorthand, six.string_types):
             kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_allowed = 'type' in self._kwds
+            type_in_shorthand = 'type' in kwds
             type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
+            if not type_allowed:
+                # Secondary field names don't require a type argument in VegaLite 3+.
+                # We still parse it out of the shorthand, but drop it here.
+                kwds.pop('type', None)
+            elif not (type_in_shorthand or type_defined):
+                # If type is allowed, then it is required.
                 if isinstance(context.get('data', None), pd.DataFrame):
                     raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be inferred because it does not "
@@ -35,14 +47,11 @@ class FieldChannelMixin(object):
                                      "the data is not specified as a pandas.DataFrame."
                                      "".format(self.shorthand))
         else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
+            # Shorthand is not a string; we pass the definition to field,
+            # and do not do any parsing.
             kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
+        # Set shorthand to Undefined, because it's not part of the base schema.
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
