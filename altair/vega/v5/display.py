@@ -14,21 +14,21 @@ VEGAEMBED_VERSION = '3'
 
 
 # ==============================================================================
-# Vega 2 renderer logic
+# Vega 5 renderer logic
 # ==============================================================================
 
 
-# The MIME type for Vega 2 releases.
-VEGA_MIME_TYPE = 'application/vnd.vega.v2+json'  # type: str
+# The MIME type for Vega 5 releases.
+VEGA_MIME_TYPE = 'application/vnd.vega.v5+json'  # type: str
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = 'altair.vega.v2.renderer'  # type: str
+ENTRY_POINT_GROUP = 'altair.vega.v5.renderer'  # type: str
 
 # The display message when rendering fails
 DEFAULT_DISPLAY = """\
-<Vega 2 object>
+<Vega 5 object>
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
@@ -72,23 +72,23 @@ renderers.enable('default')
 
 
 class Vega(Displayable):
-    """An IPython/Jupyter display class for rendering Vega 2."""
+    """An IPython/Jupyter display class for rendering Vega 5."""
 
     renderers = renderers
     schema_path = (__name__, 'schema/vega-schema.json')
 
 
 def vega(spec, validate=True):
-    """Render and optionally validate a Vega 2 spec.
+    """Render and optionally validate a Vega 5 spec.
 
     This will use the currently enabled renderer to render the spec.
 
     Parameters
     ==========
     spec: dict
-        A fully compliant VegaLite 1 spec, with the data portion fully processed.
+        A fully compliant Vega 5 spec, with the data portion fully processed.
     validate: bool
-        Should the spec be validated against the Vega 2 schema?
+        Should the spec be validated against the Vega 5 schema?
     """
     from IPython.display import display
 

@@ -30,6 +30,7 @@ def _get_args(info):
         nonkeyword = all(args[0] for args in arginfo)
         required = set.union(set(), *(args[1] for args in arginfo))
         kwds = set.union(set(), *(args[2] for args in arginfo))
+        kwds -= required
         invalid_kwds = set.union(set(), *(args[3] for args in arginfo))
         additional = all(args[4] for args in arginfo)
     elif info.is_empty() or info.is_compound():

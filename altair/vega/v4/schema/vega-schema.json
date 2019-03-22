@@ -265,6 +265,16 @@
             }
           ]
         },
+        "titleOpacity": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
+        },
         "domain": {
           "type": "boolean"
         },
@@ -281,6 +291,16 @@
             }
           ]
         },
+        "domainOpacity": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
+        },
         "domainWidth": {
           "oneOf": [
             {
@@ -293,9 +313,6 @@
         },
         "ticks": {
           "type": "boolean"
-        },
-        "tickCount": {
-          "$ref": "#/refs/tickCount"
         },
         "tickColor": {
           "oneOf": [
@@ -310,10 +327,17 @@
             }
           ]
         },
-        "tickExtra": {
-          "$ref": "#/refs/numberOrSignal"
-        },
         "tickOffset": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
+        },
+        "tickOpacity": {
           "oneOf": [
             {
               "type": "number"
@@ -352,6 +376,12 @@
               "$ref": "#/refs/numberValue"
             }
           ]
+        },
+        "tickCount": {
+          "$ref": "#/refs/tickCount"
+        },
+        "tickExtra": {
+          "$ref": "#/refs/booleanOrSignal"
         },
         "grid": {
           "type": "boolean"
@@ -444,6 +474,9 @@
             },
             {
               "type": "number"
+            },
+            {
+              "$ref": "#/refs/signal"
             }
           ]
         },
@@ -454,11 +487,14 @@
             },
             {
               "type": "number"
+            },
+            {
+              "$ref": "#/refs/signal"
             }
           ]
         },
         "labelFlushOffset": {
-          "type": "number"
+          "$ref": "#/refs/numberOrSignal"
         },
         "labelOverlap": {
           "$ref": "#/refs/labelOverlap"
@@ -541,6 +577,16 @@
           ]
         },
         "labelLimit": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
+        },
+        "labelOpacity": {
           "oneOf": [
             {
               "type": "number"
@@ -939,10 +985,17 @@
                 {
                   "properties": {
                     "url": {
-                      "type": "string"
+                      "$ref": "#/refs/stringOrSignal"
                     },
                     "format": {
-                      "$ref": "#/defs/dataFormat"
+                      "oneOf": [
+                        {
+                          "$ref": "#/defs/dataFormat"
+                        },
+                        {
+                          "$ref": "#/refs/signal"
+                        }
+                      ]
                     }
                   },
                   "required": [
@@ -1581,6 +1634,16 @@
             }
           ]
         },
+        "titleOpacity": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
+        },
         "titlePadding": {
           "oneOf": [
             {
@@ -1594,8 +1657,15 @@
         "gradientLength": {
           "$ref": "#/refs/numberOrSignal"
         },
-        "gradientThickness": {
-          "$ref": "#/refs/numberOrSignal"
+        "gradientOpacity": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
         },
         "gradientStrokeColor": {
           "oneOf": [
@@ -1613,15 +1683,15 @@
         "gradientStrokeWidth": {
           "oneOf": [
             {
-              "type": "null"
+              "type": "number"
             },
             {
-              "type": "string"
-            },
-            {
-              "$ref": "#/refs/colorValue"
+              "$ref": "#/refs/numberValue"
             }
           ]
+        },
+        "gradientThickness": {
+          "$ref": "#/refs/numberOrSignal"
         },
         "clipHeight": {
           "$ref": "#/refs/numberOrSignal"
@@ -1663,6 +1733,16 @@
           ]
         },
         "symbolOffset": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
+        },
+        "symbolOpacity": {
           "oneOf": [
             {
               "type": "number"
@@ -1822,6 +1902,16 @@
           ]
         },
         "labelOffset": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/refs/numberValue"
+            }
+          ]
+        },
+        "labelOpacity": {
           "oneOf": [
             {
               "type": "number"
@@ -2833,7 +2923,7 @@
                   "$ref": "#/refs/booleanOrSignal"
                 },
                 "padding": {
-                  "type": "number"
+                  "$ref": "#/refs/numberOrSignal"
                 },
                 "nice": {
                   "oneOf": [
@@ -3116,7 +3206,7 @@
                   "$ref": "#/refs/booleanOrSignal"
                 },
                 "padding": {
-                  "type": "number"
+                  "$ref": "#/refs/numberOrSignal"
                 },
                 "nice": {
                   "oneOf": [
@@ -3223,7 +3313,7 @@
                   "$ref": "#/refs/booleanOrSignal"
                 },
                 "padding": {
-                  "type": "number"
+                  "$ref": "#/refs/numberOrSignal"
                 },
                 "nice": {
                   "oneOf": [
@@ -3333,7 +3423,7 @@
                   "$ref": "#/refs/numberOrSignal"
                 },
                 "padding": {
-                  "type": "number"
+                  "$ref": "#/refs/numberOrSignal"
                 },
                 "nice": {
                   "oneOf": [
@@ -3515,6 +3605,9 @@
         },
         {
           "$ref": "#/defs/signalNew"
+        },
+        {
+          "$ref": "#/defs/signalInit"
         }
       ]
     },
@@ -3556,6 +3649,32 @@
       "additionalProperties": false,
       "required": [
         "name"
+      ]
+    },
+    "signalInit": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/defs/signalName"
+        },
+        "description": {
+          "type": "string"
+        },
+        "value": {},
+        "init": {
+          "$ref": "#/refs/exprString"
+        },
+        "on": {
+          "$ref": "#/defs/onEvents"
+        },
+        "bind": {
+          "$ref": "#/defs/bind"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "init"
       ]
     },
     "signalPush": {
@@ -3880,6 +3999,29 @@
                 }
               ]
             },
+            "frame": {
+              "oneOf": [
+                {
+                  "enum": [
+                    "group",
+                    "bounds"
+                  ]
+                },
+                {
+                  "$ref": "#/refs/stringValue"
+                }
+              ]
+            },
+            "offset": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/refs/numberValue"
+                }
+              ]
+            },
             "style": {
               "$ref": "#/refs/style"
             },
@@ -3891,6 +4033,45 @@
             },
             "interactive": {
               "type": "boolean"
+            },
+            "align": {
+              "oneOf": [
+                {
+                  "enum": [
+                    "left",
+                    "right",
+                    "center"
+                  ]
+                },
+                {
+                  "$ref": "#/refs/alignValue"
+                }
+              ]
+            },
+            "angle": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/refs/numberValue"
+                }
+              ]
+            },
+            "baseline": {
+              "oneOf": [
+                {
+                  "enum": [
+                    "top",
+                    "middle",
+                    "bottom",
+                    "alphabetic"
+                  ]
+                },
+                {
+                  "$ref": "#/refs/baselineValue"
+                }
+              ]
             },
             "color": {
               "oneOf": [
@@ -3956,54 +4137,6 @@
                 },
                 {
                   "$ref": "#/refs/fontWeightValue"
-                }
-              ]
-            },
-            "offset": {
-              "oneOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "$ref": "#/refs/numberValue"
-                }
-              ]
-            },
-            "frame": {
-              "oneOf": [
-                {
-                  "enum": [
-                    "group",
-                    "bounds"
-                  ]
-                },
-                {
-                  "$ref": "#/refs/stringValue"
-                }
-              ]
-            },
-            "angle": {
-              "oneOf": [
-                {
-                  "type": "number"
-                },
-                {
-                  "$ref": "#/refs/numberValue"
-                }
-              ]
-            },
-            "baseline": {
-              "oneOf": [
-                {
-                  "enum": [
-                    "top",
-                    "middle",
-                    "bottom",
-                    "alphabetic"
-                  ]
-                },
-                {
-                  "$ref": "#/refs/baselineValue"
                 }
               ]
             },
@@ -5831,6 +5964,17 @@
             }
           ],
           "default": 1
+        },
+        "as": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/refs/signal"
+            }
+          ],
+          "default": "data"
         }
       },
       "additionalProperties": false,
@@ -6175,6 +6319,9 @@
             }
           ],
           "default": "line"
+        },
+        "require": {
+          "$ref": "#/refs/signal"
         },
         "as": {
           "anyOf": [
@@ -7745,6 +7892,17 @@
           "maxItems": 2,
           "minItems": 2
         },
+        "separation": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "$ref": "#/refs/signal"
+            }
+          ],
+          "default": true
+        },
         "as": {
           "oneOf": [
             {
@@ -8407,6 +8565,9 @@
             "greedy"
           ],
           "type": "string"
+        },
+        {
+          "$ref": "#/refs/signal"
         }
       ]
     },

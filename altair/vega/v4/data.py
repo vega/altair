@@ -3,7 +3,7 @@ from ..data import (MaxRowsError, curry, default_data_transformer, limit_rows,
 
 
 # ==============================================================================
-# Vega 3 data transformers
+# Vega 4 data transformers
 # ==============================================================================
 
 
