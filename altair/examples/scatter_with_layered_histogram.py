@@ -8,6 +8,10 @@ isolate the distribution corresponding to that point, and vice versa.
 """
 # category: interactive charts
 
+import altair as alt
+import pandas as pd
+import numpy as np
+
 # generate fake data
 source = pd.DataFrame({'gender': ['M']*1000 + ['F']*1000,
                'height':np.concatenate((np.random.normal(69, 7, 1000),
