@@ -18,7 +18,7 @@ VEGAEMBED_VERSION = '3'
 # ==============================================================================
 
 
-# The MIME type for Vega 3 releases.
+# The MIME type for Vega 4 releases.
 VEGA_MIME_TYPE = 'application/vnd.vega.v4+json'  # type: str
 
 # The entry point group that can be used by other packages to declare other
@@ -72,14 +72,14 @@ renderers.enable('default')
 
 
 class Vega(Displayable):
-    """An IPython/Jupyter display class for rendering Vega 3."""
+    """An IPython/Jupyter display class for rendering Vega 4."""
 
     renderers = renderers
     schema_path = (__name__, 'schema/vega-schema.json')
 
 
 def vega(spec, validate=True):
-    """Render and optionally validate a Vega 34spec.
+    """Render and optionally validate a Vega 4 spec.
 
     This will use the currently enabled renderer to render the spec.
 

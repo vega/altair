@@ -69,6 +69,8 @@ class axis(VegaSchema):
 
     domainColor : oneOf(None, string, :class:`colorValue`)
 
+    domainOpacity : oneOf(float, :class:`numberValue`)
+
     domainWidth : oneOf(float, :class:`numberValue`)
 
     encode : Mapping(required=[])
@@ -93,13 +95,13 @@ class axis(VegaSchema):
 
     labelBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic'), :class:`baselineValue`)
 
-    labelBound : oneOf(boolean, float)
+    labelBound : oneOf(boolean, float, :class:`signal`)
 
     labelColor : oneOf(None, string, :class:`colorValue`)
 
-    labelFlush : oneOf(boolean, float)
+    labelFlush : oneOf(boolean, float, :class:`signal`)
 
-    labelFlushOffset : float
+    labelFlushOffset : :class:`numberOrSignal`
 
     labelFont : oneOf(string, :class:`stringValue`)
 
@@ -110,6 +112,8 @@ class axis(VegaSchema):
     900), :class:`fontWeightValue`)
 
     labelLimit : oneOf(float, :class:`numberValue`)
+
+    labelOpacity : oneOf(float, :class:`numberValue`)
 
     labelOverlap : :class:`labelOverlap`
 
@@ -129,9 +133,11 @@ class axis(VegaSchema):
 
     tickCount : :class:`tickCount`
 
-    tickExtra : :class:`numberOrSignal`
+    tickExtra : :class:`booleanOrSignal`
 
     tickOffset : oneOf(float, :class:`numberValue`)
+
+    tickOpacity : oneOf(float, :class:`numberValue`)
 
     tickRound : oneOf(boolean, :class:`booleanValue`)
 
@@ -161,6 +167,8 @@ class axis(VegaSchema):
 
     titleLimit : oneOf(float, :class:`numberValue`)
 
+    titleOpacity : oneOf(float, :class:`numberValue`)
+
     titlePadding : oneOf(float, :class:`numberValue`)
 
     titleX : oneOf(float, :class:`numberValue`)
@@ -176,40 +184,44 @@ class axis(VegaSchema):
     _rootschema = Root._schema
 
     def __init__(self, orient=Undefined, scale=Undefined, bandPosition=Undefined, domain=Undefined,
-                 domainColor=Undefined, domainWidth=Undefined, encode=Undefined, format=Undefined,
-                 grid=Undefined, gridColor=Undefined, gridDash=Undefined, gridOpacity=Undefined,
-                 gridScale=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined,
-                 labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined,
-                 labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined,
-                 labelFontSize=Undefined, labelFontWeight=Undefined, labelLimit=Undefined,
+                 domainColor=Undefined, domainOpacity=Undefined, domainWidth=Undefined,
+                 encode=Undefined, format=Undefined, grid=Undefined, gridColor=Undefined,
+                 gridDash=Undefined, gridOpacity=Undefined, gridScale=Undefined, gridWidth=Undefined,
+                 labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined,
+                 labelBound=Undefined, labelColor=Undefined, labelFlush=Undefined,
+                 labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined,
+                 labelFontWeight=Undefined, labelLimit=Undefined, labelOpacity=Undefined,
                  labelOverlap=Undefined, labelPadding=Undefined, labels=Undefined, maxExtent=Undefined,
                  minExtent=Undefined, offset=Undefined, position=Undefined, tickColor=Undefined,
-                 tickCount=Undefined, tickExtra=Undefined, tickOffset=Undefined, tickRound=Undefined,
-                 tickSize=Undefined, tickWidth=Undefined, ticks=Undefined, title=Undefined,
-                 titleAlign=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
+                 tickCount=Undefined, tickExtra=Undefined, tickOffset=Undefined, tickOpacity=Undefined,
+                 tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined,
+                 title=Undefined, titleAlign=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
                  titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
-                 titleFontWeight=Undefined, titleLimit=Undefined, titlePadding=Undefined,
-                 titleX=Undefined, titleY=Undefined, values=Undefined, zindex=Undefined, **kwds):
+                 titleFontWeight=Undefined, titleLimit=Undefined, titleOpacity=Undefined,
+                 titlePadding=Undefined, titleX=Undefined, titleY=Undefined, values=Undefined,
+                 zindex=Undefined, **kwds):
         super(axis, self).__init__(orient=orient, scale=scale, bandPosition=bandPosition, domain=domain,
-                                   domainColor=domainColor, domainWidth=domainWidth, encode=encode,
-                                   format=format, grid=grid, gridColor=gridColor, gridDash=gridDash,
-                                   gridOpacity=gridOpacity, gridScale=gridScale, gridWidth=gridWidth,
-                                   labelAlign=labelAlign, labelAngle=labelAngle,
-                                   labelBaseline=labelBaseline, labelBound=labelBound,
-                                   labelColor=labelColor, labelFlush=labelFlush,
+                                   domainColor=domainColor, domainOpacity=domainOpacity,
+                                   domainWidth=domainWidth, encode=encode, format=format, grid=grid,
+                                   gridColor=gridColor, gridDash=gridDash, gridOpacity=gridOpacity,
+                                   gridScale=gridScale, gridWidth=gridWidth, labelAlign=labelAlign,
+                                   labelAngle=labelAngle, labelBaseline=labelBaseline,
+                                   labelBound=labelBound, labelColor=labelColor, labelFlush=labelFlush,
                                    labelFlushOffset=labelFlushOffset, labelFont=labelFont,
                                    labelFontSize=labelFontSize, labelFontWeight=labelFontWeight,
-                                   labelLimit=labelLimit, labelOverlap=labelOverlap,
-                                   labelPadding=labelPadding, labels=labels, maxExtent=maxExtent,
-                                   minExtent=minExtent, offset=offset, position=position,
-                                   tickColor=tickColor, tickCount=tickCount, tickExtra=tickExtra,
-                                   tickOffset=tickOffset, tickRound=tickRound, tickSize=tickSize,
-                                   tickWidth=tickWidth, ticks=ticks, title=title, titleAlign=titleAlign,
+                                   labelLimit=labelLimit, labelOpacity=labelOpacity,
+                                   labelOverlap=labelOverlap, labelPadding=labelPadding, labels=labels,
+                                   maxExtent=maxExtent, minExtent=minExtent, offset=offset,
+                                   position=position, tickColor=tickColor, tickCount=tickCount,
+                                   tickExtra=tickExtra, tickOffset=tickOffset, tickOpacity=tickOpacity,
+                                   tickRound=tickRound, tickSize=tickSize, tickWidth=tickWidth,
+                                   ticks=ticks, title=title, titleAlign=titleAlign,
                                    titleAngle=titleAngle, titleBaseline=titleBaseline,
                                    titleColor=titleColor, titleFont=titleFont,
                                    titleFontSize=titleFontSize, titleFontWeight=titleFontWeight,
-                                   titleLimit=titleLimit, titlePadding=titlePadding, titleX=titleX,
-                                   titleY=titleY, values=values, zindex=zindex, **kwds)
+                                   titleLimit=titleLimit, titleOpacity=titleOpacity,
+                                   titlePadding=titlePadding, titleX=titleX, titleY=titleY,
+                                   values=values, zindex=zindex, **kwds)
 
 
 class background(VegaSchema):
@@ -724,7 +736,7 @@ class scope(VegaSchema):
 class signal(VegaSchema):
     """signal schema wrapper
 
-    oneOf(:class:`signalPush`, :class:`signalNew`)
+    oneOf(:class:`signalPush`, :class:`signalNew`, :class:`signalInit`)
     """
     _schema = {'$ref': '#/defs/signal'}
     _rootschema = Root._schema
@@ -775,6 +787,36 @@ class signalNew(VegaSchema):
                  react=Undefined, update=Undefined, value=Undefined, **kwds):
         super(signalNew, self).__init__(name=name, bind=bind, description=description, on=on,
                                         react=react, update=update, value=value, **kwds)
+
+
+class signalInit(VegaSchema):
+    """signalInit schema wrapper
+
+    Mapping(required=[name, init])
+
+    Attributes
+    ----------
+
+    init : :class:`exprString`
+
+    name : :class:`signalName`
+
+    bind : :class:`bind`
+
+    description : string
+
+    on : :class:`onEvents`
+
+    value : Mapping(required=[])
+
+    """
+    _schema = {'$ref': '#/defs/signalInit'}
+    _rootschema = Root._schema
+
+    def __init__(self, init=Undefined, name=Undefined, bind=Undefined, description=Undefined,
+                 on=Undefined, value=Undefined, **kwds):
+        super(signalInit, self).__init__(init=init, name=name, bind=bind, description=description,
+                                         on=on, value=value, **kwds)
 
 
 class signalPush(VegaSchema):
@@ -1472,6 +1514,8 @@ class sequenceTransform(VegaSchema):
 
     step : anyOf(float, :class:`signal`)
 
+    as : anyOf(string, :class:`signal`)
+
     """
     _schema = {'$ref': '#/defs/sequenceTransform'}
     _rootschema = Root._schema
@@ -1562,6 +1606,8 @@ class linkpathTransform(VegaSchema):
 
     orient : anyOf(enum('horizontal', 'vertical', 'radial'), :class:`signal`)
 
+    require : :class:`signal`
+
     shape : anyOf(enum('line', 'arc', 'curve', 'diagonal', 'orthogonal'), :class:`signal`)
 
     signal : string
@@ -1580,11 +1626,12 @@ class linkpathTransform(VegaSchema):
     _schema = {'$ref': '#/defs/linkpathTransform'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, orient=Undefined, shape=Undefined, signal=Undefined,
-                 sourceX=Undefined, sourceY=Undefined, targetX=Undefined, targetY=Undefined, **kwds):
-        super(linkpathTransform, self).__init__(type=type, orient=orient, shape=shape, signal=signal,
-                                                sourceX=sourceX, sourceY=sourceY, targetX=targetX,
-                                                targetY=targetY, **kwds)
+    def __init__(self, type=Undefined, orient=Undefined, require=Undefined, shape=Undefined,
+                 signal=Undefined, sourceX=Undefined, sourceY=Undefined, targetX=Undefined,
+                 targetY=Undefined, **kwds):
+        super(linkpathTransform, self).__init__(type=type, orient=orient, require=require, shape=shape,
+                                                signal=signal, sourceX=sourceX, sourceY=sourceY,
+                                                targetX=targetX, targetY=targetY, **kwds)
 
 
 class pieTransform(VegaSchema):
@@ -2033,6 +2080,8 @@ class treeTransform(VegaSchema):
 
     nodeSize : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
+    separation : anyOf(boolean, :class:`signal`)
+
     signal : string
 
     size : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
@@ -2046,9 +2095,10 @@ class treeTransform(VegaSchema):
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, method=Undefined, nodeSize=Undefined,
-                 signal=Undefined, size=Undefined, sort=Undefined, **kwds):
+                 separation=Undefined, signal=Undefined, size=Undefined, sort=Undefined, **kwds):
         super(treeTransform, self).__init__(type=type, field=field, method=method, nodeSize=nodeSize,
-                                            signal=signal, size=size, sort=sort, **kwds)
+                                            separation=separation, signal=signal, size=size, sort=sort,
+                                            **kwds)
 
 
 class treelinksTransform(VegaSchema):
@@ -2262,7 +2312,7 @@ class resolvefilterTransform(VegaSchema):
 class labelOverlap(VegaSchema):
     """labelOverlap schema wrapper
 
-    oneOf(boolean, enum('parity', 'greedy'))
+    oneOf(boolean, enum('parity', 'greedy'), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/labelOverlap'}
     _rootschema = Root._schema
