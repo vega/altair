@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-import altair as alt
+import altair.vegalite.v2 as alt
 
 
 def _extract_embedOpt(html):
