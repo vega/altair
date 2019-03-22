@@ -12,7 +12,6 @@ import pandas as pd
 import six
 from toolz import pipe
 
-from altair.vegalite import v1 as vegalite_v1
 from altair.vegalite import v2 as vegalite_v2
 from altair.vegalite import v3 as vegalite_v3
 from altair.vega import v3 as vega_v3
@@ -34,7 +33,6 @@ RENDERERS = {
       '5': vega_v5.Vega,
   },
   'vega-lite': {
-      '1': vegalite_v1.VegaLite,
       '2': vegalite_v2.VegaLite,
       '3': vegalite_v3.VegaLite,
   }
@@ -49,7 +47,6 @@ TRANSFORMERS = {
       '5': vegalite_v2.data_transformers,
   },
   'vega-lite': {
-      '1': vegalite_v1.data_transformers,
       '2': vegalite_v2.data_transformers,
       '3': vegalite_v3.data_transformers,
   }
