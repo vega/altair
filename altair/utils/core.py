@@ -249,18 +249,19 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
 
     units = dict(field='(?P<field>.*)',
                  type='(?P<type>{})'.format('|'.join(valid_typecodes)),
-                 count='(?P<aggregate>count)',
+                 agg_count='(?P<aggregate>count)',
+                 op_count='(?P<op>count)',
                  aggregate='(?P<aggregate>{})'.format('|'.join(AGGREGATES)),
                  window_op='(?P<op>{})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
                  timeUnit='(?P<timeUnit>{})'.format('|'.join(TIMEUNITS)))
 
     patterns = []
 
-    if parse_aggregates or parse_window_ops:
-        patterns.extend([r'{count}\(\)'])
     if parse_aggregates:
+        patterns.extend([r'{agg_count}\(\)'])
         patterns.extend([r'{aggregate}\({field}\)'])
     if parse_window_ops:
+        patterns.extend([r'{op_count}\(\)'])
         patterns.extend([r'{window_op}\({field}\)'])
     if parse_timeunits:
         patterns.extend([r'{timeUnit}\({field}\)'])
