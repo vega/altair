@@ -1,4 +1,5 @@
 """Generate a schema wrapper from a schema"""
+import argparse
 import copy
 import os
 import sys
@@ -27,7 +28,7 @@ SCHEMA_VERSION = {
     'vega-lite': {
         'v1': 'v1.3.1',
         'v2': 'v2.6.0',
-        # 'v3': 'v3.0.0-rc13',
+        'v3': 'v3.0.0-rc13',
     }
 }
 
@@ -78,6 +79,11 @@ CHANNEL_MIXINS = """
 class FieldChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
+
+        if self.shorthand is not Undefined and self.field is not Undefined:
+            raise ValueError("both shorthand and field specified in {}"
+                             "".format(self.__class__.__name__))
+
         if self.shorthand is Undefined:
             kwds = {}
         elif isinstance(self.shorthand, (tuple, list)):
@@ -88,8 +94,15 @@ class FieldChannelMixin(object):
                     for shorthand in self.shorthand]
         elif isinstance(self.shorthand, six.string_types):
             kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
+            type_allowed = 'type' in self._kwds
+            type_in_shorthand = 'type' in kwds
             type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not (type_defined or 'type' in kwds):
+            if not type_allowed:
+                # Secondary field names don't require a type argument in VegaLite 3+.
+                # We still parse it out of the shorthand, but drop it here.
+                kwds.pop('type', None)
+            elif not (type_in_shorthand or type_defined):
+                # If type is allowed, then it is required.
                 if isinstance(context.get('data', None), pd.DataFrame):
                     raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be inferred because it does not "
@@ -100,14 +113,11 @@ class FieldChannelMixin(object):
                                      "the data is not specified as a pandas.DataFrame."
                                      "".format(self.shorthand))
         else:
-            # shorthand is not a string; we pass the definition to field
-            if self.field is not Undefined:
-                raise ValueError("both shorthand and field specified in {}"
-                                 "".format(self.__class__.__name__))
-            # field is a RepeatSpec or similar; cannot infer type
+            # Shorthand is not a string; we pass the definition to field,
+            # and do not do any parsing.
             kwds = {'field': self.shorthand}
 
-        # set shorthand to Undefined, because it's not part of the schema
+        # Set shorthand to Undefined, because it's not part of the base schema.
         self.shorthand = Undefined
         self._kwds.update({k: v for k, v in kwds.items()
                            if self._kwds.get(k, Undefined) is Undefined})
@@ -168,10 +178,15 @@ def schema_url(library, version):
     return SCHEMA_URL_TEMPLATE.format(library=library, version=version)
 
 
-def download_schemafile(library, version, schemapath):
+def download_schemafile(library, version, schemapath, skip_download=False):
     url = schema_url(library, version)
+    if not os.path.exists(schemapath):
+        os.makedirs(schemapath)
     filename = os.path.join(schemapath, '{library}-schema.json'.format(library=library))
-    request.urlretrieve(url, filename)
+    if not skip_download:
+        request.urlretrieve(url, filename)
+    elif not os.path.exists(filename):
+        raise ValueError("Cannot skip download: {} does not exist".format(filename))
     return filename
 
 
@@ -413,18 +428,17 @@ def generate_vegalite_config_mixin(schemafile):
     return imports, '\n'.join(code)
 
 
-def vegalite_main():
+def vegalite_main(skip_download=False):
     library = 'vega-lite'
 
     for version in SCHEMA_VERSION[library]:
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vegalite', version))
         schemapath = os.path.join(path, 'schema')
-        if not os.path.exists(schemapath):
-            os.makedirs(schemapath)
         schemafile = download_schemafile(library=library,
                                          version=version,
-                                         schemapath=schemapath)
+                                         schemapath=schemapath,
+                                         skip_download=skip_download)
 
         # Generate __init__.py file
         outfile = join(schemapath, '__init__.py')
@@ -467,18 +481,17 @@ def vegalite_main():
                 f.write(config_mixin)
 
 
-def vega_main():
+def vega_main(skip_download=False):
     library = 'vega'
 
     for version in SCHEMA_VERSION[library]:
         path = abspath(join(dirname(__file__), '..',
                             'altair', 'vega', version))
         schemapath = os.path.join(path, 'schema')
-        if not os.path.exists(schemapath):
-            os.makedirs(schemapath)
         schemafile = download_schemafile(library=library,
                                          version=version,
-                                         schemapath=schemapath)
+                                         schemapath=schemapath,
+                                         skip_download=skip_download)
 
         # Generate __init__.py file
         outfile = join(schemapath, '__init__.py')
@@ -499,7 +512,16 @@ def vega_main():
             f.write(file_contents)
 
 
-if __name__ == '__main__':
+def main():
+    parser = argparse.ArgumentParser(prog="generate_schema_wrapper.py",
+                                     description="Generate the Altair package.")
+    parser.add_argument('--skip-download', action='store_true',
+                        help="skip downloading schema files")
+    args = parser.parse_args()
     copy_schemapi_util()
-    vegalite_main()
-    vega_main()
+    vegalite_main(args.skip_download)
+    vega_main(args.skip_download)
+
+
+if __name__ == '__main__':
+    main()
