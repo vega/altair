@@ -28,6 +28,73 @@ Pandas ``DataFrame`` and returns a transformed version of either of these types:
         # Transform and return the data
         return transformed_data
 
+Dataset Consolidation
+~~~~~~~~~~~~~~~~~~~~~
+Datasets passed as Pandas dataframes can be represented in the chart in two
+ways:
+
+- As literal dataset values in the ``data`` attribute at any level of the
+  specification
+- As a named dataset in the ``datasets`` attribute of the top-level
+  specification.
+
+The former is a bit more simple, but common patterns of usage in Altair can
+often lead to full datasets being listed multiple times in their entirety
+within a single specification.
+
+For this reason, Altair 2.2 and newer will by default move all
+directly-specified datasets into the top-level ``datasets`` entry, and
+reference them by a unique name determined from the hash of the data
+representation. The benefit of using a hash-based name is that even if the
+user specifies a dataset in multiple places when building the chart, the
+specification will only include one copy.
+
+This behavior can be modified by setting the ``consolidate_datasets`` attribute
+of the data transformer.
+
+For example, consider this simple layered chart:
+
+.. altair-plot::
+   :chart-var-name: chart
+		    
+   import altair as alt
+   import pandas as pd
+
+   df = pd.DataFrame({'x': range(5),
+                      'y': [1, 3, 4, 3, 5]})
+
+   line = alt.Chart(df).mark_line().encode(x='x', y='y')
+   points = alt.Chart(df).mark_point().encode(x='x', y='y')
+   chart = line + points
+
+If we look at the resulting specification, we see that although the dataset
+was specified twice, only one copy of it is output in the spec:
+
+.. altair-plot::
+   :output: stdout
+
+   from pprint import pprint
+   pprint(chart.to_dict())
+
+This consolidation of datasets is an extra bit of processing that is turned on
+by default in all renderers.
+
+If you would like to disable this dataset consolidation for any reason, you can
+do so by setting ``alt.data_transformers.consolidate_datasets = False``, or
+by using the ``enable()`` context manager to do it only temporarily:
+
+.. altair-plot::
+   :output: stdout
+
+   with alt.data_transformers.enable(consolidate_datasets=False):
+       pprint(chart.to_dict())
+   
+Notice that now the dataset is not specified within the top-level ``datasets``
+attribute, but rather as values within the ``data`` attribute of each
+individual layer. This duplication of data is the reason that dataset
+consolidation is set to ``True`` by default.
+
+
 Built-in data transformers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -45,7 +112,7 @@ Convert a Dataframe to a separate ``.json`` file before visualization::
 
     to_json(data, prefix='altair-data'):
 
-Convert a Dataframe to a separate ``.csv`` file before visualiztion::
+Convert a Dataframe to a separate ``.csv`` file before visualization::
 
     to_csv(data, prefix='altair-data'):
 
@@ -104,3 +171,28 @@ be registered and enabled as::
 
     alt.data_transformers.register('s3', lambda data: pipe(data, to_s3('mybucket')))
     alt.data_transformers.enable('s3')
+
+
+Storing JSON data in a separate directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When creating many charts with ``alt.data_transformers.enable('json')`` the
+working directory can get a bit cluttered. To avoid this we can build a simple
+custom data transformer that stores all JSON files in separate directory.::
+
+    import os
+    import altair as alt
+
+
+    def json_dir(data, data_dir='altairdata'):
+        os.makedirs(data_dir, exist_ok=True)
+        return alt.pipe(data, alt.to_json(filename=data_dir + '/{prefix}-{hash}.{extension}') )
+
+
+    alt.data_transformers.register('json_dir', json_dir)
+    alt.data_transformers.enable('json_dir', data_dir='mydata')
+
+After enabling this data transformer, the JSON files will be stored in what ``data_dir``
+was set to when enabling the transformer or 'altairdata' by default. All we had to do
+was to prefix the ``filename`` argument of the ``alt.to_json`` function with our
+desired directory and make sure that the directory actually exists.

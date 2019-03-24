@@ -92,6 +92,14 @@ def test_parse_shorthand_all_timeunits():
                                               'type': 'quantitative'}
 
 
+def test_parse_shorthand_window_count():
+    shorthand = "count()"
+    dct = parse_shorthand(shorthand,
+                          parse_aggregates=False, parse_window_ops=True, 
+                          parse_timeunits=False, parse_types=False)
+    assert dct == {'op': 'count'}
+
+
 def test_parse_shorthand_all_window_ops():
     window_ops = alt.Root._schema['definitions']['WindowOnlyOp']['enum']
     aggregates = alt.Root._schema['definitions']['AggregateOp']['enum']

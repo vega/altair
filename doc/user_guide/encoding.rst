@@ -7,7 +7,7 @@ Encodings
 
 The key to creating meaningful visualizations is to map *properties of the data*
 to *visual properties* in order to effectively communicate information.
-In Alair, this mapping of visual properties to data columns is referred to
+In Altair, this mapping of visual properties to data columns is referred to
 as an **encoding**, and is most often expressed through the :meth:`Chart.encode`
 method.
 
@@ -111,10 +111,10 @@ column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_s
 row      :class:`Row`      The row of a faceted plot     :ref:`gallery_beckers_barley_trellis_plot`
 =======  ================  ============================  ============================================
 
-.. _data-types:
+.. _encoding-data-types:
 
-Data Types
-~~~~~~~~~~
+Encoding Data Types
+~~~~~~~~~~~~~~~~~~~
 The details of any mapping depend on the *type* of the data. Altair recognizes
 four main data types:
 
@@ -205,7 +205,7 @@ that contains integers specifying a year:
     pop = data.population.url
 
     base = alt.Chart(pop).mark_bar().encode(
-        alt.Y('mean(people):Q', axis=alt.Axis(title='total population'))
+        alt.Y('mean(people):Q', title='total population')
     ).properties(
         width=200,
         height=200
@@ -380,7 +380,7 @@ Encoding Shorthands
 
 For convenience, Altair allows the specification of the variable name along
 with the aggregate and type within a simple shorthand string syntax.
-This makes use of the type shorthand codes listed in :ref:`data-types`
+This makes use of the type shorthand codes listed in :ref:`encoding-data-types`
 as well as the aggregate names listed in :ref:`encoding-aggregates`.
 The following table shows examples of the shorthand specification alongside
 the long-form equivalent:
@@ -465,3 +465,88 @@ For line marks, the `order` channel encodes the order in which data points are c
         alt.Y('gas', scale=alt.Scale(zero=False)),
         order='year'
     )
+
+Sorting Legends and Axes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Specific channels can take a  :class:`sort` property which determines the
+order of the scale being used for the channel. There are a number of different
+sort options available:
+
+- ``sort='ascending'`` (Default) will sort the field's value in ascending order.
+  for string data, this uses standard alphabetical order.
+- ``sort='descending'`` will sort the field's value in descending order
+- passing a list to ``sort`` allows you to explicitly set the order in which
+  you would like the encoding to appear
+- passing a :class:`EncodingSortField` class to ``sort`` allows you to sort
+  an axis by the value of some other field in the dataset.
+
+Here is an example of applying these four different sort approaches on the
+x-axis, using the barley dataset:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+
+    base = alt.Chart(barley).mark_bar().encode(
+        y='mean(yield):Q',
+        color=alt.Color('mean(yield):Q', legend=None)
+    ).properties(width=100, height=100)
+
+    # Sort x in ascending order
+    ascending = base.encode(
+        alt.X(field='site', type='nominal', sort='ascending')
+    ).properties(
+        title='Ascending'
+    )
+
+    # Sort x in descending order
+    descending = base.encode(
+        alt.X(field='site', type='nominal', sort='descending')
+    ).properties(
+        title='Descending'
+    )
+
+    # Sort x in an explicitly-specified order
+    explicit = base.encode(
+        alt.X(field='site', type='nominal',
+              sort=['Duluth', 'Grand Rapids', 'Morris',
+                    'University Farm', 'Waseca', 'Crookston'])
+    ).properties(
+        title='Explicit'
+    )
+
+    # Sort according to another field
+    sortfield = base.encode(
+        alt.X(field='site', type='nominal',
+              sort=alt.EncodingSortField(field='yield', op='mean'))
+    ).properties(
+        title='By Yield'
+    )
+
+    ascending | descending | explicit | sortfield
+
+
+Sorting Legends
+^^^^^^^^^^^^^^^
+
+While the above examples show sorting of axes by specifying ``sort`` in the
+:class:`X` and :class:`Y` encodings, legends can be sorted by specifying
+``sort`` in the :class:`Color` encoding:
+
+.. altair-plot::
+
+    alt.Chart(barley).mark_rect().encode(
+        alt.X('mean(yield):Q', sort='ascending'),
+        alt.Y('site:N', sort='descending'),
+        alt.Color('site:N',
+            sort=['Morris', 'Duluth', 'Grand Rapids',
+                  'University Farm', 'Waseca', 'Crookston']
+        )
+    )
+
+Here the y-axis is sorted reverse-alphabetically, while the color legend is
+sorted in the specified order, beginning with ``'Morris'``.

@@ -6,15 +6,18 @@
            this as on RTD they are loaded after this stylesheet */
         white-space: normal !important;
     }
-
     .wy-table-responsive {
         overflow: visible !important;
     }
 }
 
 .rst-content dl:not(.docutils) dt em {
-    font-style: normal; !important;
-    line-height: 1.4em; !important;
+    font-style: normal !important;
+    line-height: 1.4em !important;
+}
+
+.rst-content div[class^='highlight'] {
+    background: #fff !important;
 }
 
 img.logo {

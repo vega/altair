@@ -33,6 +33,9 @@ of the points to 20%. There are three possible approaches to these:
 
 Global Config
 ~~~~~~~~~~~~~
+*See :ref:`user-guide-configuration` for a full
+discussion of global configuration options*
+
 First, every chart type has a ``"config"`` property at the top level that acts
 as a sort of theme for the whole chart and all of its sub-charts.
 Here you can specify things like axes properties, mark properties, selection
@@ -290,3 +293,217 @@ You can remove the legend entirely by submitting a null value.
       y='petalLength',
       color=alt.Color('species', legend=None),
   )
+
+Removing the Chart Border
+-------------------------
+Basic Altair charts are drawn with both a grid and an outside border.
+To create a chart with no border, you will need to remove them both.
+
+As an example, let's start with a simple scatter plot.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    )
+
+First remove the grid using the :meth:`Chart.configure_axis` method.
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    ).configure_axis(
+        grid=False
+    )
+
+You'll note that while the inside rules are gone, the outside border remains.
+Hide it by setting the `strokeWidth` or the `strokeOpacity` options on
+:meth:`Chart.configure_view` to `0`:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        x='petalWidth',
+        y='petalLength',
+        color='species'
+    ).configure_axis(
+        grid=False
+    ).configure_view(
+        strokeWidth=0
+    )
+
+
+It is also possible to completely remove all borders and axes by
+combining the above option with setting `axis` to `None` during encoding.
+
+..altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    iris = data.iris()
+
+    alt.Chart(iris).mark_point().encode(
+        alt.X('petalWidth', axis=None),
+        alt.Y('petalLength', axis=None),
+        color='species'
+    ).configure_axis(
+        grid=False
+    ).configure_view(
+        strokeWidth=0
+    )
+
+
+Customizing Colors
+------------------
+
+As discussed in :ref:`type-legend-scale`, Altair chooses a suitable default color
+scheme based on the type of the data that the color encodes. These defaults can
+be customized using the `scale` argument of the :class:`Color` class.
+
+The :class:`Scale` class passed to the `scale` argument provides a number of options
+for customizing the color scale; we will discuss a few of them here.
+
+Color Schemes
+~~~~~~~~~~~~~
+Altair  includes a set of named color schemes for both categorical and sequential
+data, defined by the vega project; see the
+`Vega documentation <https://vega.github.io/vega/docs/schemes/>`_
+for a full gallery of available color schemes.  These schemes
+can be passed to the `scheme` argument of the :class:`Scale` class:
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+
+  alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', scale=alt.Scale(scheme='dark2'))
+  )
+
+Color Domain and Range
+~~~~~~~~~~~~~~~~~~~~~~
+
+To make a custom mapping of discrete values to colors, use the
+`domain` and `range` paramaters of the :class:`Scale` class for
+values and colors respectively.
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  iris = data.iris()
+  domain = ['setosa', 'versicolor', 'virginica']
+  range_ = ['red', 'green', 'blue']
+
+  alt.Chart(iris).mark_point().encode(
+      x='petalWidth',
+      y='petalLength',
+      color=alt.Color('species', scale=alt.Scale(domain=domain, range=range_))
+  )
+
+Raw Color Values
+~~~~~~~~~~~~~~~~
+The ``scale`` is what maps the raw input values into an appropriate color encoding
+for displaying the data. If your data entries consist of raw color names or codes,
+you can set ``scale=None`` to use those colors directly:
+
+.. altair-plot::
+
+  import pandas as pd
+  import altair as alt
+
+  data = pd.DataFrame({
+      'x': range(6),
+      'color': ['red', 'steelblue', 'chartreuse', '#F4D03F', '#D35400', '#7D3C98']
+  })
+
+  alt.Chart(data).mark_point(
+      filled=True,
+      size=100
+  ).encode(
+      x='x',
+      color=alt.Color('color', scale=None)
+  )
+
+Adjusting the width of Bar Marks
+--------------------------------
+The width of the bars in a bar plot are controlled through the ``size`` property in the :meth:`~Chart.mark_bar()`:
+
+.. altair-plot::
+
+  import altair as alt
+  import pandas as pd
+
+  data = pd.DataFrame({'name': ['a', 'b'], 'value': [4, 10]})
+
+  alt.Chart(data).mark_bar(size=10).encode(
+      x='name:O',
+      y='value:Q'
+  )
+
+But since ``mark_bar(size=10)`` only controls the width of the bars, it might become possible that the width of the chart is not adjusted accordingly:
+
+.. altair-plot::
+
+  alt.Chart(data).mark_bar(size=30).encode(
+      x='name:O',
+      y='value:Q'
+  )
+
+The width of the chart containing the bar plot can be controlled through two mechanisms:
+
+1. Setting the ``width`` of chart, so the width of the bars are adjusted to fit the width of the chart.
+
+2. Setting the ``rangeStep`` property of the bars in the :class:`Scale` class. The ``rangeStep`` allocates the width (in pixels) for each bar, so the width of the chart becomes the number of bars multiply the ``rangeStep``.
+
+An example using the first mechanism (using ``width``):
+
+.. altair-plot::
+
+  alt.Chart(data).mark_bar(size=30).encode(
+      x='name:O',
+      y='value:Q'
+  ).properties(width=100)
+
+The width of the bars are set using ``mark_bar(size=30)`` and the width of the chart is set using ``properties(width=100)``
+
+An example using the second mechanism (using ``rangeStep``):
+
+.. altair-plot::
+
+  alt.Chart(data).mark_bar(size=30).encode(
+      alt.X('name:N', scale=alt.Scale(rangeStep=100)),
+      y='value:Q'
+  )
+
+The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the the chart is set using ``alt.Scale(rangeStep=100)``
+
+.. note::
+
+   If both ``width`` and ``rangeStep`` are specified, then ``rangeStep`` will be ignored.

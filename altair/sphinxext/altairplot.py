@@ -87,7 +87,7 @@ VGL_TEMPLATE = jinja2.Template("""
         "renderer": "{{ renderer }}",
         "actions": {{ actions}}
       };
-      vegaEmbed('#{{ div_id }}', {{ spec }}).catch(console.err);
+      vegaEmbed('#{{ div_id }}', spec, opt).catch(console.err);
   });
 </script>
 </div>
@@ -109,13 +109,13 @@ DEFAULT_ALTAIRPLOT_LINKS = {'editor': True, 'source': True, 'export': True}
 
 def validate_links(links):
     if links.strip().lower() == 'none':
-        return {}
+        return False
 
     links = links.strip().split()
     diff = set(links) - set(DEFAULT_ALTAIRPLOT_LINKS.keys())
     if diff:
-        raise ValueError("Following links are invalid: {0}".format(list(diff)))
-    return dict((link, link in links) for link in DEFAULT_ALTAIRPLOT_LINKS)
+        raise ValueError("Following links are invalid: {}".format(list(diff)))
+    return {link: link in links for link in DEFAULT_ALTAIRPLOT_LINKS}
 
 
 def validate_output(output):
@@ -164,8 +164,8 @@ class AltairPlotDirective(Directive):
         # use the source file name to construct a friendly target_id
         serialno = env.new_serialno('altair-plot')
         rst_base = rst_filename.replace('.', '-')
-        div_id = "{0}-altair-plot-{1}".format(rst_base, serialno)
-        target_id = "{0}-altair-source-{1}".format(rst_base, serialno)
+        div_id = "{}-altair-plot-{}".format(rst_base, serialno)
+        target_id = "{}-altair-source-{}".format(rst_base, serialno)
         target_node = nodes.target('', '', ids=[target_id])
 
         # create the node in which the plot will appear;
@@ -206,15 +206,15 @@ def html_visit_altair_plot(self, node):
             chart = eval_block(node['code'], namespace)
         stdout = f.getvalue()
     except Exception as e:
-        warnings.warn("altair-plot: {0}:{1} Code Execution failed:"
-                      "{2}: {3}".format(node['rst_source'], node['rst_lineno'],
+        warnings.warn("altair-plot: {}:{} Code Execution failed:"
+                      "{}: {}".format(node['rst_source'], node['rst_lineno'],
                                         e.__class__.__name__, str(e)))
         raise nodes.SkipNode
 
     chart_name = node['chart-var-name']
     if chart_name is not None:
         if chart_name not in namespace:
-            raise ValueError("chart-var-name='{0}' not present in namespace"
+            raise ValueError("chart-var-name='{}' not present in namespace"
                              "".format(chart_name))
         chart = namespace[chart_name]
 
@@ -230,7 +230,6 @@ def html_visit_altair_plot(self, node):
             output_literal = nodes.literal_block(stdout, stdout)
             output_literal['language'] = 'none'
             node.extend([output_literal])
-            self.visit_admonition(node)
     elif output == 'repr':
         if chart is None:
             raise nodes.SkipNode
@@ -239,7 +238,6 @@ def html_visit_altair_plot(self, node):
             repr_literal = nodes.literal_block(rep, rep)
             repr_literal['language'] = 'none'
             node.extend([repr_literal])
-            self.visit_admonition(node)
     elif output == 'plot':
         if isinstance(chart, alt.TopLevelMixin):
             # Last line should be a chart; convert to spec dict
@@ -266,7 +264,7 @@ def html_visit_altair_plot(self, node):
                                        actions=json.dumps(actions))
             self.body.append(html)
         else:
-            warnings.warn('altair-plot: {0}:{1} Malformed block. Last line of '
+            warnings.warn('altair-plot: {}:{} Malformed block. Last line of '
                           'code block should define a valid altair Chart object.'
                           ''.format(node['rst_source'], node['rst_lineno']))
         raise nodes.SkipNode

@@ -5,11 +5,12 @@ from ..display import Displayable
 from ..display import default_renderer_base
 from ..display import json_renderer_base
 from ..display import RendererRegistry
+from ..display import HTMLRenderer
 
 from .schema import SCHEMA_VERSION
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '3.3.1'
-VEGAEMBED_VERSION = '3.14'
+VEGA_VERSION = '4'
+VEGAEMBED_VERSION = '3'
 
 
 # ==============================================================================
@@ -65,21 +66,27 @@ def svg_renderer(spec, **metadata):
                               vegalite_version=VEGALITE_VERSION,
                               **metadata)
 
-def colab_renderer(spec, **metadata):
-    return spec_to_mimebundle(spec, format='html',
-                              mode='vega-lite',
+colab_renderer = HTMLRenderer(mode='vega-lite',
+                              fullhtml=True, requirejs=False,
+                              output_div='altair-viz',
                               vega_version=VEGA_VERSION,
                               vegaembed_version=VEGAEMBED_VERSION,
-                              vegalite_version=VEGALITE_VERSION,
-                              **metadata)
+                              vegalite_version=VEGALITE_VERSION)
+
+kaggle_renderer = HTMLRenderer(mode='vega-lite',
+                               fullhtml=False, requirejs=True,
+                               vega_version=VEGA_VERSION,
+                               vegaembed_version=VEGAEMBED_VERSION,
+                               vegalite_version=VEGALITE_VERSION)
 
 renderers.register('default', default_renderer)
 renderers.register('jupyterlab', default_renderer)
 renderers.register('nteract', default_renderer)
+renderers.register('colab', colab_renderer)
+renderers.register('kaggle', kaggle_renderer)
 renderers.register('json', json_renderer)
 renderers.register('png', png_renderer)
 renderers.register('svg', svg_renderer)
-renderers.register('colab', colab_renderer)
 renderers.enable('default')
 
 

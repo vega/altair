@@ -1,5 +1,8 @@
 Altair: Declarative Visualization in Python
 ===========================================
+.. role:: raw-html(raw)
+   :format: html
+
 
 .. altair-minigallery::
    :names: one_dot_per_zipcode, horizon_graph, world_projections, candlestick_chart, falkensee, scatter_linked_brush, layered_heatmap_text, natural_disasters, streamgraph, multiline_tooltip, select_detail, choropleth, interactive_cross_highlight, seattle_weather_interactive, london_tube
@@ -36,15 +39,18 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/encoding
    user_guide/marks
    user_guide/transform
-   user_guide/selections
+   user_guide/interactions
    user_guide/configuration
    user_guide/compound_charts
    user_guide/saving_charts
    user_guide/customization
+   user_guide/times_and_dates
    user_guide/faq
    user_guide/troubleshooting
    user_guide/renderers
+   user_guide/internals
    user_guide/API
+   user_guide/ecosystem
 
 .. toctree::
    :maxdepth: 1

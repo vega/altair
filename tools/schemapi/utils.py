@@ -155,7 +155,7 @@ class SchemaInfo(object):
                 rval = "{...}"
             elif key == 'properties':
                 rval = '{\n    ' + '\n    '.join(sorted(map(repr, val))) + '\n  }'
-            keys.append('"{0}": {1}'.format(key, rval))
+            keys.append('"{}": {}'.format(key, rval))
         return "SchemaInfo({\n  " + '\n  '.join(keys) + "\n})"
 
     @property
@@ -167,7 +167,11 @@ class SchemaInfo(object):
 
     @property
     def short_description(self):
-        return self.title or self.medium_description
+        if self.title:
+            # use RST syntax for generated sphinx docs
+            return ":class:`{}`".format(self.title)
+        else:
+            return self.medium_description
 
     @property
     def medium_description(self):
@@ -178,37 +182,40 @@ class SchemaInfo(object):
                          'boolean': 'boolean',
                          'array': 'list',
                          'null': 'None'}
-        if self.is_empty():
+        if self.is_list():
+            return '[{0}]'.format(', '.join(self.child(s).short_description
+                                            for s in self.schema))
+        elif self.is_empty():
             return 'any object'
         elif self.is_enum():
-            return 'enum({0})'.format(', '.join(map(repr, self.enum)))
+            return 'enum({})'.format(', '.join(map(repr, self.enum)))
         elif self.is_anyOf():
-            return 'anyOf({0})'.format(', '.join(s.short_description
+            return 'anyOf({})'.format(', '.join(s.short_description
                                                  for s in self.anyOf))
         elif self.is_oneOf():
-            return 'oneOf({0})'.format(', '.join(s.short_description
+            return 'oneOf({})'.format(', '.join(s.short_description
                                                  for s in self.oneOf))
         elif self.is_allOf():
-            return 'allOf({0})'.format(', '.join(s.short_description
+            return 'allOf({})'.format(', '.join(s.short_description
                                                  for s in self.allOf))
         elif self.is_not():
-            return 'not {0}'.format(self.not_.short_description)
+            return 'not {}'.format(self.not_.short_description)
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
                 subschema.schema['type'] = typ_
                 options.append(subschema.short_description)
-            return "anyOf({0})".format(', '.join(options))
+            return "anyOf({})".format(', '.join(options))
         elif self.is_object():
-            return "Mapping(required=[{0}])".format(', '.join(self.required))
+            return "Mapping(required=[{}])".format(', '.join(self.required))
         elif self.is_array():
-            return "List({0})".format(self.child(self.items).short_description)
+            return "List({})".format(self.child(self.items).short_description)
         elif self.type in _simple_types:
             return _simple_types[self.type]
         elif not self.type:
             import warnings
-            warnings.warn("no short_description for schema\n{0}"
+            warnings.warn("no short_description for schema\n{}"
                           "".format(self.schema))
             return 'any'
 
@@ -280,6 +287,9 @@ class SchemaInfo(object):
         return self.raw_schema.get('description',
                                    self.schema.get('description', ''))
 
+    def is_list(self):
+        return isinstance(self.schema, list)
+
     def is_reference(self):
         return '$ref' in self.raw_schema
 
@@ -334,7 +344,7 @@ class SchemaInfo(object):
         elif self.is_value():
             return 'value'
         else:
-            raise ValueError("Unknown type with keys {0}".format(self.schema))
+            raise ValueError("Unknown type with keys {}".format(self.schema))
 
     def property_name_map(self):
         """
@@ -369,12 +379,25 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
             leading_space = len(line) - len(stripped)
             indent = indent_level + leading_space
             wrapper = textwrap.TextWrapper(width=width - indent,
-                                           initial_indent=indent * ' ',
-                                           subsequent_indent=indent * ' ',
-                                           break_long_words=False,
-                                           break_on_hyphens=False,
-                                           drop_whitespace=False)
-            final_lines.extend(wrapper.wrap(stripped))
+                                            initial_indent= indent * ' ',
+                                            subsequent_indent=indent * ' ',
+                                            break_long_words=False,
+                                            break_on_hyphens=False,
+                                            drop_whitespace=True)
+            list_wrapper = textwrap.TextWrapper(width=width - indent,
+                                                initial_indent= indent * ' '+'* ',
+                                                subsequent_indent=indent * ' '+ '  ',
+                                                break_long_words=False,
+                                                break_on_hyphens=False,
+                                                drop_whitespace=True)
+            for line in stripped.split("\n"):
+                if line == '':
+                    final_lines.append('')
+                elif line.startswith('* '):
+                    final_lines.extend(list_wrapper.wrap(line[2:]))
+                else:
+                    final_lines.extend(wrapper.wrap(line.lstrip()))
+
         # If this is the last line, put in an indent
         elif i + 1 == len(lines):
             final_lines.append(indent_level * ' ')

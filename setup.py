@@ -1,25 +1,3 @@
-LONG_DESCRIPTION = """
-Altair: A declarative statistical visualization library for Python.
-
-http://altair-viz.github.io/
-
-This package provides a Python API for building statistical visualizations
-in a declarative manner. This API contains no actual visualization rendering
-code, but instead emits JSON data structures following the `Vega-Lite`_
-specification. For convenience, Altair can optionally use `ipyvega`_ to
-seamlessly display client-side renderings in the Jupyter notebook.
-
-.. image:: https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png
-
-See the `Altair Documentation`_ for tutorials, detailed installation
-instructions, and examples.
-See the `Altair Github Repository`_ for issues, bug reports, and contributions.
-
-.. _Altair Github Repository: http://github.com/altair-viz/altair/
-.. _Altair Documentation: http://altair-viz.github.io/
-.. _Vega-Lite: https://github.com/vega/vega-lite
-"""
-
 import io
 import os
 import re
@@ -80,18 +58,11 @@ def find_packages(top=HERE):
 # Variables
 #==============================================================================
 
-
-
 DESCRIPTION         = "Altair: A declarative statistical visualization library for Python."
+LONG_DESCRIPTION    = read("README.md")
+LONG_DESCRIPTION_CONTENT_TYPE = 'text/markdown'
 NAME                = "altair"
 PACKAGES            = find_packages()
-PACKAGE_DATA        = {'altair': [
-                                  'vega/v2/schema/*.json',
-                                  'vega/v3/schema/*.json',
-                                  'vegalite/v1/schema/*.json',
-                                  'vegalite/v2/schema/*.json'
-                                  ]
-                      }
 AUTHOR              = "Brian E. Granger / Jake VanderPlas"
 AUTHOR_EMAIL        = "jakevdp@gmail.com"
 URL                 = 'http://altair-viz.github.io'
@@ -106,13 +77,14 @@ setup(name=NAME,
       version=VERSION,
       description=DESCRIPTION,
       long_description=LONG_DESCRIPTION,
+      long_description_content_type=LONG_DESCRIPTION_CONTENT_TYPE,
       author=AUTHOR,
       author_email=AUTHOR_EMAIL,
       url=URL,
       download_url=DOWNLOAD_URL,
       license=LICENSE,
       packages=PACKAGES,
-      package_data=PACKAGE_DATA,
+      include_package_data=True,
       install_requires=INSTALL_REQUIRES,
       extras_require={
         'dev': DEV_REQUIRES
@@ -124,7 +96,7 @@ setup(name=NAME,
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6'],
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7'],
      )

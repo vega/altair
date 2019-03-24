@@ -15,8 +15,12 @@ import numpy as np
 
 try:
     from pandas.api.types import infer_dtype
-except ImportError: # Pandas before 0.20.0
+    # keywords required; see https://github.com/altair-viz/altair/issues/1314
+    _infer_dtype_kwds = {'skipna': False}
+except ImportError:
+    # This is the appropriate import for pandas < 0.20.0
     from pandas.lib import infer_dtype
+    _infer_dtype_kwds = {}  # no keywords allowed in pandas < 0.20
 
 from .schemapi import SchemaBase, Undefined
 
@@ -40,22 +44,22 @@ WINDOW_AGGREGATES = ["row_number", "rank", "dense_rank", "percent_rank",
                      "cume_dist", "ntile", "lag", "lead", "first_value",
                      "last_value", "nth_value"]
 
-# timeUnits from vega-lite version 2.4.3
+# timeUnits from vega-lite version 3.0.0
 TIMEUNITS = ["utcyear", "utcquarter", "utcmonth", "utcday", "utcdate",
              "utchours", "utcminutes", "utcseconds", "utcmilliseconds",
              "utcyearquarter", "utcyearquartermonth", "utcyearmonth",
              "utcyearmonthdate", "utcyearmonthdatehours",
              "utcyearmonthdatehoursminutes",
              "utcyearmonthdatehoursminutesseconds",
-             "utcquartermonth", "utcmonthdate", "utchoursminutes",
-             "utchoursminutesseconds", "utcminutesseconds",
+             "utcquartermonth", "utcmonthdate", "utcmonthdatehours",
+             "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds",
              "utcsecondsmilliseconds",
              "year", "quarter", "month", "day", "date", "hours", "minutes",
              "seconds", "milliseconds", "yearquarter", "yearquartermonth",
              "yearmonth", "yearmonthdate", "yearmonthdatehours",
              "yearmonthdatehoursminutes",
              "yearmonthdatehoursminutesseconds", "quartermonth", "monthdate",
-             "hoursminutes", "hoursminutesseconds", "minutesseconds",
+             "monthdatehours", "hoursminutes", "hoursminutesseconds", "minutesseconds",
              "secondsmilliseconds"]
 
 
@@ -69,7 +73,7 @@ def infer_vegalite_type(data):
     data: Numpy array or Pandas Series
     """
     # Otherwise, infer based on the dtype of the input
-    typ = infer_dtype(data)
+    typ = infer_dtype(data, **_infer_dtype_kwds)
 
     # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
 
@@ -82,7 +86,7 @@ def infer_vegalite_type(data):
                  'timedelta64', 'date', 'time', 'period']:
         return 'temporal'
     else:
-        warnings.warn("I don't know how to infer vegalite type from '{0}'.  "
+        warnings.warn("I don't know how to infer vegalite type from '{}'.  "
                       "Defaulting to nominal.".format(typ))
         return 'nominal'
 
@@ -91,6 +95,8 @@ def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy
+    * Convert RangeIndex columns to strings
+    * Raise ValueError if column names are not strings
     * Raise ValueError if it has a hierarchical index.
     * Convert categoricals to strings.
     * Convert np.bool_ dtypes to Python bool objects
@@ -101,9 +107,17 @@ def sanitize_dataframe(df):
     """
     df = df.copy()
 
-    if isinstance(df.index, pd.core.index.MultiIndex):
+    if isinstance(df.columns, pd.RangeIndex):
+        df.columns = df.columns.astype(str)
+
+    for col in df.columns:
+        if not isinstance(col, six.string_types):
+            raise ValueError('Dataframe contains invalid column name: {0!r}. '
+                             'Column names must be strings'.format(col))
+
+    if isinstance(df.index, pd.MultiIndex):
         raise ValueError('Hierarchical indices not supported')
-    if isinstance(df.columns, pd.core.index.MultiIndex):
+    if isinstance(df.columns, pd.MultiIndex):
         raise ValueError('Hierarchical indices not supported')
 
     def to_list_if_array(val):
@@ -122,9 +136,13 @@ def sanitize_dataframe(df):
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
         elif str(dtype).startswith('datetime'):
-            # Convert datetimes to strings
-            # astype(str) will choose the appropriate resolution
-            df[col_name] = df[col_name].astype(str).replace('NaT', '')
+            # Convert datetimes to strings. This needs to be a full ISO string
+            # with time, which is why we cannot use ``col.astype(str)``.
+            # This is because Javascript parses date-only times in UTC, but
+            # parses full ISO-8601 dates as local time, and dates in Vega and
+            # Vega-Lite are displayed in local time by default.
+            # (see https://github.com/altair-viz/altair/issues/1027)
+            df[col_name] = df[col_name].apply(lambda x: x.isoformat()).replace('NaT', '')
         elif str(dtype).startswith('timedelta'):
             raise ValueError('Field "{col_name}" has type "{dtype}" which is '
                              'not supported by Altair. Please convert to '
@@ -230,19 +248,20 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
     units = dict(field='(?P<field>.*)',
-                 type='(?P<type>{0})'.format('|'.join(valid_typecodes)),
-                 count='(?P<aggregate>count)',
-                 aggregate='(?P<aggregate>{0})'.format('|'.join(AGGREGATES)),
-                 window_op='(?P<op>{0})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
-                 timeUnit='(?P<timeUnit>{0})'.format('|'.join(TIMEUNITS)))
+                 type='(?P<type>{})'.format('|'.join(valid_typecodes)),
+                 agg_count='(?P<aggregate>count)',
+                 op_count='(?P<op>count)',
+                 aggregate='(?P<aggregate>{})'.format('|'.join(AGGREGATES)),
+                 window_op='(?P<op>{})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
+                 timeUnit='(?P<timeUnit>{})'.format('|'.join(TIMEUNITS)))
 
     patterns = []
 
-    if parse_aggregates or parse_window_ops:
-        patterns.extend([r'{count}\(\)'])
     if parse_aggregates:
+        patterns.extend([r'{agg_count}\(\)'])
         patterns.extend([r'{aggregate}\({field}\)'])
     if parse_window_ops:
+        patterns.extend([r'{op_count}\(\)'])
         patterns.extend([r'{window_op}\({field}\)'])
     if parse_timeunits:
         patterns.extend([r'{timeUnit}\({field}\)'])
@@ -290,16 +309,18 @@ def use_signature(Obj):
         f._uses_signature = Obj
 
         # Supplement the docstring of f with information from Obj
-        doclines = Obj.__doc__.splitlines()
-        if f.__doc__:
-            doc = f.__doc__ + '\n'.join(doclines[1:])
-        else:
-            doc = '\n'.join(doclines)
-        try:
-            f.__doc__ = doc
-        except AttributeError:
-            # __doc__ is not modifiable for classes in Python < 3.3
-            pass
+        if Obj.__doc__:
+            doclines = Obj.__doc__.splitlines()
+            if f.__doc__:
+                doc = f.__doc__ + '\n'.join(doclines[1:])
+            else:
+                doc = '\n'.join(doclines)
+            try:
+                f.__doc__ = doc
+            except AttributeError:
+                # __doc__ is not modifiable for classes in Python < 3.3
+                pass
+        
         return f
     return decorate
 
@@ -370,15 +391,6 @@ def update_nested(original, update, copy=False):
         else:
             original[key] = val
     return original
-
-
-def write_file_or_filename(fp, content, mode='w'):
-    """Write content to fp, whether fp is a string or a file-like object"""
-    if isinstance(fp, six.string_types):
-        with open(fp, mode) as f:
-            f.write(content)
-    else:
-        fp.write(content)
 
 
 def display_traceback(in_ipython=True):

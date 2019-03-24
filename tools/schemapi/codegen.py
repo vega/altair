@@ -2,6 +2,7 @@
 from .utils import SchemaInfo, is_valid_identifier, indent_docstring, indent_arglist
 
 import textwrap
+import re
 
 
 class CodeSnippet(object):
@@ -29,6 +30,7 @@ def _get_args(info):
         nonkeyword = all(args[0] for args in arginfo)
         required = set.union(set(), *(args[1] for args in arginfo))
         kwds = set.union(set(), *(args[2] for args in arginfo))
+        kwds -= required
         invalid_kwds = set.union(set(), *(args[3] for args in arginfo))
         additional = all(args[4] for args in arginfo)
     elif info.is_empty() or info.is_compound():
@@ -127,21 +129,23 @@ class SchemaGenerator(object):
         #       values, etc.
         # TODO: use _get_args here for more information on allOf objects
         info = SchemaInfo(self.schema, self.rootschema)
-        doc = ["{0} schema wrapper".format(self.classname),
+        doc = ["{} schema wrapper".format(self.classname),
                '',
                info.medium_description]
         if info.description:
-            doc += self._process_description(info.description).splitlines()
+            doc += self._process_description( #remove condition description
+                re.sub(r"\n\{\n(\n|.)*\n\}",'',info.description)).splitlines()
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
             doc += ['',
                     'Attributes',
-                    '----------']
+                    '----------',
+                    '']
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
-                doc += ["{0} : {1}".format(prop, propinfo.short_description),
-                        "    {0}".format(self._process_description(propinfo.description))]
+                doc += ["{} : {}".format(prop, propinfo.short_description),
+                        "    {}".format(self._process_description(propinfo.description))]
         if len(doc) > 1:
             doc += ['']
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
@@ -164,7 +168,7 @@ class SchemaGenerator(object):
             args.append('*args')
             super_args.append('*args')
 
-        args.extend('{0}=Undefined'.format(p)
+        args.extend('{}=Undefined'.format(p)
                     for p in sorted(required) + sorted(kwds))
         super_args.extend('{0}={0}'.format(p)
                           for p in sorted(nodefault) + sorted(required) + sorted(kwds))

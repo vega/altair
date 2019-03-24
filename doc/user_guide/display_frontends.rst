@@ -235,8 +235,7 @@ The command will block the Python interpreter, and will have to be canceled with
 ``Ctrl-C`` to execute any further code.
 
 .. _entrypoints: https://github.com/takluyver/entrypoints
-.. _ipyvega: https://github.com/vega/ipyvega/tree/master
-.. _ipyvega: https://github.com/vega/ipyvega/tree/vega
+.. _ipyvega: https://github.com/vega/ipyvega/
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
 .. _Colab: https://colab.research.google.com

@@ -10,7 +10,7 @@ def test_unary_operations():
     OP_MAP = {'-': operator.neg, '+': operator.pos}
     for op, func in OP_MAP.items():
         z = func(datum.xxx)
-        assert repr(z) == '({0}datum.xxx)'.format(op)
+        assert repr(z) == '({}datum.xxx)'.format(op)
 
 
 def test_binary_operations():
@@ -32,16 +32,16 @@ def test_binary_operations():
     }
     for op, func in OP_MAP.items():
         z1 = func(datum.xxx, 2)
-        assert repr(z1) == '(datum.xxx {0} 2)'.format(op)
+        assert repr(z1) == '(datum.xxx {} 2)'.format(op)
 
         z2 = func(2, datum.xxx)
         if op in INEQ_REVERSE:
-            assert repr(z2) == '(datum.xxx {0} 2)'.format(INEQ_REVERSE[op])
+            assert repr(z2) == '(datum.xxx {} 2)'.format(INEQ_REVERSE[op])
         else:
-            assert repr(z2) == '(2 {0} datum.xxx)'.format(op)
+            assert repr(z2) == '(2 {} datum.xxx)'.format(op)
 
         z3 = func(datum.xxx, datum.yyy)
-        assert repr(z3) == '(datum.xxx {0} datum.yyy)'.format(op)
+        assert repr(z3) == '(datum.xxx {} datum.yyy)'.format(op)
 
 
 def test_abs():
@@ -55,7 +55,7 @@ def test_expr_funcs():
     for funcname in expr.funcs.__all__:
         func = getattr(expr, funcname)
         z = func(datum.xxx)
-        assert repr(z) == '{0}(datum.xxx)'.format(name_map.get(funcname,
+        assert repr(z) == '{}(datum.xxx)'.format(name_map.get(funcname,
                                                                funcname))
 
 
@@ -65,7 +65,7 @@ def test_expr_consts():
     for constname in expr.consts.__all__:
         const = getattr(expr, constname)
         z = const * datum.xxx
-        assert repr(z) == '({0} * datum.xxx)'.format(name_map.get(constname,
+        assert repr(z) == '({} * datum.xxx)'.format(name_map.get(constname,
                                                                 constname))
 
 

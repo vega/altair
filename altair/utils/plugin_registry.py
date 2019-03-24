@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar, cast
+from typing import Any, Union, List, Generic, TypeVar, cast
 
 import entrypoints
 from toolz import curry
@@ -28,10 +28,10 @@ class PluginEnabler(object):
         return self
 
     def __exit__(self, type, value, traceback):
-        self.registry._set_state(self.original_state    )
+        self.registry._set_state(self.original_state)
 
     def __repr__(self):
-        return "{0}.enable({1!r})".format(self.registry.__class__.__name__, self.name)
+        return "{}.enable({!r})".format(self.registry.__class__.__name__, self.name)
 
 
 class PluginRegistry(Generic[PluginType]):
@@ -54,6 +54,10 @@ class PluginRegistry(Generic[PluginType]):
     # in case an entrypoint is not found
     entrypoint_err_messages = {}
 
+    # global settings is a key-value mapping of settings that are stored globally
+    # in the registry rather than passed to the plugins
+    _global_settings = {}
+
     def __init__(self, entry_point_group='', plugin_type=object):
         # type: (str, Any) -> None
         """Create a PluginRegistry for a named entry point group.
@@ -68,10 +72,11 @@ class PluginRegistry(Generic[PluginType]):
         """
         self.entry_point_group = entry_point_group
         self.plugin_type = plugin_type
-        self._active = None     # type: None
+        self._active = None     # type: str
         self._active_name = ''  # type: str
         self._plugins = {}      # type: dict
         self._options = {}      # type: dict
+        self._global_settings = self.__class__._global_settings.copy()  # type: dict
 
     def register(self, name, value):
         # type: (str, Union[PluginType, None]) -> PluginType
@@ -112,12 +117,13 @@ class PluginRegistry(Generic[PluginType]):
         return {'_active': self._active,
                 '_active_name': self._active_name,
                 '_plugins': self._plugins.copy(),
-                '_options': self._options.copy()}
+                '_options': self._options.copy(),
+                '_global_settings': self._global_settings.copy()}
 
     def _set_state(self, state):
         """Reset the state of the registry"""
         assert set(state.keys()) == {'_active', '_active_name',
-                                     '_plugins', '_options'}
+                                     '_plugins', '_options', '_global_settings'}
         for key, val in state.items():
             setattr(self, key, val)
 
@@ -136,6 +142,8 @@ class PluginRegistry(Generic[PluginType]):
             self.register(name, value)
         self._active_name = name
         self._active = self._plugins[name]
+        for key in set(options.keys()) & set(self._global_settings.keys()):
+            self._global_settings[key] = options.pop(key)
         self._options = options
 
     def enable(self, name=None, **options):
@@ -161,7 +169,7 @@ class PluginRegistry(Generic[PluginType]):
         if name is None:
             name = self.active
         return PluginEnabler(self, name, **options)
-        
+
 
     @property
     def active(self):
@@ -185,7 +193,7 @@ class PluginRegistry(Generic[PluginType]):
 
     def __repr__(self):
         # type: () -> str
-        return ("{0}(active={1!r}, registered={2!r})"
+        return ("{}(active={!r}, registered={!r})"
                 "".format(self.__class__.__name__,
                           self._active_name,
                           list(self.names())))

@@ -67,8 +67,10 @@ This can be done with the ``scale_factor`` argument, which defaults to 1.0::
 JSON format
 ~~~~~~~~~~~
 The fundamental chart representation output by Altair is a JSON string format;
-you can save a chart to a JSON file using :meth:`Chart.save`, by passing
-a filename with a ``.json`` extension.
+one of the core methods provided by Altair is :meth:`Chart.to_json`, which
+returns a JSON string that represents the chart content.
+Additionally, you can save a chart to a JSON file using :meth:`Chart.save`,
+by passing a filename with a ``.json`` extension.
 
 For example, here we save a simple scatter-plot to JSON:
 

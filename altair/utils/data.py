@@ -16,7 +16,15 @@ from .plugin_registry import PluginRegistry
 DataTransformerType = Callable
 
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
-    pass
+    _global_settings = {'consolidate_datasets': True}
+
+    @property
+    def consolidate_datasets(self):
+        return self._global_settings['consolidate_datasets']
+
+    @consolidate_datasets.setter
+    def consolidate_datasets(self, value):
+        self._global_settings['consolidate_datasets'] = value
 
 
 # ==============================================================================
@@ -59,7 +67,7 @@ def limit_rows(data, max_rows=5000):
             return data
     if max_rows is not None and len(values) > max_rows:
         raise MaxRowsError('The number of rows in your dataset is greater '
-                           'than the maximum allowed ({0}). '
+                           'than the maximum allowed ({}). '
                            'For information on how to plot larger datasets '
                            'in Altair, see the documentation'.format(max_rows))
     return data

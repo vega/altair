@@ -7,5 +7,20 @@ div.wy-side-nav-search {
 }
 
 div.wy-side-nay {
-  background: #212121:
+  background: #212121;
+}
+
+table.field-list td li {
+  line-height: 18px;
+}
+
+table.docutils td p {
+  font-size: 14px !important;
+  margin-bottom: 6px;
+
+}
+
+table.docutils td li {
+  line-height: 18px;
+
 }

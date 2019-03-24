@@ -3,88 +3,300 @@
 API Reference
 =============
 
+This is the class and function reference of Altair, and the following content
+is generated automatically from the code documentation strings.
+Please refer to the `full user guide <http://altair-viz.github.io>`_ for
+further details, as this low-level documentation may not be enough to give
+full guidelines on their use.
+
 Top-Level Objects
 -----------------
+.. currentmodule:: altair
 
-.. autoclass:: altair.Chart
+.. autosummary::
+   :toctree: generated/toplevel/
+   :nosignatures:
 
-.. autoclass:: altair.LayerChart
-
-.. autoclass:: altair.HConcatChart
-
-.. autoclass:: altair.VConcatChart
-
-.. autoclass:: altair.FacetChart
-
-.. autoclass:: altair.RepeatChart
+   Chart
+   LayerChart
+   HConcatChart
+   VConcatChart
+   FacetChart
+   RepeatChart
 
 Encoding Channels
 -----------------
+.. currentmodule:: altair
 
-.. autoclass:: altair.Color
+.. autosummary::
+   :toctree: generated/channels/
+   :nosignatures:
 
-.. autoclass:: altair.ColorValue
+   Color
+   ColorValue
+   Column
+   Detail
+   Fill
+   FillValue
+   Href
+   HrefValue
+   Key
+   Latitude
+   Latitude2
+   Longitude
+   Longitude2
+   Opacity
+   OpacityValue
+   Order
+   Row
+   Shape
+   ShapeValue
+   Size
+   SizeValue
+   Stroke
+   StrokeValue
+   Text
+   TextValue
+   Tooltip
+   TooltipValue
+   X
+   XValue
+   X2
+   X2Value
+   Y
+   YValue
+   Y2
+   Y2Value
 
-.. autoclass:: altair.Column
-
-.. autoclass:: altair.Detail
-
-.. autoclass:: altair.Href
-
-.. autoclass:: altair.HrefValue
-
-.. autoclass:: altair.Opacity
-
-.. autoclass:: altair.OpacityValue
-
-.. autoclass:: altair.Order
-
-.. autoclass:: altair.Row
-
-.. autoclass:: altair.Shape
-
-.. autoclass:: altair.ShapeValue
-
-.. autoclass:: altair.Size
-
-.. autoclass:: altair.SizeValue
-
-.. autoclass:: altair.Text
-
-.. autoclass:: altair.TextValue
-
-.. autoclass:: altair.Tooltip
-
-.. autoclass:: altair.TooltipValue
-
-.. autoclass:: altair.X
-
-.. autoclass:: altair.XValue
-
-.. autoclass:: altair.X2
-
-.. autoclass:: altair.X2Value
-
-.. autoclass:: altair.Y
-
-.. autoclass:: altair.YValue
-
-.. autoclass:: altair.Y2
-
-.. autoclass:: altair.Y2Value
-
-
-Other Objects
+API Functions
 -------------
+.. currentmodule:: altair
 
-.. automodule:: altair
-   :members:
-   :imported-members:
-   :exclude-members: Chart,LayerChart,FacetChart,
+.. autosummary::
+   :toctree: generated/api/
+   :nosignatures:
 
-Vega Expressions
-----------------
+   layer
+   vconcat
+   hconcat
+   repeat
+   value
+   selection
+   selection_interval
+   selection_multi
+   selection_single
+   binding
+   binding_checkbox
+   binding_radio
+   binding_range
+   binding_select
+   condition
+   topo_feature
 
-.. automodule:: altair.expr
-   :members:
-   :imported-members:
+Low-Level Schema Wrappers
+-------------------------
+.. currentmodule:: altair
+
+.. autosummary::
+   :toctree: generated/core/
+   :nosignatures:
+
+   Aggregate
+   AggregateOp
+   AggregateTransform
+   AggregatedFieldDef
+   Anchor
+   AnyMark
+   AreaConfig
+   AutoSizeParams
+   AutosizeType
+   Axis
+   AxisConfig
+   AxisOrient
+   AxisResolveMap
+   BarConfig
+   Baseline
+   BasicType
+   BinParams
+   BinTransform
+   BrushConfig
+   CalculateTransform
+   CompositeUnitSpec
+   CompositeUnitSpecAlias
+   ConditionalFieldDef
+   ConditionalMarkPropFieldDef
+   ConditionalPredicateFieldDef
+   ConditionalPredicateMarkPropFieldDef
+   ConditionalPredicateTextFieldDef
+   ConditionalPredicateValueDef
+   ConditionalSelectionFieldDef
+   ConditionalSelectionMarkPropFieldDef
+   ConditionalSelectionTextFieldDef
+   ConditionalSelectionValueDef
+   ConditionalTextFieldDef
+   ConditionalValueDef
+   Config
+   CsvDataFormat
+   Cursor
+   Data
+   DataFormat
+   Datasets
+   DateTime
+   Day
+   DictInlineDataset
+   Dir
+   DsvDataFormat
+   Encoding
+   EncodingSortField
+   EncodingWithFacet
+   FacetFieldDef
+   FacetMapping
+   FacetSpec
+   FacetedCompositeUnitSpecAlias
+   FieldDef
+   FieldDefWithCondition
+   FieldEqualPredicate
+   FieldGTEPredicate
+   FieldGTPredicate
+   FieldLTEPredicate
+   FieldLTPredicate
+   FieldOneOfPredicate
+   FieldRangePredicate
+   FilterTransform
+   FontStyle
+   FontWeight
+   FontWeightNumber
+   FontWeightString
+   GeoType
+   HConcatSpec
+   Header
+   HeaderConfig
+   HorizontalAlign
+   InlineData
+   InlineDataset
+   Interpolate
+   IntervalSelection
+   IntervalSelectionConfig
+   JsonDataFormat
+   LayerSpec
+   Legend
+   LegendConfig
+   LegendOrient
+   LegendResolveMap
+   LineConfig
+   LocalMultiTimeUnit
+   LocalSingleTimeUnit
+   LogicalAndPredicate
+   LogicalNotPredicate
+   LogicalOperandPredicate
+   LogicalOrPredicate
+   LookupData
+   LookupTransform
+   Mark
+   MarkConfig
+   MarkDef
+   MarkPropFieldDefWithCondition
+   MarkPropValueDefWithCondition
+   Month
+   MultiSelection
+   MultiSelectionConfig
+   MultiTimeUnit
+   NamedData
+   NiceTime
+   OrderFieldDef
+   Orient
+   OverlayMarkDef
+   Padding
+   Parse
+   PositionFieldDef
+   Predicate
+   Projection
+   ProjectionConfig
+   ProjectionType
+   RangeConfig
+   RangeConfigValue
+   Repeat
+   RepeatRef
+   RepeatSpec
+   Resolve
+   ResolveMode
+   Root
+   RowColVgLayoutAlign
+   RowColboolean
+   RowColnumber
+   Scale
+   ScaleConfig
+   ScaleInterpolate
+   ScaleInterpolateParams
+   ScaleResolveMap
+   ScaleType
+   SchemaBase
+   SchemeParams
+   SelectionAnd
+   SelectionConfig
+   SelectionDef
+   SelectionDomain
+   SelectionNot
+   SelectionOperand
+   SelectionOr
+   SelectionPredicate
+   SelectionResolution
+   SingleDefChannel
+   SingleSelection
+   SingleSelectionConfig
+   SingleTimeUnit
+   Sort
+   SortField
+   SortOrder
+   Spec
+   StackOffset
+   StrokeCap
+   StrokeJoin
+   StyleConfigIndex
+   TextBaseline
+   TextConfig
+   TextFieldDef
+   TextFieldDefWithCondition
+   TextValueDefWithCondition
+   TickConfig
+   TimeUnit
+   TimeUnitTransform
+   TitleOrient
+   TitleParams
+   TopLevelFacetSpec
+   TopLevelFacetedUnitSpec
+   TopLevelHConcatSpec
+   TopLevelLayerSpec
+   TopLevelRepeatSpec
+   TopLevelSpec
+   TopLevelVConcatSpec
+   TopoDataFormat
+   Transform
+   Type
+   Undefined
+   UrlData
+   UtcMultiTimeUnit
+   UtcSingleTimeUnit
+   VConcatSpec
+   ValueDef
+   ValueDefWithCondition
+   VegaLiteSchema
+   VerticalAlign
+   VgAxisConfig
+   VgBinding
+   VgCheckboxBinding
+   VgComparatorOrder
+   VgEventStream
+   VgGenericBinding
+   VgLayoutAlign
+   VgMarkConfig
+   VgProjectionType
+   VgRadioBinding
+   VgRangeBinding
+   VgScheme
+   VgSelectBinding
+   VgTitleConfig
+   ViewConfig
+   WindowFieldDef
+   WindowOnlyOp
+   WindowTransform

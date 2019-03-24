@@ -6,6 +6,7 @@ from typing import Callable, Dict
 from jsonschema import validate
 
 from .plugin_registry import PluginRegistry
+from .mimebundle import spec_to_mimebundle
 
 
 # ==============================================================================
@@ -32,10 +33,53 @@ class RendererRegistry(PluginRegistry[RendererType]):
             """),
     }
 
+    def set_embed_options(self, defaultStyle=None, renderer=None,
+                          width=None, height=None, padding=None,
+                          scaleFactor=None, actions=None, **kwargs):
+        """Set options for embeddings of Vega & Vega-Lite charts.
+
+        Options are fully documented at https://github.com/vega/vega-embed.
+        Similar to the `enable()` method, this can be used as either
+        a persistent global switch, or as a temporary local setting using
+        a context manager (i.e. a `with` statement).
+
+        Parameters
+        ----------
+        defaultStyle : bool or string
+            Specify a default stylesheet for embed actions.
+        renderer : string
+            The renderer to use for the view. One of "canvas" (default) or "svg"
+        width : integer
+            The view width in pixels
+        height : integer
+            The view height in pixels
+        padding : integer
+            The view padding in pixels
+        scaleFactor : number
+            The number by which to multiply the width and height (default 1)
+            of an exported PNG or SVG image.
+        actions : bool or dict
+            Determines if action links ("Export as PNG/SVG", "View Source",
+            "View Vega" (only for Vega-Lite), "Open in Vega Editor") are
+            included with the embedded view. If the value is true, all action
+            links will be shown and none if the value is false. This property
+            can take a key-value mapping object that maps keys (export, source,
+            compiled, editor) to boolean values for determining if
+            each action link should be shown.
+        **kwargs :
+            Additional options are passed directly to embed options.
+        """
+        options = {'defaultStyle': defaultStyle, 'renderer': renderer,
+                   'width': width, 'height': height, 'padding': padding,
+                   'scaleFactor': scaleFactor, 'actions': actions}
+        kwargs.update({key: val for key, val in options.items()
+                       if val is not None})
+        return self.enable(None, embed_options=kwargs)
+
+
 # ==============================================================================
 # VegaLite v1/v2 renderer logic
 # ==============================================================================
-
 
 
 class Displayable(object):
@@ -57,7 +101,7 @@ class Displayable(object):
     schema_path = ('altair', '')
 
     def __init__(self, spec, validate=False):
-        # type: (dict, bool) ->: None
+        # type: (dict, bool) -> None
         self.spec = spec
         self.validate = validate
         self._validate()
@@ -100,3 +144,22 @@ def json_renderer_base(spec, str_repr, **options):
     """
     return default_renderer_base(spec, mime_type='application/json',
                                  str_repr=str_repr, **options)
+
+
+class HTMLRenderer(object):
+    """Object to render charts as HTML, with a unique output div each time"""
+    def __init__(self, output_div='altair-viz-{}', **kwargs):
+        self._output_div = output_div
+        self._output_count = 0
+        self.kwargs = kwargs
+
+    @property
+    def output_div(self):
+        self._output_count += 1
+        return self._output_div.format(self._output_count)
+
+    def __call__(self, spec, **metadata):
+        kwargs = self.kwargs.copy()
+        kwargs.update(metadata)
+        return spec_to_mimebundle(spec, format='html',
+                                  output_div=self.output_div, **kwargs)

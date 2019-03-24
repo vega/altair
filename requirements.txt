@@ -1,7 +1,8 @@
 entrypoints
+jinja2
 jsonschema
 numpy
 pandas
 six
 toolz
-typing
+typing>=3.6;python_version<"3.5"

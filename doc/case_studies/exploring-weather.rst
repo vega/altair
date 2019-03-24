@@ -48,8 +48,7 @@ It is difficult to see patterns across continuous variables, and so to
 better see this, we can create a histogram of the precipitation data.
 For this we first discretize the precipitation values by adding a binning
 to ``x``.
-Additionally, we set our encoding channel ``y`` with the special field ``*``
-that is aggregated with ``count``.
+Additionally, we set our encoding channel ``y`` with ``count``.
 The result is a histogram of precipitation values:
 
 .. altair-plot::
@@ -70,7 +69,7 @@ other ``timeUnit`` binnings):
 .. altair-plot::
 
     alt.Chart(df).mark_line().encode(
-        x='month(date:T)',
+        x='month(date):T',
         y='average(precipitation)'
     )
 
@@ -178,7 +177,7 @@ meaning of the plot more clear:
 .. altair-plot::
 
     alt.Chart(df).mark_bar().encode(
-        x=alt.X('month(date):N', axis=alt.Axis(title='Month of the year')),
+        x=alt.X('month(date):N', title='Month of the year'),
         y='count()',
         color=alt.Color('weather', legend=alt.Legend(title='Weather type'), scale=scale),
     )
@@ -192,8 +191,8 @@ and to allow interactive panning and zooming with the mouse:
 .. altair-plot::
 
     alt.Chart(df).mark_point().encode(
-        alt.X('temp_max', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
-        alt.Y('temp_range:Q', axis=alt.Axis(title='Daily Temperature Range (C)')),
+        alt.X('temp_max', title='Maximum Daily Temperature (C)'),
+        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
         alt.Color('weather', scale=scale),
         alt.Size('precipitation', scale=alt.Scale(range=[1, 200]))
     ).transform_calculate(
@@ -222,15 +221,15 @@ by weather type:
 And now we can vertically concatenate this histogram to the points plot above,
 and add a brush selection tool such that the histogram reflects the content
 of the selection (for more information on selections, see
-:ref:`user-guide-selections`):
+:ref:`user-guide-interactions`):
 
 .. altair-plot::
 
     brush = alt.selection(type='interval')
 
     points = alt.Chart().mark_point().encode(
-        alt.X('temp_max:Q', axis=alt.Axis(title='Maximum Daily Temperature (C)')),
-        alt.Y('temp_range:Q', axis=alt.Axis(title='Daily Temperature Range (C)')),
+        alt.X('temp_max:Q', title='Maximum Daily Temperature (C)'),
+        alt.Y('temp_range:Q', title='Daily Temperature Range (C)'),
         color=alt.condition(brush, 'weather:N', alt.value('lightgray'), scale=scale),
         size=alt.Size('precipitation:Q', scale=alt.Scale(range=[1, 200]))
     ).transform_calculate(

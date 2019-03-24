@@ -8,7 +8,7 @@ import json
 import re
 
 
-def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):
+def create_thumbnail(image_filename, thumb_filename, window_size=(280, 160)):
     """Create a thumbnail whose shortest dimension matches the window"""
     from PIL import Image
     im = Image.open(image_filename)
@@ -26,6 +26,21 @@ def create_thumbnail(image_filename, thumb_filename, window_size=(144, 80)):
 
     thumb = im.resize((final_width, final_height), Image.ANTIALIAS)
     thumb.save(thumb_filename)
+
+
+def create_generic_image(filename, shape=(200, 300), gradient=True):
+    """Create a generic image"""
+    from PIL import Image
+    import numpy as np
+
+    assert len(shape) == 2
+
+    arr = np.zeros((shape[0], shape[1], 3))
+    if gradient:
+        # gradient from gray to white
+        arr += np.linspace(128, 255, shape[1])[:, None]
+    im = Image.fromarray(arr.astype('uint8'))
+    im.save(filename)
 
 
 SYNTAX_ERROR_DOCSTRING = """
@@ -117,7 +132,7 @@ def get_docstring_and_rest(filename):
 
     if not isinstance(node, ast.Module):
         raise TypeError("This function only supports modules. "
-                        "You provided {0}".format(node.__class__.__name__))
+                        "You provided {}".format(node.__class__.__name__))
     try:
         # In python 3.7 module knows its docstring.
         # Everything else will raise an attribute error

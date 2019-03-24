@@ -1,8 +1,23 @@
 """Tests of various renderers"""
 
+import json
+import re
+
 import pytest
 
-import altair as alt
+import altair.vegalite.v2 as alt
+
+
+def _extract_embedOpt(html):
+    """Extract an embedOpt definition from an html string.
+
+    Note: this is very brittle, but works for the specific test in this file.
+    """
+    result = re.search(r"embedOpt\s+=\s+(?P<embedOpt>\{.*?\})", html)
+    if not result:
+        return None
+    else:
+        return json.loads(result.groupdict()['embedOpt'])
 
 
 @pytest.fixture
@@ -12,17 +27,28 @@ def chart():
 
 def test_colab_renderer_embed_options(chart):
     """Test that embed_options in renderer metadata are correctly manifest in html"""
-    with alt.renderers.enable('colab', embed_options=dict(actions=False)):
+    def assert_actions_true(chart):
         bundle = chart._repr_mimebundle_(None, None)
-        html = bundle['text/html']
-        assert ('embed_opt = {"actions": false, "mode": "vega-lite"}' in html or
-                'embed_opt = {"mode": "vega-lite", "actions": false}' in html)
+        embedOpt = _extract_embedOpt(bundle['text/html'])
+        assert embedOpt == {'actions': True, 'mode': 'vega-lite'}
 
-    with alt.renderers.enable('colab', embed_options=dict(actions=True)):
+    def assert_actions_false(chart):
         bundle = chart._repr_mimebundle_(None, None)
-        html = bundle['text/html']
-        assert ('embed_opt = {"actions": true, "mode": "vega-lite"}' in html or
-                'embed_opt = {"mode": "vega-lite", "actions": true}' in html)
+        embedOpt = _extract_embedOpt(bundle['text/html'])
+        assert embedOpt == {'actions': False, 'mode': 'vega-lite'}
+
+    with alt.renderers.enable('colab', embed_options=dict(actions=False)):
+        assert_actions_false(chart)
+
+    with alt.renderers.enable('colab'):
+        with alt.renderers.enable(embed_options=dict(actions=True)):
+            assert_actions_true(chart)
+
+        with alt.renderers.set_embed_options(actions=False):
+            assert_actions_false(chart)
+
+        with alt.renderers.set_embed_options(actions=True):
+            assert_actions_true(chart)
 
 
 def test_default_renderer_embed_options(chart, renderer='default'):

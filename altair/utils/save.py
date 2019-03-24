@@ -2,8 +2,16 @@ import json
 
 import six
 
-from .core import write_file_or_filename
 from .mimebundle import spec_to_mimebundle
+
+
+def write_file_or_filename(fp, content, mode='w'):
+    """Write content to fp, whether fp is a string or a file-like object"""
+    if isinstance(fp, six.string_types):
+        with open(fp, mode) as f:
+            f.write(content)
+    else:
+        fp.write(content)
 
 
 def save(chart, fp, vega_version, vegaembed_version,
@@ -69,7 +77,7 @@ def save(chart, fp, vega_version, vegaembed_version,
 
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be 'vega' or 'vega-lite', "
-                         "not '{0}'".format(mode))
+                         "not '{}'".format(mode))
 
     if mode == 'vega-lite' and vegalite_version is None:
         raise ValueError("must specify vega-lite version")
@@ -97,4 +105,4 @@ def save(chart, fp, vega_version, vegaembed_version,
         else:
             write_file_or_filename(fp, mimebundle['image/svg+xml'], mode='w')
     else:
-        raise ValueError("unrecognized format: '{0}'".format(format))
+        raise ValueError("unrecognized format: '{}'".format(format))

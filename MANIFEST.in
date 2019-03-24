@@ -1,4 +1,5 @@
 include *.md
+include Makefile
 include LICENSE
 include CHANGES.md
 include requirements.txt

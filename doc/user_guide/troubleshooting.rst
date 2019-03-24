@@ -102,6 +102,21 @@ Altair will not display correctly if using a kernel with IPython version 4.X or 
 The easiest way to address this is to change your kernel: choose "Kernel"->"Change Kernel"
 and then use the first kernel that appears.
 
+.. _jupyterlab-notebook-backend:
+
+JupyterLab: require is not defined
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you are using JupyterLab and see the error::
+
+    Javascript Error: require is not defined
+
+This likely means that you have enabled the notebook renderer, which is not
+supported in JupyterLab: that is, you have somewhere run
+``alt.renderers.enable('notebook')``.
+JupyterLab supports Altair's default renderer, which you can re-enable using::
+
+    alt.renderers.enable('default')
+
 
 .. _troubleshooting-notebook:
 
@@ -224,6 +239,9 @@ Altair does not check whether fields are valid, because there are many avenues
 by which a field can be specified within the full schema, and it is too difficult
 to account for all corner cases. Improving the user experience in this is a
 priority; see https://github.com/vega/vega-lite/issues/3576.
+
+For interactive charts, an empty plot can also be caused by your adblocker.
+Disabling the adblocker should fix this.
 
 Chart does not display at all
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

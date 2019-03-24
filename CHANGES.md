@@ -1,18 +1,90 @@
 # Altair Change Log
 
-## Version 2.2.0 (Unreleased):
+## Version 2.5.0 (Unreleased)
+
+## Enhancements
+
+## Bug Fixes
+
+## Version 2.4.1 (Released February 21, 2019)
 
 ### Enhancements
+
+- Several documentation cleanups & new examples
+
+### Bug Fixes
+
+- Fix incompatibility with pandas version 0.24 (#1315)
+
+## Version 2.3.0 (Released December 7, 2018)
+
+Includes many reworked examples in the example gallery.
+
+### Enhancements
+
+- Better errors for non-string column names, as well as automatic conversion
+  of ``pandas.RangeIndex`` columns to strings (#1107)
+
+- Renderers now have set_embed_options() method (#1203)
+
+- Added kaggle renderer & more HTML output options (#1123)
+
+### Backward-incompatible changes
+
+### Maintenance
+
+- fix typing requirement in Python 3.6+ (#1185)
+
+- Added support & CI testing for Python 3.7 (#1008)
+
+### Bug fixes
+
+- Selection predicates now recognize all valid entries (#1143)
+- Python 2 support for `chart.save()` (#1134)
+
+## Version 2.2.2 (Released August 17, 2018)
+
+### Bug Fixes
+
+- fix missing JSON resource in ``altair.vega.v4`` (#1097)
+
+## Version 2.2.1 (Released August 15, 2018)
+
+### Bug Fixes
+
+- appropriate handling of InlineData in dataset consolidation (#1092)
+
+- fix admonition formatting in documentation page (#1094)
+
+## Version 2.2.0 (Released August 14, 2018):
+
+### Enhancements
+
+- better handling of datetimes and timezones (#1053)
+
+- all inline datasets are now converted to named datasets and stored at the
+  top level of the chart. This behavior can be disabled by setting
+  ``alt.data_transformers.consolidate_datasets = False`` (#951 & #1046)
 
 - more streamlined shorthand syntax for window transforms (#957)
 
 ### Maintenance
 
-- update to Vega-Lite 2.5.2; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2)
+- update from Vega-Lite 2.4.3 to Vega-Lite 2.6.0; see vega-lite change-logs [2.5.0](https://github.com/vega/vega-lite/releases/tag/v2.5.0) [2.5.1](https://github.com/vega/vega-lite/releases/tag/v2.5.1) [2.5.2](https://github.com/vega/vega-lite/releases/tag/v2.5.2) [2.6.0](https://github.com/vega/vega-lite/releases/tag/v2.6.0)
 
 ### Backward-incompatible changes
 
-- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and ``alt.WindowSortField`` renamed to ``alt.SortField`` (https://github.com/vega/vega-lite/pull/3741)
+- ``alt.SortField`` renamed to ``alt.EncodingSortField`` and
+  ``alt.WindowSortField`` renamed to ``alt.SortField`` (#3741)
+
+### Bug Fixes
+
+- Fixed serialization of logical operands on selections within
+  ``transform_filter()``: (#1075)
+
+- Fixed sphinx issue which embedded chart specs twice (#1088)
+
+- Avoid Selenium import until it is actually needed (#982)
 
 ## Version 2.1.0 (Released June 6, 2018):
 
@@ -23,7 +95,7 @@
 
 - add an ``add_selection()`` method to add selections to charts (#832)
 
-- add ``chart.serve()`` and ``chart.display()`` methods for more flexiblity
+- add ``chart.serve()`` and ``chart.display()`` methods for more flexibility
   in displaying charts (#831)
 
 - allow multiple fields to be passed to encodings such as ``tooltip``
@@ -66,7 +138,7 @@ This version of Altair is based on Vega-Lite 1.2.1.
   ([#216](https://github.com/altair-viz/altair/pull/216)).
 
 - Change default import in all code and docs to `import altair as alt`
-  
+
 - Check for missing and misspelled column names upon exporting or rendering,
   and raise `FieldError` ([#399](https://github.com/altair-viz/altair/pull/399))
   if any problems are found. This can be disabled by setting `Chart.validated_columns=False`.

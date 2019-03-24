@@ -40,15 +40,27 @@ def test_chart_data_types():
 
     # Dict Data
     data = {"values": [{"x": 1, "y": 2}, {"x": 2, "y": 3}]}
-    dct = Chart(data).to_dict()
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = Chart(data).to_dict()
     assert dct['data'] == data
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = Chart(data).to_dict()
+    name = dct['data']['name']
+    assert dct['datasets'][name] == data['values']
 
     # DataFrame data
     data = pd.DataFrame({"x": range(5), "y": range(5)})
-    dct = Chart(data).to_dict()
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = Chart(data).to_dict()
     assert dct['data']['values'] == data.to_dict(orient='records')
 
-    # Altair data object
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = Chart(data).to_dict()
+    name = dct['data']['name']
+    assert dct['datasets'][name] == data.to_dict(orient='records')
+
+    # Named data object
     data = alt.NamedData(name='Foo')
     dct = Chart(data).to_dict()
     assert dct['data'] == {'name': 'Foo'}
@@ -199,7 +211,7 @@ def test_save(format, basic_chart):
 
     elif format == 'html':
         content = out.read()
-        assert content.startswith('\n<!DOCTYPE html>')
+        assert content.startswith('<!DOCTYPE html>')
 
 
 def test_facet_parse():
@@ -226,8 +238,17 @@ def test_facet_parse_data():
         row='row',
         column='column:O'
     )
-    dct = chart.to_dict()
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = chart.to_dict()
     assert 'values' in dct['data']
+    assert 'data' not in dct['spec']
+    assert dct['facet'] == {'column': {'field': 'column', 'type': 'ordinal'},
+                            'row': {'field': 'row', 'type': 'nominal'}}
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = chart.to_dict()
+    assert 'datasets' in dct
+    assert 'name' in dct['data']
     assert 'data' not in dct['spec']
     assert dct['facet'] == {'column': {'field': 'column', 'type': 'ordinal'},
                             'row': {'field': 'row', 'type': 'nominal'}}
@@ -313,7 +334,25 @@ def test_transforms():
                                                     window=window)]
             or chart.transform == [alt.WindowTransform(frame=[None, 0],
                                                        window=window[::-1])])
-            
+
+
+def test_filter_transform_selection_predicates():
+    selector1 = alt.selection_interval(name='s1')
+    selector2 = alt.selection_interval(name='s2')
+    base = alt.Chart('data.txt').mark_point()
+
+    chart = base.transform_filter(selector1)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': 's1'}}]
+
+    chart = base.transform_filter(~selector1)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'not': 's1'}}}]
+
+    chart = base.transform_filter(selector1 & selector2)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'and': ['s1', 's2']}}}]
+
+    chart = base.transform_filter(selector1 | selector2)
+    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'or': ['s1', 's2']}}}]
+
 
 
 def test_resolve_methods():
@@ -348,7 +387,9 @@ def test_add_selection():
 def test_LookupData():
     df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
     lookup = alt.LookupData(data=df, key='x')
-    dct = lookup.to_dict()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = lookup.to_dict()
     assert dct['key'] == 'x'
     assert dct['data'] == {'values': [{'x': 1, 'y': 4},
                                       {'x': 2, 'y': 5},
@@ -392,3 +433,62 @@ def test_chart_from_dict():
     # test that an invalid spec leads to a schema validation error
     with pytest.raises(jsonschema.ValidationError):
         alt.Chart.from_dict({'invalid': 'spec'})
+
+
+def test_consolidate_datasets(basic_chart):
+    chart = basic_chart | basic_chart
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct_consolidated = chart.to_dict()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct_standard = chart.to_dict()
+
+    assert 'datasets' in dct_consolidated
+    assert 'datasets' not in dct_standard
+
+    datasets = dct_consolidated['datasets']
+
+    # two dataset copies should be recognized as duplicates
+    assert len(datasets) == 1
+
+    # make sure data matches original & names are correct
+    name, data = datasets.popitem()
+
+    for spec in dct_standard['hconcat']:
+        assert spec['data']['values'] == data
+
+    for spec in dct_consolidated['hconcat']:
+        assert spec['data'] == {'name': name}
+
+
+def test_consolidate_InlineData():
+    data = alt.InlineData(
+        values=[{'a': 1, 'b': 1}, {'a': 2, 'b': 2}],
+        format={'type': 'csv'}
+    )
+    chart = alt.Chart(data).mark_point()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = chart.to_dict()
+    assert dct['data']['format'] == data.format
+    assert dct['data']['values'] == data.values
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = chart.to_dict()
+    assert dct['data']['format'] == data.format
+    assert list(dct['datasets'].values())[0] == data.values
+
+    data = alt.InlineData(
+        values=[],
+        name='runtime_data'
+    )
+    chart = alt.Chart(data).mark_point()
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        dct = chart.to_dict()
+    assert dct['data'] == data.to_dict()
+
+    with alt.data_transformers.enable(consolidate_datasets=True):
+        dct = chart.to_dict()
+    assert dct['data'] == data.to_dict()
