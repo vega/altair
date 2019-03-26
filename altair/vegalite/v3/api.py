@@ -735,7 +735,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         Add a BinTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         as_ : anyOf(string, List(string))
             The output fields at which to write the start and end bin values.
@@ -789,14 +789,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         Add a CalculateTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         as_ : string
             The field for storing the computed formula value.
         calculate : string or alt.expr expression
             A `expression <https://vega.github.io/vega-lite/docs/types.html#expression>`__
             string. Use the variable ``datum`` to refer to the current data object.
-
         **kwargs
             transforms can also be passed by keyword argument; see Examples
 
@@ -833,7 +832,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.CalculateTransform : underlying transform object
-
         """
         if as_ is Undefined:
             as_ = kwargs.pop('as', Undefined)
@@ -848,11 +846,114 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             self = self._add_transform(core.CalculateTransform(**dct))
         return self
 
+    def transform_impute(self, impute, key, frame=Undefined, groupby=Undefined,
+                         keyvals=Undefined, method=Undefined, value=Undefined):
+        """
+        Add an ImputeTransform to the schema.
+
+        Parameters
+        ----------
+        impute : string
+            The data field for which the missing values should be imputed.
+        key : string
+            A key field that uniquely identifies data objects within a group.
+            Missing key values (those occurring in the data but not in the current group) will
+            be imputed.
+        frame : List(anyOf(None, float))
+            A frame specification as a two-element array used to control the window over which
+            the specified method is applied. The array entries should either be a number
+            indicating the offset from the current data object, or null to indicate unbounded
+            rows preceding or following the current data object.  For example, the value ``[-5,
+            5]`` indicates that the window should include five objects preceding and five
+            objects following the current object.
+            **Default value:** :  ``[null, null]`` indicating that the window includes all
+            objects.
+        groupby : List(string)
+            An optional array of fields by which to group the values.
+            Imputation will then be performed on a per-group basis.
+        keyvals : anyOf(List(Mapping(required=[])), :class:`ImputeSequence`)
+            Defines the key values that should be considered for imputation.
+            An array of key values or an object defining a `number sequence
+            <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
+            If provided, this will be used in addition to the key values observed within the
+            input data.  If not provided, the values will be derived from all unique values of
+            the ``key`` field. For ``impute`` in ``encoding``, the key field is the x-field if
+            the y-field is imputed, or vice versa.
+            If there is no impute grouping, this property *must* be specified.
+        method : :class:`ImputeMethod`
+            The imputation method to use for the field value of imputed data objects.
+            One of ``value``, ``mean``, ``median``, ``max`` or ``min``.
+            **Default value:**  ``"value"``
+        value : Mapping(required=[])
+            The field value to use when the imputation ``method`` is ``"value"``.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.ImputeTransform : underlying transform object
+        """
+        return self._add_transform(core.ImputeTransform(
+            impute=impute, key=key, frame=frame, groupby=groupby,
+            keyvals=keyvals, method=method, value=value
+        ))
+
+    def transform_joinaggregate(self, joinaggregate=Undefined, groupby=Undefined, **kwargs):
+        """
+        Add a JoinAggregateTransform to the schema.
+
+        Parameters
+        ----------
+        joinaggregate : List(:class:`JoinAggregateFieldDef`)
+            The definition of the fields in the join aggregate, and what calculations to use.
+        groupby : List(string)
+            The data fields for partitioning the data objects into separate groups. If
+            unspecified, all data points will be in a single group.
+        **kwargs
+            joinaggregates can also be passed by keyword argument; see Examples.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        Examples
+        --------
+        >>> import altair as alt
+        >>> chart = alt.Chart().transform_joinaggregate(x='sum(y)')
+        >>> chart.transform[0]
+        JoinAggregateTransform({
+          joinaggregate: [JoinAggregateFieldDef({
+            as: 'x',
+            field: 'y',
+            op: AggregateOp('sum')
+          })]
+        })
+
+        See Also
+        --------
+        alt.JoinAggregateTransform : underlying transform object
+        """
+        if joinaggregate is Undefined:
+            joinaggregate = []
+        for key, val in kwargs.items():
+            parsed = utils.parse_shorthand(val)
+            dct = {'as': key,
+                   'field': parsed.get('field', Undefined),
+                   'op': parsed.get('aggregate', Undefined)}
+            joinaggregate.append(core.JoinAggregateFieldDef.from_dict(dct))
+        return self._add_transform(core.JoinAggregateTransform(
+            joinaggregate=joinaggregate, groupby=groupby
+        ))
+
     def transform_filter(self, filter, **kwargs):
         """
         Add a FilterTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         filter : a filter expression or :class:`LogicalOperandPredicate`
             The `filter` property must be one of the predicate definitions:
@@ -880,6 +981,54 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
+    def transform_flatten(self, flatten, as_=Undefined):
+        """Add a FlattenTransform to the schema.
+
+        Parameters
+        ----------
+        flatten : List(string)
+            An array of one or more data fields containing arrays to flatten.
+            If multiple fields are specified, their array values should have a parallel
+            structure, ideally with the same length.
+            If the lengths of parallel arrays do not match,
+            the longest array will be used with ``null`` values added for missing entries.
+        as : List(string)
+            The output field names for extracted array values.
+            **Default value:** The field name of the corresponding array field
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.FlattenTransform : underlying transform object
+        """
+        return self._add_transform(core.FlattenTransform(flatten=flatten, **{'as': as_}))
+
+    def transform_fold(self, fold, as_=Undefined):
+        """Add a FoldTransform to the schema.
+
+        Parameters
+        ----------
+        fold : List(string)
+            An array of data fields indicating the properties to fold.
+        as : [string, string]
+            The output field names for the key and value properties produced by the fold
+            transform. Default: ``["key", "value"]``
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.FoldTransform : underlying transform object
+        """
+        return self._add_transform(core.FoldTransform(fold=fold, **{'as': as_}))
+
     def transform_lookup(self, as_=Undefined, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
         """Add a LookupTransform to the schema
 
@@ -905,7 +1054,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.LookupTransform : underlying transform object
-
         """
         if as_ is not Undefined:
             if 'as' in kwargs:
@@ -919,11 +1067,64 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs['default'] = default
         return self._add_transform(core.LookupTransform(**kwargs))
 
+    def transform_sample(self, sample=1000):
+        """
+        Add a SampleTransform to the schema.
+
+        Parameters
+        ----------
+        sample : float
+            The maximum number of data objects to include in the sample. Default: 1000.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.SampleTransform : underlying transform object
+        """
+        return self._add_transform(core.SampleTransform(sample))
+
+    def transform_stack(self, as_, stack, groupby, offset=Undefined, sort=Undefined):
+        """
+        Add a StackTransform to the schema.
+
+        Parameters
+        ----------
+        as_ : anyOf(string, List(string))
+            Output field names. This can be either a string or an array of strings with
+            two elements denoting the name for the fields for stack start and stack end
+            respectively.
+            If a single string(eg."val") is provided, the end field will be "val_end".
+        stack : string
+            The field which is stacked.
+        groupby : List(string)
+            The data fields to group by.
+        offset : enum('zero', 'center', 'normalize')
+            Mode for stacking marks. Default: 'zero'.
+        sort : List(:class:`SortField`)
+            Field that determines the order of leaves in the stacked charts.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.StackTransform : underlying transform object
+        """
+        return self._add_transform(core.StackTransform(
+            stack=stack, groupby=groupby, offset=offset, sort=sort, **{'as': as_}
+        ))
+
     def transform_timeunit(self, as_=Undefined, field=Undefined, timeUnit=Undefined, **kwargs):
         """
         Add a TimeUnitTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         as_ : string
             The output field to write the timeUnit value.
@@ -997,7 +1198,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                          ignorePeers=Undefined, sort=Undefined, **kwargs):
         """Add a WindowTransform to the schema
 
-        Attributes
+        Parameters
         ----------
         window : List(:class:`WindowFieldDef`)
             The definition of the fields in the window, and what calculations to use.

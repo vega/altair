@@ -303,9 +303,41 @@ def test_transforms():
     kwds = {'as': 'calc', 'calculate': 'datum.a * 4'}
     assert chart.transform == [alt.CalculateTransform(**kwds)]
 
+    # impute transform
+    chart = alt.Chart().transform_impute("field", "key", groupby=["x"])
+    kwds = {"impute": "field", "key": "key", "groupby": ["x"]}
+    assert chart.transform == [alt.ImputeTransform(**kwds)]
+
+    # joinaggregate transform
+    chart = alt.Chart().transform_joinaggregate(min='min(x)', groupby=['key'])
+    kwds = {
+        'joinaggregate': [
+            alt.JoinAggregateFieldDef(field='x', op=alt.AggregateOp('min'), **{'as': 'min'})
+        ],
+        'groupby': ['key']
+    }
+    assert chart.transform == [
+        alt.JoinAggregateTransform(
+            joinaggregate=[
+                alt.JoinAggregateFieldDef(field='x', op=alt.AggregateOp('min'), **{'as': 'min'})
+            ],
+            groupby=['key']
+        )
+    ]
+
     # filter transform
     chart = alt.Chart().transform_filter("datum.a < 4")
     assert chart.transform == [alt.FilterTransform(filter="datum.a < 4")]
+
+    # flatten transform
+    chart = alt.Chart().transform_flatten(['A', 'B'], ['X', 'Y'])
+    kwds = {'as': ['X', 'Y'], 'flatten': ['A', 'B']}
+    assert chart.transform == [alt.FlattenTransform(**kwds)]
+
+    # fold transform
+    chart = alt.Chart().transform_fold(['A', 'B', 'C'], as_=['key', 'val'])
+    kwds = {'as': ['key', 'val'], 'fold': ['A', 'B', 'C']}
+    assert chart.transform == [alt.FoldTransform(**kwds)]
 
     # lookup transform
     lookup_data = alt.LookupData(alt.UrlData('foo.csv'), 'id', ['rate'])
@@ -316,6 +348,14 @@ def test_transforms():
             'lookup': 'a',
             'default': 'b'}
     assert chart.transform == [alt.LookupTransform(**kwds)]
+
+    # sample transform
+    chart = alt.Chart().transform_sample()
+    assert chart.transform == [alt.SampleTransform(1000)]
+
+    # stack transform
+    chart = alt.Chart().transform_stack('stacked', 'x', groupby=['y'])
+    assert chart.transform == [alt.StackTransform(stack='x', groupby=['y'], **{'as': 'stacked'})]
 
     # timeUnit transform
     chart = alt.Chart().transform_timeunit("foo", field="x", timeUnit="date")
