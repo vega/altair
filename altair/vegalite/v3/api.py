@@ -923,17 +923,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         Examples
         --------
         >>> import altair as alt
-        >>> chart = alt.Chart().transform_joinaggregate(x='sum(y)', a='mean(b)')
+        >>> chart = alt.Chart().transform_joinaggregate(x='sum(y)')
         >>> chart.transform[0]
         JoinAggregateTransform({
           joinaggregate: [JoinAggregateFieldDef({
             as: 'x',
             field: 'y',
             op: AggregateOp('sum')
-          }), JoinAggregateFieldDef({
-            as: 'a',
-            field: 'b',
-            op: AggregateOp('mean')
           })]
         })
 
