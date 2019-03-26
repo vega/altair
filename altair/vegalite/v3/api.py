@@ -1489,6 +1489,35 @@ def repeat(repeater):
     return core.RepeatRef(repeat=repeater)
 
 
+@utils.use_signature(core.TopLevelConcatSpec)
+class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
+    """A chart with horizontally-concatenated facets"""
+    def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
+        # TODO: move common data to top level?
+        for spec in concat:
+            _check_if_valid_subspec(spec, 'ConcatChart')
+        super(ConcatChart, self).__init__(data=data, concat=list(concat),
+                                          columns=columns, **kwargs)
+
+    def __ior__(self, other):
+        _check_if_valid_subspec(other, 'ConcatChart')
+        self.concat.append(other)
+        return self
+
+    def __or__(self, other):
+        _check_if_valid_subspec(other, 'ConcatChart')
+        copy = self.copy()
+        copy.concat.append(other)
+        return copy
+
+    # TODO: think about the most useful class API here
+
+
+def concat(*charts, **kwargs):
+    """Concatenate charts horizontally"""
+    return ConcatChart(concat=charts, **kwargs)
+
+
 @utils.use_signature(core.TopLevelHConcatSpec)
 class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
