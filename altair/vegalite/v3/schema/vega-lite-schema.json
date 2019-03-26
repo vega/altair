@@ -85,19 +85,6 @@
       ],
       "type": "string"
     },
-    "AlignValue": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/Align"
-        },
-        {
-          "$ref": "#/definitions/AlignValueRef"
-        }
-      ]
-    },
-    "AlignValueRef": {
-      "$ref": "#/definitions/ScaledValueRef<Align>"
-    },
     "AnyMark": {
       "anyOf": [
         {
@@ -1531,44 +1518,6 @@
         }
       },
       "type": "object"
-    },
-    "BaseValueRef<Align>": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/SignalRef"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "value": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Align"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            }
-          },
-          "required": [
-            "value"
-          ],
-          "type": "object"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "field": {
-              "$ref": "#/definitions/Field"
-            }
-          },
-          "required": [
-            "field"
-          ],
-          "type": "object"
-        }
-      ]
     },
     "Baseline": {
       "enum": [
@@ -3766,18 +3715,6 @@
       },
       "type": "object"
     },
-    "DatumFieldRef": {
-      "additionalProperties": false,
-      "properties": {
-        "datum": {
-          "$ref": "#/definitions/Field"
-        }
-      },
-      "required": [
-        "datum"
-      ],
-      "type": "object"
-    },
     "Day": {
       "maximum": 7,
       "minimum": 1,
@@ -4578,16 +4515,7 @@
           "type": "string"
         },
         {
-          "$ref": "#/definitions/SignalRef"
-        },
-        {
-          "$ref": "#/definitions/DatumFieldRef"
-        },
-        {
-          "$ref": "#/definitions/GroupFieldRef"
-        },
-        {
-          "$ref": "#/definitions/ParentFieldRef"
+          "$ref": "#/definitions/RepeatRef"
         }
       ]
     },
@@ -6039,21 +5967,6 @@
       ],
       "type": "object"
     },
-    "GroupFieldRef": {
-      "additionalProperties": false,
-      "properties": {
-        "group": {
-          "$ref": "#/definitions/Field"
-        },
-        "level": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "group"
-      ],
-      "type": "object"
-    },
     "Header": {
       "additionalProperties": false,
       "description": "Headers of row / column channels for faceted plots.",
@@ -6071,7 +5984,7 @@
           "type": "string"
         },
         "labelAlign": {
-          "$ref": "#/definitions/AlignValue",
+          "$ref": "#/definitions/Align",
           "description": "Horizontal text alignment of header labels."
         },
         "labelAnchor": {
@@ -6117,7 +6030,7 @@
           ]
         },
         "titleAlign": {
-          "$ref": "#/definitions/AlignValue",
+          "$ref": "#/definitions/Align",
           "description": "Horizontal text alignment (to the anchor) of header titles."
         },
         "titleAnchor": {
@@ -6182,7 +6095,7 @@
           "type": "string"
         },
         "labelAlign": {
-          "$ref": "#/definitions/AlignValue",
+          "$ref": "#/definitions/Align",
           "description": "Horizontal text alignment of header labels."
         },
         "labelAnchor": {
@@ -6229,7 +6142,7 @@
           "type": "null"
         },
         "titleAlign": {
-          "$ref": "#/definitions/AlignValue",
+          "$ref": "#/definitions/Align",
           "description": "Horizontal text alignment (to the anchor) of header titles."
         },
         "titleAnchor": {
@@ -9003,21 +8916,6 @@
       ],
       "minimum": 0
     },
-    "ParentFieldRef": {
-      "additionalProperties": false,
-      "properties": {
-        "level": {
-          "type": "number"
-        },
-        "parent": {
-          "$ref": "#/definitions/Field"
-        }
-      },
-      "required": [
-        "parent"
-      ],
-      "type": "object"
-    },
     "Parse": {
       "additionalProperties": {
         "$ref": "#/definitions/ParseValue"
@@ -10016,88 +9914,6 @@
         "band"
       ],
       "type": "string"
-    },
-    "ScaledValueRef<Align>": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/BaseValueRef<Align>"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "scale": {
-              "$ref": "#/definitions/Field"
-            },
-            "value": {
-              "type": [
-                "boolean",
-                "number",
-                "string",
-                "null"
-              ]
-            }
-          },
-          "required": [
-            "scale",
-            "value"
-          ],
-          "type": "object"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "field": {
-              "$ref": "#/definitions/Field"
-            },
-            "scale": {
-              "$ref": "#/definitions/Field"
-            }
-          },
-          "required": [
-            "scale",
-            "field"
-          ],
-          "type": "object"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "band": {
-              "type": [
-                "boolean",
-                "number"
-              ]
-            },
-            "scale": {
-              "$ref": "#/definitions/Field"
-            }
-          },
-          "required": [
-            "scale",
-            "band"
-          ],
-          "type": "object"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "range": {
-              "type": [
-                "number",
-                "boolean"
-              ]
-            },
-            "scale": {
-              "$ref": "#/definitions/Field"
-            }
-          },
-          "required": [
-            "scale",
-            "range"
-          ],
-          "type": "object"
-        }
-      ]
     },
     "SchemeConfig": {
       "additionalProperties": false,
@@ -12402,8 +12218,7 @@
           ],
           "type": "string"
         }
-      ],
-      "description": "Constants and utilities for data type \n Data type based on level of measurement"
+      ]
     },
     "TypeForShape": {
       "enum": [
