@@ -123,31 +123,6 @@ class Align(VegaLiteSchema):
         super(Align, self).__init__(*args)
 
 
-class AlignValue(VegaLiteSchema):
-    """AlignValue schema wrapper
-
-    anyOf(:class:`Align`, :class:`AlignValueRef`)
-    """
-    _schema = {'$ref': '#/definitions/AlignValue'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args, **kwds):
-        super(AlignValue, self).__init__(*args, **kwds)
-
-
-class AlignValueRef(VegaLiteSchema):
-    """AlignValueRef schema wrapper
-
-    anyOf(:class:`BaseValueRefAlign`, Mapping(required=[scale, value]), Mapping(required=[scale,
-    field]), Mapping(required=[scale, band]), Mapping(required=[scale, range]))
-    """
-    _schema = {'$ref': '#/definitions/AlignValueRef'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args, **kwds):
-        super(AlignValueRef, self).__init__(*args, **kwds)
-
-
 class AnyMark(VegaLiteSchema):
     """AnyMark schema wrapper
 
@@ -1688,18 +1663,6 @@ class BaseTitleConfig(VegaLiteSchema):
                                               fontSize=fontSize, fontStyle=fontStyle,
                                               fontWeight=fontWeight, frame=frame, limit=limit,
                                               offset=offset, orient=orient, **kwds)
-
-
-class BaseValueRefAlign(VegaLiteSchema):
-    """BaseValueRefAlign schema wrapper
-
-    anyOf(:class:`SignalRef`, Mapping(required=[value]), Mapping(required=[field]))
-    """
-    _schema = {'$ref': '#/definitions/BaseValueRef<Align>'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args, **kwds):
-        super(BaseValueRefAlign, self).__init__(*args, **kwds)
 
 
 class Baseline(VegaLiteSchema):
@@ -4571,24 +4534,6 @@ class DateTime(VegaLiteSchema):
                                        utc=utc, year=year, **kwds)
 
 
-class DatumFieldRef(VegaLiteSchema):
-    """DatumFieldRef schema wrapper
-
-    Mapping(required=[datum])
-
-    Attributes
-    ----------
-
-    datum : :class:`Field`
-
-    """
-    _schema = {'$ref': '#/definitions/DatumFieldRef'}
-    _rootschema = Root._schema
-
-    def __init__(self, datum=Undefined, **kwds):
-        super(DatumFieldRef, self).__init__(datum=datum, **kwds)
-
-
 class Day(VegaLiteSchema):
     """Day schema wrapper
 
@@ -5535,8 +5480,7 @@ class FacetedUnitSpec(VegaLiteSchema):
 class Field(VegaLiteSchema):
     """Field schema wrapper
 
-    anyOf(string, :class:`SignalRef`, :class:`DatumFieldRef`, :class:`GroupFieldRef`,
-    :class:`ParentFieldRef`)
+    anyOf(string, :class:`RepeatRef`)
     """
     _schema = {'$ref': '#/definitions/Field'}
     _rootschema = Root._schema
@@ -7407,26 +7351,6 @@ class VConcatSpec(VegaLiteSchema):
                                           spacing=spacing, title=title, transform=transform, **kwds)
 
 
-class GroupFieldRef(VegaLiteSchema):
-    """GroupFieldRef schema wrapper
-
-    Mapping(required=[group])
-
-    Attributes
-    ----------
-
-    group : :class:`Field`
-
-    level : float
-
-    """
-    _schema = {'$ref': '#/definitions/GroupFieldRef'}
-    _rootschema = Root._schema
-
-    def __init__(self, group=Undefined, level=Undefined, **kwds):
-        super(GroupFieldRef, self).__init__(group=group, level=level, **kwds)
-
-
 class Header(VegaLiteSchema):
     """Header schema wrapper
 
@@ -7452,7 +7376,7 @@ class Header(VegaLiteSchema):
         fields.
     formatType : enum('number', 'time')
         The format type for labels (number or time).
-    labelAlign : :class:`AlignValue`
+    labelAlign : :class:`Align`
         Horizontal text alignment of header labels.
     labelAnchor : :class:`TitleAnchor`
         The anchor position for placing the labels. One of ``"start"``, ``"middle"``, or
@@ -7500,7 +7424,7 @@ class Header(VegaLiteSchema):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    titleAlign : :class:`AlignValue`
+    titleAlign : :class:`Align`
         Horizontal text alignment (to the anchor) of header titles.
     titleAnchor : :class:`TitleAnchor`
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
@@ -7586,7 +7510,7 @@ class HeaderConfig(VegaLiteSchema):
         fields.
     formatType : enum('number', 'time')
         The format type for labels (number or time).
-    labelAlign : :class:`AlignValue`
+    labelAlign : :class:`Align`
         Horizontal text alignment of header labels.
     labelAnchor : :class:`TitleAnchor`
         The anchor position for placing the labels. One of ``"start"``, ``"middle"``, or
@@ -7620,7 +7544,7 @@ class HeaderConfig(VegaLiteSchema):
         **Default value:**  ``false``
     title : None
         Set to null to disable title for the axis, legend, or header.
-    titleAlign : :class:`AlignValue`
+    titleAlign : :class:`Align`
         Horizontal text alignment (to the anchor) of header titles.
     titleAnchor : :class:`TitleAnchor`
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
@@ -10876,26 +10800,6 @@ class Padding(VegaLiteSchema):
         super(Padding, self).__init__(*args, **kwds)
 
 
-class ParentFieldRef(VegaLiteSchema):
-    """ParentFieldRef schema wrapper
-
-    Mapping(required=[parent])
-
-    Attributes
-    ----------
-
-    parent : :class:`Field`
-
-    level : float
-
-    """
-    _schema = {'$ref': '#/definitions/ParentFieldRef'}
-    _rootschema = Root._schema
-
-    def __init__(self, parent=Undefined, level=Undefined, **kwds):
-        super(ParentFieldRef, self).__init__(parent=parent, level=level, **kwds)
-
-
 class Parse(VegaLiteSchema):
     """Parse schema wrapper
 
@@ -12042,19 +11946,6 @@ class ScaleType(VegaLiteSchema):
 
     def __init__(self, *args):
         super(ScaleType, self).__init__(*args)
-
-
-class ScaledValueRefAlign(VegaLiteSchema):
-    """ScaledValueRefAlign schema wrapper
-
-    anyOf(:class:`BaseValueRefAlign`, Mapping(required=[scale, value]), Mapping(required=[scale,
-    field]), Mapping(required=[scale, band]), Mapping(required=[scale, range]))
-    """
-    _schema = {'$ref': '#/definitions/ScaledValueRef<Align>'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args, **kwds):
-        super(ScaledValueRefAlign, self).__init__(*args, **kwds)
 
 
 class SchemeConfig(VegaLiteSchema):
@@ -15333,8 +15224,6 @@ class Type(VegaLiteSchema):
     """Type schema wrapper
 
     anyOf(:class:`StandardType`, enum('geojson'))
-    Constants and utilities for data type
-     Data type based on level of measurement
     """
     _schema = {'$ref': '#/definitions/Type'}
     _rootschema = Root._schema
