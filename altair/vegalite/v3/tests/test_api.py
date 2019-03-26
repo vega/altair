@@ -304,9 +304,9 @@ def test_transforms():
     assert chart.transform == [alt.CalculateTransform(**kwds)]
 
     # impute transform
-    # chart = alt.Chart().transform_impute("field", "key", groupby=["x"])
-    # kwds = {"impute": "field", "key": "key", "groupby": ["x"]}
-    # assert chart.transform == [alt.ImputeTransform(**kwds)]
+    chart = alt.Chart().transform_impute("field", "key", groupby=["x"])
+    kwds = {"impute": "field", "key": "key", "groupby": ["x"]}
+    assert chart.transform == [alt.ImputeTransform(**kwds)]
 
     # joinaggregate transform
     chart = alt.Chart().transform_joinaggregate(min='min(x)', groupby=['key'])
