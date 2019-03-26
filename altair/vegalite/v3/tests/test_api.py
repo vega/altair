@@ -365,10 +365,6 @@ def test_resolve_methods():
     chart = alt.LayerChart().resolve_scale(x='shared', y='independent')
     assert chart.resolve == alt.Resolve(scale=alt.ScaleResolveMap(x='shared', y='independent'))
 
-    with pytest.raises(ValueError) as err:
-        alt.Chart().resolve_axis(x='shared')
-    assert str(err.value).endswith("object has no attribute 'resolve'")
-
 
 def test_add_selection():
     selections = [alt.selection_interval(),

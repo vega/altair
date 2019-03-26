@@ -549,7 +549,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             a repeated chart.
 
         """
-        repeat = core.Repeat(row=row, column=column)
+        repeat = core.RepeatMapping(row=row, column=column)
         return RepeatChart(spec=self, repeat=repeat, **kwargs)
 
     def properties(self, **kwargs):

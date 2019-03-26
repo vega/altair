@@ -213,9 +213,33 @@ class Color(FieldChannelMixin, core.ColorFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -349,9 +373,33 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -444,9 +492,33 @@ class Detail(FieldChannelMixin, core.FieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -454,6 +526,152 @@ class Detail(FieldChannelMixin, core.FieldDef):
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
         super(Detail, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                      timeUnit=timeUnit, title=title, type=type, **kwds)
+
+
+class Facet(FieldChannelMixin, core.FacetFieldDef):
+    """Facet schema wrapper
+
+    Mapping(required=[shorthand])
+
+    Attributes
+    ----------
+
+    shorthand : string
+        shorthand for field, aggregate, and type
+    aggregate : :class:`Aggregate`
+        Aggregation function for the field
+        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
+
+        **Default value:** ``undefined`` (None)
+    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+        A flag for binning a ``quantitative`` field, `an object defining binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
+        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
+        ``"binned"`` ).
+
+
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+
+        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
+        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
+        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
+        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
+        adjust the axis ticks based on the bin step, you can also set the axis's
+        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+
+        **Default value:** ``false``
+    field : :class:`Field`
+        **Required.** A string defining the name of the field from which to pull a data
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
+
+        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
+        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`__.
+
+        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+    header : :class:`Header`
+        An object defining properties of a facet's header.
+    sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          Javascript.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order.  For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` is not supported for ``row`` and ``column``.
+    timeUnit : :class:`TimeUnit`
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
+
+        **Default value:** ``undefined`` (None)
+    title : anyOf(string, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`Type`
+        The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+    """
+    _class_is_valid_at_instantiation = False
+
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
+                 header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
+                 **kwds):
+        super(Facet, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+                                    header=header, sort=sort, timeUnit=timeUnit, title=title, type=type,
+                                    **kwds)
 
 
 class Fill(FieldChannelMixin, core.ColorFieldDefWithCondition):
@@ -590,9 +808,33 @@ class Fill(FieldChannelMixin, core.ColorFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -752,9 +994,33 @@ class Fillopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -914,9 +1180,33 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -1023,9 +1313,33 @@ class Key(FieldChannelMixin, core.FieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -1115,9 +1429,33 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -1292,9 +1630,33 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -1523,9 +1885,33 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -1633,9 +2019,33 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -1772,9 +2182,33 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -1920,9 +2354,33 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -2082,9 +2540,33 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -2244,9 +2726,33 @@ class Stroke(FieldChannelMixin, core.ColorFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -2406,9 +2912,33 @@ class Strokeopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -2569,9 +3099,33 @@ class Strokewidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -2687,9 +3241,33 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -2805,9 +3383,33 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -2992,9 +3594,33 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
@@ -3496,9 +4122,33 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
 
