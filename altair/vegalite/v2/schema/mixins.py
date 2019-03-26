@@ -24,7 +24,7 @@ class MarkMethodMixin(object):
                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'area'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -58,7 +58,7 @@ class MarkMethodMixin(object):
                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'bar'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -92,7 +92,7 @@ class MarkMethodMixin(object):
                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'line'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -126,7 +126,7 @@ class MarkMethodMixin(object):
                    xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'trail'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -160,7 +160,7 @@ class MarkMethodMixin(object):
                    xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'point'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -194,7 +194,7 @@ class MarkMethodMixin(object):
                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'text'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -228,7 +228,7 @@ class MarkMethodMixin(object):
                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'tick'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -262,7 +262,7 @@ class MarkMethodMixin(object):
                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rect'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -296,7 +296,7 @@ class MarkMethodMixin(object):
                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rule'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -330,7 +330,7 @@ class MarkMethodMixin(object):
                     x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'circle'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -364,7 +364,7 @@ class MarkMethodMixin(object):
                     x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'square'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
@@ -399,7 +399,7 @@ class MarkMethodMixin(object):
                       yOffset=Undefined, **kwds):
         """Set the chart's mark to 'geoshape'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,

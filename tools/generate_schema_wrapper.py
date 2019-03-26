@@ -26,7 +26,6 @@ SCHEMA_VERSION = {
         'v5': 'v5.3.1',
     },
     'vega-lite': {
-        'v1': 'v1.3.1',
         'v2': 'v2.6.0',
         'v3': 'v3.0.0',
     }
@@ -285,9 +284,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
 
     contents.append(CHANNEL_MIXINS)
 
-    if version == 'v1':
-        encoding_def = 'Encoding'
-    elif version == 'v2':
+    if version == 'v2':
         encoding_def = 'EncodingWithFacet'
     else:
         encoding_def = 'FacetedEncoding'
@@ -333,39 +330,21 @@ MARK_METHOD = '''
 def mark_{mark}({def_arglist}):
     """Set the chart's mark to '{mark}'
 
-    For information on additional arguments, see ``alt.MarkDef``
+    For information on additional arguments, see :class:`{mark_def}`
     """
     kwds = dict({dict_arglist})
     copy = self.copy(deep=True, ignore=['data'])
     if any(val is not Undefined for val in kwds.values()):
-        copy.mark = core.MarkDef(type="{mark}", **kwds)
+        copy.mark = core.{mark_def}(type="{mark}", **kwds)
     else:
         copy.mark = "{mark}"
     return copy
 '''
 
 
-def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
-                                 mark_def='MarkDef'):
+def generate_vegalite_mark_mixin(schemafile, markdefs):
     with open(schemafile, encoding='utf8') as f:
         schema = json.load(f)
-    marks = schema['definitions'][mark_enum]['enum']
-    info = SchemaInfo({'$ref': '#/definitions/' + mark_def},
-                      rootschema=schema)
-
-    # adapted from SchemaInfo.init_code
-    nonkeyword, required, kwds, invalid_kwds, additional = codegen._get_args(info)
-    required -= {'type'}
-    kwds -= {'type'}
-
-    def_args = ['self'] + ['{}=Undefined'.format(p)
-                           for p in (sorted(required) + sorted(kwds))]
-    dict_args = ['{0}={0}'.format(p)
-                 for p in (sorted(required) + sorted(kwds))]
-
-    if additional or invalid_kwds:
-        def_args.append('**kwds')
-        dict_args.append('**kwds')
 
     imports = ["from altair.utils.schemapi import Undefined",
                "from . import core"]
@@ -373,12 +352,32 @@ def generate_vegalite_mark_mixin(schemafile, mark_enum='Mark',
     code = ["class MarkMethodMixin(object):",
             '    """A mixin class that defines mark methods"""']
 
-    for mark in marks:
-        # TODO: only include args relevant to given type?
-        mark_method = MARK_METHOD.format(mark=mark,
-                                         def_arglist=indent_arglist(def_args, indent_level=10 + len(mark)),
-                                         dict_arglist=indent_arglist(dict_args, indent_level=16))
-        code.append('\n    '.join(mark_method.splitlines()))
+    for mark_enum, mark_def in markdefs.items():
+        marks = schema['definitions'][mark_enum]['enum']
+        info = SchemaInfo({'$ref': '#/definitions/' + mark_def},
+                        rootschema=schema)
+
+        # adapted from SchemaInfo.init_code
+        nonkeyword, required, kwds, invalid_kwds, additional = codegen._get_args(info)
+        required -= {'type'}
+        kwds -= {'type'}
+
+        def_args = ['self'] + ['{}=Undefined'.format(p)
+                            for p in (sorted(required) + sorted(kwds))]
+        dict_args = ['{0}={0}'.format(p)
+                    for p in (sorted(required) + sorted(kwds))]
+
+        if additional or invalid_kwds:
+            def_args.append('**kwds')
+            dict_args.append('**kwds')
+
+        for mark in marks:
+            # TODO: only include args relevant to given type?
+            mark_method = MARK_METHOD.format(mark=mark,
+                                             mark_def=mark_def,
+                                             def_arglist=indent_arglist(def_args, indent_level=10 + len(mark)),
+                                             dict_arglist=indent_arglist(dict_args, indent_level=16))
+            code.append('\n    '.join(mark_method.splitlines()))
 
     return imports, '\n'.join(code)
 
@@ -465,20 +464,23 @@ def vegalite_main(skip_download=False):
         with open(outfile, 'w', encoding='utf8') as f:
             f.write(code)
 
-        if version != 'v1':
-            # generate the mark mixin
-            outfile = join(schemapath, 'mixins.py')
-            print("Generating\n {}\n  ->{}".format(schemafile, outfile))
-            mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile)
-            config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
-            imports = sorted(set(mark_imports + config_imports))
-            with open(outfile, 'w', encoding='utf8') as f:
-                f.write(HEADER)
-                f.write('\n'.join(imports))
-                f.write('\n\n\n')
-                f.write(mark_mixin)
-                f.write('\n\n\n')
-                f.write(config_mixin)
+        # generate the mark mixin
+        if version == 'v2':
+            markdefs = {'Mark': 'MarkDef'}
+        else:
+            markdefs = {k: k + 'Def' for k in ['Mark', 'BoxPlot', 'ErrorBar', 'ErrorBand']}
+        outfile = join(schemapath, 'mixins.py')
+        print("Generating\n {}\n  ->{}".format(schemafile, outfile))
+        mark_imports, mark_mixin = generate_vegalite_mark_mixin(schemafile, markdefs)
+        config_imports, config_mixin = generate_vegalite_config_mixin(schemafile)
+        imports = sorted(set(mark_imports + config_imports))
+        with open(outfile, 'w', encoding='utf8') as f:
+            f.write(HEADER)
+            f.write('\n'.join(imports))
+            f.write('\n\n\n')
+            f.write(mark_mixin)
+            f.write('\n\n\n')
+            f.write(config_mixin)
 
 
 def vega_main(skip_download=False):
