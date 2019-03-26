@@ -896,7 +896,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.ImputeTransform : underlying transform object
         """
-        raise NotImplementedError("ImputeTransform")
+        return self._add_transform(core.ImputeTransform(
+            impute=impute, key=key, frame=frame, groupby=groupby,
+            keyvals=keyvals, method=method, value=value
+        ))
 
     def transform_joinaggregate(self, joinaggregate=Undefined, groupby=Undefined, **kwargs):
         """
@@ -1006,7 +1009,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.FlattenTransform : underlying transform object
         """
-        self._add_transform(core.FlattenTransform(flatten=flatten, **{'as': as_}))
+        return self._add_transform(core.FlattenTransform(flatten=flatten, **{'as': as_}))
 
     def transform_fold(self, fold, as_=Undefined):
         """Add a FoldTransform to the schema.
@@ -1028,7 +1031,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         alt.FoldTransform : underlying transform object
         """
-        self._add_transform(core.FoldTransform(fold=fold, **{'as': as_}))
+        return self._add_transform(core.FoldTransform(fold=fold, **{'as': as_}))
 
     def transform_lookup(self, as_=Undefined, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
         """Add a LookupTransform to the schema
