@@ -549,7 +549,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             a repeated chart.
 
         """
-        repeat = core.Repeat(row=row, column=column)
+        repeat = core.RepeatMapping(row=row, column=column)
         return RepeatChart(spec=self, repeat=repeat, **kwargs)
 
     def properties(self, **kwargs):
@@ -1252,8 +1252,8 @@ class EncodingMixin(object):
             else:
                 if condition is not Undefined:
                     obj['condition'] = _wrap_in_channel_class(condition, prop)
-            kwargs[prop] = _wrap_in_channel_class(obj, prop)
-
+            if obj is not None:
+                kwargs[prop] = _wrap_in_channel_class(obj, prop)
 
         copy = self.copy(deep=True, ignore=['data'])
 
