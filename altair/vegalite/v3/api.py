@@ -1679,14 +1679,14 @@ def repeat(repeater):
 
     Parameters
     ----------
-    repeater : {'row'|'column'}
+    repeater : {'row'|'column'|'repeat'}
         The repeater to tie the field to.
 
     Returns
     -------
     repeat : RepeatRef object
     """
-    assert repeater in ['row', 'column']
+    assert repeater in ['row', 'column', 'repeat']
     return core.RepeatRef(repeat=repeater)
 
 

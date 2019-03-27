@@ -9426,7 +9426,8 @@
         "repeat": {
           "enum": [
             "row",
-            "column"
+            "column",
+            "repeat"
           ],
           "type": "string"
         }

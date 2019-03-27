@@ -1,5 +1,5 @@
 # flake8: noqa
-__version__ = '3.0.0dev0'
+__version__ = '3.0.0dev2'
 
 from .vegalite import *
 from . import examples
