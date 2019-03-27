@@ -1,10 +1,18 @@
 # Altair Change Log
 
-## Version 2.5.0 (Unreleased)
+## Version 3.0.0rc1 (prerelease)
 
-## Enhancements
+Update to Vega-Lite 3.0 and Vega 5.0 & support all new features. See
+https://github.com/vega/vega-lite/releases/tag/v3.0.0 for Vega-Lite
+feature lists.
 
-## Bug Fixes
+### Highlights:
+
+- new compound marks: ``mark_boxplot()``, ``mark_errorband()``, ``mark_errorbar()``
+- new transforms: ``transform_impute()``, ``transform_joinaggregate()``, ``transform_flatten()``
+  ``transform_fold()``, ``transform_sample()``, ``transform_stack()``
+- tooltips enabled by default. Pass encoding ``tooltip=None`` to disable.
+- new ``columns`` keyword that allows wrapped faceting and concatenation.
 
 ## Version 2.4.1 (Released February 21, 2019)
 
