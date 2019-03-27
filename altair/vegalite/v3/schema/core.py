@@ -11344,7 +11344,7 @@ class RepeatRef(VegaLiteSchema):
     Attributes
     ----------
 
-    repeat : enum('row', 'column')
+    repeat : enum('row', 'column', 'repeat')
 
     """
     _schema = {'$ref': '#/definitions/RepeatRef'}
