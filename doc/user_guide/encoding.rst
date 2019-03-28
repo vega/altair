@@ -53,6 +53,10 @@ longitude   :class:`Longitude`   Longitude for geo charts           :ref:`galler
 latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
 longitude2  :class:`Longitude2`  Second longitude value for ranges  N/A
 latitude2   :class:`Latitude2`   Second latitude value for ranges   N/A
+xerror      :class:`XError`      The x-axis error value             N/A
+yerror      :class:`YError`      The y-axis error value             N/A
+xerror2     :class:`XError2`     The second x-axis error value      N/A
+yerror2     :class:`YError2`     The second y-axis error value      N/A
 ==========  ===================  =================================  ===================================
 
 Mark Property Channels:
