@@ -56,6 +56,7 @@ clean:
 .PHONY: clean-generated
 clean-generated:
 	rm -rf user_guide/generated/
+	rm -rf gallery/
 
 .PHONY: clean-images
 clean-images:
