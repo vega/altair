@@ -83,7 +83,7 @@ similar to this::
 
     Chart({
       data: 'https://vega.github.io/vega-datasets/data/cars.json',
-      encoding: EncodingWithFacet({
+      encoding: FacetedEncoding({
         x: X({
           shorthand: 'Horsepower'
         })
@@ -178,7 +178,7 @@ object similar to this::
 
     Chart({
       data: 'https://vega.github.io/vega-datasets/data/cars.json',
-      encoding: EncodingWithFacet({
+      encoding: FacetedEncoding({
         x: X({
           shorthand: 'Horsepower'
         })

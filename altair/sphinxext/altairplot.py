@@ -70,9 +70,9 @@ import altair as alt
 from altair.utils.execeval import eval_block
 
 # These default URLs can be changed in conf.py; see setup() below.
-VEGA_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega@3"
-VEGALITE_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-lite@2"
-VEGAEMBED_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-embed@3"
+VEGA_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega@5"
+VEGALITE_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-lite@3"
+VEGAEMBED_JS_URL_DEFAULT = "https://cdn.jsdelivr.net/npm/vega-embed@4"
 
 
 VGL_TEMPLATE = jinja2.Template("""

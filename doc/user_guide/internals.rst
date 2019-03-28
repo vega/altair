@@ -81,7 +81,7 @@ the above chart using these low-level object types directly:
             url='https://vega.github.io/vega-datasets/data/cars.json'
         ),
         mark='point',
-        encoding=alt.EncodingWithFacet(
+        encoding=alt.FacetedEncoding(
             x=alt.PositionFieldDef(
                 field='Horsepower',
                 type='quantitative'
@@ -90,7 +90,7 @@ the above chart using these low-level object types directly:
                 field='Miles_per_Gallon',
                 type='quantitative'
             ),
-            color=alt.MarkPropFieldDefWithCondition(
+            color=alt.ColorFieldDefWithCondition(
                 field='Origin',
                 type='nominal'
             )
