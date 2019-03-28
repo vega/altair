@@ -253,16 +253,25 @@ titles, binning parameters, aggregation, sorting, and many more.
 The particular options that are available vary by encoding type; the various
 options are listed below.
 
+
 The :class:`X` and :class:`Y` encodings accept the following options:
 
 .. altair-object-table:: altair.PositionFieldDef
 
-The :class:`Color`, :class:`Fill`, :class:`Opacity`, :class:`Shape`,
-:class:`Size`, and :class:`Stroke` encodings accept the following options:
+The :class:`Color`, :class:`Fill`, and :class:`Stroke`  encodings accept the following options:
 
-.. altair-object-table:: altair.MarkPropFieldDefWithCondition
+.. altair-object-table:: altair.ColorFieldDefWithCondition
 
-The :class:`Row` and :class:`Column` encodings accept the following options:
+The :class:`Shape` encoding accepts the following options:
+
+.. altair-object-table:: altair.ShapeFieldDefWithCondition
+
+The :class:`Fillopacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
+and :class:`Strokewidth` encodings accept the following options:
+
+.. altair-object-table:: altair.NumericFieldDefWithCondition
+
+The :class:`Row`, :class:`Column`, and :class:`Facet` encodings accept the following options:
 
 .. altair-object-table:: altair.FacetFieldDef
 
@@ -270,21 +279,31 @@ The :class:`Text` and :class:`Tooltip` encodings accept the following options:
 
 .. altair-object-table:: altair.TextFieldDefWithCondition
 
-The :class:`Detail`, :class:`Key`, :class:`Latitude`, :class:`Latitude2`,
-:class:`Longitude`, :class:`Longitude2`, :class:`X2`
-and :class:`Y2` encodings accept the following options:
+The :class:`Fillopacity`, :class:`Opacity`, :class:`Size`, :class:`Strokeopacity`,
+and :class:`Strokewidth` encodings accept the following options:
+
+.. altair-object-table:: altair.NumericFieldDefWithCondition
+
+The :class:`Detail` and :class:`Key` encodings accept the following options:
 
 .. altair-object-table:: altair.FieldDef
 
+The :class:`Latitude` and :class:`Longitude` encodings accept the following options:
+
+.. altair-object-table:: altair.LatLongFieldDef
+
+The :class:`Latitude2`, :class:`Longitude2`, :class:`X2`, :class:`Y2`, :class:`Xerror`, :class:`Yerror`,
+:class:`Xerror2`, and :class:`Yerror2` encodings accept the following options:
+
+.. altair-object-table:: altair.SecondaryFieldDef
+
 The :class:`Href` encoding accepts the following options:
 
-.. altair-object-table:: altair.FieldDefWithCondition
+.. altair-object-table:: altair.StringFieldDefWithCondition
 
 The :class:`Order` encoding accepts the following options:
 
 .. altair-object-table:: altair.OrderFieldDef
-
-
 
 
 .. _encoding-aggregates:
