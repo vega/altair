@@ -10,7 +10,7 @@ used to map columns to visual attributes of the plot.
 The ``mark`` property is what specifies how exactly those attributes
 should be represented on the plot.
 
-Altair provides a number of mark properties:
+Altair provides a number of basic mark properties:
 
 ==========  ============================  ===================================================  ====================================
 Mark Name   Method                        Description                                          Example
@@ -27,6 +27,16 @@ square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.   
 text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chart_with_labels`
 tick        :meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.                  :ref:`gallery_strip_plot`
 ==========  ============================  ===================================================  ====================================
+
+In addition, Altair provides the following compound marks:
+
+==========  ==============================  ================================  ==================================
+Mark Name   Method                          Description                       Example
+==========  ==============================  ================================  ==================================
+box plot    :meth:`~Chart.mark_boxplot`     A box plot.                       :ref:`gallery_boxplot_max_min`
+error band  :meth:`~Chart.mark_errorband`   A continuous band around a line.  N/A
+error bar   :meth:`~Chart.mark_errorbar`    An errorbar around a point.       N/A
+==========  ==============================  ================================  ==================================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
 of the Chart object, which take optional keyword arguments that are passed to
