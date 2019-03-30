@@ -39,6 +39,9 @@ points = alt.Chart(airports_counts).mark_circle().encode(
     latitude='latitude:Q',
     size='Number of Airports:Q',
     color=alt.value('steelblue')
+).properties(
+    title='Number of airports in US'
 )
+
 
 background + points
