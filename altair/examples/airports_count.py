@@ -8,20 +8,7 @@ airports on a background of US states.
 import altair as alt
 from vega_datasets import data
 
-airports = data.airports()
-airports_counts = airports[['state','latitude', 'longitude']]
-
-# Take the mean as the position of state
-agg = {'latitude': 'mean',
-         'longitude': 'mean'
-                  }
-airports_counts = airports.groupby(['state']).agg(agg) 
-agg = {'latitude': 'count',
-      
-                  }
-
-airports_counts['Number of Airports'] =  airports.groupby(['state']).agg(agg)
-
+airports = data.airports.url
 states = alt.topo_feature(data.us_10m.url, feature='states')
 
 # US states background
@@ -34,14 +21,28 @@ background = alt.Chart(states).mark_geoshape(
 ).project('albersUsa')
 
 # airport positions on background
-points = alt.Chart(airports_counts).mark_circle().encode(
+points = alt.Chart(airports).transform_aggregate(
+    latitude='mean(latitude)',
+    longitude='mean(longitude)',
+    count='count()',
+    groupby=['state']
+).mark_circle().encode(
     longitude='longitude:Q',
     latitude='latitude:Q',
-    size='Number of Airports:Q',
-    color=alt.value('steelblue')
+    size=alt.Size('count:Q', title='Number of Airports'),
+    color=alt.value('steelblue'),
+    tooltip=['state:N','count:Q']
 ).properties(
     title='Number of airports in US'
 )
 
+chart = background + points 
+chart = chart.configure_title(
+    fontSize=24,
+    color='black'
+).configure_legend(
+    titleFontSize=14,
+    labelFontSize=12,
+)
 
-background + points
+chart
