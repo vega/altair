@@ -3,6 +3,8 @@ Wheat and Wages
 ---------------
 A recreation of William Playfair's classic chart visualizing
 the price of wheat, the wages of a mechanic, and the reigning British monarch.
+
+This is a more polished version of the simpler chart in :ref:`gallery_bar_and_line_with_dual_axis`.
 """
 # category: case studies
 import altair as alt

@@ -2,6 +2,8 @@
 Bar Chart with Line on Dual Axis
 --------------------------------
 This example shows how to combine two plots and keep their axes.
+
+For a more polished version of this chart, see :ref:`gallery_wheat_wages`.
 """
 # category: bar charts
 import altair as alt
