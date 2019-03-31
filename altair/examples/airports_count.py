@@ -36,13 +36,4 @@ points = alt.Chart(airports).transform_aggregate(
     title='Number of airports in US'
 )
 
-chart = background + points 
-chart = chart.configure_title(
-    fontSize=24,
-    color='black'
-).configure_legend(
-    titleFontSize=14,
-    labelFontSize=12,
-)
-
-chart
+background + points
