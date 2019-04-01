@@ -12,7 +12,8 @@ from vega_datasets import data
 source = data.population.url
 
 slider = alt.binding_range(min=1850, max=2000, step=10)
-select_year = alt.selection_single(name='year', fields=['year'], bind=slider)
+select_year = alt.selection_single(name='year', fields=['year'],
+                                   bind=slider, init={'year': 2000})
 
 base = alt.Chart(source).add_selection(
     select_year
