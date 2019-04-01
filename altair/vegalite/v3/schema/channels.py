@@ -105,20 +105,21 @@ class Color(FieldChannelMixin, core.ColorFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalColorValueDef`,
     List(:class:`ConditionalColorValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -290,12 +291,12 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -437,12 +438,12 @@ class Detail(FieldChannelMixin, core.FieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -553,12 +554,12 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -700,20 +701,21 @@ class Fill(FieldChannelMixin, core.ColorFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalColorValueDef`,
     List(:class:`ConditionalColorValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -886,20 +888,21 @@ class Fillopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -1072,20 +1075,21 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -1258,12 +1262,12 @@ class Key(FieldChannelMixin, core.FieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -1374,12 +1378,12 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -1492,12 +1496,12 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -1575,12 +1579,12 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -1693,12 +1697,12 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -1777,20 +1781,21 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -1962,12 +1967,12 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -2099,12 +2104,12 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -2246,20 +2251,21 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -2432,20 +2438,21 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -2618,20 +2625,21 @@ class Stroke(FieldChannelMixin, core.ColorFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalColorValueDef`,
     List(:class:`ConditionalColorValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -2804,20 +2812,21 @@ class Strokeopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -2991,20 +3000,21 @@ class Strokewidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -3177,19 +3187,20 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -3206,8 +3217,32 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
-        The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`__ for a
-        text field. If not defined, this will be determined automatically.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3272,11 +3307,12 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
-                 **kwds):
+                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
+                 title=Undefined, type=Undefined, **kwds):
         super(Text, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
-                                   condition=condition, field=field, format=format, timeUnit=timeUnit,
-                                   title=title, type=type, **kwds)
+                                   condition=condition, field=field, format=format,
+                                   formatType=formatType, timeUnit=timeUnit, title=title, type=type,
+                                   **kwds)
 
 
 class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
@@ -3319,19 +3355,20 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -3348,8 +3385,32 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
-        The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`__ for a
-        text field. If not defined, this will be determined automatically.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3414,11 +3475,12 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
-                 **kwds):
+                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
+                 title=Undefined, type=Undefined, **kwds):
         super(Tooltip, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                       condition=condition, field=field, format=format,
-                                      timeUnit=timeUnit, title=title, type=type, **kwds)
+                                      formatType=formatType, timeUnit=timeUnit, title=title, type=type,
+                                      **kwds)
 
 
 class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
@@ -3466,12 +3528,12 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3678,12 +3740,12 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3782,12 +3844,12 @@ class Xerror(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3886,12 +3948,12 @@ class Xerror2(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3994,12 +4056,12 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -4206,12 +4268,12 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -4310,12 +4372,12 @@ class Yerror(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -4414,12 +4476,12 @@ class Yerror2(FieldChannelMixin, core.SecondaryFieldDef):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
