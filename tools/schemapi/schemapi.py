@@ -159,6 +159,13 @@ class SchemaBase(object):
             with debug_mode(False):
                 return self.__class__(*self._args, **self._kwds)
 
+    def _get(self, attr, default=Undefined):
+        """Get an attribute, returning default if not present."""
+        attr = self._kwds.get(attr, Undefined)
+        if attr is Undefined:
+            attr = default
+        return attr
+
     def __getattr__(self, attr):
         # reminder: getattr is called after the normal lookups
         if attr in self._kwds:
@@ -353,8 +360,10 @@ class SchemaBase(object):
         return jsonschema.validate(instance, schema, resolver=resolver)
 
     @classmethod
-    def resolve_references(cls, schema):
-        """Resolve references of the schema the context of this object's schema"""
+    def resolve_references(cls, schema=None):
+        """Resolve references in the context of this object's schema or root schema."""
+        if schema is None:
+            schema = cls._schema
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema
                                                       or cls._schema
                                                       or schema)
