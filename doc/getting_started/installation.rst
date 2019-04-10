@@ -87,7 +87,10 @@ To install the notebook and Altair with conda, run the following command::
 
 To install the notebook and Altair with pip, run the following command::
 
-    $ pip install -U altair vega_datasets notebook vega
+    $ pip install -U altair vega_datasets notebook vega==1.4.0
+    
+If you don't specify the version, pip will install vega version 2.x, which Altair
+does not currently support.
 
 Once the packages and extensions are installed, launch the notebook by running::
 
