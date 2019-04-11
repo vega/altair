@@ -61,16 +61,19 @@ yerror2     :class:`YError2`     The second y-axis error value      N/A
 
 Mark Property Channels:
 
-=======  ================  ========================  =========================================
-Channel  Altair Class      Description               Example
-=======  ================  ========================  =========================================
-color    :class:`Color`    The color of the mark     :ref:`gallery_simple_heatmap`
-fill     :class:`Fill`     The fill for the mark     N/A
-opacity  :class:`Opacity`  The opacity of the mark   :ref:`gallery_horizon_graph`
-shape    :class:`Shape`    The shape of the mark     N/A
-size     :class:`Size`     The size of the mark      :ref:`gallery_table_bubble_plot_github`
-stroke   :class:`Stroke`   The stroke of the mark    N/A
-=======  ================  ========================  =========================================
+=============  ======================  ==============================  =========================================
+Channel        Altair Class            Description                     Example
+=============  ======================  ==============================  =========================================
+color          :class:`Color`          The color of the mark           :ref:`gallery_simple_heatmap`
+fill           :class:`Fill`           The fill for the mark           N/A
+fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
+opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
+shape          :class:`Shape`          The shape of the mark           N/A
+size           :class:`Size`           The size of the mark            :ref:`gallery_table_bubble_plot_github`
+stroke         :class:`Stroke`         The stroke of the mark          N/A
+strokeopacity  :class:`StrokeOpacity`  The opacity of the line         N/A
+strokewidth    :class:`StrokeWidth`    The width of the line           N/A
+=============  ======================  ==============================  =========================================
 
 Text and Tooltip Channels:
 
