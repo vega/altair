@@ -27,7 +27,7 @@ base = alt.Chart().mark_bar().encode(
 )
 
 # blue background with selection
-background = base.properties(selection=brush)
+background = base.add_selection(brush)
 
 # yellow highlights on the transformed data
 highlight = base.encode(

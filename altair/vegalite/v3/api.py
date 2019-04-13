@@ -150,82 +150,36 @@ def _get_channels_mapping():
 
 # -------------------------------------------------------------------------
 # Tools for working with selections
-class SelectionMapping(core.VegaLiteSchema):
-    """A mapping of selection names to selection definitions.
+class Selection(object):
+    """A Selection object"""
+    _counter = 1
 
-    This is designed to match the schema of the "selection" property of
-    top-level objects.
-    """
-    _schema = {
-        'type': 'object',
-        'additionalPropeties': {'$ref': '#/definitions/SelectionDef'}
-    }
-    _rootschema = core.Root._schema
-
-    def __add__(self, other):
-        if isinstance(other, SelectionMapping):
-            copy = self.copy()
-            copy._kwds.update(other._kwds)
-            return copy
-        else:
-            return NotImplemented
-
-    def __iadd__(self, other):
-        if isinstance(other, SelectionMapping):
-            self._kwds.update(other._kwds)
-            return self
-        else:
-            return NotImplemented
-
-
-class NamedSelection(SelectionMapping):
-    """A SelectionMapping with a single named selection item"""
-    _schema = {
-        'type': 'object',
-        'additionalPropeties': {'$ref': '#/definitions/SelectionDef'},
-        'minProperties': 1, 'maxProperties': 1
-    }
-    _rootschema = core.Root._schema
-
-    def _get_name(self):
-        if len(self._kwds) != 1:
-            raise ValueError("NamedSelection has multiple properties")
-        return next(iter(self._kwds))
+    def __init__(self, name, selection):
+        if name is None:
+            name = "selector{:03d}".format(self._counter)
+            self._counter += 1
+        self.name = name
+        self.selection = selection
 
     def ref(self):
-        """Return a selection reference to this object
+        return 
 
-        Examples
-        --------
-        >>> import altair as alt
-        >>> sel = alt.selection_interval(name='interval')
-        >>> sel.ref()
-        {'selection': 'interval'}
-
-        """
-        return {"selection": self._get_name()}
+    def to_dict(self):
+        return {'selection': self.name}
 
     def __invert__(self):
-        return core.SelectionNot(**{'not': self._get_name()})
+        return core.SelectionNot(**{'not': self.name})
 
     def __and__(self, other):
-        if isinstance(other, NamedSelection):
-            other = other._get_name()
-        return core.SelectionAnd(**{'and': [self._get_name(), other]})
+        if isinstance(other, Selection):
+            other = other.name
+        return core.SelectionAnd(**{'and': [self.name, other]})
 
     def __or__(self, other):
-        if isinstance(other, NamedSelection):
-            other = other._get_name()
-        return core.SelectionOr(**{'or': [self._get_name(), other]})
+        if isinstance(other, Selection):
+            other = other.name
+        return core.SelectionOr(**{'or': [self.name, other]})
 
-    def __add__(self, other):
-        copy = SelectionMapping(**self._kwds)
-        copy += other
-        return copy
-
-    def __iadd__(self, other):
-        # this will be delegated to SelectionMapping
-        return NotImplemented
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
@@ -251,15 +205,11 @@ def selection(name=None, type=Undefined, **kwds):
 
     Returns
     -------
-    selection: NamedSelection
+    selection: Selection
         The selection object that can be used in chart creation.
     """
-    if name is None:
-        name = "selector{:03d}".format(selection.counter)
-        selection.counter += 1
-    return NamedSelection(**{name: core.SelectionDef(type=type, **kwds)})
+    return Selection(name, core.SelectionDef(type=type, **kwds))
 
-selection.counter = 1
 
 @utils.use_signature(core.IntervalSelection)
 def selection_interval(**kwargs):
@@ -314,7 +264,7 @@ def condition(predicate, if_true, if_false, **kwargs):
 
     Parameters
     ----------
-    predicate: NamedSelection, LogicalOperandPredicate, expr.Expression, dict, or string
+    predicate: Selection, LogicalOperandPredicate, expr.Expression, dict, or string
         the selection predicate or test predicate for the condition.
         if a string is passed, it will be treated as a test operand.
     if_true:
@@ -339,8 +289,8 @@ def condition(predicate, if_true, if_false, **kwargs):
                        core.FieldGTPredicate, core.FieldLTEPredicate,
                        core.FieldGTEPredicate, core.SelectionPredicate)
 
-    if isinstance(predicate, NamedSelection):
-        condition = {'selection': predicate._get_name()}
+    if isinstance(predicate, Selection):
+        condition = {'selection': predicate.name}
     elif isinstance(predicate, selection_predicates):
         condition = {'selection': predicate}
     elif isinstance(predicate, test_predicates):
@@ -563,16 +513,15 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to the chart"""
+        """Add one or more selections to the chart."""
         if not selections:
             return self
-        else:
-            copy = self.copy(deep=True, ignore=['data'])
-            if copy.selection is Undefined:
-                copy.selection = SelectionMapping()
-            for selection in selections:
-                copy.selection += selection
-            return copy
+        copy = self.copy(deep=True, ignore=['data'])
+        if copy.selection is Undefined:
+            copy.selection = {}
+        for s in selections:
+            copy.selection[s.name] = s.selection
+        return copy
 
     def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
@@ -961,7 +910,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             (2) a range predicate
             (3) a selection predicate
             (4) a logical operand combining (1)-(3)
-            (5) a NamedSelection object
+            (5) a Selection object
 
         Returns
         -------
@@ -975,8 +924,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         selection_predicates = (core.SelectionNot, core.SelectionOr,
                                 core.SelectionAnd, core.SelectionOperand)
-        if isinstance(filter, NamedSelection):
-            filter = {'selection': filter._get_name()}
+        if isinstance(filter, Selection):
+            filter = {'selection': filter.name}
         elif isinstance(filter, selection_predicates):
             filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
@@ -1417,7 +1366,7 @@ class EncodingMixin(object):
                                      "".format(encoding))
                 kwargs[encoding] = arg
 
-        def _wrap_in_channel_class(obj, prop):
+        def _wrap_in_channel_class(obj, prop):  
             clsname = prop.title()
 
             if isinstance(obj, core.SchemaBase):
@@ -1598,15 +1547,8 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
             encodings.append('x')
         if bind_y:
             encodings.append('y')
-        copy = self.copy(deep=True, ignore=['data'])
-
-        if copy.selection is Undefined:
-            copy.selection = SelectionMapping()
-        if isinstance(copy.selection, dict):
-            copy.selection = SelectionMapping(**copy.selection)
-        copy.selection += selection(type='interval', bind='scales',
-                                    encodings=encodings)
-        return copy
+        return self.add_selection(selection_interval(bind='scales',
+                                                     encodings=encodings))
 
     def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
         """Create a facet chart from the current chart.
