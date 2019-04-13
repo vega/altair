@@ -407,7 +407,7 @@ selection. This can be accomplished using the various logical operand classes:
 - :class:`~LogicalNotPredicate`
 
 These are not yet part of the Altair interface
-(see `Issue 693 <https://github.com/altair-viz/altair/pull/693>`_)
+(see `Issue 695 <https://github.com/altair-viz/altair/issues/695>`_)
 but can be constructed explicitly; for example, here we plot US population
 distributions for all data *except* the years 1950-1960,
 by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
