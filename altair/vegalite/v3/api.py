@@ -162,7 +162,7 @@ class Selection(object):
         self.selection = selection
 
     def ref(self):
-        return 
+        return {'selection': self.name}
 
     def to_dict(self):
         return {'selection': self.name}
