@@ -243,6 +243,8 @@ class SchemaBase(object):
             elif isinstance(val, dict):
                 return {k: _todict(v) for k, v in val.items()
                         if v is not Undefined}
+            elif hasattr(val, 'to_dict'):
+                return val.to_dict()
             else:
                 return val
 

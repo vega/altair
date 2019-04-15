@@ -254,35 +254,29 @@ def test_facet_parse_data():
                             'row': {'field': 'row', 'type': 'nominal'}}
 
 
-def test_SelectionMapping():
+def test_selection():
     # test instantiation of selections
     interval = alt.selection_interval(name='selec_1')
-    assert interval['selec_1'].type == 'interval'
-    assert interval._get_name() == 'selec_1'
+    assert interval.selection.type == 'interval'
+    assert interval.name == 'selec_1'
 
     single = alt.selection_single(name='selec_2')
-    assert single['selec_2'].type == 'single'
-    assert single._get_name() == 'selec_2'
+    assert single.selection.type == 'single'
+    assert single.name == 'selec_2'
 
     multi = alt.selection_multi(name='selec_3')
-    assert multi['selec_3'].type == 'multi'
-    assert multi._get_name() == 'selec_3'
+    assert multi.selection.type == 'multi'
+    assert multi.name == 'selec_3'
 
-    # test addition
-    x = single + multi + interval
-    assert set(x.to_dict().keys()) == {'selec_1', 'selec_2', 'selec_3'}
-
-    y = single.copy()
-    y += multi
-    y += interval
-    assert x.to_dict() == y.to_dict()
+    # test adding to chart
+    chart = alt.Chart().add_selection(single)
+    chart = chart.add_selection(multi, interval)
+    assert set(chart.selection.keys()) == {'selec_1', 'selec_2', 'selec_3'}
 
     # test logical operations
-    x = single & multi
-    assert isinstance(x, alt.SelectionAnd)
-
-    y = single | multi
-    assert isinstance(y, alt.SelectionOr)
+    assert isinstance(single & multi, alt.SelectionAnd)
+    assert isinstance(single | multi, alt.SelectionOr)
+    assert isinstance(~single, alt.SelectionNot)
 
 
 def test_transforms():
@@ -416,8 +410,8 @@ def test_add_selection():
         selections[1],
         selections[2]
     )
-    expected = selections[0] + selections[1] + selections[2]
-    assert chart.selection.to_dict() == expected.to_dict()
+    expected = {s.name: s.selection for s in selections}
+    assert chart.selection == expected
 
 
 def test_LookupData():
