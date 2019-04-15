@@ -1,8 +1,8 @@
 # Altair Change Log
 
-## Version 3.0.0rc1 (prerelease)
+## Version 3.0.0 (unreleased)
 
-Update to Vega-Lite 3.0 and Vega 5.0 & support all new features. See
+Update to Vega-Lite 3.2 and Vega 5.0 & support all new features. See
 https://github.com/vega/vega-lite/releases/tag/v3.0.0 for Vega-Lite
 feature lists.
 
@@ -13,6 +13,26 @@ feature lists.
   ``transform_fold()``, ``transform_sample()``, ``transform_stack()``
 - tooltips enabled by default. Pass encoding ``tooltip=None`` to disable.
 - new ``columns`` keyword that allows wrapped faceting and concatenation.
+
+### Backward-incompatible changes:
+
+- selections can be bound to scales directly; i.e. you can use
+  ```
+  alt.Scale(domain=selection)
+  ```
+  instead of
+  ```
+  alt.Scale(domain=selection.ref())
+  ```
+
+- selections can no longer be passed directly as chart properties; i.e. you should use
+  ```
+  chart.add_selection(selection1, selection2)
+  ```
+  instead of
+  ```
+  chart.properties(selection=selection1 + selection2)
+  ```
 
 ## Version 2.4.1 (Released February 21, 2019)
 
