@@ -1049,7 +1049,7 @@ class FillopacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
         super(FillopacityValue, self).__init__(value=value, **kwds)
 
 
-class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
+class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
     """Href schema wrapper
 
     Mapping(required=[shorthand])
@@ -1083,8 +1083,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1105,52 +1104,33 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/field.html>`__.
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
-    legend : anyOf(:class:`Legend`, None)
-        An object defining properties of the legend.
-        If ``null``, the legend for the encoding channel will be removed.
-
-        **Default value:** If undefined, default `legend properties
-        <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
-    scale : anyOf(:class:`Scale`, None)
-        An object defining properties of the channel's scale, which is the function that
-        transforms values in the data domain (numbers, dates, strings, etc) to visual values
-        (pixels, colors, sizes) of the encoding channels.
-
-        If ``null``, the scale will be `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
-
-        **Default value:** If undefined, default `scale properties
-        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
-    sort : :class:`Sort`
-        Sort order for the encoded field.
-
-        For continuous fields (quantitative or temporal), ``sort`` can be either
-        ``"ascending"`` or ``"descending"``.
-
-        For discrete fields, ``sort`` can be one of the following:
+    format : string
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
 
 
-        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
-          Javascript.
-        * `A sort-by-encoding definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ for sorting
-          by another encoding channel. (This type of sort definition is not available for
-          ``row`` and ``column`` channels.)
-        * `A sort field definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-          another field.
-        * `An array specifying the field values in preferred order
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-          sort order will obey the values in the array, followed by any unspecified values
-          in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
-        * ``null`` indicating no sort.
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
-        **Default value:** ``"ascending"``
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
 
-        **Note:** ``null`` is not supported for ``row`` and ``column``.
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1178,7 +1158,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : enum('nominal')
+    type : :class:`StandardType`
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ).
         It can also be a ``"geojson"`` type for encoding `'geoshape'
@@ -1215,18 +1195,19 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
         super(Href, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
-                                   condition=condition, field=field, legend=legend, scale=scale,
-                                   sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+                                   condition=condition, field=field, format=format,
+                                   formatType=formatType, timeUnit=timeUnit, title=title, type=type,
+                                   **kwds)
 
 
-class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
+class HrefValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """HrefValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnominalstring`,
-    :class:`ConditionOnlyDefMarkPropFieldDefnominal`)
+    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefstringnumberboolean`,
+    :class:`ConditionOnlyDefTextFieldDef`)
     A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
     optional.
     """
@@ -1469,6 +1450,25 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
                                        timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+class LatitudeValue(ValueChannelMixin, core.NumberValueDef):
+    """LatitudeValue schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value of an encoding channel.
+
+    Attributes
+    ----------
+
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+
+    def __init__(self, value, **kwds):
+        super(LatitudeValue, self).__init__(value=value, **kwds)
+
+
 class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Latitude2 schema wrapper
 
@@ -1552,6 +1552,25 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
                  timeUnit=Undefined, title=Undefined, **kwds):
         super(Latitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                         timeUnit=timeUnit, title=title, **kwds)
+
+
+class Latitude2Value(ValueChannelMixin, core.NumberValueDef):
+    """Latitude2Value schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value of an encoding channel.
+
+    Attributes
+    ----------
+
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+
+    def __init__(self, value, **kwds):
+        super(Latitude2Value, self).__init__(value=value, **kwds)
 
 
 class Longitude(FieldChannelMixin, core.LatLongFieldDef):
@@ -1670,6 +1689,25 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
                                         timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
+class LongitudeValue(ValueChannelMixin, core.NumberValueDef):
+    """LongitudeValue schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value of an encoding channel.
+
+    Attributes
+    ----------
+
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+
+    def __init__(self, value, **kwds):
+        super(LongitudeValue, self).__init__(value=value, **kwds)
+
+
 class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
     """Longitude2 schema wrapper
 
@@ -1753,6 +1791,25 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
                  timeUnit=Undefined, title=Undefined, **kwds):
         super(Longitude2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                          timeUnit=timeUnit, title=title, **kwds)
+
+
+class Longitude2Value(ValueChannelMixin, core.NumberValueDef):
+    """Longitude2Value schema wrapper
+
+    Mapping(required=[value])
+    Definition object for a constant value of an encoding channel.
+
+    Attributes
+    ----------
+
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+
+    def __init__(self, value, **kwds):
+        super(Longitude2Value, self).__init__(value=value, **kwds)
 
 
 class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
