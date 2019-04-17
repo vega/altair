@@ -123,7 +123,6 @@ Low-Level Schema Wrappers
    BaseMarkConfig
    BaseTitleConfig
    Baseline
-   Bin
    BinParams
    BinTransform
    BindCheckbox
@@ -135,16 +134,12 @@ Low-Level Schema Wrappers
    BoxPlotDef
    BrushConfig
    CalculateTransform
-   Chart
    Color
    ColorFieldDefWithCondition
-   ColorValue
    ColorValueDefWithCondition
-   Column
    CompositeMark
    CompositeMarkDef
    CompositionConfig
-   ConcatChart
    ConcatSpec
    ConditionOnlyDefMarkPropFieldDef
    ConditionOnlyDefMarkPropFieldDefTypeForShape
@@ -182,13 +177,11 @@ Low-Level Schema Wrappers
    Datasets
    DateTime
    Day
-   Detail
    DictInlineDataset
    Dir
    DsvDataFormat
    Element
    Encoding
-   EncodingMixin
    EncodingSortField
    ErrorBand
    ErrorBandConfig
@@ -198,15 +191,12 @@ Low-Level Schema Wrappers
    ErrorBarDef
    ErrorBarExtent
    EventStream
-   Facet
-   FacetChart
    FacetFieldDef
    FacetMapping
    FacetSpec
    FacetedEncoding
    FacetedUnitSpec
    Field
-   FieldChannelMixin
    FieldDef
    FieldDefWithConditionMarkPropFieldDefTypeForShapestring
    FieldDefWithConditionMarkPropFieldDefnumber
@@ -220,10 +210,6 @@ Low-Level Schema Wrappers
    FieldOneOfPredicate
    FieldRangePredicate
    FieldValidPredicate
-   Fill
-   FillValue
-   Fillopacity
-   FillopacityValue
    FilterTransform
    FlattenTransform
    FoldTransform
@@ -235,12 +221,9 @@ Low-Level Schema Wrappers
    GenericUnitSpecEncodingAnyMark
    GraticuleGenerator
    GraticuleParams
-   HConcatChart
    HConcatSpec
    Header
    HeaderConfig
-   Href
-   HrefValue
    ImputeMethod
    ImputeParams
    ImputeSequence
@@ -253,14 +236,8 @@ Low-Level Schema Wrappers
    JoinAggregateFieldDef
    JoinAggregateTransform
    JsonDataFormat
-   Key
    LabelOverlap
    LatLongFieldDef
-   Latitude
-   Latitude2
-   Latitude2Value
-   LatitudeValue
-   LayerChart
    LayerSpec
    LayoutAlign
    LayoutBounds
@@ -276,16 +253,11 @@ Low-Level Schema Wrappers
    LogicalNotPredicate
    LogicalOperandPredicate
    LogicalOrPredicate
-   Longitude
-   Longitude2
-   Longitude2Value
-   LongitudeValue
    LookupData
    LookupTransform
    Mark
    MarkConfig
    MarkDef
-   MaxRowsError
    Month
    MultiSelection
    MultiSelectionConfig
@@ -295,11 +267,7 @@ Low-Level Schema Wrappers
    NumberValueDef
    NumericFieldDefWithCondition
    NumericValueDefWithCondition
-   Opacity
-   OpacityValue
-   Order
    OrderFieldDef
-   OrderValue
    Orient
    Orientation
    OverlayMarkDef
@@ -316,19 +284,15 @@ Low-Level Schema Wrappers
    ProjectionType
    RangeConfig
    RangeConfigValue
-   RepeatChart
    RepeatMapping
    RepeatRef
    RepeatSpec
    Resolve
    ResolveMode
    Root
-   Row
    RowColLayoutAlign
    RowColboolean
    RowColnumber
-   SCHEMA_URL
-   SCHEMA_VERSION
    SampleTransform
    Scale
    ScaleConfig
@@ -340,7 +304,6 @@ Low-Level Schema Wrappers
    SchemeConfig
    SchemeParams
    SecondaryFieldDef
-   Selection
    SelectionAnd
    SelectionConfig
    SelectionDef
@@ -356,17 +319,13 @@ Low-Level Schema Wrappers
    SelectionResolution
    SequenceGenerator
    SequenceParams
-   Shape
    ShapeFieldDefWithCondition
-   ShapeValue
    ShapeValueDefWithCondition
    SignalRef
    SingleDefUnitChannel
    SingleSelection
    SingleSelectionConfig
    SingleTimeUnit
-   Size
-   SizeValue
    Sort
    SortArray
    SortByEncoding
@@ -379,23 +338,14 @@ Low-Level Schema Wrappers
    StandardType
    StringFieldDefWithConditionTypeForShape
    StringValueDefWithConditionTypeForShape
-   Stroke
    StrokeCap
    StrokeJoin
-   StrokeValue
-   Strokeopacity
-   StrokeopacityValue
-   Strokewidth
-   StrokewidthValue
    StyleConfigIndex
    SymbolShape
-   TOPLEVEL_ONLY_KEYS
-   Text
    TextBaseline
    TextConfig
    TextFieldDef
    TextFieldDefWithCondition
-   TextValue
    TextValueDefWithCondition
    TickConfig
    TimeUnit
@@ -405,14 +355,11 @@ Low-Level Schema Wrappers
    TitleFrame
    TitleOrient
    TitleParams
-   Tooltip
    TooltipContent
-   TooltipValue
    TopLevelConcatSpec
    TopLevelFacetSpec
    TopLevelHConcatSpec
    TopLevelLayerSpec
-   TopLevelMixin
    TopLevelRepeatSpec
    TopLevelSpec
    TopLevelUnitSpec
@@ -426,12 +373,7 @@ Low-Level Schema Wrappers
    UrlData
    UtcMultiTimeUnit
    UtcSingleTimeUnit
-   VConcatChart
    VConcatSpec
-   VEGAEMBED_VERSION
-   VEGALITE_VERSION
-   VEGA_VERSION
-   ValueChannelMixin
    ValueDefWithConditionMarkPropFieldDefTypeForShapestring
    ValueDefWithConditionMarkPropFieldDefnumber
    ValueDefWithConditionMarkPropFieldDefstringnull
@@ -440,28 +382,11 @@ Low-Level Schema Wrappers
    ValueDefWithOptionalConditionMarkPropFieldDefnumber
    ValueDefWithOptionalConditionMarkPropFieldDefstringnull
    ValueDefWithOptionalConditionTextFieldDefstringnumberboolean
-   VegaLite
    VegaLiteSchema
    ViewBackground
    ViewConfig
    WindowFieldDef
    WindowOnlyOp
    WindowTransform
-   X
-   X2
-   X2Value
-   XValue
    XValueDef
-   Xerror
-   Xerror2
-   Xerror2Value
-   XerrorValue
-   Y
-   Y2
-   Y2Value
-   YValue
    YValueDef
-   Yerror
-   Yerror2
-   Yerror2Value
-   YerrorValue
