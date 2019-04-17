@@ -37,18 +37,27 @@ Encoding Channels
    ColorValue
    Column
    Detail
+   Facet
+   FieldChannelMixin
    Fill
    FillValue
+   Fillopacity
+   FillopacityValue
    Href
    HrefValue
    Key
    Latitude
    Latitude2
+   Latitude2Value
+   LatitudeValue
    Longitude
    Longitude2
+   Longitude2Value
+   LongitudeValue
    Opacity
    OpacityValue
    Order
+   OrderValue
    Row
    Shape
    ShapeValue
@@ -56,18 +65,32 @@ Encoding Channels
    SizeValue
    Stroke
    StrokeValue
+   Strokeopacity
+   StrokeopacityValue
+   Strokewidth
+   StrokewidthValue
    Text
    TextValue
    Tooltip
    TooltipValue
+   Undefined
+   ValueChannelMixin
    X
-   XValue
    X2
    X2Value
+   XValue
+   Xerror
+   Xerror2
+   Xerror2Value
+   XerrorValue
    Y
-   YValue
    Y2
    Y2Value
+   YValue
+   Yerror
+   Yerror2
+   Yerror2Value
+   YerrorValue
 
 API Functions
 -------------
@@ -78,6 +101,7 @@ API Functions
    :nosignatures:
 
    layer
+   concat
    vconcat
    hconcat
    repeat
