@@ -414,6 +414,16 @@ def test_add_selection():
     assert chart.selection == expected
 
 
+def test_selection_property():
+    sel = alt.selection_interval()
+    chart = alt.Chart('data.csv').mark_point().properties(
+        selection=sel
+    )
+    selections = chart.to_dict()['selection']
+
+    assert list(chart['selection'].keys()) == [sel.name]
+
+
 def test_LookupData():
     df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
     lookup = alt.LookupData(data=df, key='x')
