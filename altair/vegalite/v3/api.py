@@ -509,7 +509,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         copy = self.copy(deep=True, ignore=['data'])
         for key, val in kwargs.items():
-            setattr(copy, key, val)
+            if key == 'selection' and isinstance(val, Selection):
+                # For backward compatibility with old selection interface.
+                setattr(copy, key, {val.name: val.selection})
+            else:
+                setattr(copy, key, val)
         return copy
 
     def add_selection(self, *selections):
