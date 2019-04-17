@@ -109,6 +109,8 @@ Low-Level Schema Wrappers
    Align
    AnyMark
    AreaConfig
+   ArgmaxDef
+   ArgminDef
    AutoSizeParams
    AutosizeType
    Axis
@@ -121,6 +123,7 @@ Low-Level Schema Wrappers
    BaseMarkConfig
    BaseTitleConfig
    Baseline
+   Bin
    BinParams
    BinTransform
    BindCheckbox
@@ -132,6 +135,7 @@ Low-Level Schema Wrappers
    BoxPlotDef
    BrushConfig
    CalculateTransform
+   Chart
    Color
    ColorFieldDefWithCondition
    ColorValue
@@ -140,20 +144,18 @@ Low-Level Schema Wrappers
    CompositeMark
    CompositeMarkDef
    CompositionConfig
+   ConcatChart
    ConcatSpec
    ConditionOnlyDefMarkPropFieldDef
    ConditionOnlyDefMarkPropFieldDefTypeForShape
-   ConditionOnlyDefMarkPropFieldDefnominal
    ConditionOnlyDefTextFieldDef
    ConditionalColorValueDef
    ConditionalMarkPropFieldDef
    ConditionalMarkPropFieldDefTypeForShape
-   ConditionalMarkPropFieldDefnominal
    ConditionalNumberValueDef
    ConditionalPredicateColorValueDef
    ConditionalPredicateMarkPropFieldDef
    ConditionalPredicateMarkPropFieldDefTypeForShape
-   ConditionalPredicateMarkPropFieldDefnominal
    ConditionalPredicateNumberValueDef
    ConditionalPredicateStringValueDef
    ConditionalPredicateTextFieldDef
@@ -162,7 +164,6 @@ Low-Level Schema Wrappers
    ConditionalSelectionColorValueDef
    ConditionalSelectionMarkPropFieldDef
    ConditionalSelectionMarkPropFieldDefTypeForShape
-   ConditionalSelectionMarkPropFieldDefnominal
    ConditionalSelectionNumberValueDef
    ConditionalSelectionStringValueDef
    ConditionalSelectionTextFieldDef
@@ -177,6 +178,7 @@ Low-Level Schema Wrappers
    Cursor
    Data
    DataFormat
+   DataSource
    Datasets
    DateTime
    Day
@@ -186,6 +188,7 @@ Low-Level Schema Wrappers
    DsvDataFormat
    Element
    Encoding
+   EncodingMixin
    EncodingSortField
    ErrorBand
    ErrorBandConfig
@@ -196,6 +199,7 @@ Low-Level Schema Wrappers
    ErrorBarExtent
    EventStream
    Facet
+   FacetChart
    FacetFieldDef
    FacetMapping
    FacetSpec
@@ -205,7 +209,6 @@ Low-Level Schema Wrappers
    FieldChannelMixin
    FieldDef
    FieldDefWithConditionMarkPropFieldDefTypeForShapestring
-   FieldDefWithConditionMarkPropFieldDefnominalstring
    FieldDefWithConditionMarkPropFieldDefnumber
    FieldDefWithConditionMarkPropFieldDefstringnull
    FieldDefWithConditionTextFieldDefstringnumberboolean
@@ -226,9 +229,13 @@ Low-Level Schema Wrappers
    FoldTransform
    FontStyle
    FontWeight
+   Generator
    GenericBinMixinsbooleanBinParams
    GenericBinMixinsbooleanBinParamsbinnednull
    GenericUnitSpecEncodingAnyMark
+   GraticuleGenerator
+   GraticuleParams
+   HConcatChart
    HConcatSpec
    Header
    HeaderConfig
@@ -251,6 +258,9 @@ Low-Level Schema Wrappers
    LatLongFieldDef
    Latitude
    Latitude2
+   Latitude2Value
+   LatitudeValue
+   LayerChart
    LayerSpec
    LayoutAlign
    LayoutBounds
@@ -268,11 +278,14 @@ Low-Level Schema Wrappers
    LogicalOrPredicate
    Longitude
    Longitude2
+   Longitude2Value
+   LongitudeValue
    LookupData
    LookupTransform
    Mark
    MarkConfig
    MarkDef
+   MaxRowsError
    Month
    MultiSelection
    MultiSelectionConfig
@@ -303,6 +316,7 @@ Low-Level Schema Wrappers
    ProjectionType
    RangeConfig
    RangeConfigValue
+   RepeatChart
    RepeatMapping
    RepeatRef
    RepeatSpec
@@ -326,6 +340,7 @@ Low-Level Schema Wrappers
    SchemeConfig
    SchemeParams
    SecondaryFieldDef
+   Selection
    SelectionAnd
    SelectionConfig
    SelectionDef
@@ -339,6 +354,8 @@ Low-Level Schema Wrappers
    SelectionOr
    SelectionPredicate
    SelectionResolution
+   SequenceGenerator
+   SequenceParams
    Shape
    ShapeFieldDefWithCondition
    ShapeValue
@@ -356,12 +373,11 @@ Low-Level Schema Wrappers
    SortField
    SortOrder
    Spec
+   SphereGenerator
    StackOffset
    StackTransform
    StandardType
-   StringFieldDefWithCondition
    StringFieldDefWithConditionTypeForShape
-   StringValueDefWithCondition
    StringValueDefWithConditionTypeForShape
    Stroke
    StrokeCap
@@ -373,6 +389,7 @@ Low-Level Schema Wrappers
    StrokewidthValue
    StyleConfigIndex
    SymbolShape
+   TOPLEVEL_ONLY_KEYS
    Text
    TextBaseline
    TextConfig
@@ -395,6 +412,7 @@ Low-Level Schema Wrappers
    TopLevelFacetSpec
    TopLevelHConcatSpec
    TopLevelLayerSpec
+   TopLevelMixin
    TopLevelRepeatSpec
    TopLevelSpec
    TopLevelUnitSpec
@@ -408,18 +426,21 @@ Low-Level Schema Wrappers
    UrlData
    UtcMultiTimeUnit
    UtcSingleTimeUnit
+   VConcatChart
    VConcatSpec
+   VEGAEMBED_VERSION
+   VEGALITE_VERSION
+   VEGA_VERSION
    ValueChannelMixin
    ValueDefWithConditionMarkPropFieldDefTypeForShapestring
-   ValueDefWithConditionMarkPropFieldDefnominalstring
    ValueDefWithConditionMarkPropFieldDefnumber
    ValueDefWithConditionMarkPropFieldDefstringnull
    ValueDefWithConditionTextFieldDefstringnumberboolean
    ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestring
-   ValueDefWithOptionalConditionMarkPropFieldDefnominalstring
    ValueDefWithOptionalConditionMarkPropFieldDefnumber
    ValueDefWithOptionalConditionMarkPropFieldDefstringnull
    ValueDefWithOptionalConditionTextFieldDefstringnumberboolean
+   VegaLite
    VegaLiteSchema
    ViewBackground
    ViewConfig

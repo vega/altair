@@ -45,8 +45,8 @@ Position Channels:
 ==========  ===================  =================================  ===================================
 Channel     Altair Class         Description                        Example
 ==========  ===================  =================================  ===================================
-x           :class:`X`           The x-axis value                   :ref:`gallery_simple_scatter`
-y           :class:`Y`           The y-axis value                   :ref:`gallery_simple_scatter`
+x           :class:`X`           The x-axis value                   :ref:`gallery_scatter_tooltips`
+y           :class:`Y`           The y-axis value                   :ref:`gallery_scatter_tooltips`
 x2          :class:`X2`          Second x value for ranges          :ref:`gallery_error_bars_with_ci`
 y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_line_with_ci`
 longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airports`
@@ -306,7 +306,7 @@ The :class:`Latitude2`, :class:`Longitude2`, :class:`X2`, :class:`Y2`, :class:`X
 
 The :class:`Href` encoding accepts the following options:
 
-.. altair-object-table:: altair.StringFieldDefWithCondition
+.. altair-object-table:: altair.TextFieldDefWithCondition
 
 The :class:`Order` encoding accepts the following options:
 
@@ -380,7 +380,7 @@ average    The mean (average) field value. Identical to mean.                   
 count      The total count of data objects in the group.                                :ref:`gallery_simple_heatmap`
 distinct   The count of distinct field values.                                          N/A
 max        The maximum field value.                                                     :ref:`gallery_boxplot_max_min`
-mean       The mean (average) field value.                                              :ref:`gallery_layered_plot_with_dual_axis`
+mean       The mean (average) field value.                                              :ref:`gallery_scatter_with_layered_histogram`
 median     The median field value                                                       :ref:`gallery_boxplot_max_min`
 min        The minimum field value.                                                     :ref:`gallery_boxplot_max_min`
 missing    The count of null or undefined field values.                                 N/A
