@@ -26,7 +26,7 @@ If you are using JupyterLab (not Jupyter notebook) and see the following output:
     <VegaLite 3 object>
 
 This most likely means that you are using too old a version of JupyterLab.
-Altair 3.0 or later works best with JupyterLab version 0.36 or later;
+Altair 3.0 or later works best with JupyterLab version 1.0 or later;
 check the version with::
 
    $ jupyter lab --version
@@ -49,7 +49,7 @@ If you are using JupyterLab (not Jupyter notebook) and see the following output:
 
 This means that you are using Altair version 2, which is not supported by newer
 versions of JupyterLab. The best option is to update to Altair version 3, and
-make certain you have JupyterLab version 0.36 or later.
+make certain you have JupyterLab version 1.0 or later.
 
 JavaScript output is disabled in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
