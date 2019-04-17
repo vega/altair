@@ -419,7 +419,6 @@ def test_selection_property():
     chart = alt.Chart('data.csv').mark_point().properties(
         selection=sel
     )
-    selections = chart.to_dict()['selection']
 
     assert list(chart['selection'].keys()) == [sel.name]
 
