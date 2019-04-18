@@ -36,6 +36,21 @@ def debug_mode(arg):
         DEBUG_MODE = original
 
 
+def _todict(obj, validate, context):
+    """Convert an object to a dict representation."""
+    if isinstance(obj, SchemaBase):
+        return obj.to_dict(validate=validate, context=context)
+    elif isinstance(obj, (list, tuple)):
+        return [_todict(v, validate, context) for v in obj]
+    elif isinstance(obj, dict):
+        return {k: _todict(v, validate, context) for k, v in obj.items()
+                if v is not Undefined}
+    elif hasattr(obj, 'to_dict'):
+        return obj.to_dict()
+    else:
+        return obj
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
     def __init__(self, obj, err):
@@ -202,7 +217,7 @@ class SchemaBase(object):
                 and self._args == other._args
                 and self._kwds == other._kwds)
 
-    def to_dict(self, validate=True, ignore=[], context={}):
+    def to_dict(self, validate=True, ignore=None, context=None):
         """Return a dictionary representation of the object
 
         Parameters
@@ -229,26 +244,18 @@ class SchemaBase(object):
         jsonschema.ValidationError :
             if validate=True and the dict does not conform to the schema
         """
+        if context is None:
+            context = {}
+        if ignore is None:
+            ignore = []
         sub_validate = 'deep' if validate == 'deep' else False
 
-        def _todict(val):
-            if isinstance(val, SchemaBase):
-                return val.to_dict(validate=sub_validate, context=context)
-            elif isinstance(val, (list, tuple)):
-                return [_todict(v) for v in val]
-            elif isinstance(val, dict):
-                return {k: _todict(v) for k, v in val.items()
-                        if v is not Undefined}
-            elif hasattr(val, 'to_dict'):
-                return val.to_dict()
-            else:
-                return val
-
         if self._args and not self._kwds:
-            result = _todict(self._args[0])
+            result = _todict(self._args[0], validate=sub_validate, context=context)
         elif not self._args:
             result = _todict({k: v for k, v in self._kwds.items()
-                              if k not in ignore})
+                              if k not in ignore},
+                              validate=sub_validate, context=context)
         else:
             raise ValueError("{} instance has both a value and properties : "
                              "cannot serialize to dict".format(self.__class__))
@@ -373,6 +380,17 @@ class SchemaBase(object):
             with resolver.resolving(schema['$ref']) as resolved:
                 schema = resolved
         return schema
+
+    @classmethod
+    def validate_property(cls, name, value, schema=None):
+        """
+        Validate a property against property schema in the context of the
+        rootschema
+        """
+        value = _todict(value, validate=False, context={})
+        props = cls.resolve_references(schema or cls._schema).get('properties', {})
+        resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
+        return jsonschema.validate(value, props.get(name, {}), resolver=resolver)
 
     def __dir__(self):
         return list(self._kwds.keys())
