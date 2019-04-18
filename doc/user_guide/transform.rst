@@ -24,17 +24,18 @@ This second approach -- specifying data transformations within the chart
 specification itself -- can be accomplished using the ``transform_*``
 methods of top-level objects:
 
-=========================================  ================================================================================
-Method                                     Description
-=========================================  ================================================================================
-:meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
-:meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
-:meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
-:meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
-:meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
-:meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
-:meth:`~Chart.transform_window`            Compute a windowed aggregation
-=========================================  ================================================================================
+=====================================  =========================================  ================================================================================
+Transform                              Method                                     Description
+=====================================  =========================================  ================================================================================
+:ref:`user-guide-aggregate-transform`  :meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
+:ref:`user-guide-bin-transform`        :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
+:ref:`user-guide-calculate-transform`  :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
+:ref:`user-guide-filter-transform`     :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
+:ref:`user-guide-flatten-transform`    :meth:`~Chart.transform_flatten`           Flatten array data into columns.
+:ref:`user-guide-lookup-transform`     :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
+:ref:`user-guide-timeunit-transform`   :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
+:ref:`user-guide-window-transform`     :meth:`~Chart.transform_window`            Compute a windowed aggregation
+=====================================  =========================================  ================================================================================
 
 We will see some examples of these transforms in the following sections.
 
@@ -429,6 +430,62 @@ by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
     ).transform_filter(
         {'not': alt.FieldRangePredicate(field='year', range=[1900, 1950])}
     )
+
+
+.. _user-guide-flatten-transform:
+
+Flatten Transform
+~~~~~~~~~~~~~~~~~
+The flatten transform can be used to extract the contents of arrays from data entries.
+This will not generally be useful for well-structured data within pandas dataframes,
+but it can be useful for working with data from other sources.
+
+As an example, consider this dataset which uses a common convention in JSON data,
+a set of fields each containing a list of entries:
+
+.. altair-plot::
+   :output: none
+
+   import numpy as np
+
+   rand = np.random.RandomState(0)
+
+   def generate_data(N):
+       mean = rand.randn()
+       std = rand.rand()
+       return list(rand.normal(mean, std, N))
+
+   data = [
+       {'label': 'A', 'values': generate_data(20)},
+       {'label': 'B', 'values': generate_data(30)},
+       {'label': 'C', 'values': generate_data(40)},
+       {'label': 'D', 'values': generate_data(50)},   
+   ]
+
+This kind of data structure does not work well in the context of dataframe
+representations, as we can see by loading this into pandas:
+
+.. altair-plot::
+   :output: repr
+
+   import pandas as pd
+   df = pd.DataFrame.from_records(data)
+   df
+
+Alair's flatten transform allows you to extract the contents of these arrays
+into a column that can be referenced by an encoding:
+
+.. altair-plot::
+
+   alt.Chart(df).transform_flatten(
+       ['values']
+   ).mark_tick().encode(
+       x='values:Q',
+       y='label:N',
+   )
+
+This can be particularly useful in cleaning up data specified via a JSON URL,
+without having to first load the data for manipulation in pandas.
 
 
 .. _user-guide-lookup-transform:
