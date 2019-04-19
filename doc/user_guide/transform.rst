@@ -32,6 +32,8 @@ Transform                              Method                                   
 :ref:`user-guide-calculate-transform`  :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
 :ref:`user-guide-filter-transform`     :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
 :ref:`user-guide-flatten-transform`    :meth:`~Chart.transform_flatten`           Flatten array data into columns.
+:ref:`user-guide-fold-transform`       :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data.
+:ref:`user-guide-impute-transform`     :meth:`~Chart.transform_impute`            Impute missing data.
 :ref:`user-guide-lookup-transform`     :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
 :ref:`user-guide-timeunit-transform`   :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
 :ref:`user-guide-window-transform`     :meth:`~Chart.transform_window`            Compute a windowed aggregation
@@ -528,6 +530,126 @@ with the associated names in a field named ``"key"``.
 
 For an example of the fold transform in action, see :ref:`gallery_parallel_coordinates`.
 
+
+.. _user-guide-impute-transform:
+
+Impute Transform
+~~~~~~~~~~~~~~~~
+The impute transform allows you to fill-in missing entries in a dataset.
+As an example, consider the following data, which includes missing values
+that we filter-out of the long-form representation (see :ref:`data-long-vs-wide`
+for more on this):
+
+.. altair-plot::
+   :output: repr
+
+   import numpy as np
+   import pandas as pd
+
+   data = pd.DataFrame({
+       't': range(5),
+       'x': [2, np.nan, 3, 1, 3],
+       'y': [5, 7, 5, np.nan, 4]
+   }).melt('t').dropna()
+   data
+
+Notice the result: the ``x`` series has no entry at ``t=1``, and the ``y``
+series has a missing entry at ``t=3``. If we use Altair to visualize this
+data directly, the line skips the missing entries:
+
+.. altair-plot::
+
+   raw = alt.Chart(data).mark_line(point=True).encode(
+       x=alt.X('t:Q'),
+       y='value:Q',
+       color='variable:N'
+   )
+   raw
+
+This is not always desireable, because (particularly for a line plot with
+no points) it can imply the esistence of data that is not there.
+
+Impute via Encodings
+^^^^^^^^^^^^^^^^^^^^
+To address this, you can use an impute argument to the encoding channel.
+For example, we can impute using a constant value (we'll show the raw chart
+lightly in the background for reference):
+
+.. altair-plot::
+
+   background = raw.encode(opacity=alt.value(0.2))
+   chart = alt.Chart(data).mark_line(point=True).encode(
+       x='t:Q',
+       y=alt.Y('value:Q', impute=alt.ImputeParams(value=0)),
+       color='variable:N'
+   )
+   background + chart
+
+Or we can impute using any supported aggregate:
+
+.. altair-plot::
+
+   chart = alt.Chart(data).mark_line(point=True).encode(
+       x='t:Q',
+       y=alt.Y('value:Q', impute=alt.ImputeParams(method='mean')),
+       color='variable:N'
+   )
+   background + chart
+
+Impute via Transform
+^^^^^^^^^^^^^^^^^^^^
+Similar to the :ref:`user-guide-bin-transform` and :ref:`user-guide-aggregate-transform`,
+it is also possible to specify the impute transform outside the encoding as a
+transform. For example, here is the equivalent of the above two charts:
+
+.. altair-plot::
+
+   chart = alt.Chart(data).transform_impute(
+       impute='value',
+       key='t',
+       value=0,
+       groupby=['variable']
+   ).mark_line(point=True).encode(
+       x='t:Q',
+       y='value:Q',
+       color='variable:N'
+   )
+   background + chart
+
+.. altair-plot::
+
+   chart = alt.Chart(data).transform_impute(
+       impute='value',
+       key='t',
+       method='mean',
+       groupby=['variable']
+   ).mark_line(point=True).encode(
+       x='t:Q',
+       y='value:Q',
+       color='variable:N'
+   )
+   background + chart
+
+If you would like to use more localized imputed values, you can specify a
+``frame`` parameter similar to the :ref:`user-guide-window-transform` that
+will control which values are used for the imputation. For example, here
+we impute missing values using the mean of the neighboring points on either
+side:
+
+.. altair-plot::
+
+   chart = alt.Chart(data).transform_impute(
+       impute='value',
+       key='t',
+       method='mean',
+       frame=[-1, 1],
+       groupby=['variable']
+   ).mark_line(point=True).encode(
+       x='t:Q',
+       y='value:Q',
+       color='variable:N'
+   )
+   background + chart
 
 .. _user-guide-lookup-transform:
 
