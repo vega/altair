@@ -1,3 +1,5 @@
+# To satisfy python2 pep-0263, this file uses encoding: utf-8
+
 from .core import FunctionExpression
 
 
