@@ -1,5 +1,3 @@
-# To satisfy python2 pep-0263, this file uses encoding: utf-8
-
 from .core import FunctionExpression
 
 
@@ -85,7 +83,7 @@ FUNCTION_LISTING = {
     "split": r"Returns an array of tokens created by splitting the input _string_ according to a provided _separator_ pattern. The result can optionally be constrained to return at most _limit_ tokens.",
     "substring": r"Returns a section of _string_ between the _start_ and _end_ indices.",
     "trim": r"Returns a trimmed string with preceding and trailing whitespace removed.",
-    "truncate": u"Truncates an input _string_ to a target _length_. The optional _align_ argument indicates what part of the string should be truncated: `'left'` (the beginning), `'center'`, or `'right'` (the end). By default, the `'right'` end of the string is truncated. The optional _ellipsis_ argument indicates the string to use to indicate truncated content; by default the ellipsis character `…` (`\u2026`) is used.",
+    "truncate": r"Truncates an input _string_ to a target _length_. The optional _align_ argument indicates what part of the string should be truncated: `'left'` (the beginning), `'center'`, or `'right'` (the end). By default, the `'right'` end of the string is truncated. The optional _ellipsis_ argument indicates the string to use to indicate truncated content; by default the ellipsis character `...` (`\\u2026`) is used.",
     "upper": r"Transforms _string_ to upper-case letters.",
     "merge": r"Merges the input objects _object1_, _object2_, etc into a new output object. Inputs are visited in sequential order, such that key values from later arguments can overwrite those from earlier arguments. Example: `merge({a:1, b:2}, {a:3}) -> {a:3, b:2}`.",
     "dayFormat": r"Formats a (0-6) _weekday_ number as a full week day name, according to the current locale. For example: `dayFormat(0) -> \"Sunday\"`.",
@@ -148,7 +146,7 @@ class ExprFunc(object):
     def __init__(self, name, doc):
         self.name = name
         self.doc = doc
-        self.__doc__ = u"""{}(*args)\n    {}""".format(name, doc)
+        self.__doc__ = """{}(*args)\n    {}""".format(name, doc)
 
     def __call__(self, *args):
         return FunctionExpression(self.name, args)
