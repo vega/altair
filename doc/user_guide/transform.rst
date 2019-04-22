@@ -24,20 +24,22 @@ This second approach -- specifying data transformations within the chart
 specification itself -- can be accomplished using the ``transform_*``
 methods of top-level objects:
 
-=====================================  =========================================  ================================================================================
-Transform                              Method                                     Description
-=====================================  =========================================  ================================================================================
-:ref:`user-guide-aggregate-transform`  :meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
-:ref:`user-guide-bin-transform`        :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
-:ref:`user-guide-calculate-transform`  :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
-:ref:`user-guide-filter-transform`     :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
-:ref:`user-guide-flatten-transform`    :meth:`~Chart.transform_flatten`           Flatten array data into columns.
-:ref:`user-guide-fold-transform`       :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data.
-:ref:`user-guide-impute-transform`     :meth:`~Chart.transform_impute`            Impute missing data.
-:ref:`user-guide-lookup-transform`     :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
-:ref:`user-guide-timeunit-transform`   :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
-:ref:`user-guide-window-transform`     :meth:`~Chart.transform_window`            Compute a windowed aggregation
-=====================================  =========================================  ================================================================================
+=========================================  =========================================  ================================================================================
+Transform                                  Method                                     Description
+=========================================  =========================================  ================================================================================
+:ref:`user-guide-aggregate-transform`      :meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
+:ref:`user-guide-bin-transform`            :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
+:ref:`user-guide-calculate-transform`      :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
+:ref:`user-guide-filter-transform`         :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
+:ref:`user-guide-flatten-transform`        :meth:`~Chart.transform_flatten`           Flatten array data into columns.
+:ref:`user-guide-fold-transform`           :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data.
+:ref:`user-guide-impute-transform`         :meth:`~Chart.transform_impute`            Impute missing data.
+:ref:`user-guide-joinaggregate-transform`  :meth:`~Chart.transform_joinaggregate`     Aggregate transform joined to original data.
+:ref:`user-guide-lookup-transform`         :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
+:ref:`user-guide-sample-transform`         :meth:`~Chart.transform_sample`            Random sub-sample of the rows in the dataset.
+:ref:`user-guide-timeunit-transform`       :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
+:ref:`user-guide-window-transform`         :meth:`~Chart.transform_window`            Compute a windowed aggregation
+=========================================  =========================================  ================================================================================
 
 We will see some examples of these transforms in the following sections.
 
@@ -837,6 +839,37 @@ of unemployment rates per county in the US:
         projection={'type': 'albersUsa'},
         width=500, height=300
     )
+
+
+.. _user-guide-sample-transform:
+
+Sample Transform
+~~~~~~~~~~~~~~~~
+The sample transform is one of the simpler of all Altair's data transforms;
+it takes a single parameter ``sample`` which specified a number of rows to
+randomly choose from the dataset. The resulting chart will be created using
+only this random subset of the data.
+
+For example, here we chart the full cars dataset alongside a sample of 100
+rows:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+
+   source = data.cars.url
+
+   chart = alt.Chart(source).mark_point().encode(
+       x='Horsepower:Q',
+       y='Miles_per_Gallon:Q',
+       color='Origin:N'
+   ).properties(
+       width=200,
+       height=200
+   )
+
+   chart | chart.transform_sample(100)
 
 
 .. _user-guide-timeunit-transform:
