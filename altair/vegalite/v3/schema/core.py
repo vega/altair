@@ -7502,7 +7502,7 @@ class IntervalSelection(VegaLiteSchema):
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
         disable.
 
-        **Default value:** ``mouseout`` if ``on: mouseover`` else ``dblclick``.
+        **Default value:** ``dblclick``.
 
         See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
         for more information.
@@ -7578,7 +7578,7 @@ class IntervalSelectionConfig(VegaLiteSchema):
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
         disable.
 
-        **Default value:** ``mouseout`` if ``on: mouseover`` else ``dblclick``.
+        **Default value:** ``dblclick``.
 
         See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
         for more information.
@@ -9765,7 +9765,7 @@ class MultiSelection(VegaLiteSchema):
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
         disable.
 
-        **Default value:** ``mouseout`` if ``on: mouseover`` else ``dblclick``.
+        **Default value:** ``dblclick``.
 
         See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
         for more information.
@@ -9832,7 +9832,7 @@ class MultiSelectionConfig(VegaLiteSchema):
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
         disable.
 
-        **Default value:** ``mouseout`` if ``on: mouseover`` else ``dblclick``.
+        **Default value:** ``dblclick``.
 
         See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
         for more information.
@@ -11996,7 +11996,7 @@ class SequenceGenerator(VegaLiteSchema):
     ----------
 
     sequence : :class:`SequenceParams`
-        Generate sphere GeoJSON data for the full globe.
+        Generate a sequence of numbers.
     name : string
         Provide a placeholder name and bind data at runtime.
     """
@@ -12279,7 +12279,7 @@ class SingleSelection(VegaLiteSchema):
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
         disable.
 
-        **Default value:** ``mouseout`` if ``on: mouseover`` else ``dblclick``.
+        **Default value:** ``dblclick``.
 
         See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
         for more information.
@@ -12344,7 +12344,7 @@ class SingleSelectionConfig(VegaLiteSchema):
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
         disable.
 
-        **Default value:** ``mouseout`` if ``on: mouseover`` else ``dblclick``.
+        **Default value:** ``dblclick``.
 
         See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
         for more information.
