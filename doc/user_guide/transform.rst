@@ -37,6 +37,7 @@ Transform                                  Method                               
 :ref:`user-guide-joinaggregate-transform`  :meth:`~Chart.transform_joinaggregate`     Aggregate transform joined to original data.
 :ref:`user-guide-lookup-transform`         :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
 :ref:`user-guide-sample-transform`         :meth:`~Chart.transform_sample`            Random sub-sample of the rows in the dataset.
+:ref:`user-guide-stack-transform`          :meth:`~Chart.transform_stack`             Compute stacked version of values.
 :ref:`user-guide-timeunit-transform`       :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
 :ref:`user-guide-window-transform`         :meth:`~Chart.transform_window`            Compute a windowed aggregation
 =========================================  =========================================  ================================================================================
@@ -870,6 +871,54 @@ rows:
    )
 
    chart | chart.transform_sample(100)
+
+.. _user-guide-stack-transform:
+
+Stack Transform
+~~~~~~~~~~~~~~~
+The stack transform allows you to compute values associated with stacked versions
+of encodings. For example, consider this stacked bar chart:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.barley()
+
+    alt.Chart(source).mark_bar().encode(
+        column='year:O',
+        x='yield:Q',
+        y='variety:N',
+        color='site:N'
+    ).properties(width=250)
+
+Implicitly, this data is being grouped and stacked, but what if you would like to
+access those stacked values directly?
+We can construct that same chart manually using the stack transform:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.barley()
+
+    alt.Chart(source).transform_stack(
+        stack='yield',
+        as_=['yield_1', 'yield_2'],
+        groupby=['year', 'variety'],
+        sort=[alt.SortField('site', 'descending')]
+    ).mark_bar().encode(
+        column='year:O',
+        x=alt.X('yield_1:Q', title='yield'),
+        x2='yield_2:Q',
+        y='variety:N',
+        color='site:N'
+    ).properties(width=250)
+
+Notice that the bars are now explicitly drawn between values computed and
+specified within the x and x2 encodings.
 
 
 .. _user-guide-timeunit-transform:
