@@ -104,6 +104,17 @@ The same plot can be shown using an explicitly computed aggregation, using the
 
 For a list of available aggregates, see :ref:`encoding-aggregates`.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_aggregate` method is built on the :class:`~AggregateTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.AggregateTransform
+
+The :class:`~AggregatedFieldDef` objects have the following options:
+
+.. altair-object-table:: altair.AggregatedFieldDef
+
 .. _user-guide-bin-transform:
 
 Bin transforms
@@ -189,6 +200,13 @@ Note the slight difference in binning behavior between the encoding-based binnin
 (which preserve the range of the bins) and the transform-based binnings (which
 collapse each bin to a single representative value.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_bin` method is built on the :class:`~BinTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.BinTransform
+
 .. _user-guide-calculate-transform:
 
 Calculate Transform
@@ -243,6 +261,13 @@ available functions and constants.
 
 These expressions can also be used when constructing a
 :ref:`user-guide-filter-transform`, as we shall see next.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_calculate` method is built on the :class:`~CalculateTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.CalculateTransform
 
 .. _user-guide-filter-transform:
 
@@ -436,6 +461,12 @@ by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
         {'not': alt.FieldRangePredicate(field='year', range=[1900, 1950])}
     )
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_filter` method is built on the :class:`~FilterTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.FilterTransform
 
 .. _user-guide-flatten-transform:
 
@@ -492,6 +523,12 @@ into a column that can be referenced by an encoding:
 This can be particularly useful in cleaning up data specified via a JSON URL,
 without having to first load the data for manipulation in pandas.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_flatten` method is built on the :class:`~FlattenTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.FlattenTransform
 
 .. _user-guide-fold-transform:
 
@@ -533,6 +570,12 @@ with the associated names in a field named ``"key"``.
 
 For an example of the fold transform in action, see :ref:`gallery_parallel_coordinates`.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_fold` method is built on the :class:`~FoldTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.FoldTransform
 
 .. _user-guide-impute-transform:
 
@@ -654,6 +697,13 @@ side:
    )
    background + chart
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_impute` method is built on the :class:`~ImputeTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.ImputeTransform
+
 .. _user-guide-joinaggregate-transform:
 
 Join Aggregate Transform
@@ -720,6 +770,12 @@ standard deviation, which requires calculations on the joined data:
        y="Rotten_Tomatoes_Deviation:Q"
    )
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_joinaggregate` method is built on the
+:class:`~JoinAggregateTransform` class, which has the following options:
+
+.. altair-object-table:: altair.JoinAggregateTransform
 
 .. _user-guide-lookup-transform:
 
@@ -841,6 +897,12 @@ of unemployment rates per county in the US:
         width=500, height=300
     )
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_lookup` method is built on the :class:`~LookupTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.LookupTransform
 
 .. _user-guide-sample-transform:
 
@@ -872,6 +934,14 @@ rows:
 
    chart | chart.transform_sample(100)
 
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_sample` method is built on the :class:`~SampleTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.SampleTransform
+
 .. _user-guide-stack-transform:
 
 Stack Transform
@@ -891,7 +961,7 @@ of encodings. For example, consider this stacked bar chart:
         x='yield:Q',
         y='variety:N',
         color='site:N'
-    ).properties(width=250)
+    ).properties(width=220)
 
 Implicitly, this data is being grouped and stacked, but what if you would like to
 access those stacked values directly?
@@ -914,12 +984,19 @@ We can construct that same chart manually using the stack transform:
         x=alt.X('yield_1:Q', title='yield'),
         x2='yield_2:Q',
         y='variety:N',
-        color='site:N'
-    ).properties(width=250)
+        color='site:N',
+        tooltip=['site', 'yield', 'variety']
+    ).properties(width=220)
 
 Notice that the bars are now explicitly drawn between values computed and
 specified within the x and x2 encodings.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_stack` method is built on the :class:`~StackTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.StackTransform
 
 .. _user-guide-timeunit-transform:
 
@@ -1021,6 +1098,13 @@ Notice that because the ``timeUnit`` is not part of the encoding channel here,
 it is often necessary to add an axis formatter to ensure appropriate axis
 labels.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_timeunit` method is built on the :class:`~TimeUnitTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.TimeUnitTransform
+
 
 .. _user-guide-window-transform:
 
@@ -1111,6 +1195,13 @@ If we plot the `z-scores`_ of the stock prices, rather than the stock prices the
 By using two aggregation functions (``mean`` and ``stdev``) within the window transform, we are able to compute the z-scores within the calculate transform.
 
 For more information about the arguments to the window transform, see :class:`WindowTransform` and `the Vega-Lite documentation <https://vega.github.io/vega-lite/docs/window.html>`_.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_window` method is built on the :class:`~WindowTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.WindowTransform
 
 .. _Vega expression: https://vega.github.io/vega/docs/expressions/
 .. _z-scores: https://en.wikipedia.org/w/index.php?title=Z-score
