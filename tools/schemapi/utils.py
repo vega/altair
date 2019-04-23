@@ -53,7 +53,7 @@ def get_valid_identifier(prop, replacement_character='', allow_unicode=False):
     """
     # First substitute-out all non-valid characters.
     flags = re.UNICODE if allow_unicode else re.ASCII
-    valid = re.sub('\W', replacement_character, prop, flags=flags)
+    valid = re.sub(r'\W', replacement_character, prop, flags=flags)
 
     # If nothing is left, use just an underscore
     if not valid:
@@ -61,7 +61,7 @@ def get_valid_identifier(prop, replacement_character='', allow_unicode=False):
 
     # first character must be a non-digit. Prefix with an underscore
     # if needed
-    if re.match('^[\d\W]', valid):
+    if re.match(r'^[\d\W]', valid):
         valid = '_' + valid
 
     # if the result is a reserved keyword, then add an underscore at the end
@@ -81,12 +81,13 @@ def is_valid_identifier(var, allow_unicode=False):
         if True, then allow Python 3 style unicode identifiers.
     """
     flags = re.UNICODE if allow_unicode else re.ASCII
-    is_valid = re.match("^[^\d\W]\w*\Z", var, flags)
+    is_valid = re.match(r"^[^\d\W]\w*\Z", var, flags)
     return is_valid and not keyword.iskeyword(var)
 
 
 class SchemaProperties(object):
     """A wrapper for properties within a schema"""
+
     def __init__(self, properties, schema, rootschema=None):
         self._properties = properties
         self._schema = schema
@@ -125,6 +126,7 @@ class SchemaProperties(object):
 
 class SchemaInfo(object):
     """A wrapper for inspecting a JSON schema"""
+
     def __init__(self, schema, rootschema=None, validate=False):
         if hasattr(schema, '_schema'):
             if hasattr(schema, '_rootschema'):
@@ -191,13 +193,13 @@ class SchemaInfo(object):
             return 'enum({})'.format(', '.join(map(repr, self.enum)))
         elif self.is_anyOf():
             return 'anyOf({})'.format(', '.join(s.short_description
-                                                 for s in self.anyOf))
+                                                for s in self.anyOf))
         elif self.is_oneOf():
             return 'oneOf({})'.format(', '.join(s.short_description
-                                                 for s in self.oneOf))
+                                                for s in self.oneOf))
         elif self.is_allOf():
             return 'allOf({})'.format(', '.join(s.short_description
-                                                 for s in self.allOf))
+                                                for s in self.allOf))
         elif self.is_not():
             return 'not {}'.format(self.not_.short_description)
         elif isinstance(self.type, list):
@@ -379,14 +381,14 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
             leading_space = len(line) - len(stripped)
             indent = indent_level + leading_space
             wrapper = textwrap.TextWrapper(width=width - indent,
-                                            initial_indent= indent * ' ',
-                                            subsequent_indent=indent * ' ',
-                                            break_long_words=False,
-                                            break_on_hyphens=False,
-                                            drop_whitespace=True)
+                                           initial_indent=indent * ' ',
+                                           subsequent_indent=indent * ' ',
+                                           break_long_words=False,
+                                           break_on_hyphens=False,
+                                           drop_whitespace=True)
             list_wrapper = textwrap.TextWrapper(width=width - indent,
-                                                initial_indent= indent * ' '+'* ',
-                                                subsequent_indent=indent * ' '+ '  ',
+                                                initial_indent=indent * ' ' + '* ',
+                                                subsequent_indent=indent * ' ' + '  ',
                                                 break_long_words=False,
                                                 break_on_hyphens=False,
                                                 drop_whitespace=True)
