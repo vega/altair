@@ -62,6 +62,9 @@ clean-generated:
 clean-images:
 	rm -rf _images
 
+.PHONY: clean-all
+clean-all: clean clean-generated clean-images
+
 .PHONY: html
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
