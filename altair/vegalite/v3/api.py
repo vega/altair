@@ -152,12 +152,16 @@ def _get_channels_mapping():
 # Tools for working with selections
 class Selection(object):
     """A Selection object"""
-    _counter = 1
+    _counter = 0
+
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "selector{:03d}".format(cls._counter)
 
     def __init__(self, name, selection):
         if name is None:
-            name = "selector{:03d}".format(self._counter)
-            self.__class__._counter += 1
+            name = self._get_name()
         self.name = name
         self.selection = selection
 
