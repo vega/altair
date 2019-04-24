@@ -157,9 +157,12 @@ class Selection(object):
     def __init__(self, name, selection):
         if name is None:
             name = "selector{:03d}".format(self._counter)
-            self._counter += 1
+            self.__class__._counter += 1
         self.name = name
         self.selection = selection
+
+    def __repr__(self):
+        return "Selection({0!r}, {1})".format(self.name, self.selection)
 
     def ref(self):
         return {'selection': self.name}
