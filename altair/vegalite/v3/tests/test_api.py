@@ -278,6 +278,13 @@ def test_selection():
     assert isinstance(single | multi, alt.SelectionOr)
     assert isinstance(~single, alt.SelectionNot)
 
+    # test that default names increment (regression for #1454)
+    sel1 = alt.selection_single()
+    sel2 = alt.selection_multi()
+    sel3 = alt.selection_interval()
+    names = {s.name for s in (sel1, sel2, sel3)}
+    assert len(names) == 3
+
 
 def test_transforms():
     # aggregate transform
