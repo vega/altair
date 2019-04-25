@@ -51,7 +51,7 @@ source = pd.DataFrame([
     ])
 
 
-alt.Chart(source).mark_text(size=60, baseline='middle').encode(
+alt.Chart(source).mark_text(size=45, baseline='middle').encode(
     alt.X('x:O', axis=None),
     alt.Y('animal:O', axis=None),
     alt.Row('country:N', header=alt.Header(title='')),
@@ -61,4 +61,4 @@ alt.Chart(source).mark_text(size=60, baseline='middle').encode(
 ).transform_window(
     x='rank()',
     groupby=['country', 'animal']
-).properties(width=800, height=200)
+).properties(width=550, height=140)

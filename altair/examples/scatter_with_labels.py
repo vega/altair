@@ -13,12 +13,12 @@ source = pd.DataFrame({
     'label': ['A', 'B', 'C', 'D', 'E']
 })
 
-bars = alt.Chart(source).mark_point().encode(
+points = alt.Chart(source).mark_point().encode(
     x='x:Q',
     y='y:Q'
 )
 
-text = bars.mark_text(
+text = points.mark_text(
     align='left',
     baseline='middle',
     dx=7
@@ -26,4 +26,4 @@ text = bars.mark_text(
     text='label'
 )
 
-bars + text
+points + text

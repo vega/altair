@@ -67,8 +67,8 @@ line = alt.Chart(source).mark_line(color='#333').encode(
     alt.X('year:T', axis=alt.Axis(format='%Y')),
     y='population'
 ).properties(
-    width=600,
-    height=400
+    width=500,
+    height=300
 )
 
 point = line.mark_point(color='#333')

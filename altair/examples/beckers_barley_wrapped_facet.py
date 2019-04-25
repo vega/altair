@@ -5,26 +5,19 @@ The example demonstrates the trellis charts created by Richard Becker, William C
 This is the Altair replicate of `the VegaLite version <https://vega.github.io/vega-lite/docs/facet.html#facet-full>`_ 
 demonstrating the usage of `columns` argument to create wrapped facet.
 """
-
+# category: other charts
 import altair as alt
 from vega_datasets import data
 
-source = data.barley()
+source = data.barley.url
 
-alt.Chart(source, columns=2).mark_point().encode(
-    x=alt.X(
-        'yield:Q',
-        scale=alt.Scale(zero=False),
-        aggregate='median'
-    ),
-    y=alt.Y(
-        'variety:O',
-        sort=alt.SortByEncoding(encoding='x', order='descending'),
-        scale=alt.Scale(rangeStep=12),
-    ),
-    color=alt.Color('year:N', legend=alt.Legend(title="Year")),
-    facet=alt.Facet(
-        'site:O',
-        sort=alt.EncodingSortField(field='yield', op='median')
-    )
+alt.Chart(source).mark_point().encode(
+    alt.X('median(yield):Q', scale=alt.Scale(zero=False)),
+    y='variety:O',
+    color='year:N',
+    facet='site:O',
+).properties(
+    columns=2,
+    width=200,
+    height=100,
 )

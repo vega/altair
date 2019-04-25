@@ -21,11 +21,13 @@ background = alt.Chart(states).mark_geoshape(
 ).project('albersUsa')
 
 # airport positions on background
-points = alt.Chart(airports).mark_circle().encode(
+points = alt.Chart(airports).mark_circle(
+    size=10,
+    color='steelblue'
+).encode(
     longitude='longitude:Q',
     latitude='latitude:Q',
-    size=alt.value(10),
-    color=alt.value('steelblue')
+    tooltip=['name', 'city', 'state']
 )
 
 background + points

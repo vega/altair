@@ -14,4 +14,4 @@ alt.Chart(source).mark_bar().encode(
     x='yield',
     y='variety',
     color='site'
-).properties(width=250)
+).properties(width=220)

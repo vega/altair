@@ -66,7 +66,7 @@ color_scale = alt.Scale(
     range=['rgb(162,160,152)', 'rgb(194,81,64)', 'rgb(93,93,93)', 'rgb(91,131,149)']
 )
 
-alt.Chart(source).mark_point(filled=True, opacity=1, size=200).encode(
+alt.Chart(source).mark_point(filled=True, opacity=1, size=100).encode(
     alt.X('x:O', axis=None),
     alt.Y('animal:O', axis=None),
     alt.Row('country:N', header=alt.Header(title='')),
@@ -75,4 +75,4 @@ alt.Chart(source).mark_point(filled=True, opacity=1, size=200).encode(
 ).transform_window(
     x='rank()',
     groupby=['country', 'animal']
-).properties(width=800, height=200)
+).properties(width=550, height=140)

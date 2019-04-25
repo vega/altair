@@ -17,13 +17,13 @@ alt.Chart(source).mark_circle(
     alt.X('Year:O', axis=alt.Axis(labelAngle=0)),
     alt.Y('Entity:N'),
     alt.Size('Deaths:Q',
-        scale=alt.Scale(range=[0, 5000]),
+        scale=alt.Scale(range=[0, 4000]),
         legend=alt.Legend(title='Annual Global Deaths')
     ),
     alt.Color('Entity:N', legend=None)
 ).properties(
-    width=480,
-    height=350
+    width=450,
+    height=320
 ).transform_filter(
     alt.datum.Entity != 'All natural disasters'
 )

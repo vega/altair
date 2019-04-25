@@ -15,5 +15,6 @@ brush = alt.selection(type='interval')
 alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
-    color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))
+    color=alt.condition(brush, 'Cylinders:O', alt.value('grey')),
+    tooltip=None
 ).add_selection(brush)
