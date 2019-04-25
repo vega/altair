@@ -318,5 +318,5 @@ numpydoc_show_class_members = False
 # For the altairplot extension
 altairplot_links = {'editor': True, 'source': True, 'export': True}
 altairplot_vega_js_url = "https://cdn.jsdelivr.net/npm/vega@5.3"
-altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@3.0"
+altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@3.2"
 altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@4.0"
