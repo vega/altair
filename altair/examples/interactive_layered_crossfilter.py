@@ -22,7 +22,7 @@ base = alt.Chart().mark_bar().encode(
     x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.Bin(maxbins=20)),
     y='count()'
 ).properties(
-    width=180,
+    width=160,
     height=130
 )
 

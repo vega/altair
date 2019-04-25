@@ -31,4 +31,6 @@ alt.Chart(source).mark_bar().encode(
     "sex", alt.expr.if_(alt.datum.sex == 1, "Male", "Female")
 ).transform_filter(
     select_year
+).configure_facet(
+    spacing=8
 )

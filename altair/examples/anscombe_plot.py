@@ -13,8 +13,9 @@ source = data.anscombe()
 alt.Chart(source).mark_circle().encode(
     alt.X('X', scale=alt.Scale(zero=False)),
     alt.Y('Y', scale=alt.Scale(zero=False)),
-    column='Series'
+    facet='Series'
 ).properties(
-    width=150,
-    height=150
+    width=180,
+    height=180,
+    columns=2
 )

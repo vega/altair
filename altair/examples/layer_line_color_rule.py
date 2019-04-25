@@ -11,7 +11,7 @@ from vega_datasets import data
 
 source = data.stocks()
 
-base = alt.Chart(source).properties(width=600)
+base = alt.Chart(source).properties(width=550)
 
 line = base.mark_line().encode(
     x='date',

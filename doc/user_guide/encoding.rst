@@ -47,7 +47,7 @@ Channel     Altair Class         Description                        Example
 ==========  ===================  =================================  ===================================
 x           :class:`X`           The x-axis value                   :ref:`gallery_scatter_tooltips`
 y           :class:`Y`           The y-axis value                   :ref:`gallery_scatter_tooltips`
-x2          :class:`X2`          Second x value for ranges          :ref:`gallery_error_bars_with_ci`
+x2          :class:`X2`          Second x value for ranges          :ref:`gallery_errorbars_with_ci`
 y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_line_with_ci`
 longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airports`
 latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
@@ -386,8 +386,8 @@ min        The minimum field value.                                             
 missing    The count of null or undefined field values.                                 N/A
 q1         The lower quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
 q3         The upper quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
-ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_error_bars_with_ci`
-ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_error_bars_with_ci`
+ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_sorted_error_bars_with_ci`
+ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_sorted_error_bars_with_ci`
 stderr     The standard error of the field values.                                      N/A
 stdev      The sample standard deviation of field values.                               N/A
 stdevp     The population standard deviation of field values.                           N/A

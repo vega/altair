@@ -21,6 +21,8 @@ base = alt.Chart(source).add_selection(
     select_year
 ).transform_calculate(
     gender=alt.expr.if_(alt.datum.sex == 1, 'Male', 'Female')
+).properties(
+    width=250
 )
 
 
@@ -50,4 +52,4 @@ right = base.transform_filter(
     color=alt.Color('gender:N', scale=color_scale, legend=None)
 ).mark_bar().properties(title='Male')
 
-left | middle | right
+alt.concat(left, middle, right, spacing=5)
