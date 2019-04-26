@@ -13,5 +13,4 @@ alt.Chart(source).mark_circle().encode(
     x='Horsepower',
     y='Miles_per_Gallon',
     color='Origin',
-    tooltip=None,
 ).interactive()

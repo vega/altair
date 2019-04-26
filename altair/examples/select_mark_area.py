@@ -21,7 +21,6 @@ base = alt.Chart(source).mark_area(
 ).encode(
     x='yearmonth(date):T',
     y='sum(count):Q',
-    tooltip=None
 )
 
 brush = alt.selection_interval(encodings=['x'],empty='all')

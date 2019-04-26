@@ -19,16 +19,10 @@ def basic_spec():
         }
     }
 
-@pytest.fixture
-def final_spec(basic_spec):
-    spec = {
-        'config': {
-            'view': {
-                'height': 300,
-                'width': 400
-            }
-        }
-    }
+
+def make_final_spec(alt, basic_spec):
+    theme = alt.themes.get()
+    spec = theme()
     spec.update(basic_spec)
     return spec
 
@@ -46,7 +40,7 @@ def make_basic_chart(alt):
 
 
 @pytest.mark.parametrize('alt', [v2, v3])
-def test_basic_chart_to_dict(alt, final_spec):
+def test_basic_chart_to_dict(alt, basic_spec):
     chart = alt.Chart('data.csv').mark_line().encode(
         alt.X('xval:Q'),
         y=alt.Y('yval:O'),
@@ -58,11 +52,11 @@ def test_basic_chart_to_dict(alt, final_spec):
     assert dct.pop('$schema').startswith('http')
 
     # remainder of spec should match the basic spec
-    assert dct == final_spec
+    assert dct == make_final_spec(alt, basic_spec)
 
 
 @pytest.mark.parametrize('alt', [v2, v3])
-def test_basic_chart_from_dict(alt, basic_spec, final_spec):
+def test_basic_chart_from_dict(alt, basic_spec):
     chart = alt.Chart.from_dict(basic_spec)
     dct = chart.to_dict()
 
@@ -70,7 +64,7 @@ def test_basic_chart_from_dict(alt, basic_spec, final_spec):
     assert dct.pop('$schema').startswith('http')
 
     # remainder of spec should match the basic spec
-    assert dct == final_spec
+    assert dct == make_final_spec(alt, basic_spec)
 
 
 @pytest.mark.parametrize('alt', [v2, v3])
