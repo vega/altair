@@ -2,7 +2,7 @@
 
 ## Version 3.0.0 (unreleased)
 
-Update to Vega-Lite 3.2 and Vega 5.0 & support all new features. See
+Update to Vega-Lite 3.2 and Vega 5.3 & support all new features. See
 https://github.com/vega/vega-lite/releases/tag/v3.0.0 for Vega-Lite
 feature lists.
 
@@ -11,28 +11,14 @@ feature lists.
 - new compound marks: ``mark_boxplot()``, ``mark_errorband()``, ``mark_errorbar()``
 - new transforms: ``transform_impute()``, ``transform_joinaggregate()``, ``transform_flatten()``
   ``transform_fold()``, ``transform_sample()``, ``transform_stack()``
-- tooltips enabled by default. Pass encoding ``tooltip=None`` to disable.
-- new ``columns`` keyword that allows wrapped faceting and concatenation.
-
-### Backward-incompatible changes:
-
-- selections can be bound to scales directly; i.e. you can use
-  ```
-  alt.Scale(domain=selection)
-  ```
-  instead of
-  ```
-  alt.Scale(domain=selection.ref())
-  ```
-
-- selections can no longer be passed directly as chart properties; i.e. you should use
-  ```
-  chart.add_selection(selection1, selection2)
-  ```
-  instead of
-  ```
-  chart.properties(selection=selection1 + selection2)
-  ```
+- new ``facet`` encoding that is similar to the ``row`` and ``column`` encoding, but
+  allows for wrapped facets
+- new ``alt.concat()`` function that is similar to ``alt.hconcat`` and ``alt.vconcat``,
+  but allows for more general wrapped concatenation
+- new ``columns`` keyword that allows wrapped faceting, repeating, and concatenation.
+- many, many bug fixes
+- tooltips can now be automatically populated using the ``tooltip`` mark configuration.
+- ability to specify initial condisions for selections
 
 ## Version 2.4.1 (Released February 21, 2019)
 
