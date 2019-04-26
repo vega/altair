@@ -64,6 +64,4 @@ alt.layer(
     line, selectors, points, rules, text
 ).properties(
     width=600, height=300
-).configure_mark(
-    tooltip=None
 )

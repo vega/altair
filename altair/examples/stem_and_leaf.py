@@ -32,7 +32,6 @@ alt.Chart(source).mark_text(
     ),
     alt.Y('stem:N', title='', axis=alt.Axis(tickSize=0)),
     text='leaf:N',
-    tooltip=None
 ).configure_axis(
     labelFontSize=20
 ).configure_text(

@@ -16,7 +16,6 @@ bars = alt.Chart().mark_bar().encode(
     x='month(date):O',
     y='mean(precipitation):Q',
     opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
-    tooltip=None
 ).add_selection(
     brush
 )

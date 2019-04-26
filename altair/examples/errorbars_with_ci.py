@@ -19,7 +19,6 @@ error_bars = alt.Chart(source).mark_errorbar(extent='ci').encode(
 points = alt.Chart(source).mark_point(filled=True, color='black').encode(
   x=alt.X('yield:Q', aggregate='mean'),
   y=alt.Y('variety:N'),
-  tooltip=None
 )
 
 error_bars + points

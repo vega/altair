@@ -448,10 +448,12 @@ def test_themes():
 
     try:
         alt.themes.enable('default')
-        assert chart.to_dict()['config'] == {"view": {"width": 400, "height": 300}}
+        assert chart.to_dict()['config'] == {"mark": {"tooltip": None},
+                                             "view": {"width": 400, "height": 300}}
 
         alt.themes.enable('opaque')
         assert chart.to_dict()['config'] == {"background": "white",
+                                             "mark": {"tooltip": None},
                                              "view": {"width": 400, "height": 300}}
 
         alt.themes.enable('none')

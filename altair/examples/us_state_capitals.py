@@ -28,7 +28,6 @@ hover = alt.selection(type='single', on='mouseover', nearest=True,
 base = alt.Chart(capitals).encode(
     longitude='lon:Q',
     latitude='lat:Q',
-    tooltip=None
 )
 
 text = base.mark_text(dy=-5, align='right').encode( 
