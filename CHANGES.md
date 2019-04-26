@@ -1,6 +1,8 @@
 # Altair Change Log
 
-## Version 3.0.0 (unreleased)
+## Version 3.1.0 (unreleased)
+
+## Version 3.0.0
 
 Update to Vega-Lite 3.2 and Vega 5.3 & support all new features. See
 https://github.com/vega/vega-lite/releases/tag/v3.0.0 for Vega-Lite
