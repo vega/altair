@@ -24,12 +24,14 @@ points = alt.Chart().mark_point().encode(
 # Base chart for data tables
 ranked_text = alt.Chart().mark_text().encode(
     y=alt.Y('row_number:O',axis=None)
-).transform_filter(
-    brush
 ).transform_window(
     row_number='row_number()'
 ).transform_filter(
-    alt.datum.row_number<20
+    brush
+).transform_window(
+    rank='rank(row_number)'
+).transform_filter(
+    alt.datum.rank<20
 )
 
 # Data Tables
