@@ -1,6 +1,8 @@
 # Altair Change Log
 
-## Version 3.1.0 (unreleased)
+## Version 3.0.1
+
+Fix version info bug for HTML output and Colab & Kaggle renderers.
 
 ## Version 3.0.0
 
