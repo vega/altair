@@ -169,17 +169,16 @@ Once you have installed one of these packages, enable the corresponding renderer
 
 Displaying in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~
+JupyterLab version 1.0 and later includes built-in support for Altair 3 charts
+(If you are using older versions of Altair, they will work with JupyterLab
+versions between 0.32 and 0.35).
 
-JupyterLab versions 0.32 and later include built-in support for Vega-Lite 2.x and
-Vega 3.x. These will work out of the box with Altair imported as::
+These will work out of the box with Altair imported as::
 
     import altair as alt
 
-An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
-(``labextension install`` requires nodejs)::
-
-    conda install -c conda-forge nodejs  # if you do not already have nodejs installed
-    jupyter labextension install @jupyterlab/vega2-extension
+The Vega jupyterlab extension is included with the main jupyterlab installation,
+so no additional steps are necessary.
 
 .. _display-nteract:
 
