@@ -1434,19 +1434,56 @@ class EncodingMixin(object):
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
 
-    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
+    def facet(self, facet=Undefined, row=Undefined, column=Undefined, data=Undefined,
+              columns=Undefined, **kwargs):
         """Create a facet chart from the current chart.
 
         Faceted charts require data to be specified at the top level; if data
         is not specified, the data from the current chart will be used at the
         top level.
+
+        Parameters
+        ----------
+        facet : string or alt.Facet (optional)
+            The data column to use as an encoding for a wrapped facet.
+            If specified, then neither row nor column may be specified.
+        column : string or alt.Column (optional)
+            The data column to use as an encoding for a column facet.
+            May be combined with row argument, but not with facet argument.
+        row : string or alt.Column (optional)
+            The data column to use as an encoding for a row facet.
+            May be combined with column argument, but not with facet argument.
+        data : string or dataframe (optional)
+            The dataset to use for faceting. If not supplied, then data must
+            be specified in the top-level chart that calls this method.
+        columns : integer
+            the maximum number of columns for a wrapped facet.
+
+        Returns
+        -------
+        self :
+            for chaining
         """
+        facet_specified = (facet is not Undefined)
+        rowcol_specified = (row is not Undefined or column is not Undefined)
+
+        if facet_specified and rowcol_specified:
+            raise ValueError("facet argument cannot be combined with row/column argument.")
+
         if data is Undefined:
-            data = self.data
-            self = self.copy()
-            self.data = Undefined
-        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
-                          data=data, **kwargs)
+            if self.data is Undefined:
+                 raise ValueError("Facet charts require data to be specified at the top level.")
+            self = self.copy(ignore=['data'])
+            data, self.data = self.data, Undefined
+
+        if facet_specified:
+            if isinstance(column, six.string_types):
+                column = channels.Facet(column)
+            facet = column
+        else:
+            facet = FacetMapping(row=row, column=column)
+
+        return FacetChart(spec=self, facet=facet, data=data, columns=columns, **kwargs)
 
 
 class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
