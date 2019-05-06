@@ -2,6 +2,12 @@
 
 ## Version 3.1.0 (unreleased)
 
+### Enhancements
+
+- ``alt.LayerChart`` now supports ``mark_*()`` methods. If a layer specifies a
+  mark at the top level, all child charts will inherit it (unless they override
+  it explicitly).
+
 ## Version 3.0.1
 
 Fix version info bug for HTML output and Colab & Kaggle renderers.

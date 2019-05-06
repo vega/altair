@@ -1434,6 +1434,20 @@ class EncodingMixin(object):
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
 
+    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
+        """Create a facet chart from the current chart.
+
+        Faceted charts require data to be specified at the top level; if data
+        is not specified, the data from the current chart will be used at the
+        top level.
+        """
+        if data is Undefined:
+            data = self.data
+            self = self.copy()
+            self.data = Undefined
+        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
+                          data=data, **kwargs)
+
 
 class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
             core.TopLevelUnitSpec):
@@ -1561,20 +1575,6 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
             encodings.append('y')
         return self.add_selection(selection_interval(bind='scales',
                                                      encodings=encodings))
-
-    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
-        """Create a facet chart from the current chart.
-
-        Faceted charts require data to be specified at the top level; if data
-        is not specified, the data from the current chart will be used at the
-        top level.
-        """
-        if data is Undefined:
-            data = self.data
-            self = self.copy()
-            self.data = Undefined
-        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
-                          data=data, **kwargs)
 
 
 def _check_if_valid_subspec(spec, classname):
@@ -1730,7 +1730,8 @@ def vconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelLayerSpec)
-class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
+class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
+                 core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
@@ -1780,20 +1781,6 @@ class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
         copy = self.copy()
         copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
-
-    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
-        """Create a facet chart from the current chart.
-
-        Faceted charts require data to be specified at the top level; if data
-        is not specified, the data from the current chart will be used at the
-        top level.
-        """
-        if data is Undefined:
-            data = self.data
-            self = self.copy()
-            self.data = Undefined
-        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
-                          data=data, **kwargs)
 
 
 def layer(*charts, **kwargs):
