@@ -407,6 +407,25 @@ def test_resolve_methods():
     assert chart.resolve == alt.Resolve(scale=alt.ScaleResolveMap(x='shared', y='independent'))
 
 
+def test_layer_marks():
+    chart = alt.LayerChart().mark_point()
+    assert chart.mark == 'point'
+
+    chart = alt.LayerChart().mark_point(color='red')
+    assert chart.mark == alt.MarkDef('point', color='red')
+
+    chart = alt.LayerChart().mark_bar()
+    assert chart.mark == 'bar'
+
+    chart = alt.LayerChart().mark_bar(color='green')
+    assert chart.mark == alt.MarkDef('bar', color='green')
+
+
+def test_layer_encodings():
+    chart = alt.LayerChart().encode(x='column:Q')
+    assert chart.encoding.x == alt.X(shorthand='column:Q')
+
+
 def test_add_selection():
     selections = [alt.selection_interval(),
                   alt.selection_single(),
