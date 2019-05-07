@@ -273,8 +273,8 @@ The :class:`Shape` encoding accepts the following options:
 
 .. altair-object-table:: altair.ShapeFieldDefWithCondition
 
-The :class:`Fillopacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
-and :class:`Strokewidth` encodings accept the following options:
+The :class:`FillOpacity`, :class:`Opacity`, :class:`Size`, :class:`StrokeOpacity`,
+and :class:`StrokeWidth` encodings accept the following options:
 
 .. altair-object-table:: altair.NumericFieldDefWithCondition
 
@@ -286,11 +286,6 @@ The :class:`Text` and :class:`Tooltip` encodings accept the following options:
 
 .. altair-object-table:: altair.TextFieldDefWithCondition
 
-The :class:`Fillopacity`, :class:`Opacity`, :class:`Size`, :class:`Strokeopacity`,
-and :class:`Strokewidth` encodings accept the following options:
-
-.. altair-object-table:: altair.NumericFieldDefWithCondition
-
 The :class:`Detail` and :class:`Key` encodings accept the following options:
 
 .. altair-object-table:: altair.FieldDef
@@ -299,8 +294,8 @@ The :class:`Latitude` and :class:`Longitude` encodings accept the following opti
 
 .. altair-object-table:: altair.LatLongFieldDef
 
-The :class:`Latitude2`, :class:`Longitude2`, :class:`X2`, :class:`Y2`, :class:`Xerror`, :class:`Yerror`,
-:class:`Xerror2`, and :class:`Yerror2` encodings accept the following options:
+The :class:`Latitude2`, :class:`Longitude2`, :class:`X2`, :class:`Y2`, :class:`XError`, :class:`YError`,
+:class:`XError2`, and :class:`YError2` encodings accept the following options:
 
 .. altair-object-table:: altair.SecondaryFieldDef
 

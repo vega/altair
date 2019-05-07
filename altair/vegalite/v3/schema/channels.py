@@ -862,8 +862,8 @@ class FillValue(ValueChannelMixin, core.ColorValueDefWithCondition):
         super(FillValue, self).__init__(value=value, **kwds)
 
 
-class Fillopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
-    """Fillopacity schema wrapper
+class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
+    """FillOpacity schema wrapper
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
@@ -1030,13 +1030,13 @@ class Fillopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
-        super(Fillopacity, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+        super(FillOpacity, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                           condition=condition, field=field, legend=legend, scale=scale,
                                           sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class FillopacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
-    """FillopacityValue schema wrapper
+class FillOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+    """FillOpacityValue schema wrapper
 
     anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
     :class:`ConditionOnlyDefMarkPropFieldDef`)
@@ -1046,7 +1046,7 @@ class FillopacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
-        super(FillopacityValue, self).__init__(value=value, **kwds)
+        super(FillOpacityValue, self).__init__(value=value, **kwds)
 
 
 class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
@@ -2843,8 +2843,8 @@ class StrokeValue(ValueChannelMixin, core.ColorValueDefWithCondition):
         super(StrokeValue, self).__init__(value=value, **kwds)
 
 
-class Strokeopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
-    """Strokeopacity schema wrapper
+class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
+    """StrokeOpacity schema wrapper
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
@@ -3011,14 +3011,14 @@ class Strokeopacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
-        super(Strokeopacity, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+        super(StrokeOpacity, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                             condition=condition, field=field, legend=legend,
                                             scale=scale, sort=sort, timeUnit=timeUnit, title=title,
                                             type=type, **kwds)
 
 
-class StrokeopacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
-    """StrokeopacityValue schema wrapper
+class StrokeOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+    """StrokeOpacityValue schema wrapper
 
     anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
     :class:`ConditionOnlyDefMarkPropFieldDef`)
@@ -3028,11 +3028,11 @@ class StrokeopacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
-        super(StrokeopacityValue, self).__init__(value=value, **kwds)
+        super(StrokeOpacityValue, self).__init__(value=value, **kwds)
 
 
-class Strokewidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
-    """Strokewidth schema wrapper
+class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
+    """StrokeWidth schema wrapper
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
@@ -3199,13 +3199,13 @@ class Strokewidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
-        super(Strokewidth, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+        super(StrokeWidth, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
                                           condition=condition, field=field, legend=legend, scale=scale,
                                           sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class StrokewidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
-    """StrokewidthValue schema wrapper
+class StrokeWidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+    """StrokeWidthValue schema wrapper
 
     anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
     :class:`ConditionOnlyDefMarkPropFieldDef`)
@@ -3215,7 +3215,7 @@ class StrokewidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
-        super(StrokewidthValue, self).__init__(value=value, **kwds)
+        super(StrokeWidthValue, self).__init__(value=value, **kwds)
 
 
 class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
@@ -3874,8 +3874,8 @@ class X2Value(ValueChannelMixin, core.XValueDef):
         super(X2Value, self).__init__(value=value, **kwds)
 
 
-class Xerror(FieldChannelMixin, core.SecondaryFieldDef):
-    """Xerror schema wrapper
+class XError(FieldChannelMixin, core.SecondaryFieldDef):
+    """XError schema wrapper
 
     Mapping(required=[shorthand])
     A field definition of a secondary channel that shares a scale with another primary channel.
@@ -3955,12 +3955,12 @@ class Xerror(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
-        super(Xerror, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+        super(XError, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                      timeUnit=timeUnit, title=title, **kwds)
 
 
-class XerrorValue(ValueChannelMixin, core.NumberValueDef):
-    """XerrorValue schema wrapper
+class XErrorValue(ValueChannelMixin, core.NumberValueDef):
+    """XErrorValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
@@ -3975,11 +3975,11 @@ class XerrorValue(ValueChannelMixin, core.NumberValueDef):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
-        super(XerrorValue, self).__init__(value=value, **kwds)
+        super(XErrorValue, self).__init__(value=value, **kwds)
 
 
-class Xerror2(FieldChannelMixin, core.SecondaryFieldDef):
-    """Xerror2 schema wrapper
+class XError2(FieldChannelMixin, core.SecondaryFieldDef):
+    """XError2 schema wrapper
 
     Mapping(required=[shorthand])
     A field definition of a secondary channel that shares a scale with another primary channel.
@@ -4059,12 +4059,12 @@ class Xerror2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
-        super(Xerror2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+        super(XError2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
-class Xerror2Value(ValueChannelMixin, core.NumberValueDef):
-    """Xerror2Value schema wrapper
+class XError2Value(ValueChannelMixin, core.NumberValueDef):
+    """XError2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
@@ -4079,7 +4079,7 @@ class Xerror2Value(ValueChannelMixin, core.NumberValueDef):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
-        super(Xerror2Value, self).__init__(value=value, **kwds)
+        super(XError2Value, self).__init__(value=value, **kwds)
 
 
 class Y(FieldChannelMixin, core.PositionFieldDef):
@@ -4402,8 +4402,8 @@ class Y2Value(ValueChannelMixin, core.YValueDef):
         super(Y2Value, self).__init__(value=value, **kwds)
 
 
-class Yerror(FieldChannelMixin, core.SecondaryFieldDef):
-    """Yerror schema wrapper
+class YError(FieldChannelMixin, core.SecondaryFieldDef):
+    """YError schema wrapper
 
     Mapping(required=[shorthand])
     A field definition of a secondary channel that shares a scale with another primary channel.
@@ -4483,12 +4483,12 @@ class Yerror(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
-        super(Yerror, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+        super(YError, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                      timeUnit=timeUnit, title=title, **kwds)
 
 
-class YerrorValue(ValueChannelMixin, core.NumberValueDef):
-    """YerrorValue schema wrapper
+class YErrorValue(ValueChannelMixin, core.NumberValueDef):
+    """YErrorValue schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
@@ -4503,11 +4503,11 @@ class YerrorValue(ValueChannelMixin, core.NumberValueDef):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
-        super(YerrorValue, self).__init__(value=value, **kwds)
+        super(YErrorValue, self).__init__(value=value, **kwds)
 
 
-class Yerror2(FieldChannelMixin, core.SecondaryFieldDef):
-    """Yerror2 schema wrapper
+class YError2(FieldChannelMixin, core.SecondaryFieldDef):
+    """YError2 schema wrapper
 
     Mapping(required=[shorthand])
     A field definition of a secondary channel that shares a scale with another primary channel.
@@ -4587,12 +4587,12 @@ class Yerror2(FieldChannelMixin, core.SecondaryFieldDef):
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
-        super(Yerror2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
+        super(YError2, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin, field=field,
                                       timeUnit=timeUnit, title=title, **kwds)
 
 
-class Yerror2Value(ValueChannelMixin, core.NumberValueDef):
-    """Yerror2Value schema wrapper
+class YError2Value(ValueChannelMixin, core.NumberValueDef):
+    """YError2Value schema wrapper
 
     Mapping(required=[value])
     Definition object for a constant value of an encoding channel.
@@ -4607,4 +4607,4 @@ class Yerror2Value(ValueChannelMixin, core.NumberValueDef):
     _class_is_valid_at_instantiation = False
 
     def __init__(self, value, **kwds):
-        super(Yerror2Value, self).__init__(value=value, **kwds)
+        super(YError2Value, self).__init__(value=value, **kwds)

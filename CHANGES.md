@@ -27,6 +27,17 @@
 
    In each case, the new invocations are compatible back to Altair 2.X.
 
+- Several of the encoding channels added in 3.0 have had their capitalization
+  corrected to better match the names used in the schema:
+
+  - ``alt.Fillopacity`` -> ``alt.FillOpacity``
+  - ``alt.Strokeopacity`` -> ``alt.StrokeOpacity``
+  - ``alt.Strokewidth`` -> ``alt.StrokeWidth``
+  - ``alt.Xerror`` -> ``alt.XError``
+  - ``alt.Xerror2`` -> ``alt.XError2``
+  - ``alt.Yerror`` -> ``alt.YError``
+  - ``alt.Yerror2`` -> ``alt.YError2``
+
 ## Version 3.0.1
 
 Fix version info bug for HTML output and Colab & Kaggle renderers.
