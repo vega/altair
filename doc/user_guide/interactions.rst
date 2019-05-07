@@ -325,7 +325,7 @@ create a wide variety of linked interactive chart types.
 
 Binding: Adding Data Driven Inputs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-With an understanding of the selection types and conditions, you can now add data-driven input elements to the charts using the  :class:`bind`. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, selections can be bound two-ways:
+With an understanding of the selection types and conditions, you can now add data-driven input elements to the charts using the ``bind`` option. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, selections can be bound two-ways:
 
 1. Single selections can be bound directly to an input elements. *For example, a radio button.*
 2. Interval selections which can be bound to scale. *for example, zooming in on a map.*
@@ -395,14 +395,11 @@ Bindings and input elements can also be used to filter data on the client side. 
 
 Scale Binding
 ^^^^^^^^^^^^^
-With interval selections, the bind property can be set to the value of :"scales":. In these cases, the binding will automatically respond to the panning and zooming along the chart:
+With interval selections, the ``bind`` property can be set to the value of ``"scales"``. In these cases, the binding will automatically respond to the panning and zooming along the chart:
 
 .. altair-plot::
 
-    selection = alt.selection_interval(bind="scales")
-    color = alt.condition(selection,
-                        alt.Color('Origin:N', legend=None),
-                        alt.value('lightgray'))
+    selection = alt.selection_interval(bind='scales')
 
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
