@@ -8,6 +8,25 @@
   mark at the top level, all child charts will inherit it (unless they override
   it explicitly).
 
+- ``alt.Chart.facet()`` now handles wrapped facets; for example:
+  ```python
+  chart.facet('column_name', columns=5)
+  ```
+  See ``altair/examples/us_population_over_time_facet.py`` for a more
+  complete example.
+
+### Backward-Incompatible Changes
+
+- ``alt.Chart.facet()`` now accepts a wrapped facet encoding as a first positional
+   argument, rather than a row encoding. The following are examples of old invocations,
+   and the equivalent new invocations:
+
+   - ``chart.facet(row='col1', column='col2')``: unchanged
+   - ``chart.facet('col1', 'col2')``: change to ``chart.facet(row='col1', column='col2')``
+   - ``chart.facet('col1')``: change to ``chart.facet(row='col1')``
+
+   In each case, the new invocations are compatible back to Altair 2.X.
+
 ## Version 3.0.1
 
 Fix version info bug for HTML output and Colab & Kaggle renderers.

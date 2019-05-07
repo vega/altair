@@ -491,6 +491,7 @@ def test_chart_from_dict():
               base | base,
               base & base,
               base.facet(row='c:N'),
+              (base + base).facet(row='c:N', data='data.csv'),
               base.repeat(row=['c:N', 'd:N'])]
 
     for chart in charts:
