@@ -1,5 +1,5 @@
 import warnings
-import functools
+# import functools
 
 
 class AltairDeprecationWarning(UserWarning):
@@ -38,7 +38,7 @@ def _deprecated(obj, name=None, message=None):
                     {'__doc__': obj.__doc__,
                     '__init__': _deprecated(obj.__init__, "__init__", message)})
     elif callable(obj):
-        @functools.wraps(obj)
+        # @functools.wraps(obj)  # TODO: use this in Py3 only
         def new_obj(*args, **kwargs):
             warnings.warn(message, AltairDeprecationWarning)
             return obj(*args, **kwargs)
