@@ -302,7 +302,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
         for definition in definitions:
             defschema = {'$ref': definition}
             basename = definition.split('/')[-1]
-            classname = prop.title()
+            classname = prop[0].upper() + prop[1:]
 
             if 'Value' in basename:
                 Generator = ValueSchemaGenerator

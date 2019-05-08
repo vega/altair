@@ -41,8 +41,8 @@ Encoding Channels
    FieldChannelMixin
    Fill
    FillValue
-   Fillopacity
-   FillopacityValue
+   FillOpacity
+   FillOpacityValue
    Href
    HrefValue
    Key
@@ -65,10 +65,10 @@ Encoding Channels
    SizeValue
    Stroke
    StrokeValue
-   Strokeopacity
-   StrokeopacityValue
-   Strokewidth
-   StrokewidthValue
+   StrokeOpacity
+   StrokeOpacityValue
+   StrokeWidth
+   StrokeWidthValue
    Text
    TextValue
    Tooltip
@@ -79,18 +79,18 @@ Encoding Channels
    X2
    X2Value
    XValue
-   Xerror
-   Xerror2
-   Xerror2Value
-   XerrorValue
+   XError
+   XError2
+   XError2Value
+   XErrorValue
    Y
    Y2
    Y2Value
    YValue
-   Yerror
-   Yerror2
-   Yerror2Value
-   YerrorValue
+   YError
+   YError2
+   YError2Value
+   YErrorValue
 
 API Functions
 -------------
