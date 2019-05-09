@@ -173,15 +173,17 @@ labels of rows and columns:
 Wide-form data can be similarly visualized using e.g. layering
 (see :ref:`layer-chart`), but it is far less convenient within Altair's grammar.
 
+If you would like to convert data from wide-form to long-form, there are two possible
+approaches: it can be done as a preprocessing step using pandas, or as a transform
+step within the chart itself. We will detail to two approaches below.
 
 .. _data-converting-long-form:
 
-Converting Between Long-form and Wide-form
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Conversion between wide-form and long-form data is not part of the Altair schema,
-and must be done as an external preprocessing step.
-In Python, this kind of data manipulation can be done using Pandas_, as discussed
-in detail in the `Reshaping and Pivot Tables`_ section of the Pandas documentation.
+Converting Between Long-form and Wide-form: Pandas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+This sort of data manipulation can be done as a preprocessing step using Pandas_,
+and is discussed in detail in the `Reshaping and Pivot Tables`_ section of the
+Pandas documentation.
 
 For converting wide-form data to the long-form data used by Altair, the ``melt``
 method of dataframes can be used. The first argument to ``melt`` is the column
@@ -200,14 +202,32 @@ In case you would like to undo this operation and convert from long-form back
 to wide-form, the ``pivot`` method of dataframes is useful.
 
 .. altair-plot::
-    :output: stdout
+    :output: repr
 
-    wide_form = long_form.pivot(index='Date', columns='company', values='price')
-    print(wide_form)
+    long_form.pivot(index='Date', columns='company', values='price').reset_index()
 
 For more information on the ``pivot`` method, see the `Pandas pivot documentation`_.
 
+Converting Between Long-form and Wide-form: Fold Transform
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+If you would like to avoid data preprocessing, you can reshape your data using Altair's
+Fold Transform (see :ref:`user-guide-fold-transform` for a full discussion).
+With it, the above chart can be reproduced as follows:
+
+.. altair-plot::
+   
+    alt.Chart(wide_form).transform_fold(
+        ['AAPL', 'AMZN', 'GOOG'],
+        as_=['company', 'price']
+    ).mark_line().encode(
+        x='Date:T',
+        y='price:Q',
+        color='company:N'
+    )
+
+Notice that unlike the pandas ``melt`` function we must explicitly specify the columns
+to be folded. The ``as_`` argument is optional, with the default being ``["key", "value"]``.
 
 .. _Pandas: http://pandas.pydata.org/
 .. _Pandas pivot documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html
