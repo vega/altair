@@ -215,6 +215,38 @@ def test_save(format, basic_chart):
         assert content.startswith('<!DOCTYPE html>')
 
 
+def test_facet():
+    # wrapped facet
+    chart1 = alt.Chart('data.csv').mark_point().encode(
+        x='x:Q',
+        y='y:Q',
+    ).facet(
+        'category:N',
+        columns=2
+    )
+
+    dct1 = chart1.to_dict()
+
+    assert dct1['facet'] == alt.Facet('category:N').to_dict()
+    assert dct1['columns'] == 2
+    assert dct1['data'] == alt.UrlData('data.csv').to_dict()
+
+    # explicit row/col facet
+    chart2 = alt.Chart('data.csv').mark_point().encode(
+        x='x:Q',
+        y='y:Q',
+    ).facet(
+        row='category1:Q',
+        column='category2:Q'
+    )
+
+    dct2 = chart2.to_dict()
+
+    assert dct2['facet']['row'] == alt.Facet('category1:Q').to_dict()
+    assert dct2['facet']['column'] == alt.Facet('category2:Q').to_dict()
+    assert 'columns' not in dct2
+    assert dct2['data'] == alt.UrlData('data.csv').to_dict()
+
 def test_facet_parse():
     chart = alt.Chart('data.csv').mark_point().encode(
         x='x:Q',
@@ -491,9 +523,11 @@ def test_chart_from_dict():
               base + base,
               base | base,
               base & base,
-              base.facet(row='c:N'),
+              base.facet('c:N'),
               (base + base).facet(row='c:N', data='data.csv'),
-              base.repeat(['c:N', 'd:N'])]
+              base.repeat(['c', 'd']),
+              (base + base).repeat(row=['c', 'd'])
+    ]
 
     for chart in charts:
         print(chart)

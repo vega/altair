@@ -1494,9 +1494,8 @@ class EncodingMixin(object):
             data, self.data = self.data, Undefined
 
         if facet_specified:
-            if isinstance(column, six.string_types):
-                column = channels.Facet(column)
-            facet = column
+            if isinstance(facet, six.string_types):
+                facet = channels.Facet(facet)
         else:
             facet = FacetMapping(row=row, column=column)
 
