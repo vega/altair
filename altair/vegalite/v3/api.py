@@ -487,7 +487,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def __or__(self, other):
         return HConcatChart(hconcat=[self, other])
 
-    def repeat(self, row=Undefined, column=Undefined, **kwargs):
+    def repeat(self, repeat=Undefined, row=Undefined, column=Undefined, columns=Undefined, **kwargs):
         """Return a RepeatChart built from the chart
 
         Fields within the chart can be set to correspond to the row or
@@ -495,19 +495,36 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Parameters
         ----------
+        repeat : list
+            a list of data column names to be repeated. This cannot be
+            used along with the ``row`` or ``column`` argument.
         row : list
             a list of data column names to be mapped to the row facet
         column : list
             a list of data column names to be mapped to the column facet
+        columns : int
+            the maximum number of columns before wrapping. Only referenced
+            if ``repeat`` is specified.
+        **kwargs :
+            additional keywords passed to RepeatChart.
 
         Returns
         -------
         chart : RepeatChart
             a repeated chart.
-
         """
-        repeat = core.RepeatMapping(row=row, column=column)
-        return RepeatChart(spec=self, repeat=repeat, **kwargs)
+        repeat_specified = (repeat is not Undefined)
+        rowcol_specified = (row is not Undefined or column is not Undefined)
+
+        if repeat_specified and rowcol_specified:
+            raise ValueError("repeat argument cannot be combined with row/column argument.")
+
+        if repeat_specified:
+            repeat = repeat
+        else:
+            repeat = core.RepeatMapping(row=row, column=column)
+
+        return RepeatChart(spec=self, repeat=repeat, columns=columns, **kwargs)
 
     def properties(self, **kwargs):
         """Set top-level properties of the Chart.
@@ -1378,7 +1395,7 @@ class EncodingMixin(object):
                                      "".format(encoding))
                 kwargs[encoding] = arg
 
-        def _wrap_in_channel_class(obj, prop):  
+        def _wrap_in_channel_class(obj, prop):
             clsname = prop.title()
 
             if isinstance(obj, core.SchemaBase):
@@ -1662,7 +1679,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         return copy
 
 
-def repeat(repeater):
+def repeat(repeater='repeat'):
     """Tie a channel to the row or column within a repeated chart
 
     The output of this should be passed to the ``field`` attribute of
@@ -1671,13 +1688,14 @@ def repeat(repeater):
     Parameters
     ----------
     repeater : {'row'|'column'|'repeat'}
-        The repeater to tie the field to.
+        The repeater to tie the field to. Default is 'repeat'.
 
     Returns
     -------
     repeat : RepeatRef object
     """
-    assert repeater in ['row', 'column', 'repeat']
+    if repeater not in ['row', 'column', 'repeat']:
+        raise ValueError("repeater must be one of ['row', 'column', 'repeat']")
     return core.RepeatRef(repeat=repeater)
 
 

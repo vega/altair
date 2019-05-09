@@ -493,9 +493,10 @@ def test_chart_from_dict():
               base & base,
               base.facet(row='c:N'),
               (base + base).facet(row='c:N', data='data.csv'),
-              base.repeat(row=['c:N', 'd:N'])]
+              base.repeat(['c:N', 'd:N'])]
 
     for chart in charts:
+        print(chart)
         chart_out = alt.Chart.from_dict(chart.to_dict())
         assert type(chart_out) is type(chart)
 
@@ -572,3 +573,36 @@ def test_deprecated_encodings():
     chart2 = base.encode(strokeOpacity=alt.StrokeOpacity('x:Q')).to_dict()
 
     assert chart1 == chart2
+
+
+def test_repeat():
+    # wrapped repeat
+    chart1 = alt.Chart('data.csv').mark_point().encode(
+        x=alt.X(alt.repeat(), type='quantitative'),
+        y='y:Q',
+    ).repeat(
+        ['A', 'B', 'C', 'D'],
+        columns=2
+    )
+
+    dct1 = chart1.to_dict()
+
+    assert dct1['repeat'] == ['A', 'B', 'C', 'D']
+    assert dct1['columns'] == 2
+    assert dct1['spec']['encoding']['x']['field'] == {'repeat': 'repeat'}
+
+    # explicit row/col repeat
+    chart2 = alt.Chart('data.csv').mark_point().encode(
+        x=alt.X(alt.repeat('row'), type='quantitative'),
+        y=alt.Y(alt.repeat('column'), type='quantitative')
+    ).repeat(
+        row=['A', 'B', 'C'],
+        column=['C', 'B', 'A']
+    )
+
+    dct2 = chart2.to_dict()
+
+    assert dct2['repeat'] == {'row': ['A', 'B', 'C'], 'column': ['C', 'B', 'A']}
+    assert 'columns' not in dct2
+    assert dct2['spec']['encoding']['x']['field'] == {'repeat': 'row'}
+    assert dct2['spec']['encoding']['y']['field'] == {'repeat': 'column'}
