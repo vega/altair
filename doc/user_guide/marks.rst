@@ -23,7 +23,7 @@ line        :meth:`~Chart.mark_line`      A line plot.                          
 point       :meth:`~Chart.mark_point`     A scatter plot with configurable point shapes.       :ref:`gallery_scatter_linked_brush`
 rect        :meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps                :ref:`gallery_simple_heatmap`
 rule        :meth:`~Chart.mark_rule`      A vertical or horizontal line spanning the axis.     :ref:`gallery_candlestick_chart`
-square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.                  N/A
+square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.                  :ref:`gallery_simple_scatter_large_square`
 text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chart_with_labels`
 tick        :meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.                  :ref:`gallery_strip_plot`
 ==========  ============================  ===================================================  ====================================
