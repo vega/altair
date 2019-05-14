@@ -517,18 +517,18 @@ class legend(VegaSchema):
                  labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined,
                  labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined,
                  labelOpacity=Undefined, labelOverlap=Undefined, labelSeparation=Undefined,
-                 offset=Undefined, opacity=Undefined, orient=Undefined, padding=Undefined,
-                 rowPadding=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeColor=Undefined, strokeDash=Undefined, strokeWidth=Undefined,
-                 symbolDash=Undefined, symbolDashOffset=Undefined, symbolFillColor=Undefined,
-                 symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined,
-                 symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined,
-                 tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined,
-                 titleAnchor=Undefined, titleBaseline=Undefined, titleColor=Undefined,
-                 titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined,
-                 titleFontWeight=Undefined, titleLimit=Undefined, titleOpacity=Undefined,
-                 titleOrient=Undefined, titlePadding=Undefined, type=Undefined, values=Undefined,
-                 zindex=Undefined, **kwds):
+                 legendX=Undefined, legendY=Undefined, offset=Undefined, opacity=Undefined,
+                 orient=Undefined, padding=Undefined, rowPadding=Undefined, shape=Undefined,
+                 size=Undefined, stroke=Undefined, strokeColor=Undefined, strokeDash=Undefined,
+                 strokeWidth=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined,
+                 symbolFillColor=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined,
+                 symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined,
+                 symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined,
+                 titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined,
+                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
+                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
+                 titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined,
+                 values=Undefined, zindex=Undefined, **kwds):
         super(legend, self).__init__(clipHeight=clipHeight, columnPadding=columnPadding,
                                      columns=columns, cornerRadius=cornerRadius, direction=direction,
                                      encode=encode, fill=fill, fillColor=fillColor, format=format,
@@ -543,13 +543,14 @@ class legend(VegaSchema):
                                      labelFontWeight=labelFontWeight, labelLimit=labelLimit,
                                      labelOffset=labelOffset, labelOpacity=labelOpacity,
                                      labelOverlap=labelOverlap, labelSeparation=labelSeparation,
-                                     offset=offset, opacity=opacity, orient=orient, padding=padding,
-                                     rowPadding=rowPadding, shape=shape, size=size, stroke=stroke,
-                                     strokeColor=strokeColor, strokeDash=strokeDash,
-                                     strokeWidth=strokeWidth, symbolDash=symbolDash,
-                                     symbolDashOffset=symbolDashOffset, symbolFillColor=symbolFillColor,
-                                     symbolOffset=symbolOffset, symbolOpacity=symbolOpacity,
-                                     symbolSize=symbolSize, symbolStrokeColor=symbolStrokeColor,
+                                     legendX=legendX, legendY=legendY, offset=offset, opacity=opacity,
+                                     orient=orient, padding=padding, rowPadding=rowPadding, shape=shape,
+                                     size=size, stroke=stroke, strokeColor=strokeColor,
+                                     strokeDash=strokeDash, strokeWidth=strokeWidth,
+                                     symbolDash=symbolDash, symbolDashOffset=symbolDashOffset,
+                                     symbolFillColor=symbolFillColor, symbolOffset=symbolOffset,
+                                     symbolOpacity=symbolOpacity, symbolSize=symbolSize,
+                                     symbolStrokeColor=symbolStrokeColor,
                                      symbolStrokeWidth=symbolStrokeWidth, symbolType=symbolType,
                                      tickCount=tickCount, tickMinStep=tickMinStep, title=title,
                                      titleAlign=titleAlign, titleAnchor=titleAnchor,
@@ -615,13 +616,13 @@ class markGroup(VegaSchema):
                  interactive=Undefined, key=Undefined, layout=Undefined, legends=Undefined,
                  marks=Undefined, name=Undefined, on=Undefined, projections=Undefined, role=Undefined,
                  scales=Undefined, signals=Undefined, sort=Undefined, style=Undefined, title=Undefined,
-                 transform=Undefined, **kwds):
+                 transform=Undefined, usermeta=Undefined, **kwds):
         super(markGroup, self).__init__(type=type, axes=axes, clip=clip, data=data, encode=encode,
                                         interactive=interactive, key=key, layout=layout,
                                         legends=legends, marks=marks, name=name, on=on,
                                         projections=projections, role=role, scales=scales,
                                         signals=signals, sort=sort, style=style, title=title,
-                                        transform=transform, **kwds)
+                                        transform=transform, usermeta=usermeta, **kwds)
 
 
 class markVisual(VegaSchema):
@@ -797,16 +798,18 @@ class scope(VegaSchema):
 
     title : :class:`title`
 
+    usermeta : Mapping(required=[])
+
     """
     _schema = {'$ref': '#/defs/scope'}
     _rootschema = Root._schema
 
     def __init__(self, axes=Undefined, data=Undefined, encode=Undefined, layout=Undefined,
                  legends=Undefined, marks=Undefined, projections=Undefined, scales=Undefined,
-                 signals=Undefined, title=Undefined, **kwds):
+                 signals=Undefined, title=Undefined, usermeta=Undefined, **kwds):
         super(scope, self).__init__(axes=axes, data=data, encode=encode, layout=layout, legends=legends,
                                     marks=marks, projections=projections, scales=scales,
-                                    signals=signals, title=title, **kwds)
+                                    signals=signals, title=title, usermeta=usermeta, **kwds)
 
 
 class signalName(VegaSchema):
@@ -870,11 +873,12 @@ class transform(VegaSchema):
     :class:`geopathTransform`, :class:`geopointTransform`, :class:`geoshapeTransform`,
     :class:`graticuleTransform`, :class:`nestTransform`, :class:`packTransform`,
     :class:`partitionTransform`, :class:`stratifyTransform`, :class:`treeTransform`,
-    :class:`treelinksTransform`, :class:`treemapTransform`, :class:`aggregateTransform`,
-    :class:`binTransform`, :class:`collectTransform`, :class:`countpatternTransform`,
-    :class:`crossTransform`, :class:`densityTransform`, :class:`extentTransform`,
-    :class:`filterTransform`, :class:`flattenTransform`, :class:`foldTransform`,
-    :class:`formulaTransform`, :class:`imputeTransform`, :class:`joinaggregateTransform`,
+    :class:`treelinksTransform`, :class:`treemapTransform`, :class:`loessTransform`,
+    :class:`regressionTransform`, :class:`aggregateTransform`, :class:`binTransform`,
+    :class:`collectTransform`, :class:`countpatternTransform`, :class:`crossTransform`,
+    :class:`densityTransform`, :class:`extentTransform`, :class:`filterTransform`,
+    :class:`flattenTransform`, :class:`foldTransform`, :class:`formulaTransform`,
+    :class:`imputeTransform`, :class:`joinaggregateTransform`, :class:`kdeTransform`,
     :class:`lookupTransform`, :class:`pivotTransform`, :class:`projectTransform`,
     :class:`sampleTransform`, :class:`sequenceTransform`, :class:`windowTransform`,
     :class:`identifierTransform`, :class:`voronoiTransform`, :class:`wordcloudTransform`)
@@ -1541,6 +1545,79 @@ class treemapTransform(VegaSchema):
                                                sort=sort, **kwds)
 
 
+class loessTransform(VegaSchema):
+    """loessTransform schema wrapper
+
+    Mapping(required=[type, x, y])
+
+    Attributes
+    ----------
+
+    type : enum('loess')
+
+    x : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
+
+    y : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
+
+    bandwidth : anyOf(float, :class:`signal`)
+
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
+
+    signal : string
+
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
+
+    """
+    _schema = {'$ref': '#/defs/loessTransform'}
+    _rootschema = Root._schema
+
+    def __init__(self, type=Undefined, x=Undefined, y=Undefined, bandwidth=Undefined, groupby=Undefined,
+                 signal=Undefined, **kwds):
+        super(loessTransform, self).__init__(type=type, x=x, y=y, bandwidth=bandwidth, groupby=groupby,
+                                             signal=signal, **kwds)
+
+
+class regressionTransform(VegaSchema):
+    """regressionTransform schema wrapper
+
+    Mapping(required=[type, x, y])
+
+    Attributes
+    ----------
+
+    type : enum('regression')
+
+    x : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
+
+    y : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
+
+    extent : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
+
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
+
+    method : anyOf(string, :class:`signal`)
+
+    order : anyOf(float, :class:`signal`)
+
+    params : anyOf(boolean, :class:`signal`)
+
+    signal : string
+
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
+
+    """
+    _schema = {'$ref': '#/defs/regressionTransform'}
+    _rootschema = Root._schema
+
+    def __init__(self, type=Undefined, x=Undefined, y=Undefined, extent=Undefined, groupby=Undefined,
+                 method=Undefined, order=Undefined, params=Undefined, signal=Undefined, **kwds):
+        super(regressionTransform, self).__init__(type=type, x=x, y=y, extent=extent, groupby=groupby,
+                                                  method=method, order=order, params=params,
+                                                  signal=signal, **kwds)
+
+
 class aggregateTransform(VegaSchema):
     """aggregateTransform schema wrapper
 
@@ -1725,7 +1802,11 @@ class densityTransform(VegaSchema):
 
     extent : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
+    maxsteps : anyOf(float, :class:`signal`)
+
     method : anyOf(string, :class:`signal`)
+
+    minsteps : anyOf(float, :class:`signal`)
 
     signal : string
 
@@ -1737,10 +1818,11 @@ class densityTransform(VegaSchema):
     _schema = {'$ref': '#/defs/densityTransform'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, distribution=Undefined, extent=Undefined, method=Undefined,
-                 signal=Undefined, steps=Undefined, **kwds):
+    def __init__(self, type=Undefined, distribution=Undefined, extent=Undefined, maxsteps=Undefined,
+                 method=Undefined, minsteps=Undefined, signal=Undefined, steps=Undefined, **kwds):
         super(densityTransform, self).__init__(type=type, distribution=distribution, extent=extent,
-                                               method=method, signal=signal, steps=steps, **kwds)
+                                               maxsteps=maxsteps, method=method, minsteps=minsteps,
+                                               signal=signal, steps=steps, **kwds)
 
 
 class extentTransform(VegaSchema):
@@ -1937,6 +2019,52 @@ class joinaggregateTransform(VegaSchema):
                                                      ops=ops, signal=signal, **kwds)
 
 
+class kdeTransform(VegaSchema):
+    """kdeTransform schema wrapper
+
+    Mapping(required=[type, field])
+
+    Attributes
+    ----------
+
+    field : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
+
+    type : enum('kde')
+
+    bandwidth : anyOf(float, :class:`signal`)
+
+    counts : anyOf(boolean, :class:`signal`)
+
+    cumulative : anyOf(boolean, :class:`signal`)
+
+    extent : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
+
+    groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
+    :class:`signal`)
+
+    maxsteps : anyOf(float, :class:`signal`)
+
+    minsteps : anyOf(float, :class:`signal`)
+
+    signal : string
+
+    steps : anyOf(float, :class:`signal`)
+
+    as : oneOf(List(anyOf(string, :class:`signal`)), :class:`signal`)
+
+    """
+    _schema = {'$ref': '#/defs/kdeTransform'}
+    _rootschema = Root._schema
+
+    def __init__(self, field=Undefined, type=Undefined, bandwidth=Undefined, counts=Undefined,
+                 cumulative=Undefined, extent=Undefined, groupby=Undefined, maxsteps=Undefined,
+                 minsteps=Undefined, signal=Undefined, steps=Undefined, **kwds):
+        super(kdeTransform, self).__init__(field=field, type=type, bandwidth=bandwidth, counts=counts,
+                                           cumulative=cumulative, extent=extent, groupby=groupby,
+                                           maxsteps=maxsteps, minsteps=minsteps, signal=signal,
+                                           steps=steps, **kwds)
+
+
 class lookupTransform(VegaSchema):
     """lookupTransform schema wrapper
 
@@ -2108,10 +2236,10 @@ class windowTransform(VegaSchema):
     ignorePeers : anyOf(boolean, :class:`signal`)
 
     ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist',
-    'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'values', 'count',
-    '__count__', 'missing', 'valid', 'sum', 'mean', 'average', 'variance', 'variancep', 'stdev',
-    'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax',
-    'min', 'max'), :class:`signal`)), :class:`signal`)
+    'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'prev_value',
+    'next_value', 'values', 'count', '__count__', 'missing', 'valid', 'sum', 'mean', 'average',
+    'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median',
+    'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)), :class:`signal`)
 
     params : oneOf(List(anyOf(float, :class:`signal`, None)), :class:`signal`)
 
@@ -2711,13 +2839,94 @@ class colorHCL(VegaSchema):
 class colorValue(VegaSchema):
     """colorValue schema wrapper
 
-    oneOf(:class:`nullableStringValue`, Mapping(required=[gradient]), Mapping(required=[color]))
+    oneOf(:class:`nullableStringValue`, Mapping(required=[value]), Mapping(required=[value]),
+    Mapping(required=[gradient]), Mapping(required=[color]))
     """
     _schema = {'$ref': '#/refs/colorValue'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(colorValue, self).__init__(*args, **kwds)
+
+
+class gradientStops(VegaSchema):
+    """gradientStops schema wrapper
+
+    List(Mapping(required=[offset, color]))
+    """
+    _schema = {'$ref': '#/refs/gradientStops'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(gradientStops, self).__init__(*args)
+
+
+class gradientLinear(VegaSchema):
+    """gradientLinear schema wrapper
+
+    Mapping(required=[gradient, stops])
+
+    Attributes
+    ----------
+
+    gradient : enum('linear')
+
+    stops : :class:`gradientStops`
+
+    id : string
+
+    x1 : float
+
+    x2 : float
+
+    y1 : float
+
+    y2 : float
+
+    """
+    _schema = {'$ref': '#/refs/gradientLinear'}
+    _rootschema = Root._schema
+
+    def __init__(self, gradient=Undefined, stops=Undefined, id=Undefined, x1=Undefined, x2=Undefined,
+                 y1=Undefined, y2=Undefined, **kwds):
+        super(gradientLinear, self).__init__(gradient=gradient, stops=stops, id=id, x1=x1, x2=x2, y1=y1,
+                                             y2=y2, **kwds)
+
+
+class gradientRadial(VegaSchema):
+    """gradientRadial schema wrapper
+
+    Mapping(required=[gradient, stops])
+
+    Attributes
+    ----------
+
+    gradient : enum('radial')
+
+    stops : :class:`gradientStops`
+
+    id : string
+
+    r1 : float
+
+    r2 : float
+
+    x1 : float
+
+    x2 : float
+
+    y1 : float
+
+    y2 : float
+
+    """
+    _schema = {'$ref': '#/refs/gradientRadial'}
+    _rootschema = Root._schema
+
+    def __init__(self, gradient=Undefined, stops=Undefined, id=Undefined, r1=Undefined, r2=Undefined,
+                 x1=Undefined, x2=Undefined, y1=Undefined, y2=Undefined, **kwds):
+        super(gradientRadial, self).__init__(gradient=gradient, stops=stops, id=id, r1=r1, r2=r2, x1=x1,
+                                             x2=x2, y1=y1, y2=y2, **kwds)
 
 
 class expr(VegaSchema):

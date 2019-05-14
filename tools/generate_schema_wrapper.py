@@ -21,9 +21,8 @@ from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist, res
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
     'vega': {
-        'v3': 'v3.3.1',
         'v4': 'v4.4.0',
-        'v5': 'v5.3.5',
+        'v5': 'v5.4.0',
     },
     'vega-lite': {
         'v2': 'v2.6.0',
