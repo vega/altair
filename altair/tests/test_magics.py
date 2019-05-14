@@ -8,8 +8,8 @@ except ImportError:
     IPYTHON_AVAILABLE = False
     pass
 
-from altair.vegalite.v2 import VegaLite
-from altair.vega.v3 import Vega
+from altair.vegalite.v3 import VegaLite
+from altair.vega.v5 import Vega
 
 
 DATA_RECORDS = [{'amount': 28, 'category': 'A'},
