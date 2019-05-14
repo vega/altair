@@ -14,7 +14,6 @@ from toolz import pipe
 
 from altair.vegalite import v2 as vegalite_v2
 from altair.vegalite import v3 as vegalite_v3
-from altair.vega import v3 as vega_v3
 from altair.vega import v4 as vega_v4
 from altair.vega import v5 as vega_v5
 
@@ -28,7 +27,6 @@ except ImportError:
 
 RENDERERS = {
   'vega': {
-      '3': vega_v3.Vega,
       '4': vega_v4.Vega,
       '5': vega_v5.Vega,
   },
@@ -83,12 +81,12 @@ def _get_variable(name):
     'data',
     nargs='*',
     help='local variable name of a pandas DataFrame to be used as the dataset')
-@magic_arguments.argument('-v', '--version', dest='version', default='3')
+@magic_arguments.argument('-v', '--version', dest='version', default='5')
 @magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vega(line, cell):
     """Cell magic for displaying Vega visualizations in CoLab.
 
-    %%vega [name1:variable1 name2:variable2 ...] [--json] [--version='3']
+    %%vega [name1:variable1 name2:variable2 ...] [--json] [--version='5']
 
     Visualize the contents of the cell using Vega, optionally specifying
     one or more pandas DataFrame objects to be used as the datasets.
@@ -143,12 +141,12 @@ def vega(line, cell):
     'data',
     nargs='?',
     help='local variablename of a pandas DataFrame to be used as the dataset')
-@magic_arguments.argument('-v', '--version', dest='version', default='2')
+@magic_arguments.argument('-v', '--version', dest='version', default='3')
 @magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vegalite(line, cell):
     """Cell magic for displaying vega-lite visualizations in CoLab.
 
-    %%vegalite [dataframe] [--json] [--version=2]
+    %%vegalite [dataframe] [--json] [--version=3]
 
     Visualize the contents of the cell using Vega-Lite, optionally
     specifying a pandas DataFrame object to be used as the dataset.
