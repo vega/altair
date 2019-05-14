@@ -107,7 +107,7 @@ Bin = core.BinParams
 class LookupData(core.LookupData):
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
-        copy = self.copy(ignore=['data'])
+        copy = self.copy(deep=False)
         context = kwargs.get('context', {})
         copy.data = _prepare_data(copy.data, context)
         return super(LookupData, copy).to_dict(*args, **kwargs)
@@ -118,7 +118,7 @@ class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
 
     def to_dict(self, *args, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=False)
         context = kwargs.get('context', {})
         data = context.get('data', None)
         if isinstance(self.row, six.string_types):
@@ -354,7 +354,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context.setdefault('datasets', {})
         is_top_level = context.get('top_level', True)
 
-        copy = self.copy()
+        copy = self.copy(deep=False)
         original_data = getattr(copy, 'data', Undefined)
         copy.data = _prepare_data(original_data, context)
 
@@ -531,7 +531,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Argument names and types are the same as class initialization.
         """
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         for key, val in kwargs.items():
             if key == 'selection' and isinstance(val, Selection):
                 # For backward compatibility with old selection interface.
@@ -545,9 +545,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """Add one or more selections to the chart."""
         if not selections:
             return self
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=['selection'])
         if copy.selection is Undefined:
             copy.selection = {}
+
         for s in selections:
             copy.selection[s.name] = s.selection
         return copy
@@ -631,11 +632,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def _add_transform(self, *transforms):
         """Copy the chart and add specified transforms to chart.transform"""
-        copy = self.copy()
+        copy = self.copy(deep=['transform'])
         if copy.transform is Undefined:
-            copy.transform = list(transforms)
-        else:
-            copy.transform.extend(transforms)
+            copy.transform = []
+        copy.transform.extend(transforms)
         return copy
 
     def transform_aggregate(self, aggregate=Undefined, groupby=Undefined, **kwds):
@@ -1262,7 +1262,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         if not hasattr(self, 'resolve'):
             raise ValueError("{} object has no attribute "
                              "'resolve'".format(self.__class__))
-        copy = self.copy()
+        copy = self.copy(deep=['resolve'])
         if copy.resolve is Undefined:
             copy.resolve = core.Resolve()
         for key, val in kwargs.items():
@@ -1434,15 +1434,11 @@ class EncodingMixin(object):
             if obj is not None:
                 kwargs[prop] = _wrap_in_channel_class(obj, prop)
 
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=['encoding'])
 
         # get a copy of the dict representation of the previous encoding
-        encoding = copy.encoding
-        if encoding is Undefined:
-            encoding = {}
-        elif isinstance(encoding, dict):
-            pass
-        else:
+        encoding = copy._get('encoding', {})
+        if isinstance(encoding, core.VegaLiteSchema):
             encoding = {k: v for k, v in encoding._kwds.items()
                         if v is not Undefined}
 
@@ -1490,7 +1486,7 @@ class EncodingMixin(object):
         if data is Undefined:
             if self.data is Undefined:
                  raise ValueError("Facet charts require data to be specified at the top level.")
-            self = self.copy(ignore=['data'])
+            self = self.copy(deep=False)
             data, self.data = self.data, Undefined
 
         if facet_specified:
@@ -1673,7 +1669,7 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             copy of self, with interactive axes added
 
         """
-        copy = self.copy()
+        copy = self.copy(deep=False)
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
@@ -1714,12 +1710,9 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         return self
 
     def __or__(self, other):
-        _check_if_valid_subspec(other, 'ConcatChart')
-        copy = self.copy()
-        copy.concat.append(other)
+        copy = self.copy(deep=['concat'])
+        copy |= other
         return copy
-
-    # TODO: think about the most useful class API here
 
 
 def concat(*charts, **kwargs):
@@ -1742,12 +1735,9 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return self
 
     def __or__(self, other):
-        _check_if_valid_subspec(other, 'HConcatChart')
-        copy = self.copy()
-        copy.hconcat.append(other)
+        copy = self.copy(deep=['hconcat'])
+        copy |= other
         return copy
-
-    # TODO: think about the most useful class API here
 
 
 def hconcat(*charts, **kwargs):
@@ -1770,12 +1760,9 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return self
 
     def __and__(self, other):
-        _check_if_valid_subspec(other, 'VConcatChart')
-        copy = self.copy()
-        copy.vconcat.append(other)
+        copy = self.copy(deep=['vconcat'])
+        copy &= other
         return copy
-
-    # TODO: think about the most useful class API here
 
 
 def vconcat(*charts, **kwargs):
@@ -1800,12 +1787,12 @@ class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         return self
 
     def __add__(self, other):
-        copy = self.copy()
-        copy.layer.append(other)
+        copy = self.copy(deep=['layer'])
+        copy += other
         return copy
 
     def add_layers(self, *layers):
-        copy = self.copy()
+        copy = self.copy(deep=['layer'])
         for layer in layers:
             copy += layer
         return copy
@@ -1832,7 +1819,7 @@ class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         if not self.layer:
             raise ValueError("LayerChart: cannot call interactive() until a "
                              "layer is defined")
-        copy = self.copy()
+        copy = self.copy(deep=['layer'])
         copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
@@ -1868,7 +1855,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             copy of self, with interactive axes added
 
         """
-        copy = self.copy()
+        copy = self.copy(deep=False)
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
