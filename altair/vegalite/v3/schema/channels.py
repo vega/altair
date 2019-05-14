@@ -72,7 +72,7 @@ class ValueChannelMixin(object):
                 pass
             elif 'field' in condition and 'type' not in condition:
                 kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
+                copy = self.copy(deep=['condition'])
                 copy.condition.update(kwds)
         return super(ValueChannelMixin, copy).to_dict(validate=validate,
                                                       ignore=ignore,

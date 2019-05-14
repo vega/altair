@@ -136,7 +136,7 @@ class ValueChannelMixin(object):
                 pass
             elif 'field' in condition and 'type' not in condition:
                 kwds = parse_shorthand(condition['field'], context.get('data', None))
-                copy = self.copy()
+                copy = self.copy(deep=['condition'])
                 copy.condition.update(kwds)
         return super(ValueChannelMixin, copy).to_dict(validate=validate,
                                                       ignore=ignore,
@@ -332,7 +332,7 @@ def mark_{mark}({def_arglist}):
     For information on additional arguments, see :class:`{mark_def}`
     """
     kwds = dict({dict_arglist})
-    copy = self.copy(deep=True, ignore=['data'])
+    copy = self.copy(deep=False)
     if any(val is not Undefined for val in kwds.values()):
         copy.mark = core.{mark_def}(type="{mark}", **kwds)
     else:
@@ -384,7 +384,7 @@ def generate_vegalite_mark_mixin(schemafile, markdefs):
 CONFIG_METHOD = """
 @use_signature(core.{classname})
 def {method}(self, *args, **kwargs):
-    copy = self.copy()
+    copy = self.copy(deep=False)
     copy.config = core.{classname}(*args, **kwargs)
     return copy
 """
@@ -392,11 +392,9 @@ def {method}(self, *args, **kwargs):
 CONFIG_PROP_METHOD = """
 @use_signature(core.{classname})
 def configure_{prop}(self, *args, **kwargs):
-    copy = self.copy(deep=False)
+    copy = self.copy(deep=['config'])
     if copy.config is Undefined:
         copy.config = core.Config()
-    else:
-        copy.config = copy.config.copy(deep=False)
     copy.config["{prop}"] = core.{classname}(*args, **kwargs)
     return copy
 """
