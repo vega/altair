@@ -37,7 +37,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="area", **kwds)
         else:
@@ -71,7 +71,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="bar", **kwds)
         else:
@@ -105,7 +105,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="line", **kwds)
         else:
@@ -139,7 +139,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="trail", **kwds)
         else:
@@ -173,7 +173,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="point", **kwds)
         else:
@@ -207,7 +207,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="text", **kwds)
         else:
@@ -241,7 +241,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="tick", **kwds)
         else:
@@ -275,7 +275,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rect", **kwds)
         else:
@@ -309,7 +309,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rule", **kwds)
         else:
@@ -343,7 +343,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="circle", **kwds)
         else:
@@ -377,7 +377,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="square", **kwds)
         else:
@@ -412,7 +412,7 @@ class MarkMethodMixin(object):
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
                     xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="geoshape", **kwds)
         else:
@@ -425,296 +425,238 @@ class ConfigMethodMixin(object):
 
     @use_signature(core.Config)
     def configure(self, *args, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=False)
         copy.config = core.Config(*args, **kwargs)
         return copy
 
     @use_signature(core.AreaConfig)
     def configure_area(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["area"] = core.AreaConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axis(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axis"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
     def configure_axisBand(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisBand"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
     def configure_axisBottom(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisBottom"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
     def configure_axisLeft(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisLeft"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
     def configure_axisRight(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisRight"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
     def configure_axisTop(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisTop"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
     def configure_axisX(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisX"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgAxisConfig)
     def configure_axisY(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisY"] = core.VgAxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.BarConfig)
     def configure_bar(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["bar"] = core.BarConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_circle(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["circle"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_geoshape(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["geoshape"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.HeaderConfig)
     def configure_header(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["header"] = core.HeaderConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.LegendConfig)
     def configure_legend(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["legend"] = core.LegendConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.LineConfig)
     def configure_line(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["line"] = core.LineConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_mark(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["mark"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_point(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["point"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ProjectionConfig)
     def configure_projection(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["projection"] = core.ProjectionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.RangeConfig)
     def configure_range(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["range"] = core.RangeConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_rect(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["rect"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_rule(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["rule"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ScaleConfig)
     def configure_scale(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["scale"] = core.ScaleConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.SelectionConfig)
     def configure_selection(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["selection"] = core.SelectionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_square(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["square"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.TextConfig)
     def configure_text(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["text"] = core.TextConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.TickConfig)
     def configure_tick(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["tick"] = core.TickConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.VgTitleConfig)
     def configure_title(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["title"] = core.VgTitleConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.LineConfig)
     def configure_trail(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["trail"] = core.LineConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ViewConfig)
     def configure_view(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["view"] = core.ViewConfig(*args, **kwargs)
         return copy

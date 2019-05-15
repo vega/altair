@@ -145,13 +145,25 @@ class SchemaBase(object):
 
         Parameters
         ----------
-        deep : boolean, optional
-            if True (default) then return a deep copy of all dict, list, and
-            SchemaBase objects within the object structure
+        deep : boolean or list, optional
+            If True (default) then return a deep copy of all dict, list, and
+            SchemaBase objects within the object structure.
+            If False, then only copy the top object.
+            If a list or iterable, then only copy the listed attributes.
         ignore : list, optional
             A list of keys for which the contents should not be copied, but
             only stored by reference.
         """
+        def _shallow_copy(obj):
+            if isinstance(obj, SchemaBase):
+                return obj.copy(deep=False)
+            elif isinstance(obj, list):
+                return obj[:]
+            elif isinstance(obj, dict):
+                return obj.copy()
+            else:
+                return obj
+
         def _deep_copy(obj, ignore=()):
             if isinstance(obj, SchemaBase):
                 args = tuple(_deep_copy(arg) for arg in obj._args)
@@ -168,11 +180,22 @@ class SchemaBase(object):
                         for k, v in obj.items()}
             else:
                 return obj
-        if deep:
-            return _deep_copy(self, ignore=ignore)
+        try:
+            deep = list(deep)
+        except TypeError:
+            deep_is_list = False
         else:
-            with debug_mode(False):
-                return self.__class__(*self._args, **self._kwds)
+            deep_is_list = True
+
+        if deep and not deep_is_list:
+            return _deep_copy(self, ignore=ignore)
+
+        with debug_mode(False):
+            copy = self.__class__(*self._args, **self._kwds)
+        if deep_is_list:
+            for attr in deep:
+                copy[attr] = _shallow_copy(copy._get(attr))
+        return copy
 
     def _get(self, attr, default=Undefined):
         """Get an attribute, returning default if not present."""
