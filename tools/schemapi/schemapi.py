@@ -154,6 +154,16 @@ class SchemaBase(object):
             A list of keys for which the contents should not be copied, but
             only stored by reference.
         """
+        def _shallow_copy(obj):
+            if isinstance(obj, SchemaBase):
+                return obj.copy(deep=False)
+            elif isinstance(obj, list):
+                return obj[:]
+            elif isinstance(obj, dict):
+                return obj.copy()
+            else:
+                return obj
+
         def _deep_copy(obj, ignore=()):
             if isinstance(obj, SchemaBase):
                 args = tuple(_deep_copy(arg) for arg in obj._args)
@@ -184,8 +194,7 @@ class SchemaBase(object):
             copy = self.__class__(*self._args, **self._kwds)
         if deep_is_list:
             for attr in deep:
-                if copy._get(attr) is not Undefined:
-                    copy[attr] = copy[attr].copy()
+                copy[attr] = _shallow_copy(copy._get(attr))
         return copy
 
     def _get(self, attr, default=Undefined):
