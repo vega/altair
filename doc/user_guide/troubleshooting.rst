@@ -208,6 +208,9 @@ Notebook: Textual Chart Representation
 *If you are using the Notebook rather than the JupyterLab, then refer to*
 :ref:`jupyterlab-textual-chart-representation`
 
+*If you are not using a Jupyter notebook environment, then refer to*
+:ref:`troubleshooting-non-notebook`.
+
 If you are using Jupyter notebook and see a textual representation of the Chart
 object similar to this::
 
@@ -232,6 +235,20 @@ Altair will not display correctly if using a kernel with IPython version 4.X or 
 The easiest way to address this is to change your kernel:
 choose "Kernel"->"Change Kernel" and then select "Python 2" or "Python 3",
 depending on what version of Python you used when installing Altair.
+
+
+.. _troubleshooting-non-notebook:
+
+Trouble-shooting Altair outside of Jupyter
+------------------------------------------
+If you are using Altair outside of a Jupyter notebook environment (such as a
+Python or IPython terminal) charts will be displayed as a textual
+representation. Rendering of Altair charts requires executing Javascript code,
+which your Python terminal cannot do natively.
+
+For recommendations on how to use Altair outside of notebook environments,
+see :ref:`display-general`.
+
 
 .. _troubleshooting-general:
 
