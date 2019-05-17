@@ -1,4 +1,4 @@
-# Altair
+# Altair <a href="https://vega.github.io/vega-lite/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 [![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
@@ -6,8 +6,6 @@
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
 
 [http://altair-viz.github.io](http://altair-viz.github.io)
-
-<a href="https://altair-viz.github.io"><img src="https://altair-viz.github.io/_static/altair-logo-light.png" align="left" hspace="40" vspace="6" alt="Altair logo" width="150px"></a>
 
 **Altair** is a declarative statistical visualization library for Python. With Altair, you can spend more time understanding your data and its meaning. Altair's
 API is simple, friendly and consistent and built on top of the powerful
