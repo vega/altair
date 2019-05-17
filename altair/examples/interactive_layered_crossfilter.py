@@ -22,12 +22,12 @@ base = alt.Chart().mark_bar().encode(
     x=alt.X(alt.repeat('column'), type='quantitative', bin=alt.Bin(maxbins=20)),
     y='count()'
 ).properties(
-    width=180,
+    width=160,
     height=130
 )
 
 # blue background with selection
-background = base.properties(selection=brush)
+background = base.add_selection(brush)
 
 # yellow highlights on the transformed data
 highlight = base.encode(

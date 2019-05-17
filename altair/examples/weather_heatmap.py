@@ -14,11 +14,11 @@ alt.Chart(
     source,
     title="2010 Daily High Temperature (F) in Seattle, WA"
 ).mark_rect().encode(
-    x=alt.X('date:O', timeUnit='date'),
-    y=alt.Y('date:O', timeUnit='month'),
-    color=alt.Color('temp:Q', aggregate='max'),
+    x='date(date):O',
+    y='month(date):O',
+    color=alt.Color('max(temp):Q', scale=alt.Scale(scheme="inferno")),
     tooltip=[
-        alt.Tooltip('date:T', timeUnit='monthdate', title='Date'),
-        alt.Tooltip('temp:Q', aggregate='max', title='Max Temp')
+        alt.Tooltip('monthdate(date):T', title='Date'),
+        alt.Tooltip('max(temp):Q', title='Max Temp')
     ]
-).properties(width=600)
+).properties(width=550)

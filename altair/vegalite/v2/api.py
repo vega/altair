@@ -197,7 +197,7 @@ class NamedSelection(SelectionMapping):
 
         Examples
         --------
-        >>> import altair as alt
+        >>> import altair.vegalite.v2 as alt
         >>> sel = alt.selection_interval(name='interval')
         >>> sel.ref()
         {'selection': 'interval'}
@@ -685,7 +685,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         The aggregate transform allows you to specify transforms directly using
         the same shorthand syntax as used in encodings:
 
-        >>> import altair as alt
+        >>> import altair.vegalite.v2 as alt
         >>> chart1 = alt.Chart().transform_aggregate(
         ...     mean_acc='mean(Acceleration)',
         ...     groupby=['Origin']
@@ -752,7 +752,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Examples
         --------
-        >>> import altair as alt
+        >>> import altair.vegalite.v2 as alt
         >>> chart = alt.Chart().transform_bin("x_binned", "x")
         >>> chart.transform[0]
         BinTransform({
@@ -807,7 +807,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Examples
         --------
-        >>> import altair as alt
+        >>> import altair.vegalite.v2 as alt
         >>> from altair import datum, expr
 
         >>> chart = alt.Chart().transform_calculate(y = 2 * expr.sin(datum.x))
@@ -941,7 +941,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Examples
         --------
-        >>> import altair as alt
+        >>> import altair.vegalite.v2 as alt
         >>> from altair import datum, expr
 
         >>> chart = alt.Chart().transform_timeunit(month='month(date)')
@@ -1041,7 +1041,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         --------
         A cumulative line chart
 
-        >>> import altair as alt
+        >>> import altair.vegalite.v2 as alt
         >>> import numpy as np
         >>> import pandas as pd
         >>> data = pd.DataFrame({'x': np.arange(100),

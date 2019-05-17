@@ -36,10 +36,9 @@ bar = alt.Chart(source).mark_bar().encode(
     y='count()',
     color=alt.condition(pts, alt.ColorValue("steelblue"), alt.ColorValue("grey"))
 ).properties(
-    selection=pts,
     width=550,
     height=200
-)
+).add_selection(pts)
 
 alt.vconcat(
     rect + circ,

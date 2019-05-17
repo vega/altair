@@ -24,17 +24,23 @@ This second approach -- specifying data transformations within the chart
 specification itself -- can be accomplished using the ``transform_*``
 methods of top-level objects:
 
-=========================================  ================================================================================
-Method                                     Description
-=========================================  ================================================================================
-:meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
-:meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
-:meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
-:meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
-:meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
-:meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
-:meth:`~Chart.transform_window`            Compute a windowed aggregation
-=========================================  ================================================================================
+=========================================  =========================================  ================================================================================
+Transform                                  Method                                     Description
+=========================================  =========================================  ================================================================================
+:ref:`user-guide-aggregate-transform`      :meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
+:ref:`user-guide-bin-transform`            :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
+:ref:`user-guide-calculate-transform`      :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
+:ref:`user-guide-filter-transform`         :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
+:ref:`user-guide-flatten-transform`        :meth:`~Chart.transform_flatten`           Flatten array data into columns.
+:ref:`user-guide-fold-transform`           :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data.
+:ref:`user-guide-impute-transform`         :meth:`~Chart.transform_impute`            Impute missing data.
+:ref:`user-guide-joinaggregate-transform`  :meth:`~Chart.transform_joinaggregate`     Aggregate transform joined to original data.
+:ref:`user-guide-lookup-transform`         :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
+:ref:`user-guide-sample-transform`         :meth:`~Chart.transform_sample`            Random sub-sample of the rows in the dataset.
+:ref:`user-guide-stack-transform`          :meth:`~Chart.transform_stack`             Compute stacked version of values.
+:ref:`user-guide-timeunit-transform`       :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
+:ref:`user-guide-window-transform`         :meth:`~Chart.transform_window`            Compute a windowed aggregation
+=========================================  =========================================  ================================================================================
 
 We will see some examples of these transforms in the following sections.
 
@@ -97,6 +103,17 @@ The same plot can be shown using an explicitly computed aggregation, using the
     )
 
 For a list of available aggregates, see :ref:`encoding-aggregates`.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_aggregate` method is built on the :class:`~AggregateTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.AggregateTransform
+
+The :class:`~AggregatedFieldDef` objects have the following options:
+
+.. altair-object-table:: altair.AggregatedFieldDef
 
 .. _user-guide-bin-transform:
 
@@ -183,6 +200,13 @@ Note the slight difference in binning behavior between the encoding-based binnin
 (which preserve the range of the bins) and the transform-based binnings (which
 collapse each bin to a single representative value.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_bin` method is built on the :class:`~BinTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.BinTransform
+
 .. _user-guide-calculate-transform:
 
 Calculate Transform
@@ -237,6 +261,13 @@ available functions and constants.
 
 These expressions can also be used when constructing a
 :ref:`user-guide-filter-transform`, as we shall see next.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_calculate` method is built on the :class:`~CalculateTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.CalculateTransform
 
 .. _user-guide-filter-transform:
 
@@ -388,8 +419,9 @@ to select the data to be shown in the top chart:
         y='sum(people):Q',
         color=alt.condition(selection, alt.value('steelblue'), alt.value('lightgray'))
     ).properties(
-        width=600, height=100,
-        selection=selection
+        width=600, height=100
+    ).add_selection(
+        selection
     )
 
     alt.vconcat(
@@ -407,7 +439,7 @@ selection. This can be accomplished using the various logical operand classes:
 - :class:`~LogicalNotPredicate`
 
 These are not yet part of the Altair interface
-(see `Issue 693 <https://github.com/altair-viz/altair/pull/693>`_)
+(see `Issue 695 <https://github.com/altair-viz/altair/issues/695>`_)
 but can be constructed explicitly; for example, here we plot US population
 distributions for all data *except* the years 1950-1960,
 by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
@@ -429,12 +461,327 @@ by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
         {'not': alt.FieldRangePredicate(field='year', range=[1900, 1950])}
     )
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_filter` method is built on the :class:`~FilterTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.FilterTransform
+
+.. _user-guide-flatten-transform:
+
+Flatten Transform
+~~~~~~~~~~~~~~~~~
+The flatten transform can be used to extract the contents of arrays from data entries.
+This will not generally be useful for well-structured data within pandas dataframes,
+but it can be useful for working with data from other sources.
+
+As an example, consider this dataset which uses a common convention in JSON data,
+a set of fields each containing a list of entries:
+
+.. altair-plot::
+   :output: none
+
+   import numpy as np
+
+   rand = np.random.RandomState(0)
+
+   def generate_data(N):
+       mean = rand.randn()
+       std = rand.rand()
+       return list(rand.normal(mean, std, N))
+
+   data = [
+       {'label': 'A', 'values': generate_data(20)},
+       {'label': 'B', 'values': generate_data(30)},
+       {'label': 'C', 'values': generate_data(40)},
+       {'label': 'D', 'values': generate_data(50)},   
+   ]
+
+This kind of data structure does not work well in the context of dataframe
+representations, as we can see by loading this into pandas:
+
+.. altair-plot::
+   :output: repr
+
+   import pandas as pd
+   df = pd.DataFrame.from_records(data)
+   df
+
+Alair's flatten transform allows you to extract the contents of these arrays
+into a column that can be referenced by an encoding:
+
+.. altair-plot::
+
+   alt.Chart(df).transform_flatten(
+       ['values']
+   ).mark_tick().encode(
+       x='values:Q',
+       y='label:N',
+   )
+
+This can be particularly useful in cleaning up data specified via a JSON URL,
+without having to first load the data for manipulation in pandas.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_flatten` method is built on the :class:`~FlattenTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.FlattenTransform
+
+.. _user-guide-fold-transform:
+
+Fold Transform
+~~~~~~~~~~~~~~
+The fold transform is, in short, a way to convert wide-form data to long-form
+data directly without any preprocessing (see :ref:`data-long-vs-wide` for more
+information).
+
+So, for example, if your data consist of multiple columns that record parallel
+data for different categories, you can use the fold transform to encode based
+on those categories:
+
+.. altair-plot::
+
+   import numpy as np
+   import pandas as pd
+   import altair as alt
+
+   rand = np.random.RandomState(0)
+   data = pd.DataFrame({
+       'date': pd.date_range('2019-01-01', freq='D', periods=30),
+       'A': rand.randn(30).cumsum(),
+       'B': rand.randn(30).cumsum(),
+       'C': rand.randn(30).cumsum(),
+   })
+
+   alt.Chart(data).transform_fold(
+       ['A', 'B', 'C'],
+   ).mark_line().encode(
+       x='date:T',
+       y='value:Q',
+       color='key:N'
+   )
+
+Notice here that the fold transform essentially stacks all the values
+from the specified columns into a single new field named ``"value"``,
+with the associated names in a field named ``"key"``.
+
+For an example of the fold transform in action, see :ref:`gallery_parallel_coordinates`.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_fold` method is built on the :class:`~FoldTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.FoldTransform
+
+.. _user-guide-impute-transform:
+
+Impute Transform
+~~~~~~~~~~~~~~~~
+The impute transform allows you to fill-in missing entries in a dataset.
+As an example, consider the following data, which includes missing values
+that we filter-out of the long-form representation (see :ref:`data-long-vs-wide`
+for more on this):
+
+.. altair-plot::
+   :output: repr
+
+   import numpy as np
+   import pandas as pd
+
+   data = pd.DataFrame({
+       't': range(5),
+       'x': [2, np.nan, 3, 1, 3],
+       'y': [5, 7, 5, np.nan, 4]
+   }).melt('t').dropna()
+   data
+
+Notice the result: the ``x`` series has no entry at ``t=1``, and the ``y``
+series has a missing entry at ``t=3``. If we use Altair to visualize this
+data directly, the line skips the missing entries:
+
+.. altair-plot::
+
+   raw = alt.Chart(data).mark_line(point=True).encode(
+       x=alt.X('t:Q'),
+       y='value:Q',
+       color='variable:N'
+   )
+   raw
+
+This is not always desireable, because (particularly for a line plot with
+no points) it can imply the esistence of data that is not there.
+
+Impute via Encodings
+^^^^^^^^^^^^^^^^^^^^
+To address this, you can use an impute argument to the encoding channel.
+For example, we can impute using a constant value (we'll show the raw chart
+lightly in the background for reference):
+
+.. altair-plot::
+
+   background = raw.encode(opacity=alt.value(0.2))
+   chart = alt.Chart(data).mark_line(point=True).encode(
+       x='t:Q',
+       y=alt.Y('value:Q', impute=alt.ImputeParams(value=0)),
+       color='variable:N'
+   )
+   background + chart
+
+Or we can impute using any supported aggregate:
+
+.. altair-plot::
+
+   chart = alt.Chart(data).mark_line(point=True).encode(
+       x='t:Q',
+       y=alt.Y('value:Q', impute=alt.ImputeParams(method='mean')),
+       color='variable:N'
+   )
+   background + chart
+
+Impute via Transform
+^^^^^^^^^^^^^^^^^^^^
+Similar to the :ref:`user-guide-bin-transform` and :ref:`user-guide-aggregate-transform`,
+it is also possible to specify the impute transform outside the encoding as a
+transform. For example, here is the equivalent of the above two charts:
+
+.. altair-plot::
+
+   chart = alt.Chart(data).transform_impute(
+       impute='value',
+       key='t',
+       value=0,
+       groupby=['variable']
+   ).mark_line(point=True).encode(
+       x='t:Q',
+       y='value:Q',
+       color='variable:N'
+   )
+   background + chart
+
+.. altair-plot::
+
+   chart = alt.Chart(data).transform_impute(
+       impute='value',
+       key='t',
+       method='mean',
+       groupby=['variable']
+   ).mark_line(point=True).encode(
+       x='t:Q',
+       y='value:Q',
+       color='variable:N'
+   )
+   background + chart
+
+If you would like to use more localized imputed values, you can specify a
+``frame`` parameter similar to the :ref:`user-guide-window-transform` that
+will control which values are used for the imputation. For example, here
+we impute missing values using the mean of the neighboring points on either
+side:
+
+.. altair-plot::
+
+   chart = alt.Chart(data).transform_impute(
+       impute='value',
+       key='t',
+       method='mean',
+       frame=[-1, 1],
+       groupby=['variable']
+   ).mark_line(point=True).encode(
+       x='t:Q',
+       y='value:Q',
+       color='variable:N'
+   )
+   background + chart
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_impute` method is built on the :class:`~ImputeTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.ImputeTransform
+
+.. _user-guide-joinaggregate-transform:
+
+Join Aggregate Transform
+~~~~~~~~~~~~~~~~~~~~~~~~
+The Join Aggregate transform acts in almost every way the same as an Aggregate
+transform, but the resulting aggregate is joined to the original dataset.
+To make this more clear, consider the following dataset:
+
+.. altair-plot::
+   :output: repr
+
+   import pandas as pd
+   import numpy as np
+
+   rand = np.random.RandomState(0)
+
+   df = pd.DataFrame({
+       'label': rand.choice(['A', 'B', 'C'], 10),
+       'value': rand.randn(10),
+   })
+   df
+
+Here is a pandas operation that is equivalent to Altair's Aggregate transform,
+using the mean as an example:
+
+.. altair-plot::
+   :output: repr
+
+   mean = df.groupby('label').mean().reset_index()
+   mean
+
+And here is an output that is equivalent to Altair's Join Aggregate:
+
+.. altair-plot::
+   :output: repr
+
+   pd.merge(df, mean, on='label', suffixes=['', '_mean'])
+   
+Notice that the join aggregate joins the aggregated value with the original
+dataframe, such that the aggregated values can be used in tandem with the
+original values if desired.
+
+Here is an example of how the join aggregate might be used: we compare the
+IMDB and Rotten Tomatoes movie ratings, normalized by their mean and
+standard deviation, which requires calculations on the joined data:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+
+   alt.Chart(data.movies.url).transform_filter(
+       'datum.IMDB_Rating != null  && datum.Rotten_Tomatoes_Rating != null'  
+   ).transform_joinaggregate(
+       IMDB_mean='mean(IMDB_Rating)',
+       IMDB_std='stdev(IMDB_Rating)',
+       RT_mean='mean(Rotten_Tomatoes_Rating)',
+       RT_std='stdev(Rotten_Tomatoes_Rating)'
+   ).transform_calculate(
+       IMDB_Deviation="(datum.IMDB_Rating - datum.IMDB_mean) / datum.IMDB_std",
+       Rotten_Tomatoes_Deviation="(datum.Rotten_Tomatoes_Rating - datum.RT_mean) / datum.RT_std"
+   ).mark_point().encode(
+       x='IMDB_Deviation:Q',
+       y="Rotten_Tomatoes_Deviation:Q"
+   )
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_joinaggregate` method is built on the
+:class:`~JoinAggregateTransform` class, which has the following options:
+
+.. altair-object-table:: altair.JoinAggregateTransform
 
 .. _user-guide-lookup-transform:
 
 Lookup Transform
 ~~~~~~~~~~~~~~~~
-The lookup transform extends a primary data source by looking up values from
+The Lookup transform extends a primary data source by looking up values from
 another data source; it is similar to a one-sided join. A lookup can be added
 at the top level of a chart using the :meth:`Chart.transform_lookup` method.
 
@@ -550,6 +897,106 @@ of unemployment rates per county in the US:
         width=500, height=300
     )
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_lookup` method is built on the :class:`~LookupTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.LookupTransform
+
+.. _user-guide-sample-transform:
+
+Sample Transform
+~~~~~~~~~~~~~~~~
+The sample transform is one of the simpler of all Altair's data transforms;
+it takes a single parameter ``sample`` which specified a number of rows to
+randomly choose from the dataset. The resulting chart will be created using
+only this random subset of the data.
+
+For example, here we chart the full cars dataset alongside a sample of 100
+rows:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+
+   source = data.cars.url
+
+   chart = alt.Chart(source).mark_point().encode(
+       x='Horsepower:Q',
+       y='Miles_per_Gallon:Q',
+       color='Origin:N'
+   ).properties(
+       width=200,
+       height=200
+   )
+
+   chart | chart.transform_sample(100)
+
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_sample` method is built on the :class:`~SampleTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.SampleTransform
+
+.. _user-guide-stack-transform:
+
+Stack Transform
+~~~~~~~~~~~~~~~
+The stack transform allows you to compute values associated with stacked versions
+of encodings. For example, consider this stacked bar chart:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.barley()
+
+    alt.Chart(source).mark_bar().encode(
+        column='year:O',
+        x='yield:Q',
+        y='variety:N',
+        color='site:N'
+    ).properties(width=220)
+
+Implicitly, this data is being grouped and stacked, but what if you would like to
+access those stacked values directly?
+We can construct that same chart manually using the stack transform:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.barley()
+
+    alt.Chart(source).transform_stack(
+        stack='yield',
+        as_=['yield_1', 'yield_2'],
+        groupby=['year', 'variety'],
+        sort=[alt.SortField('site', 'descending')]
+    ).mark_bar().encode(
+        column='year:O',
+        x=alt.X('yield_1:Q', title='yield'),
+        x2='yield_2:Q',
+        y='variety:N',
+        color='site:N',
+        tooltip=['site', 'yield', 'variety']
+    ).properties(width=220)
+
+Notice that the bars are now explicitly drawn between values computed and
+specified within the x and x2 encodings.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_stack` method is built on the :class:`~StackTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.StackTransform
 
 .. _user-guide-timeunit-transform:
 
@@ -651,6 +1098,13 @@ Notice that because the ``timeUnit`` is not part of the encoding channel here,
 it is often necessary to add an axis formatter to ensure appropriate axis
 labels.
 
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_timeunit` method is built on the :class:`~TimeUnitTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.TimeUnitTransform
+
 
 .. _user-guide-window-transform:
 
@@ -741,6 +1195,13 @@ If we plot the `z-scores`_ of the stock prices, rather than the stock prices the
 By using two aggregation functions (``mean`` and ``stdev``) within the window transform, we are able to compute the z-scores within the calculate transform.
 
 For more information about the arguments to the window transform, see :class:`WindowTransform` and `the Vega-Lite documentation <https://vega.github.io/vega-lite/docs/window.html>`_.
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_window` method is built on the :class:`~WindowTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.WindowTransform
 
 .. _Vega expression: https://vega.github.io/vega/docs/expressions/
 .. _z-scores: https://en.wikipedia.org/w/index.php?title=Z-score

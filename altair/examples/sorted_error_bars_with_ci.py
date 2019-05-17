@@ -10,40 +10,27 @@ from vega_datasets import data
 
 source = data.barley()
 
-base = alt.Chart(source, width=600, height=400)
-
-points = base.mark_point(filled=True).encode(
-    x=alt.X(
-        'mean(yield)',
-        title='Barley Yield',
-    ),
+points = alt.Chart(source).mark_point(
+    filled=True,
+    color='black'
+).encode(
+    x=alt.X('mean(yield)', title='Barley Yield'),
     y=alt.Y(
         'variety',
          sort=alt.EncodingSortField(
              field='yield',
              op='mean',
              order='descending'
-         )       
-    ),
-    color = alt.value('black')
+         )
+    )
+).properties(
+    width=400,
+    height=250
 )
 
-error_bars = base.mark_rule().encode(
+error_bars = points.mark_rule().encode(
     x='ci0(yield)',
     x2='ci1(yield)',
-    y=alt.Y(
-        'variety',
-        title='',
-        sort=alt.EncodingSortField(
-            field='yield',
-            op='mean',
-            order='descending'
-        ),
-        axis=alt.Axis(
-            labels=False,
-            ticks=False
-        )
-    )
 )
 
-(points + error_bars).resolve_scale(y='independent')
+points + error_bars

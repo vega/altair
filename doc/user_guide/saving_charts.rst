@@ -49,7 +49,9 @@ Firefox, which requires the following:
   installation.
 
 Once those dependencies are installed, you should be able to save charts as
-``png`` or ``svg``.
+``png`` or ``svg``. Altair defaults to using chromedriver. If you'd like to use geckodriver::
+
+    chart.save('chart.png', webdriver='firefox')
 
 Figure Size/Resolution
 ^^^^^^^^^^^^^^^^^^^^^^

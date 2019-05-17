@@ -17,7 +17,7 @@ background = alt.Chart(states).mark_geoshape(
     stroke='white'
 ).properties(
     title='US State Capitols',
-    width=700,
+    width=650,
     height=400
 ).project('albersUsa')
 
@@ -27,10 +27,10 @@ hover = alt.selection(type='single', on='mouseover', nearest=True,
 
 base = alt.Chart(capitals).encode(
     longitude='lon:Q',
-    latitude='lat:Q'
+    latitude='lat:Q',
 )
 
-text = base.mark_text(dy=-5, align='right').encode(
+text = base.mark_text(dy=-5, align='right').encode( 
     alt.Text('city', type='nominal'),
     opacity=alt.condition(~hover, alt.value(0), alt.value(1))
 )

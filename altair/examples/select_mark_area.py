@@ -13,14 +13,18 @@ This example shows how to use two areas, one on top of the other, and a
 import altair as alt
 from vega_datasets import data
 
-unemp = data.unemployment_across_industries.url
+source = data.unemployment_across_industries.url
 
-brush = alt.selection_interval(encodings=['x'],empty='all')
-
-base = alt.Chart(unemp).mark_area(color='goldenrod',opacity=.3).encode(
-    x=alt.X('date:T', timeUnit='yearmonth'),
-    y=alt.Y('sum(count):Q')
+base = alt.Chart(source).mark_area(
+    color='goldenrod',
+    opacity=0.3
+).encode(
+    x='yearmonth(date):T',
+    y='sum(count):Q',
 )
 
+brush = alt.selection_interval(encodings=['x'],empty='all')
+background = base.add_selection(brush)
 selected = base.transform_filter(brush).mark_area(color='goldenrod')
-alt.layer(base.add_selection(brush), selected)
+
+background + selected

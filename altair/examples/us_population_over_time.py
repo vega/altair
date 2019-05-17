@@ -15,7 +15,8 @@ pink_blue = alt.Scale(domain=('Male', 'Female'),
                       range=["steelblue", "salmon"])
 
 slider = alt.binding_range(min=1900, max=2000, step=10)
-select_year = alt.selection_single(name="year", fields=['year'], bind=slider)
+select_year = alt.selection_single(name="year", fields=['year'],
+                                   bind=slider, init={'year': 2000})
 
 alt.Chart(source).mark_bar().encode(
     x=alt.X('sex:N', title=None),
@@ -30,4 +31,6 @@ alt.Chart(source).mark_bar().encode(
     "sex", alt.expr.if_(alt.datum.sex == 1, "Male", "Female")
 ).transform_filter(
     select_year
+).configure_facet(
+    spacing=8
 )

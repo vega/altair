@@ -251,7 +251,7 @@ here is an example:
 
 Additional title configuration options are listed in the following table:
 
-.. altair-object-table:: altair.VgTitleConfig
+.. altair-object-table:: altair.TitleConfig
 
 
 .. _config-view:

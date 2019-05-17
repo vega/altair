@@ -169,17 +169,16 @@ Once you have installed one of these packages, enable the corresponding renderer
 
 Displaying in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~
+JupyterLab version 1.0 and later includes built-in support for Altair 3 charts
+(If you are using older versions of Altair, they will work with JupyterLab
+versions between 0.32 and 0.35).
 
-JupyterLab versions 0.32 and later include built-in support for Vega-Lite 2.x and
-Vega 3.x. These will work out of the box with Altair imported as::
+These will work out of the box with Altair imported as::
 
     import altair as alt
 
-An extension is available with the older Vega-Lite 1.x and Vega 2.x renderers
-(``labextension install`` requires nodejs)::
-
-    conda install -c conda-forge nodejs  # if you do not already have nodejs installed
-    jupyter labextension install @jupyterlab/vega2-extension
+The Vega jupyterlab extension is included with the main jupyterlab installation,
+so no additional steps are necessary.
 
 .. _display-nteract:
 
@@ -206,14 +205,17 @@ environment, but to render these specifications currently requires a javascript
 engine. For this reason, Altair works most seamlessly with the browser-based
 environments mentioned above.
 
-If you would like to render plots from another Python interface that does not have
-a built-in javascript engine, you'll need to somehow connect your charts to a
-second tool that can execute javascript.
+If you would like to render plots from another Python interface that does not
+have a built-in javascript engine, you'll need to somehow connect your charts
+to a second tool that can execute javascript.
 
-Fortunately, most people have a web browser available, and Altair provides the
-:meth:`Chart.serve` method which will seamlessly convert the plot to HTML, start
-a webserver serving that HTML, and open your system's default web browser to view
-it.
+There are a few options available for this:
+
+Built-in ``serve()`` method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Altair includes a :meth:`Chart.serve` method which will seamlessly convert a
+chart to HTML, start a webserver serving that HTML, and open your system's
+default web browser to view it.
 
 For example, you can serve a chart to a web browser like this::
 
@@ -234,6 +236,47 @@ For example, you can serve a chart to a web browser like this::
 The command will block the Python interpreter, and will have to be canceled with
 ``Ctrl-C`` to execute any further code.
 
+Manual ``save()`` and display
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you would prefer, you can manually save your chart as html and open it with
+a web browser. Once you have created your chart, run::
+
+    chart.save('filename.html')
+
+and use a web browser to open this file.
+
+The Vegascope Renderer
+~~~~~~~~~~~~~~~~~~~~~~
+The `VegaScope`_ project provides an Altair renderer that works seamlessly with
+the IPython terminal. Start by installing the package::
+
+    $ pip install vegascope
+
+Now in your Python script you can enable the vegascope renderer::
+
+    import altair as alt
+    alt.renderers.enable('vegascope')
+
+    # load a simple dataset as a pandas DataFrame
+    from vega_datasets import data
+    cars = data.cars()
+
+    chart = alt.Chart(cars).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color='Origin',
+    ).interactive()
+
+In an IPython environment, this will automatically trigger vegascope to serve
+the chart in a background process to your web browser, and unlike Altair's
+:meth:`Chart.serve` method, any subsequently created charts will use
+the same server.
+
+If you are in a non-IPython environment, you can trigger the renderer manually
+using the :meth:`Chart.display` method::
+
+   chart.display()
+
 .. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
@@ -242,3 +285,4 @@ The command will block the Python interpreter, and will have to be canceled with
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
 .. _Vega-Lite: http://vega.github.io/vega-lite
 .. _Vega: https://vega.github.io/vega/
+.. _VegaScope: https://github.com/scikit-hep/vegascope

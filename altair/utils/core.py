@@ -271,7 +271,7 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
     if parse_types:
         patterns = list(itertools.chain(*((p + ':{type}', p) for p in patterns)))
 
-    regexps = (re.compile('\A' + p.format(**units) + '\Z', re.DOTALL)
+    regexps = (re.compile(r'\A' + p.format(**units) + r'\Z', re.DOTALL)
                for p in patterns)
 
     # find matches depending on valid fields passed
@@ -320,7 +320,7 @@ def use_signature(Obj):
             except AttributeError:
                 # __doc__ is not modifiable for classes in Python < 3.3
                 pass
-        
+
         return f
     return decorate
 

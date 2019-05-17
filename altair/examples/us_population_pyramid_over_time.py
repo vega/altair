@@ -12,7 +12,8 @@ from vega_datasets import data
 source = data.population.url
 
 slider = alt.binding_range(min=1850, max=2000, step=10)
-select_year = alt.selection_single(name='year', fields=['year'], bind=slider)
+select_year = alt.selection_single(name='year', fields=['year'],
+                                   bind=slider, init={'year': 2000})
 
 base = alt.Chart(source).add_selection(
     select_year
@@ -20,6 +21,8 @@ base = alt.Chart(source).add_selection(
     select_year
 ).transform_calculate(
     gender=alt.expr.if_(alt.datum.sex == 1, 'Male', 'Female')
+).properties(
+    width=250
 )
 
 
@@ -49,4 +52,4 @@ right = base.transform_filter(
     color=alt.Color('gender:N', scale=color_scale, legend=None)
 ).mark_bar().properties(title='Male')
 
-left | middle | right
+alt.concat(left, middle, right, spacing=5)

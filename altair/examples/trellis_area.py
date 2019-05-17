@@ -14,4 +14,6 @@ alt.Chart(source).mark_area().encode(
     y="net_generation:Q",
     color="source:N",
     row="source:N"
+).properties(
+    height=100
 )

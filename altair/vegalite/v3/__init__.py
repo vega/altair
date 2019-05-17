@@ -1,6 +1,7 @@
 # flake8: noqa
 from .schema import *
 from .api import *
+from ._deprecated import *
 
 from ...datasets import (
     list_datasets,

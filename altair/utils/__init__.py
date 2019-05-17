@@ -11,6 +11,7 @@ from .core import (
 )
 from .html import spec_to_html
 from .plugin_registry import PluginRegistry
+from .deprecation import AltairDeprecationWarning
 
 
 __all__ = (
@@ -22,6 +23,7 @@ __all__ = (
     'update_subtraits',
     'update_nested',
     'display_traceback',
+    'AltairDeprecationWarning',
     'SchemaBase',
     'Undefined',
     'PluginRegistry'

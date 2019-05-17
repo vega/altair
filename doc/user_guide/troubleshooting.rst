@@ -14,6 +14,33 @@ This section summarizes some of the most common problems and their solutions.
 Trouble-shooting Altair with JupyterLab
 ---------------------------------------
 
+.. _jupyterlab-vega-lite-3-object:
+
+JupyterLab: VegaLite 3 Object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*If you are using the Jupyter notebook rather than JupyterLab, then refer to*
+:ref:`notebook-vega-lite-3-object`
+
+If you are using JupyterLab (not Jupyter notebook) and see the following output::
+
+    <VegaLite 3 object>
+
+This most likely means that you are using too old a version of JupyterLab.
+Altair 3.0 or later works best with JupyterLab version 1.0 or later;
+check the version with::
+
+   $ jupyter lab --version
+   0.35.1
+
+If this is the problem, then use ``pip install -U jupyterlab`` or
+``conda update jupyterlab`` to update JupyterLab, depending on how you
+first installed it.
+
+*Note: until JupyterLab 1.0 is released, you will need to use the 1.0
+pre-release with Altair 3. This can be installed using*::
+
+    $ pip install -U --pre jupyterlab
+
 .. _jupyterlab-vega-lite-2-object:
 
 JupyterLab: VegaLite 2 Object
@@ -25,15 +52,9 @@ If you are using JupyterLab (not Jupyter notebook) and see the following output:
 
     <VegaLite 2 object>
 
-This most likely means that you are using too old a version of JupyterLab.
-Altair works best with JupyterLab version 0.32 or later; check the version with::
-
-   $ jupyter lab --version
-   0.32.1
-
-If this is the problem, then use ``pip install -U jupyterlab`` or
-``conda update jupyterlab`` to update JupyterLab, depending on how you
-first installed it.
+This means that you are using Altair version 2, which is not supported by newer
+versions of JupyterLab. The best option is to update to Altair version 3, and
+make certain you have JupyterLab version 1.0 or later.
 
 JavaScript output is disabled in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,7 +104,7 @@ similar to this::
 
     Chart({
       data: 'https://vega.github.io/vega-datasets/data/cars.json',
-      encoding: EncodingWithFacet({
+      encoding: FacetedEncoding({
         x: X({
           shorthand: 'Horsepower'
         })
@@ -123,22 +144,22 @@ JupyterLab supports Altair's default renderer, which you can re-enable using::
 Trouble-shooting Altair with Notebook
 -------------------------------------
 
-.. _notebook-vega-lite-2-object:
+.. _notebook-vega-lite-3-object:
 
-Notebook: VegaLite 2 object
+Notebook: VegaLite 3 object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *If you are using JupyterLab rather than the Jupyter notebook, then refer to*
-:ref:`jupyterlab-vega-lite-2-object`
+:ref:`jupyterlab-vega-lite-3-object`
 
 If you are using the notebook (not JupyterLab) and see the the following output::
 
-    <Vegalite 2 object>
+    <Vegalite 3 object>
 
 it means that either:
 
 1. You have forgotten to enable the notebook renderer. As mentioned
-   in :ref:`installation-notebook`, you need to install the ``vega`` package and
-   Jupyter extension, and then enable it using::
+   in :ref:`installation-notebook`, you need to install version 2.0 or newer
+   of the ``vega`` package and Jupyter extension, and then enable it using::
 
        import altair as alt
        alt.renderers.enable('notebook')
@@ -153,7 +174,7 @@ it means that either:
    please make sure to follow the standard installation instructions at
    :ref:`installation-notebook`.
 
-2. Have too old a version of Jupyter notebook. Run::
+2. You have too old a version of Jupyter notebook. Run::
 
        $ jupyter notebook --version
 
@@ -166,6 +187,20 @@ that you are using a different *Kernel* within your notebook. Switch to the kern
 named *Python 2* if you are using Python 2, or *Python 3* if you are using Python 3.
 
 
+.. _notebook-vega-lite-2-object:
+
+Notebook: VegaLite 2 object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*If you are using JupyterLab rather than the Jupyter notebook, then refer to*
+:ref:`jupyterlab-vega-lite-2-object`
+
+If you are using the notebook (not JupyterLab) and see the the following output::
+
+    <Vegalite 2 object>
+
+it usually means that you are using Altair version 2. The best option is to update
+to Altair version 3 and follow the instructions at :ref:`notebook-vega-lite-3-object`.
+
 .. _notebook-textual-chart-representation:
 
 Notebook: Textual Chart Representation
@@ -173,12 +208,15 @@ Notebook: Textual Chart Representation
 *If you are using the Notebook rather than the JupyterLab, then refer to*
 :ref:`jupyterlab-textual-chart-representation`
 
+*If you are not using a Jupyter notebook environment, then refer to*
+:ref:`troubleshooting-non-notebook`.
+
 If you are using Jupyter notebook and see a textual representation of the Chart
 object similar to this::
 
     Chart({
       data: 'https://vega.github.io/vega-datasets/data/cars.json',
-      encoding: EncodingWithFacet({
+      encoding: FacetedEncoding({
         x: X({
           shorthand: 'Horsepower'
         })
@@ -197,6 +235,20 @@ Altair will not display correctly if using a kernel with IPython version 4.X or 
 The easiest way to address this is to change your kernel:
 choose "Kernel"->"Change Kernel" and then select "Python 2" or "Python 3",
 depending on what version of Python you used when installing Altair.
+
+
+.. _troubleshooting-non-notebook:
+
+Trouble-shooting Altair outside of Jupyter
+------------------------------------------
+If you are using Altair outside of a Jupyter notebook environment (such as a
+Python or IPython terminal) charts will be displayed as a textual
+representation. Rendering of Altair charts requires executing Javascript code,
+which your Python terminal cannot do natively.
+
+For recommendations on how to use Altair outside of notebook environments,
+see :ref:`display-general`.
+
 
 .. _troubleshooting-general:
 

@@ -31,7 +31,7 @@ points = alt.Chart().mark_point().encode(
     color=alt.condition(brush, color, alt.value('lightgray')),
     size=alt.Size('precipitation:Q', scale=alt.Scale(range=[5, 200]))
 ).properties(
-    width=600,
+    width=550,
     height=300
 ).add_selection(
     brush
@@ -47,7 +47,7 @@ bars = alt.Chart().mark_bar().encode(
 ).transform_filter(
     brush
 ).properties(
-    width=600,
+    width=550,
 ).add_selection(
     click
 )

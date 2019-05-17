@@ -23,7 +23,8 @@ class Root(VegaLiteSchema):
     """Root schema wrapper
 
     anyOf(:class:`TopLevelUnitSpec`, :class:`TopLevelFacetSpec`, :class:`TopLevelLayerSpec`,
-    :class:`TopLevelRepeatSpec`, :class:`TopLevelVConcatSpec`, :class:`TopLevelHConcatSpec`)
+    :class:`TopLevelRepeatSpec`, :class:`TopLevelConcatSpec`, :class:`TopLevelVConcatSpec`,
+    :class:`TopLevelHConcatSpec`)
     A Vega-Lite top-level specification.
     This is the root class for all Vega-Lite specifications.
     (The json schema is generated from this type.)
@@ -38,15 +39,13 @@ class Root(VegaLiteSchema):
 class Aggregate(VegaLiteSchema):
     """Aggregate schema wrapper
 
-    enum('argmax', 'argmin', 'average', 'count', 'distinct', 'max', 'mean', 'median', 'min',
-    'missing', 'q1', 'q3', 'ci0', 'ci1', 'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
-    'variance', 'variancep')
+    anyOf(:class:`AggregateOp`, :class:`ArgmaxDef`, :class:`ArgminDef`)
     """
     _schema = {'$ref': '#/definitions/Aggregate'}
     _rootschema = Root._schema
 
-    def __init__(self, *args):
-        super(Aggregate, self).__init__(*args)
+    def __init__(self, *args, **kwds):
+        super(Aggregate, self).__init__(*args, **kwds)
 
 
 class AggregateOp(VegaLiteSchema):
@@ -254,7 +253,10 @@ class AreaConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -286,9 +288,18 @@ class AreaConfig(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -349,6 +360,16 @@ class AreaConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     """
     _schema = {'$ref': '#/definitions/AreaConfig'}
     _rootschema = Root._schema
@@ -358,24 +379,61 @@ class AreaConfig(VegaLiteSchema):
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
                  href=Undefined, interpolate=Undefined, limit=Undefined, line=Undefined,
-                 opacity=Undefined, orient=Undefined, point=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, **kwds):
+                 opacity=Undefined, order=Undefined, orient=Undefined, point=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
         super(AreaConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
                                          fontStyle=fontStyle, fontWeight=fontWeight, href=href,
                                          interpolate=interpolate, limit=limit, line=line,
-                                         opacity=opacity, orient=orient, point=point, radius=radius,
-                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
-                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, tooltip=tooltip,
-                                         **kwds)
+                                         opacity=opacity, order=order, orient=orient, point=point,
+                                         radius=radius, shape=shape, size=size, stroke=stroke,
+                                         strokeCap=strokeCap, strokeDash=strokeDash,
+                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
+                                         strokeWidth=strokeWidth, tension=tension, text=text,
+                                         theta=theta, tooltip=tooltip, x=x, x2=x2, y=y, y2=y2, **kwds)
+
+
+class ArgmaxDef(VegaLiteSchema):
+    """ArgmaxDef schema wrapper
+
+    Mapping(required=[argmax])
+
+    Attributes
+    ----------
+
+    argmax : string
+
+    """
+    _schema = {'$ref': '#/definitions/ArgmaxDef'}
+    _rootschema = Root._schema
+
+    def __init__(self, argmax=Undefined, **kwds):
+        super(ArgmaxDef, self).__init__(argmax=argmax, **kwds)
+
+
+class ArgminDef(VegaLiteSchema):
+    """ArgminDef schema wrapper
+
+    Mapping(required=[argmin])
+
+    Attributes
+    ----------
+
+    argmin : string
+
+    """
+    _schema = {'$ref': '#/definitions/ArgminDef'}
+    _rootschema = Root._schema
+
+    def __init__(self, argmin=Undefined, **kwds):
+        super(ArgminDef, self).__init__(argmin=argmin, **kwds)
 
 
 class AutoSizeParams(VegaLiteSchema):
@@ -449,6 +507,10 @@ class Axis(VegaLiteSchema):
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
+    domainDash : List(float)
+        An array of alternating [stroke, space] lengths for dashed domain lines.
+    domainDashOffset : float
+        The pixel offset at which to start drawing with the domain dash array.
     domainOpacity : float
         Opacity of the axis domain line.
     domainWidth : float
@@ -456,19 +518,32 @@ class Axis(VegaLiteSchema):
 
         **Default value:** ``1``
     format : string
-        The formatting pattern for labels. This is D3's `number format pattern
-        <https://github.com/d3/d3-format#locale_format>`__ for quantitative fields and D3's
-        `time format pattern <https://github.com/d3/d3-time-format#locale_format>`__ for
-        time field.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more information.
+        for more examples.
 
-        **Default value:**  derived from `numberFormat
-        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for
-        quantitative fields and from `timeFormat
-        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for temporal
-        fields.
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     grid : boolean
         A boolean flag indicating if grid lines should be included as part of the axis
 
@@ -480,7 +555,9 @@ class Axis(VegaLiteSchema):
 
         **Default value:** ``"lightGray"``.
     gridDash : List(float)
-        The offset (in pixels) into which to begin drawing with the grid dash array.
+        An array of alternating [stroke, space] lengths for dashed grid lines.
+    gridDashOffset : float
+        The pixel offset at which to start drawing with the grid dash array.
     gridOpacity : float
         The stroke opacity of grid (value between [0,1])
 
@@ -584,7 +661,7 @@ class Axis(VegaLiteSchema):
     orient : :class:`AxisOrient`
         The orientation of the axis. One of ``"top"``, ``"bottom"``, ``"left"`` or
         ``"right"``. The orientation can be used to further specialize the axis type (e.g.,
-        a y axis oriented for the right edge of the chart).
+        a y-axis oriented towards the right edge of the chart).
 
         **Default value:** ``"bottom"`` for x-axes and ``"left"`` for y-axes.
     position : float
@@ -601,11 +678,15 @@ class Axis(VegaLiteSchema):
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
         number may be different so that values are "nice" (multiples of 2, 5, 10) and lie
         within the underlying scale's range.
+    tickDash : List(float)
+        An array of alternating [stroke, space] lengths for dashed tick mark lines.
+    tickDashOffset : float
+        The pixel offset at which to start drawing with the tick mark dash array.
     tickExtra : boolean
         Boolean flag indicating if an extra axis tick should be added for the initial
         position of the axis. This flag is useful for styling axes for ``band`` scales such
         that ticks are placed on band boundaries rather in the middle of a band. Use in
-        conjunction with ``"bandPostion": 1`` and an axis ``"padding"`` value of ``0``.
+        conjunction with ``"bandPosition": 1`` and an axis ``"padding"`` value of ``0``.
     tickMinStep : float
         The minimum desired step between axis ticks, in terms of scale domain values. For
         example, a value of ``1`` indicates that ticks should not be less than 1 unit apart.
@@ -656,6 +737,8 @@ class Axis(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     titleAlign : :class:`Align`
         Horizontal text alignment of axis titles.
+    titleAnchor : :class:`TitleAnchor`
+        Text anchor position for placing axis titles.
     titleAngle : float
         Angle in degrees of axis titles.
     titleBaseline : :class:`TextBaseline`
@@ -697,25 +780,30 @@ class Axis(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, bandPosition=Undefined, domain=Undefined, domainColor=Undefined,
-                 domainOpacity=Undefined, domainWidth=Undefined, format=Undefined, grid=Undefined,
-                 gridColor=Undefined, gridDash=Undefined, gridOpacity=Undefined, gridWidth=Undefined,
-                 labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined,
-                 labelBound=Undefined, labelColor=Undefined, labelFlush=Undefined,
-                 labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined,
-                 labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined,
-                 labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined,
-                 labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined,
-                 offset=Undefined, orient=Undefined, position=Undefined, tickColor=Undefined,
-                 tickCount=Undefined, tickExtra=Undefined, tickMinStep=Undefined, tickOffset=Undefined,
-                 tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined,
-                 ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAngle=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
-                 titleLimit=Undefined, titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined,
-                 titleY=Undefined, values=Undefined, zindex=Undefined, **kwds):
+                 domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined,
+                 domainWidth=Undefined, format=Undefined, formatType=Undefined, grid=Undefined,
+                 gridColor=Undefined, gridDash=Undefined, gridDashOffset=Undefined,
+                 gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined, labelAngle=Undefined,
+                 labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined,
+                 labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined,
+                 labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined,
+                 labelLimit=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
+                 labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined,
+                 maxExtent=Undefined, minExtent=Undefined, offset=Undefined, orient=Undefined,
+                 position=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined,
+                 tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined,
+                 tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined,
+                 tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined,
+                 titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
+                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
+                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
+                 titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined,
+                 values=Undefined, zindex=Undefined, **kwds):
         super(Axis, self).__init__(bandPosition=bandPosition, domain=domain, domainColor=domainColor,
+                                   domainDash=domainDash, domainDashOffset=domainDashOffset,
                                    domainOpacity=domainOpacity, domainWidth=domainWidth, format=format,
-                                   grid=grid, gridColor=gridColor, gridDash=gridDash,
+                                   formatType=formatType, grid=grid, gridColor=gridColor,
+                                   gridDash=gridDash, gridDashOffset=gridDashOffset,
                                    gridOpacity=gridOpacity, gridWidth=gridWidth, labelAlign=labelAlign,
                                    labelAngle=labelAngle, labelBaseline=labelBaseline,
                                    labelBound=labelBound, labelColor=labelColor, labelFlush=labelFlush,
@@ -726,10 +814,12 @@ class Axis(VegaLiteSchema):
                                    labelPadding=labelPadding, labelSeparation=labelSeparation,
                                    labels=labels, maxExtent=maxExtent, minExtent=minExtent,
                                    offset=offset, orient=orient, position=position, tickColor=tickColor,
-                                   tickCount=tickCount, tickExtra=tickExtra, tickMinStep=tickMinStep,
-                                   tickOffset=tickOffset, tickOpacity=tickOpacity, tickRound=tickRound,
-                                   tickSize=tickSize, tickWidth=tickWidth, ticks=ticks, title=title,
-                                   titleAlign=titleAlign, titleAngle=titleAngle,
+                                   tickCount=tickCount, tickDash=tickDash,
+                                   tickDashOffset=tickDashOffset, tickExtra=tickExtra,
+                                   tickMinStep=tickMinStep, tickOffset=tickOffset,
+                                   tickOpacity=tickOpacity, tickRound=tickRound, tickSize=tickSize,
+                                   tickWidth=tickWidth, ticks=ticks, title=title, titleAlign=titleAlign,
+                                   titleAnchor=titleAnchor, titleAngle=titleAngle,
                                    titleBaseline=titleBaseline, titleColor=titleColor,
                                    titleFont=titleFont, titleFontSize=titleFontSize,
                                    titleFontStyle=titleFontStyle, titleFontWeight=titleFontWeight,
@@ -761,6 +851,10 @@ class AxisConfig(VegaLiteSchema):
         Color of axis domain line.
 
         **Default value:** ``"gray"``.
+    domainDash : List(float)
+        An array of alternating [stroke, space] lengths for dashed domain lines.
+    domainDashOffset : float
+        The pixel offset at which to start drawing with the domain dash array.
     domainOpacity : float
         Opacity of the axis domain line.
     domainWidth : float
@@ -778,7 +872,9 @@ class AxisConfig(VegaLiteSchema):
 
         **Default value:** ``"lightGray"``.
     gridDash : List(float)
-        The offset (in pixels) into which to begin drawing with the grid dash array.
+        An array of alternating [stroke, space] lengths for dashed grid lines.
+    gridDashOffset : float
+        The pixel offset at which to start drawing with the grid dash array.
     gridOpacity : float
         The stroke opacity of grid (value between [0,1])
 
@@ -872,6 +968,12 @@ class AxisConfig(VegaLiteSchema):
         a minimum offset value for axis titles.
 
         **Default value:** ``30`` for y-axis; ``undefined`` for x-axis.
+    orient : :class:`AxisOrient`
+        The orientation of the axis. One of ``"top"``, ``"bottom"``, ``"left"`` or
+        ``"right"``. The orientation can be used to further specialize the axis type (e.g.,
+        a y-axis oriented towards the right edge of the chart).
+
+        **Default value:** ``"bottom"`` for x-axes and ``"left"`` for y-axes.
     shortTimeLabels : boolean
         Whether month names and weekday names should be abbreviated.
 
@@ -880,11 +982,15 @@ class AxisConfig(VegaLiteSchema):
         The color of the axis's tick.
 
         **Default value:** ``"gray"``
+    tickDash : List(float)
+        An array of alternating [stroke, space] lengths for dashed tick mark lines.
+    tickDashOffset : float
+        The pixel offset at which to start drawing with the tick mark dash array.
     tickExtra : boolean
         Boolean flag indicating if an extra axis tick should be added for the initial
         position of the axis. This flag is useful for styling axes for ``band`` scales such
         that ticks are placed on band boundaries rather in the middle of a band. Use in
-        conjunction with ``"bandPostion": 1`` and an axis ``"padding"`` value of ``0``.
+        conjunction with ``"bandPosition": 1`` and an axis ``"padding"`` value of ``0``.
     tickOffset : float
         Position offset in pixels to apply to ticks, labels, and gridlines.
     tickOpacity : float
@@ -906,8 +1012,12 @@ class AxisConfig(VegaLiteSchema):
         Boolean value that determines whether the axis should include ticks.
 
         **Default value:** ``true``
+    title : None
+        Set to null to disable title for the axis, legend, or header.
     titleAlign : :class:`Align`
         Horizontal text alignment of axis titles.
+    titleAnchor : :class:`TitleAnchor`
+        Text anchor position for placing axis titles.
     titleAngle : float
         Angle in degrees of axis titles.
     titleBaseline : :class:`TextBaseline`
@@ -940,40 +1050,45 @@ class AxisConfig(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, bandPosition=Undefined, domain=Undefined, domainColor=Undefined,
-                 domainOpacity=Undefined, domainWidth=Undefined, grid=Undefined, gridColor=Undefined,
-                 gridDash=Undefined, gridOpacity=Undefined, gridWidth=Undefined, labelAlign=Undefined,
-                 labelAngle=Undefined, labelBaseline=Undefined, labelBound=Undefined,
-                 labelColor=Undefined, labelFlush=Undefined, labelFlushOffset=Undefined,
-                 labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined,
-                 labelFontWeight=Undefined, labelLimit=Undefined, labelOpacity=Undefined,
-                 labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined,
-                 labels=Undefined, maxExtent=Undefined, minExtent=Undefined, shortTimeLabels=Undefined,
-                 tickColor=Undefined, tickExtra=Undefined, tickOffset=Undefined, tickOpacity=Undefined,
-                 tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined,
-                 titleAlign=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
-                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
-                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
-                 titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined,
-                 **kwds):
+                 domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined,
+                 domainWidth=Undefined, grid=Undefined, gridColor=Undefined, gridDash=Undefined,
+                 gridDashOffset=Undefined, gridOpacity=Undefined, gridWidth=Undefined,
+                 labelAlign=Undefined, labelAngle=Undefined, labelBaseline=Undefined,
+                 labelBound=Undefined, labelColor=Undefined, labelFlush=Undefined,
+                 labelFlushOffset=Undefined, labelFont=Undefined, labelFontSize=Undefined,
+                 labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined,
+                 labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined,
+                 labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined,
+                 orient=Undefined, shortTimeLabels=Undefined, tickColor=Undefined, tickDash=Undefined,
+                 tickDashOffset=Undefined, tickExtra=Undefined, tickOffset=Undefined,
+                 tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined,
+                 ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined,
+                 titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined,
+                 titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined,
+                 titleFontWeight=Undefined, titleLimit=Undefined, titleOpacity=Undefined,
+                 titlePadding=Undefined, titleX=Undefined, titleY=Undefined, **kwds):
         super(AxisConfig, self).__init__(bandPosition=bandPosition, domain=domain,
-                                         domainColor=domainColor, domainOpacity=domainOpacity,
+                                         domainColor=domainColor, domainDash=domainDash,
+                                         domainDashOffset=domainDashOffset, domainOpacity=domainOpacity,
                                          domainWidth=domainWidth, grid=grid, gridColor=gridColor,
-                                         gridDash=gridDash, gridOpacity=gridOpacity,
-                                         gridWidth=gridWidth, labelAlign=labelAlign,
-                                         labelAngle=labelAngle, labelBaseline=labelBaseline,
-                                         labelBound=labelBound, labelColor=labelColor,
-                                         labelFlush=labelFlush, labelFlushOffset=labelFlushOffset,
-                                         labelFont=labelFont, labelFontSize=labelFontSize,
-                                         labelFontStyle=labelFontStyle, labelFontWeight=labelFontWeight,
-                                         labelLimit=labelLimit, labelOpacity=labelOpacity,
-                                         labelOverlap=labelOverlap, labelPadding=labelPadding,
-                                         labelSeparation=labelSeparation, labels=labels,
-                                         maxExtent=maxExtent, minExtent=minExtent,
-                                         shortTimeLabels=shortTimeLabels, tickColor=tickColor,
-                                         tickExtra=tickExtra, tickOffset=tickOffset,
-                                         tickOpacity=tickOpacity, tickRound=tickRound,
-                                         tickSize=tickSize, tickWidth=tickWidth, ticks=ticks,
-                                         titleAlign=titleAlign, titleAngle=titleAngle,
+                                         gridDash=gridDash, gridDashOffset=gridDashOffset,
+                                         gridOpacity=gridOpacity, gridWidth=gridWidth,
+                                         labelAlign=labelAlign, labelAngle=labelAngle,
+                                         labelBaseline=labelBaseline, labelBound=labelBound,
+                                         labelColor=labelColor, labelFlush=labelFlush,
+                                         labelFlushOffset=labelFlushOffset, labelFont=labelFont,
+                                         labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
+                                         labelFontWeight=labelFontWeight, labelLimit=labelLimit,
+                                         labelOpacity=labelOpacity, labelOverlap=labelOverlap,
+                                         labelPadding=labelPadding, labelSeparation=labelSeparation,
+                                         labels=labels, maxExtent=maxExtent, minExtent=minExtent,
+                                         orient=orient, shortTimeLabels=shortTimeLabels,
+                                         tickColor=tickColor, tickDash=tickDash,
+                                         tickDashOffset=tickDashOffset, tickExtra=tickExtra,
+                                         tickOffset=tickOffset, tickOpacity=tickOpacity,
+                                         tickRound=tickRound, tickSize=tickSize, tickWidth=tickWidth,
+                                         ticks=ticks, title=title, titleAlign=titleAlign,
+                                         titleAnchor=titleAnchor, titleAngle=titleAngle,
                                          titleBaseline=titleBaseline, titleColor=titleColor,
                                          titleFont=titleFont, titleFontSize=titleFontSize,
                                          titleFontStyle=titleFontStyle, titleFontWeight=titleFontWeight,
@@ -1135,7 +1250,10 @@ class BarConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -1152,9 +1270,18 @@ class BarConfig(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -1215,6 +1342,16 @@ class BarConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     """
     _schema = {'$ref': '#/definitions/BarConfig'}
     _rootschema = Root._schema
@@ -1225,11 +1362,12 @@ class BarConfig(VegaLiteSchema):
                  dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
                  filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
                  fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, tooltip=Undefined, **kwds):
+                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, x=Undefined,
+                 x2=Undefined, y=Undefined, y2=Undefined, **kwds):
         super(BarConfig, self).__init__(align=align, angle=angle, baseline=baseline,
                                         binSpacing=binSpacing, color=color,
                                         continuousBandSize=continuousBandSize,
@@ -1239,12 +1377,13 @@ class BarConfig(VegaLiteSchema):
                                         filled=filled, font=font, fontSize=fontSize,
                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
                                         interpolate=interpolate, limit=limit, opacity=opacity,
-                                        orient=orient, radius=radius, shape=shape, size=size,
-                                        stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                        strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                        strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
-                                        strokeWidth=strokeWidth, tension=tension, text=text,
-                                        theta=theta, tooltip=tooltip, **kwds)
+                                        order=order, orient=orient, radius=radius, shape=shape,
+                                        size=size, stroke=stroke, strokeCap=strokeCap,
+                                        strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                        strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                                        strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                        tension=tension, text=text, theta=theta, tooltip=tooltip, x=x,
+                                        x2=x2, y=y, y2=y2, **kwds)
 
 
 class BaseBinding(VegaLiteSchema):
@@ -1270,6 +1409,36 @@ class BaseBinding(VegaLiteSchema):
     def __init__(self, debounce=Undefined, element=Undefined, name=Undefined, type=Undefined, **kwds):
         super(BaseBinding, self).__init__(debounce=debounce, element=element, name=name, type=type,
                                           **kwds)
+
+
+class BaseLegendLayout(VegaLiteSchema):
+    """BaseLegendLayout schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    anchor : :class:`TitleAnchor`
+        The anchor point for legend orient group layout.
+    bounds : :class:`LayoutBounds`
+        The bounds calculation to use for legend orient group layout.
+    center : anyOf(boolean, :class:`SignalRef`)
+        A flag to center legends within a shared orient group.
+    direction : anyOf(:class:`Orientation`, :class:`SignalRef`)
+        The layout direction for legend orient group layout.
+    margin : anyOf(float, :class:`SignalRef`)
+        The pixel margin between legends within a orient group.
+    offset : anyOf(float, :class:`SignalRef`)
+        The pixel offset from the chart body for a legend orient group.
+    """
+    _schema = {'$ref': '#/definitions/BaseLegendLayout'}
+    _rootschema = Root._schema
+
+    def __init__(self, anchor=Undefined, bounds=Undefined, center=Undefined, direction=Undefined,
+                 margin=Undefined, offset=Undefined, **kwds):
+        super(BaseLegendLayout, self).__init__(anchor=anchor, bounds=bounds, center=center,
+                                               direction=direction, margin=margin, offset=offset, **kwds)
 
 
 class BaseMarkConfig(VegaLiteSchema):
@@ -1364,7 +1533,7 @@ class BaseMarkConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -1381,9 +1550,18 @@ class BaseMarkConfig(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -1429,6 +1607,16 @@ class BaseMarkConfig(VegaLiteSchema):
         radians, with ``0`` indicating "north".
     tooltip : Mapping(required=[])
         The tooltip text to show upon mouse hover.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     """
     _schema = {'$ref': '#/definitions/BaseMarkConfig'}
     _rootschema = Root._schema
@@ -1441,7 +1629,8 @@ class BaseMarkConfig(VegaLiteSchema):
                  shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
                  strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
                  strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, **kwds):
+                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, x=Undefined,
+                 x2=Undefined, y=Undefined, y2=Undefined, **kwds):
         super(BaseMarkConfig, self).__init__(align=align, angle=angle, baseline=baseline,
                                              cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                              dy=dy, ellipsis=ellipsis, fill=fill,
@@ -1454,7 +1643,7 @@ class BaseMarkConfig(VegaLiteSchema):
                                              strokeMiterLimit=strokeMiterLimit,
                                              strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                              tension=tension, text=text, theta=theta, tooltip=tooltip,
-                                             **kwds)
+                                             x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
 class BaseTitleConfig(VegaLiteSchema):
@@ -1478,6 +1667,10 @@ class BaseTitleConfig(VegaLiteSchema):
         or ``"alphabetic"``.
     color : :class:`Color`
         Text color for title text.
+    dx : float
+        Delta offset for title text x-coordinate.
+    dy : float
+        Delta offset for title text y-coordinate.
     font : string
         Font name for title text.
     fontSize : float
@@ -1507,11 +1700,11 @@ class BaseTitleConfig(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, anchor=Undefined, angle=Undefined, baseline=Undefined,
-                 color=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, frame=Undefined, limit=Undefined, offset=Undefined,
-                 orient=Undefined, **kwds):
+                 color=Undefined, dx=Undefined, dy=Undefined, font=Undefined, fontSize=Undefined,
+                 fontStyle=Undefined, fontWeight=Undefined, frame=Undefined, limit=Undefined,
+                 offset=Undefined, orient=Undefined, **kwds):
         super(BaseTitleConfig, self).__init__(align=align, anchor=anchor, angle=angle,
-                                              baseline=baseline, color=color, font=font,
+                                              baseline=baseline, color=color, dx=dx, dy=dy, font=font,
                                               fontSize=fontSize, fontStyle=fontStyle,
                                               fontWeight=fontWeight, frame=frame, limit=limit,
                                               offset=offset, orient=orient, **kwds)
@@ -1811,7 +2004,7 @@ class BoxPlotDef(VegaLiteSchema):
 
     opacity : float
         The opacity (value between [0,1]) of the mark.
-    orient : :class:`Orient`
+    orient : :class:`Orientation`
         Orientation of the box plot.  This is normally automatically determined based on
         types of fields on x and y channels. However, an explicit ``orient`` be specified
         when the orientation is ambiguous.
@@ -1925,9 +2118,33 @@ class ColorFieldDefWithCondition(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -1943,20 +2160,21 @@ class ColorFieldDefWithCondition(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalColorValueDef`,
     List(:class:`ConditionalColorValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -2115,21 +2333,21 @@ class Encoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark>`__ 's ``fillOpacity``
         property.
-    href : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`)
+    href : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`)
         A URL to load upon mouse click.
     key : :class:`FieldDef`
         A data field to use as a unique key for data binding. When a visualization’s data is
         updated, the key value will be used to match data elements to existing mark
         instances. Use a key channel to enable object constancy for transitions over dynamic
         data.
-    latitude : :class:`LatLongFieldDef`
+    latitude : anyOf(:class:`LatLongFieldDef`, :class:`NumberValueDef`)
         Latitude position of geographically projected marks.
-    latitude2 : :class:`SecondaryFieldDef`
+    latitude2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Latitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    longitude : :class:`LatLongFieldDef`
+    longitude : anyOf(:class:`LatLongFieldDef`, :class:`NumberValueDef`)
         Longitude position of geographically projected marks.
-    longitude2 : :class:`SecondaryFieldDef`
+    longitude2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
     opacity : anyOf(:class:`NumericFieldDefWithCondition`,
@@ -2154,14 +2372,29 @@ class Encoding(VegaLiteSchema):
         **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to avoid
         creating additional aggregation grouping.
     shape : anyOf(:class:`ShapeFieldDefWithCondition`, :class:`ShapeValueDefWithCondition`)
-        For ``point`` marks the supported values are
-        ``"circle"`` (default), ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
-        or ``"triangle-down"``, or else a custom SVG path string.
+        Shape of the mark.
+
+
+        #.
+        For ``point`` marks the supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+        ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+        ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+        <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+        sizing, custom shape paths should be defined within a square bounding box with
+        coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        #.
         For ``geoshape`` marks it should be a field definition of the geojson data
 
         **Default value:** If undefined, the default shape depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#point-config>`__ 's ``shape``
-        property.
+        property. ( ``"circle"`` if unset.)
     size : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Size of the mark.
 
@@ -2200,7 +2433,8 @@ class Encoding(VegaLiteSchema):
     List(:class:`TextFieldDef`), None)
         The tooltip text to show upon mouse hover.
     x : anyOf(:class:`PositionFieldDef`, :class:`XValueDef`)
-        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"``.
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
 
         The ``value`` of this channel can be a number or a string ``"width"``.
     x2 : anyOf(:class:`SecondaryFieldDef`, :class:`XValueDef`)
@@ -2213,7 +2447,8 @@ class Encoding(VegaLiteSchema):
         Secondary error value of x coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
     y : anyOf(:class:`PositionFieldDef`, :class:`YValueDef`)
-        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"``.
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
 
         The ``value`` of this channel can be a number or a string ``"height"``.
     y2 : anyOf(:class:`SecondaryFieldDef`, :class:`YValueDef`)
@@ -2269,131 +2504,43 @@ class CompositeMarkDef(VegaLiteSchema):
         super(CompositeMarkDef, self).__init__(*args, **kwds)
 
 
-class CompositeUnitSpec(VegaLiteSchema):
-    """CompositeUnitSpec schema wrapper
+class CompositionConfig(VegaLiteSchema):
+    """CompositionConfig schema wrapper
 
-    Mapping(required=[mark])
-    Base interface for a unit (single-view) specification.
-
-    Attributes
-    ----------
-
-    mark : :class:`AnyMark`
-        A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
-        ``"tick"``, ``"line"``,
-        ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
-        definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    data : :class:`Data`
-        An object describing the data source
-    description : string
-        Description of this mark for commenting purpose.
-    encoding : :class:`Encoding`
-        A key-value mapping between encoding channels and definition of fields.
-    height : float
-        The height of a visualization.
-
-        **Default value:**
-
-
-        * If a view's `autosize
-          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
-          its y-channel has a `continuous scale
-          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the height will
-          be the value of `config.view.height
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * For y-axis with a band or point scale: if `rangeStep
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
-          unspecified, the height is `determined by the range step, paddings, and the
-          cardinality of the field mapped to y-channel
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__. Otherwise, if the
-          ``rangeStep`` is ``null``, the height will be the value of `config.view.height
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * If no field is mapped to ``y`` channel, the ``height`` will be the value of
-          ``rangeStep``.
-
-        **Note** : For plots with `row and column channels
-        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
-        height of a single view.
-
-        **See also:** The documentation for `width and height
-        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
-    name : string
-        Name of the visualization for later reference.
-    projection : :class:`Projection`
-        An object defining properties of geographic projection, which will be applied to
-        ``shape`` path for ``"geoshape"`` marks
-        and to ``latitude`` and ``"longitude"`` channels for other marks.
-    selection : Mapping(required=[])
-        A key-value mapping between selection names and definitions.
-    title : anyOf(string, :class:`TitleParams`)
-        Title for the plot.
-    transform : List(:class:`Transform`)
-        An array of data transformations such as filter and new field calculation.
-    view : :class:`ViewBackground`
-        An object defining the view background's fill and stroke.
-
-        **Default value:** none (transparent)
-    width : float
-        The width of a visualization.
-
-        **Default value:** This will be determined by the following rules:
-
-
-        * If a view's `autosize
-          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
-          its x-channel has a `continuous scale
-          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the width will
-          be the value of `config.view.width
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * For x-axis with a band or point scale: if `rangeStep
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
-          unspecified, the width is `determined by the range step, paddings, and the
-          cardinality of the field mapped to x-channel
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__.   Otherwise, if the
-          ``rangeStep`` is ``null``, the width will be the value of `config.view.width
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * If no field is mapped to ``x`` channel, the ``width`` will be the value of
-          `config.scale.textXRangeStep
-          <https://vega.github.io/vega-lite/docs/size.html#default-width-and-height>`__ for
-          ``text`` mark and the value of ``rangeStep`` for other marks.
-
-        **Note:** For plots with `row and column channels
-        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
-        width of a single view.
-
-        **See also:** The documentation for `width and height
-        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
-    """
-    _schema = {'$ref': '#/definitions/CompositeUnitSpec'}
-    _rootschema = Root._schema
-
-    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, projection=Undefined, selection=Undefined,
-                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(CompositeUnitSpec, self).__init__(mark=mark, data=data, description=description,
-                                                encoding=encoding, height=height, name=name,
-                                                projection=projection, selection=selection, title=title,
-                                                transform=transform, view=view, width=width, **kwds)
-
-
-class ConditionOnlyDefMarkPropFieldDefnominal(VegaLiteSchema):
-    """ConditionOnlyDefMarkPropFieldDefnominal schema wrapper
-
-    Mapping(required=[condition])
-    A Condition<ValueDef | FieldDef> only definition.
+    Mapping(required=[])
 
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefnominal`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
+    spacing : float
+        The default spacing in pixels between composed sub-views.
+
+        **Default value** : ``20``
     """
-    _schema = {'$ref': '#/definitions/ConditionOnlyDef<MarkPropFieldDef<"nominal">>'}
+    _schema = {'$ref': '#/definitions/CompositionConfig'}
     _rootschema = Root._schema
 
-    def __init__(self, condition=Undefined, **kwds):
-        super(ConditionOnlyDefMarkPropFieldDefnominal, self).__init__(condition=condition, **kwds)
+    def __init__(self, columns=Undefined, spacing=Undefined, **kwds):
+        super(CompositionConfig, self).__init__(columns=columns, spacing=spacing, **kwds)
 
 
 class ConditionOnlyDefMarkPropFieldDef(VegaLiteSchema):
@@ -2454,19 +2601,6 @@ class ConditionOnlyDefTextFieldDef(VegaLiteSchema):
 
     def __init__(self, condition=Undefined, **kwds):
         super(ConditionOnlyDefTextFieldDef, self).__init__(condition=condition, **kwds)
-
-
-class ConditionalMarkPropFieldDefnominal(VegaLiteSchema):
-    """ConditionalMarkPropFieldDefnominal schema wrapper
-
-    anyOf(:class:`ConditionalPredicateMarkPropFieldDefnominal`,
-    :class:`ConditionalSelectionMarkPropFieldDefnominal`)
-    """
-    _schema = {'$ref': '#/definitions/ConditionalMarkPropFieldDef<"nominal">'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args, **kwds):
-        super(ConditionalMarkPropFieldDefnominal, self).__init__(*args, **kwds)
 
 
 class ConditionalMarkPropFieldDef(VegaLiteSchema):
@@ -2570,150 +2704,6 @@ class ConditionalStringValueDef(VegaLiteSchema):
         super(ConditionalStringValueDef, self).__init__(*args, **kwds)
 
 
-class ConditionalPredicateMarkPropFieldDefnominal(VegaLiteSchema):
-    """ConditionalPredicateMarkPropFieldDefnominal schema wrapper
-
-    Mapping(required=[test, type])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-
-    type : enum('nominal')
-        The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ).
-        It can also be a ``"geojson"`` type for encoding `'geoshape'
-        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
-
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
-    aggregate : :class:`Aggregate`
-        Aggregation function for the field
-        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-
-        **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
-        A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
-
-
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
-
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
-
-        **Default value:** ``false``
-    field : :class:`Field`
-        **Required.** A string defining the name of the field from which to pull a data
-        value
-        or an object defining iterated values from the `repeat
-        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
-
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
-        If field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
-        See more details about escaping in the `field documentation
-        <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
-    legend : anyOf(:class:`Legend`, None)
-        An object defining properties of the legend.
-        If ``null``, the legend for the encoding channel will be removed.
-
-        **Default value:** If undefined, default `legend properties
-        <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
-    scale : anyOf(:class:`Scale`, None)
-        An object defining properties of the channel's scale, which is the function that
-        transforms values in the data domain (numbers, dates, strings, etc) to visual values
-        (pixels, colors, sizes) of the encoding channels.
-
-        If ``null``, the scale will be `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
-
-        **Default value:** If undefined, default `scale properties
-        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
-    sort : :class:`Sort`
-        Sort order for the encoded field.
-
-        For continuous fields (quantitative or temporal), ``sort`` can be either
-        ``"ascending"`` or ``"descending"``.
-
-        For discrete fields, ``sort`` can be one of the following:
-
-
-        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
-          Javascript.
-        * `A sort-by-encoding definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ for sorting
-          by another encoding channel. (This type of sort definition is not available for
-          ``row`` and ``column`` channels.)
-        * `A sort field definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-          another field.
-        * `An array specifying the field values in preferred order
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-          sort order will obey the values in the array, followed by any unspecified values
-          in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
-        * ``null`` indicating no sort.
-
-        **Default value:** ``"ascending"``
-
-        **Note:** ``null`` is not supported for ``row`` and ``column``.
-    timeUnit : :class:`TimeUnit`
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field.
-        or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
-
-        **Default value:** ``undefined`` (None)
-    title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.
-
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
-        field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
-        Otherwise, the title is simply the field name.
-
-        **Notes** :
-
-        1) You can customize the default field title format by providing the `fieldTitle
-        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
-        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
-        function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
-
-        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
-        defined, axis/header/legend title will be used.
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef<"nominal">>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, **kwds):
-        super(ConditionalPredicateMarkPropFieldDefnominal, self).__init__(test=test, type=type,
-                                                                          aggregate=aggregate, bin=bin,
-                                                                          field=field, legend=legend,
-                                                                          scale=scale, sort=sort,
-                                                                          timeUnit=timeUnit,
-                                                                          title=title, **kwds)
-
-
 class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
     """ConditionalPredicateMarkPropFieldDef schema wrapper
 
@@ -2723,16 +2713,40 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     type : :class:`StandardType`
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ).
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -2748,12 +2762,12 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -2867,16 +2881,40 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     type : :class:`TypeForShape`
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ).
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -2892,12 +2930,12 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3012,16 +3050,40 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     type : :class:`StandardType`
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ).
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -3037,12 +3099,12 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3060,8 +3122,32 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
-        The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`__ for a
-        text field. If not defined, this will be determined automatically.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3094,11 +3180,13 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
+                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
+                 title=Undefined, **kwds):
         super(ConditionalPredicateTextFieldDef, self).__init__(test=test, type=type,
                                                                aggregate=aggregate, bin=bin,
                                                                field=field, format=format,
-                                                               timeUnit=timeUnit, title=title, **kwds)
+                                                               formatType=formatType, timeUnit=timeUnit,
+                                                               title=title, **kwds)
 
 
 class ConditionalPredicateValueDef(VegaLiteSchema):
@@ -3110,7 +3198,7 @@ class ConditionalPredicateValueDef(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     value : anyOf(float, string, boolean, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -3131,7 +3219,7 @@ class ConditionalPredicateColorValueDef(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -3152,7 +3240,7 @@ class ConditionalPredicateTextValueDef(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     value : anyOf(string, float, boolean)
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -3173,7 +3261,7 @@ class ConditionalPredicateNumberValueDef(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     value : float
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -3194,7 +3282,7 @@ class ConditionalPredicateStringValueDef(VegaLiteSchema):
     ----------
 
     test : :class:`LogicalOperandPredicate`
-
+        Predicate for triggering the condition
     value : string
         A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
         between ``0`` to ``1`` for opacity).
@@ -3204,153 +3292,6 @@ class ConditionalPredicateStringValueDef(VegaLiteSchema):
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
         super(ConditionalPredicateStringValueDef, self).__init__(test=test, value=value, **kwds)
-
-
-class ConditionalSelectionMarkPropFieldDefnominal(VegaLiteSchema):
-    """ConditionalSelectionMarkPropFieldDefnominal schema wrapper
-
-    Mapping(required=[selection, type])
-
-    Attributes
-    ----------
-
-    selection : :class:`SelectionOperand`
-        A `selection name <https://vega.github.io/vega-lite/docs/selection.html>`__, or a
-        series of `composed selections
-        <https://vega.github.io/vega-lite/docs/selection.html#compose>`__.
-    type : enum('nominal')
-        The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ).
-        It can also be a ``"geojson"`` type for encoding `'geoshape'
-        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
-
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
-    aggregate : :class:`Aggregate`
-        Aggregation function for the field
-        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-
-        **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
-        A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
-
-
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
-
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
-
-        **Default value:** ``false``
-    field : :class:`Field`
-        **Required.** A string defining the name of the field from which to pull a data
-        value
-        or an object defining iterated values from the `repeat
-        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
-
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
-        If field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
-        See more details about escaping in the `field documentation
-        <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
-    legend : anyOf(:class:`Legend`, None)
-        An object defining properties of the legend.
-        If ``null``, the legend for the encoding channel will be removed.
-
-        **Default value:** If undefined, default `legend properties
-        <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
-    scale : anyOf(:class:`Scale`, None)
-        An object defining properties of the channel's scale, which is the function that
-        transforms values in the data domain (numbers, dates, strings, etc) to visual values
-        (pixels, colors, sizes) of the encoding channels.
-
-        If ``null``, the scale will be `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
-
-        **Default value:** If undefined, default `scale properties
-        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
-    sort : :class:`Sort`
-        Sort order for the encoded field.
-
-        For continuous fields (quantitative or temporal), ``sort`` can be either
-        ``"ascending"`` or ``"descending"``.
-
-        For discrete fields, ``sort`` can be one of the following:
-
-
-        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
-          Javascript.
-        * `A sort-by-encoding definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ for sorting
-          by another encoding channel. (This type of sort definition is not available for
-          ``row`` and ``column`` channels.)
-        * `A sort field definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-          another field.
-        * `An array specifying the field values in preferred order
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-          sort order will obey the values in the array, followed by any unspecified values
-          in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
-        * ``null`` indicating no sort.
-
-        **Default value:** ``"ascending"``
-
-        **Note:** ``null`` is not supported for ``row`` and ``column``.
-    timeUnit : :class:`TimeUnit`
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field.
-        or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
-
-        **Default value:** ``undefined`` (None)
-    title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.
-
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
-        field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
-        Otherwise, the title is simply the field name.
-
-        **Notes** :
-
-        1) You can customize the default field title format by providing the `fieldTitle
-        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
-        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
-        function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
-
-        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
-        defined, axis/header/legend title will be used.
-    """
-    _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef<"nominal">>'}
-    _rootschema = Root._schema
-
-    def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, **kwds):
-        super(ConditionalSelectionMarkPropFieldDefnominal, self).__init__(selection=selection,
-                                                                          type=type,
-                                                                          aggregate=aggregate, bin=bin,
-                                                                          field=field, legend=legend,
-                                                                          scale=scale, sort=sort,
-                                                                          timeUnit=timeUnit,
-                                                                          title=title, **kwds)
 
 
 class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
@@ -3371,9 +3312,33 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -3389,12 +3354,12 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3517,9 +3482,33 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -3535,12 +3524,12 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3665,9 +3654,33 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -3683,12 +3696,12 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -3706,8 +3719,32 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
-        The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`__ for a
-        text field. If not defined, this will be determined automatically.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3740,11 +3777,13 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
+                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
+                 title=Undefined, **kwds):
         super(ConditionalSelectionTextFieldDef, self).__init__(selection=selection, type=type,
                                                                aggregate=aggregate, bin=bin,
                                                                field=field, format=format,
-                                                               timeUnit=timeUnit, title=title, **kwds)
+                                                               formatType=formatType, timeUnit=timeUnit,
+                                                               title=title, **kwds)
 
 
 class ConditionalSelectionValueDef(VegaLiteSchema):
@@ -3912,6 +3951,9 @@ class Config(VegaLiteSchema):
         Box Config
     circle : :class:`MarkConfig`
         Circle-Specific Config
+    concat : :class:`CompositionConfig`
+        Default configuration for all concatenation view composition operators ( ``concat``,
+        ``hconcat``, and ``vconcat`` )
     countTitle : string
         Default axis and legend title for count fields.
 
@@ -3920,6 +3962,8 @@ class Config(VegaLiteSchema):
         ErrorBand Config
     errorbar : :class:`ErrorBarConfig`
         ErrorBar Config
+    facet : :class:`CompositionConfig`
+        Default configuration for the ``facet`` view composition operator
     fieldTitle : enum('verbal', 'functional', 'plain')
         Defines how Vega-Lite generates title for fields.  There are three possible styles:
 
@@ -3933,10 +3977,33 @@ class Config(VegaLiteSchema):
     geoshape : :class:`MarkConfig`
         Geoshape-Specific Config
     header : :class:`HeaderConfig`
-        Header configuration, which determines default properties for all `header
-        <https://vega.github.io/vega-lite/docs/header.html>`__. For a full list of header
-        configuration options, please see the `corresponding section of in the header
-        documentation <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+        Header configuration, which determines default properties for all `headers
+        <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+    headerColumn : :class:`HeaderConfig`
+        Header configuration, which determines default properties for column `headers
+        <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+    headerFacet : :class:`HeaderConfig`
+        Header configuration, which determines default properties for non-row/column facet
+        `headers <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
+    headerRow : :class:`HeaderConfig`
+        Header configuration, which determines default properties for row `headers
+        <https://vega.github.io/vega-lite/docs/header.html>`__.
+
+        For a full list of header configuration options, please see the `corresponding
+        section of in the header documentation
+        <https://vega.github.io/vega-lite/docs/header.html#config>`__.
     invalidValues : enum('filter', None)
         Defines how Vega-Lite should handle invalid values ( ``null`` and ``NaN`` ).
 
@@ -3979,6 +4046,8 @@ class Config(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__.
     rect : :class:`MarkConfig`
         Rect-Specific Config
+    repeat : :class:`CompositionConfig`
+        Default configuration for the ``repeat`` view composition operator
     rule : :class:`MarkConfig`
         Rule-Specific Config
     scale : :class:`ScaleConfig`
@@ -4026,22 +4095,26 @@ class Config(VegaLiteSchema):
     def __init__(self, area=Undefined, autosize=Undefined, axis=Undefined, axisBand=Undefined,
                  axisBottom=Undefined, axisLeft=Undefined, axisRight=Undefined, axisTop=Undefined,
                  axisX=Undefined, axisY=Undefined, background=Undefined, bar=Undefined,
-                 boxplot=Undefined, circle=Undefined, countTitle=Undefined, errorband=Undefined,
-                 errorbar=Undefined, fieldTitle=Undefined, geoshape=Undefined, header=Undefined,
-                 invalidValues=Undefined, legend=Undefined, line=Undefined, mark=Undefined,
-                 numberFormat=Undefined, padding=Undefined, point=Undefined, projection=Undefined,
-                 range=Undefined, rect=Undefined, rule=Undefined, scale=Undefined, selection=Undefined,
-                 square=Undefined, stack=Undefined, style=Undefined, text=Undefined, tick=Undefined,
-                 timeFormat=Undefined, title=Undefined, trail=Undefined, view=Undefined, **kwds):
+                 boxplot=Undefined, circle=Undefined, concat=Undefined, countTitle=Undefined,
+                 errorband=Undefined, errorbar=Undefined, facet=Undefined, fieldTitle=Undefined,
+                 geoshape=Undefined, header=Undefined, headerColumn=Undefined, headerFacet=Undefined,
+                 headerRow=Undefined, invalidValues=Undefined, legend=Undefined, line=Undefined,
+                 mark=Undefined, numberFormat=Undefined, padding=Undefined, point=Undefined,
+                 projection=Undefined, range=Undefined, rect=Undefined, repeat=Undefined,
+                 rule=Undefined, scale=Undefined, selection=Undefined, square=Undefined,
+                 stack=Undefined, style=Undefined, text=Undefined, tick=Undefined, timeFormat=Undefined,
+                 title=Undefined, trail=Undefined, view=Undefined, **kwds):
         super(Config, self).__init__(area=area, autosize=autosize, axis=axis, axisBand=axisBand,
                                      axisBottom=axisBottom, axisLeft=axisLeft, axisRight=axisRight,
                                      axisTop=axisTop, axisX=axisX, axisY=axisY, background=background,
-                                     bar=bar, boxplot=boxplot, circle=circle, countTitle=countTitle,
-                                     errorband=errorband, errorbar=errorbar, fieldTitle=fieldTitle,
-                                     geoshape=geoshape, header=header, invalidValues=invalidValues,
-                                     legend=legend, line=line, mark=mark, numberFormat=numberFormat,
-                                     padding=padding, point=point, projection=projection, range=range,
-                                     rect=rect, rule=rule, scale=scale, selection=selection,
+                                     bar=bar, boxplot=boxplot, circle=circle, concat=concat,
+                                     countTitle=countTitle, errorband=errorband, errorbar=errorbar,
+                                     facet=facet, fieldTitle=fieldTitle, geoshape=geoshape,
+                                     header=header, headerColumn=headerColumn, headerFacet=headerFacet,
+                                     headerRow=headerRow, invalidValues=invalidValues, legend=legend,
+                                     line=line, mark=mark, numberFormat=numberFormat, padding=padding,
+                                     point=point, projection=projection, range=range, rect=rect,
+                                     repeat=repeat, rule=rule, scale=scale, selection=selection,
                                      square=square, stack=stack, style=style, text=text, tick=tick,
                                      timeFormat=timeFormat, title=title, trail=trail, view=view, **kwds)
 
@@ -4066,14 +4139,16 @@ class CsvDataFormat(VegaLiteSchema):
 
         For ``"date"``, we parse data based using Javascript's `Date.parse()
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`__.
-        For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ), using
+        For Specific date formats can be provided (e.g., ``{foo: "date:'%m%d%Y'"}`` ), using
         the `d3-time-format syntax <https://github.com/d3/d3-time-format#locale_format>`__.
-        UTC date format parsing is supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ).
+        UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}`` ).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
     type : enum('csv', 'tsv')
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
-        The default format type is determined by the extension of the file URL.
+
+        **Default value:**  The default format type is determined by the extension of the
+        file URL.
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/CsvDataFormat'}
@@ -4102,7 +4177,7 @@ class Cursor(VegaLiteSchema):
 class Data(VegaLiteSchema):
     """Data schema wrapper
 
-    anyOf(:class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
+    anyOf(:class:`DataSource`, :class:`Generator`)
     """
     _schema = {'$ref': '#/definitions/Data'}
     _rootschema = Root._schema
@@ -4122,6 +4197,18 @@ class DataFormat(VegaLiteSchema):
 
     def __init__(self, *args, **kwds):
         super(DataFormat, self).__init__(*args, **kwds)
+
+
+class DataSource(VegaLiteSchema):
+    """DataSource schema wrapper
+
+    anyOf(:class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
+    """
+    _schema = {'$ref': '#/definitions/DataSource'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(DataSource, self).__init__(*args, **kwds)
 
 
 class Datasets(VegaLiteSchema):
@@ -4247,14 +4334,16 @@ class DsvDataFormat(VegaLiteSchema):
 
         For ``"date"``, we parse data based using Javascript's `Date.parse()
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`__.
-        For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ), using
+        For Specific date formats can be provided (e.g., ``{foo: "date:'%m%d%Y'"}`` ), using
         the `d3-time-format syntax <https://github.com/d3/d3-time-format#locale_format>`__.
-        UTC date format parsing is supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ).
+        UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}`` ).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
     type : enum('dsv')
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
-        The default format type is determined by the extension of the file URL.
+
+        **Default value:**  The default format type is determined by the extension of the
+        file URL.
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/DsvDataFormat'}
@@ -4355,12 +4444,13 @@ class ErrorBandConfig(VegaLiteSchema):
 
         * ``"linear"`` : piecewise linear segments, as in a polyline.
         * ``"linear-closed"`` : close the linear segments to form a polygon.
-        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
-          function.
-        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
-          step function.
-        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
-          step function.
+        * ``"step"`` : a piecewise constant function (a step function) consisting of
+          alternating horizontal and vertical lines. The y-value changes at the midpoint of
+          each pair of adjacent x-values.
+        * ``"step-before"`` : a piecewise constant function (a step function) consisting of
+          alternating horizontal and vertical lines. The y-value changes before the x-value.
+        * ``"step-after"`` : a piecewise constant function (a step function) consisting of
+          alternating horizontal and vertical lines. The y-value changes after the x-value.
         * ``"basis"`` : a B-spline, with control point duplication on the ends.
         * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
         * ``"basis-closed"`` : a closed B-spline, as in a loop.
@@ -4429,12 +4519,13 @@ class ErrorBandDef(VegaLiteSchema):
 
         * ``"linear"`` : piecewise linear segments, as in a polyline.
         * ``"linear-closed"`` : close the linear segments to form a polygon.
-        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
-          function.
-        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
-          step function.
-        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
-          step function.
+        * ``"step"`` : a piecewise constant function (a step function) consisting of
+          alternating horizontal and vertical lines. The y-value changes at the midpoint of
+          each pair of adjacent x-values.
+        * ``"step-before"`` : a piecewise constant function (a step function) consisting of
+          alternating horizontal and vertical lines. The y-value changes before the x-value.
+        * ``"step-after"`` : a piecewise constant function (a step function) consisting of
+          alternating horizontal and vertical lines. The y-value changes after the x-value.
         * ``"basis"`` : a B-spline, with control point duplication on the ends.
         * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
         * ``"basis-closed"`` : a closed B-spline, as in a loop.
@@ -4447,7 +4538,7 @@ class ErrorBandDef(VegaLiteSchema):
         * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
     opacity : float
         The opacity (value between [0,1]) of the mark.
-    orient : :class:`Orient`
+    orient : :class:`Orientation`
         Orientation of the error band. This is normally automatically determined, but can be
         specified when the orientation is ambiguous and cannot be automatically determined.
     tension : float
@@ -4546,7 +4637,7 @@ class ErrorBarDef(VegaLiteSchema):
         **Default value:** ``"stderr"``.
     opacity : float
         The opacity (value between [0,1]) of the mark.
-    orient : :class:`Orient`
+    orient : :class:`Orientation`
         Orientation of the error bar.  This is normally automatically determined, but can be
         specified when the orientation is ambiguous and cannot be automatically determined.
     rule : anyOf(boolean, :class:`MarkConfig`)
@@ -4587,116 +4678,6 @@ class EventStream(VegaLiteSchema):
         super(EventStream, self).__init__(**kwds)
 
 
-class LayerSpec(VegaLiteSchema):
-    """LayerSpec schema wrapper
-
-    Mapping(required=[layer])
-    Layer Spec with ``encoding`` and ``projection`` shorthands that will be applied to
-    underlying unit (single-view) specifications.
-
-    Attributes
-    ----------
-
-    layer : List(anyOf(:class:`LayerSpec`, :class:`CompositeUnitSpec`))
-        Layer or single view specifications to be layered.
-
-        **Note** : Specifications inside ``layer`` cannot use ``row`` and ``column``
-        channels as layering facet specifications is not allowed. Instead, use the `facet
-        operator <https://vega.github.io/vega-lite/docs/facet.html>`__ and place a layer
-        inside a facet.
-    data : :class:`Data`
-        An object describing the data source
-    description : string
-        Description of this mark for commenting purpose.
-    encoding : :class:`Encoding`
-        A shared key-value mapping between encoding channels and definition of fields in the
-        underlying layers.
-    height : float
-        The height of a visualization.
-
-        **Default value:**
-
-
-        * If a view's `autosize
-          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
-          its y-channel has a `continuous scale
-          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the height will
-          be the value of `config.view.height
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * For y-axis with a band or point scale: if `rangeStep
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
-          unspecified, the height is `determined by the range step, paddings, and the
-          cardinality of the field mapped to y-channel
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__. Otherwise, if the
-          ``rangeStep`` is ``null``, the height will be the value of `config.view.height
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * If no field is mapped to ``y`` channel, the ``height`` will be the value of
-          ``rangeStep``.
-
-        **Note** : For plots with `row and column channels
-        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
-        height of a single view.
-
-        **See also:** The documentation for `width and height
-        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
-    name : string
-        Name of the visualization for later reference.
-    projection : :class:`Projection`
-        An object defining properties of the geographic projection shared by underlying
-        layers.
-    resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for layers.
-    title : anyOf(string, :class:`TitleParams`)
-        Title for the plot.
-    transform : List(:class:`Transform`)
-        An array of data transformations such as filter and new field calculation.
-    view : :class:`ViewBackground`
-        An object defining the view background's fill and stroke.
-
-        **Default value:** none (transparent)
-    width : float
-        The width of a visualization.
-
-        **Default value:** This will be determined by the following rules:
-
-
-        * If a view's `autosize
-          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
-          its x-channel has a `continuous scale
-          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the width will
-          be the value of `config.view.width
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * For x-axis with a band or point scale: if `rangeStep
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
-          unspecified, the width is `determined by the range step, paddings, and the
-          cardinality of the field mapped to x-channel
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__.   Otherwise, if the
-          ``rangeStep`` is ``null``, the width will be the value of `config.view.width
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * If no field is mapped to ``x`` channel, the ``width`` will be the value of
-          `config.scale.textXRangeStep
-          <https://vega.github.io/vega-lite/docs/size.html#default-width-and-height>`__ for
-          ``text`` mark and the value of ``rangeStep`` for other marks.
-
-        **Note:** For plots with `row and column channels
-        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
-        width of a single view.
-
-        **See also:** The documentation for `width and height
-        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
-    """
-    _schema = {'$ref': '#/definitions/LayerSpec'}
-    _rootschema = Root._schema
-
-    def __init__(self, layer=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, projection=Undefined, resolve=Undefined,
-                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(LayerSpec, self).__init__(layer=layer, data=data, description=description,
-                                        encoding=encoding, height=height, name=name,
-                                        projection=projection, resolve=resolve, title=title,
-                                        transform=transform, view=view, width=width, **kwds)
-
-
 class FacetFieldDef(VegaLiteSchema):
     """FacetFieldDef schema wrapper
 
@@ -4711,9 +4692,33 @@ class FacetFieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -4729,12 +4734,12 @@ class FacetFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -4826,9 +4831,9 @@ class FacetMapping(VegaLiteSchema):
     ----------
 
     column : :class:`FacetFieldDef`
-        Horizontal facets for trellis plots.
+        A field definition for the horizontal facet of trellis plots.
     row : :class:`FacetFieldDef`
-        Vertical facets for trellis plots.
+        A field definition for the vertical facet of trellis plots.
     """
     _schema = {'$ref': '#/definitions/FacetMapping'}
     _rootschema = Root._schema
@@ -4862,10 +4867,14 @@ class FacetedEncoding(VegaLiteSchema):
         2) See the scale documentation for more information about customizing `color scheme
         <https://vega.github.io/vega-lite/docs/scale.html#scheme>`__.
     column : :class:`FacetFieldDef`
-        Horizontal facets for trellis plots.
+        A field definition for the horizontal facet of trellis plots.
     detail : anyOf(:class:`FieldDef`, List(:class:`FieldDef`))
         Additional levels of detail for grouping data in aggregate views and
         in line, trail, and area marks without mapping data to a specific visual channel.
+    facet : :class:`FacetFieldDef`
+        A field definition for the (flexible) facet of trellis plots.
+
+        If either ``row`` or ``column`` is specified, this channel will be ignored.
     fill : anyOf(:class:`ColorFieldDefWithCondition`, :class:`ColorValueDefWithCondition`)
         Fill color of the marks.
         **Default value:** If undefined, the default color depends on `mark config
@@ -4881,21 +4890,21 @@ class FacetedEncoding(VegaLiteSchema):
         **Default value:** If undefined, the default opacity depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#mark>`__ 's ``fillOpacity``
         property.
-    href : anyOf(:class:`StringFieldDefWithCondition`, :class:`StringValueDefWithCondition`)
+    href : anyOf(:class:`TextFieldDefWithCondition`, :class:`TextValueDefWithCondition`)
         A URL to load upon mouse click.
     key : :class:`FieldDef`
         A data field to use as a unique key for data binding. When a visualization’s data is
         updated, the key value will be used to match data elements to existing mark
         instances. Use a key channel to enable object constancy for transitions over dynamic
         data.
-    latitude : :class:`LatLongFieldDef`
+    latitude : anyOf(:class:`LatLongFieldDef`, :class:`NumberValueDef`)
         Latitude position of geographically projected marks.
-    latitude2 : :class:`SecondaryFieldDef`
+    latitude2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Latitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
-    longitude : :class:`LatLongFieldDef`
+    longitude : anyOf(:class:`LatLongFieldDef`, :class:`NumberValueDef`)
         Longitude position of geographically projected marks.
-    longitude2 : :class:`SecondaryFieldDef`
+    longitude2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Longitude-2 position for geographically projected ranged ``"area"``, ``"bar"``,
         ``"rect"``, and  ``"rule"``.
     opacity : anyOf(:class:`NumericFieldDefWithCondition`,
@@ -4920,16 +4929,31 @@ class FacetedEncoding(VegaLiteSchema):
         **Note** : In aggregate plots, ``order`` field should be ``aggregate`` d to avoid
         creating additional aggregation grouping.
     row : :class:`FacetFieldDef`
-        Vertical facets for trellis plots.
+        A field definition for the vertical facet of trellis plots.
     shape : anyOf(:class:`ShapeFieldDefWithCondition`, :class:`ShapeValueDefWithCondition`)
-        For ``point`` marks the supported values are
-        ``"circle"`` (default), ``"square"``, ``"cross"``, ``"diamond"``, ``"triangle-up"``,
-        or ``"triangle-down"``, or else a custom SVG path string.
+        Shape of the mark.
+
+
+        #.
+        For ``point`` marks the supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+        ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+        ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+        <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+        sizing, custom shape paths should be defined within a square bounding box with
+        coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        #.
         For ``geoshape`` marks it should be a field definition of the geojson data
 
         **Default value:** If undefined, the default shape depends on `mark config
         <https://vega.github.io/vega-lite/docs/config.html#point-config>`__ 's ``shape``
-        property.
+        property. ( ``"circle"`` if unset.)
     size : anyOf(:class:`NumericFieldDefWithCondition`, :class:`NumericValueDefWithCondition`)
         Size of the mark.
 
@@ -4968,7 +4992,8 @@ class FacetedEncoding(VegaLiteSchema):
     List(:class:`TextFieldDef`), None)
         The tooltip text to show upon mouse hover.
     x : anyOf(:class:`PositionFieldDef`, :class:`XValueDef`)
-        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"``.
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
 
         The ``value`` of this channel can be a number or a string ``"width"``.
     x2 : anyOf(:class:`SecondaryFieldDef`, :class:`XValueDef`)
@@ -4981,7 +5006,8 @@ class FacetedEncoding(VegaLiteSchema):
         Secondary error value of x coordinates for error specified ``"errorbar"`` and
         ``"errorband"``.
     y : anyOf(:class:`PositionFieldDef`, :class:`YValueDef`)
-        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"``.
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
 
         The ``value`` of this channel can be a number or a string ``"height"``.
     y2 : anyOf(:class:`SecondaryFieldDef`, :class:`YValueDef`)
@@ -4997,15 +5023,15 @@ class FacetedEncoding(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/FacetedEncoding'}
     _rootschema = Root._schema
 
-    def __init__(self, color=Undefined, column=Undefined, detail=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, href=Undefined, key=Undefined, latitude=Undefined,
-                 latitude2=Undefined, longitude=Undefined, longitude2=Undefined, opacity=Undefined,
-                 order=Undefined, row=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, text=Undefined, tooltip=Undefined,
-                 x=Undefined, x2=Undefined, xError=Undefined, xError2=Undefined, y=Undefined,
-                 y2=Undefined, yError=Undefined, yError2=Undefined, **kwds):
-        super(FacetedEncoding, self).__init__(color=color, column=column, detail=detail, fill=fill,
-                                              fillOpacity=fillOpacity, href=href, key=key,
+    def __init__(self, color=Undefined, column=Undefined, detail=Undefined, facet=Undefined,
+                 fill=Undefined, fillOpacity=Undefined, href=Undefined, key=Undefined,
+                 latitude=Undefined, latitude2=Undefined, longitude=Undefined, longitude2=Undefined,
+                 opacity=Undefined, order=Undefined, row=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined, text=Undefined,
+                 tooltip=Undefined, x=Undefined, x2=Undefined, xError=Undefined, xError2=Undefined,
+                 y=Undefined, y2=Undefined, yError=Undefined, yError2=Undefined, **kwds):
+        super(FacetedEncoding, self).__init__(color=color, column=column, detail=detail, facet=facet,
+                                              fill=fill, fillOpacity=fillOpacity, href=href, key=key,
                                               latitude=latitude, latitude2=latitude2,
                                               longitude=longitude, longitude2=longitude2,
                                               opacity=opacity, order=order, row=row, shape=shape,
@@ -5019,7 +5045,8 @@ class FacetedUnitSpec(VegaLiteSchema):
     """FacetedUnitSpec schema wrapper
 
     Mapping(required=[mark])
-    Base interface for a unit (single-view) specification.
+    Unit spec that can have a composite mark and row or column channels (shorthand for a facet
+    spec).
 
     Attributes
     ----------
@@ -5029,6 +5056,62 @@ class FacetedUnitSpec(VegaLiteSchema):
         ``"tick"``, ``"line"``,
         ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
         definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
+    align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
+    center : anyOf(boolean, :class:`RowColboolean`)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
+        **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
     data : :class:`Data`
         An object describing the data source
     description : string
@@ -5069,8 +5152,18 @@ class FacetedUnitSpec(VegaLiteSchema):
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks
         and to ``latitude`` and ``"longitude"`` channels for other marks.
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
+    spacing : anyOf(float, :class:`RowColnumber`)
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
     title : anyOf(string, :class:`TitleParams`)
         Title for the plot.
     transform : List(:class:`Transform`)
@@ -5113,12 +5206,16 @@ class FacetedUnitSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/FacetedUnitSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, projection=Undefined, selection=Undefined,
-                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(FacetedUnitSpec, self).__init__(mark=mark, data=data, description=description,
+    def __init__(self, mark=Undefined, align=Undefined, bounds=Undefined, center=Undefined,
+                 columns=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
+                 height=Undefined, name=Undefined, projection=Undefined, resolve=Undefined,
+                 selection=Undefined, spacing=Undefined, title=Undefined, transform=Undefined,
+                 view=Undefined, width=Undefined, **kwds):
+        super(FacetedUnitSpec, self).__init__(mark=mark, align=align, bounds=bounds, center=center,
+                                              columns=columns, data=data, description=description,
                                               encoding=encoding, height=height, name=name,
-                                              projection=projection, selection=selection, title=title,
+                                              projection=projection, resolve=resolve,
+                                              selection=selection, spacing=spacing, title=title,
                                               transform=transform, view=view, width=width, **kwds)
 
 
@@ -5132,159 +5229,6 @@ class Field(VegaLiteSchema):
 
     def __init__(self, *args, **kwds):
         super(Field, self).__init__(*args, **kwds)
-
-
-class FieldDefWithConditionMarkPropFieldDefnominalstring(VegaLiteSchema):
-    """FieldDefWithConditionMarkPropFieldDefnominalstring schema wrapper
-
-    Mapping(required=[type])
-    A FieldDef with Condition :raw-html:`<ValueDef>`
-
-    Attributes
-    ----------
-
-    type : enum('nominal')
-        The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ).
-        It can also be a ``"geojson"`` type for encoding `'geoshape'
-        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
-
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
-    aggregate : :class:`Aggregate`
-        Aggregation function for the field
-        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-
-        **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
-        A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
-
-
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
-
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
-
-        **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
-        One or more value definition(s) with a selection predicate.
-
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
-        since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : :class:`Field`
-        **Required.** A string defining the name of the field from which to pull a data
-        value
-        or an object defining iterated values from the `repeat
-        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
-
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
-        If field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
-        See more details about escaping in the `field documentation
-        <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
-    legend : anyOf(:class:`Legend`, None)
-        An object defining properties of the legend.
-        If ``null``, the legend for the encoding channel will be removed.
-
-        **Default value:** If undefined, default `legend properties
-        <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
-    scale : anyOf(:class:`Scale`, None)
-        An object defining properties of the channel's scale, which is the function that
-        transforms values in the data domain (numbers, dates, strings, etc) to visual values
-        (pixels, colors, sizes) of the encoding channels.
-
-        If ``null``, the scale will be `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
-
-        **Default value:** If undefined, default `scale properties
-        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
-    sort : :class:`Sort`
-        Sort order for the encoded field.
-
-        For continuous fields (quantitative or temporal), ``sort`` can be either
-        ``"ascending"`` or ``"descending"``.
-
-        For discrete fields, ``sort`` can be one of the following:
-
-
-        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
-          Javascript.
-        * `A sort-by-encoding definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ for sorting
-          by another encoding channel. (This type of sort definition is not available for
-          ``row`` and ``column`` channels.)
-        * `A sort field definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-          another field.
-        * `An array specifying the field values in preferred order
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-          sort order will obey the values in the array, followed by any unspecified values
-          in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
-        * ``null`` indicating no sort.
-
-        **Default value:** ``"ascending"``
-
-        **Note:** ``null`` is not supported for ``row`` and ``column``.
-    timeUnit : :class:`TimeUnit`
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field.
-        or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
-
-        **Default value:** ``undefined`` (None)
-    title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.
-
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
-        field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
-        Otherwise, the title is simply the field name.
-
-        **Notes** :
-
-        1) You can customize the default field title format by providing the `fieldTitle
-        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
-        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
-        function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
-
-        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
-        defined, axis/header/legend title will be used.
-    """
-    _schema = {'$ref': '#/definitions/FieldDefWithCondition<MarkPropFieldDef<"nominal">,string>'}
-    _rootschema = Root._schema
-
-    def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, **kwds):
-        super(FieldDefWithConditionMarkPropFieldDefnominalstring, self).__init__(type=type,
-                                                                                 aggregate=aggregate,
-                                                                                 bin=bin,
-                                                                                 condition=condition,
-                                                                                 field=field,
-                                                                                 legend=legend,
-                                                                                 scale=scale, sort=sort,
-                                                                                 timeUnit=timeUnit,
-                                                                                 title=title, **kwds)
 
 
 class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
@@ -5302,9 +5246,33 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -5320,20 +5288,21 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalColorValueDef`,
     List(:class:`ConditionalColorValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -5455,9 +5424,33 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -5473,20 +5466,21 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -5606,9 +5600,33 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestring(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -5624,20 +5642,21 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestring(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -5761,9 +5780,33 @@ class FieldDefWithConditionTextFieldDefstringnumberboolean(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -5779,19 +5822,20 @@ class FieldDefWithConditionTextFieldDefstringnumberboolean(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -5808,8 +5852,32 @@ class FieldDefWithConditionTextFieldDefstringnumberboolean(VegaLiteSchema):
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
-        The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`__ for a
-        text field. If not defined, this will be determined automatically.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -5842,13 +5910,15 @@ class FieldDefWithConditionTextFieldDefstringnumberboolean(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
+                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
+                 title=Undefined, **kwds):
         super(FieldDefWithConditionTextFieldDefstringnumberboolean, self).__init__(type=type,
                                                                                    aggregate=aggregate,
                                                                                    bin=bin,
                                                                                    condition=condition,
                                                                                    field=field,
                                                                                    format=format,
+                                                                                   formatType=formatType,
                                                                                    timeUnit=timeUnit,
                                                                                    title=title, **kwds)
 
@@ -5868,9 +5938,33 @@ class FieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -5886,12 +5980,12 @@ class FieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -6234,6 +6328,18 @@ class FontWeight(VegaLiteSchema):
         super(FontWeight, self).__init__(*args)
 
 
+class Generator(VegaLiteSchema):
+    """Generator schema wrapper
+
+    anyOf(:class:`SequenceGenerator`, :class:`SphereGenerator`, :class:`GraticuleGenerator`)
+    """
+    _schema = {'$ref': '#/definitions/Generator'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(Generator, self).__init__(*args, **kwds)
+
+
 class GenericBinMixinsbooleanBinParams(VegaLiteSchema):
     """GenericBinMixinsbooleanBinParams schema wrapper
 
@@ -6252,12 +6358,12 @@ class GenericBinMixinsbooleanBinParams(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     """
@@ -6286,12 +6392,12 @@ class GenericBinMixinsbooleanBinParamsbinnednull(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     """
@@ -6300,6 +6406,106 @@ class GenericBinMixinsbooleanBinParamsbinnednull(VegaLiteSchema):
 
     def __init__(self, bin=Undefined, **kwds):
         super(GenericBinMixinsbooleanBinParamsbinnednull, self).__init__(bin=bin, **kwds)
+
+
+class ConcatSpec(VegaLiteSchema):
+    """ConcatSpec schema wrapper
+
+    Mapping(required=[concat])
+    Base interface for a generalized concatenation specification.
+
+    Attributes
+    ----------
+
+    concat : List(:class:`Spec`)
+        A list of views to be concatenated.
+    align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
+    center : anyOf(boolean, :class:`RowColboolean`)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
+        **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
+    data : :class:`Data`
+        An object describing the data source
+    description : string
+        Description of this mark for commenting purpose.
+    name : string
+        Name of the visualization for later reference.
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
+    spacing : anyOf(float, :class:`RowColnumber`)
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
+    title : anyOf(string, :class:`TitleParams`)
+        Title for the plot.
+    transform : List(:class:`Transform`)
+        An array of data transformations such as filter and new field calculation.
+    """
+    _schema = {'$ref': '#/definitions/ConcatSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, concat=Undefined, align=Undefined, bounds=Undefined, center=Undefined,
+                 columns=Undefined, data=Undefined, description=Undefined, name=Undefined,
+                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
+        super(ConcatSpec, self).__init__(concat=concat, align=align, bounds=bounds, center=center,
+                                         columns=columns, data=data, description=description, name=name,
+                                         resolve=resolve, spacing=spacing, title=title,
+                                         transform=transform, **kwds)
 
 
 class FacetSpec(VegaLiteSchema):
@@ -6311,9 +6517,12 @@ class FacetSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    facet : :class:`FacetMapping`
-        An object that describes mappings between ``row`` and ``column`` channels and their
-        field definitions.
+    facet : anyOf(:class:`FacetFieldDef`, :class:`FacetMapping`)
+        Definition for how to facet the data.  One of:
+        1) `a field definition for faceting the plot by one field
+        <https://vega.github.io/vega-lite/docs/facet.html#field-def>`__
+        2) `An object that maps row and column channels to their field definitions
+        <https://vega.github.io/vega-lite/docs/facet.html#mapping>`__
     spec : anyOf(:class:`LayerSpec`, :class:`FacetedUnitSpec`)
         A specification of the view that gets faceted.
     align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
@@ -6353,6 +6562,25 @@ class FacetSpec(VegaLiteSchema):
         supply different centering values for rows and columns.
 
         **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
     data : :class:`Data`
         An object describing the data source
     description : string
@@ -6360,13 +6588,15 @@ class FacetSpec(VegaLiteSchema):
     name : string
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for facets.
+        Scale, axis, and legend resolutions for view composition specifications.
     spacing : anyOf(float, :class:`RowColnumber`)
         The spacing in pixels between sub-views of the composition operator.
         An object of the form ``{"row": number, "column": number}`` can be used to set
         different spacing values for rows and columns.
 
-        **Default value** : ``20``
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
     title : anyOf(string, :class:`TitleParams`)
         Title for the plot.
     transform : List(:class:`Transform`)
@@ -6376,12 +6606,13 @@ class FacetSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, facet=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
-                 center=Undefined, data=Undefined, description=Undefined, name=Undefined,
-                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
+                 center=Undefined, columns=Undefined, data=Undefined, description=Undefined,
+                 name=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
+                 transform=Undefined, **kwds):
         super(FacetSpec, self).__init__(facet=facet, spec=spec, align=align, bounds=bounds,
-                                        center=center, data=data, description=description, name=name,
-                                        resolve=resolve, spacing=spacing, title=title,
-                                        transform=transform, **kwds)
+                                        center=center, columns=columns, data=data,
+                                        description=description, name=name, resolve=resolve,
+                                        spacing=spacing, title=title, transform=transform, **kwds)
 
 
 class HConcatSpec(VegaLiteSchema):
@@ -6394,7 +6625,7 @@ class HConcatSpec(VegaLiteSchema):
     ----------
 
     hconcat : List(:class:`Spec`)
-        A list of views that should be concatenated and put into a row.
+        A list of views to be concatenated and put into a row.
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
         of ``full`` (the default) or ``flush``.
@@ -6419,7 +6650,7 @@ class HConcatSpec(VegaLiteSchema):
     name : string
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for horizontally concatenated charts.
+        Scale, axis, and legend resolutions for view composition specifications.
     spacing : float
         The spacing in pixels between sub-views of the concat operator.
 
@@ -6449,11 +6680,15 @@ class RepeatSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    repeat : :class:`Repeat`
-        An object that describes what fields should be repeated into views that are laid out
-        as a ``row`` or ``column``.
+    repeat : anyOf(List(string), :class:`RepeatMapping`)
+        Definition for fields to be repeated.  One of:
+        1) An array of fields to be repeated.  If ``"repeat"`` is an array, the field can be
+        referred using ``{"repeat": "repeat"}``
+        2) An object that mapped ``"row"`` and/or ``"column"`` to the listed of fields to be
+        repeated along the particular orientations. The objects ``{"repeat": "row"}`` and
+        ``{"repeat": "column"}`` can be used to refer to the repeated field respectively.
     spec : :class:`Spec`
-        Any specification in Vega-Lite.
+        A specification of the view that gets repeated.
     align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
         The alignment to apply to grid rows and columns.
         The supported string values are ``"all"``, ``"each"``, and ``"none"``.
@@ -6491,6 +6726,25 @@ class RepeatSpec(VegaLiteSchema):
         supply different centering values for rows and columns.
 
         **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
     data : :class:`Data`
         An object describing the data source
     description : string
@@ -6498,13 +6752,15 @@ class RepeatSpec(VegaLiteSchema):
     name : string
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
-        Scale and legend resolutions for repeated charts.
+        Scale, axis, and legend resolutions for view composition specifications.
     spacing : anyOf(float, :class:`RowColnumber`)
         The spacing in pixels between sub-views of the composition operator.
         An object of the form ``{"row": number, "column": number}`` can be used to set
         different spacing values for rows and columns.
 
-        **Default value** : ``20``
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
     title : anyOf(string, :class:`TitleParams`)
         Title for the plot.
     transform : List(:class:`Transform`)
@@ -6514,19 +6770,20 @@ class RepeatSpec(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
-                 center=Undefined, data=Undefined, description=Undefined, name=Undefined,
-                 resolve=Undefined, spacing=Undefined, title=Undefined, transform=Undefined, **kwds):
+                 center=Undefined, columns=Undefined, data=Undefined, description=Undefined,
+                 name=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
+                 transform=Undefined, **kwds):
         super(RepeatSpec, self).__init__(repeat=repeat, spec=spec, align=align, bounds=bounds,
-                                         center=center, data=data, description=description, name=name,
-                                         resolve=resolve, spacing=spacing, title=title,
-                                         transform=transform, **kwds)
+                                         center=center, columns=columns, data=data,
+                                         description=description, name=name, resolve=resolve,
+                                         spacing=spacing, title=title, transform=transform, **kwds)
 
 
 class Spec(VegaLiteSchema):
     """Spec schema wrapper
 
     anyOf(:class:`FacetedUnitSpec`, :class:`LayerSpec`, :class:`FacetSpec`, :class:`RepeatSpec`,
-    :class:`VConcatSpec`, :class:`HConcatSpec`)
+    :class:`ConcatSpec`, :class:`VConcatSpec`, :class:`HConcatSpec`)
     Any specification in Vega-Lite.
     """
     _schema = {'$ref': '#/definitions/Spec'}
@@ -6645,116 +6902,6 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
                                                              view=view, width=width, **kwds)
 
 
-class GenericUnitSpecFacetedEncodingAnyMark(VegaLiteSchema):
-    """GenericUnitSpecFacetedEncodingAnyMark schema wrapper
-
-    Mapping(required=[mark])
-    Base interface for a unit (single-view) specification.
-
-    Attributes
-    ----------
-
-    mark : :class:`AnyMark`
-        A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
-        ``"tick"``, ``"line"``,
-        ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
-        definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    data : :class:`Data`
-        An object describing the data source
-    description : string
-        Description of this mark for commenting purpose.
-    encoding : :class:`FacetedEncoding`
-        A key-value mapping between encoding channels and definition of fields.
-    height : float
-        The height of a visualization.
-
-        **Default value:**
-
-
-        * If a view's `autosize
-          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
-          its y-channel has a `continuous scale
-          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the height will
-          be the value of `config.view.height
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * For y-axis with a band or point scale: if `rangeStep
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
-          unspecified, the height is `determined by the range step, paddings, and the
-          cardinality of the field mapped to y-channel
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__. Otherwise, if the
-          ``rangeStep`` is ``null``, the height will be the value of `config.view.height
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * If no field is mapped to ``y`` channel, the ``height`` will be the value of
-          ``rangeStep``.
-
-        **Note** : For plots with `row and column channels
-        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
-        height of a single view.
-
-        **See also:** The documentation for `width and height
-        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
-    name : string
-        Name of the visualization for later reference.
-    projection : :class:`Projection`
-        An object defining properties of geographic projection, which will be applied to
-        ``shape`` path for ``"geoshape"`` marks
-        and to ``latitude`` and ``"longitude"`` channels for other marks.
-    selection : Mapping(required=[])
-        A key-value mapping between selection names and definitions.
-    title : anyOf(string, :class:`TitleParams`)
-        Title for the plot.
-    transform : List(:class:`Transform`)
-        An array of data transformations such as filter and new field calculation.
-    view : :class:`ViewBackground`
-        An object defining the view background's fill and stroke.
-
-        **Default value:** none (transparent)
-    width : float
-        The width of a visualization.
-
-        **Default value:** This will be determined by the following rules:
-
-
-        * If a view's `autosize
-          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
-          its x-channel has a `continuous scale
-          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the width will
-          be the value of `config.view.width
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * For x-axis with a band or point scale: if `rangeStep
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
-          unspecified, the width is `determined by the range step, paddings, and the
-          cardinality of the field mapped to x-channel
-          <https://vega.github.io/vega-lite/docs/scale.html#band>`__.   Otherwise, if the
-          ``rangeStep`` is ``null``, the width will be the value of `config.view.width
-          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
-        * If no field is mapped to ``x`` channel, the ``width`` will be the value of
-          `config.scale.textXRangeStep
-          <https://vega.github.io/vega-lite/docs/size.html#default-width-and-height>`__ for
-          ``text`` mark and the value of ``rangeStep`` for other marks.
-
-        **Note:** For plots with `row and column channels
-        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
-        width of a single view.
-
-        **See also:** The documentation for `width and height
-        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
-    """
-    _schema = {'$ref': '#/definitions/GenericUnitSpec<FacetedEncoding,AnyMark>'}
-    _rootschema = Root._schema
-
-    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, projection=Undefined, selection=Undefined,
-                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
-        super(GenericUnitSpecFacetedEncodingAnyMark, self).__init__(mark=mark, data=data,
-                                                                    description=description,
-                                                                    encoding=encoding, height=height,
-                                                                    name=name, projection=projection,
-                                                                    selection=selection, title=title,
-                                                                    transform=transform, view=view,
-                                                                    width=width, **kwds)
-
-
 class VConcatSpec(VegaLiteSchema):
     """VConcatSpec schema wrapper
 
@@ -6765,7 +6912,7 @@ class VConcatSpec(VegaLiteSchema):
     ----------
 
     vconcat : List(:class:`Spec`)
-        A list of views that should be concatenated and put into a column.
+        A list of views to be concatenated and put into a column.
     bounds : enum('full', 'flush')
         The bounds calculation method to use for determining the extent of a sub-plot. One
         of ``full`` (the default) or ``flush``.
@@ -6790,7 +6937,7 @@ class VConcatSpec(VegaLiteSchema):
     name : string
         Name of the visualization for later reference.
     resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for vertically concatenated charts.
+        Scale, axis, and legend resolutions for view composition specifications.
     spacing : float
         The spacing in pixels between sub-views of the concat operator.
 
@@ -6811,6 +6958,65 @@ class VConcatSpec(VegaLiteSchema):
                                           spacing=spacing, title=title, transform=transform, **kwds)
 
 
+class GraticuleGenerator(VegaLiteSchema):
+    """GraticuleGenerator schema wrapper
+
+    Mapping(required=[graticule])
+
+    Attributes
+    ----------
+
+    graticule : anyOf(enum(True), :class:`GraticuleParams`)
+        Generate graticule GeoJSON data for geographic reference lines.
+    name : string
+        Provide a placeholder name and bind data at runtime.
+    """
+    _schema = {'$ref': '#/definitions/GraticuleGenerator'}
+    _rootschema = Root._schema
+
+    def __init__(self, graticule=Undefined, name=Undefined, **kwds):
+        super(GraticuleGenerator, self).__init__(graticule=graticule, name=name, **kwds)
+
+
+class GraticuleParams(VegaLiteSchema):
+    """GraticuleParams schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    extent : List(List(float))
+        Sets both the major and minor extents to the same values.
+    extentMajor : List(List(float))
+        The major extent of the graticule as a two-element array of coordinates.
+    extentMinor : List(List(float))
+        The minor extent of the graticule as a two-element array of coordinates.
+    precision : float
+        The precision of the graticule in degrees.
+
+        **Default value:** ``2.5``
+    step : List(float)
+        Sets both the major and minor step angles to the same values.
+    stepMajor : List(float)
+        The major step angles of the graticule.
+
+        **Default value:** ``[90, 360]``
+    stepMinor : List(float)
+        The minor step angles of the graticule.
+
+        **Default value:** ``[10, 10]``
+    """
+    _schema = {'$ref': '#/definitions/GraticuleParams'}
+    _rootschema = Root._schema
+
+    def __init__(self, extent=Undefined, extentMajor=Undefined, extentMinor=Undefined,
+                 precision=Undefined, step=Undefined, stepMajor=Undefined, stepMinor=Undefined, **kwds):
+        super(GraticuleParams, self).__init__(extent=extent, extentMajor=extentMajor,
+                                              extentMinor=extentMinor, precision=precision, step=step,
+                                              stepMajor=stepMajor, stepMinor=stepMinor, **kwds)
+
+
 class Header(VegaLiteSchema):
     """Header schema wrapper
 
@@ -6821,19 +7027,38 @@ class Header(VegaLiteSchema):
     ----------
 
     format : string
-        The formatting pattern for labels. This is D3's `number format pattern
-        <https://github.com/d3/d3-format#locale_format>`__ for quantitative fields and D3's
-        `time format pattern <https://github.com/d3/d3-time-format#locale_format>`__ for
-        time field.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more information.
+        for more examples.
 
-        **Default value:**  derived from `numberFormat
-        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for
-        quantitative fields and from `timeFormat
-        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for temporal
-        fields.
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
+    labelAlign : :class:`Align`
+        Horizontal text alignment of header labels.
+    labelAnchor : :class:`TitleAnchor`
+        The anchor position for placing the labels. One of ``"start"``, ``"middle"``, or
+        ``"end"``. For example, with a label orientation of top these anchor positions map
+        to a left-, center-, or right-aligned label.
     labelAngle : float
         The rotation angle of the header labels.
 
@@ -6849,6 +7074,9 @@ class Header(VegaLiteSchema):
         automatically truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0``, indicating no limit
+    labelOrient : :class:`Orient`
+        The orientation of the header label. One of ``"top"``, ``"bottom"``, ``"left"`` or
+        ``"right"``.
     labelPadding : float
         The padding, in pixel, between facet header's label and the plot.
 
@@ -6873,21 +7101,12 @@ class Header(VegaLiteSchema):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    titleAnchor : string
+    titleAlign : :class:`Align`
+        Horizontal text alignment (to the anchor) of header titles.
+    titleAnchor : :class:`TitleAnchor`
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
         ``"end"``. For example, with an orientation of top these anchor positions map to a
         left-, center-, or right-aligned title.
-
-        **Default value:** ``"middle"`` for `single
-        <https://vega.github.io/vega-lite/docs/spec.html>`__ and `layered
-        <https://vega.github.io/vega-lite/docs/layer.html>`__ views.
-        ``"start"`` for other composite views.
-
-        **Note:** `For now <https://github.com/vega/vega-lite/issues/2875>`__, ``anchor`` is
-        only customizable only for `single
-        <https://vega.github.io/vega-lite/docs/spec.html>`__ and `layered
-        <https://vega.github.io/vega-lite/docs/layer.html>`__ views.  For other composite
-        views, ``anchor`` is always ``"start"``.
     titleAngle : float
         The rotation angle of the header title.
 
@@ -6913,6 +7132,9 @@ class Header(VegaLiteSchema):
         automatically truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0``, indicating no limit
+    titleOrient : :class:`Orient`
+        The orientation of the header title. One of ``"top"``, ``"bottom"``, ``"left"`` or
+        ``"right"``.
     titlePadding : float
         The padding, in pixel, between facet header's title and the label.
 
@@ -6921,19 +7143,23 @@ class Header(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/Header'}
     _rootschema = Root._schema
 
-    def __init__(self, format=Undefined, labelAngle=Undefined, labelColor=Undefined,
-                 labelFont=Undefined, labelFontSize=Undefined, labelLimit=Undefined,
-                 labelPadding=Undefined, title=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
-                 titlePadding=Undefined, **kwds):
-        super(Header, self).__init__(format=format, labelAngle=labelAngle, labelColor=labelColor,
-                                     labelFont=labelFont, labelFontSize=labelFontSize,
-                                     labelLimit=labelLimit, labelPadding=labelPadding, title=title,
-                                     titleAnchor=titleAnchor, titleAngle=titleAngle,
-                                     titleBaseline=titleBaseline, titleColor=titleColor,
-                                     titleFont=titleFont, titleFontSize=titleFontSize,
-                                     titleFontWeight=titleFontWeight, titleLimit=titleLimit,
+    def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
+                 labelAnchor=Undefined, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
+                 labelFontSize=Undefined, labelLimit=Undefined, labelOrient=Undefined,
+                 labelPadding=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined,
+                 titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined,
+                 titleFont=Undefined, titleFontSize=Undefined, titleFontWeight=Undefined,
+                 titleLimit=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds):
+        super(Header, self).__init__(format=format, formatType=formatType, labelAlign=labelAlign,
+                                     labelAnchor=labelAnchor, labelAngle=labelAngle,
+                                     labelColor=labelColor, labelFont=labelFont,
+                                     labelFontSize=labelFontSize, labelLimit=labelLimit,
+                                     labelOrient=labelOrient, labelPadding=labelPadding, title=title,
+                                     titleAlign=titleAlign, titleAnchor=titleAnchor,
+                                     titleAngle=titleAngle, titleBaseline=titleBaseline,
+                                     titleColor=titleColor, titleFont=titleFont,
+                                     titleFontSize=titleFontSize, titleFontWeight=titleFontWeight,
+                                     titleLimit=titleLimit, titleOrient=titleOrient,
                                      titlePadding=titlePadding, **kwds)
 
 
@@ -6945,6 +7171,39 @@ class HeaderConfig(VegaLiteSchema):
     Attributes
     ----------
 
+    format : string
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
+    labelAlign : :class:`Align`
+        Horizontal text alignment of header labels.
+    labelAnchor : :class:`TitleAnchor`
+        The anchor position for placing the labels. One of ``"start"``, ``"middle"``, or
+        ``"end"``. For example, with a label orientation of top these anchor positions map
+        to a left-, center-, or right-aligned label.
     labelAngle : float
         The rotation angle of the header labels.
 
@@ -6960,25 +7219,25 @@ class HeaderConfig(VegaLiteSchema):
         automatically truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0``, indicating no limit
+    labelOrient : :class:`Orient`
+        The orientation of the header label. One of ``"top"``, ``"bottom"``, ``"left"`` or
+        ``"right"``.
     labelPadding : float
         The padding, in pixel, between facet header's label and the plot.
 
         **Default value:** ``10``
-    titleAnchor : string
+    shortTimeLabels : boolean
+        Whether month names and weekday names should be abbreviated.
+
+        **Default value:**  ``false``
+    title : None
+        Set to null to disable title for the axis, legend, or header.
+    titleAlign : :class:`Align`
+        Horizontal text alignment (to the anchor) of header titles.
+    titleAnchor : :class:`TitleAnchor`
         The anchor position for placing the title. One of ``"start"``, ``"middle"``, or
         ``"end"``. For example, with an orientation of top these anchor positions map to a
         left-, center-, or right-aligned title.
-
-        **Default value:** ``"middle"`` for `single
-        <https://vega.github.io/vega-lite/docs/spec.html>`__ and `layered
-        <https://vega.github.io/vega-lite/docs/layer.html>`__ views.
-        ``"start"`` for other composite views.
-
-        **Note:** `For now <https://github.com/vega/vega-lite/issues/2875>`__, ``anchor`` is
-        only customizable only for `single
-        <https://vega.github.io/vega-lite/docs/spec.html>`__ and `layered
-        <https://vega.github.io/vega-lite/docs/layer.html>`__ views.  For other composite
-        views, ``anchor`` is always ``"start"``.
     titleAngle : float
         The rotation angle of the header title.
 
@@ -7004,6 +7263,9 @@ class HeaderConfig(VegaLiteSchema):
         automatically truncated if the rendered size exceeds the limit.
 
         **Default value:** ``0``, indicating no limit
+    titleOrient : :class:`Orient`
+        The orientation of the header title. One of ``"top"``, ``"bottom"``, ``"left"`` or
+        ``"right"``.
     titlePadding : float
         The padding, in pixel, between facet header's title and the label.
 
@@ -7012,18 +7274,25 @@ class HeaderConfig(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/HeaderConfig'}
     _rootschema = Root._schema
 
-    def __init__(self, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
-                 labelFontSize=Undefined, labelLimit=Undefined, labelPadding=Undefined,
-                 titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
-                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
-                 titleFontWeight=Undefined, titleLimit=Undefined, titlePadding=Undefined, **kwds):
-        super(HeaderConfig, self).__init__(labelAngle=labelAngle, labelColor=labelColor,
-                                           labelFont=labelFont, labelFontSize=labelFontSize,
-                                           labelLimit=labelLimit, labelPadding=labelPadding,
-                                           titleAnchor=titleAnchor, titleAngle=titleAngle,
-                                           titleBaseline=titleBaseline, titleColor=titleColor,
-                                           titleFont=titleFont, titleFontSize=titleFontSize,
-                                           titleFontWeight=titleFontWeight, titleLimit=titleLimit,
+    def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
+                 labelAnchor=Undefined, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
+                 labelFontSize=Undefined, labelLimit=Undefined, labelOrient=Undefined,
+                 labelPadding=Undefined, shortTimeLabels=Undefined, title=Undefined,
+                 titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
+                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
+                 titleFontSize=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
+                 titleOrient=Undefined, titlePadding=Undefined, **kwds):
+        super(HeaderConfig, self).__init__(format=format, formatType=formatType, labelAlign=labelAlign,
+                                           labelAnchor=labelAnchor, labelAngle=labelAngle,
+                                           labelColor=labelColor, labelFont=labelFont,
+                                           labelFontSize=labelFontSize, labelLimit=labelLimit,
+                                           labelOrient=labelOrient, labelPadding=labelPadding,
+                                           shortTimeLabels=shortTimeLabels, title=title,
+                                           titleAlign=titleAlign, titleAnchor=titleAnchor,
+                                           titleAngle=titleAngle, titleBaseline=titleBaseline,
+                                           titleColor=titleColor, titleFont=titleFont,
+                                           titleFontSize=titleFontSize, titleFontWeight=titleFontWeight,
+                                           titleLimit=titleLimit, titleOrient=titleOrient,
                                            titlePadding=titlePadding, **kwds)
 
 
@@ -7228,10 +7497,19 @@ class IntervalSelection(VegaLiteSchema):
         Establishes a two-way binding between the interval selection and the scales
         used within the same view. This allows a user to interactively pan and
         zoom the view.
+    clear : anyOf(:class:`EventStream`, boolean)
+        Clears the selection, emptying it of all values. Can be an
+        `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
+        disable.
+
+        **Default value:** ``dblclick``.
+
+        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
+        for more information.
     empty : enum('all', 'none')
-        By default, all data values are considered to lie within an empty selection.
+        By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
-    encodings : List(:class:`SingleDefChannel`)
+    encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
     fields : List(string)
@@ -7274,12 +7552,13 @@ class IntervalSelection(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/IntervalSelection'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, bind=Undefined, empty=Undefined, encodings=Undefined,
-                 fields=Undefined, init=Undefined, mark=Undefined, on=Undefined, resolve=Undefined,
-                 translate=Undefined, zoom=Undefined, **kwds):
-        super(IntervalSelection, self).__init__(type=type, bind=bind, empty=empty, encodings=encodings,
-                                                fields=fields, init=init, mark=mark, on=on,
-                                                resolve=resolve, translate=translate, zoom=zoom, **kwds)
+    def __init__(self, type=Undefined, bind=Undefined, clear=Undefined, empty=Undefined,
+                 encodings=Undefined, fields=Undefined, init=Undefined, mark=Undefined, on=Undefined,
+                 resolve=Undefined, translate=Undefined, zoom=Undefined, **kwds):
+        super(IntervalSelection, self).__init__(type=type, bind=bind, clear=clear, empty=empty,
+                                                encodings=encodings, fields=fields, init=init,
+                                                mark=mark, on=on, resolve=resolve, translate=translate,
+                                                zoom=zoom, **kwds)
 
 
 class IntervalSelectionConfig(VegaLiteSchema):
@@ -7294,10 +7573,19 @@ class IntervalSelectionConfig(VegaLiteSchema):
         Establishes a two-way binding between the interval selection and the scales
         used within the same view. This allows a user to interactively pan and
         zoom the view.
+    clear : anyOf(:class:`EventStream`, boolean)
+        Clears the selection, emptying it of all values. Can be an
+        `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
+        disable.
+
+        **Default value:** ``dblclick``.
+
+        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
+        for more information.
     empty : enum('all', 'none')
-        By default, all data values are considered to lie within an empty selection.
+        By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
-    encodings : List(:class:`SingleDefChannel`)
+    encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
     fields : List(string)
@@ -7340,13 +7628,13 @@ class IntervalSelectionConfig(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
     _rootschema = Root._schema
 
-    def __init__(self, bind=Undefined, empty=Undefined, encodings=Undefined, fields=Undefined,
-                 init=Undefined, mark=Undefined, on=Undefined, resolve=Undefined, translate=Undefined,
-                 zoom=Undefined, **kwds):
-        super(IntervalSelectionConfig, self).__init__(bind=bind, empty=empty, encodings=encodings,
-                                                      fields=fields, init=init, mark=mark, on=on,
-                                                      resolve=resolve, translate=translate, zoom=zoom,
-                                                      **kwds)
+    def __init__(self, bind=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
+                 fields=Undefined, init=Undefined, mark=Undefined, on=Undefined, resolve=Undefined,
+                 translate=Undefined, zoom=Undefined, **kwds):
+        super(IntervalSelectionConfig, self).__init__(bind=bind, clear=clear, empty=empty,
+                                                      encodings=encodings, fields=fields, init=init,
+                                                      mark=mark, on=on, resolve=resolve,
+                                                      translate=translate, zoom=zoom, **kwds)
 
 
 class JoinAggregateFieldDef(VegaLiteSchema):
@@ -7416,9 +7704,9 @@ class JsonDataFormat(VegaLiteSchema):
 
         For ``"date"``, we parse data based using Javascript's `Date.parse()
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`__.
-        For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ), using
+        For Specific date formats can be provided (e.g., ``{foo: "date:'%m%d%Y'"}`` ), using
         the `d3-time-format syntax <https://github.com/d3/d3-time-format#locale_format>`__.
-        UTC date format parsing is supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ).
+        UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}`` ).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
     property : string
@@ -7430,7 +7718,9 @@ class JsonDataFormat(VegaLiteSchema):
         from the loaded JSON object.
     type : enum('json')
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
-        The default format type is determined by the extension of the file URL.
+
+        **Default value:**  The default format type is determined by the extension of the
+        file URL.
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/JsonDataFormat'}
@@ -7475,12 +7765,12 @@ class LatLongFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -7530,9 +7820,33 @@ class LatLongFieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     """
     _schema = {'$ref': '#/definitions/LatLongFieldDef'}
     _rootschema = Root._schema
@@ -7541,6 +7855,116 @@ class LatLongFieldDef(VegaLiteSchema):
                  title=Undefined, type=Undefined, **kwds):
         super(LatLongFieldDef, self).__init__(aggregate=aggregate, bin=bin, field=field,
                                               timeUnit=timeUnit, title=title, type=type, **kwds)
+
+
+class LayerSpec(VegaLiteSchema):
+    """LayerSpec schema wrapper
+
+    Mapping(required=[layer])
+    A full layered plot specification, which may contains ``encoding`` and ``projection``
+    properties that will be applied to underlying unit (single-view) specifications.
+
+    Attributes
+    ----------
+
+    layer : List(anyOf(:class:`LayerSpec`, :class:`UnitSpec`))
+        Layer or single view specifications to be layered.
+
+        **Note** : Specifications inside ``layer`` cannot use ``row`` and ``column``
+        channels as layering facet specifications is not allowed. Instead, use the `facet
+        operator <https://vega.github.io/vega-lite/docs/facet.html>`__ and place a layer
+        inside a facet.
+    data : :class:`Data`
+        An object describing the data source
+    description : string
+        Description of this mark for commenting purpose.
+    encoding : :class:`Encoding`
+        A shared key-value mapping between encoding channels and definition of fields in the
+        underlying layers.
+    height : float
+        The height of a visualization.
+
+        **Default value:**
+
+
+        * If a view's `autosize
+          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
+          its y-channel has a `continuous scale
+          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the height will
+          be the value of `config.view.height
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * For y-axis with a band or point scale: if `rangeStep
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
+          unspecified, the height is `determined by the range step, paddings, and the
+          cardinality of the field mapped to y-channel
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__. Otherwise, if the
+          ``rangeStep`` is ``null``, the height will be the value of `config.view.height
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * If no field is mapped to ``y`` channel, the ``height`` will be the value of
+          ``rangeStep``.
+
+        **Note** : For plots with `row and column channels
+        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
+        height of a single view.
+
+        **See also:** The documentation for `width and height
+        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
+    name : string
+        Name of the visualization for later reference.
+    projection : :class:`Projection`
+        An object defining properties of the geographic projection shared by underlying
+        layers.
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
+    title : anyOf(string, :class:`TitleParams`)
+        Title for the plot.
+    transform : List(:class:`Transform`)
+        An array of data transformations such as filter and new field calculation.
+    view : :class:`ViewBackground`
+        An object defining the view background's fill and stroke.
+
+        **Default value:** none (transparent)
+    width : float
+        The width of a visualization.
+
+        **Default value:** This will be determined by the following rules:
+
+
+        * If a view's `autosize
+          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
+          its x-channel has a `continuous scale
+          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the width will
+          be the value of `config.view.width
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * For x-axis with a band or point scale: if `rangeStep
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
+          unspecified, the width is `determined by the range step, paddings, and the
+          cardinality of the field mapped to x-channel
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__.   Otherwise, if the
+          ``rangeStep`` is ``null``, the width will be the value of `config.view.width
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * If no field is mapped to ``x`` channel, the ``width`` will be the value of
+          `config.scale.textXRangeStep
+          <https://vega.github.io/vega-lite/docs/size.html#default-width-and-height>`__ for
+          ``text`` mark and the value of ``rangeStep`` for other marks.
+
+        **Note:** For plots with `row and column channels
+        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
+        width of a single view.
+
+        **See also:** The documentation for `width and height
+        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
+    """
+    _schema = {'$ref': '#/definitions/LayerSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, layer=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
+                 height=Undefined, name=Undefined, projection=Undefined, resolve=Undefined,
+                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
+        super(LayerSpec, self).__init__(layer=layer, data=data, description=description,
+                                        encoding=encoding, height=height, name=name,
+                                        projection=projection, resolve=resolve, title=title,
+                                        transform=transform, view=view, width=width, **kwds)
 
 
 class LayoutAlign(VegaLiteSchema):
@@ -7553,6 +7977,18 @@ class LayoutAlign(VegaLiteSchema):
 
     def __init__(self, *args):
         super(LayoutAlign, self).__init__(*args)
+
+
+class LayoutBounds(VegaLiteSchema):
+    """LayoutBounds schema wrapper
+
+    anyOf(enum('full'), enum('flush'), :class:`SignalRef`)
+    """
+    _schema = {'$ref': '#/definitions/LayoutBounds'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(LayoutBounds, self).__init__(*args, **kwds)
 
 
 class Legend(VegaLiteSchema):
@@ -7588,19 +8024,32 @@ class Legend(VegaLiteSchema):
     fillColor : :class:`Color`
         Background fill color for the full legend.
     format : string
-        The formatting pattern for labels. This is D3's `number format pattern
-        <https://github.com/d3/d3-format#locale_format>`__ for quantitative fields and D3's
-        `time format pattern <https://github.com/d3/d3-time-format#locale_format>`__ for
-        time field.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
 
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
-        for more information.
+        for more examples.
 
-        **Default value:**  derived from `numberFormat
-        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for
-        quantitative fields and from `timeFormat
-        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for temporal
-        fields.
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     gradientLength : float
         The length in pixels of the primary axis of a color gradient. This value corresponds
         to the height of a vertical gradient or the width of a horizontal gradient.
@@ -7689,6 +8138,10 @@ class Legend(VegaLiteSchema):
         **Default value:** ``2``.
     strokeColor : :class:`Color`
         Border stroke color for the full legend.
+    symbolDash : List(float)
+        An array of alternating [stroke, space] lengths for dashed symbol strokes.
+    symbolDashOffset : float
+        The pixel offset at which to start drawing with the symbol stroke dash array.
     symbolFillColor : :class:`Color`
         The color of the legend symbol,
     symbolOffset : float
@@ -7752,6 +8205,8 @@ class Legend(VegaLiteSchema):
         Horizontal text alignment for legend titles.
 
         **Default value:** ``"left"``.
+    titleAnchor : :class:`TitleAnchor`
+        Text anchor position for placing legend titles.
     titleBaseline : :class:`TextBaseline`
         Vertical text baseline for legend titles.
 
@@ -7775,6 +8230,8 @@ class Legend(VegaLiteSchema):
         **Default value:** ``180``.
     titleOpacity : float
         Opacity of the legend title.
+    titleOrient : :class:`Orient`
+        Orientation of the legend title.
     titlePadding : float
         The padding, in pixels, between title and legend.
 
@@ -7797,25 +8254,27 @@ class Legend(VegaLiteSchema):
 
     def __init__(self, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined,
                  cornerRadius=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined,
-                 gradientLength=Undefined, gradientOpacity=Undefined, gradientStrokeColor=Undefined,
-                 gradientStrokeWidth=Undefined, gradientThickness=Undefined, gridAlign=Undefined,
-                 labelAlign=Undefined, labelBaseline=Undefined, labelColor=Undefined,
-                 labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined,
-                 labelFontWeight=Undefined, labelLimit=Undefined, labelOffset=Undefined,
-                 labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined,
-                 labelSeparation=Undefined, offset=Undefined, orient=Undefined, padding=Undefined,
-                 rowPadding=Undefined, strokeColor=Undefined, symbolFillColor=Undefined,
-                 symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined,
-                 symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined,
-                 tickCount=Undefined, tickMinStep=Undefined, title=Undefined, titleAlign=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
-                 titleLimit=Undefined, titleOpacity=Undefined, titlePadding=Undefined, type=Undefined,
+                 formatType=Undefined, gradientLength=Undefined, gradientOpacity=Undefined,
+                 gradientStrokeColor=Undefined, gradientStrokeWidth=Undefined,
+                 gradientThickness=Undefined, gridAlign=Undefined, labelAlign=Undefined,
+                 labelBaseline=Undefined, labelColor=Undefined, labelFont=Undefined,
+                 labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined,
+                 labelLimit=Undefined, labelOffset=Undefined, labelOpacity=Undefined,
+                 labelOverlap=Undefined, labelPadding=Undefined, labelSeparation=Undefined,
+                 offset=Undefined, orient=Undefined, padding=Undefined, rowPadding=Undefined,
+                 strokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined,
+                 symbolFillColor=Undefined, symbolOffset=Undefined, symbolOpacity=Undefined,
+                 symbolSize=Undefined, symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined,
+                 symbolType=Undefined, tickCount=Undefined, tickMinStep=Undefined, title=Undefined,
+                 titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined,
+                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
+                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
+                 titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, type=Undefined,
                  values=Undefined, zindex=Undefined, **kwds):
         super(Legend, self).__init__(clipHeight=clipHeight, columnPadding=columnPadding,
                                      columns=columns, cornerRadius=cornerRadius, direction=direction,
-                                     fillColor=fillColor, format=format, gradientLength=gradientLength,
-                                     gradientOpacity=gradientOpacity,
+                                     fillColor=fillColor, format=format, formatType=formatType,
+                                     gradientLength=gradientLength, gradientOpacity=gradientOpacity,
                                      gradientStrokeColor=gradientStrokeColor,
                                      gradientStrokeWidth=gradientStrokeWidth,
                                      gradientThickness=gradientThickness, gridAlign=gridAlign,
@@ -7827,16 +8286,18 @@ class Legend(VegaLiteSchema):
                                      labelOverlap=labelOverlap, labelPadding=labelPadding,
                                      labelSeparation=labelSeparation, offset=offset, orient=orient,
                                      padding=padding, rowPadding=rowPadding, strokeColor=strokeColor,
+                                     symbolDash=symbolDash, symbolDashOffset=symbolDashOffset,
                                      symbolFillColor=symbolFillColor, symbolOffset=symbolOffset,
                                      symbolOpacity=symbolOpacity, symbolSize=symbolSize,
                                      symbolStrokeColor=symbolStrokeColor,
                                      symbolStrokeWidth=symbolStrokeWidth, symbolType=symbolType,
                                      tickCount=tickCount, tickMinStep=tickMinStep, title=title,
-                                     titleAlign=titleAlign, titleBaseline=titleBaseline,
-                                     titleColor=titleColor, titleFont=titleFont,
-                                     titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
-                                     titleFontWeight=titleFontWeight, titleLimit=titleLimit,
-                                     titleOpacity=titleOpacity, titlePadding=titlePadding, type=type,
+                                     titleAlign=titleAlign, titleAnchor=titleAnchor,
+                                     titleBaseline=titleBaseline, titleColor=titleColor,
+                                     titleFont=titleFont, titleFontSize=titleFontSize,
+                                     titleFontStyle=titleFontStyle, titleFontWeight=titleFontWeight,
+                                     titleLimit=titleLimit, titleOpacity=titleOpacity,
+                                     titleOrient=titleOrient, titlePadding=titlePadding, type=type,
                                      values=values, zindex=zindex, **kwds)
 
 
@@ -7959,6 +8420,8 @@ class LegendConfig(VegaLiteSchema):
         The minimum separation that must be between label bounding boxes for them to be
         considered non-overlapping (default ``0`` ). This property is ignored if
         *labelOverlap* resolution is not enabled.
+    layout : :class:`LegendLayout`
+        Legend orient group layout parameters.
     offset : float
         The offset in pixels by which to displace the legend from the data rectangle and
         axes.
@@ -7998,6 +8461,10 @@ class LegendConfig(VegaLiteSchema):
         scale color encoding for the legend.
 
         **Default value:** ``"gray"``.
+    symbolDash : List(float)
+        An array of alternating [stroke, space] lengths for dashed symbol strokes.
+    symbolDashOffset : float
+        The pixel offset at which to start drawing with the symbol stroke dash array.
     symbolDirection : :class:`Orientation`
         The default direction ( ``"horizontal"`` or ``"vertical"`` ) for symbol legends.
 
@@ -8032,10 +8499,14 @@ class LegendConfig(VegaLiteSchema):
         *
         * **Default value:** ``"circle"``.
         *
+    title : None
+        Set to null to disable title for the axis, legend, or header.
     titleAlign : :class:`Align`
         Horizontal text alignment for legend titles.
 
         **Default value:** ``"left"``.
+    titleAnchor : :class:`TitleAnchor`
+        Text anchor position for placing legend titles.
     titleBaseline : :class:`TextBaseline`
         Vertical text baseline for legend titles.
 
@@ -8059,6 +8530,8 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``180``.
     titleOpacity : float
         Opacity of the legend title.
+    titleOrient : :class:`Orient`
+        Orientation of the legend title.
     titlePadding : float
         The padding, in pixels, between title and legend.
 
@@ -8078,16 +8551,17 @@ class LegendConfig(VegaLiteSchema):
                  labelColor=Undefined, labelFont=Undefined, labelFontSize=Undefined,
                  labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined,
                  labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
-                 labelPadding=Undefined, labelSeparation=Undefined, offset=Undefined, orient=Undefined,
-                 padding=Undefined, rowPadding=Undefined, shortTimeLabels=Undefined,
+                 labelPadding=Undefined, labelSeparation=Undefined, layout=Undefined, offset=Undefined,
+                 orient=Undefined, padding=Undefined, rowPadding=Undefined, shortTimeLabels=Undefined,
                  strokeColor=Undefined, strokeDash=Undefined, strokeWidth=Undefined,
-                 symbolBaseFillColor=Undefined, symbolBaseStrokeColor=Undefined,
-                 symbolDirection=Undefined, symbolFillColor=Undefined, symbolOffset=Undefined,
-                 symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined,
-                 symbolStrokeWidth=Undefined, symbolType=Undefined, titleAlign=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
-                 titleLimit=Undefined, titleOpacity=Undefined, titlePadding=Undefined, **kwds):
+                 symbolBaseFillColor=Undefined, symbolBaseStrokeColor=Undefined, symbolDash=Undefined,
+                 symbolDashOffset=Undefined, symbolDirection=Undefined, symbolFillColor=Undefined,
+                 symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined,
+                 symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined,
+                 title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined,
+                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
+                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
+                 titleOpacity=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds):
         super(LegendConfig, self).__init__(clipHeight=clipHeight, columnPadding=columnPadding,
                                            columns=columns, cornerRadius=cornerRadius,
                                            fillColor=fillColor, gradientDirection=gradientDirection,
@@ -8109,22 +8583,74 @@ class LegendConfig(VegaLiteSchema):
                                            labelFontWeight=labelFontWeight, labelLimit=labelLimit,
                                            labelOffset=labelOffset, labelOpacity=labelOpacity,
                                            labelOverlap=labelOverlap, labelPadding=labelPadding,
-                                           labelSeparation=labelSeparation, offset=offset,
-                                           orient=orient, padding=padding, rowPadding=rowPadding,
-                                           shortTimeLabels=shortTimeLabels, strokeColor=strokeColor,
-                                           strokeDash=strokeDash, strokeWidth=strokeWidth,
+                                           labelSeparation=labelSeparation, layout=layout,
+                                           offset=offset, orient=orient, padding=padding,
+                                           rowPadding=rowPadding, shortTimeLabels=shortTimeLabels,
+                                           strokeColor=strokeColor, strokeDash=strokeDash,
+                                           strokeWidth=strokeWidth,
                                            symbolBaseFillColor=symbolBaseFillColor,
                                            symbolBaseStrokeColor=symbolBaseStrokeColor,
+                                           symbolDash=symbolDash, symbolDashOffset=symbolDashOffset,
                                            symbolDirection=symbolDirection,
                                            symbolFillColor=symbolFillColor, symbolOffset=symbolOffset,
                                            symbolOpacity=symbolOpacity, symbolSize=symbolSize,
                                            symbolStrokeColor=symbolStrokeColor,
                                            symbolStrokeWidth=symbolStrokeWidth, symbolType=symbolType,
-                                           titleAlign=titleAlign, titleBaseline=titleBaseline,
-                                           titleColor=titleColor, titleFont=titleFont,
-                                           titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
+                                           title=title, titleAlign=titleAlign, titleAnchor=titleAnchor,
+                                           titleBaseline=titleBaseline, titleColor=titleColor,
+                                           titleFont=titleFont, titleFontSize=titleFontSize,
+                                           titleFontStyle=titleFontStyle,
                                            titleFontWeight=titleFontWeight, titleLimit=titleLimit,
-                                           titleOpacity=titleOpacity, titlePadding=titlePadding, **kwds)
+                                           titleOpacity=titleOpacity, titleOrient=titleOrient,
+                                           titlePadding=titlePadding, **kwds)
+
+
+class LegendLayout(VegaLiteSchema):
+    """LegendLayout schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    anchor : :class:`TitleAnchor`
+        The anchor point for legend orient group layout.
+    bottom : :class:`BaseLegendLayout`
+
+    bounds : :class:`LayoutBounds`
+        The bounds calculation to use for legend orient group layout.
+    center : anyOf(boolean, :class:`SignalRef`)
+        A flag to center legends within a shared orient group.
+    direction : anyOf(:class:`Orientation`, :class:`SignalRef`)
+        The layout direction for legend orient group layout.
+    left : :class:`BaseLegendLayout`
+
+    margin : anyOf(float, :class:`SignalRef`)
+        The pixel margin between legends within a orient group.
+    offset : anyOf(float, :class:`SignalRef`)
+        The pixel offset from the chart body for a legend orient group.
+    right : :class:`BaseLegendLayout`
+
+    top : :class:`BaseLegendLayout`
+
+    bottom-left : :class:`BaseLegendLayout`
+
+    bottom-right : :class:`BaseLegendLayout`
+
+    top-left : :class:`BaseLegendLayout`
+
+    top-right : :class:`BaseLegendLayout`
+
+    """
+    _schema = {'$ref': '#/definitions/LegendLayout'}
+    _rootschema = Root._schema
+
+    def __init__(self, anchor=Undefined, bottom=Undefined, bounds=Undefined, center=Undefined,
+                 direction=Undefined, left=Undefined, margin=Undefined, offset=Undefined,
+                 right=Undefined, top=Undefined, **kwds):
+        super(LegendLayout, self).__init__(anchor=anchor, bottom=bottom, bounds=bounds, center=center,
+                                           direction=direction, left=left, margin=margin, offset=offset,
+                                           right=right, top=top, **kwds)
 
 
 class LegendOrient(VegaLiteSchema):
@@ -8288,7 +8814,10 @@ class LineConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -8320,9 +8849,18 @@ class LineConfig(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -8383,6 +8921,16 @@ class LineConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     """
     _schema = {'$ref': '#/definitions/LineConfig'}
     _rootschema = Root._schema
@@ -8392,24 +8940,25 @@ class LineConfig(VegaLiteSchema):
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
                  href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
-                 orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 order=Undefined, orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                 size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
                  strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, tooltip=Undefined, **kwds):
+                 theta=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 y2=Undefined, **kwds):
         super(LineConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
                                          fontStyle=fontStyle, fontWeight=fontWeight, href=href,
                                          interpolate=interpolate, limit=limit, opacity=opacity,
-                                         orient=orient, point=point, radius=radius, shape=shape,
-                                         size=size, stroke=stroke, strokeCap=strokeCap,
+                                         order=order, orient=orient, point=point, radius=radius,
+                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
                                          strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                                          strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, tooltip=tooltip,
-                                         **kwds)
+                                         tension=tension, text=text, theta=theta, tooltip=tooltip, x=x,
+                                         x2=x2, y=y, y2=y2, **kwds)
 
 
 class LocalMultiTimeUnit(VegaLiteSchema):
@@ -8748,7 +9297,10 @@ class MarkConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -8765,9 +9317,18 @@ class MarkConfig(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -8828,6 +9389,16 @@ class MarkConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     """
     _schema = {'$ref': '#/definitions/MarkConfig'}
     _rootschema = Root._schema
@@ -8837,23 +9408,25 @@ class MarkConfig(VegaLiteSchema):
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
                  href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
-                 orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 tooltip=Undefined, **kwds):
+                 order=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 y2=Undefined, **kwds):
         super(MarkConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
                                          fontStyle=fontStyle, fontWeight=fontWeight, href=href,
                                          interpolate=interpolate, limit=limit, opacity=opacity,
-                                         orient=orient, radius=radius, shape=shape, size=size,
-                                         stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
-                                         strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, tooltip=tooltip, **kwds)
+                                         order=order, orient=orient, radius=radius, shape=shape,
+                                         size=size, stroke=stroke, strokeCap=strokeCap,
+                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                         tension=tension, text=text, theta=theta, tooltip=tooltip, x=x,
+                                         x2=x2, y=y, y2=y2, **kwds)
 
 
 class MarkDef(VegaLiteSchema):
@@ -8988,7 +9561,10 @@ class MarkDef(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -9020,9 +9596,18 @@ class MarkDef(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -9101,10 +9686,20 @@ class MarkDef(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     x2Offset : float
         Offset for x2-position.
     xOffset : float
         Offset for x-position.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     y2Offset : float
         Offset for y2-position.
     yOffset : float
@@ -9119,26 +9714,27 @@ class MarkDef(VegaLiteSchema):
                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
                  fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
                  interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                 orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 order=Undefined, orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                 size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
                  strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                 text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined,
-                 x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                 text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined,
+                 x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                 y2Offset=Undefined, yOffset=Undefined, **kwds):
         super(MarkDef, self).__init__(type=type, align=align, angle=angle, baseline=baseline,
                                       binSpacing=binSpacing, clip=clip, color=color,
                                       cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                                       ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                       filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
                                       fontWeight=fontWeight, href=href, interpolate=interpolate,
-                                      limit=limit, line=line, opacity=opacity, orient=orient,
-                                      point=point, radius=radius, shape=shape, size=size, stroke=stroke,
-                                      strokeCap=strokeCap, strokeDash=strokeDash,
+                                      limit=limit, line=line, opacity=opacity, order=order,
+                                      orient=orient, point=point, radius=radius, shape=shape, size=size,
+                                      stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                                       strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
                                       strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
                                       strokeWidth=strokeWidth, style=style, tension=tension, text=text,
-                                      theta=theta, thickness=thickness, tooltip=tooltip,
-                                      x2Offset=x2Offset, xOffset=xOffset, y2Offset=y2Offset,
+                                      theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                                      x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
                                       yOffset=yOffset, **kwds)
 
 
@@ -9164,10 +9760,19 @@ class MultiSelection(VegaLiteSchema):
 
     type : enum('multi')
 
+    clear : anyOf(:class:`EventStream`, boolean)
+        Clears the selection, emptying it of all values. Can be an
+        `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
+        disable.
+
+        **Default value:** ``dblclick``.
+
+        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
+        for more information.
     empty : enum('all', 'none')
-        By default, all data values are considered to lie within an empty selection.
+        By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
-    encodings : List(:class:`SingleDefChannel`)
+    encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
     fields : List(string)
@@ -9206,12 +9811,12 @@ class MultiSelection(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/MultiSelection'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, empty=Undefined, encodings=Undefined, fields=Undefined,
-                 init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined, toggle=Undefined,
-                 **kwds):
-        super(MultiSelection, self).__init__(type=type, empty=empty, encodings=encodings, fields=fields,
-                                             init=init, nearest=nearest, on=on, resolve=resolve,
-                                             toggle=toggle, **kwds)
+    def __init__(self, type=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
+                 fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined,
+                 toggle=Undefined, **kwds):
+        super(MultiSelection, self).__init__(type=type, clear=clear, empty=empty, encodings=encodings,
+                                             fields=fields, init=init, nearest=nearest, on=on,
+                                             resolve=resolve, toggle=toggle, **kwds)
 
 
 class MultiSelectionConfig(VegaLiteSchema):
@@ -9222,10 +9827,19 @@ class MultiSelectionConfig(VegaLiteSchema):
     Attributes
     ----------
 
+    clear : anyOf(:class:`EventStream`, boolean)
+        Clears the selection, emptying it of all values. Can be an
+        `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
+        disable.
+
+        **Default value:** ``dblclick``.
+
+        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
+        for more information.
     empty : enum('all', 'none')
-        By default, all data values are considered to lie within an empty selection.
+        By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
-    encodings : List(:class:`SingleDefChannel`)
+    encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
     fields : List(string)
@@ -9264,11 +9878,12 @@ class MultiSelectionConfig(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/MultiSelectionConfig'}
     _rootschema = Root._schema
 
-    def __init__(self, empty=Undefined, encodings=Undefined, fields=Undefined, init=Undefined,
-                 nearest=Undefined, on=Undefined, resolve=Undefined, toggle=Undefined, **kwds):
-        super(MultiSelectionConfig, self).__init__(empty=empty, encodings=encodings, fields=fields,
-                                                   init=init, nearest=nearest, on=on, resolve=resolve,
-                                                   toggle=toggle, **kwds)
+    def __init__(self, clear=Undefined, empty=Undefined, encodings=Undefined, fields=Undefined,
+                 init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined, toggle=Undefined,
+                 **kwds):
+        super(MultiSelectionConfig, self).__init__(clear=clear, empty=empty, encodings=encodings,
+                                                   fields=fields, init=init, nearest=nearest, on=on,
+                                                   resolve=resolve, toggle=toggle, **kwds)
 
 
 class MultiTimeUnit(VegaLiteSchema):
@@ -9330,9 +9945,33 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -9348,20 +9987,21 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -9492,9 +10132,33 @@ class OrderFieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -9510,12 +10174,12 @@ class OrderFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -9574,7 +10238,7 @@ class OrderFieldDef(VegaLiteSchema):
 class Orient(VegaLiteSchema):
     """Orient schema wrapper
 
-    enum('horizontal', 'vertical')
+    enum('left', 'right', 'top', 'bottom')
     """
     _schema = {'$ref': '#/definitions/Orient'}
     _rootschema = Root._schema
@@ -9706,7 +10370,10 @@ class OverlayMarkDef(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -9723,9 +10390,18 @@ class OverlayMarkDef(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -9800,10 +10476,20 @@ class OverlayMarkDef(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     x2Offset : float
         Offset for x2-position.
     xOffset : float
         Offset for x-position.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     y2Offset : float
         Offset for y2-position.
     yOffset : float
@@ -9817,26 +10503,29 @@ class OverlayMarkDef(VegaLiteSchema):
                  dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
                  filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
                  fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                 text=Undefined, theta=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                 xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined,
+                 x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
+                 y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         super(OverlayMarkDef, self).__init__(align=align, angle=angle, baseline=baseline, clip=clip,
                                              color=color, cornerRadius=cornerRadius, cursor=cursor,
                                              dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                                              fillOpacity=fillOpacity, filled=filled, font=font,
                                              fontSize=fontSize, fontStyle=fontStyle,
                                              fontWeight=fontWeight, href=href, interpolate=interpolate,
-                                             limit=limit, opacity=opacity, orient=orient, radius=radius,
-                                             shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
-                                             strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                             strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                                             limit=limit, opacity=opacity, order=order, orient=orient,
+                                             radius=radius, shape=shape, size=size, stroke=stroke,
+                                             strokeCap=strokeCap, strokeDash=strokeDash,
+                                             strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                             strokeMiterLimit=strokeMiterLimit,
                                              strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                              style=style, tension=tension, text=text, theta=theta,
-                                             tooltip=tooltip, x2Offset=x2Offset, xOffset=xOffset,
-                                             y2Offset=y2Offset, yOffset=yOffset, **kwds)
+                                             tooltip=tooltip, x=x, x2=x2, x2Offset=x2Offset,
+                                             xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
+                                             yOffset=yOffset, **kwds)
 
 
 class Padding(VegaLiteSchema):
@@ -9960,9 +10649,33 @@ class PositionFieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -9984,12 +10697,12 @@ class PositionFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -10176,6 +10889,10 @@ class Projection(VegaLiteSchema):
 
     ratio : float
 
+    reflectX : boolean
+
+    reflectY : boolean
+
     rotate : List(float)
         Sets the projection’s three-axis rotation to the specified angles, which must be a
         two- or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying
@@ -10183,10 +10900,14 @@ class Projection(VegaLiteSchema):
         pitch and roll.)
 
         **Default value:** ``[0, 0, 0]``
+    scale : float
+        Sets the projection's scale (zoom) value, overriding automatic fitting.
     spacing : float
 
     tilt : float
 
+    translate : List(float)
+        Sets the projection's translation (pan) value, overriding automatic fitting.
     type : :class:`ProjectionType`
         The cartographic projection to use. This value is case-insensitive, for example
         ``"albers"`` and ``"Albers"`` indicate the same projection type. You can find all
@@ -10201,12 +10922,14 @@ class Projection(VegaLiteSchema):
     def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                  coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
                  parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
-                 rotate=Undefined, spacing=Undefined, tilt=Undefined, type=Undefined, **kwds):
+                 reflectX=Undefined, reflectY=Undefined, rotate=Undefined, scale=Undefined,
+                 spacing=Undefined, tilt=Undefined, translate=Undefined, type=Undefined, **kwds):
         super(Projection, self).__init__(center=center, clipAngle=clipAngle, clipExtent=clipExtent,
                                          coefficient=coefficient, distance=distance, fraction=fraction,
                                          lobes=lobes, parallel=parallel, precision=precision,
-                                         radius=radius, ratio=ratio, rotate=rotate, spacing=spacing,
-                                         tilt=tilt, type=type, **kwds)
+                                         radius=radius, ratio=ratio, reflectX=reflectX,
+                                         reflectY=reflectY, rotate=rotate, scale=scale, spacing=spacing,
+                                         tilt=tilt, translate=translate, type=type, **kwds)
 
 
 class ProjectionConfig(VegaLiteSchema):
@@ -10252,6 +10975,10 @@ class ProjectionConfig(VegaLiteSchema):
 
     ratio : float
 
+    reflectX : boolean
+
+    reflectY : boolean
+
     rotate : List(float)
         Sets the projection’s three-axis rotation to the specified angles, which must be a
         two- or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying
@@ -10259,10 +10986,14 @@ class ProjectionConfig(VegaLiteSchema):
         pitch and roll.)
 
         **Default value:** ``[0, 0, 0]``
+    scale : float
+        Sets the projection's scale (zoom) value, overriding automatic fitting.
     spacing : float
 
     tilt : float
 
+    translate : List(float)
+        Sets the projection's translation (pan) value, overriding automatic fitting.
     type : :class:`ProjectionType`
         The cartographic projection to use. This value is case-insensitive, for example
         ``"albers"`` and ``"Albers"`` indicate the same projection type. You can find all
@@ -10277,13 +11008,15 @@ class ProjectionConfig(VegaLiteSchema):
     def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                  coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
                  parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
-                 rotate=Undefined, spacing=Undefined, tilt=Undefined, type=Undefined, **kwds):
+                 reflectX=Undefined, reflectY=Undefined, rotate=Undefined, scale=Undefined,
+                 spacing=Undefined, tilt=Undefined, translate=Undefined, type=Undefined, **kwds):
         super(ProjectionConfig, self).__init__(center=center, clipAngle=clipAngle,
                                                clipExtent=clipExtent, coefficient=coefficient,
                                                distance=distance, fraction=fraction, lobes=lobes,
                                                parallel=parallel, precision=precision, radius=radius,
-                                               ratio=ratio, rotate=rotate, spacing=spacing, tilt=tilt,
-                                               type=type, **kwds)
+                                               ratio=ratio, reflectX=reflectX, reflectY=reflectY,
+                                               rotate=rotate, scale=scale, spacing=spacing, tilt=tilt,
+                                               translate=translate, type=type, **kwds)
 
 
 class ProjectionType(VegaLiteSchema):
@@ -10342,8 +11075,8 @@ class RangeConfigValue(VegaLiteSchema):
         super(RangeConfigValue, self).__init__(*args, **kwds)
 
 
-class Repeat(VegaLiteSchema):
-    """Repeat schema wrapper
+class RepeatMapping(VegaLiteSchema):
+    """RepeatMapping schema wrapper
 
     Mapping(required=[])
 
@@ -10351,15 +11084,15 @@ class Repeat(VegaLiteSchema):
     ----------
 
     column : List(string)
-        Horizontal repeated views.
+        An array of fields to be repeated horizontally.
     row : List(string)
-        Vertical repeated views.
+        An array of fields to be repeated vertically.
     """
-    _schema = {'$ref': '#/definitions/Repeat'}
+    _schema = {'$ref': '#/definitions/RepeatMapping'}
     _rootschema = Root._schema
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
-        super(Repeat, self).__init__(column=column, row=row, **kwds)
+        super(RepeatMapping, self).__init__(column=column, row=row, **kwds)
 
 
 class RepeatRef(VegaLiteSchema):
@@ -10371,7 +11104,7 @@ class RepeatRef(VegaLiteSchema):
     Attributes
     ----------
 
-    repeat : enum('row', 'column')
+    repeat : enum('row', 'column', 'repeat')
 
     """
     _schema = {'$ref': '#/definitions/RepeatRef'}
@@ -11051,12 +11784,12 @@ class SecondaryFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -11254,6 +11987,54 @@ class SelectionResolution(VegaLiteSchema):
         super(SelectionResolution, self).__init__(*args)
 
 
+class SequenceGenerator(VegaLiteSchema):
+    """SequenceGenerator schema wrapper
+
+    Mapping(required=[sequence])
+
+    Attributes
+    ----------
+
+    sequence : :class:`SequenceParams`
+        Generate a sequence of numbers.
+    name : string
+        Provide a placeholder name and bind data at runtime.
+    """
+    _schema = {'$ref': '#/definitions/SequenceGenerator'}
+    _rootschema = Root._schema
+
+    def __init__(self, sequence=Undefined, name=Undefined, **kwds):
+        super(SequenceGenerator, self).__init__(sequence=sequence, name=name, **kwds)
+
+
+class SequenceParams(VegaLiteSchema):
+    """SequenceParams schema wrapper
+
+    Mapping(required=[start, stop])
+
+    Attributes
+    ----------
+
+    start : float
+        The starting value of the sequence (inclusive).
+    stop : float
+        The ending value of the sequence (exclusive).
+    step : float
+        The step value between sequence entries.
+
+        **Default value:** ``1``
+    as : string
+        The name of the generated sequence field.
+
+        **Default value:** ``"data"``
+    """
+    _schema = {'$ref': '#/definitions/SequenceParams'}
+    _rootschema = Root._schema
+
+    def __init__(self, start=Undefined, stop=Undefined, step=Undefined, **kwds):
+        super(SequenceParams, self).__init__(start=start, stop=stop, step=step, **kwds)
+
+
 class ShapeFieldDefWithCondition(VegaLiteSchema):
     """ShapeFieldDefWithCondition schema wrapper
 
@@ -11269,9 +12050,33 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -11287,20 +12092,21 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -11417,16 +12223,22 @@ class ShapeValueDefWithCondition(VegaLiteSchema):
         super(ShapeValueDefWithCondition, self).__init__(*args, **kwds)
 
 
-class SingleDefChannel(VegaLiteSchema):
-    """SingleDefChannel schema wrapper
+class SignalRef(VegaLiteSchema):
+    """SignalRef schema wrapper
 
-    anyOf(:class:`SingleDefUnitChannel`, enum('row'), enum('column'))
+    Mapping(required=[signal])
+
+    Attributes
+    ----------
+
+    signal : string
+
     """
-    _schema = {'$ref': '#/definitions/SingleDefChannel'}
+    _schema = {'$ref': '#/definitions/SignalRef'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(SingleDefChannel, self).__init__(*args, **kwds)
+    def __init__(self, signal=Undefined, **kwds):
+        super(SignalRef, self).__init__(signal=signal, **kwds)
 
 
 class SingleDefUnitChannel(VegaLiteSchema):
@@ -11462,10 +12274,19 @@ class SingleSelection(VegaLiteSchema):
 
         See the `bind transform <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation for more information.
+    clear : anyOf(:class:`EventStream`, boolean)
+        Clears the selection, emptying it of all values. Can be an
+        `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
+        disable.
+
+        **Default value:** ``dblclick``.
+
+        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
+        for more information.
     empty : enum('all', 'none')
-        By default, all data values are considered to lie within an empty selection.
+        By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
-    encodings : List(:class:`SingleDefChannel`)
+    encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
     fields : List(string)
@@ -11493,12 +12314,12 @@ class SingleSelection(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/SingleSelection'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, bind=Undefined, empty=Undefined, encodings=Undefined,
-                 fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined,
-                 **kwds):
-        super(SingleSelection, self).__init__(type=type, bind=bind, empty=empty, encodings=encodings,
-                                              fields=fields, init=init, nearest=nearest, on=on,
-                                              resolve=resolve, **kwds)
+    def __init__(self, type=Undefined, bind=Undefined, clear=Undefined, empty=Undefined,
+                 encodings=Undefined, fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined,
+                 resolve=Undefined, **kwds):
+        super(SingleSelection, self).__init__(type=type, bind=bind, clear=clear, empty=empty,
+                                              encodings=encodings, fields=fields, init=init,
+                                              nearest=nearest, on=on, resolve=resolve, **kwds)
 
 
 class SingleSelectionConfig(VegaLiteSchema):
@@ -11518,10 +12339,19 @@ class SingleSelectionConfig(VegaLiteSchema):
 
         See the `bind transform <https://vega.github.io/vega-lite/docs/bind.html>`__
         documentation for more information.
+    clear : anyOf(:class:`EventStream`, boolean)
+        Clears the selection, emptying it of all values. Can be an
+        `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
+        disable.
+
+        **Default value:** ``dblclick``.
+
+        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
+        for more information.
     empty : enum('all', 'none')
-        By default, all data values are considered to lie within an empty selection.
+        By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
-    encodings : List(:class:`SingleDefChannel`)
+    encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
     fields : List(string)
@@ -11549,11 +12379,12 @@ class SingleSelectionConfig(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/SingleSelectionConfig'}
     _rootschema = Root._schema
 
-    def __init__(self, bind=Undefined, empty=Undefined, encodings=Undefined, fields=Undefined,
-                 init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined, **kwds):
-        super(SingleSelectionConfig, self).__init__(bind=bind, empty=empty, encodings=encodings,
-                                                    fields=fields, init=init, nearest=nearest, on=on,
-                                                    resolve=resolve, **kwds)
+    def __init__(self, bind=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
+                 fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined,
+                 **kwds):
+        super(SingleSelectionConfig, self).__init__(bind=bind, clear=clear, empty=empty,
+                                                    encodings=encodings, fields=fields, init=init,
+                                                    nearest=nearest, on=on, resolve=resolve, **kwds)
 
 
 class SingleTimeUnit(VegaLiteSchema):
@@ -11650,6 +12481,26 @@ class SortOrder(VegaLiteSchema):
         super(SortOrder, self).__init__(*args)
 
 
+class SphereGenerator(VegaLiteSchema):
+    """SphereGenerator schema wrapper
+
+    Mapping(required=[sphere])
+
+    Attributes
+    ----------
+
+    sphere : anyOf(enum(True), Mapping(required=[]))
+        Generate sphere GeoJSON data for the full globe.
+    name : string
+        Provide a placeholder name and bind data at runtime.
+    """
+    _schema = {'$ref': '#/definitions/SphereGenerator'}
+    _rootschema = Root._schema
+
+    def __init__(self, sphere=Undefined, name=Undefined, **kwds):
+        super(SphereGenerator, self).__init__(sphere=sphere, name=name, **kwds)
+
+
 class StackOffset(VegaLiteSchema):
     """StackOffset schema wrapper
 
@@ -11720,9 +12571,33 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -11738,20 +12613,21 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -11855,154 +12731,6 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
                                                                       **kwds)
 
 
-class StringFieldDefWithCondition(VegaLiteSchema):
-    """StringFieldDefWithCondition schema wrapper
-
-    Mapping(required=[type])
-    A FieldDef with Condition :raw-html:`<ValueDef>`
-
-    Attributes
-    ----------
-
-    type : enum('nominal')
-        The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
-        ``"ordinal"``, or ``"nominal"`` ).
-        It can also be a ``"geojson"`` type for encoding `'geoshape'
-        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
-
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
-    aggregate : :class:`Aggregate`
-        Aggregation function for the field
-        (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
-
-        **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
-        A flag for binning a ``quantitative`` field, `an object defining binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
-        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
-        ``"binned"`` ).
-
-
-        If ``true``, default `binning parameters
-        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
-
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
-
-        **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
-        One or more value definition(s) with a selection predicate.
-
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
-        since Vega-Lite only allows at most one encoded field per encoding channel.
-    field : :class:`Field`
-        **Required.** A string defining the name of the field from which to pull a data
-        value
-        or an object defining iterated values from the `repeat
-        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
-
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
-        If field names contain dots or brackets but are not nested, you can use ``\\`` to
-        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
-        See more details about escaping in the `field documentation
-        <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
-    legend : anyOf(:class:`Legend`, None)
-        An object defining properties of the legend.
-        If ``null``, the legend for the encoding channel will be removed.
-
-        **Default value:** If undefined, default `legend properties
-        <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
-    scale : anyOf(:class:`Scale`, None)
-        An object defining properties of the channel's scale, which is the function that
-        transforms values in the data domain (numbers, dates, strings, etc) to visual values
-        (pixels, colors, sizes) of the encoding channels.
-
-        If ``null``, the scale will be `disabled and the data value will be directly encoded
-        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
-
-        **Default value:** If undefined, default `scale properties
-        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
-    sort : :class:`Sort`
-        Sort order for the encoded field.
-
-        For continuous fields (quantitative or temporal), ``sort`` can be either
-        ``"ascending"`` or ``"descending"``.
-
-        For discrete fields, ``sort`` can be one of the following:
-
-
-        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
-          Javascript.
-        * `A sort-by-encoding definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ for sorting
-          by another encoding channel. (This type of sort definition is not available for
-          ``row`` and ``column`` channels.)
-        * `A sort field definition
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
-          another field.
-        * `An array specifying the field values in preferred order
-          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
-          sort order will obey the values in the array, followed by any unspecified values
-          in their original order.  For discrete time field, values in the sort array can be
-          `date-time definition objects <types#datetime>`__. In addition, for time units
-          ``"month"`` and ``"day"``, the values can be the month or day names (case
-          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
-        * ``null`` indicating no sort.
-
-        **Default value:** ``"ascending"``
-
-        **Note:** ``null`` is not supported for ``row`` and ``column``.
-    timeUnit : :class:`TimeUnit`
-        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
-        field.
-        or `a temporal field that gets casted as ordinal
-        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
-
-        **Default value:** ``undefined`` (None)
-    title : anyOf(string, None)
-        A title for the field. If ``null``, the title will be removed.
-
-        **Default value:**  derived from the field's name and transformation function (
-        ``aggregate``, ``bin`` and ``timeUnit`` ).  If the field has an aggregate function,
-        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
-        field is binned or has a time unit applied, the applied function is shown in
-        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
-        Otherwise, the title is simply the field name.
-
-        **Notes** :
-
-        1) You can customize the default field title format by providing the `fieldTitle
-        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
-        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
-        function via the compile function's options
-        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
-
-        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
-        defined, axis/header/legend title will be used.
-    """
-    _schema = {'$ref': '#/definitions/StringFieldDefWithCondition'}
-    _rootschema = Root._schema
-
-    def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
-                 title=Undefined, **kwds):
-        super(StringFieldDefWithCondition, self).__init__(type=type, aggregate=aggregate, bin=bin,
-                                                          condition=condition, field=field,
-                                                          legend=legend, scale=scale, sort=sort,
-                                                          timeUnit=timeUnit, title=title, **kwds)
-
-
 class StringValueDefWithConditionTypeForShape(VegaLiteSchema):
     """StringValueDefWithConditionTypeForShape schema wrapper
 
@@ -12016,21 +12744,6 @@ class StringValueDefWithConditionTypeForShape(VegaLiteSchema):
 
     def __init__(self, *args, **kwds):
         super(StringValueDefWithConditionTypeForShape, self).__init__(*args, **kwds)
-
-
-class StringValueDefWithCondition(VegaLiteSchema):
-    """StringValueDefWithCondition schema wrapper
-
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnominalstring`,
-    :class:`ConditionOnlyDefMarkPropFieldDefnominal`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
-    optional.
-    """
-    _schema = {'$ref': '#/definitions/StringValueDefWithCondition'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args, **kwds):
-        super(StringValueDefWithCondition, self).__init__(*args, **kwds)
 
 
 class StrokeCap(VegaLiteSchema):
@@ -12202,7 +12915,10 @@ class TextConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -12219,9 +12935,18 @@ class TextConfig(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     shortTimeLabels : boolean
@@ -12284,6 +13009,16 @@ class TextConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     """
     _schema = {'$ref': '#/definitions/TextConfig'}
     _rootschema = Root._schema
@@ -12293,24 +13028,25 @@ class TextConfig(VegaLiteSchema):
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
                  href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
-                 orient=Undefined, radius=Undefined, shape=Undefined, shortTimeLabels=Undefined,
-                 size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, tooltip=Undefined, **kwds):
+                 order=Undefined, orient=Undefined, radius=Undefined, shape=Undefined,
+                 shortTimeLabels=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, x=Undefined,
+                 x2=Undefined, y=Undefined, y2=Undefined, **kwds):
         super(TextConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
                                          fontStyle=fontStyle, fontWeight=fontWeight, href=href,
                                          interpolate=interpolate, limit=limit, opacity=opacity,
-                                         orient=orient, radius=radius, shape=shape,
+                                         order=order, orient=orient, radius=radius, shape=shape,
                                          shortTimeLabels=shortTimeLabels, size=size, stroke=stroke,
                                          strokeCap=strokeCap, strokeDash=strokeDash,
                                          strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
                                          strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, tooltip=tooltip, **kwds)
+                                         theta=theta, tooltip=tooltip, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
 class TextFieldDef(VegaLiteSchema):
@@ -12327,9 +13063,33 @@ class TextFieldDef(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -12345,12 +13105,12 @@ class TextFieldDef(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     field : :class:`Field`
@@ -12368,8 +13128,32 @@ class TextFieldDef(VegaLiteSchema):
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
-        The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`__ for a
-        text field. If not defined, this will be determined automatically.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -12402,9 +13186,10 @@ class TextFieldDef(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
-                 format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
+                 format=Undefined, formatType=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
         super(TextFieldDef, self).__init__(type=type, aggregate=aggregate, bin=bin, field=field,
-                                           format=format, timeUnit=timeUnit, title=title, **kwds)
+                                           format=format, formatType=formatType, timeUnit=timeUnit,
+                                           title=title, **kwds)
 
 
 class TextFieldDefWithCondition(VegaLiteSchema):
@@ -12422,9 +13207,33 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         It can also be a ``"geojson"`` type for encoding `'geoshape'
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
 
-        **Note:** Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not
-        have ``type`` as they have exactly the same type as their primary channels (e.g.,
-        ``x``, ``y`` )
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types ( ``number``, ``string``, etc.). The same primitive data type can have
+          different types of measurement. For example, numeric data can represent
+          quantitative, ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
@@ -12440,19 +13249,20 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         If ``true``, default `binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
 
-        To indicate that the data for the ``x`` (or ``y`` ) channel are already binned, you
-        can set the ``bin`` property of the ``x`` (or ``y`` ) channel to ``"binned"`` and
-        map the bin-start field to ``x`` (or ``y`` ) and the bin-end field to ``x2`` (or
-        ``y2`` ). The scale and axis will be formatted similar to binning in Vega-lite.  To
-        adjust the axis ticks based on the bin step, you can also set the axis's
-        `tickMinStep <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
     condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
-        One or more value definition(s) with a selection predicate.
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
-        **Note:** A field definition's ``condition`` property can only contain `value
-        definitions <https://vega.github.io/vega-lite/docs/encoding.html#value-def>`__
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
         since Vega-Lite only allows at most one encoded field per encoding channel.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
@@ -12469,8 +13279,32 @@ class TextFieldDefWithCondition(VegaLiteSchema):
 
         **Note:** ``field`` is not required if ``aggregate`` is ``count``.
     format : string
-        The `formatting pattern <https://vega.github.io/vega-lite/docs/format.html>`__ for a
-        text field. If not defined, this will be determined automatically.
+        The text formatting pattern for labels of guides (axes, legends, headers) and text
+        marks.
+
+
+        * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
+          `number format pattern <https://github.com/d3/d3-format#locale_format>`__.
+        * If the format type is ``"time"`` (e.g., for temporal fields), this is D3's `time
+          format pattern <https://github.com/d3/d3-time-format#locale_format>`__.
+
+        See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
+        for more examples.
+
+        **Default value:**  Derived from `numberFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
+        format and from `timeFormat
+        <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
+        format.
+    formatType : enum('number', 'time')
+        The format type for labels ( ``"number"`` or ``"time"`` ).
+
+        **Default value:**
+
+
+        * ``"time"`` for temporal fields and ordinal and nomimal fields with ``timeUnit``.
+        * ``"number"`` for quantitative fields as well as ordinal and nomimal fields without
+          ``timeUnit``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -12503,10 +13337,12 @@ class TextFieldDefWithCondition(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
-                 field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
+                 field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
+                 title=Undefined, **kwds):
         super(TextFieldDefWithCondition, self).__init__(type=type, aggregate=aggregate, bin=bin,
                                                         condition=condition, field=field, format=format,
-                                                        timeUnit=timeUnit, title=title, **kwds)
+                                                        formatType=formatType, timeUnit=timeUnit,
+                                                        title=title, **kwds)
 
 
 class TextValueDefWithCondition(VegaLiteSchema):
@@ -12637,7 +13473,10 @@ class TickConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    orient : :class:`Orient`
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
         The orientation of a non-stacked bar, tick, area, and line charts.
         The value is either horizontal (default) or vertical.
 
@@ -12654,9 +13493,18 @@ class TickConfig(VegaLiteSchema):
         Polar coordinate radial offset, in pixels, of the text label from the origin
         determined by the ``x`` and ``y`` properties.
     shape : string
-        The default symbol shape to use. One of: ``"circle"`` (default), ``"square"``,
-        ``"cross"``, ``"diamond"``, ``"triangle-up"``, or ``"triangle-down"``, or a custom
-        SVG path.
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
 
         **Default value:** ``"circle"``
     size : float
@@ -12721,6 +13569,16 @@ class TickConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
+    x : float
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        ``x2``.
+    x2 : float
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+    y : float
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        ``y2``
+    y2 : float
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
     """
     _schema = {'$ref': '#/definitions/TickConfig'}
     _rootschema = Root._schema
@@ -12730,24 +13588,25 @@ class TickConfig(VegaLiteSchema):
                  dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
                  filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
                  fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, thickness=Undefined, tooltip=Undefined, **kwds):
+                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, thickness=Undefined,
+                 tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
         super(TickConfig, self).__init__(align=align, angle=angle, bandSize=bandSize, baseline=baseline,
                                          color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir,
                                          dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                                          fillOpacity=fillOpacity, filled=filled, font=font,
                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
                                          href=href, interpolate=interpolate, limit=limit,
-                                         opacity=opacity, orient=orient, radius=radius, shape=shape,
-                                         size=size, stroke=stroke, strokeCap=strokeCap,
+                                         opacity=opacity, order=order, orient=orient, radius=radius,
+                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
                                          strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                                          strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                          tension=tension, text=text, theta=theta, thickness=thickness,
-                                         tooltip=tooltip, **kwds)
+                                         tooltip=tooltip, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
 class TimeUnit(VegaLiteSchema):
@@ -12787,7 +13646,7 @@ class TimeUnitTransform(VegaLiteSchema):
 class TitleAnchor(VegaLiteSchema):
     """TitleAnchor schema wrapper
 
-    enum('start', 'middle', 'end')
+    enum(None, 'start', 'middle', 'end')
     """
     _schema = {'$ref': '#/definitions/TitleAnchor'}
     _rootschema = Root._schema
@@ -12817,6 +13676,10 @@ class TitleConfig(VegaLiteSchema):
         or ``"alphabetic"``.
     color : :class:`Color`
         Text color for title text.
+    dx : float
+        Delta offset for title text x-coordinate.
+    dy : float
+        Delta offset for title text y-coordinate.
     font : string
         Font name for title text.
     fontSize : float
@@ -12846,11 +13709,11 @@ class TitleConfig(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, anchor=Undefined, angle=Undefined, baseline=Undefined,
-                 color=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, frame=Undefined, limit=Undefined, offset=Undefined,
-                 orient=Undefined, **kwds):
+                 color=Undefined, dx=Undefined, dy=Undefined, font=Undefined, fontSize=Undefined,
+                 fontStyle=Undefined, fontWeight=Undefined, frame=Undefined, limit=Undefined,
+                 offset=Undefined, orient=Undefined, **kwds):
         super(TitleConfig, self).__init__(align=align, anchor=anchor, angle=angle, baseline=baseline,
-                                          color=color, font=font, fontSize=fontSize,
+                                          color=color, dx=dx, dy=dy, font=font, fontSize=fontSize,
                                           fontStyle=fontStyle, fontWeight=fontWeight, frame=frame,
                                           limit=limit, offset=offset, orient=orient, **kwds)
 
@@ -12913,6 +13776,10 @@ class TitleParams(VegaLiteSchema):
         or ``"alphabetic"``.
     color : :class:`Color`
         Text color for title text.
+    dx : float
+        Delta offset for title text x-coordinate.
+    dy : float
+        Delta offset for title text y-coordinate.
     font : string
         Font name for title text.
     fontSize : float
@@ -12952,14 +13819,15 @@ class TitleParams(VegaLiteSchema):
     _rootschema = Root._schema
 
     def __init__(self, text=Undefined, align=Undefined, anchor=Undefined, angle=Undefined,
-                 baseline=Undefined, color=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, frame=Undefined, limit=Undefined,
-                 offset=Undefined, orient=Undefined, style=Undefined, zindex=Undefined, **kwds):
+                 baseline=Undefined, color=Undefined, dx=Undefined, dy=Undefined, font=Undefined,
+                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, frame=Undefined,
+                 limit=Undefined, offset=Undefined, orient=Undefined, style=Undefined, zindex=Undefined,
+                 **kwds):
         super(TitleParams, self).__init__(text=text, align=align, anchor=anchor, angle=angle,
-                                          baseline=baseline, color=color, font=font, fontSize=fontSize,
-                                          fontStyle=fontStyle, fontWeight=fontWeight, frame=frame,
-                                          limit=limit, offset=offset, orient=orient, style=style,
-                                          zindex=zindex, **kwds)
+                                          baseline=baseline, color=color, dx=dx, dy=dy, font=font,
+                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
+                                          frame=frame, limit=limit, offset=offset, orient=orient,
+                                          style=style, zindex=zindex, **kwds)
 
 
 class TooltipContent(VegaLiteSchema):
@@ -12980,6 +13848,491 @@ class TooltipContent(VegaLiteSchema):
         super(TooltipContent, self).__init__(content=content, **kwds)
 
 
+class TopLevelConcatSpec(VegaLiteSchema):
+    """TopLevelConcatSpec schema wrapper
+
+    Mapping(required=[concat])
+
+    Attributes
+    ----------
+
+    concat : List(:class:`Spec`)
+        A list of views to be concatenated.
+    align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
+    autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
+        Sets how the visualization size should be determined. If a string, should be one of
+        ``"pad"``, ``"fit"`` or ``"none"``.
+        Object values can additionally specify parameters for content sizing and automatic
+        resizing.
+        ``"fit"`` is only supported for single and layered views that don't use
+        ``rangeStep``.
+
+        **Default value** : ``pad``
+    background : string
+        CSS color property to use as the background of the entire view.
+
+        **Default value:** none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
+    center : anyOf(boolean, :class:`RowColboolean`)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
+        **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
+    config : :class:`Config`
+        Vega-Lite configuration object.  This property can only be defined at the top-level
+        of a specification.
+    data : :class:`Data`
+        An object describing the data source
+    datasets : :class:`Datasets`
+        A global data store for named datasets. This is a mapping from names to inline
+        datasets.
+        This can be an array of objects or primitive values or a string. Arrays of primitive
+        values are ingested as objects with a ``data`` property.
+    description : string
+        Description of this mark for commenting purpose.
+    name : string
+        Name of the visualization for later reference.
+    padding : :class:`Padding`
+        The default visualization padding, in pixels, from the edge of the visualization
+        canvas to the data rectangle.  If a number, specifies padding for all sides.
+        If an object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
+        "bottom": 5}`` to specify padding for each side of the visualization.
+
+        **Default value** : ``5``
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
+    spacing : anyOf(float, :class:`RowColnumber`)
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
+    title : anyOf(string, :class:`TitleParams`)
+        Title for the plot.
+    transform : List(:class:`Transform`)
+        An array of data transformations such as filter and new field calculation.
+    usermeta : Mapping(required=[])
+        Optional metadata that will be passed to Vega.
+        This object is completely ignored by Vega and Vega-Lite and can be used for custom
+        metadata.
+    $schema : string
+        URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
+        Unless you have a reason to change this, use
+        ``https://vega.github.io/schema/vega-lite/v3.json``. Setting the ``$schema``
+        property allows automatic validation and autocomplete in editors that support JSON
+        schema.
+    """
+    _schema = {'$ref': '#/definitions/TopLevelConcatSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, concat=Undefined, align=Undefined, autosize=Undefined, background=Undefined,
+                 bounds=Undefined, center=Undefined, columns=Undefined, config=Undefined,
+                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
+                 padding=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
+                 transform=Undefined, usermeta=Undefined, **kwds):
+        super(TopLevelConcatSpec, self).__init__(concat=concat, align=align, autosize=autosize,
+                                                 background=background, bounds=bounds, center=center,
+                                                 columns=columns, config=config, data=data,
+                                                 datasets=datasets, description=description, name=name,
+                                                 padding=padding, resolve=resolve, spacing=spacing,
+                                                 title=title, transform=transform, usermeta=usermeta,
+                                                 **kwds)
+
+
+class TopLevelHConcatSpec(VegaLiteSchema):
+    """TopLevelHConcatSpec schema wrapper
+
+    Mapping(required=[hconcat])
+
+    Attributes
+    ----------
+
+    hconcat : List(:class:`Spec`)
+        A list of views to be concatenated and put into a row.
+    autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
+        Sets how the visualization size should be determined. If a string, should be one of
+        ``"pad"``, ``"fit"`` or ``"none"``.
+        Object values can additionally specify parameters for content sizing and automatic
+        resizing.
+        ``"fit"`` is only supported for single and layered views that don't use
+        ``rangeStep``.
+
+        **Default value** : ``pad``
+    background : string
+        CSS color property to use as the background of the entire view.
+
+        **Default value:** none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
+    center : boolean
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
+
+        **Default value:** ``false``
+    config : :class:`Config`
+        Vega-Lite configuration object.  This property can only be defined at the top-level
+        of a specification.
+    data : :class:`Data`
+        An object describing the data source
+    datasets : :class:`Datasets`
+        A global data store for named datasets. This is a mapping from names to inline
+        datasets.
+        This can be an array of objects or primitive values or a string. Arrays of primitive
+        values are ingested as objects with a ``data`` property.
+    description : string
+        Description of this mark for commenting purpose.
+    name : string
+        Name of the visualization for later reference.
+    padding : :class:`Padding`
+        The default visualization padding, in pixels, from the edge of the visualization
+        canvas to the data rectangle.  If a number, specifies padding for all sides.
+        If an object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
+        "bottom": 5}`` to specify padding for each side of the visualization.
+
+        **Default value** : ``5``
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
+    spacing : float
+        The spacing in pixels between sub-views of the concat operator.
+
+        **Default value** : ``10``
+    title : anyOf(string, :class:`TitleParams`)
+        Title for the plot.
+    transform : List(:class:`Transform`)
+        An array of data transformations such as filter and new field calculation.
+    usermeta : Mapping(required=[])
+        Optional metadata that will be passed to Vega.
+        This object is completely ignored by Vega and Vega-Lite and can be used for custom
+        metadata.
+    $schema : string
+        URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
+        Unless you have a reason to change this, use
+        ``https://vega.github.io/schema/vega-lite/v3.json``. Setting the ``$schema``
+        property allows automatic validation and autocomplete in editors that support JSON
+        schema.
+    """
+    _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
+                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
+                 description=Undefined, name=Undefined, padding=Undefined, resolve=Undefined,
+                 spacing=Undefined, title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
+        super(TopLevelHConcatSpec, self).__init__(hconcat=hconcat, autosize=autosize,
+                                                  background=background, bounds=bounds, center=center,
+                                                  config=config, data=data, datasets=datasets,
+                                                  description=description, name=name, padding=padding,
+                                                  resolve=resolve, spacing=spacing, title=title,
+                                                  transform=transform, usermeta=usermeta, **kwds)
+
+
+class TopLevelRepeatSpec(VegaLiteSchema):
+    """TopLevelRepeatSpec schema wrapper
+
+    Mapping(required=[repeat, spec])
+
+    Attributes
+    ----------
+
+    repeat : anyOf(List(string), :class:`RepeatMapping`)
+        Definition for fields to be repeated.  One of:
+        1) An array of fields to be repeated.  If ``"repeat"`` is an array, the field can be
+        referred using ``{"repeat": "repeat"}``
+        2) An object that mapped ``"row"`` and/or ``"column"`` to the listed of fields to be
+        repeated along the particular orientations. The objects ``{"repeat": "row"}`` and
+        ``{"repeat": "column"}`` can be used to refer to the repeated field respectively.
+    spec : :class:`Spec`
+        A specification of the view that gets repeated.
+    align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
+    autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
+        Sets how the visualization size should be determined. If a string, should be one of
+        ``"pad"``, ``"fit"`` or ``"none"``.
+        Object values can additionally specify parameters for content sizing and automatic
+        resizing.
+        ``"fit"`` is only supported for single and layered views that don't use
+        ``rangeStep``.
+
+        **Default value** : ``pad``
+    background : string
+        CSS color property to use as the background of the entire view.
+
+        **Default value:** none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
+    center : anyOf(boolean, :class:`RowColboolean`)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
+        **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
+    config : :class:`Config`
+        Vega-Lite configuration object.  This property can only be defined at the top-level
+        of a specification.
+    data : :class:`Data`
+        An object describing the data source
+    datasets : :class:`Datasets`
+        A global data store for named datasets. This is a mapping from names to inline
+        datasets.
+        This can be an array of objects or primitive values or a string. Arrays of primitive
+        values are ingested as objects with a ``data`` property.
+    description : string
+        Description of this mark for commenting purpose.
+    name : string
+        Name of the visualization for later reference.
+    padding : :class:`Padding`
+        The default visualization padding, in pixels, from the edge of the visualization
+        canvas to the data rectangle.  If a number, specifies padding for all sides.
+        If an object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
+        "bottom": 5}`` to specify padding for each side of the visualization.
+
+        **Default value** : ``5``
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
+    spacing : anyOf(float, :class:`RowColnumber`)
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
+    title : anyOf(string, :class:`TitleParams`)
+        Title for the plot.
+    transform : List(:class:`Transform`)
+        An array of data transformations such as filter and new field calculation.
+    usermeta : Mapping(required=[])
+        Optional metadata that will be passed to Vega.
+        This object is completely ignored by Vega and Vega-Lite and can be used for custom
+        metadata.
+    $schema : string
+        URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
+        Unless you have a reason to change this, use
+        ``https://vega.github.io/schema/vega-lite/v3.json``. Setting the ``$schema``
+        property allows automatic validation and autocomplete in editors that support JSON
+        schema.
+    """
+    _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, autosize=Undefined,
+                 background=Undefined, bounds=Undefined, center=Undefined, columns=Undefined,
+                 config=Undefined, data=Undefined, datasets=Undefined, description=Undefined,
+                 name=Undefined, padding=Undefined, resolve=Undefined, spacing=Undefined,
+                 title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
+        super(TopLevelRepeatSpec, self).__init__(repeat=repeat, spec=spec, align=align,
+                                                 autosize=autosize, background=background,
+                                                 bounds=bounds, center=center, columns=columns,
+                                                 config=config, data=data, datasets=datasets,
+                                                 description=description, name=name, padding=padding,
+                                                 resolve=resolve, spacing=spacing, title=title,
+                                                 transform=transform, usermeta=usermeta, **kwds)
+
+
+class TopLevelVConcatSpec(VegaLiteSchema):
+    """TopLevelVConcatSpec schema wrapper
+
+    Mapping(required=[vconcat])
+
+    Attributes
+    ----------
+
+    vconcat : List(:class:`Spec`)
+        A list of views to be concatenated and put into a column.
+    autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
+        Sets how the visualization size should be determined. If a string, should be one of
+        ``"pad"``, ``"fit"`` or ``"none"``.
+        Object values can additionally specify parameters for content sizing and automatic
+        resizing.
+        ``"fit"`` is only supported for single and layered views that don't use
+        ``rangeStep``.
+
+        **Default value** : ``pad``
+    background : string
+        CSS color property to use as the background of the entire view.
+
+        **Default value:** none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
+    center : boolean
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
+
+        **Default value:** ``false``
+    config : :class:`Config`
+        Vega-Lite configuration object.  This property can only be defined at the top-level
+        of a specification.
+    data : :class:`Data`
+        An object describing the data source
+    datasets : :class:`Datasets`
+        A global data store for named datasets. This is a mapping from names to inline
+        datasets.
+        This can be an array of objects or primitive values or a string. Arrays of primitive
+        values are ingested as objects with a ``data`` property.
+    description : string
+        Description of this mark for commenting purpose.
+    name : string
+        Name of the visualization for later reference.
+    padding : :class:`Padding`
+        The default visualization padding, in pixels, from the edge of the visualization
+        canvas to the data rectangle.  If a number, specifies padding for all sides.
+        If an object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
+        "bottom": 5}`` to specify padding for each side of the visualization.
+
+        **Default value** : ``5``
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
+    spacing : float
+        The spacing in pixels between sub-views of the concat operator.
+
+        **Default value** : ``10``
+    title : anyOf(string, :class:`TitleParams`)
+        Title for the plot.
+    transform : List(:class:`Transform`)
+        An array of data transformations such as filter and new field calculation.
+    usermeta : Mapping(required=[])
+        Optional metadata that will be passed to Vega.
+        This object is completely ignored by Vega and Vega-Lite and can be used for custom
+        metadata.
+    $schema : string
+        URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
+        Unless you have a reason to change this, use
+        ``https://vega.github.io/schema/vega-lite/v3.json``. Setting the ``$schema``
+        property allows automatic validation and autocomplete in editors that support JSON
+        schema.
+    """
+    _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
+                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
+                 description=Undefined, name=Undefined, padding=Undefined, resolve=Undefined,
+                 spacing=Undefined, title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
+        super(TopLevelVConcatSpec, self).__init__(vconcat=vconcat, autosize=autosize,
+                                                  background=background, bounds=bounds, center=center,
+                                                  config=config, data=data, datasets=datasets,
+                                                  description=description, name=name, padding=padding,
+                                                  resolve=resolve, spacing=spacing, title=title,
+                                                  transform=transform, usermeta=usermeta, **kwds)
+
+
 class TopLevelLayerSpec(VegaLiteSchema):
     """TopLevelLayerSpec schema wrapper
 
@@ -12988,7 +14341,7 @@ class TopLevelLayerSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    layer : List(anyOf(:class:`LayerSpec`, :class:`CompositeUnitSpec`))
+    layer : List(anyOf(:class:`LayerSpec`, :class:`UnitSpec`))
         Layer or single view specifications to be layered.
 
         **Note** : Specifications inside ``layer`` cannot use ``row`` and ``column``
@@ -13064,7 +14417,7 @@ class TopLevelLayerSpec(VegaLiteSchema):
         An object defining properties of the geographic projection shared by underlying
         layers.
     resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for layers.
+        Scale, axis, and legend resolutions for view composition specifications.
     title : anyOf(string, :class:`TitleParams`)
         Title for the plot.
     transform : List(:class:`Transform`)
@@ -13131,324 +14484,6 @@ class TopLevelLayerSpec(VegaLiteSchema):
                                                 width=width, **kwds)
 
 
-class TopLevelHConcatSpec(VegaLiteSchema):
-    """TopLevelHConcatSpec schema wrapper
-
-    Mapping(required=[hconcat])
-
-    Attributes
-    ----------
-
-    hconcat : List(:class:`Spec`)
-        A list of views that should be concatenated and put into a row.
-    autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
-        ``"pad"``, ``"fit"`` or ``"none"``.
-        Object values can additionally specify parameters for content sizing and automatic
-        resizing.
-        ``"fit"`` is only supported for single and layered views that don't use
-        ``rangeStep``.
-
-        **Default value** : ``pad``
-    background : string
-        CSS color property to use as the background of the entire view.
-
-        **Default value:** none (transparent)
-    bounds : enum('full', 'flush')
-        The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.
-
-
-        * If set to ``full``, the entire calculated bounds (including axes, title, and
-          legend) will be used.
-        * If set to ``flush``, only the specified width and height values for the sub-view
-          will be used. The ``flush`` setting can be useful when attempting to place
-          sub-plots without axes or legends into a uniform grid structure.
-
-        **Default value:** ``"full"``
-    center : boolean
-        Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.
-
-        **Default value:** ``false``
-    config : :class:`Config`
-        Vega-Lite configuration object.  This property can only be defined at the top-level
-        of a specification.
-    data : :class:`Data`
-        An object describing the data source
-    datasets : :class:`Datasets`
-        A global data store for named datasets. This is a mapping from names to inline
-        datasets.
-        This can be an array of objects or primitive values or a string. Arrays of primitive
-        values are ingested as objects with a ``data`` property.
-    description : string
-        Description of this mark for commenting purpose.
-    name : string
-        Name of the visualization for later reference.
-    padding : :class:`Padding`
-        The default visualization padding, in pixels, from the edge of the visualization
-        canvas to the data rectangle.  If a number, specifies padding for all sides.
-        If an object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
-        "bottom": 5}`` to specify padding for each side of the visualization.
-
-        **Default value** : ``5``
-    resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for horizontally concatenated charts.
-    spacing : float
-        The spacing in pixels between sub-views of the concat operator.
-
-        **Default value** : ``10``
-    title : anyOf(string, :class:`TitleParams`)
-        Title for the plot.
-    transform : List(:class:`Transform`)
-        An array of data transformations such as filter and new field calculation.
-    usermeta : Mapping(required=[])
-        Optional metadata that will be passed to Vega.
-        This object is completely ignored by Vega and Vega-Lite and can be used for custom
-        metadata.
-    $schema : string
-        URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v3.json``. Setting the ``$schema``
-        property allows automatic validation and autocomplete in editors that support JSON
-        schema.
-    """
-    _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
-    _rootschema = Root._schema
-
-    def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
-                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
-                 description=Undefined, name=Undefined, padding=Undefined, resolve=Undefined,
-                 spacing=Undefined, title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
-        super(TopLevelHConcatSpec, self).__init__(hconcat=hconcat, autosize=autosize,
-                                                  background=background, bounds=bounds, center=center,
-                                                  config=config, data=data, datasets=datasets,
-                                                  description=description, name=name, padding=padding,
-                                                  resolve=resolve, spacing=spacing, title=title,
-                                                  transform=transform, usermeta=usermeta, **kwds)
-
-
-class TopLevelRepeatSpec(VegaLiteSchema):
-    """TopLevelRepeatSpec schema wrapper
-
-    Mapping(required=[repeat, spec])
-
-    Attributes
-    ----------
-
-    repeat : :class:`Repeat`
-        An object that describes what fields should be repeated into views that are laid out
-        as a ``row`` or ``column``.
-    spec : :class:`Spec`
-        Any specification in Vega-Lite.
-    align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
-        The alignment to apply to grid rows and columns.
-        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
-
-
-        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
-          placed one after the other.
-        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
-          or column may be of variable size.
-        * For ``"all"``, subviews will be aligned and each row or column will be sized
-          identically based on the maximum observed size. String values for this property
-          will be applied to both grid rows and columns.
-
-        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
-        be used to supply different alignments for rows and columns.
-
-        **Default value:** ``"all"``.
-    autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
-        ``"pad"``, ``"fit"`` or ``"none"``.
-        Object values can additionally specify parameters for content sizing and automatic
-        resizing.
-        ``"fit"`` is only supported for single and layered views that don't use
-        ``rangeStep``.
-
-        **Default value** : ``pad``
-    background : string
-        CSS color property to use as the background of the entire view.
-
-        **Default value:** none (transparent)
-    bounds : enum('full', 'flush')
-        The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.
-
-
-        * If set to ``full``, the entire calculated bounds (including axes, title, and
-          legend) will be used.
-        * If set to ``flush``, only the specified width and height values for the sub-view
-          will be used. The ``flush`` setting can be useful when attempting to place
-          sub-plots without axes or legends into a uniform grid structure.
-
-        **Default value:** ``"full"``
-    center : anyOf(boolean, :class:`RowColboolean`)
-        Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.
-
-        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
-        supply different centering values for rows and columns.
-
-        **Default value:** ``false``
-    config : :class:`Config`
-        Vega-Lite configuration object.  This property can only be defined at the top-level
-        of a specification.
-    data : :class:`Data`
-        An object describing the data source
-    datasets : :class:`Datasets`
-        A global data store for named datasets. This is a mapping from names to inline
-        datasets.
-        This can be an array of objects or primitive values or a string. Arrays of primitive
-        values are ingested as objects with a ``data`` property.
-    description : string
-        Description of this mark for commenting purpose.
-    name : string
-        Name of the visualization for later reference.
-    padding : :class:`Padding`
-        The default visualization padding, in pixels, from the edge of the visualization
-        canvas to the data rectangle.  If a number, specifies padding for all sides.
-        If an object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
-        "bottom": 5}`` to specify padding for each side of the visualization.
-
-        **Default value** : ``5``
-    resolve : :class:`Resolve`
-        Scale and legend resolutions for repeated charts.
-    spacing : anyOf(float, :class:`RowColnumber`)
-        The spacing in pixels between sub-views of the composition operator.
-        An object of the form ``{"row": number, "column": number}`` can be used to set
-        different spacing values for rows and columns.
-
-        **Default value** : ``20``
-    title : anyOf(string, :class:`TitleParams`)
-        Title for the plot.
-    transform : List(:class:`Transform`)
-        An array of data transformations such as filter and new field calculation.
-    usermeta : Mapping(required=[])
-        Optional metadata that will be passed to Vega.
-        This object is completely ignored by Vega and Vega-Lite and can be used for custom
-        metadata.
-    $schema : string
-        URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v3.json``. Setting the ``$schema``
-        property allows automatic validation and autocomplete in editors that support JSON
-        schema.
-    """
-    _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
-    _rootschema = Root._schema
-
-    def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, autosize=Undefined,
-                 background=Undefined, bounds=Undefined, center=Undefined, config=Undefined,
-                 data=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
-                 padding=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
-                 transform=Undefined, usermeta=Undefined, **kwds):
-        super(TopLevelRepeatSpec, self).__init__(repeat=repeat, spec=spec, align=align,
-                                                 autosize=autosize, background=background,
-                                                 bounds=bounds, center=center, config=config, data=data,
-                                                 datasets=datasets, description=description, name=name,
-                                                 padding=padding, resolve=resolve, spacing=spacing,
-                                                 title=title, transform=transform, usermeta=usermeta,
-                                                 **kwds)
-
-
-class TopLevelVConcatSpec(VegaLiteSchema):
-    """TopLevelVConcatSpec schema wrapper
-
-    Mapping(required=[vconcat])
-
-    Attributes
-    ----------
-
-    vconcat : List(:class:`Spec`)
-        A list of views that should be concatenated and put into a column.
-    autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
-        ``"pad"``, ``"fit"`` or ``"none"``.
-        Object values can additionally specify parameters for content sizing and automatic
-        resizing.
-        ``"fit"`` is only supported for single and layered views that don't use
-        ``rangeStep``.
-
-        **Default value** : ``pad``
-    background : string
-        CSS color property to use as the background of the entire view.
-
-        **Default value:** none (transparent)
-    bounds : enum('full', 'flush')
-        The bounds calculation method to use for determining the extent of a sub-plot. One
-        of ``full`` (the default) or ``flush``.
-
-
-        * If set to ``full``, the entire calculated bounds (including axes, title, and
-          legend) will be used.
-        * If set to ``flush``, only the specified width and height values for the sub-view
-          will be used. The ``flush`` setting can be useful when attempting to place
-          sub-plots without axes or legends into a uniform grid structure.
-
-        **Default value:** ``"full"``
-    center : boolean
-        Boolean flag indicating if subviews should be centered relative to their respective
-        rows or columns.
-
-        **Default value:** ``false``
-    config : :class:`Config`
-        Vega-Lite configuration object.  This property can only be defined at the top-level
-        of a specification.
-    data : :class:`Data`
-        An object describing the data source
-    datasets : :class:`Datasets`
-        A global data store for named datasets. This is a mapping from names to inline
-        datasets.
-        This can be an array of objects or primitive values or a string. Arrays of primitive
-        values are ingested as objects with a ``data`` property.
-    description : string
-        Description of this mark for commenting purpose.
-    name : string
-        Name of the visualization for later reference.
-    padding : :class:`Padding`
-        The default visualization padding, in pixels, from the edge of the visualization
-        canvas to the data rectangle.  If a number, specifies padding for all sides.
-        If an object, the value should have the format ``{"left": 5, "top": 5, "right": 5,
-        "bottom": 5}`` to specify padding for each side of the visualization.
-
-        **Default value** : ``5``
-    resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for vertically concatenated charts.
-    spacing : float
-        The spacing in pixels between sub-views of the concat operator.
-
-        **Default value** : ``10``
-    title : anyOf(string, :class:`TitleParams`)
-        Title for the plot.
-    transform : List(:class:`Transform`)
-        An array of data transformations such as filter and new field calculation.
-    usermeta : Mapping(required=[])
-        Optional metadata that will be passed to Vega.
-        This object is completely ignored by Vega and Vega-Lite and can be used for custom
-        metadata.
-    $schema : string
-        URL to `JSON schema <http://json-schema.org/>`__ for a Vega-Lite specification.
-        Unless you have a reason to change this, use
-        ``https://vega.github.io/schema/vega-lite/v3.json``. Setting the ``$schema``
-        property allows automatic validation and autocomplete in editors that support JSON
-        schema.
-    """
-    _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
-    _rootschema = Root._schema
-
-    def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
-                 center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
-                 description=Undefined, name=Undefined, padding=Undefined, resolve=Undefined,
-                 spacing=Undefined, title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
-        super(TopLevelVConcatSpec, self).__init__(vconcat=vconcat, autosize=autosize,
-                                                  background=background, bounds=bounds, center=center,
-                                                  config=config, data=data, datasets=datasets,
-                                                  description=description, name=name, padding=padding,
-                                                  resolve=resolve, spacing=spacing, title=title,
-                                                  transform=transform, usermeta=usermeta, **kwds)
-
-
 class TopLevelFacetSpec(VegaLiteSchema):
     """TopLevelFacetSpec schema wrapper
 
@@ -13459,9 +14494,12 @@ class TopLevelFacetSpec(VegaLiteSchema):
 
     data : :class:`Data`
         An object describing the data source
-    facet : :class:`FacetMapping`
-        An object that describes mappings between ``row`` and ``column`` channels and their
-        field definitions.
+    facet : anyOf(:class:`FacetFieldDef`, :class:`FacetMapping`)
+        Definition for how to facet the data.  One of:
+        1) `a field definition for faceting the plot by one field
+        <https://vega.github.io/vega-lite/docs/facet.html#field-def>`__
+        2) `An object that maps row and column channels to their field definitions
+        <https://vega.github.io/vega-lite/docs/facet.html#mapping>`__
     spec : anyOf(:class:`LayerSpec`, :class:`FacetedUnitSpec`)
         A specification of the view that gets faceted.
     align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
@@ -13514,6 +14552,25 @@ class TopLevelFacetSpec(VegaLiteSchema):
         supply different centering values for rows and columns.
 
         **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
     config : :class:`Config`
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -13534,13 +14591,15 @@ class TopLevelFacetSpec(VegaLiteSchema):
 
         **Default value** : ``5``
     resolve : :class:`Resolve`
-        Scale, axis, and legend resolutions for facets.
+        Scale, axis, and legend resolutions for view composition specifications.
     spacing : anyOf(float, :class:`RowColnumber`)
         The spacing in pixels between sub-views of the composition operator.
         An object of the form ``{"row": number, "column": number}`` can be used to set
         different spacing values for rows and columns.
 
-        **Default value** : ``20``
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
     title : anyOf(string, :class:`TitleParams`)
         Title for the plot.
     transform : List(:class:`Transform`)
@@ -13561,22 +14620,24 @@ class TopLevelFacetSpec(VegaLiteSchema):
 
     def __init__(self, data=Undefined, facet=Undefined, spec=Undefined, align=Undefined,
                  autosize=Undefined, background=Undefined, bounds=Undefined, center=Undefined,
-                 config=Undefined, datasets=Undefined, description=Undefined, name=Undefined,
-                 padding=Undefined, resolve=Undefined, spacing=Undefined, title=Undefined,
-                 transform=Undefined, usermeta=Undefined, **kwds):
+                 columns=Undefined, config=Undefined, datasets=Undefined, description=Undefined,
+                 name=Undefined, padding=Undefined, resolve=Undefined, spacing=Undefined,
+                 title=Undefined, transform=Undefined, usermeta=Undefined, **kwds):
         super(TopLevelFacetSpec, self).__init__(data=data, facet=facet, spec=spec, align=align,
                                                 autosize=autosize, background=background, bounds=bounds,
-                                                center=center, config=config, datasets=datasets,
-                                                description=description, name=name, padding=padding,
-                                                resolve=resolve, spacing=spacing, title=title,
-                                                transform=transform, usermeta=usermeta, **kwds)
+                                                center=center, columns=columns, config=config,
+                                                datasets=datasets, description=description, name=name,
+                                                padding=padding, resolve=resolve, spacing=spacing,
+                                                title=title, transform=transform, usermeta=usermeta,
+                                                **kwds)
 
 
 class TopLevelSpec(VegaLiteSchema):
     """TopLevelSpec schema wrapper
 
     anyOf(:class:`TopLevelUnitSpec`, :class:`TopLevelFacetSpec`, :class:`TopLevelLayerSpec`,
-    :class:`TopLevelRepeatSpec`, :class:`TopLevelVConcatSpec`, :class:`TopLevelHConcatSpec`)
+    :class:`TopLevelRepeatSpec`, :class:`TopLevelConcatSpec`, :class:`TopLevelVConcatSpec`,
+    :class:`TopLevelHConcatSpec`)
     A Vega-Lite top-level specification.
     This is the root class for all Vega-Lite specifications.
     (The json schema is generated from this type.)
@@ -13603,6 +14664,23 @@ class TopLevelUnitSpec(VegaLiteSchema):
         ``"tick"``, ``"line"``,
         ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
         definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
+    align : anyOf(:class:`LayoutAlign`, :class:`RowColLayoutAlign`)
+        The alignment to apply to grid rows and columns.
+        The supported string values are ``"all"``, ``"each"``, and ``"none"``.
+
+
+        * For ``"none"``, a flow layout will be used, in which adjacent subviews are simply
+          placed one after the other.
+        * For ``"each"``, subviews will be aligned into a clean grid structure, but each row
+          or column may be of variable size.
+        * For ``"all"``, subviews will be aligned and each row or column will be sized
+          identically based on the maximum observed size. String values for this property
+          will be applied to both grid rows and columns.
+
+        Alternatively, an object value of the form ``{"row": string, "column": string}`` can
+        be used to supply different alignments for rows and columns.
+
+        **Default value:** ``"all"``.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
         Sets how the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
@@ -13616,6 +14694,45 @@ class TopLevelUnitSpec(VegaLiteSchema):
         CSS color property to use as the background of the entire view.
 
         **Default value:** none (transparent)
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
+    center : anyOf(boolean, :class:`RowColboolean`)
+        Boolean flag indicating if subviews should be centered relative to their respective
+        rows or columns.
+
+        An object value of the form ``{"row": boolean, "column": boolean}`` can be used to
+        supply different centering values for rows and columns.
+
+        **Default value:** ``false``
+    columns : float
+        The number of columns to include in the view composition layout.
+
+        **Default value** : ``undefined`` -- An infinite number of columns (a single row)
+        will be assumed. This is equivalent to
+        ``hconcat`` (for ``concat`` ) and to using the ``column`` channel (for ``facet`` and
+        ``repeat`` ).
+
+        **Note** :
+
+        1) This property is only for:
+
+
+        * the general (wrappable) ``concat`` operator (not ``hconcat`` / ``vconcat`` )
+        * the ``facet`` and ``repeat`` operator with one field/repetition definition
+          (without row/column nesting)
+
+        2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
+        and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
     config : :class:`Config`
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
@@ -13669,8 +14786,18 @@ class TopLevelUnitSpec(VegaLiteSchema):
         An object defining properties of geographic projection, which will be applied to
         ``shape`` path for ``"geoshape"`` marks
         and to ``latitude`` and ``"longitude"`` channels for other marks.
+    resolve : :class:`Resolve`
+        Scale, axis, and legend resolutions for view composition specifications.
     selection : Mapping(required=[])
         A key-value mapping between selection names and definitions.
+    spacing : anyOf(float, :class:`RowColnumber`)
+        The spacing in pixels between sub-views of the composition operator.
+        An object of the form ``{"row": number, "column": number}`` can be used to set
+        different spacing values for rows and columns.
+
+        **Default value** : Depends on ``"spacing"`` property of `the view composition
+        configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
+        ``20`` by default)
     title : anyOf(string, :class:`TitleParams`)
         Title for the plot.
     transform : List(:class:`Transform`)
@@ -13723,16 +14850,19 @@ class TopLevelUnitSpec(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/TopLevelUnitSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, data=Undefined, mark=Undefined, autosize=Undefined, background=Undefined,
+    def __init__(self, data=Undefined, mark=Undefined, align=Undefined, autosize=Undefined,
+                 background=Undefined, bounds=Undefined, center=Undefined, columns=Undefined,
                  config=Undefined, datasets=Undefined, description=Undefined, encoding=Undefined,
                  height=Undefined, name=Undefined, padding=Undefined, projection=Undefined,
-                 selection=Undefined, title=Undefined, transform=Undefined, usermeta=Undefined,
-                 view=Undefined, width=Undefined, **kwds):
-        super(TopLevelUnitSpec, self).__init__(data=data, mark=mark, autosize=autosize,
-                                               background=background, config=config, datasets=datasets,
+                 resolve=Undefined, selection=Undefined, spacing=Undefined, title=Undefined,
+                 transform=Undefined, usermeta=Undefined, view=Undefined, width=Undefined, **kwds):
+        super(TopLevelUnitSpec, self).__init__(data=data, mark=mark, align=align, autosize=autosize,
+                                               background=background, bounds=bounds, center=center,
+                                               columns=columns, config=config, datasets=datasets,
                                                description=description, encoding=encoding,
                                                height=height, name=name, padding=padding,
-                                               projection=projection, selection=selection, title=title,
+                                               projection=projection, resolve=resolve,
+                                               selection=selection, spacing=spacing, title=title,
                                                transform=transform, usermeta=usermeta, view=view,
                                                width=width, **kwds)
 
@@ -13771,14 +14901,16 @@ class TopoDataFormat(VegaLiteSchema):
 
         For ``"date"``, we parse data based using Javascript's `Date.parse()
         <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse>`__.
-        For Specific date formats can be provided (e.g., ``{foo: 'date:"%m%d%Y"'}`` ), using
+        For Specific date formats can be provided (e.g., ``{foo: "date:'%m%d%Y'"}`` ), using
         the `d3-time-format syntax <https://github.com/d3/d3-time-format#locale_format>`__.
-        UTC date format parsing is supported similarly (e.g., ``{foo: 'utc:"%m%d%Y"'}`` ).
+        UTC date format parsing is supported similarly (e.g., ``{foo: "utc:'%m%d%Y'"}`` ).
         See more about `UTC time
         <https://vega.github.io/vega-lite/docs/timeunit.html#utc>`__
     type : enum('topojson')
         Type of input data: ``"json"``, ``"csv"``, ``"tsv"``, ``"dsv"``.
-        The default format type is determined by the extension of the file URL.
+
+        **Default value:**  The default format type is determined by the extension of the
+        file URL.
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/TopoDataFormat'}
@@ -13791,11 +14923,11 @@ class TopoDataFormat(VegaLiteSchema):
 class Transform(VegaLiteSchema):
     """Transform schema wrapper
 
-    anyOf(:class:`FilterTransform`, :class:`CalculateTransform`, :class:`LookupTransform`,
-    :class:`BinTransform`, :class:`TimeUnitTransform`, :class:`ImputeTransform`,
-    :class:`AggregateTransform`, :class:`WindowTransform`, :class:`JoinAggregateTransform`,
-    :class:`StackTransform`, :class:`FlattenTransform`, :class:`FoldTransform`,
-    :class:`SampleTransform`)
+    anyOf(:class:`AggregateTransform`, :class:`BinTransform`, :class:`CalculateTransform`,
+    :class:`FilterTransform`, :class:`FlattenTransform`, :class:`FoldTransform`,
+    :class:`ImputeTransform`, :class:`JoinAggregateTransform`, :class:`LookupTransform`,
+    :class:`TimeUnitTransform`, :class:`SampleTransform`, :class:`StackTransform`,
+    :class:`WindowTransform`)
     """
     _schema = {'$ref': '#/definitions/Transform'}
     _rootschema = Root._schema
@@ -13808,8 +14940,6 @@ class Type(VegaLiteSchema):
     """Type schema wrapper
 
     anyOf(:class:`StandardType`, enum('geojson'))
-    Constants and utilities for data type
-     Data type based on level of measurement
     """
     _schema = {'$ref': '#/definitions/Type'}
     _rootschema = Root._schema
@@ -13828,6 +14958,113 @@ class TypeForShape(VegaLiteSchema):
 
     def __init__(self, *args):
         super(TypeForShape, self).__init__(*args)
+
+
+class UnitSpec(VegaLiteSchema):
+    """UnitSpec schema wrapper
+
+    Mapping(required=[mark])
+    Base interface for a unit (single-view) specification.
+
+    Attributes
+    ----------
+
+    mark : :class:`AnyMark`
+        A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
+        ``"tick"``, ``"line"``,
+        ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
+        definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
+    data : :class:`Data`
+        An object describing the data source
+    description : string
+        Description of this mark for commenting purpose.
+    encoding : :class:`Encoding`
+        A key-value mapping between encoding channels and definition of fields.
+    height : float
+        The height of a visualization.
+
+        **Default value:**
+
+
+        * If a view's `autosize
+          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
+          its y-channel has a `continuous scale
+          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the height will
+          be the value of `config.view.height
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * For y-axis with a band or point scale: if `rangeStep
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
+          unspecified, the height is `determined by the range step, paddings, and the
+          cardinality of the field mapped to y-channel
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__. Otherwise, if the
+          ``rangeStep`` is ``null``, the height will be the value of `config.view.height
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * If no field is mapped to ``y`` channel, the ``height`` will be the value of
+          ``rangeStep``.
+
+        **Note** : For plots with `row and column channels
+        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
+        height of a single view.
+
+        **See also:** The documentation for `width and height
+        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
+    name : string
+        Name of the visualization for later reference.
+    projection : :class:`Projection`
+        An object defining properties of geographic projection, which will be applied to
+        ``shape`` path for ``"geoshape"`` marks
+        and to ``latitude`` and ``"longitude"`` channels for other marks.
+    selection : Mapping(required=[])
+        A key-value mapping between selection names and definitions.
+    title : anyOf(string, :class:`TitleParams`)
+        Title for the plot.
+    transform : List(:class:`Transform`)
+        An array of data transformations such as filter and new field calculation.
+    view : :class:`ViewBackground`
+        An object defining the view background's fill and stroke.
+
+        **Default value:** none (transparent)
+    width : float
+        The width of a visualization.
+
+        **Default value:** This will be determined by the following rules:
+
+
+        * If a view's `autosize
+          <https://vega.github.io/vega-lite/docs/size.html#autosize>`__ type is ``"fit"`` or
+          its x-channel has a `continuous scale
+          <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__, the width will
+          be the value of `config.view.width
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * For x-axis with a band or point scale: if `rangeStep
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__ is a numeric value or
+          unspecified, the width is `determined by the range step, paddings, and the
+          cardinality of the field mapped to x-channel
+          <https://vega.github.io/vega-lite/docs/scale.html#band>`__.   Otherwise, if the
+          ``rangeStep`` is ``null``, the width will be the value of `config.view.width
+          <https://vega.github.io/vega-lite/docs/spec.html#config>`__.
+        * If no field is mapped to ``x`` channel, the ``width`` will be the value of
+          `config.scale.textXRangeStep
+          <https://vega.github.io/vega-lite/docs/size.html#default-width-and-height>`__ for
+          ``text`` mark and the value of ``rangeStep`` for other marks.
+
+        **Note:** For plots with `row and column channels
+        <https://vega.github.io/vega-lite/docs/encoding.html#facet>`__, this represents the
+        width of a single view.
+
+        **See also:** The documentation for `width and height
+        <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
+    """
+    _schema = {'$ref': '#/definitions/UnitSpec'}
+    _rootschema = Root._schema
+
+    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
+                 height=Undefined, name=Undefined, projection=Undefined, selection=Undefined,
+                 title=Undefined, transform=Undefined, view=Undefined, width=Undefined, **kwds):
+        super(UnitSpec, self).__init__(mark=mark, data=data, description=description, encoding=encoding,
+                                       height=height, name=name, projection=projection,
+                                       selection=selection, title=title, transform=transform, view=view,
+                                       width=width, **kwds)
 
 
 class UrlData(VegaLiteSchema):
@@ -13942,21 +15179,6 @@ class NumberValueDef(VegaLiteSchema):
         super(NumberValueDef, self).__init__(value=value, **kwds)
 
 
-class ValueDefWithConditionMarkPropFieldDefnominalstring(VegaLiteSchema):
-    """ValueDefWithConditionMarkPropFieldDefnominalstring schema wrapper
-
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnominalstring`,
-    :class:`ConditionOnlyDefMarkPropFieldDefnominal`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
-    optional.
-    """
-    _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldDef<"nominal">,string>'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args, **kwds):
-        super(ValueDefWithConditionMarkPropFieldDefnominalstring, self).__init__(*args, **kwds)
-
-
 class ValueDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
     """ValueDefWithConditionMarkPropFieldDefstringnull schema wrapper
 
@@ -14015,31 +15237,6 @@ class ValueDefWithConditionTextFieldDefstringnumberboolean(VegaLiteSchema):
 
     def __init__(self, *args, **kwds):
         super(ValueDefWithConditionTextFieldDefstringnumberboolean, self).__init__(*args, **kwds)
-
-
-class ValueDefWithOptionalConditionMarkPropFieldDefnominalstring(VegaLiteSchema):
-    """ValueDefWithOptionalConditionMarkPropFieldDefnominalstring schema wrapper
-
-    Mapping(required=[value])
-    A ValueDef with optional Condition<ValueDef | FieldDef>
-
-    Attributes
-    ----------
-
-    value : string
-        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
-        between ``0`` to ``1`` for opacity).
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefnominal`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ValueDefWithOptionalCondition<MarkPropFieldDef<"nominal">,string>'}
-    _rootschema = Root._schema
-
-    def __init__(self, value=Undefined, condition=Undefined, **kwds):
-        super(ValueDefWithOptionalConditionMarkPropFieldDefnominalstring, self).__init__(value=value,
-                                                                                         condition=condition,
-                                                                                         **kwds)
 
 
 class ValueDefWithOptionalConditionMarkPropFieldDefstringnull(VegaLiteSchema):
@@ -14154,7 +15351,7 @@ class ViewBackground(VegaLiteSchema):
         The radius in pixels of rounded rectangle corners.
 
         **Default value:** ``0``
-    fill : string
+    fill : anyOf(string, None)
         The fill color.
 
         **Default value:** ``undefined``
@@ -14167,7 +15364,7 @@ class ViewBackground(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    stroke : string
+    stroke : anyOf(string, None)
         The stroke color.
 
         **Default value:** ``"#ddd"``
@@ -14232,7 +15429,7 @@ class ViewConfig(VegaLiteSchema):
         The radius in pixels of rounded rectangle corners.
 
         **Default value:** ``0``
-    fill : string
+    fill : anyOf(string, None)
         The fill color.
 
         **Default value:** ``undefined``
@@ -14250,7 +15447,7 @@ class ViewConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    stroke : string
+    stroke : anyOf(string, None)
         The stroke color.
 
         **Default value:** ``"#ddd"``

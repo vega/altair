@@ -32,7 +32,7 @@ points = alt.Chart().mark_point(filled=True, color="black").encode(
     x='x',
     y='y'
 ).transform_filter(
-    pts.ref()
+    pts
 ).properties(
     width=300,
     height=300
@@ -44,10 +44,9 @@ mag = alt.Chart().mark_bar().encode(
     y="count()",
     color=alt.condition(pts, alt.value("black"), alt.value("lightgray"))
 ).properties(
-    selection=pts,
     width=300,
     height=300
-)
+).add_selection(pts)
 
 # build the chart:
 alt.hconcat(

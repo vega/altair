@@ -56,10 +56,14 @@ clean:
 .PHONY: clean-generated
 clean-generated:
 	rm -rf user_guide/generated/
+	rm -rf gallery/
 
 .PHONY: clean-images
 clean-images:
 	rm -rf _images
+
+.PHONY: clean-all
+clean-all: clean clean-generated clean-images
 
 .PHONY: html
 html:

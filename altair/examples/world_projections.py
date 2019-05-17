@@ -23,7 +23,4 @@ projections = ['equirectangular', 'mercator', 'orthographic', 'gnomonic']
 charts = [base.project(proj).properties(title=proj)
           for proj in projections]
 
-alt.vconcat(
-    alt.hconcat(*charts[:2]),
-    alt.hconcat(*charts[2:])
-)
+alt.concat(*charts, columns=2)

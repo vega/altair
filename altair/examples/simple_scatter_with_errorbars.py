@@ -1,9 +1,7 @@
 """
 Simple Scatter Plot with Errorbars
 ----------------------------------
-
 A simple scatter plot of a data set with errorbars.
-
 """
 # category: scatter plots
 import altair as alt
@@ -20,31 +18,26 @@ yerr = 0.2
 source = pd.DataFrame({"x":x, "y":y, "yerr":yerr})
 
 # the base chart
-base = alt.Chart(source)
+base = alt.Chart(source).transform_calculate(
+    ymin="datum.y-datum.yerr",
+    ymax="datum.y+datum.yerr"
+)
 
 # generate the points
-points = base.mark_point(filled=True, size=50).encode(
-    x=alt.X(
-        'x',
-        title='x',
-        scale=alt.Scale(domain=(0,6))
-    ),
-    y=alt.Y(
-        'y',
-        title='y',
-        scale=alt.Scale(zero=False, domain=(10, 11))
-    ),
-    color=alt.value('black')
+points = base.mark_point(
+    filled=True,
+    size=50,
+    color='black'
+).encode(
+    x=alt.X('x', scale=alt.Scale(domain=(0, 6))),
+    y=alt.Y('y', scale=alt.Scale(domain=(10, 11)))
 )
 
 # generate the error bars
-errorbars = base.mark_rule().encode(
+errorbars = base.mark_errorbar().encode(
     x="x",
     y="ymin:Q",
     y2="ymax:Q"
-).transform_calculate(
-    ymin="datum.y-datum.yerr",
-    ymax="datum.y+datum.yerr"
 )
 
 points + errorbars

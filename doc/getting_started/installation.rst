@@ -27,7 +27,7 @@ Quick Start: Altair + JupyterLab
 We recommend installing Altair with JupyterLab. If you would like to use it
 with the classic notebook, see :ref:`installation-notebook`.
 
-Altair works best with JupyterLab version 0.32 or later.
+Altair version 3 works best with JupyterLab version 1.0 or later.
 
 To install JupyterLab and Altair with conda, run the following command::
 
@@ -78,8 +78,8 @@ Altair works in the Jupyter notebook, though we recommend using it in JupyterLab
 if available (see :ref:`installation-jupyterlab`).
 
 If using the notebook, Altair works best with notebook version 5.3 or newer.
-Note that using Altair in the notebook also requires the vega_ package
-to be installed and configured.
+Note that using Altair 3 in the notebook also requires version 2 or newer of
+the vega_ package to be installed and configured.
 
 To install the notebook and Altair with conda, run the following command::
 

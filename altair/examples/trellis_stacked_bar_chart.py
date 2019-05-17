@@ -11,7 +11,7 @@ source = data.barley()
 
 alt.Chart(source).mark_bar().encode(
     column='year',
-    x='sum(yield)',
+    x='yield',
     y='variety',
     color='site'
-).properties(width=250)
+).properties(width=220)

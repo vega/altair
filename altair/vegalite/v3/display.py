@@ -9,8 +9,8 @@ from ..display import HTMLRenderer
 
 from .schema import SCHEMA_VERSION
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '4'
-VEGAEMBED_VERSION = '3'
+VEGA_VERSION = '5'
+VEGAEMBED_VERSION = '4'
 
 
 # ==============================================================================

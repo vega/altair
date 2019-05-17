@@ -107,7 +107,7 @@ Bin = core.BinParams
 class LookupData(core.LookupData):
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
-        copy = self.copy(ignore=['data'])
+        copy = self.copy(deep=False)
         context = kwargs.get('context', {})
         copy.data = _prepare_data(copy.data, context)
         return super(LookupData, copy).to_dict(*args, **kwargs)
@@ -118,7 +118,7 @@ class FacetMapping(core.FacetMapping):
     _class_is_valid_at_instantiation = False
 
     def to_dict(self, *args, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=False)
         context = kwargs.get('context', {})
         data = context.get('data', None)
         if isinstance(self.row, six.string_types):
@@ -150,82 +150,43 @@ def _get_channels_mapping():
 
 # -------------------------------------------------------------------------
 # Tools for working with selections
-class SelectionMapping(core.VegaLiteSchema):
-    """A mapping of selection names to selection definitions.
+class Selection(object):
+    """A Selection object"""
+    _counter = 0
 
-    This is designed to match the schema of the "selection" property of
-    top-level objects.
-    """
-    _schema = {
-        'type': 'object',
-        'additionalPropeties': {'$ref': '#/definitions/SelectionDef'}
-    }
-    _rootschema = core.Root._schema
+    @classmethod
+    def _get_name(cls):
+        cls._counter += 1
+        return "selector{:03d}".format(cls._counter)
 
-    def __add__(self, other):
-        if isinstance(other, SelectionMapping):
-            copy = self.copy()
-            copy._kwds.update(other._kwds)
-            return copy
-        else:
-            return NotImplemented
+    def __init__(self, name, selection):
+        if name is None:
+            name = self._get_name()
+        self.name = name
+        self.selection = selection
 
-    def __iadd__(self, other):
-        if isinstance(other, SelectionMapping):
-            self._kwds.update(other._kwds)
-            return self
-        else:
-            return NotImplemented
-
-
-class NamedSelection(SelectionMapping):
-    """A SelectionMapping with a single named selection item"""
-    _schema = {
-        'type': 'object',
-        'additionalPropeties': {'$ref': '#/definitions/SelectionDef'},
-        'minProperties': 1, 'maxProperties': 1
-    }
-    _rootschema = core.Root._schema
-
-    def _get_name(self):
-        if len(self._kwds) != 1:
-            raise ValueError("NamedSelection has multiple properties")
-        return next(iter(self._kwds))
+    def __repr__(self):
+        return "Selection({0!r}, {1})".format(self.name, self.selection)
 
     def ref(self):
-        """Return a selection reference to this object
+        return {'selection': self.name}
 
-        Examples
-        --------
-        >>> import altair as alt
-        >>> sel = alt.selection_interval(name='interval')
-        >>> sel.ref()
-        {'selection': 'interval'}
-
-        """
-        return {"selection": self._get_name()}
+    def to_dict(self):
+        return {'selection': self.name}
 
     def __invert__(self):
-        return core.SelectionNot(**{'not': self._get_name()})
+        return core.SelectionNot(**{'not': self.name})
 
     def __and__(self, other):
-        if isinstance(other, NamedSelection):
-            other = other._get_name()
-        return core.SelectionAnd(**{'and': [self._get_name(), other]})
+        if isinstance(other, Selection):
+            other = other.name
+        return core.SelectionAnd(**{'and': [self.name, other]})
 
     def __or__(self, other):
-        if isinstance(other, NamedSelection):
-            other = other._get_name()
-        return core.SelectionOr(**{'or': [self._get_name(), other]})
+        if isinstance(other, Selection):
+            other = other.name
+        return core.SelectionOr(**{'or': [self.name, other]})
 
-    def __add__(self, other):
-        copy = SelectionMapping(**self._kwds)
-        copy += other
-        return copy
-
-    def __iadd__(self, other):
-        # this will be delegated to SelectionMapping
-        return NotImplemented
 
 # ------------------------------------------------------------------------
 # Top-Level Functions
@@ -251,15 +212,11 @@ def selection(name=None, type=Undefined, **kwds):
 
     Returns
     -------
-    selection: NamedSelection
+    selection: Selection
         The selection object that can be used in chart creation.
     """
-    if name is None:
-        name = "selector{:03d}".format(selection.counter)
-        selection.counter += 1
-    return NamedSelection(**{name: core.SelectionDef(type=type, **kwds)})
+    return Selection(name, core.SelectionDef(type=type, **kwds))
 
-selection.counter = 1
 
 @utils.use_signature(core.IntervalSelection)
 def selection_interval(**kwargs):
@@ -314,7 +271,7 @@ def condition(predicate, if_true, if_false, **kwargs):
 
     Parameters
     ----------
-    predicate: NamedSelection, LogicalOperandPredicate, expr.Expression, dict, or string
+    predicate: Selection, LogicalOperandPredicate, expr.Expression, dict, or string
         the selection predicate or test predicate for the condition.
         if a string is passed, it will be treated as a test operand.
     if_true:
@@ -339,8 +296,8 @@ def condition(predicate, if_true, if_false, **kwargs):
                        core.FieldGTPredicate, core.FieldLTEPredicate,
                        core.FieldGTEPredicate, core.SelectionPredicate)
 
-    if isinstance(predicate, NamedSelection):
-        condition = {'selection': predicate._get_name()}
+    if isinstance(predicate, Selection):
+        condition = {'selection': predicate.name}
     elif isinstance(predicate, selection_predicates):
         condition = {'selection': predicate}
     elif isinstance(predicate, test_predicates):
@@ -397,7 +354,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         context.setdefault('datasets', {})
         is_top_level = context.get('top_level', True)
 
-        copy = self.copy()
+        copy = self.copy(deep=False)
         original_data = getattr(copy, 'data', Undefined)
         copy.data = _prepare_data(original_data, context)
 
@@ -530,7 +487,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def __or__(self, other):
         return HConcatChart(hconcat=[self, other])
 
-    def repeat(self, row=Undefined, column=Undefined, **kwargs):
+    def repeat(self, repeat=Undefined, row=Undefined, column=Undefined, columns=Undefined, **kwargs):
         """Return a RepeatChart built from the chart
 
         Fields within the chart can be set to correspond to the row or
@@ -538,41 +495,63 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Parameters
         ----------
+        repeat : list
+            a list of data column names to be repeated. This cannot be
+            used along with the ``row`` or ``column`` argument.
         row : list
             a list of data column names to be mapped to the row facet
         column : list
             a list of data column names to be mapped to the column facet
+        columns : int
+            the maximum number of columns before wrapping. Only referenced
+            if ``repeat`` is specified.
+        **kwargs :
+            additional keywords passed to RepeatChart.
 
         Returns
         -------
         chart : RepeatChart
             a repeated chart.
-
         """
-        repeat = core.Repeat(row=row, column=column)
-        return RepeatChart(spec=self, repeat=repeat, **kwargs)
+        repeat_specified = (repeat is not Undefined)
+        rowcol_specified = (row is not Undefined or column is not Undefined)
+
+        if repeat_specified and rowcol_specified:
+            raise ValueError("repeat argument cannot be combined with row/column argument.")
+
+        if repeat_specified:
+            repeat = repeat
+        else:
+            repeat = core.RepeatMapping(row=row, column=column)
+
+        return RepeatChart(spec=self, repeat=repeat, columns=columns, **kwargs)
 
     def properties(self, **kwargs):
         """Set top-level properties of the Chart.
 
         Argument names and types are the same as class initialization.
         """
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=False)
         for key, val in kwargs.items():
-            setattr(copy, key, val)
+            if key == 'selection' and isinstance(val, Selection):
+                # For backward compatibility with old selection interface.
+                setattr(copy, key, {val.name: val.selection})
+            else:
+                self.validate_property(key, val)
+                setattr(copy, key, val)
         return copy
 
     def add_selection(self, *selections):
-        """Add one or more selections to the chart"""
+        """Add one or more selections to the chart."""
         if not selections:
             return self
-        else:
-            copy = self.copy(deep=True, ignore=['data'])
-            if copy.selection is Undefined:
-                copy.selection = SelectionMapping()
-            for selection in selections:
-                copy.selection += selection
-            return copy
+        copy = self.copy(deep=['selection'])
+        if copy.selection is Undefined:
+            copy.selection = {}
+
+        for s in selections:
+            copy.selection[s.name] = s.selection
+        return copy
 
     def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
@@ -653,11 +632,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     def _add_transform(self, *transforms):
         """Copy the chart and add specified transforms to chart.transform"""
-        copy = self.copy()
+        copy = self.copy(deep=['transform'])
         if copy.transform is Undefined:
-            copy.transform = list(transforms)
-        else:
-            copy.transform.extend(transforms)
+            copy.transform = []
+        copy.transform.extend(transforms)
         return copy
 
     def transform_aggregate(self, aggregate=Undefined, groupby=Undefined, **kwds):
@@ -735,7 +713,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         Add a BinTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         as_ : anyOf(string, List(string))
             The output fields at which to write the start and end bin values.
@@ -789,14 +767,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         Add a CalculateTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         as_ : string
             The field for storing the computed formula value.
         calculate : string or alt.expr expression
             A `expression <https://vega.github.io/vega-lite/docs/types.html#expression>`__
             string. Use the variable ``datum`` to refer to the current data object.
-
         **kwargs
             transforms can also be passed by keyword argument; see Examples
 
@@ -833,7 +810,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.CalculateTransform : underlying transform object
-
         """
         if as_ is Undefined:
             as_ = kwargs.pop('as', Undefined)
@@ -848,11 +824,114 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             self = self._add_transform(core.CalculateTransform(**dct))
         return self
 
+    def transform_impute(self, impute, key, frame=Undefined, groupby=Undefined,
+                         keyvals=Undefined, method=Undefined, value=Undefined):
+        """
+        Add an ImputeTransform to the schema.
+
+        Parameters
+        ----------
+        impute : string
+            The data field for which the missing values should be imputed.
+        key : string
+            A key field that uniquely identifies data objects within a group.
+            Missing key values (those occurring in the data but not in the current group) will
+            be imputed.
+        frame : List(anyOf(None, float))
+            A frame specification as a two-element array used to control the window over which
+            the specified method is applied. The array entries should either be a number
+            indicating the offset from the current data object, or null to indicate unbounded
+            rows preceding or following the current data object.  For example, the value ``[-5,
+            5]`` indicates that the window should include five objects preceding and five
+            objects following the current object.
+            **Default value:** :  ``[null, null]`` indicating that the window includes all
+            objects.
+        groupby : List(string)
+            An optional array of fields by which to group the values.
+            Imputation will then be performed on a per-group basis.
+        keyvals : anyOf(List(Mapping(required=[])), :class:`ImputeSequence`)
+            Defines the key values that should be considered for imputation.
+            An array of key values or an object defining a `number sequence
+            <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
+            If provided, this will be used in addition to the key values observed within the
+            input data.  If not provided, the values will be derived from all unique values of
+            the ``key`` field. For ``impute`` in ``encoding``, the key field is the x-field if
+            the y-field is imputed, or vice versa.
+            If there is no impute grouping, this property *must* be specified.
+        method : :class:`ImputeMethod`
+            The imputation method to use for the field value of imputed data objects.
+            One of ``value``, ``mean``, ``median``, ``max`` or ``min``.
+            **Default value:**  ``"value"``
+        value : Mapping(required=[])
+            The field value to use when the imputation ``method`` is ``"value"``.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.ImputeTransform : underlying transform object
+        """
+        return self._add_transform(core.ImputeTransform(
+            impute=impute, key=key, frame=frame, groupby=groupby,
+            keyvals=keyvals, method=method, value=value
+        ))
+
+    def transform_joinaggregate(self, joinaggregate=Undefined, groupby=Undefined, **kwargs):
+        """
+        Add a JoinAggregateTransform to the schema.
+
+        Parameters
+        ----------
+        joinaggregate : List(:class:`JoinAggregateFieldDef`)
+            The definition of the fields in the join aggregate, and what calculations to use.
+        groupby : List(string)
+            The data fields for partitioning the data objects into separate groups. If
+            unspecified, all data points will be in a single group.
+        **kwargs
+            joinaggregates can also be passed by keyword argument; see Examples.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        Examples
+        --------
+        >>> import altair as alt
+        >>> chart = alt.Chart().transform_joinaggregate(x='sum(y)')
+        >>> chart.transform[0]
+        JoinAggregateTransform({
+          joinaggregate: [JoinAggregateFieldDef({
+            as: 'x',
+            field: 'y',
+            op: AggregateOp('sum')
+          })]
+        })
+
+        See Also
+        --------
+        alt.JoinAggregateTransform : underlying transform object
+        """
+        if joinaggregate is Undefined:
+            joinaggregate = []
+        for key, val in kwargs.items():
+            parsed = utils.parse_shorthand(val)
+            dct = {'as': key,
+                   'field': parsed.get('field', Undefined),
+                   'op': parsed.get('aggregate', Undefined)}
+            joinaggregate.append(core.JoinAggregateFieldDef.from_dict(dct))
+        return self._add_transform(core.JoinAggregateTransform(
+            joinaggregate=joinaggregate, groupby=groupby
+        ))
+
     def transform_filter(self, filter, **kwargs):
         """
         Add a FilterTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         filter : a filter expression or :class:`LogicalOperandPredicate`
             The `filter` property must be one of the predicate definitions:
@@ -860,7 +939,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             (2) a range predicate
             (3) a selection predicate
             (4) a logical operand combining (1)-(3)
-            (5) a NamedSelection object
+            (5) a Selection object
 
         Returns
         -------
@@ -874,11 +953,59 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         selection_predicates = (core.SelectionNot, core.SelectionOr,
                                 core.SelectionAnd, core.SelectionOperand)
-        if isinstance(filter, NamedSelection):
-            filter = {'selection': filter._get_name()}
+        if isinstance(filter, Selection):
+            filter = {'selection': filter.name}
         elif isinstance(filter, selection_predicates):
             filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
+
+    def transform_flatten(self, flatten, as_=Undefined):
+        """Add a FlattenTransform to the schema.
+
+        Parameters
+        ----------
+        flatten : List(string)
+            An array of one or more data fields containing arrays to flatten.
+            If multiple fields are specified, their array values should have a parallel
+            structure, ideally with the same length.
+            If the lengths of parallel arrays do not match,
+            the longest array will be used with ``null`` values added for missing entries.
+        as : List(string)
+            The output field names for extracted array values.
+            **Default value:** The field name of the corresponding array field
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.FlattenTransform : underlying transform object
+        """
+        return self._add_transform(core.FlattenTransform(flatten=flatten, **{'as': as_}))
+
+    def transform_fold(self, fold, as_=Undefined):
+        """Add a FoldTransform to the schema.
+
+        Parameters
+        ----------
+        fold : List(string)
+            An array of data fields indicating the properties to fold.
+        as : [string, string]
+            The output field names for the key and value properties produced by the fold
+            transform. Default: ``["key", "value"]``
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.FoldTransform : underlying transform object
+        """
+        return self._add_transform(core.FoldTransform(fold=fold, **{'as': as_}))
 
     def transform_lookup(self, as_=Undefined, from_=Undefined, lookup=Undefined, default=Undefined, **kwargs):
         """Add a LookupTransform to the schema
@@ -905,7 +1032,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         See Also
         --------
         alt.LookupTransform : underlying transform object
-
         """
         if as_ is not Undefined:
             if 'as' in kwargs:
@@ -919,11 +1045,64 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         kwargs['default'] = default
         return self._add_transform(core.LookupTransform(**kwargs))
 
+    def transform_sample(self, sample=1000):
+        """
+        Add a SampleTransform to the schema.
+
+        Parameters
+        ----------
+        sample : float
+            The maximum number of data objects to include in the sample. Default: 1000.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.SampleTransform : underlying transform object
+        """
+        return self._add_transform(core.SampleTransform(sample))
+
+    def transform_stack(self, as_, stack, groupby, offset=Undefined, sort=Undefined):
+        """
+        Add a StackTransform to the schema.
+
+        Parameters
+        ----------
+        as_ : anyOf(string, List(string))
+            Output field names. This can be either a string or an array of strings with
+            two elements denoting the name for the fields for stack start and stack end
+            respectively.
+            If a single string(eg."val") is provided, the end field will be "val_end".
+        stack : string
+            The field which is stacked.
+        groupby : List(string)
+            The data fields to group by.
+        offset : enum('zero', 'center', 'normalize')
+            Mode for stacking marks. Default: 'zero'.
+        sort : List(:class:`SortField`)
+            Field that determines the order of leaves in the stacked charts.
+
+        Returns
+        -------
+        self : Chart object
+            returns chart to allow for chaining
+
+        See Also
+        --------
+        alt.StackTransform : underlying transform object
+        """
+        return self._add_transform(core.StackTransform(
+            stack=stack, groupby=groupby, offset=offset, sort=sort, **{'as': as_}
+        ))
+
     def transform_timeunit(self, as_=Undefined, field=Undefined, timeUnit=Undefined, **kwargs):
         """
         Add a TimeUnitTransform to the schema.
 
-        Attributes
+        Parameters
         ----------
         as_ : string
             The output field to write the timeUnit value.
@@ -997,7 +1176,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                          ignorePeers=Undefined, sort=Undefined, **kwargs):
         """Add a WindowTransform to the schema
 
-        Attributes
+        Parameters
         ----------
         window : List(:class:`WindowFieldDef`)
             The definition of the fields in the window, and what calculations to use.
@@ -1083,7 +1262,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         if not hasattr(self, 'resolve'):
             raise ValueError("{} object has no attribute "
                              "'resolve'".format(self.__class__))
-        copy = self.copy()
+        copy = self.copy(deep=['resolve'])
         if copy.resolve is Undefined:
             copy.resolve = core.Resolve()
         for key, val in kwargs.items():
@@ -1252,18 +1431,14 @@ class EncodingMixin(object):
             else:
                 if condition is not Undefined:
                     obj['condition'] = _wrap_in_channel_class(condition, prop)
-            kwargs[prop] = _wrap_in_channel_class(obj, prop)
+            if obj is not None:
+                kwargs[prop] = _wrap_in_channel_class(obj, prop)
 
-
-        copy = self.copy(deep=True, ignore=['data'])
+        copy = self.copy(deep=['encoding'])
 
         # get a copy of the dict representation of the previous encoding
-        encoding = copy.encoding
-        if encoding is Undefined:
-            encoding = {}
-        elif isinstance(encoding, dict):
-            pass
-        else:
+        encoding = copy._get('encoding', {})
+        if isinstance(encoding, core.VegaLiteSchema):
             encoding = {k: v for k, v in encoding._kwds.items()
                         if v is not Undefined}
 
@@ -1271,6 +1446,56 @@ class EncodingMixin(object):
         encoding.update(kwargs)
         copy.encoding = core.FacetedEncoding(**encoding)
         return copy
+
+    def facet(self, facet=Undefined, row=Undefined, column=Undefined, data=Undefined,
+              columns=Undefined, **kwargs):
+        """Create a facet chart from the current chart.
+
+        Faceted charts require data to be specified at the top level; if data
+        is not specified, the data from the current chart will be used at the
+        top level.
+
+        Parameters
+        ----------
+        facet : string or alt.Facet (optional)
+            The data column to use as an encoding for a wrapped facet.
+            If specified, then neither row nor column may be specified.
+        column : string or alt.Column (optional)
+            The data column to use as an encoding for a column facet.
+            May be combined with row argument, but not with facet argument.
+        row : string or alt.Column (optional)
+            The data column to use as an encoding for a row facet.
+            May be combined with column argument, but not with facet argument.
+        data : string or dataframe (optional)
+            The dataset to use for faceting. If not supplied, then data must
+            be specified in the top-level chart that calls this method.
+        columns : integer
+            the maximum number of columns for a wrapped facet.
+
+        Returns
+        -------
+        self :
+            for chaining
+        """
+        facet_specified = (facet is not Undefined)
+        rowcol_specified = (row is not Undefined or column is not Undefined)
+
+        if facet_specified and rowcol_specified:
+            raise ValueError("facet argument cannot be combined with row/column argument.")
+
+        if data is Undefined:
+            if self.data is Undefined:
+                 raise ValueError("Facet charts require data to be specified at the top level.")
+            self = self.copy(deep=False)
+            data, self.data = self.data, Undefined
+
+        if facet_specified:
+            if isinstance(facet, six.string_types):
+                facet = channels.Facet(facet)
+        else:
+            facet = FacetMapping(row=row, column=column)
+
+        return FacetChart(spec=self, facet=facet, data=data, columns=columns, **kwargs)
 
 
 class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
@@ -1397,29 +1622,8 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
             encodings.append('x')
         if bind_y:
             encodings.append('y')
-        copy = self.copy(deep=True, ignore=['data'])
-
-        if copy.selection is Undefined:
-            copy.selection = SelectionMapping()
-        if isinstance(copy.selection, dict):
-            copy.selection = SelectionMapping(**copy.selection)
-        copy.selection += selection(type='interval', bind='scales',
-                                    encodings=encodings)
-        return copy
-
-    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
-        """Create a facet chart from the current chart.
-
-        Faceted charts require data to be specified at the top level; if data
-        is not specified, the data from the current chart will be used at the
-        top level.
-        """
-        if data is Undefined:
-            data = self.data
-            self = self.copy()
-            self.data = Undefined
-        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
-                          data=data, **kwargs)
+        return self.add_selection(selection_interval(bind='scales',
+                                                     encodings=encodings))
 
 
 def _check_if_valid_subspec(spec, classname):
@@ -1465,12 +1669,12 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
             copy of self, with interactive axes added
 
         """
-        copy = self.copy()
+        copy = self.copy(deep=False)
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
 
-def repeat(repeater):
+def repeat(repeater='repeat'):
     """Tie a channel to the row or column within a repeated chart
 
     The output of this should be passed to the ``field`` attribute of
@@ -1478,15 +1682,42 @@ def repeat(repeater):
 
     Parameters
     ----------
-    repeater : {'row'|'column'}
-        The repeater to tie the field to.
+    repeater : {'row'|'column'|'repeat'}
+        The repeater to tie the field to. Default is 'repeat'.
 
     Returns
     -------
     repeat : RepeatRef object
     """
-    assert repeater in ['row', 'column']
+    if repeater not in ['row', 'column', 'repeat']:
+        raise ValueError("repeater must be one of ['row', 'column', 'repeat']")
     return core.RepeatRef(repeat=repeater)
+
+
+@utils.use_signature(core.TopLevelConcatSpec)
+class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
+    """A chart with horizontally-concatenated facets"""
+    def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
+        # TODO: move common data to top level?
+        for spec in concat:
+            _check_if_valid_subspec(spec, 'ConcatChart')
+        super(ConcatChart, self).__init__(data=data, concat=list(concat),
+                                          columns=columns, **kwargs)
+
+    def __ior__(self, other):
+        _check_if_valid_subspec(other, 'ConcatChart')
+        self.concat.append(other)
+        return self
+
+    def __or__(self, other):
+        copy = self.copy(deep=['concat'])
+        copy |= other
+        return copy
+
+
+def concat(*charts, **kwargs):
+    """Concatenate charts horizontally"""
+    return ConcatChart(concat=charts, **kwargs)
 
 
 @utils.use_signature(core.TopLevelHConcatSpec)
@@ -1504,12 +1735,9 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         return self
 
     def __or__(self, other):
-        _check_if_valid_subspec(other, 'HConcatChart')
-        copy = self.copy()
-        copy.hconcat.append(other)
+        copy = self.copy(deep=['hconcat'])
+        copy |= other
         return copy
-
-    # TODO: think about the most useful class API here
 
 
 def hconcat(*charts, **kwargs):
@@ -1532,12 +1760,9 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         return self
 
     def __and__(self, other):
-        _check_if_valid_subspec(other, 'VConcatChart')
-        copy = self.copy()
-        copy.vconcat.append(other)
+        copy = self.copy(deep=['vconcat'])
+        copy &= other
         return copy
-
-    # TODO: think about the most useful class API here
 
 
 def vconcat(*charts, **kwargs):
@@ -1546,7 +1771,8 @@ def vconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelLayerSpec)
-class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
+class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
+                 core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
@@ -1561,12 +1787,12 @@ class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
         return self
 
     def __add__(self, other):
-        copy = self.copy()
-        copy.layer.append(other)
+        copy = self.copy(deep=['layer'])
+        copy += other
         return copy
 
     def add_layers(self, *layers):
-        copy = self.copy()
+        copy = self.copy(deep=['layer'])
         for layer in layers:
             copy += layer
         return copy
@@ -1593,23 +1819,9 @@ class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
         if not self.layer:
             raise ValueError("LayerChart: cannot call interactive() until a "
                              "layer is defined")
-        copy = self.copy()
+        copy = self.copy(deep=['layer'])
         copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
-
-    def facet(self, row=Undefined, column=Undefined, data=Undefined, **kwargs):
-        """Create a facet chart from the current chart.
-
-        Faceted charts require data to be specified at the top level; if data
-        is not specified, the data from the current chart will be used at the
-        top level.
-        """
-        if data is Undefined:
-            data = self.data
-            self = self.copy()
-            self.data = Undefined
-        return FacetChart(spec=self, facet=FacetMapping(row=row, column=column),
-                          data=data, **kwargs)
 
 
 def layer(*charts, **kwargs):
@@ -1643,7 +1855,7 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
             copy of self, with interactive axes added
 
         """
-        copy = self.copy()
+        copy = self.copy(deep=False)
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 

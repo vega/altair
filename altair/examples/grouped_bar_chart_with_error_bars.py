@@ -15,10 +15,9 @@ bars = alt.Chart().mark_bar().encode(
     color='year:N',
 )
 
-error_bars = alt.Chart().mark_rule().encode(
+error_bars = alt.Chart().mark_errorbar(extent='ci').encode(
     x='year:O',
-    y='ci0(yield):Q',
-    y2='ci1(yield):Q'
+    y='yield:Q'
 )
 
 alt.layer(bars, error_bars, data=source).facet(

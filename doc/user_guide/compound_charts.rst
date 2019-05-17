@@ -16,12 +16,12 @@ class                   functional form                  operator form        re
 :class:`VConcatChart`   ``alt.vconcat(chart1, chart2)``  ``chart1 & chart2``  :ref:`vconcat-chart`
 ======================  ===============================  ===================  ======================
 
-======================  =============================  ======================
-class                   method form                    reference
-======================  =============================  ======================
-:class:`RepeatChart`    ``chart.repeat(row, column)``  :ref:`repeat-chart`
-:class:`FacetChart`     ``chart.facet(row, column)``   :ref:`facet-chart`
-======================  =============================  ======================
+======================  ====================================  ======================
+class                   method form                           reference
+======================  ====================================  ======================
+:class:`RepeatChart`    ``chart.repeat(row, column)``         :ref:`repeat-chart`
+:class:`FacetChart`     ``chart.facet(facet, row, column)``   :ref:`facet-chart`
+======================  ====================================  ======================
 
 .. _layer-chart:
 
@@ -181,7 +181,7 @@ with a ``brush`` selection to add interaction:
     brush = alt.selection(type='interval', encodings=['x'])
 
     upper = alt.Chart(sp500).mark_area().encode(
-        x=alt.X('date:T', scale={'domain': brush.ref()}),
+        x=alt.X('date:T', scale=alt.Scale(domain=brush)),
         y='price:Q'
     ).properties(
         width=600,

@@ -15,29 +15,31 @@ class MarkMethodMixin(object):
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
-                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'area'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="area", **kwds)
         else:
@@ -49,29 +51,31 @@ class MarkMethodMixin(object):
                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                  fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                 limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
-                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                 point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                  strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                 xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                 theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined,
+                 x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                 yOffset=Undefined, **kwds):
         """Set the chart's mark to 'bar'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="bar", **kwds)
         else:
@@ -83,29 +87,31 @@ class MarkMethodMixin(object):
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
-                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'line'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="line", **kwds)
         else:
@@ -117,29 +123,31 @@ class MarkMethodMixin(object):
                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                    fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                   limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
-                   point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
-                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                   theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                   limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined,
+                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                   text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined,
+                   x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                   y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'trail'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="trail", **kwds)
         else:
@@ -151,29 +159,31 @@ class MarkMethodMixin(object):
                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                    fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                   limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
-                   point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
-                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
-                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                   theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                   xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                   limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined,
+                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
+                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
+                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
+                   text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined,
+                   x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
+                   y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'point'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="point", **kwds)
         else:
@@ -185,29 +195,31 @@ class MarkMethodMixin(object):
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
-                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'text'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="text", **kwds)
         else:
@@ -219,29 +231,31 @@ class MarkMethodMixin(object):
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
-                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'tick'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="tick", **kwds)
         else:
@@ -253,29 +267,31 @@ class MarkMethodMixin(object):
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
-                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rect'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rect", **kwds)
         else:
@@ -287,29 +303,31 @@ class MarkMethodMixin(object):
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                   fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                  limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined, point=Undefined,
-                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                  limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                  point=Undefined, radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                   strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                   strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                   strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
-                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x2Offset=Undefined,
-                  xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined,
+                  x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                  yOffset=Undefined, **kwds):
         """Set the chart's mark to 'rule'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="rule", **kwds)
         else:
@@ -321,29 +339,31 @@ class MarkMethodMixin(object):
                     dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                     fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                     fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                    limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
-                    point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                    limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined,
+                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
                     strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
                     text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined,
-                    x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                    x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
+                    y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'circle'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="circle", **kwds)
         else:
@@ -355,29 +375,31 @@ class MarkMethodMixin(object):
                     dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                     fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                     fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                    limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
-                    point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                    limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined,
+                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                    size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
                     strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
                     text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined,
-                    x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                    x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
+                    y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
         """Set the chart's mark to 'square'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="square", **kwds)
         else:
@@ -389,34 +411,83 @@ class MarkMethodMixin(object):
                       dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                       fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
                       fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                      limit=Undefined, line=Undefined, opacity=Undefined, orient=Undefined,
-                      point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                      stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                      limit=Undefined, line=Undefined, opacity=Undefined, order=Undefined,
+                      orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
+                      size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                       strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
                       strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined,
                       tension=Undefined, text=Undefined, theta=Undefined, thickness=Undefined,
-                      tooltip=Undefined, x2Offset=Undefined, xOffset=Undefined, y2Offset=Undefined,
+                      tooltip=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                      xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
                       yOffset=Undefined, **kwds):
         """Set the chart's mark to 'geoshape'
     
-        For information on additional arguments, see ``alt.MarkDef``
+        For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, baseline=baseline, binSpacing=binSpacing, clip=clip,
                     color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                     ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity, filled=filled, font=font,
                     fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, orient=orient,
-                    point=point, radius=radius, shape=shape, size=size, stroke=stroke,
+                    interpolate=interpolate, limit=limit, line=line, opacity=opacity, order=order,
+                    orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                     strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
-                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x2Offset=x2Offset,
-                    xOffset=xOffset, y2Offset=y2Offset, yOffset=yOffset, **kwds)
-        copy = self.copy(deep=True, ignore=['data'])
+                    text=text, theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
+                    x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                    **kwds)
+        copy = self.copy(deep=False)
         if any(val is not Undefined for val in kwds.values()):
             copy.mark = core.MarkDef(type="geoshape", **kwds)
         else:
             copy.mark = "geoshape"
+        return copy
+
+    def mark_boxplot(self, box=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
+                     median=Undefined, opacity=Undefined, orient=Undefined, outliers=Undefined,
+                     rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
+        """Set the chart's mark to 'boxplot'
+    
+        For information on additional arguments, see :class:`BoxPlotDef`
+        """
+        kwds = dict(box=box, clip=clip, color=color, extent=extent, median=median, opacity=opacity,
+                    orient=orient, outliers=outliers, rule=rule, size=size, ticks=ticks, **kwds)
+        copy = self.copy(deep=False)
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.BoxPlotDef(type="boxplot", **kwds)
+        else:
+            copy.mark = "boxplot"
+        return copy
+
+    def mark_errorbar(self, clip=Undefined, color=Undefined, extent=Undefined, opacity=Undefined,
+                      orient=Undefined, rule=Undefined, ticks=Undefined, **kwds):
+        """Set the chart's mark to 'errorbar'
+    
+        For information on additional arguments, see :class:`ErrorBarDef`
+        """
+        kwds = dict(clip=clip, color=color, extent=extent, opacity=opacity, orient=orient, rule=rule,
+                    ticks=ticks, **kwds)
+        copy = self.copy(deep=False)
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.ErrorBarDef(type="errorbar", **kwds)
+        else:
+            copy.mark = "errorbar"
+        return copy
+
+    def mark_errorband(self, band=Undefined, borders=Undefined, clip=Undefined, color=Undefined,
+                       extent=Undefined, interpolate=Undefined, opacity=Undefined, orient=Undefined,
+                       tension=Undefined, **kwds):
+        """Set the chart's mark to 'errorband'
+    
+        For information on additional arguments, see :class:`ErrorBandDef`
+        """
+        kwds = dict(band=band, borders=borders, clip=clip, color=color, extent=extent,
+                    interpolate=interpolate, opacity=opacity, orient=orient, tension=tension, **kwds)
+        copy = self.copy(deep=False)
+        if any(val is not Undefined for val in kwds.values()):
+            copy.mark = core.ErrorBandDef(type="errorband", **kwds)
+        else:
+            copy.mark = "errorband"
         return copy
 
 
@@ -425,326 +496,310 @@ class ConfigMethodMixin(object):
 
     @use_signature(core.Config)
     def configure(self, *args, **kwargs):
-        copy = self.copy()
+        copy = self.copy(deep=False)
         copy.config = core.Config(*args, **kwargs)
         return copy
 
     @use_signature(core.AreaConfig)
     def configure_area(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["area"] = core.AreaConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axis(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axis"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axisBand(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisBand"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axisBottom(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisBottom"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axisLeft(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisLeft"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axisRight(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisRight"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axisTop(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisTop"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axisX(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisX"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
     def configure_axisY(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["axisY"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.BarConfig)
     def configure_bar(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["bar"] = core.BarConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.BoxPlotConfig)
     def configure_boxplot(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["boxplot"] = core.BoxPlotConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_circle(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["circle"] = core.MarkConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.CompositionConfig)
+    def configure_concat(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["concat"] = core.CompositionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ErrorBandConfig)
     def configure_errorband(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["errorband"] = core.ErrorBandConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ErrorBarConfig)
     def configure_errorbar(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["errorbar"] = core.ErrorBarConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.CompositionConfig)
+    def configure_facet(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["facet"] = core.CompositionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_geoshape(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["geoshape"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.HeaderConfig)
     def configure_header(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["header"] = core.HeaderConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.HeaderConfig)
+    def configure_headerColumn(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["headerColumn"] = core.HeaderConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.HeaderConfig)
+    def configure_headerFacet(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["headerFacet"] = core.HeaderConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.HeaderConfig)
+    def configure_headerRow(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["headerRow"] = core.HeaderConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.LegendConfig)
     def configure_legend(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["legend"] = core.LegendConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.LineConfig)
     def configure_line(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["line"] = core.LineConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_mark(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["mark"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_point(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["point"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ProjectionConfig)
     def configure_projection(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["projection"] = core.ProjectionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.RangeConfig)
     def configure_range(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["range"] = core.RangeConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_rect(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["rect"] = core.MarkConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.CompositionConfig)
+    def configure_repeat(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["repeat"] = core.CompositionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_rule(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["rule"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ScaleConfig)
     def configure_scale(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["scale"] = core.ScaleConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.SelectionConfig)
     def configure_selection(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["selection"] = core.SelectionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
     def configure_square(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["square"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.TextConfig)
     def configure_text(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["text"] = core.TextConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.TickConfig)
     def configure_tick(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["tick"] = core.TickConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.TitleConfig)
     def configure_title(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["title"] = core.TitleConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.LineConfig)
     def configure_trail(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["trail"] = core.LineConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.ViewConfig)
     def configure_view(self, *args, **kwargs):
-        copy = self.copy(deep=False)
+        copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        else:
-            copy.config = copy.config.copy(deep=False)
         copy.config["view"] = core.ViewConfig(*args, **kwargs)
         return copy

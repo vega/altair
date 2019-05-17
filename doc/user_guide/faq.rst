@@ -7,25 +7,21 @@ Frequently Asked Questions
 
 .. _faq-other-ides:
 
-Does Altair work with PyCharm/Spyder/<my favorite IDE>
-------------------------------------------------------
-Altair can be used to create chart specifications with any frontend, but in
-order to *render* those charts requires executing the javascript code that
+Does Altair work with IPython Terminal/PyCharm/Spyder/<my favorite IDE>
+-----------------------------------------------------------------------
+Altair can be used to create chart specifications with any frontend that
+executes Python code, but in order to *render* those charts requires connecting
+altair to an environment capable of executing the javascript code that
 turns the JSON specification into a visual chart.
 
-There are extensions included in JupyterLab, Jupyter Notebook, Colab, Hydrogen,
-and nteract that know how to automatically perform this rendering (see
-:ref:`installation` for details). If you're using another frontend, you'll have
-to figure out how to run that javascript rendering in the most convenient way
-for you.
+There are extensions included in JupyterLab, Jupyter Notebook, Colab,
+Kaggle kernels, Hydrogen, and nteract that know how to automatically perform
+this rendering (see :ref:`installation` for details).
 
-The easiest approach is to use the :meth:`Chart.serve` method, which will convert
-the chart to HTML, start a webserver, and open your default browser to view the
-chart. See :ref:`display-general` for more information.
-
-If you would like to manually save the chart to an html file in order to view it
-with a browser, you can use the :meth:`Chart.save` method; for example
-``chart.save('filename.html')``.
+For other frontends that don't have vega-lite rendering built-in, it is
+possible to work with Altair charts using either the ``vegascope`` project,
+or the build-in :meth:`Chart.serve` or :meth:`Chart.save` methods.
+For more information on thse, see :ref:`display-general`.
 
 .. _faq-no-display:
 

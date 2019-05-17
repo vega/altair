@@ -27,7 +27,7 @@ nearest = alt.selection(type='single', nearest=True, on='mouseover',
                         fields=['x'], empty='none')
 
 # The basic line
-line = alt.Chart().mark_line(interpolate='basis').encode(
+line = alt.Chart(source).mark_line(interpolate='basis').encode(
     x='x:Q',
     y='y:Q',
     color='category:N'
@@ -35,7 +35,7 @@ line = alt.Chart().mark_line(interpolate='basis').encode(
 
 # Transparent selectors across the chart. This is what tells us
 # the x-value of the cursor
-selectors = alt.Chart().mark_point().encode(
+selectors = alt.Chart(source).mark_point().encode(
     x='x:Q',
     opacity=alt.value(0),
 ).add_selection(
@@ -53,12 +53,15 @@ text = line.mark_text(align='left', dx=5, dy=-5).encode(
 )
 
 # Draw a rule at the location of the selection
-rules = alt.Chart().mark_rule(color='gray').encode(
+rules = alt.Chart(source).mark_rule(color='gray').encode(
     x='x:Q',
 ).transform_filter(
     nearest
 )
 
 # Put the five layers into a chart and bind the data
-alt.layer(line, selectors, points, rules, text,
-          data=source, width=600, height=300)
+alt.layer(
+    line, selectors, points, rules, text
+).properties(
+    width=600, height=300
+)
