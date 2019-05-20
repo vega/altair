@@ -206,7 +206,7 @@ If you are certain you would like to embed your dataset within the visualization
 specification, you can disable the ``MaxRows`` check by modifying the arguments
 to the default data transformer::
 
-    alt.data_transformers.enable('default', max_rows=None)
+    alt.data_transformers.enable(max_rows=None)
 
 If you choose this route, please be careful: if you are making multiple plots
 with the dataset in a particular notebook, the notebook will grow very large
