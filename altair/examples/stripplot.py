@@ -1,6 +1,6 @@
 """
 Stripplot
------------------
+---------
 This example shows how to make a Stripplot.
 """
 # category: scatter plots
@@ -29,7 +29,8 @@ stripplot =  alt.Chart(source, width=40).mark_circle(size=8).encode(
         ),
     ),
 ).transform_calculate(
-    jitter='pow(random()-0.5,3)'
+    # Generate Gaussian jitter with a Box-Muller transform
+    jitter='sqrt(-2*log(random()))*cos(2*PI*random())'
 ).configure_facet(
     spacing=0
 ).configure_view(
