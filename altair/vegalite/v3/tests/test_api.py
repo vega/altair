@@ -2,6 +2,7 @@
 
 import io
 import json
+import operator
 import os
 import tempfile
 
@@ -16,6 +17,13 @@ try:
     import selenium
 except ImportError:
     selenium = None
+
+
+OP_DICT = {
+    'layer': operator.add,
+    'hconcat': operator.or_,
+    'vconcat': operator.and_,
+}
 
 
 @pytest.fixture
@@ -540,7 +548,10 @@ def test_chart_from_dict():
 
 
 def test_consolidate_datasets(basic_chart):
-    chart = basic_chart | basic_chart
+    subchart1 = basic_chart
+    subchart2 = basic_chart.copy()
+    subchart2.data = basic_chart.data.copy()
+    chart = subchart1 | subchart2
 
     with alt.data_transformers.enable(consolidate_datasets=True):
         dct_consolidated = chart.to_dict()
@@ -648,3 +659,52 @@ def test_data_property():
     chart2 = alt.Chart().mark_point().properties(data=data)
 
     assert chart1.to_dict() == chart2.to_dict()
+
+    
+@pytest.mark.parametrize('method', ['layer', 'hconcat', 'vconcat', 'concat'])
+@pytest.mark.parametrize('data', ['data.json', pd.DataFrame({'x': range(3), 'y': list('abc')})])
+def test_subcharts_with_same_data(method, data):
+    func = getattr(alt, method)
+
+    point = alt.Chart(data).mark_point().encode(x='x:Q', y='y:Q')
+    line = point.mark_line()
+    text = point.mark_text()
+
+    chart1 = func(point, line, text)
+    assert chart1.data is not alt.Undefined
+    assert all(c.data is alt.Undefined for c in getattr(chart1, method))
+
+    if method != 'concat':
+        op = OP_DICT[method]
+        chart2 = op(op(point, line), text)
+        assert chart2.data is not alt.Undefined
+        assert all(c.data is alt.Undefined for c in getattr(chart2, method))
+
+
+@pytest.mark.parametrize('method', ['layer', 'hconcat', 'vconcat', 'concat'])
+@pytest.mark.parametrize('data', ['data.json', pd.DataFrame({'x': range(3), 'y': list('abc')})])
+def test_subcharts_different_data(method, data):
+    func = getattr(alt, method)
+
+    point = alt.Chart(data).mark_point().encode(x='x:Q', y='y:Q')
+    otherdata = alt.Chart('data.csv').mark_point().encode(x='x:Q', y='y:Q')
+    nodata = alt.Chart().mark_point().encode(x='x:Q', y='y:Q')
+
+    chart1 = func(point, otherdata)
+    assert chart1.data is alt.Undefined
+    assert getattr(chart1, method)[0].data is data
+
+    chart2 = func(point, nodata)
+    assert chart2.data is alt.Undefined
+    assert getattr(chart2, method)[0].data is data
+
+
+def test_layer_facet(basic_chart):
+    chart = (basic_chart + basic_chart).facet(row='row:Q')
+    assert chart.data is not alt.Undefined
+    assert chart.spec.data is alt.Undefined
+    for layer in chart.spec.layer:
+        assert layer.data is alt.Undefined
+
+    dct = chart.to_dict()
+    assert 'data' in dct
