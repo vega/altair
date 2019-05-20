@@ -18,7 +18,7 @@ source = data.seattle_weather.url
 step = 20
 overlap = 1
 
-ridgeline = alt.Chart(source, height=step).transform_timeunit(
+ridgeline = alt.Chart(source).transform_timeunit(
     Month='month(date)'
 ).transform_joinaggregate(
     mean_temp='mean(temp_max)', groupby=['Month']
@@ -51,7 +51,7 @@ ridgeline = alt.Chart(source, height=step).transform_timeunit(
         header=alt.Header(labelAngle=0, labelAlign='right', format='%B')
     )
 ).properties(
-    bounds='flush', title='Seattle Weather'
+    bounds='flush', title='Seattle Weather', height=step
 ).configure_facet(
     spacing=0
 ).configure_view(
