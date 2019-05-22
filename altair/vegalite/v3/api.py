@@ -537,7 +537,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 # For backward compatibility with old selection interface.
                 setattr(copy, key, {val.name: val.selection})
             else:
-                self.validate_property(key, val)
+                # Don't validate data, because it hasn't been processed.
+                if key != 'data':
+                    self.validate_property(key, val)
                 setattr(copy, key, val)
         return copy
 

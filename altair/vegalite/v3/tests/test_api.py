@@ -640,3 +640,11 @@ def test_repeat():
     assert 'columns' not in dct2
     assert dct2['spec']['encoding']['x']['field'] == {'repeat': 'row'}
     assert dct2['spec']['encoding']['y']['field'] == {'repeat': 'column'}
+
+
+def test_data_property():
+    data = pd.DataFrame({'x': [1, 2, 3], 'y': list('ABC')})
+    chart1 = alt.Chart(data).mark_point()
+    chart2 = alt.Chart().mark_point().properties(data=data)
+
+    assert chart1.to_dict() == chart2.to_dict()
