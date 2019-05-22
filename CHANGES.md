@@ -4,6 +4,13 @@
 
 ### Enhancements
 
+- ``data`` argument is now properly handled by  ``Chart.properties`` (#1525)
+
+- Compound charts (layer, concat, hconcat, vconcat) now move data to the top
+  level by default. In particular, this means that the ``facet()`` method
+  can now be called directly on a layered chart without having to change
+  how data is specified. (#1521)
+
 - ``alt.LayerChart`` now supports ``mark_*()`` methods. If a layer specifies a
   mark at the top level, all child charts will inherit it (unless they override
   it explicitly).
