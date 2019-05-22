@@ -477,15 +477,20 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return result
 
     # Layering and stacking
-
     def __add__(self, other):
-        return LayerChart(layer=[self, other])
+        if not isinstance(other, TopLevelMixin):
+            raise ValueError("Only Chart objects can be layered.")
+        return layer(self, other)
 
     def __and__(self, other):
-        return VConcatChart(vconcat=[self, other])
+        if not isinstance(other, TopLevelMixin):
+            raise ValueError("Only Chart objects can be concatenated.")
+        return vconcat(self, other)
 
     def __or__(self, other):
-        return HConcatChart(hconcat=[self, other])
+        if not isinstance(other, TopLevelMixin):
+            raise ValueError("Only Chart objects can be concatenated.")
+        return hconcat(self, other)
 
     def repeat(self, repeat=Undefined, row=Undefined, column=Undefined, columns=Undefined, **kwargs):
         """Return a RepeatChart built from the chart
@@ -559,7 +564,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
                 parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
                 rotate=Undefined, spacing=Undefined, tilt=Undefined, **kwds):
-        """Add a geographic projection to the chartself.
+        """Add a geographic projection to the chart.
 
         This is generally used either with ``mark_geoshape`` or with the
         ``latitude``/``longitude`` encodings.
@@ -1705,10 +1710,12 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
             _check_if_valid_subspec(spec, 'ConcatChart')
         super(ConcatChart, self).__init__(data=data, concat=list(concat),
                                           columns=columns, **kwargs)
+        self.data, self.concat = _combine_subchart_data(self.data, self.concat)
 
     def __ior__(self, other):
         _check_if_valid_subspec(other, 'ConcatChart')
         self.concat.append(other)
+        self.data, self.concat = _combine_subchart_data(self.data, self.concat)
         return self
 
     def __or__(self, other):
@@ -1730,10 +1737,12 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
         for spec in hconcat:
             _check_if_valid_subspec(spec, 'HConcatChart')
         super(HConcatChart, self).__init__(data=data, hconcat=list(hconcat), **kwargs)
+        self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
 
     def __ior__(self, other):
         _check_if_valid_subspec(other, 'HConcatChart')
         self.hconcat.append(other)
+        self.data, self.hconcat = _combine_subchart_data(self.data, self.hconcat)
         return self
 
     def __or__(self, other):
@@ -1755,10 +1764,12 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         for spec in vconcat:
             _check_if_valid_subspec(spec, 'VConcatChart')
         super(VConcatChart, self).__init__(data=data, vconcat=list(vconcat), **kwargs)
+        self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
 
     def __iand__(self, other):
         _check_if_valid_subspec(other, 'VConcatChart')
         self.vconcat.append(other)
+        self.data, self.vconcat = _combine_subchart_data(self.data, self.vconcat)
         return self
 
     def __and__(self, other):
@@ -1782,10 +1793,12 @@ class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         for spec in layer:
             _check_if_valid_subspec(spec, 'LayerChart')
         super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
+        self.data, self.layer = _combine_subchart_data(self.data, self.layer)
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, 'LayerChart')
         self.layer.append(other)
+        self.data, self.layer = _combine_subchart_data(self.data, self.layer)
         return self
 
     def __add__(self, other):
@@ -1881,3 +1894,29 @@ def topo_feature(url, feature, **kwargs):
     """
     return core.UrlData(url=url, format=core.TopoDataFormat(type='topojson',
                                                          feature=feature, **kwargs))
+
+
+def _combine_subchart_data(data, subcharts):
+    def remove_data(subchart):
+        if subchart.data is not Undefined:
+            subchart = subchart.copy()
+            subchart.data = Undefined
+        return subchart
+
+    if not subcharts:
+        # No subcharts = nothing to do.
+        pass
+    elif data is Undefined:
+        # Top level has no data; all subchart data must
+        # be identical to proceed.
+        subdata = subcharts[0].data
+        if subdata is not Undefined and all(c.data is subdata for c in subcharts):
+            data = subdata
+            subcharts = [remove_data(c) for c in subcharts]
+    else:
+        # Top level has data; subchart data must be either
+        # undefined or identical to proceed.
+        if all(c.data is Undefined or c.data is data for c in subcharts):
+            subcharts = [remove_data(c) for c in subcharts]
+
+    return data, subcharts
