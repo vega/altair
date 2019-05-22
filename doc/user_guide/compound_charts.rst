@@ -343,7 +343,7 @@ layered chart with a hover selection:
 
     hover = alt.selection_single(on='mouseover', nearest=True, empty='none')
 
-    base = alt.Chart().encode(
+    base = alt.Chart(iris).encode(
         x='petalLength:Q',
         y='petalWidth:Q',
         color=alt.condition(hover, 'species:N', alt.value('lightgray'))
@@ -352,23 +352,18 @@ layered chart with a hover selection:
         height=180,
     )
 
-    chart = base.mark_point().add_selection(
+    points = base.mark_point().add_selection(
         hover
     )
 
-    chart += base.mark_text(dy=-5).encode(
+    text = base.mark_text(dy=-5).encode(
         text = 'species:N',
         opacity = alt.condition(hover, alt.value(1), alt.value(0))
     )
 
-    chart.facet(
-        column='species:N',
-        data=iris
+    alt.layer(points, text).facet(
+        'species:N',
     )
-
-Notice that we specify the data within the facet here; this is important, because
-the top-level facet needs access to this data in order to know how to encode
-the column.
 
 Though each of the above examples have faceted the data across columns,
 faceting across rows (or across rows *and* columns) is supported as
