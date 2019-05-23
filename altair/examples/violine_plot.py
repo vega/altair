@@ -5,16 +5,17 @@ This example shows how to make a king of a Violinplot.
 """
 # category: other charts
 import altair as alt
+from altair import datum
 from vega_datasets import data
 
 source = data.cars.url
 
 violinplot =  alt.Chart(source).transform_filter(
-    alt.FieldGTPredicate(field='Miles_per_Gallon',gt=0)
+    datum.Miles_per_Gallon > 0
 ).transform_bin(
     ['bin_max', 'bin_min'], field='Miles_per_Gallon', bin=alt.Bin(maxbins=20)
 ).transform_calculate(
-    binned='(datum["bin_max"]+datum["bin_min"])/2'
+    binned=(datum.bin_max + datum.bin_min) / 2
 ).transform_aggregate(
     value_count='count()', groupby=['Origin', 'binned']
 ).transform_impute(
