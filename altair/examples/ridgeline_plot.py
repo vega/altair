@@ -28,7 +28,7 @@ ridgeline = alt.Chart(source).transform_timeunit(
     value='count()', groupby=['Month', 'mean_temp', 'bin_min', 'bin_max']
 ).transform_impute(
     impute='value', groupby=['Month', 'mean_temp'], key='bin_min', value=0
-).mark_line(
+).mark_area(
     interpolate='monotone',
     fillOpacity=0.8,
     stroke='lightgray',
