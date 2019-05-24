@@ -42,7 +42,7 @@ Firefox, which requires the following:
   code without opening an actual browser window).
   If you use homebrew on OSX, this can be installed with::
 
-      $ brew install chromedriver
+      $ brew cask install chromedriver
       $ brew install geckodriver
 
   See the ``chromedriver`` or ``geckodriver`` documentation for details on
