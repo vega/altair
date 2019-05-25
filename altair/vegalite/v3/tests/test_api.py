@@ -708,3 +708,39 @@ def test_layer_facet(basic_chart):
 
     dct = chart.to_dict()
     assert 'data' in dct
+
+
+def test_layer_errors():
+    toplevel_chart = alt.Chart(
+        'data.txt'
+    ).mark_point().configure_legend(
+        columns=2
+    )
+
+    facet_chart1 = alt.Chart('data.txt').mark_point().encode(
+        facet='row:Q'
+    )
+
+    facet_chart2 = alt.Chart('data.txt').mark_point().facet('row:Q')
+
+    repeat_chart = alt.Chart('data.txt').mark_point().repeat(['A', 'B', 'C'])
+
+    simple_chart = alt.Chart('data.txt').mark_point()
+
+    with pytest.raises(ValueError) as err:
+        toplevel_chart + simple_chart
+    assert str(err.value).startswith(
+        'Objects with "config" attribute cannot be used within LayerChart.'
+    )
+
+    with pytest.raises(ValueError) as err:
+        repeat_chart + simple_chart
+    assert str(err.value) == "Repeat charts cannot be layered."
+
+    with pytest.raises(ValueError) as err:
+        facet_chart1 + simple_chart
+    assert str(err.value) == "Faceted charts cannot be layered."
+
+    with pytest.raises(ValueError) as err:
+        alt.layer(simple_chart) + facet_chart2
+    assert str(err.value) == "Faceted charts cannot be layered."

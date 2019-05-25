@@ -1641,6 +1641,8 @@ def _check_if_valid_subspec(spec, classname):
     err = ('Objects with "{0}" attribute cannot be used within {1}. '
            'Consider defining the {0} attribute in the {1} object instead.')
 
+    if not isinstance(spec, (core.SchemaBase, dict)):
+        raise ValueError("Only chart objects can be used in {0}.".format(classname))
     for attr in TOPLEVEL_ONLY_KEYS:
         if isinstance(spec, core.SchemaBase):
             val = getattr(spec, attr, Undefined)
@@ -1648,6 +1650,37 @@ def _check_if_valid_subspec(spec, classname):
             val = spec.get(attr, Undefined)
         if val is not Undefined:
             raise ValueError(err.format(attr, classname))
+
+
+def _check_if_can_be_layered(spec):
+    """Check if the spec can be layered."""
+    def _get(spec, attr):
+        if isinstance(spec, core.SchemaBase):
+            return spec._get(attr)
+        else:
+            return spec.get(attr, Undefined)
+    encoding = _get(spec, 'encoding')
+    if encoding is not Undefined:
+        for channel in ['row', 'column', 'facet']:
+            if _get(encoding, channel) is not Undefined:
+                raise ValueError("Faceted charts cannot be layered.")
+    if isinstance(spec, (Chart, LayerChart)):
+        return
+
+    if not isinstance(spec, (core.SchemaBase, dict)):
+        raise ValueError("Only chart objects can be layered.")
+    if  _get(spec, 'facet') is not Undefined:
+        raise ValueError("Faceted charts cannot be layered.")
+    if isinstance(spec, FacetChart) or _get(spec, 'facet') is not Undefined:
+        raise ValueError("Faceted charts cannot be layered.")
+    if isinstance(spec, RepeatChart) or _get(spec, 'repeat') is not Undefined:
+        raise ValueError("Repeat charts cannot be layered.")
+    if isinstance(spec, ConcatChart) or _get(spec, 'concat') is not Undefined:
+        raise ValueError("Concatenated charts cannot be layered.")
+    if isinstance(spec, HConcatChart) or _get(spec, 'hconcat') is not Undefined:
+        raise ValueError("Concatenated charts cannot be layered.")
+    if isinstance(spec, VConcatChart) or _get(spec, 'vconcat') is not Undefined:
+        raise ValueError("Concatenated charts cannot be layered.")
 
 
 @utils.use_signature(core.TopLevelRepeatSpec)
@@ -1792,11 +1825,13 @@ class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         # TODO: check for conflicting interaction
         for spec in layer:
             _check_if_valid_subspec(spec, 'LayerChart')
+            _check_if_can_be_layered(spec)
         super(LayerChart, self).__init__(data=data, layer=list(layer), **kwargs)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
 
     def __iadd__(self, other):
         _check_if_valid_subspec(other, 'LayerChart')
+        _check_if_can_be_layered(other)
         self.layer.append(other)
         self.data, self.layer = _combine_subchart_data(self.data, self.layer)
         return self
