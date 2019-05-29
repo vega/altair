@@ -144,10 +144,21 @@ error is a way of preventing that.
 
 You can get around it in a few ways:
 
+Disabling MaxRowsError
+~~~~~~~~~~~~~~~~~~~~~~
+If you are certain you would like to embed your dataset within the visualization
+specification, you can disable the ``MaxRows`` check with the following::
+
+    alt.data_transformers.disable_max_rows()
+
+If you choose this route, please be careful: if you are making multiple plots
+with the dataset in a particular notebook, the notebook will grow very large
+and performance may suffer.
+
 Passing Data by URL
 ~~~~~~~~~~~~~~~~~~~
-The preferred solution to working with large datasets is to not embed the data
-in the notebook, but rather pass it to the chart by URL.
+A better solution when working with large datasets is to not embed the data
+in the notebook, but rather store it separately pass it to the chart by URL.
 This not only addresses the issue of large notebooks, but also leads to better
 interactivity performance with large datasets.
 
@@ -199,15 +210,3 @@ And then enable the data transformer::
     alt.data_transformers.enable('data_server')
 
 Note that this may not approach on some cloud-based Jupyter notebook services.
-
-Disabling MaxRows
-~~~~~~~~~~~~~~~~~
-If you are certain you would like to embed your dataset within the visualization
-specification, you can disable the ``MaxRows`` check by modifying the arguments
-to the default data transformer::
-
-    alt.data_transformers.enable(max_rows=None)
-
-If you choose this route, please be careful: if you are making multiple plots
-with the dataset in a particular notebook, the notebook will grow very large
-and performance may suffer.

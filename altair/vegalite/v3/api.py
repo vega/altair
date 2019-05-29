@@ -445,9 +445,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             the format to write: one of ['json', 'html', 'png', 'svg'].
             If not specified, the format will be determined from the filename.
         override_data_transformer : boolean (optional)
-            If True (default), then the save action will be done with the
-            default data_transformer with max_rows set to None. If False,
-            then use the currently active data transformer.
+            If True (default), then the save action will be done with
+            the MaxRowsError disabled. If False, then do not change the data
+            transformer.
         scale_factor : float
             For svg or png formats, scale the image by this factor when saving.
             This can be used to control the size or resolution of the output.
@@ -470,7 +470,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         # that save() will succeed even for large datasets that would
         # normally trigger a MaxRowsError
         if override_data_transformer:
-            with data_transformers.enable('default', max_rows=None):
+            with data_transformers.disable_max_rows():
                 result = save(**kwds)
         else:
             result = save(**kwds)
