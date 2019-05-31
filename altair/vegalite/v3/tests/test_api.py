@@ -354,18 +354,14 @@ def test_transforms():
     chart = alt.Chart().transform_joinaggregate(min='min(x)', groupby=['key'])
     kwds = {
         'joinaggregate': [
-            alt.JoinAggregateFieldDef(field='x', op=alt.AggregateOp('min'), **{'as': 'min'})
+            alt.JoinAggregateFieldDef(
+                field=alt.FieldName('x'),
+                op=alt.AggregateOp('min'),
+                **{'as': alt.FieldName('min')})
         ],
         'groupby': ['key']
     }
-    assert chart.transform == [
-        alt.JoinAggregateTransform(
-            joinaggregate=[
-                alt.JoinAggregateFieldDef(field='x', op=alt.AggregateOp('min'), **{'as': 'min'})
-            ],
-            groupby=['key']
-        )
-    ]
+    assert chart.transform == [alt.JoinAggregateTransform(**kwds)]
 
     # filter transform
     chart = alt.Chart().transform_filter("datum.a < 4")

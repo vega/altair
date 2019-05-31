@@ -79,7 +79,7 @@ class ValueChannelMixin(object):
                                                       context=context)
 
 
-class Color(FieldChannelMixin, core.ColorFieldDefWithCondition):
+class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Color schema wrapper
 
     Mapping(required=[shorthand])
@@ -95,7 +95,7 @@ class Color(FieldChannelMixin, core.ColorFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -113,8 +113,8 @@ class Color(FieldChannelMixin, core.ColorFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalColorValueDef`,
-    List(:class:`ConditionalColorValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -252,7 +252,7 @@ class Color(FieldChannelMixin, core.ColorFieldDefWithCondition):
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class ColorValue(ValueChannelMixin, core.ColorValueDefWithCondition):
+class ColorValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """ColorValue schema wrapper
 
     anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
@@ -281,7 +281,7 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -368,7 +368,7 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : :class:`Type`
+    type : :class:`StandardType`
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ).
         It can also be a ``"geojson"`` type for encoding `'geoshape'
@@ -412,11 +412,11 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
                                      type=type, **kwds)
 
 
-class Detail(FieldChannelMixin, core.FieldDef):
+class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
     """Detail schema wrapper
 
     Mapping(required=[shorthand])
-    Field Def without scale (and without bin: "binned" support).
+    Definition object for a data field, its type and transformation of an encoding channel.
 
     Attributes
     ----------
@@ -544,7 +544,7 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -631,7 +631,7 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : :class:`Type`
+    type : :class:`StandardType`
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ).
         It can also be a ``"geojson"`` type for encoding `'geoshape'
@@ -675,7 +675,7 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
                                     **kwds)
 
 
-class Fill(FieldChannelMixin, core.ColorFieldDefWithCondition):
+class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Fill schema wrapper
 
     Mapping(required=[shorthand])
@@ -691,7 +691,7 @@ class Fill(FieldChannelMixin, core.ColorFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -709,8 +709,8 @@ class Fill(FieldChannelMixin, core.ColorFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalColorValueDef`,
-    List(:class:`ConditionalColorValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -848,7 +848,7 @@ class Fill(FieldChannelMixin, core.ColorFieldDefWithCondition):
                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class FillValue(ValueChannelMixin, core.ColorValueDefWithCondition):
+class FillValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """FillValue schema wrapper
 
     anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
@@ -878,7 +878,7 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -1083,7 +1083,7 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
+    condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1206,7 +1206,7 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
 class HrefValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """HrefValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefstringnumberboolean`,
+    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
     :class:`ConditionOnlyDefTextFieldDef`)
     A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
     optional.
@@ -1217,11 +1217,11 @@ class HrefValue(ValueChannelMixin, core.TextValueDefWithCondition):
         super(HrefValue, self).__init__(value=value, **kwds)
 
 
-class Key(FieldChannelMixin, core.FieldDef):
+class Key(FieldChannelMixin, core.FieldDefWithoutScale):
     """Key schema wrapper
 
     Mapping(required=[shorthand])
-    Field Def without scale (and without bin: "binned" support).
+    Definition object for a data field, its type and transformation of an encoding channel.
 
     Attributes
     ----------
@@ -1349,7 +1349,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -1486,7 +1486,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -1588,7 +1588,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -1725,7 +1725,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -1828,7 +1828,7 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -2151,7 +2151,7 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -2238,7 +2238,7 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
 
         2) If both field definition's ``title`` and axis, header, or legend ``title`` are
         defined, axis/header/legend title will be used.
-    type : :class:`Type`
+    type : :class:`StandardType`
         The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
         ``"ordinal"``, or ``"nominal"`` ).
         It can also be a ``"geojson"`` type for encoding `'geoshape'
@@ -2298,7 +2298,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -2458,7 +2458,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
 class ShapeValue(ValueChannelMixin, core.ShapeValueDefWithCondition):
     """ShapeValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestring`,
+    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull`,
     :class:`ConditionOnlyDefMarkPropFieldDefTypeForShape`)
     A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
     optional.
@@ -2485,7 +2485,7 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -2656,7 +2656,7 @@ class SizeValue(ValueChannelMixin, core.NumericValueDefWithCondition):
         super(SizeValue, self).__init__(value=value, **kwds)
 
 
-class Stroke(FieldChannelMixin, core.ColorFieldDefWithCondition):
+class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
     """Stroke schema wrapper
 
     Mapping(required=[shorthand])
@@ -2672,7 +2672,7 @@ class Stroke(FieldChannelMixin, core.ColorFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -2690,8 +2690,8 @@ class Stroke(FieldChannelMixin, core.ColorFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalColorValueDef`,
-    List(:class:`ConditionalColorValueDef`))
+    condition : anyOf(:class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2829,7 +2829,7 @@ class Stroke(FieldChannelMixin, core.ColorFieldDefWithCondition):
                                      sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class StrokeValue(ValueChannelMixin, core.ColorValueDefWithCondition):
+class StrokeValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """StrokeValue schema wrapper
 
     anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
@@ -2859,7 +2859,7 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -3047,7 +3047,7 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -3252,7 +3252,7 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
+    condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3375,7 +3375,7 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
 class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """TextValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefstringnumberboolean`,
+    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
     :class:`ConditionOnlyDefTextFieldDef`)
     A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
     optional.
@@ -3420,7 +3420,7 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
-    condition : anyOf(:class:`ConditionalTextValueDef`, List(:class:`ConditionalTextValueDef`))
+    condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3543,7 +3543,7 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
 class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """TooltipValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefstringnumberboolean`,
+    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
     :class:`ConditionOnlyDefTextFieldDef`)
     A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
     optional.
@@ -3653,7 +3653,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
-    stack : anyOf(:class:`StackOffset`, None)
+    stack : anyOf(:class:`StackOffset`, None, boolean)
         Type of stacking offset if the field should be stacked.
         ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
         For example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -3662,16 +3662,17 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         ``stack`` can be one of the following values:
 
 
-        * `"zero"`: stacking with baseline offset at zero value of the scale (for creating
-          typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
-          `area <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
         - ``"center"`` - stacking with center baseline (for `streamgraph
         <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
-        * ``null`` - No-stacking. This will produce layered `bar
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
@@ -3787,7 +3788,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -3891,7 +3892,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -3995,7 +3996,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -4181,7 +4182,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
-    stack : anyOf(:class:`StackOffset`, None)
+    stack : anyOf(:class:`StackOffset`, None, boolean)
         Type of stacking offset if the field should be stacked.
         ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
         For example, ``stack`` of ``y`` can be used to customize stacking for a vertical bar
@@ -4190,16 +4191,17 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         ``stack`` can be one of the following values:
 
 
-        * `"zero"`: stacking with baseline offset at zero value of the scale (for creating
-          typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and
-          `area <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
+        * ``"zero"`` or `true`: stacking with baseline offset at zero value of the scale
+          (for creating typical stacked
+          [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and `area
+          <https://vega.github.io/vega-lite/docs/stack.html#area>`__ chart).
         * ``"normalize"`` - stacking with normalized domain (for creating `normalized
           stacked bar and area charts
           <https://vega.github.io/vega-lite/docs/stack.html#normalized>`__.
           :raw-html:`<br/>`
         - ``"center"`` - stacking with center baseline (for `streamgraph
         <https://vega.github.io/vega-lite/docs/stack.html#streamgraph>`__ ).
-        * ``null`` - No-stacking. This will produce layered `bar
+        * ``null`` or ``false`` - No-stacking. This will produce layered `bar
           <https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart>`__ and area
           chart.
 
@@ -4315,7 +4317,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -4419,7 +4421,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
@@ -4523,7 +4525,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
-    bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
+    bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
         data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
