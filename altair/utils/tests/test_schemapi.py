@@ -30,7 +30,8 @@ class MySchema(_TestSchema):
             'b2': {'type': 'array', 'items': {'type': 'number'}},
             'c': {'type': ['string', 'number']},
             'd': {'anyOf': [{'$ref': '#/definitions/StringMapping'},
-                            {'$ref': '#/definitions/StringArray'}]}
+                            {'$ref': '#/definitions/StringArray'}]},
+            'e': {'items': [{'type': 'string'}, {'type': 'string'}]}
         }
     }
 
@@ -114,7 +115,7 @@ class InvalidProperties(_TestSchema):
 def test_construct_multifaceted_schema():
     dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
        'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-       'd': ['x', 'y', 'z']}
+       'd': ['x', 'y', 'z'], 'e': ['a', 'b']}
 
     myschema = MySchema.from_dict(dct)
     assert myschema.to_dict() == dct
@@ -256,7 +257,7 @@ def test_attribute_error():
 def test_to_from_json():
     dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
            'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-           'd': ['x', 'y', 'z']}
+           'd': ['x', 'y', 'z'], 'e': ['g', 'h']}
     json_str = MySchema.from_dict(dct).to_json()
     new_dct = MySchema.from_json(json_str).to_dict()
 
