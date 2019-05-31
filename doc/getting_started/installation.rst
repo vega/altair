@@ -89,6 +89,14 @@ To install the notebook and Altair with pip, run the following command::
 
     $ pip install -U altair vega_datasets notebook vega
 
+.. note::
+
+   If you have multiple Python environments, you need to install the
+   vega_ package in the Python environment that runs ipykernel *and*
+   the Python environment that runs the Jupyter Notebook server.  You
+   only need to install Altair in the Python environment that runs
+   ipykernel.
+
 Once the packages and extensions are installed, launch the notebook by running::
 
     $ jupyter notebook
