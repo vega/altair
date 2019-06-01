@@ -912,8 +912,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> chart.transform[0]
         JoinAggregateTransform({
           joinaggregate: [JoinAggregateFieldDef({
-            as: 'x',
-            field: 'y',
+            as: FieldName('x'),
+            field: FieldName('y'),
             op: AggregateOp('sum')
           })]
         })
