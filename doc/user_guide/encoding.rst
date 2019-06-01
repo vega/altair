@@ -267,7 +267,7 @@ The :class:`X` and :class:`Y` encodings accept the following options:
 
 The :class:`Color`, :class:`Fill`, and :class:`Stroke`  encodings accept the following options:
 
-.. altair-object-table:: altair.ColorFieldDefWithCondition
+.. altair-object-table:: altair.StringFieldDefWithCondition
 
 The :class:`Shape` encoding accepts the following options:
 
@@ -288,7 +288,7 @@ The :class:`Text` and :class:`Tooltip` encodings accept the following options:
 
 The :class:`Detail` and :class:`Key` encodings accept the following options:
 
-.. altair-object-table:: altair.FieldDef
+.. altair-object-table:: altair.FieldDefWithoutScale
 
 The :class:`Latitude` and :class:`Longitude` encodings accept the following options:
 

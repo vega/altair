@@ -90,7 +90,7 @@ the above chart using these low-level object types directly:
                 field='Miles_per_Gallon',
                 type='quantitative'
             ),
-            color=alt.ColorFieldDefWithCondition(
+            color=alt.StringFieldDefWithCondition(
                 field='Origin',
                 type='nominal'
             )

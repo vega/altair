@@ -142,7 +142,6 @@ Low-Level Schema Wrappers
    AxisOrient
    AxisResolveMap
    BarConfig
-   BaseBinding
    BaseLegendLayout
    BaseMarkConfig
    BaseTitleConfig
@@ -159,8 +158,6 @@ Low-Level Schema Wrappers
    BrushConfig
    CalculateTransform
    Color
-   ColorFieldDefWithCondition
-   ColorValueDefWithCondition
    CompositeMark
    CompositeMarkDef
    CompositionConfig
@@ -168,29 +165,23 @@ Low-Level Schema Wrappers
    ConditionOnlyDefMarkPropFieldDef
    ConditionOnlyDefMarkPropFieldDefTypeForShape
    ConditionOnlyDefTextFieldDef
-   ConditionalColorValueDef
    ConditionalMarkPropFieldDef
    ConditionalMarkPropFieldDefTypeForShape
    ConditionalNumberValueDef
-   ConditionalPredicateColorValueDef
    ConditionalPredicateMarkPropFieldDef
    ConditionalPredicateMarkPropFieldDefTypeForShape
    ConditionalPredicateNumberValueDef
    ConditionalPredicateStringValueDef
    ConditionalPredicateTextFieldDef
-   ConditionalPredicateTextValueDef
    ConditionalPredicateValueDef
-   ConditionalSelectionColorValueDef
    ConditionalSelectionMarkPropFieldDef
    ConditionalSelectionMarkPropFieldDefTypeForShape
    ConditionalSelectionNumberValueDef
    ConditionalSelectionStringValueDef
    ConditionalSelectionTextFieldDef
-   ConditionalSelectionTextValueDef
    ConditionalSelectionValueDef
    ConditionalStringValueDef
    ConditionalTextFieldDef
-   ConditionalTextValueDef
    ConditionalValueDef
    Config
    CsvDataFormat
@@ -221,16 +212,17 @@ Low-Level Schema Wrappers
    FacetedEncoding
    FacetedUnitSpec
    Field
-   FieldDef
-   FieldDefWithConditionMarkPropFieldDefTypeForShapestring
+   FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull
    FieldDefWithConditionMarkPropFieldDefnumber
    FieldDefWithConditionMarkPropFieldDefstringnull
-   FieldDefWithConditionTextFieldDefstringnumberboolean
+   FieldDefWithConditionTextFieldDefValue
+   FieldDefWithoutScale
    FieldEqualPredicate
    FieldGTEPredicate
    FieldGTPredicate
    FieldLTEPredicate
    FieldLTPredicate
+   FieldName
    FieldOneOfPredicate
    FieldRangePredicate
    FieldValidPredicate
@@ -240,8 +232,6 @@ Low-Level Schema Wrappers
    FontStyle
    FontWeight
    Generator
-   GenericBinMixinsbooleanBinParams
-   GenericBinMixinsbooleanBinParamsbinnednull
    GenericUnitSpecEncodingAnyMark
    GraticuleGenerator
    GraticuleParams
@@ -254,6 +244,7 @@ Low-Level Schema Wrappers
    ImputeTransform
    InlineData
    InlineDataset
+   InputBinding
    Interpolate
    IntervalSelection
    IntervalSelectionConfig
@@ -360,7 +351,9 @@ Low-Level Schema Wrappers
    StackOffset
    StackTransform
    StandardType
+   StringFieldDefWithCondition
    StringFieldDefWithConditionTypeForShape
+   StringValueDefWithCondition
    StringValueDefWithConditionTypeForShape
    StrokeCap
    StrokeJoin
@@ -390,22 +383,23 @@ Low-Level Schema Wrappers
    TopLevelVConcatSpec
    TopoDataFormat
    Transform
-   Type
    TypeForShape
+   TypedFieldDef
    Undefined
    UnitSpec
    UrlData
    UtcMultiTimeUnit
    UtcSingleTimeUnit
    VConcatSpec
-   ValueDefWithConditionMarkPropFieldDefTypeForShapestring
+   Value
+   ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull
    ValueDefWithConditionMarkPropFieldDefnumber
    ValueDefWithConditionMarkPropFieldDefstringnull
-   ValueDefWithConditionTextFieldDefstringnumberboolean
-   ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestring
+   ValueDefWithConditionTextFieldDefValue
+   ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull
    ValueDefWithOptionalConditionMarkPropFieldDefnumber
    ValueDefWithOptionalConditionMarkPropFieldDefstringnull
-   ValueDefWithOptionalConditionTextFieldDefstringnumberboolean
+   ValueDefWithOptionalConditionTextFieldDefValue
    VegaLiteSchema
    ViewBackground
    ViewConfig
