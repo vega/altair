@@ -1,6 +1,6 @@
 """
-Ridgeline plot (Joyplot) Example
---------------------------------
+Ridgeline plot Example
+----------------------
 A `Ridgeline plot <https://serialmentor.com/blog/2017/9/15/goodbye-joyplots>`_
 chart is a chart that lets you visualize distribution of a numeric value for 
 several groups.
@@ -18,7 +18,7 @@ source = data.seattle_weather.url
 step = 20
 overlap = 1
 
-ridgeline = alt.Chart(source).transform_timeunit(
+alt.Chart(source).transform_timeunit(
     Month='month(date)'
 ).transform_joinaggregate(
     mean_temp='mean(temp_max)', groupby=['Month']
@@ -59,5 +59,3 @@ ridgeline = alt.Chart(source).transform_timeunit(
 ).configure_title(
     anchor='end'
 )
-ridgeline
-
