@@ -1,6 +1,6 @@
 """
 Brushing Scatter Plot to show data on a table
----------------------------------
+---------------------------------------------
 A scatter plot of the cars dataset, with data tables for horsepower, MPG, and origin. 
 The tables update toreflect the selection on the scatter plot.
 """
@@ -15,14 +15,14 @@ source = data.cars()
 brush = alt.selection(type='interval')
 
 # Scatter Plot
-points = alt.Chart().mark_point().encode(
+points = alt.Chart(source).mark_point().encode(
     x='Horsepower:Q',
     y='Miles_per_Gallon:Q',
     color=alt.condition(brush, 'Cylinders:O', alt.value('grey'))
 ).add_selection(brush)
 
 # Base chart for data tables
-ranked_text = alt.Chart().mark_text().encode(
+ranked_text = alt.Chart(source).mark_text().encode(
     y=alt.Y('row_number:O',axis=None)
 ).transform_window(
     row_number='row_number()'
@@ -43,8 +43,7 @@ text = alt.hconcat(horsepower, mpg, origin) # Combine data tables
 # Build chart
 alt.hconcat(
     points,
-    text,
-    data=source
+    text
 ).resolve_legend(
     color="independent"
 )

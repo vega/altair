@@ -8,9 +8,9 @@ import altair as alt
 from altair import datum
 from vega_datasets import data
 
-source = data.cars.url
+source = data.cars()
 
-violinplot =  alt.Chart(source).transform_filter(
+alt.Chart(source).transform_filter(
     datum.Miles_per_Gallon > 0
 ).transform_bin(
     ['bin_max', 'bin_min'], field='Miles_per_Gallon', bin=alt.Bin(maxbins=20)
@@ -47,5 +47,3 @@ violinplot =  alt.Chart(source).transform_filter(
 ).configure_view(
     stroke=None
 )
-
-violinplot
