@@ -2,7 +2,18 @@
 
 ## Version 3.1.0 (unreleased)
 
+Update includes full compatibility with version 3.3 of Vega-Lite.
+
+
 ### Enhancements
+
+- Added support for [vega themes](https://github.com/vega/vega-themes) via
+  ``alt.themes.enable(theme_name)`` (#1539)
+
+- Added an ``alt.renderers.disable_max_rows()`` method for disabling the
+  maximum rows check (#1538)
+
+- Improved user-facing warnings/errors around layering and faceting (#1535).
 
 - ``data`` argument is now properly handled by  ``Chart.properties`` (#1525)
 
@@ -21,6 +32,13 @@
   ```
   See ``altair/examples/us_population_over_time_facet.py`` for a more
   complete example.
+
+### Bug fixes
+
+- Make ``chart.serve()`` and ``chart.save()`` respect the data transformer
+  setting (#1538)
+
+- Fixed a deserialization bug for certain chart specs in schemapi (#1543)
 
 ### Backward-Incompatible Changes
 
