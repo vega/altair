@@ -1,7 +1,9 @@
 """
 Box Plot with Min/Max Whiskers
 ------------------------------
-This example shows how to make a basic box plot using US Population data from 2000.
+This example shows how to make a basic box plot using US Population data from 2000.  
+Note that the default value of the `extent` property is 1.5, which can be used to 
+produce in the standard modified boxplot.
 """
 # category: other charts
 import altair as alt
