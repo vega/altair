@@ -98,7 +98,7 @@ Level of Detail Channel:
 =======  ================  ===============================  =========================================
 Channel  Altair Class      Description                      Example
 =======  ================  ===============================  =========================================
-detail   :class:`Detail`   Additional property to group by  :ref:`gallery_select_detail`
+detail   :class:`Detail`   Additional property to group by  :ref:`gallery_ranged_dot_plot`
 =======  ================  ===============================  =========================================
 
 Order Channel:
