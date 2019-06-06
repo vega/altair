@@ -1,9 +1,8 @@
 # Altair Change Log
 
-## Version 3.1.0 (unreleased)
+## Version 3.1.0  (Released June 6, 2018)
 
 Update includes full compatibility with version 3.3 of Vega-Lite.
-
 
 ### Enhancements
 
