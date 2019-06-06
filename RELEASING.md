@@ -48,15 +48,15 @@
 
 10. build and publish docs (Requires write-access to altair-viz/altair-viz.github.io)
 
-       cd doc
-       make clean-all
-       make html
-       bash sync_website.sh
+        cd doc
+        make clean-all
+        make html
+        bash sync_website.sh
 
 11. update version to, e.g. 2.1.0dev
 
-   - in ``altair/__init__.py``
-   - in ``doc/conf.py`` (two places)
+    - in ``altair/__init__.py``
+    - in ``doc/conf.py`` (two places)
 
 12. add a new changelog entry for the unreleased version:
 
