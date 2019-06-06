@@ -67,9 +67,9 @@
 
 13. Commit change and push to master
 
-       git add . -u
-       git commit -m "MAINT: bump version to 2.1.0dev"
-       git push upstream master
+        git add . -u
+        git commit -m "MAINT: bump version to 2.1.0dev"
+        git push upstream master
 
 14. Double-check that a conda-forge pull request is generated from the updated
     pip package by the conda-forge bot (may take up to ~an hour):
