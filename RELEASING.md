@@ -61,9 +61,9 @@
 12. add a new changelog entry for the unreleased version:
 
         ## Version 2.1.0 (unreleased)
-	### Enhancements
-	### Bug Fixes
-	### Backward-Incompatible Changes
+        ### Enhancements
+        ### Bug Fixes
+        ### Backward-Incompatible Changes
 
 13. Commit change and push to master
 
