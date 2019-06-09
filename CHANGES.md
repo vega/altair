@@ -5,7 +5,7 @@
 ### Bug Fixes
 ### Backward-Incompatible Changes
 
-## Version 3.1.0  (Released June 6, 2018)
+## Version 3.1.0  (Released June 6, 2019)
 
 Update includes full compatibility with version 3.3 of Vega-Lite.
 
@@ -67,11 +67,11 @@ Update includes full compatibility with version 3.3 of Vega-Lite.
   - ``alt.Yerror`` -> ``alt.YError``
   - ``alt.Yerror2`` -> ``alt.YError2``
 
-## Version 3.0.1
+## Version 3.0.1 (Released May 1, 2019)
 
 Fix version info bug for HTML output and Colab & Kaggle renderers.
 
-## Version 3.0.0
+## Version 3.0.0 (Released April 26, 2019)
 
 Update to Vega-Lite 3.2 and Vega 5.3 & support all new features. See
 https://github.com/vega/vega-lite/releases/tag/v3.0.0 for Vega-Lite
