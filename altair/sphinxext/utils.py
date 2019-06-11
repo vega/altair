@@ -117,7 +117,7 @@ def get_docstring_and_rest(filename):
     node, content = _parse_source_file(filename)
 
     # Find the category comment
-    find_category = re.compile('^#\s*category:\s*(.*)$', re.MULTILINE)
+    find_category = re.compile(r'^#\s*category:\s*(.*)$', re.MULTILINE)
     match = find_category.search(content)
     if match is not None:
         category = match.groups()[0]
