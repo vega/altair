@@ -88,8 +88,11 @@ Now you are on a new branch where you can add your example file. All examples
 files are kept in the `altair/examples/` directory. Make sure the style and
 format match the other examples.  An official style guide for examples has not
 been created yet, but a few suggestions are 
-- Underline the title in the docstring with either `---` or `===`. Try to match
-  the number of characters. 
+- The file docstring will be rendered into HTML via
+  [reStructuredText](http://docutils.sourceforge.net/rst.html), so use that
+  format for any hyperlinks or text styling. In particular, be sure you include
+  a title in the docstring underlined with `---`, and be sure that the size of
+  the underline exactly matches the size of the title text.
 - If your example fits into a chart type but involves significant configuration
   it should be in the `case studies` category. If your example doesn't fit well
   into any category then it can be included in the `other charts` category.
@@ -101,7 +104,8 @@ been created yet, but a few suggestions are
   installation (`vega_datasets.local_data.list_datasets()`) then the data can
   be referenced directly, such as `source = data.iris()`. If the data is not
   included then it should be referenced by URL, such as `source =
-  data.movies.url`.
+  data.movies.url`. This is to ensure that Altair's automated test suite does
+  not depend on availability of external HTTP resources.
 
 Next step is to commit your example file and push the branch to your forked repo
 ```
