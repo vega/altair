@@ -188,6 +188,20 @@ javascript-enabled web browser:
 
 You can view the result here: `chart.html </_static/chart.html>`_.
 
+By default ``canvas`` is used for rendering the visualization in vegaEmbed. To 
+change to ``svg`` rendering, use the ``embed_options`` as such:
+
+.. code-block:: python
+
+    chart.save('chart.html', embed_options={'renderer':'svg})
+
+
+.. note::
+
+   This is not the same as ``alt.renderers.enable('svg')``, what renders a 
+   static ``svg`` image.
+
+
 .. _Selenium: http://selenium-python.readthedocs.io/
 .. _Google Chrome: https://www.google.com/chrome/
 .. _Mozilla Firefox: https://www.mozilla.org/firefox/
