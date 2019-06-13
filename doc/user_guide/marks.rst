@@ -60,7 +60,83 @@ arguments to represent points as red semi-transparent filled circles:
        y='Miles_per_Gallon:Q'
    )
 
-The additional arguments to ``mark_*()`` methods are passed along to an
+
+Compound Marks
+~~~~~~~~~~~~~~
+
+BoxPlot
+^^^^^^^
+
+The compound mark :meth:`~Chart.mark_boxplot` can be used to create a boxplot without having to specify each part of the plot (box, whiskers, outliers) separately.
+
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    source = data.population.url
+
+    alt.Chart(source).mark_boxplot().encode(
+        y='people:Q'
+    ).properties(
+        width=200, 
+        height=300
+    )
+
+
+To create a side-by-side boxplot, simply encode the group column on the other axis.
+
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  source = data.population.url
+
+  alt.Chart(source).mark_boxplot().encode(
+      x='age:O',
+      y='people:Q'
+  )
+
+Note that the default behavior is to display outliers as points, where an outlier is defined as any point more than 1.5 IQRs from the box.  
+Users can adjust this threshold using the ``extent`` property of the mark.
+
+
+.. altair-plot::
+
+  import altair as alt
+  from vega_datasets import data
+
+  source = data.population.url
+
+  alt.Chart(source).mark_boxplot(extent=3.0).encode(
+      x='age:O',
+      y='people:Q'
+  )
+
+
+The outliers can be ignored completely using ``extent='max-min'``
+
+
+.. altair-plot::
+
+
+  import altair as alt
+  from vega_datasets import data
+
+  source = data.population.url
+
+  alt.Chart(source).mark_boxplot(extent='min-max').encode(
+      x='age:O',
+      y='people:Q'
+  )
+
+Mark Properties
+~~~~~~~~~~~~~~~
+
+As seen in the last two examples, additional arguments to ``mark_*()`` methods are passed along to an
 associated :class:`MarkDef` instance, which supports the following attributes:
 
 .. altair-object-table:: altair.MarkDef
