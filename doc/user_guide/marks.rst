@@ -62,10 +62,10 @@ arguments to represent points as red semi-transparent filled circles:
 
 
 Compound Marks
---------------
+~~~~~~~~~~~~~~
 
 BoxPlot
-~~~~~~~
+^^^^^^^
 
 The compound mark :meth:`~Chart.mark_boxplot` can be used to create a boxplot without having to specify each part of the plot (box, whiskers, outliers) separately.
 
@@ -134,7 +134,7 @@ The outliers can be ignored completely using ``extent='max-min'``
   )
 
 Mark Properties
----------------
+~~~~~~~~~~~~~~~
 
 As seen in the last two examples, additional arguments to ``mark_*()`` methods are passed along to an
 associated :class:`MarkDef` instance, which supports the following attributes:
