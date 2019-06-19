@@ -193,7 +193,7 @@ change to ``svg`` rendering, use the ``embed_options`` as such:
 
 .. code-block:: python
 
-    chart.save('chart.html', embed_options={'renderer':'svg})
+    chart.save('chart.html', embed_options={'renderer':'svg'})
 
 
 .. note::
