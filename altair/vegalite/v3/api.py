@@ -476,6 +476,11 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             result = save(**kwds)
         return result
 
+    # Fallback for when rendering fails; the full repr is too long to be
+    # useful in nearly all cases.
+    def __repr__(self):
+        return "alt.{}(...)".format(self.__class__.__name__)
+
     # Layering and stacking
     def __add__(self, other):
         if not isinstance(other, TopLevelMixin):
