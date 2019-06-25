@@ -146,9 +146,9 @@ javascript-enabled web browser:
     <!DOCTYPE html>
     <html>
     <head>
-      <script src="https://cdn.jsdelivr.net/npm/vega@3"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-lite@2"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-embed@3"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@3"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-embed@4"></script>
     </head>
     <body>
       <div id="vis"></div>
