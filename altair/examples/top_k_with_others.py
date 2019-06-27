@@ -9,7 +9,7 @@ remaining directors as 'All Others'.
 import altair as alt
 from vega_datasets import data
 
-source = data.movies()
+source = data.movies.url
 
 alt.Chart(source).mark_bar().encode(
     x=alt.X("aggregate_gross:Q", aggregate="mean", title=None),
@@ -19,17 +19,13 @@ alt.Chart(source).mark_bar().encode(
         title=None,
     ),
 ).transform_aggregate(
-    aggregate=[
-        alt.AggregatedFieldDef(
-            **{"as": "aggregate_gross", "op": "mean", "field": "Worldwide_Gross"}
-        )
-    ],
+    aggregate_gross='mean(Worldwide_Gross)',
     groupby=["Director"],
 ).transform_window(
-    window=[alt.WindowFieldDef(**{"as": "rank", "op": "row_number"})],
+    rank='row_number()',
     sort=[alt.SortField("aggregate_gross", order="descending")],
 ).transform_calculate(
-    as_="ranked_director", calculate="datum.rank < 10 ? datum.Director : 'All Others'"
+    ranked_director="datum.rank < 10 ? datum.Director : 'All Others'"
 ).properties(
     title="Top Directors by Average Worldwide Gross",
 )
