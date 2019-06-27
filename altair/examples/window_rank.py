@@ -39,4 +39,4 @@ alt.Chart(source).mark_line().encode(
         alt.SortField("diff", order="descending"),
     ],
     groupby=["matchday"],
-)
+).properties(title="World Cup 2018: Group F Rankings")
