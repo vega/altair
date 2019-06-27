@@ -53,7 +53,8 @@ points = alt.Chart(flights_airport).mark_circle().encode(
     latitude="latitude:Q",
     longitude="longitude:Q",
     size=alt.Size("routes:Q", scale=alt.Scale(range=[0, 1000]), legend=None),
-    order=alt.Order("routes:Q", sort="descending")
+    order=alt.Order("routes:Q", sort="descending"),
+    tooltip=['latitude:Q', 'longitude:Q', 'routes:Q']
 ).transform_aggregate(
     routes="count()", 
     groupby=["origin"]
