@@ -19,15 +19,8 @@ degree_list = [1, 3, 5]
 
 # Build a dataframe with the fitted data
 poly_data = pd.DataFrame({'xfit': np.linspace(df['x'].min(), df['x'].max(), 500)})
-
 for degree in degree_list:
     poly_data[str(degree)] = np.poly1d(np.polyfit(df['x'], df['y'], degree))(poly_data['xfit'])
-
-# Tidy the dataframe so 'degree' is a variable
-poly_data = pd.melt(poly_data,
-                    id_vars=['xfit'],
-                    value_vars=[str(deg) for deg in degree_list],
-                    var_name='degree', value_name='yfit')
 
 # Plot the data points on an interactive axis
 points = alt.Chart(df).mark_circle(color='black').encode(
@@ -36,10 +29,13 @@ points = alt.Chart(df).mark_circle(color='black').encode(
 ).interactive()
 
 # Plot the best fit polynomials
-polynomial_fit = alt.Chart(poly_data).mark_line().encode(
-    x='xfit',
-    y='yfit',
-    color='degree'
+polynomial_fit = alt.Chart(poly_data).transform_fold(
+    ['1', '3', '5'],
+    as_=['degree', 'yfit']
+).mark_line().encode(
+    x='xfit:Q',
+    y='yfit:Q',
+    color='degree:N'
 )
 
 points + polynomial_fit
