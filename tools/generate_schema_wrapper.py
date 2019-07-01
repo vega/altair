@@ -88,7 +88,7 @@ class FieldChannelMixin(object):
             # If given a list of shorthands, then transform it to a list of classes
             kwds = self._kwds.copy()
             kwds.pop('shorthand')
-            return [self.__class__(shorthand, **kwds).to_dict()
+            return [self.__class__(shorthand, **kwds).to_dict(validate=validate, ignore=ignore, context=context)
                     for shorthand in self.shorthand]
         elif isinstance(self.shorthand, six.string_types):
             kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
