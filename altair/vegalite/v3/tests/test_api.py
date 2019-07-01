@@ -19,6 +19,10 @@ except ImportError:
     selenium = None
 
 
+def getargs(*args, **kwargs):
+    return args, kwargs
+
+
 OP_DICT = {
     'layer': operator.add,
     'hconcat': operator.or_,
@@ -111,28 +115,27 @@ def test_chart_infer_types():
     assert dct['encoding']['y']['type'] == 'ordinal'
 
 
-def test_multiple_encodings():
+@pytest.mark.parametrize('args, kwargs', [
+    getargs(detail=['value:Q', 'name:N'], tooltip=['value:Q', 'name:N']),
+    getargs(detail=['value', 'name'], tooltip=['value', 'name']),
+    getargs(alt.Detail(['value:Q', 'name:N']), alt.Tooltip(['value:Q', 'name:N'])),
+    getargs(alt.Detail(['value', 'name']), alt.Tooltip(['value', 'name'])),
+    getargs([alt.Detail('value:Q'), alt.Detail('name:N')],
+            [alt.Tooltip('value:Q'), alt.Tooltip('name:N')]),
+    getargs([alt.Detail('value'), alt.Detail('name')],
+            [alt.Tooltip('value'), alt.Tooltip('name')]),
+])
+def test_multiple_encodings(args, kwargs):
+    df = pd.DataFrame({
+        'value': [1, 2, 3],
+        'name': ['A', 'B', 'C'],
+    })
     encoding_dct = [{'field': 'value', 'type': 'quantitative'},
                     {'field': 'name', 'type': 'nominal'}]
-    chart1 = alt.Chart('data.csv').mark_point().encode(
-        detail=['value:Q', 'name:N'],
-        tooltip=['value:Q', 'name:N']
-    )
-
-    chart2 = alt.Chart('data.csv').mark_point().encode(
-        alt.Detail(['value:Q', 'name:N']),
-        alt.Tooltip(['value:Q', 'name:N'])
-    )
-
-    chart3 = alt.Chart('data.csv').mark_point().encode(
-        [alt.Detail('value:Q'), alt.Detail('name:N')],
-        [alt.Tooltip('value:Q'), alt.Tooltip('name:N')]
-    )
-
-    for chart in [chart1, chart2, chart3]:
-        dct = chart.to_dict()
-        assert dct['encoding']['detail'] == encoding_dct
-        assert dct['encoding']['tooltip'] == encoding_dct
+    chart = alt.Chart(df).mark_point().encode(*args, **kwargs)
+    dct = chart.to_dict()
+    assert dct['encoding']['detail'] == encoding_dct
+    assert dct['encoding']['tooltip'] == encoding_dct
 
 
 def test_chart_operations():
