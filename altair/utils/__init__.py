@@ -17,7 +17,7 @@ from .deprecation import AltairDeprecationWarning
 
 __all__ = (
     'infer_vegalite_type',
-    'infer_encoding_types'
+    'infer_encoding_types',
     'sanitize_dataframe',
     'spec_to_html',
     'parse_shorthand',

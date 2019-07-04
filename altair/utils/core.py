@@ -9,6 +9,7 @@ import sys
 import traceback
 import warnings
 
+import jsonschema
 import six
 import pandas as pd
 import numpy as np
