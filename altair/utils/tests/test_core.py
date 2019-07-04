@@ -1,7 +1,58 @@
+import types
+
 import pandas as pd
+import pytest
 
 import altair as alt
-from .. import parse_shorthand, update_nested
+from .. import parse_shorthand, update_nested, infer_encoding_types
+
+FAKE_CHANNELS_MODULE = '''
+"""Fake channels module for utility tests."""
+
+from altair.utils import schemapi
+
+
+class FieldChannel(object):
+    def __init__(self, shorthand, **kwargs):
+        kwargs['shorthand'] = shorthand
+        return super(FieldChannel, self).__init__(**kwargs)
+
+
+class ValueChannel(object):
+    def __init__(self, value, **kwargs):
+        kwargs['value'] = value
+        return super(ValueChannel, self).__init__(**kwargs)
+
+
+class X(FieldChannel, schemapi.SchemaBase):
+    _schema = {}
+    _encoding_name = "x"
+
+
+class XValue(ValueChannel, schemapi.SchemaBase):
+    _schema = {}
+    _encoding_name = "x"
+
+
+class Y(FieldChannel, schemapi.SchemaBase):
+    _schema = {}
+    _encoding_name = "y"
+
+
+class YValue(ValueChannel, schemapi.SchemaBase):
+    _schema = {}
+    _encoding_name = "y"
+
+
+class StrokeWidth(FieldChannel, schemapi.SchemaBase):
+    _schema = {}
+    _encoding_name = "strokeWidth"
+
+
+class StrokeWidthValue(ValueChannel, schemapi.SchemaBase):
+    _schema = {}
+    _encoding_name = "strokeWidth"
+'''
 
 
 def test_parse_shorthand():
@@ -124,3 +175,53 @@ def test_update_nested():
     output2 = update_nested(original, update)
     assert output2 is original
     assert output == output2
+
+
+@pytest.fixture
+def channels():
+    channels = types.ModuleType('channels')
+    exec(FAKE_CHANNELS_MODULE, channels.__dict__)
+    return channels
+
+
+def _getargs(*args, **kwargs):
+    return args, kwargs
+
+
+def test_infer_encoding_types(channels):
+    expected = dict(x=channels.X('xval'),
+                    y=channels.YValue('yval'),
+                    strokeWidth=channels.StrokeWidthValue(value=4))
+
+    # All positional args
+    args, kwds = _getargs(channels.X('xval'),
+                          channels.YValue('yval'),
+                          channels.StrokeWidthValue(4))
+    assert infer_encoding_types(args, kwds, channels) == expected
+
+    # All keyword args
+    args, kwds = _getargs(x='xval',
+                          y=alt.value('yval'),
+                          strokeWidth=alt.value(4))
+    assert infer_encoding_types(args, kwds, channels) == expected
+
+    # Mixed positional & keyword
+    args, kwds = _getargs(channels.X('xval'),
+                          channels.YValue('yval'),
+                          strokeWidth=alt.value(4))
+    assert infer_encoding_types(args, kwds, channels) == expected
+
+
+def test_infer_encoding_types_with_condition(channels):
+    args, kwds = _getargs(
+        x=alt.condition('pred1', alt.value(1), alt.value(2)),
+        y=alt.condition('pred2', alt.value(1), 'yval'),
+        strokeWidth=alt.condition('pred3', 'sval', alt.value(2))
+    )
+    expected = dict(
+        x=channels.XValue(2, condition=channels.XValue(1, test='pred1')),
+        y=channels.Y('yval', condition=channels.YValue(1, test='pred2')),
+        strokeWidth=channels.StrokeWidthValue(2,
+            condition=channels.StrokeWidth('sval', test='pred3'))
+    )
+    assert infer_encoding_types(args, kwds, channels) == expected
