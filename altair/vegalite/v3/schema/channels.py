@@ -243,6 +243,7 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "color"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -261,6 +262,7 @@ class ColorValue(ValueChannelMixin, core.StringValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "color"
 
     def __init__(self, value, **kwds):
         super(ColorValue, self).__init__(value=value, **kwds)
@@ -403,6 +405,7 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "column"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
@@ -522,6 +525,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "detail"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -666,6 +670,7 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "facet"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
@@ -839,6 +844,7 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "fill"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -857,6 +863,7 @@ class FillValue(ValueChannelMixin, core.StringValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "fill"
 
     def __init__(self, value, **kwds):
         super(FillValue, self).__init__(value=value, **kwds)
@@ -1026,6 +1033,7 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "fillOpacity"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -1044,6 +1052,7 @@ class FillOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "fillOpacity"
 
     def __init__(self, value, **kwds):
         super(FillOpacityValue, self).__init__(value=value, **kwds)
@@ -1193,6 +1202,7 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "href"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
@@ -1212,6 +1222,7 @@ class HrefValue(ValueChannelMixin, core.TextValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "href"
 
     def __init__(self, value, **kwds):
         super(HrefValue, self).__init__(value=value, **kwds)
@@ -1327,6 +1338,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "key"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1443,6 +1455,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "latitude"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1464,6 +1477,7 @@ class LatitudeValue(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "latitude"
 
     def __init__(self, value, **kwds):
         super(LatitudeValue, self).__init__(value=value, **kwds)
@@ -1547,6 +1561,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "latitude2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -1568,6 +1583,7 @@ class Latitude2Value(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "latitude2"
 
     def __init__(self, value, **kwds):
         super(Latitude2Value, self).__init__(value=value, **kwds)
@@ -1682,6 +1698,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "longitude"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1703,6 +1720,7 @@ class LongitudeValue(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "longitude"
 
     def __init__(self, value, **kwds):
         super(LongitudeValue, self).__init__(value=value, **kwds)
@@ -1786,6 +1804,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "longitude2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -1807,6 +1826,7 @@ class Longitude2Value(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "longitude2"
 
     def __init__(self, value, **kwds):
         super(Longitude2Value, self).__init__(value=value, **kwds)
@@ -1976,6 +1996,7 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "opacity"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -1994,6 +2015,7 @@ class OpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "opacity"
 
     def __init__(self, value, **kwds):
         super(OpacityValue, self).__init__(value=value, **kwds)
@@ -2110,6 +2132,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "order"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2131,6 +2154,7 @@ class OrderValue(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "order"
 
     def __init__(self, value, **kwds):
         super(OrderValue, self).__init__(value=value, **kwds)
@@ -2273,6 +2297,7 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "row"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
@@ -2446,6 +2471,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "shape"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -2464,6 +2490,7 @@ class ShapeValue(ValueChannelMixin, core.ShapeValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "shape"
 
     def __init__(self, value, **kwds):
         super(ShapeValue, self).__init__(value=value, **kwds)
@@ -2633,6 +2660,7 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "size"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -2651,6 +2679,7 @@ class SizeValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "size"
 
     def __init__(self, value, **kwds):
         super(SizeValue, self).__init__(value=value, **kwds)
@@ -2820,6 +2849,7 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "stroke"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -2838,6 +2868,7 @@ class StrokeValue(ValueChannelMixin, core.StringValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "stroke"
 
     def __init__(self, value, **kwds):
         super(StrokeValue, self).__init__(value=value, **kwds)
@@ -3007,6 +3038,7 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "strokeOpacity"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -3026,6 +3058,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "strokeOpacity"
 
     def __init__(self, value, **kwds):
         super(StrokeOpacityValue, self).__init__(value=value, **kwds)
@@ -3195,6 +3228,7 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "strokeWidth"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -3213,6 +3247,7 @@ class StrokeWidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "strokeWidth"
 
     def __init__(self, value, **kwds):
         super(StrokeWidthValue, self).__init__(value=value, **kwds)
@@ -3362,6 +3397,7 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "text"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
@@ -3381,6 +3417,7 @@ class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "text"
 
     def __init__(self, value, **kwds):
         super(TextValue, self).__init__(value=value, **kwds)
@@ -3530,6 +3567,7 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "tooltip"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
@@ -3549,6 +3587,7 @@ class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
     optional.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "tooltip"
 
     def __init__(self, value, **kwds):
         super(TooltipValue, self).__init__(value=value, **kwds)
@@ -3743,6 +3782,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined, stack=Undefined,
@@ -3766,6 +3806,7 @@ class XValue(ValueChannelMixin, core.XValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x"
 
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
@@ -3849,6 +3890,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -3870,6 +3912,7 @@ class X2Value(ValueChannelMixin, core.XValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x2"
 
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
@@ -3953,6 +3996,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "xError"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -3974,6 +4018,7 @@ class XErrorValue(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "xError"
 
     def __init__(self, value, **kwds):
         super(XErrorValue, self).__init__(value=value, **kwds)
@@ -4057,6 +4102,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "xError2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -4078,6 +4124,7 @@ class XError2Value(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "xError2"
 
     def __init__(self, value, **kwds):
         super(XError2Value, self).__init__(value=value, **kwds)
@@ -4272,6 +4319,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
           ``x``, ``y`` ).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined, stack=Undefined,
@@ -4295,6 +4343,7 @@ class YValue(ValueChannelMixin, core.YValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y"
 
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
@@ -4378,6 +4427,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -4399,6 +4449,7 @@ class Y2Value(ValueChannelMixin, core.YValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y2"
 
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
@@ -4482,6 +4533,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "yError"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -4503,6 +4555,7 @@ class YErrorValue(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "yError"
 
     def __init__(self, value, **kwds):
         super(YErrorValue, self).__init__(value=value, **kwds)
@@ -4586,6 +4639,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         defined, axis/header/legend title will be used.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "yError2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -4607,6 +4661,7 @@ class YError2Value(ValueChannelMixin, core.NumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "yError2"
 
     def __init__(self, value, **kwds):
         super(YError2Value, self).__init__(value=value, **kwds)

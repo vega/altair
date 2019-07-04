@@ -148,6 +148,7 @@ class FieldSchemaGenerator(SchemaGenerator):
     class {classname}(FieldChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
+        _encoding_name = "{encodingname}"
 
         {init_code}
     ''')
@@ -158,6 +159,7 @@ class ValueSchemaGenerator(SchemaGenerator):
     class {classname}(ValueChannelMixin, core.{basename}):
         """{docstring}"""
         _class_is_valid_at_instantiation = False
+        _encoding_name = "{encodingname}"
 
         {init_code}
     ''')
@@ -320,6 +322,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
 
             gen = Generator(classname=classname, basename=basename,
                             schema=defschema, rootschema=schema,
+                            encodingname=prop,
                             nodefault=nodefault)
             contents.append(gen.schema_class())
     return '\n'.join(contents)

@@ -1198,72 +1198,13 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 class EncodingMixin(object):
     @utils.use_signature(core.EncodingWithFacet)
     def encode(self, *args, **kwargs):
-        # First convert args to kwargs by inferring the class from the argument
-        if args:
-            channels_mapping = _get_channels_mapping()
-            for arg in args:
-                if isinstance(arg, (list, tuple)) and len(arg) > 0:
-                    type_ = type(arg[0])
-                else:
-                    type_ = type(arg)
-
-                encoding = channels_mapping.get(type_, None)
-                if encoding is None:
-                    raise NotImplementedError("non-keyword arg of type {}"
-                                              "".format(type(arg)))
-                if encoding in kwargs:
-                    raise ValueError("encode: encoding {} specified twice"
-                                     "".format(encoding))
-                kwargs[encoding] = arg
-
-        def _wrap_in_channel_class(obj, prop):
-            clsname = prop.title()
-
-            if isinstance(obj, core.SchemaBase):
-                return obj
-
-            if isinstance(obj, six.string_types):
-                obj = {'shorthand': obj}
-
-            if isinstance(obj, (list, tuple)):
-                return [_wrap_in_channel_class(subobj, prop) for subobj in obj]
-
-            if 'value' in obj:
-                clsname += 'Value'
-
-            try:
-                cls = getattr(channels, clsname)
-            except AttributeError:
-                raise ValueError("Unrecognized encoding channel '{}'".format(prop))
-
-            try:
-                # Don't force validation here; some objects won't be valid until
-                # they're created in the context of a chart.
-                return cls.from_dict(obj, validate=False)
-            except jsonschema.ValidationError:
-                # our attempts at finding the correct class have failed
-                return obj
-
-        for prop, obj in list(kwargs.items()):
-            try:
-                condition = obj['condition']
-            except (KeyError, TypeError):
-                pass
-            else:
-                if condition is not Undefined:
-                    obj['condition'] = _wrap_in_channel_class(condition, prop)
-            kwargs[prop] = _wrap_in_channel_class(obj, prop)
-
-
-        copy = self.copy(deep=True, ignore=['data'])
+        # Convert args to kwargs based on their types.
+        kwargs = utils.infer_encoding_types(args, kwargs, channels)
 
         # get a copy of the dict representation of the previous encoding
-        encoding = copy.encoding
-        if encoding is Undefined:
-            encoding = {}
-        elif isinstance(encoding, dict):
-            pass
-        else:
+        copy = self.copy(deep=['encoding'])
+        encoding = copy._get('encoding', {})
+        if isinstance(encoding, core.VegaLiteSchema):
             encoding = {k: v for k, v in encoding._kwds.items()
                         if v is not Undefined}
 

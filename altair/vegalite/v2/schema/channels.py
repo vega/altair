@@ -197,6 +197,7 @@ class Color(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "color"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -222,6 +223,7 @@ class ColorValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "color"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
@@ -324,6 +326,7 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "column"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
@@ -403,6 +406,7 @@ class Detail(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "detail"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -528,6 +532,7 @@ class Fill(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "fill"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -553,6 +558,7 @@ class FillValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "fill"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(FillValue, self).__init__(value=value, condition=condition, **kwds)
@@ -634,6 +640,7 @@ class Href(FieldChannelMixin, core.FieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "href"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -658,6 +665,7 @@ class HrefValue(ValueChannelMixin, core.ValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "href"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
@@ -733,6 +741,7 @@ class Key(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "key"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -810,6 +819,7 @@ class Latitude(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "latitude"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -887,6 +897,7 @@ class Latitude2(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "latitude2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -964,6 +975,7 @@ class Longitude(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "longitude"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1041,6 +1053,7 @@ class Longitude2(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "longitude2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1166,6 +1179,7 @@ class Opacity(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "opacity"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -1191,6 +1205,7 @@ class OpacityValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "opacity"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1267,6 +1282,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "order"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -1288,6 +1304,7 @@ class OrderValue(ValueChannelMixin, core.ValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "order"
 
     def __init__(self, value, **kwds):
         super(OrderValue, self).__init__(value=value, **kwds)
@@ -1390,6 +1407,7 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "row"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
@@ -1517,6 +1535,7 @@ class Shape(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "shape"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -1542,6 +1561,7 @@ class ShapeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "shape"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1665,6 +1685,7 @@ class Size(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "size"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -1690,6 +1711,7 @@ class SizeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "size"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1813,6 +1835,7 @@ class Stroke(FieldChannelMixin, core.MarkPropFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "stroke"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -1838,6 +1861,7 @@ class StrokeValue(ValueChannelMixin, core.MarkPropValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "stroke"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
@@ -1922,6 +1946,7 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "text"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
@@ -1947,6 +1972,7 @@ class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "text"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(TextValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2031,6 +2057,7 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "tooltip"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, format=Undefined, timeUnit=Undefined, title=Undefined, type=Undefined,
@@ -2056,6 +2083,7 @@ class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
         A constant value in visual domain.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "tooltip"
 
     def __init__(self, value, condition=Undefined, **kwds):
         super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
@@ -2199,6 +2227,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
@@ -2222,6 +2251,7 @@ class XValue(ValueChannelMixin, core.ValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x"
 
     def __init__(self, value, **kwds):
         super(XValue, self).__init__(value=value, **kwds)
@@ -2297,6 +2327,7 @@ class X2(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2318,6 +2349,7 @@ class X2Value(ValueChannelMixin, core.ValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "x2"
 
     def __init__(self, value, **kwds):
         super(X2Value, self).__init__(value=value, **kwds)
@@ -2461,6 +2493,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, scale=Undefined, sort=Undefined, stack=Undefined, timeUnit=Undefined,
@@ -2484,6 +2517,7 @@ class YValue(ValueChannelMixin, core.ValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y"
 
     def __init__(self, value, **kwds):
         super(YValue, self).__init__(value=value, **kwds)
@@ -2559,6 +2593,7 @@ class Y2(FieldChannelMixin, core.FieldDef):
         <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y2"
 
     def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, type=Undefined, **kwds):
@@ -2580,6 +2615,7 @@ class Y2Value(ValueChannelMixin, core.ValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
+    _encoding_name = "y2"
 
     def __init__(self, value, **kwds):
         super(Y2Value, self).__init__(value=value, **kwds)
