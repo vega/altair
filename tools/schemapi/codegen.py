@@ -75,6 +75,8 @@ class SchemaGenerator(object):
     rootschemarepr : CodeSnippet or object, optional
         An object whose repr will be used in the place of the explicit root
         schema.
+    **kwargs : dict
+        Additional keywords for derived classes.
     """
     schema_class_template = textwrap.dedent('''
     class {classname}({basename}):
@@ -95,7 +97,7 @@ class SchemaGenerator(object):
 
     def __init__(self, classname, schema, rootschema=None,
                  basename='SchemaBase', schemarepr=None, rootschemarepr=None,
-                 nodefault=()):
+                 nodefault=(), **kwargs):
         self.classname = classname
         self.schema = schema
         self.rootschema = rootschema
@@ -103,6 +105,7 @@ class SchemaGenerator(object):
         self.schemarepr = schemarepr
         self.rootschemarepr = rootschemarepr
         self.nodefault = nodefault
+        self.kwargs = kwargs
 
     def schema_class(self):
         """Generate code for a schema class"""
@@ -120,7 +123,8 @@ class SchemaGenerator(object):
             schema=schemarepr,
             rootschema=rootschemarepr,
             docstring=self.docstring(indent=4),
-            init_code=self.init_code(indent=4)
+            init_code=self.init_code(indent=4),
+            **self.kwargs
         )
 
     def docstring(self, indent=0):
