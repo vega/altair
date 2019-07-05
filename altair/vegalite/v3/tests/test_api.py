@@ -188,6 +188,16 @@ def test_selection_to_dict():
     ).to_dict()
 
 
+def test_selection_expression():
+    selection = alt.selection_single(fields=['value'])
+
+    assert isinstance(selection.value, alt.expr.Expression)
+    assert selection.value.to_dict() == '{0}.value'.format(selection.name)
+
+    assert isinstance(selection['value'], alt.expr.Expression)
+    assert selection['value'].to_dict() == "{0}['value']".format(selection.name)
+
+
 @pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
 @pytest.mark.skipif('not selenium')
 def test_save(format, basic_chart):

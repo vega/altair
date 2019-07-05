@@ -186,6 +186,12 @@ class Selection(object):
         if isinstance(other, Selection):
             other = other.name
         return core.SelectionOr(**{'or': [self.name, other]})
+   
+    def __getattr__(self, field_name):
+        return expr.core.GetAttrExpression(self.name, field_name)
+
+    def __getitem__(self, field_name):
+        return expr.core.GetItemExpression(self.name, field_name)
 
 
 # ------------------------------------------------------------------------
