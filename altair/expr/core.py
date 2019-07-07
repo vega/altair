@@ -7,10 +7,10 @@ class DatumType(object):
         raise ValueError("must use datum.attribute")
 
     def __getattr__(self, attr):
-        return ValueExpression(attr)
+        return GetAttrExpression("datum", attr)
 
     def __getitem__(self, attr):
-        return GetItemExpression(attr)
+        return GetItemExpression("datum", attr)
 
 
 datum = DatumType()
@@ -169,17 +169,17 @@ class ConstExpression(Expression):
         return str(self.name)
 
 
-class ValueExpression(Expression):
-    def __init__(self, name):
-        super(ValueExpression, self).__init__(name=name)
+class GetAttrExpression(Expression):
+    def __init__(self, group, name):
+        super(GetAttrExpression, self).__init__(group=group, name=name)
 
     def __repr__(self):
-        return "datum.{}".format(self.name)
+        return "{}.{}".format(self.group, self.name)
 
 
 class GetItemExpression(Expression):
-    def __init__(self, name):
-        super(GetItemExpression, self).__init__(name=name)
+    def __init__(self, group, name):
+        super(GetItemExpression, self).__init__(group=group, name=name)
 
     def __repr__(self):
-        return "datum['{}']".format(self.name)
+        return "{}['{}']".format(self.group, self.name)

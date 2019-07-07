@@ -411,6 +411,43 @@ With interval selections, the ``bind`` property can be set to the value of ``"sc
     )
     
 
+Selection Values in Expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Selection values can be accessed directly and used in expressions that affect the
+chart. For example, here we create a slider to choose a cutoff value, and color
+points based on whether they are smaller or larger than the value:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+   import numpy as np
+
+   rand = np.random.RandomState(42)
+
+   df = pd.DataFrame({
+       'xval': range(100),
+       'yval': rand.randn(100).cumsum()
+   })
+
+   slider = alt.binding_range(min=0, max=100, step=1, name='cutoff:')
+   selector = alt.selection_single(name="SelectorName", fields=['cutoff'],
+                                   bind=slider, init={'cutoff': 50})
+ 
+   alt.Chart(df).mark_point().encode(
+       x='xval',
+       y='yval',
+       color=alt.condition(
+           alt.datum.xval < selector.cutoff,
+           alt.value('red'), alt.value('blue')
+       )
+   ).add_selection(
+       selector
+   )
+
+Selector values can be similarly used anywhere that expressions are valid, for
+example, in a :ref:`user-guide-calculate-transform` or a
+:ref:`user-guide-filter-transform`.
 
 
 Further Examples
