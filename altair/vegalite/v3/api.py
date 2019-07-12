@@ -559,18 +559,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                 setattr(copy, key, val)
         return copy
 
-    def add_selection(self, *selections):
-        """Add one or more selections to the chart."""
-        if not selections:
-            return self
-        copy = self.copy(deep=['selection'])
-        if copy.selection is Undefined:
-            copy.selection = {}
-
-        for s in selections:
-            copy.selection[s.name] = s.selection
-        return copy
-
     def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
                 parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
@@ -1561,6 +1549,18 @@ class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         # As a last resort, try using the Root vegalite object
         return core.Root.from_dict(dct, validate)
 
+    def add_selection(self, *selections):
+        """Add one or more selections to the chart."""
+        if not selections:
+            return self
+        copy = self.copy(deep=['selection'])
+        if copy.selection is Undefined:
+            copy.selection = {}
+
+        for s in selections:
+            copy.selection[s.name] = s.selection
+        return copy
+
     def interactive(self, name=None, bind_x=True, bind_y=True):
         """Make chart axes scales interactive
 
@@ -1669,6 +1669,13 @@ class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
+    def add_selection(self, *selections):
+        """Add one or more selections to the chart."""
+        if not selections or self.spec is Undefined:
+            return self
+        copy = self.copy()
+        copy.spec = copy.spec.add_selection(*selections)
+        return copy
 
 def repeat(repeater='repeat'):
     """Tie a channel to the row or column within a repeated chart
@@ -1712,6 +1719,15 @@ class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
         copy |= other
         return copy
 
+    def add_selection(self, *selections):
+        """Add one or more selections to all subcharts."""
+        if not selections or not self.concat:
+            return self
+        copy = self.copy()
+        copy.concat = [chart.add_selection(*selections)
+                       for chart in copy.concat]
+        return copy
+
 
 def concat(*charts, **kwargs):
     """Concatenate charts horizontally"""
@@ -1737,6 +1753,15 @@ class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     def __or__(self, other):
         copy = self.copy(deep=['hconcat'])
         copy |= other
+        return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selections to all subcharts."""
+        if not selections or not self.hconcat:
+            return self
+        copy = self.copy()
+        copy.hconcat = [chart.add_selection(*selections)
+                        for chart in copy.hconcat]
         return copy
 
 
@@ -1766,6 +1791,15 @@ class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
         copy &= other
         return copy
 
+    def add_selection(self, *selections):
+        """Add one or more selections to all subcharts."""
+        if not selections or not self.vconcat:
+            return self
+        copy = self.copy()
+        copy.vconcat = [chart.add_selection(*selections)
+                        for chart in copy.vconcat]
+        return copy
+
 
 def vconcat(*charts, **kwargs):
     """Concatenate charts vertically"""
@@ -1773,8 +1807,7 @@ def vconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelLayerSpec)
-class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
-                 core.TopLevelLayerSpec):
+class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
@@ -1829,6 +1862,15 @@ class LayerChart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
         copy.layer[0] = copy.layer[0].interactive(name=name, bind_x=bind_x, bind_y=bind_y)
         return copy
 
+    def add_selection(self, *selections):
+        """Add one or more selections to all subcharts."""
+        if not selections or not self.layer:
+            return self
+        copy = self.copy()
+        copy.layer = [chart.add_selection(*selections)
+                        for chart in copy.layer]
+        return copy
+
 
 def layer(*charts, **kwargs):
     """layer multiple charts"""
@@ -1863,6 +1905,14 @@ class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
         """
         copy = self.copy(deep=False)
         copy.spec = copy.spec.interactive(name=name, bind_x=bind_x, bind_y=bind_y)
+        return copy
+
+    def add_selection(self, *selections):
+        """Add one or more selections to the chart."""
+        if not selections or self.spec is Undefined:
+            return self
+        copy = self.copy()
+        copy.spec = copy.spec.add_selection(*selections)
         return copy
 
 
