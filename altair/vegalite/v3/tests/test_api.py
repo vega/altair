@@ -457,20 +457,6 @@ def test_resolve_methods():
     assert chart.resolve == alt.Resolve(scale=alt.ScaleResolveMap(x='shared', y='independent'))
 
 
-def test_layer_marks():
-    chart = alt.LayerChart().mark_point()
-    assert chart.mark == 'point'
-
-    chart = alt.LayerChart().mark_point(color='red')
-    assert chart.mark == alt.MarkDef('point', color='red')
-
-    chart = alt.LayerChart().mark_bar()
-    assert chart.mark == 'bar'
-
-    chart = alt.LayerChart().mark_bar(color='green')
-    assert chart.mark == alt.MarkDef('bar', color='green')
-
-
 def test_layer_encodings():
     chart = alt.LayerChart().encode(x='column:Q')
     assert chart.encoding.x == alt.X(shorthand='column:Q')
@@ -488,6 +474,34 @@ def test_add_selection():
     )
     expected = {s.name: s.selection for s in selections}
     assert chart.selection == expected
+
+
+def test_repeat_add_selections():
+    base = alt.Chart('data.csv').mark_point()
+    selection = alt.selection_single()
+    chart1 = base.add_selection(selection).repeat(list('ABC'))
+    chart2 = base.repeat(list('ABC')).add_selection(selection)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+def test_facet_add_selections():
+    base = alt.Chart('data.csv').mark_point()
+    selection = alt.selection_single()
+    chart1 = base.add_selection(selection).facet('val:Q')
+    chart2 = base.facet('val:Q').add_selection(selection)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+@pytest.mark.parametrize('charttype', [alt.layer, alt.concat, alt.hconcat, alt.vconcat])
+def test_compound_add_selections(charttype):
+    base = alt.Chart('data.csv').mark_point()
+    selection = alt.selection_single()
+    chart1 = charttype(
+        base.add_selection(selection),
+        base.add_selection(selection)
+    )
+    chart2 = charttype(base, base).add_selection(selection)
+    assert chart1.to_dict() == chart2.to_dict()
 
 
 def test_selection_property():
