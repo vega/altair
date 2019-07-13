@@ -2,8 +2,22 @@
 
 ## Version 3.2.0 (unreleased)
 ### Enhancements
+
+- Selector values can be used directly in expressions (#1599)
+- Top-level chart repr is now truncated to improve readability of error
+  messages (#1572)
+
 ### Bug Fixes
+
+- top-level ``add_selection`` methods now delegate to sub-charts. Previously
+  they produced invalid charts (#1607)
+- Unsupported ``mark_*()`` methods removed from LayerChart (#1607)
+- New encoding channels are properly parsed (#1597)
+- Data context is propagated when encodings are specified as lists (#1587)
+
 ### Backward-Incompatible Changes
+- ``alt.LayerChart`` no longer has ``mark_*()`` methods, because they never 
+  produced valid chart specifications) (#1607)
 
 ## Version 3.1.0  (Released June 6, 2019)
 
