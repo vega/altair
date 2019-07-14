@@ -1,10 +1,12 @@
 import types
 
+import numpy as np
 import pandas as pd
 import pytest
 
 import altair as alt
 from .. import parse_shorthand, update_nested, infer_encoding_types
+from ..core import infer_dtype
 
 FAKE_CHANNELS_MODULE = '''
 """Fake channels module for utility tests."""
@@ -53,6 +55,16 @@ class StrokeWidthValue(ValueChannel, schemapi.SchemaBase):
     _schema = {}
     _encoding_name = "strokeWidth"
 '''
+
+@pytest.mark.parametrize('value,expected_type', [
+    ([1, 2, 3], 'integer'),
+    ([1.0, 2.0, 3.0], 'floating'),
+    ([1, 2.0, 3], 'mixed-integer-float'),
+    (['a', 'b', 'c'], 'string'),
+    (['a', 'b', np.nan], 'mixed'),
+])
+def test_infer_dtype(value, expected_type):
+    assert infer_dtype(value) == expected_type
 
 
 def test_parse_shorthand():
