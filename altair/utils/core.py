@@ -14,16 +14,33 @@ import six
 import pandas as pd
 import numpy as np
 
-try:
-    from pandas.api.types import infer_dtype
-    # keywords required; see https://github.com/altair-viz/altair/issues/1314
-    _infer_dtype_kwds = {'skipna': False}
-except ImportError:
-    # This is the appropriate import for pandas < 0.20.0
-    from pandas.lib import infer_dtype
-    _infer_dtype_kwds = {}  # no keywords allowed in pandas < 0.20
-
 from .schemapi import SchemaBase, Undefined
+
+try:
+    from pandas.api.types import infer_dtype as _infer_dtype
+except ImportError:
+    # Import for pandas < 0.20.0
+    from pandas.lib import infer_dtype as _infer_dtype
+
+
+def infer_dtype(value):
+    """Infer the dtype of the value.
+
+    This is a compatibility function for pandas infer_dtype,
+    with skipna=False regardless of the pandas version.
+    """
+    if not hasattr(infer_dtype, '_supports_skipna'):
+        try:
+            _ = _infer_dtype([1], skipna=False)
+        except TypeError:
+            # pandas < 0.21.0 don't support skipna keyword
+            infer_dtype._supports_skipna = False
+        else:
+            infer_dtype._supports_skipna = True
+    if infer_dtype._supports_skipna:
+        return _infer_dtype(value, skipna=False)
+    else:
+        return _infer_dtype(value)
 
 
 TYPECODE_MAP = {'ordinal': 'O',
@@ -74,7 +91,7 @@ def infer_vegalite_type(data):
     data: Numpy array or Pandas Series
     """
     # Otherwise, infer based on the dtype of the input
-    typ = infer_dtype(data, **_infer_dtype_kwds)
+    typ = infer_dtype(data)
 
     # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
 
