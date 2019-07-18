@@ -36,11 +36,6 @@ If this is the problem, then use ``pip install -U jupyterlab`` or
 ``conda update jupyterlab`` to update JupyterLab, depending on how you
 first installed it.
 
-*Note: until JupyterLab 1.0 is released, you will need to use the 1.0
-pre-release with Altair 3. This can be installed using*::
-
-    $ pip install -U --pre jupyterlab
-
 .. _jupyterlab-vega-lite-2-object:
 
 JupyterLab: VegaLite 2 Object
