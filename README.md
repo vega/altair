@@ -1,4 +1,4 @@
-# Altair <a href="https://vega.github.io/vega-lite/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
+# Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 [![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
