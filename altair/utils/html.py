@@ -58,7 +58,7 @@ requirejs.config({
     });
     {%- endif %}
     require(['vega-embed'], function(vegaEmbed){
-    {%- endif %}
+    {%- endif %} (function(root) {
       var spec = {{ spec }};
       var embedOpt = {{ embed_options }};
 
@@ -73,6 +73,7 @@ requirejs.config({
       const el = document.getElementById('{{ output_div }}');
       vegaEmbed("#{{ output_div }}", spec, embedOpt)
         .catch(error => showError(el, error));
+    })(window);
     {%- if requirejs %}
     });
     {%- endif %}
