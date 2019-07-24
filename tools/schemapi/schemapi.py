@@ -474,13 +474,20 @@ class _FromDict(object):
     @staticmethod
     def _passthrough(*args, **kwds):
         """An object constructor that simply passes arguments through"""
-        if kwds and not args:
+        if args and kwds:
+            raise ValueError("Cannot specify both positional and keyword arguments.")
+        elif not args:
             return kwds
-        elif args and not kwds:
-            assert len(args) == 1
+        elif len(args) == 1:
             return args[0]
         else:
-            raise ValueError("Both args and kwds supplied")
+            raise ValueError("Must have 0 or 1 positional argument.")
+
+    def _get_constructor(self, schema):
+        # TODO: do something more than simply selecting the last match?
+        hash_ = self.hash_schema(schema)
+        matches = self.class_dict[hash_]
+        return matches[-1] if matches else self._passthrough
 
     def from_dict(self, constructor, root, schema, dct):
         """Construct an object from a dict representation"""
@@ -488,18 +495,10 @@ class _FromDict(object):
         #       could do this by passing the schema rather than cls.
         schema = root.resolve_references(schema)
 
-        def _get_constructor(schema):
-            # TODO: do something more than simply selecting the last match?
-            hash_ = self.hash_schema(schema)
-            matches = self.class_dict[hash_]
-            constructor = matches[-1] if matches else self._passthrough
-            schema = root.resolve_references(schema)
-            return constructor, schema
-
         if 'anyOf' in schema or 'oneOf' in schema:
             schemas = schema.get('anyOf', []) + schema.get('oneOf', [])
             for this_schema in schemas:
-                this_constructor, this_schema = _get_constructor(this_schema)
+                this_constructor = self._get_constructor(this_schema)
                 try:
                     root.validate(dct, this_schema)
                 except jsonschema.ValidationError:
@@ -513,15 +512,15 @@ class _FromDict(object):
             kwds = {}
             for key, val in dct.items():
                 if key in props:
-                    prop_constructor, prop_schema = _get_constructor(props[key])
-                    val = self.from_dict(prop_constructor, root, prop_schema, val)
+                    prop_constructor = self._get_constructor(props[key])
+                    val = self.from_dict(prop_constructor, root, props[key], val)
                 kwds[key] = val
             return constructor(**kwds)
 
         elif isinstance(dct, list):
             if 'items' in schema:
                 item_schema = schema['items']
-                item_constructor, item_schema = _get_constructor(item_schema)
+                item_constructor = self._get_constructor(item_schema)
             else:
                 item_schema = {}
                 item_constructor = self._passthrough
