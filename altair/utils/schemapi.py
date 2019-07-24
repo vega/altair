@@ -474,33 +474,22 @@ class _FromDict(object):
                     return val
             return hash(_freeze(schema))
 
-    @staticmethod
-    def _passthrough(*args, **kwds):
-        """An object constructor that simply passes arguments through"""
-        if args and kwds:
-            raise ValueError("Cannot specify both positional and keyword arguments.")
-        elif not args:
-            return kwds
-        elif len(args) == 1:
-            return args[0]
-        else:
-            raise ValueError("Must have 0 or 1 positional argument.")
-
     def from_dict(self, dct, cls=None, schema=None, rootschema=None):
         """Construct an object from a dict representation"""
+        if (schema is None) == (cls is None):
+            raise ValueError("Must provide either cls or schema, but not both.")
         if schema is None:
-            if cls is None:
-                raise ValueError("Must specify either cls or schema.")
-            elif not (isinstance(cls, type) and issubclass(cls, SchemaBase)):
-                raise ValueError("schema must be specified if cls is not a SchemaBase object.")
-            schema = cls._schema
+            schema = schema or cls._schema
             rootschema = rootschema or cls._rootschema
         rootschema = rootschema or schema
+
+        def _passthrough(*args, **kwds):
+            return args[0] if args else kwds
 
         if cls is None:
             # TODO: do something more than simply selecting the last match?
             matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[-1] if matches else self._passthrough
+            cls = matches[-1] if matches else _passthrough
         schema = _resolve_references(schema, rootschema)
 
         if 'anyOf' in schema or 'oneOf' in schema:
