@@ -51,6 +51,15 @@ def _todict(obj, validate, context):
         return obj
 
 
+def _resolve_references(schema, root=None):
+    """Resolve schema references."""
+    resolver = jsonschema.RefResolver.from_schema(root or schema)
+    while '$ref' in schema:
+        with resolver.resolving(schema['$ref']) as resolved:
+            schema = resolved
+    return schema
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
     def __init__(self, obj, err):
@@ -356,8 +365,7 @@ class SchemaBase(object):
         if _wrapper_classes is None:
             _wrapper_classes = cls._default_wrapper_classes()
         converter = _FromDict(_wrapper_classes)
-        return converter.from_dict(constructor=cls, root=cls,
-                                   schema=cls._schema, dct=dct)
+        return converter.from_dict(dct, cls)
 
     @classmethod
     def from_json(cls, json_string, validate=True, **kwargs):
@@ -394,15 +402,10 @@ class SchemaBase(object):
     @classmethod
     def resolve_references(cls, schema=None):
         """Resolve references in the context of this object's schema or root schema."""
-        if schema is None:
-            schema = cls._schema
-        resolver = jsonschema.RefResolver.from_schema(cls._rootschema
-                                                      or cls._schema
-                                                      or schema)
-        while '$ref' in schema:
-            with resolver.resolving(schema['$ref']) as resolved:
-                schema = resolved
-        return schema
+        return _resolve_references(
+            schema=(schema or cls._schema),
+            root=(cls._rootschema or cls._schema or schema)
+        )
 
     @classmethod
     def validate_property(cls, name, value, schema=None):
@@ -467,41 +470,37 @@ class _FromDict(object):
                     return val
             return hash(_freeze(schema))
 
-    @staticmethod
-    def _passthrough(*args, **kwds):
-        """An object constructor that simply passes arguments through"""
-        if kwds and not args:
-            return kwds
-        elif args and not kwds:
-            assert len(args) == 1
-            return args[0]
-        else:
-            raise ValueError("Both args and kwds supplied")
-
-    def from_dict(self, constructor, root, schema, dct):
+    def from_dict(self, dct, cls=None, schema=None, rootschema=None):
         """Construct an object from a dict representation"""
-        # TODO: introspect lists, objects, etc. when they don't have a wrapper.
-        #       could do this by passing the schema rather than cls.
-        schema = root.resolve_references(schema)
+        if (schema is None) == (cls is None):
+            raise ValueError("Must provide either cls or schema, but not both.")
+        if schema is None:
+            schema = schema or cls._schema
+            rootschema = rootschema or cls._rootschema
+        rootschema = rootschema or schema
 
-        def _get_constructor(schema):
+        def _passthrough(*args, **kwds):
+            return args[0] if args else kwds
+
+        if cls is None:
             # TODO: do something more than simply selecting the last match?
-            hash_ = self.hash_schema(schema)
-            matches = self.class_dict[hash_]
-            constructor = matches[-1] if matches else self._passthrough
-            schema = root.resolve_references(schema)
-            return constructor, schema
+            matches = self.class_dict[self.hash_schema(schema)]
+            cls = matches[-1] if matches else _passthrough
+        schema = _resolve_references(schema, rootschema)
 
         if 'anyOf' in schema or 'oneOf' in schema:
             schemas = schema.get('anyOf', []) + schema.get('oneOf', [])
-            for this_schema in schemas:
-                this_constructor, this_schema = _get_constructor(this_schema)
+            for possible_schema in schemas:
+                resolver = jsonschema.RefResolver.from_schema(rootschema)
                 try:
-                    root.validate(dct, this_schema)
+                    jsonschema.validate(dct, possible_schema, resolver=resolver)
                 except jsonschema.ValidationError:
                     continue
                 else:
-                    return self.from_dict(this_constructor, root, this_schema, dct)
+                    return self.from_dict(dct,
+                        schema=possible_schema,
+                        rootschema=rootschema,
+                    )
 
         if isinstance(dct, dict):
             # TODO: handle schemas for additionalProperties/patternProperties
@@ -509,20 +508,19 @@ class _FromDict(object):
             kwds = {}
             for key, val in dct.items():
                 if key in props:
-                    prop_constructor, prop_schema = _get_constructor(props[key])
-                    val = self.from_dict(prop_constructor, root, prop_schema, val)
+                    val = self.from_dict(val,
+                        schema=props[key],
+                        rootschema=rootschema
+                    )
                 kwds[key] = val
-            return constructor(**kwds)
+            return cls(**kwds)
 
         elif isinstance(dct, list):
-            if 'items' in schema:
-                item_schema = schema['items']
-                item_constructor, item_schema = _get_constructor(item_schema)
-            else:
-                item_schema = {}
-                item_constructor = self._passthrough
-            dct = [self.from_dict(item_constructor, root, item_schema, val)
-                   for val in dct]
-            return constructor(dct)
+            item_schema = schema.get('items', {})
+            dct = [self.from_dict(val,
+                       schema=item_schema,
+                       rootschema=rootschema
+                   ) for val in dct]
+            return cls(dct)
         else:
-            return constructor(dct)
+            return cls(dct)
