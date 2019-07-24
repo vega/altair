@@ -51,6 +51,15 @@ def _todict(obj, validate, context):
         return obj
 
 
+def _resolve_references(schema, root=None):
+    """Resolve schema references."""
+    resolver = jsonschema.RefResolver.from_schema(root or schema)
+    while '$ref' in schema:
+        with resolver.resolving(schema['$ref']) as resolved:
+            schema = resolved
+    return schema
+
+
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
     def __init__(self, obj, err):
@@ -394,15 +403,10 @@ class SchemaBase(object):
     @classmethod
     def resolve_references(cls, schema=None):
         """Resolve references in the context of this object's schema or root schema."""
-        if schema is None:
-            schema = cls._schema
-        resolver = jsonschema.RefResolver.from_schema(cls._rootschema
-                                                      or cls._schema
-                                                      or schema)
-        while '$ref' in schema:
-            with resolver.resolving(schema['$ref']) as resolved:
-                schema = resolved
-        return schema
+        return _resolve_references(
+            schema=(schema or cls._schema),
+            root=(cls._rootschema or cls._schema or schema)
+        )
 
     @classmethod
     def validate_property(cls, name, value, schema=None):
