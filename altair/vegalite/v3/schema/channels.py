@@ -13,48 +13,50 @@ from altair.utils import parse_shorthand
 class FieldChannelMixin(object):
     def to_dict(self, validate=True, ignore=(), context=None):
         context = context or {}
+        shorthand = self._get('shorthand')
+        field = self._get('field')
 
-        if self.shorthand is not Undefined and self.field is not Undefined:
-            raise ValueError("both shorthand and field specified in {}"
-                             "".format(self.__class__.__name__))
+        if shorthand is not Undefined and field is not Undefined:
+            raise ValueError("{} specifies both shorthand={} and field={}. "
+                             "".format(self.__class__.__name__, shorthand, field))
 
-        if self.shorthand is Undefined:
-            kwds = {}
-        elif isinstance(self.shorthand, (tuple, list)):
+        if isinstance(shorthand, (tuple, list)):
             # If given a list of shorthands, then transform it to a list of classes
             kwds = self._kwds.copy()
             kwds.pop('shorthand')
-            return [self.__class__(shorthand, **kwds).to_dict(validate=validate, ignore=ignore, context=context)
-                    for shorthand in self.shorthand]
-        elif isinstance(self.shorthand, six.string_types):
-            kwds = parse_shorthand(self.shorthand, data=context.get('data', None))
-            type_allowed = 'type' in self._kwds
-            type_in_shorthand = 'type' in kwds
-            type_defined = self._kwds.get('type', Undefined) is not Undefined
-            if not type_allowed:
+            return [self.__class__(sh, **kwds).to_dict(validate=validate, ignore=ignore, context=context)
+                    for sh in shorthand]
+
+        if shorthand is Undefined:
+            parsed = {}
+        elif isinstance(shorthand, six.string_types):
+            parsed = parse_shorthand(shorthand, data=context.get('data', None))
+            type_required = 'type' in self._kwds
+            type_in_shorthand = 'type' in parsed
+            type_defined_explicitly = self._get('type') is not Undefined
+            if not type_required:
                 # Secondary field names don't require a type argument in VegaLite 3+.
                 # We still parse it out of the shorthand, but drop it here.
-                kwds.pop('type', None)
-            elif not (type_in_shorthand or type_defined):
-                # If type is allowed, then it is required.
+                parsed.pop('type', None)
+            elif not (type_in_shorthand or type_defined_explicitly):
                 if isinstance(context.get('data', None), pd.DataFrame):
                     raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be inferred because it does not "
-                                     "match any column in the data.".format(self.shorthand))
+                                     "match any column in the data.".format(shorthand))
                 else:
                     raise ValueError("{} encoding field is specified without a type; "
                                      "the type cannot be automatically inferred because "
                                      "the data is not specified as a pandas.DataFrame."
-                                     "".format(self.shorthand))
+                                     "".format(shorthand))
         else:
             # Shorthand is not a string; we pass the definition to field,
             # and do not do any parsing.
-            kwds = {'field': self.shorthand}
+            parsed = {'field': shorthand}
 
         # Set shorthand to Undefined, because it's not part of the base schema.
         self.shorthand = Undefined
-        self._kwds.update({k: v for k, v in kwds.items()
-                           if self._kwds.get(k, Undefined) is Undefined})
+        self._kwds.update({k: v for k, v in parsed.items()
+                           if self._get(k) is Undefined})
         return super(FieldChannelMixin, self).to_dict(
             validate=validate,
             ignore=ignore,
