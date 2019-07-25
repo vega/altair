@@ -149,7 +149,7 @@ class AreaConfig(VegaLiteSchema):
         The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
 
         **Default value:** ``"middle"``
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -208,6 +208,8 @@ class AreaConfig(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -350,7 +352,7 @@ class AreaConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -360,16 +362,30 @@ class AreaConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    y : float
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     """
     _schema = {'$ref': '#/definitions/AreaConfig'}
     _rootschema = Root._schema
@@ -378,26 +394,28 @@ class AreaConfig(VegaLiteSchema):
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 href=Undefined, interpolate=Undefined, limit=Undefined, line=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, point=Undefined,
+                 height=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 line=Undefined, opacity=Undefined, order=Undefined, orient=Undefined, point=Undefined,
                  radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
                  strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
                  strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
                  strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
+                 tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 y2=Undefined, **kwds):
         super(AreaConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
-                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                                         interpolate=interpolate, limit=limit, line=line,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, height=height,
+                                         href=href, interpolate=interpolate, limit=limit, line=line,
                                          opacity=opacity, order=order, orient=orient, point=point,
                                          radius=radius, shape=shape, size=size, stroke=stroke,
                                          strokeCap=strokeCap, strokeDash=strokeDash,
                                          strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
                                          strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, tooltip=tooltip, x=x, x2=x2, y=y, y2=y2, **kwds)
+                                         theta=theta, tooltip=tooltip, width=width, x=x, x2=x2, y=y,
+                                         y2=y2, **kwds)
 
 
 class ArgmaxDef(VegaLiteSchema):
@@ -769,7 +787,7 @@ class Axis(VegaLiteSchema):
     values : anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`))
         Explicitly set the visible axis tick values.
     zindex : float
-        A non-positive integer indicating z-index of the axis.
+        A non-negative integer indicating the z-index of the axis.
         If zindex is 0, axes should be drawn behind all chart elements.
         To put them in front, use ``"zindex = 1"``.
 
@@ -1128,264 +1146,6 @@ class AxisResolveMap(VegaLiteSchema):
         super(AxisResolveMap, self).__init__(x=x, y=y, **kwds)
 
 
-class BarConfig(VegaLiteSchema):
-    """BarConfig schema wrapper
-
-    Mapping(required=[])
-
-    Attributes
-    ----------
-
-    align : :class:`Align`
-        The horizontal alignment of the text. One of ``"left"``, ``"right"``, ``"center"``.
-    angle : float
-        The rotation angle of the text, in degrees.
-    baseline : :class:`TextBaseline`
-        The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
-
-        **Default value:** ``"middle"``
-    binSpacing : float
-        Offset between bars for binned field.  Ideal value for this is either 0 (Preferred
-        by statisticians) or 1 (Vega-Lite Default, D3 example style).
-
-        **Default value:** ``1``
-    color : string
-        Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
-        ``color`` and will override ``color``.
-
-        **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
-        ``"#4682b4"``
-
-        **Note:** This property cannot be used in a `style config
-        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    continuousBandSize : float
-        The default size of the bars on continuous scales.
-
-        **Default value:** ``5``
-    cornerRadius : float
-        The radius in pixels of rounded rectangle corners.
-
-        **Default value:** ``0``
-    cursor : :class:`Cursor`
-        The mouse cursor used over the mark. Any valid `CSS cursor type
-        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    dir : :class:`Dir`
-        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
-        (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.
-
-        **Default value:** ``"ltr"``
-    discreteBandSize : float
-        The default size of the bars with discrete dimensions.  If unspecified, the default
-        size is  ``bandSize-1``,
-        which provides 1 pixel offset between bars.
-    dx : float
-        The horizontal offset, in pixels, between the text label and its anchor point. The
-        offset is applied after rotation by the *angle* property.
-    dy : float
-        The vertical offset, in pixels, between the text label and its anchor point. The
-        offset is applied after rotation by the *angle* property.
-    ellipsis : string
-        The ellipsis string for text truncated in response to the limit parameter.
-
-        **Default value:** ``"…"``
-    fill : :class:`Color`
-        Default Fill Color.  This has higher precedence than ``config.color``
-
-        **Default value:** (None)
-    fillOpacity : float
-        The fill opacity (value between [0,1]).
-
-        **Default value:** ``1``
-    filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke color.
-
-        **Default value:** ``false`` for ``point``, ``line`` and ``rule`` ; otherwise,
-        ``true``.
-
-        **Note:** This property cannot be used in a `style config
-        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : string
-        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
-    fontSize : float
-        The font size, in pixels.
-    fontStyle : :class:`FontStyle`
-        The font style (e.g., ``"italic"`` ).
-    fontWeight : :class:`FontWeight`
-        The font weight.
-        This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
-        ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
-        ).
-    href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
-    interpolate : :class:`Interpolate`
-        The line interpolation method to use for line and area marks. One of the following:
-
-
-        * ``"linear"`` : piecewise linear segments, as in a polyline.
-        * ``"linear-closed"`` : close the linear segments to form a polygon.
-        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
-          function.
-        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
-          step function.
-        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
-          step function.
-        * ``"basis"`` : a B-spline, with control point duplication on the ends.
-        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
-        * ``"basis-closed"`` : a closed B-spline, as in a loop.
-        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
-        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
-          but will intersect other control points.
-        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
-        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
-          straighten the spline.
-        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
-    limit : float
-        The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.
-
-        **Default value:** ``0``, indicating no limit
-    opacity : float
-        The overall opacity (value between [0,1]).
-
-        **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
-        ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
-        For line and trail marks, this ``order`` property can be set to ``null`` or
-        ``false`` to make the lines use the original order in the data sources.
-    orient : :class:`Orientation`
-        The orientation of a non-stacked bar, tick, area, and line charts.
-        The value is either horizontal (default) or vertical.
-
-
-        * For bar, rule and tick, this determines whether the size of the bar and tick
-        should be applied to x or y dimension.
-        * For area, this property determines the orient property of the Vega output.
-        * For line and trail marks, this property determines the sort order of the points in
-          the line
-        if ``config.sortLineBy`` is not specified.
-        For stacked charts, this is always determined by the orientation of the stack;
-        therefore explicitly specified value will be ignored.
-    radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the ``x`` and ``y`` properties.
-    shape : string
-        Shape of the point marks. Supported values include:
-
-
-        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
-          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
-          ``"triangle-left"``.
-        * the line symbol ``"stroke"``
-        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
-        * a custom `SVG path string
-          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
-          sizing, custom shape paths should be defined within a square bounding box with
-          coordinates ranging from -1 to 1 along both the x and y dimensions.)
-
-        **Default value:** ``"circle"``
-    size : float
-        Default size for marks.
-
-
-        * For ``point`` / ``circle`` / ``square``, this represents the pixel area of the
-          marks. For example: in the case of circles, the radius is determined in part by
-          the square root of the size value.
-        * For ``bar``, this represents the band size of the bar, in pixels.
-        * For ``text``, this represents the font size, in pixels.
-
-        **Default value:** ``30`` for point, circle, square marks; ``rangeStep`` - 1 for bar
-        marks with discrete dimensions; ``5`` for bar marks with continuous dimensions;
-        ``11`` for text marks.
-    stroke : :class:`Color`
-        Default Stroke Color.  This has higher precedence than ``config.color``
-
-        **Default value:** (None)
-    strokeCap : :class:`StrokeCap`
-        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
-        ``"square"``.
-
-        **Default value:** ``"square"``
-    strokeDash : List(float)
-        An array of alternating stroke, space lengths for creating dashed or dotted lines.
-    strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : :class:`StrokeJoin`
-        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
-
-        **Default value:** ``"miter"``
-    strokeMiterLimit : float
-        The miter limit at which to bevel a line join.
-    strokeOpacity : float
-        The stroke opacity (value between [0,1]).
-
-        **Default value:** ``1``
-    strokeWidth : float
-        The stroke width, in pixels.
-    tension : float
-        Depending on the interpolation type, sets the tension parameter (for line and area
-        marks).
-    text : string
-        Placeholder text if the ``text`` channel is not specified
-    theta : float
-        Polar coordinate angle, in radians, of the text label from the origin determined by
-        the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
-        ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
-        radians, with ``0`` indicating "north".
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
-        The tooltip text string to show upon mouse hover or an object defining which fields
-        should the tooltip be derived from.
-
-
-        * If ``tooltip`` is ``{"content": "encoding"}``, then all fields from ``encoding``
-          will be used.
-        * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
-          highlighted data point will be used.
-        * If set to ``null``, then no tooltip will be used.
-    x : float
-        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
-        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    y : float
-        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
-        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    """
-    _schema = {'$ref': '#/definitions/BarConfig'}
-    _rootschema = Root._schema
-
-    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
-                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
-                 cursor=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
-                 dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, x=Undefined,
-                 x2=Undefined, y=Undefined, y2=Undefined, **kwds):
-        super(BarConfig, self).__init__(align=align, angle=angle, baseline=baseline,
-                                        binSpacing=binSpacing, color=color,
-                                        continuousBandSize=continuousBandSize,
-                                        cornerRadius=cornerRadius, cursor=cursor, dir=dir,
-                                        discreteBandSize=discreteBandSize, dx=dx, dy=dy,
-                                        ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
-                                        filled=filled, font=font, fontSize=fontSize,
-                                        fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                                        interpolate=interpolate, limit=limit, opacity=opacity,
-                                        order=order, orient=orient, radius=radius, shape=shape,
-                                        size=size, stroke=stroke, strokeCap=strokeCap,
-                                        strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                        strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
-                                        strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                        tension=tension, text=text, theta=theta, tooltip=tooltip, x=x,
-                                        x2=x2, y=y, y2=y2, **kwds)
-
-
 class BaseLegendLayout(VegaLiteSchema):
     """BaseLegendLayout schema wrapper
 
@@ -1474,6 +1234,8 @@ class BaseMarkConfig(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -1582,16 +1344,30 @@ class BaseMarkConfig(VegaLiteSchema):
         radians, with ``0`` indicating "north".
     tooltip : Mapping(required=[])
         The tooltip text to show upon mouse hover.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    y : float
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     """
     _schema = {'$ref': '#/definitions/BaseMarkConfig'}
     _rootschema = Root._schema
@@ -1599,26 +1375,27 @@ class BaseMarkConfig(VegaLiteSchema):
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, cornerRadius=Undefined,
                  cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
                  fill=Undefined, fillOpacity=Undefined, font=Undefined, fontSize=Undefined,
-                 fontStyle=Undefined, fontWeight=Undefined, href=Undefined, interpolate=Undefined,
-                 limit=Undefined, opacity=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, x=Undefined,
-                 x2=Undefined, y=Undefined, y2=Undefined, **kwds):
+                 fontStyle=Undefined, fontWeight=Undefined, height=Undefined, href=Undefined,
+                 interpolate=Undefined, limit=Undefined, opacity=Undefined, orient=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 y2=Undefined, **kwds):
         super(BaseMarkConfig, self).__init__(align=align, angle=angle, baseline=baseline,
                                              cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                              dy=dy, ellipsis=ellipsis, fill=fill,
                                              fillOpacity=fillOpacity, font=font, fontSize=fontSize,
-                                             fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                                             interpolate=interpolate, limit=limit, opacity=opacity,
-                                             orient=orient, radius=radius, shape=shape, size=size,
-                                             stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                             strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                             strokeMiterLimit=strokeMiterLimit,
+                                             fontStyle=fontStyle, fontWeight=fontWeight, height=height,
+                                             href=href, interpolate=interpolate, limit=limit,
+                                             opacity=opacity, orient=orient, radius=radius, shape=shape,
+                                             size=size, stroke=stroke, strokeCap=strokeCap,
+                                             strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                             strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                              strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                              tension=tension, text=text, theta=theta, tooltip=tooltip,
-                                             x=x, x2=x2, y=y, y2=y2, **kwds)
+                                             width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
 class BaseTitleConfig(VegaLiteSchema):
@@ -1954,7 +1731,7 @@ class BoxPlotDef(VegaLiteSchema):
 
     clip : boolean
         Whether a composite mark be clipped to the enclosing group’s width and height.
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -2013,7 +1790,7 @@ class BrushConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    fill : string
+    fill : :class:`Color`
         The fill color of the interval mark.
 
         **Default value:** ``#333333``
@@ -2021,7 +1798,7 @@ class BrushConfig(VegaLiteSchema):
         The fill opacity of the interval mark (a value between 0 and 1).
 
         **Default value:** ``0.125``
-    stroke : string
+    stroke : :class:`Color`
         The stroke color of the interval mark.
 
         **Default value:** ``#ffffff``
@@ -2069,13 +1846,47 @@ class CalculateTransform(VegaLiteSchema):
 class Color(VegaLiteSchema):
     """Color schema wrapper
 
-    string
+    anyOf(:class:`ColorName`, :class:`HexColor`, string)
     """
     _schema = {'$ref': '#/definitions/Color'}
     _rootschema = Root._schema
 
+    def __init__(self, *args, **kwds):
+        super(Color, self).__init__(*args, **kwds)
+
+
+class ColorName(VegaLiteSchema):
+    """ColorName schema wrapper
+
+    enum('black', 'silver', 'gray', 'white', 'maroon', 'red', 'purple', 'fuchsia', 'green',
+    'lime', 'olive', 'yellow', 'navy', 'blue', 'teal', 'aqua', 'orange', 'aliceblue',
+    'antiquewhite', 'aquamarine', 'azure', 'beige', 'bisque', 'blanchedalmond', 'blueviolet',
+    'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate', 'coral', 'cornflowerblue',
+    'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod', 'darkgray',
+    'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange',
+    'darkorchid', 'darkred', 'darksalmon', 'darkseagreen', 'darkslateblue', 'darkslategray',
+    'darkslategrey', 'darkturquoise', 'darkviolet', 'deeppink', 'deepskyblue', 'dimgray',
+    'dimgrey', 'dodgerblue', 'firebrick', 'floralwhite', 'forestgreen', 'gainsboro',
+    'ghostwhite', 'gold', 'goldenrod', 'greenyellow', 'grey', 'honeydew', 'hotpink',
+    'indianred', 'indigo', 'ivory', 'khaki', 'lavender', 'lavenderblush', 'lawngreen',
+    'lemonchiffon', 'lightblue', 'lightcoral', 'lightcyan', 'lightgoldenrodyellow', 'lightgray',
+    'lightgreen', 'lightgrey', 'lightpink', 'lightsalmon', 'lightseagreen', 'lightskyblue',
+    'lightslategray', 'lightslategrey', 'lightsteelblue', 'lightyellow', 'limegreen', 'linen',
+    'magenta', 'mediumaquamarine', 'mediumblue', 'mediumorchid', 'mediumpurple',
+    'mediumseagreen', 'mediumslateblue', 'mediumspringgreen', 'mediumturquoise',
+    'mediumvioletred', 'midnightblue', 'mintcream', 'mistyrose', 'moccasin', 'navajowhite',
+    'oldlace', 'olivedrab', 'orangered', 'orchid', 'palegoldenrod', 'palegreen',
+    'paleturquoise', 'palevioletred', 'papayawhip', 'peachpuff', 'peru', 'pink', 'plum',
+    'powderblue', 'rosybrown', 'royalblue', 'saddlebrown', 'salmon', 'sandybrown', 'seagreen',
+    'seashell', 'sienna', 'skyblue', 'slateblue', 'slategray', 'slategrey', 'snow',
+    'springgreen', 'steelblue', 'tan', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat',
+    'whitesmoke', 'yellowgreen', 'rebeccapurple')
+    """
+    _schema = {'$ref': '#/definitions/ColorName'}
+    _rootschema = Root._schema
+
     def __init__(self, *args):
-        super(Color, self).__init__(*args)
+        super(ColorName, self).__init__(*args)
 
 
 class Encoding(VegaLiteSchema):
@@ -2221,13 +2032,15 @@ class Encoding(VegaLiteSchema):
         The tooltip text to show upon mouse hover.
     x : anyOf(:class:`PositionFieldDef`, :class:`XValueDef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
+        specified ``x2`` or ``width``.
 
-        The ``value`` of this channel can be a number or a string ``"width"``.
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     x2 : anyOf(:class:`SecondaryFieldDef`, :class:`XValueDef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
-        The ``value`` of this channel can be a number or a string ``"width"``.
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     xError : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Error value of x coordinates for error specified ``"errorbar"`` and ``"errorband"``.
     xError2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
@@ -2235,13 +2048,15 @@ class Encoding(VegaLiteSchema):
         ``"errorband"``.
     y : anyOf(:class:`PositionFieldDef`, :class:`YValueDef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
+        specified ``y2`` or ``height``.
 
-        The ``value`` of this channel can be a number or a string ``"height"``.
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     y2 : anyOf(:class:`SecondaryFieldDef`, :class:`YValueDef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
-        The ``value`` of this channel can be a number or a string ``"height"``.
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     yError : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Error value of y coordinates for error specified ``"errorbar"`` and ``"errorband"``.
     yError2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
@@ -2328,66 +2143,6 @@ class CompositionConfig(VegaLiteSchema):
 
     def __init__(self, columns=Undefined, spacing=Undefined, **kwds):
         super(CompositionConfig, self).__init__(columns=columns, spacing=spacing, **kwds)
-
-
-class ConditionOnlyDefMarkPropFieldDef(VegaLiteSchema):
-    """ConditionOnlyDefMarkPropFieldDef schema wrapper
-
-    Mapping(required=[condition])
-    A Condition<ValueDef | FieldDef> only definition.
-
-    Attributes
-    ----------
-
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ConditionOnlyDef<MarkPropFieldDef>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, **kwds):
-        super(ConditionOnlyDefMarkPropFieldDef, self).__init__(condition=condition, **kwds)
-
-
-class ConditionOnlyDefMarkPropFieldDefTypeForShape(VegaLiteSchema):
-    """ConditionOnlyDefMarkPropFieldDefTypeForShape schema wrapper
-
-    Mapping(required=[condition])
-    A Condition<ValueDef | FieldDef> only definition.
-
-    Attributes
-    ----------
-
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ConditionOnlyDef<MarkPropFieldDef<TypeForShape>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, **kwds):
-        super(ConditionOnlyDefMarkPropFieldDefTypeForShape, self).__init__(condition=condition, **kwds)
-
-
-class ConditionOnlyDefTextFieldDef(VegaLiteSchema):
-    """ConditionOnlyDefTextFieldDef schema wrapper
-
-    Mapping(required=[condition])
-    A Condition<ValueDef | FieldDef> only definition.
-
-    Attributes
-    ----------
-
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ConditionOnlyDef<TextFieldDef>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, **kwds):
-        super(ConditionOnlyDefTextFieldDef, self).__init__(condition=condition, **kwds)
 
 
 class ConditionalMarkPropFieldDef(VegaLiteSchema):
@@ -2509,11 +2264,17 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2532,26 +2293,35 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -2562,6 +2332,9 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -2592,6 +2365,9 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2599,6 +2375,9 @@ class ConditionalPredicateMarkPropFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -2677,11 +2456,17 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2700,26 +2485,35 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -2730,6 +2524,9 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -2760,6 +2557,9 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2767,6 +2567,9 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -2846,11 +2649,17 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2869,20 +2678,26 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -2917,6 +2732,9 @@ class ConditionalPredicateTextFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3059,11 +2877,17 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3082,26 +2906,35 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -3112,6 +2945,9 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -3142,6 +2978,9 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3149,6 +2988,9 @@ class ConditionalSelectionMarkPropFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3229,11 +3071,17 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3252,26 +3100,35 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -3282,6 +3139,9 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -3312,6 +3172,9 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3319,6 +3182,9 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3401,11 +3267,17 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3424,20 +3296,26 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -3472,6 +3350,9 @@ class ConditionalSelectionTextFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3619,7 +3500,7 @@ class Config(VegaLiteSchema):
         CSS color property to use as the background of the whole Vega-Lite view
 
         **Default value:** none (transparent)
-    bar : :class:`BarConfig`
+    bar : :class:`RectConfig`
         Bar-Specific Config
     boxplot : :class:`BoxPlotConfig`
         Box Config
@@ -3718,7 +3599,7 @@ class Config(VegaLiteSchema):
         For a full list of scale range configuration options, please see the `corresponding
         section of the scale documentation
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__.
-    rect : :class:`MarkConfig`
+    rect : :class:`RectConfig`
         Rect-Specific Config
     repeat : :class:`CompositionConfig`
         Default configuration for the ``repeat`` view composition operator
@@ -4166,7 +4047,7 @@ class ErrorBandDef(VegaLiteSchema):
 
     clip : boolean
         Whether a composite mark be clipped to the enclosing group’s width and height.
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -4288,7 +4169,7 @@ class ErrorBarDef(VegaLiteSchema):
         or a composite mark type ( ``"boxplot"``, ``"errorband"``, ``"errorbar"`` ).
     clip : boolean
         Whether a composite mark be clipped to the enclosing group’s width and height.
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -4393,11 +4274,17 @@ class FacetFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4416,20 +4303,26 @@ class FacetFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     header : :class:`Header`
         An object defining properties of a facet's header.
     sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
@@ -4465,6 +4358,9 @@ class FacetFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -4667,13 +4563,15 @@ class FacetedEncoding(VegaLiteSchema):
         The tooltip text to show upon mouse hover.
     x : anyOf(:class:`PositionFieldDef`, :class:`XValueDef`)
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
+        specified ``x2`` or ``width``.
 
-        The ``value`` of this channel can be a number or a string ``"width"``.
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     x2 : anyOf(:class:`SecondaryFieldDef`, :class:`XValueDef`)
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
-        The ``value`` of this channel can be a number or a string ``"width"``.
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     xError : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Error value of x coordinates for error specified ``"errorbar"`` and ``"errorband"``.
     xError2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
@@ -4681,13 +4579,15 @@ class FacetedEncoding(VegaLiteSchema):
         ``"errorband"``.
     y : anyOf(:class:`PositionFieldDef`, :class:`YValueDef`)
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
+        specified ``y2`` or ``height``.
 
-        The ``value`` of this channel can be a number or a string ``"height"``.
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     y2 : anyOf(:class:`SecondaryFieldDef`, :class:`YValueDef`)
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
 
-        The ``value`` of this channel can be a number or a string ``"height"``.
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     yError : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
         Error value of y coordinates for error specified ``"errorbar"`` and ``"errorband"``.
     yError2 : anyOf(:class:`SecondaryFieldDef`, :class:`NumberValueDef`)
@@ -4786,8 +4686,9 @@ class FacetedUnitSpec(VegaLiteSchema):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
         and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     encoding : :class:`FacetedEncoding`
@@ -4947,11 +4848,17 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4970,6 +4877,9 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -4984,20 +4894,26 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -5008,6 +4924,9 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -5038,6 +4957,9 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -5045,6 +4967,9 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -5125,11 +5050,17 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -5148,6 +5079,9 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -5162,20 +5096,26 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -5186,6 +5126,9 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -5216,6 +5159,9 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -5223,6 +5169,9 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -5301,11 +5250,17 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -5324,6 +5279,9 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -5338,20 +5296,26 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -5362,6 +5326,9 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -5392,6 +5359,9 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -5399,6 +5369,9 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -5481,11 +5454,17 @@ class FieldDefWithConditionTextFieldDefValue(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -5504,6 +5483,9 @@ class FieldDefWithConditionTextFieldDefValue(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
@@ -5517,14 +5499,17 @@ class FieldDefWithConditionTextFieldDefValue(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -5559,6 +5544,9 @@ class FieldDefWithConditionTextFieldDefValue(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -5636,11 +5624,17 @@ class FieldDefWithoutScale(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -5659,20 +5653,26 @@ class FieldDefWithoutScale(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -5680,6 +5680,9 @@ class FieldDefWithoutScale(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -6090,8 +6093,9 @@ class ConcatSpec(VegaLiteSchema):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
         and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -6196,8 +6200,9 @@ class FacetSpec(VegaLiteSchema):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
         and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -6258,8 +6263,9 @@ class HConcatSpec(VegaLiteSchema):
         rows or columns.
 
         **Default value:** ``false``
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -6360,8 +6366,9 @@ class RepeatSpec(VegaLiteSchema):
 
         2) Setting the ``columns`` to ``1`` is equivalent to ``vconcat`` (for ``concat`` )
         and to using the ``row`` channel (for ``facet`` and ``repeat`` ).
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -6422,8 +6429,9 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         ``"tick"``, ``"line"``,
         ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
         definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     encoding : :class:`Encoding`
@@ -6545,8 +6553,9 @@ class VConcatSpec(VegaLiteSchema):
         rows or columns.
 
         **Default value:** ``false``
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     name : string
@@ -6678,12 +6687,14 @@ class Header(VegaLiteSchema):
         The rotation angle of the header labels.
 
         **Default value:** ``0`` for column header, ``-90`` for row header.
-    labelColor : string
+    labelColor : :class:`Color`
         The color of the header label, can be in hex color code or regular color name.
     labelFont : string
         The font of the header label.
     labelFontSize : float
         The font size of the header label, in pixels.
+    labelFontStyle : :class:`FontStyle`
+        The font style of the header label.
     labelLimit : float
         The maximum length of the header label in pixels. The text value will be
         automatically truncated if the rendered size exceeds the limit.
@@ -6696,6 +6707,10 @@ class Header(VegaLiteSchema):
         The padding, in pixel, between facet header's label and the plot.
 
         **Default value:** ``10``
+    labels : boolean
+        A boolean flag indicating if labels should be included as part of the header.
+
+        **Default value:** ``true``.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -6731,12 +6746,14 @@ class Header(VegaLiteSchema):
         ``"middle"``.
 
         **Default value:** ``"middle"``
-    titleColor : string
+    titleColor : :class:`Color`
         Color of the header title, can be in hex color code or regular color name.
     titleFont : string
         Font of the header title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : float
         Font size of the header title.
+    titleFontStyle : :class:`FontStyle`
+        The font style of the header title.
     titleFontWeight : :class:`FontWeight`
         Font weight of the header title.
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
@@ -6760,22 +6777,24 @@ class Header(VegaLiteSchema):
 
     def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
                  labelAnchor=Undefined, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
-                 labelFontSize=Undefined, labelLimit=Undefined, labelOrient=Undefined,
-                 labelPadding=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined,
-                 titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined,
-                 titleFont=Undefined, titleFontSize=Undefined, titleFontWeight=Undefined,
+                 labelFontSize=Undefined, labelFontStyle=Undefined, labelLimit=Undefined,
+                 labelOrient=Undefined, labelPadding=Undefined, labels=Undefined, title=Undefined,
+                 titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
+                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
+                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
                  titleLimit=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds):
         super(Header, self).__init__(format=format, formatType=formatType, labelAlign=labelAlign,
                                      labelAnchor=labelAnchor, labelAngle=labelAngle,
                                      labelColor=labelColor, labelFont=labelFont,
-                                     labelFontSize=labelFontSize, labelLimit=labelLimit,
-                                     labelOrient=labelOrient, labelPadding=labelPadding, title=title,
+                                     labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
+                                     labelLimit=labelLimit, labelOrient=labelOrient,
+                                     labelPadding=labelPadding, labels=labels, title=title,
                                      titleAlign=titleAlign, titleAnchor=titleAnchor,
                                      titleAngle=titleAngle, titleBaseline=titleBaseline,
                                      titleColor=titleColor, titleFont=titleFont,
-                                     titleFontSize=titleFontSize, titleFontWeight=titleFontWeight,
-                                     titleLimit=titleLimit, titleOrient=titleOrient,
-                                     titlePadding=titlePadding, **kwds)
+                                     titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
+                                     titleFontWeight=titleFontWeight, titleLimit=titleLimit,
+                                     titleOrient=titleOrient, titlePadding=titlePadding, **kwds)
 
 
 class HeaderConfig(VegaLiteSchema):
@@ -6823,12 +6842,14 @@ class HeaderConfig(VegaLiteSchema):
         The rotation angle of the header labels.
 
         **Default value:** ``0`` for column header, ``-90`` for row header.
-    labelColor : string
+    labelColor : :class:`Color`
         The color of the header label, can be in hex color code or regular color name.
     labelFont : string
         The font of the header label.
     labelFontSize : float
         The font size of the header label, in pixels.
+    labelFontStyle : :class:`FontStyle`
+        The font style of the header label.
     labelLimit : float
         The maximum length of the header label in pixels. The text value will be
         automatically truncated if the rendered size exceeds the limit.
@@ -6841,6 +6862,10 @@ class HeaderConfig(VegaLiteSchema):
         The padding, in pixel, between facet header's label and the plot.
 
         **Default value:** ``10``
+    labels : boolean
+        A boolean flag indicating if labels should be included as part of the header.
+
+        **Default value:** ``true``.
     shortTimeLabels : boolean
         Whether month names and weekday names should be abbreviated.
 
@@ -6862,12 +6887,14 @@ class HeaderConfig(VegaLiteSchema):
         ``"middle"``.
 
         **Default value:** ``"middle"``
-    titleColor : string
+    titleColor : :class:`Color`
         Color of the header title, can be in hex color code or regular color name.
     titleFont : string
         Font of the header title. (e.g., ``"Helvetica Neue"`` ).
     titleFontSize : float
         Font size of the header title.
+    titleFontStyle : :class:`FontStyle`
+        The font style of the header title.
     titleFontWeight : :class:`FontWeight`
         Font weight of the header title.
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
@@ -6891,24 +6918,38 @@ class HeaderConfig(VegaLiteSchema):
 
     def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
                  labelAnchor=Undefined, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
-                 labelFontSize=Undefined, labelLimit=Undefined, labelOrient=Undefined,
-                 labelPadding=Undefined, shortTimeLabels=Undefined, title=Undefined,
-                 titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
+                 labelFontSize=Undefined, labelFontStyle=Undefined, labelLimit=Undefined,
+                 labelOrient=Undefined, labelPadding=Undefined, labels=Undefined,
+                 shortTimeLabels=Undefined, title=Undefined, titleAlign=Undefined,
+                 titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
+                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
+                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
                  titleOrient=Undefined, titlePadding=Undefined, **kwds):
         super(HeaderConfig, self).__init__(format=format, formatType=formatType, labelAlign=labelAlign,
                                            labelAnchor=labelAnchor, labelAngle=labelAngle,
                                            labelColor=labelColor, labelFont=labelFont,
-                                           labelFontSize=labelFontSize, labelLimit=labelLimit,
-                                           labelOrient=labelOrient, labelPadding=labelPadding,
+                                           labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
+                                           labelLimit=labelLimit, labelOrient=labelOrient,
+                                           labelPadding=labelPadding, labels=labels,
                                            shortTimeLabels=shortTimeLabels, title=title,
                                            titleAlign=titleAlign, titleAnchor=titleAnchor,
                                            titleAngle=titleAngle, titleBaseline=titleBaseline,
                                            titleColor=titleColor, titleFont=titleFont,
-                                           titleFontSize=titleFontSize, titleFontWeight=titleFontWeight,
-                                           titleLimit=titleLimit, titleOrient=titleOrient,
-                                           titlePadding=titlePadding, **kwds)
+                                           titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
+                                           titleFontWeight=titleFontWeight, titleLimit=titleLimit,
+                                           titleOrient=titleOrient, titlePadding=titlePadding, **kwds)
+
+
+class HexColor(VegaLiteSchema):
+    """HexColor schema wrapper
+
+    string
+    """
+    _schema = {'$ref': '#/definitions/HexColor'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(HexColor, self).__init__(*args)
 
 
 class ImputeMethod(VegaLiteSchema):
@@ -7140,11 +7181,21 @@ class IntervalSelection(VegaLiteSchema):
     ----------
 
     type : enum('interval')
+        Determines the default event processing and data query for the selection. Vega-Lite
+        currently supports three selection types:
 
+
+        * ``single`` -- to select a single discrete data value on ``click``.
+        * ``multi`` -- to select multiple discrete data value; the first value is selected
+          on ``click`` and additional values toggled on shift- ``click``.
+        * ``interval`` -- to select a continuous range of data values on ``drag``.
     bind : enum('scales')
         Establishes a two-way binding between the interval selection and the scales
         used within the same view. This allows a user to interactively pan and
         zoom the view.
+
+        **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
+        documentation.
     clear : anyOf(:class:`EventStream`, boolean)
         Clears the selection, emptying it of all values. Can be an
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
@@ -7152,25 +7203,37 @@ class IntervalSelection(VegaLiteSchema):
 
         **Default value:** ``dblclick``.
 
-        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
-        for more information.
+        **See also:** `clear <https://vega.github.io/vega-lite/docs/clear.html>`__
+        documentation.
     empty : enum('all', 'none')
         By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
+
+        **See also:** `encodings <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     fields : List(:class:`FieldName`)
         An array of field names whose values must match for a data tuple to
         fall within the selection.
-    init : :class:`SelectionInitArrayMapping`
+
+        **See also:** `fields <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
+    init : :class:`SelectionInitIntervalMapping`
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/project.html>`__ and arrays of
         initial values.
+
+        **See also:** `init <https://vega.github.io/vega-lite/docs/init.html>`__
+        documentation.
     mark : :class:`BrushConfig`
         An interval selection also adds a rectangle mark to depict the
         extents of the interval. The ``mark`` property can be used to customize the
         appearance of the mark.
+
+        **See also:** `mark <https://vega.github.io/vega-lite/docs/selection-mark.html>`__
+        documentation.
     on : :class:`EventStream`
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection.
@@ -7180,6 +7243,9 @@ class IntervalSelection(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
+
+        **See also:** `resolve
+        <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     translate : anyOf(string, boolean)
         When truthy, allows a user to interactively move an interval selection
         back-and-forth. Can be ``true``, ``false`` (to disable panning), or a
@@ -7189,6 +7255,9 @@ class IntervalSelection(VegaLiteSchema):
         **Default value:** ``true``, which corresponds to
         ``[mousedown, window:mouseup] > window:mousemove!`` which corresponds to
         clicks and dragging within an interval selection to reposition it.
+
+        **See also:** `translate <https://vega.github.io/vega-lite/docs/translate.html>`__
+        documentation.
     zoom : anyOf(string, boolean)
         When truthy, allows a user to interactively resize an interval selection.
         Can be ``true``, ``false`` (to disable zooming), or a `Vega event stream
@@ -7196,6 +7265,9 @@ class IntervalSelection(VegaLiteSchema):
         only ``wheel`` events are supported.
 
         **Default value:** ``true``, which corresponds to ``wheel!``.
+
+        **See also:** `zoom <https://vega.github.io/vega-lite/docs/zoom.html>`__
+        documentation.
     """
     _schema = {'$ref': '#/definitions/IntervalSelection'}
     _rootschema = Root._schema
@@ -7221,6 +7293,9 @@ class IntervalSelectionConfig(VegaLiteSchema):
         Establishes a two-way binding between the interval selection and the scales
         used within the same view. This allows a user to interactively pan and
         zoom the view.
+
+        **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
+        documentation.
     clear : anyOf(:class:`EventStream`, boolean)
         Clears the selection, emptying it of all values. Can be an
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
@@ -7228,25 +7303,37 @@ class IntervalSelectionConfig(VegaLiteSchema):
 
         **Default value:** ``dblclick``.
 
-        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
-        for more information.
+        **See also:** `clear <https://vega.github.io/vega-lite/docs/clear.html>`__
+        documentation.
     empty : enum('all', 'none')
         By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
+
+        **See also:** `encodings <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     fields : List(:class:`FieldName`)
         An array of field names whose values must match for a data tuple to
         fall within the selection.
-    init : :class:`SelectionInitArrayMapping`
+
+        **See also:** `fields <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
+    init : :class:`SelectionInitIntervalMapping`
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/project.html>`__ and arrays of
         initial values.
+
+        **See also:** `init <https://vega.github.io/vega-lite/docs/init.html>`__
+        documentation.
     mark : :class:`BrushConfig`
         An interval selection also adds a rectangle mark to depict the
         extents of the interval. The ``mark`` property can be used to customize the
         appearance of the mark.
+
+        **See also:** `mark <https://vega.github.io/vega-lite/docs/selection-mark.html>`__
+        documentation.
     on : :class:`EventStream`
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection.
@@ -7256,6 +7343,9 @@ class IntervalSelectionConfig(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
+
+        **See also:** `resolve
+        <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     translate : anyOf(string, boolean)
         When truthy, allows a user to interactively move an interval selection
         back-and-forth. Can be ``true``, ``false`` (to disable panning), or a
@@ -7265,6 +7355,9 @@ class IntervalSelectionConfig(VegaLiteSchema):
         **Default value:** ``true``, which corresponds to
         ``[mousedown, window:mouseup] > window:mousemove!`` which corresponds to
         clicks and dragging within an interval selection to reposition it.
+
+        **See also:** `translate <https://vega.github.io/vega-lite/docs/translate.html>`__
+        documentation.
     zoom : anyOf(string, boolean)
         When truthy, allows a user to interactively resize an interval selection.
         Can be ``true``, ``false`` (to disable zooming), or a `Vega event stream
@@ -7272,6 +7365,9 @@ class IntervalSelectionConfig(VegaLiteSchema):
         only ``wheel`` events are supported.
 
         **Default value:** ``true``, which corresponds to ``wheel!``.
+
+        **See also:** `zoom <https://vega.github.io/vega-lite/docs/zoom.html>`__
+        documentation.
     """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
     _rootschema = Root._schema
@@ -7403,6 +7499,9 @@ class LatLongFieldDef(VegaLiteSchema):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -7421,20 +7520,26 @@ class LatLongFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -7442,6 +7547,9 @@ class LatLongFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -7495,6 +7603,9 @@ class LatLongFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _schema = {'$ref': '#/definitions/LatLongFieldDef'}
     _rootschema = Root._schema
@@ -7522,8 +7633,9 @@ class LayerSpec(VegaLiteSchema):
         channels as layering facet specifications is not allowed. Instead, use the `facet
         operator <https://vega.github.io/vega-lite/docs/facet.html>`__ and place a layer
         inside a facet.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     encoding : :class:`Encoding`
@@ -7744,7 +7856,7 @@ class Legend(VegaLiteSchema):
     labelFontWeight : :class:`FontWeight`
         The font weight of legend label.
     labelLimit : float
-        Maximum allowed pixel width of axis tick labels.
+        Maximum allowed pixel width of legend tick labels.
 
         **Default value:** ``160``.
     labelOffset : float
@@ -7776,8 +7888,8 @@ class Legend(VegaLiteSchema):
         **Default value:** ``18``.
     orient : :class:`LegendOrient`
         The orientation of the legend, which determines how the legend is positioned within
-        the scene. One of ``"left"``, ``"right"``, ``"top-left"``, ``"top-right"``,
-        ``"bottom-left"``, ``"bottom-right"``, ``"none"``.
+        the scene. One of ``"left"``, ``"right"``, ``"top"``, ``"bottom"``, ``"top-left"``,
+        ``"top-right"``, ``"bottom-left"``, ``"bottom-right"``, ``"none"``.
 
         **Default value:** ``"right"``
     padding : float
@@ -7813,17 +7925,16 @@ class Legend(VegaLiteSchema):
 
         **Default value:** ``1.5``.
     symbolType : :class:`SymbolShape`
-        Default shape type (such as "circle") for legend symbols.
-        Can be one of ```"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
-        ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
-        ``"triangle-left"``.
+        The symbol shape. One of the plotting shapes ``circle`` (default), ``square``,
+        ``cross``, ``diamond``, ``triangle-up``, ``triangle-down``, ``triangle-right``, or
+        ``triangle-left``, the line symbol ``stroke``, or one of the centered directional
+        shapes ``arrow``, ``wedge``, or ``triangle``. Alternatively, a custom `SVG path
+        string <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ can be
+        provided. For correct sizing, custom shape paths should be defined within a square
+        bounding box with coordinates ranging from -1 to 1 along both the x and y
+        dimensions.
 
-
-        * In addition to a set of built-in shapes, custom shapes can be defined using `SVG
-          path strings <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__.
-        *
-        * **Default value:** ``"circle"``.
-        *
+        **Default value:** ``"circle"``.
     tickCount : float
         The desired number of tick values for quantitative legends.
     tickMinStep : float
@@ -7877,7 +7988,7 @@ class Legend(VegaLiteSchema):
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
     titleLimit : float
-        Maximum allowed pixel width of axis titles.
+        Maximum allowed pixel width of legend titles.
 
         **Default value:** ``180``.
     titleOpacity : float
@@ -7897,7 +8008,7 @@ class Legend(VegaLiteSchema):
     values : List(anyOf(float, string, boolean, :class:`DateTime`))
         Explicitly set the visible legend values.
     zindex : float
-        A non-positive integer indicating z-index of the legend.
+        A non-negative integer indicating the z-index of the legend.
         If zindex is 0, legend should be drawn behind all chart elements.
         To put them in front, use zindex = 1.
     """
@@ -8051,7 +8162,7 @@ class LegendConfig(VegaLiteSchema):
     labelFontWeight : :class:`FontWeight`
         The font weight of legend label.
     labelLimit : float
-        Maximum allowed pixel width of axis tick labels.
+        Maximum allowed pixel width of legend tick labels.
 
         **Default value:** ``160``.
     labelOffset : float
@@ -8066,7 +8177,6 @@ class LegendConfig(VegaLiteSchema):
         visible label (this often works better for log-scaled axes).
 
         **Default value:** ``"greedy"`` for ``log scales otherwise`` true`.
-        *
     labelPadding : float
         Padding in pixels between the legend and legend labels.
     labelSeparation : float
@@ -8145,17 +8255,16 @@ class LegendConfig(VegaLiteSchema):
 
         **Default value:** ``1.5``.
     symbolType : :class:`SymbolShape`
-        Default shape type (such as "circle") for legend symbols.
-        Can be one of ```"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
-        ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
-        ``"triangle-left"``.
+        The symbol shape. One of the plotting shapes ``circle`` (default), ``square``,
+        ``cross``, ``diamond``, ``triangle-up``, ``triangle-down``, ``triangle-right``, or
+        ``triangle-left``, the line symbol ``stroke``, or one of the centered directional
+        shapes ``arrow``, ``wedge``, or ``triangle``. Alternatively, a custom `SVG path
+        string <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ can be
+        provided. For correct sizing, custom shape paths should be defined within a square
+        bounding box with coordinates ranging from -1 to 1 along both the x and y
+        dimensions.
 
-
-        * In addition to a set of built-in shapes, custom shapes can be defined using `SVG
-          path strings <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__.
-        *
-        * **Default value:** ``"circle"``.
-        *
+        **Default value:** ``"circle"``.
     title : None
         Set to null to disable title for the axis, legend, or header.
     titleAlign : :class:`Align`
@@ -8182,7 +8291,7 @@ class LegendConfig(VegaLiteSchema):
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
     titleLimit : float
-        Maximum allowed pixel width of axis titles.
+        Maximum allowed pixel width of legend titles.
 
         **Default value:** ``180``.
     titleOpacity : float
@@ -8379,7 +8488,7 @@ class LineConfig(VegaLiteSchema):
         The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
 
         **Default value:** ``"middle"``
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -8438,6 +8547,8 @@ class LineConfig(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -8569,7 +8680,7 @@ class LineConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -8579,16 +8690,30 @@ class LineConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    y : float
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     """
     _schema = {'$ref': '#/definitions/LineConfig'}
     _rootschema = Root._schema
@@ -8597,26 +8722,28 @@ class LineConfig(VegaLiteSchema):
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
-                 order=Undefined, orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                 size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 height=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 opacity=Undefined, order=Undefined, orient=Undefined, point=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined,
                  y2=Undefined, **kwds):
         super(LineConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
-                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                                         interpolate=interpolate, limit=limit, opacity=opacity,
-                                         order=order, orient=orient, point=point, radius=radius,
-                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
-                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
-                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, tooltip=tooltip, x=x,
-                                         x2=x2, y=y, y2=y2, **kwds)
+                                         fontStyle=fontStyle, fontWeight=fontWeight, height=height,
+                                         href=href, interpolate=interpolate, limit=limit,
+                                         opacity=opacity, order=order, orient=orient, point=point,
+                                         radius=radius, shape=shape, size=size, stroke=stroke,
+                                         strokeCap=strokeCap, strokeDash=strokeDash,
+                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
+                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
+                                         strokeWidth=strokeWidth, tension=tension, text=text,
+                                         theta=theta, tooltip=tooltip, width=width, x=x, x2=x2, y=y,
+                                         y2=y2, **kwds)
 
 
 class LocalMultiTimeUnit(VegaLiteSchema):
@@ -8862,7 +8989,7 @@ class MarkConfig(VegaLiteSchema):
         The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
 
         **Default value:** ``"middle"``
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -8921,6 +9048,8 @@ class MarkConfig(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -9037,7 +9166,7 @@ class MarkConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -9047,16 +9176,30 @@ class MarkConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    y : float
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     """
     _schema = {'$ref': '#/definitions/MarkConfig'}
     _rootschema = Root._schema
@@ -9065,26 +9208,26 @@ class MarkConfig(VegaLiteSchema):
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
-                 order=Undefined, orient=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined,
-                 y2=Undefined, **kwds):
+                 height=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
+                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, width=Undefined,
+                 x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
         super(MarkConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
-                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                                         interpolate=interpolate, limit=limit, opacity=opacity,
-                                         order=order, orient=orient, radius=radius, shape=shape,
-                                         size=size, stroke=stroke, strokeCap=strokeCap,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, height=height,
+                                         href=href, interpolate=interpolate, limit=limit,
+                                         opacity=opacity, order=order, orient=orient, radius=radius,
+                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
                                          strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                                          strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
-                                         tension=tension, text=text, theta=theta, tooltip=tooltip, x=x,
-                                         x2=x2, y=y, y2=y2, **kwds)
+                                         tension=tension, text=text, theta=theta, tooltip=tooltip,
+                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
 class MarkDef(VegaLiteSchema):
@@ -9115,7 +9258,7 @@ class MarkDef(VegaLiteSchema):
         **Default value:** ``1``
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -9174,6 +9317,8 @@ class MarkDef(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -9334,7 +9479,7 @@ class MarkDef(VegaLiteSchema):
         Thickness of the tick mark.
 
         **Default value:**  ``1``
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -9344,20 +9489,34 @@ class MarkDef(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     x2Offset : float
         Offset for x2-position.
     xOffset : float
         Offset for x-position.
-    y : float
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     y2Offset : float
         Offset for y2-position.
     yOffset : float
@@ -9370,13 +9529,14 @@ class MarkDef(VegaLiteSchema):
                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
                  cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
                  fill=Undefined, fillOpacity=Undefined, filled=Undefined, font=Undefined,
-                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, href=Undefined,
-                 interpolate=Undefined, limit=Undefined, line=Undefined, opacity=Undefined,
-                 order=Undefined, orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
-                 size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
-                 strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                 text=Undefined, theta=Undefined, thickness=Undefined, tooltip=Undefined, x=Undefined,
+                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, height=Undefined,
+                 href=Undefined, interpolate=Undefined, limit=Undefined, line=Undefined,
+                 opacity=Undefined, order=Undefined, orient=Undefined, point=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, thickness=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
                  x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
                  y2Offset=Undefined, yOffset=Undefined, **kwds):
         super(MarkDef, self).__init__(type=type, align=align, angle=angle, baseline=baseline,
@@ -9384,16 +9544,17 @@ class MarkDef(VegaLiteSchema):
                                       cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx, dy=dy,
                                       ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                       filled=filled, font=font, fontSize=fontSize, fontStyle=fontStyle,
-                                      fontWeight=fontWeight, href=href, interpolate=interpolate,
-                                      limit=limit, line=line, opacity=opacity, order=order,
-                                      orient=orient, point=point, radius=radius, shape=shape, size=size,
-                                      stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                      strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                      strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
-                                      strokeWidth=strokeWidth, style=style, tension=tension, text=text,
-                                      theta=theta, thickness=thickness, tooltip=tooltip, x=x, x2=x2,
-                                      x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                                      yOffset=yOffset, **kwds)
+                                      fontWeight=fontWeight, height=height, href=href,
+                                      interpolate=interpolate, limit=limit, line=line, opacity=opacity,
+                                      order=order, orient=orient, point=point, radius=radius,
+                                      shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                      strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                      strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                                      strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style,
+                                      tension=tension, text=text, theta=theta, thickness=thickness,
+                                      tooltip=tooltip, width=width, x=x, x2=x2, x2Offset=x2Offset,
+                                      xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset, yOffset=yOffset,
+                                      **kwds)
 
 
 class Month(VegaLiteSchema):
@@ -9417,7 +9578,14 @@ class MultiSelection(VegaLiteSchema):
     ----------
 
     type : enum('multi')
+        Determines the default event processing and data query for the selection. Vega-Lite
+        currently supports three selection types:
 
+
+        * ``single`` -- to select a single discrete data value on ``click``.
+        * ``multi`` -- to select multiple discrete data value; the first value is selected
+          on ``click`` and additional values toggled on shift- ``click``.
+        * ``interval`` -- to select a continuous range of data values on ``drag``.
     clear : anyOf(:class:`EventStream`, boolean)
         Clears the selection, emptying it of all values. Can be an
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
@@ -9425,27 +9593,36 @@ class MultiSelection(VegaLiteSchema):
 
         **Default value:** ``dblclick``.
 
-        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
-        for more information.
+        **See also:** `clear <https://vega.github.io/vega-lite/docs/clear.html>`__
+        documentation.
     empty : enum('all', 'none')
         By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
+
+        **See also:** `encodings <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     fields : List(:class:`FieldName`)
         An array of field names whose values must match for a data tuple to
         fall within the selection.
+
+        **See also:** `fields <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     init : anyOf(:class:`SelectionInitMapping`, List(:class:`SelectionInitMapping`))
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/project.html>`__ and an initial
         value (or array of values).
+
+        **See also:** `init <https://vega.github.io/vega-lite/docs/init.html>`__
+        documentation.
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.
 
-        See the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`__
-        documentation for more information.
+        **See also:** `nearest <https://vega.github.io/vega-lite/docs/nearest.html>`__
+        documentation.
     on : :class:`EventStream`
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection.
@@ -9455,6 +9632,9 @@ class MultiSelection(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
+
+        **See also:** `resolve
+        <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     toggle : anyOf(string, boolean)
         Controls whether data values should be toggled or only ever inserted into
         multi selections. Can be ``true``, ``false`` (for insertion only), or a
@@ -9463,8 +9643,8 @@ class MultiSelection(VegaLiteSchema):
         **Default value:** ``true``, which corresponds to ``event.shiftKey`` (i.e.,
         data values are toggled when a user interacts with the shift-key pressed).
 
-        See the `toggle transform <https://vega.github.io/vega-lite/docs/toggle.html>`__
-        documentation for more information.
+        **See also:** `toggle <https://vega.github.io/vega-lite/docs/toggle.html>`__
+        documentation.
     """
     _schema = {'$ref': '#/definitions/MultiSelection'}
     _rootschema = Root._schema
@@ -9492,27 +9672,36 @@ class MultiSelectionConfig(VegaLiteSchema):
 
         **Default value:** ``dblclick``.
 
-        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
-        for more information.
+        **See also:** `clear <https://vega.github.io/vega-lite/docs/clear.html>`__
+        documentation.
     empty : enum('all', 'none')
         By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
+
+        **See also:** `encodings <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     fields : List(:class:`FieldName`)
         An array of field names whose values must match for a data tuple to
         fall within the selection.
+
+        **See also:** `fields <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     init : anyOf(:class:`SelectionInitMapping`, List(:class:`SelectionInitMapping`))
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/project.html>`__ and an initial
         value (or array of values).
+
+        **See also:** `init <https://vega.github.io/vega-lite/docs/init.html>`__
+        documentation.
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.
 
-        See the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`__
-        documentation for more information.
+        **See also:** `nearest <https://vega.github.io/vega-lite/docs/nearest.html>`__
+        documentation.
     on : :class:`EventStream`
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection.
@@ -9522,6 +9711,9 @@ class MultiSelectionConfig(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
+
+        **See also:** `resolve
+        <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     toggle : anyOf(string, boolean)
         Controls whether data values should be toggled or only ever inserted into
         multi selections. Can be ``true``, ``false`` (for insertion only), or a
@@ -9530,8 +9722,8 @@ class MultiSelectionConfig(VegaLiteSchema):
         **Default value:** ``true``, which corresponds to ``event.shiftKey`` (i.e.,
         data values are toggled when a user interacts with the shift-key pressed).
 
-        See the `toggle transform <https://vega.github.io/vega-lite/docs/toggle.html>`__
-        documentation for more information.
+        **See also:** `toggle <https://vega.github.io/vega-lite/docs/toggle.html>`__
+        documentation.
     """
     _schema = {'$ref': '#/definitions/MultiSelectionConfig'}
     _rootschema = Root._schema
@@ -9630,11 +9822,17 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -9653,6 +9851,9 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -9667,20 +9868,26 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -9691,6 +9898,9 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -9721,6 +9931,9 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -9728,6 +9941,9 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -9764,16 +9980,25 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
 class NumericValueDefWithCondition(VegaLiteSchema):
     """NumericValueDefWithCondition schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
+    List(:class:`ConditionalNumberValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/NumericValueDefWithCondition'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(NumericValueDefWithCondition, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(NumericValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
 class OrderFieldDef(VegaLiteSchema):
@@ -9817,11 +10042,17 @@ class OrderFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -9840,20 +10071,26 @@ class OrderFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
     timeUnit : :class:`TimeUnit`
@@ -9863,6 +10100,9 @@ class OrderFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -9935,7 +10175,7 @@ class OverlayMarkDef(VegaLiteSchema):
         **Default value:** ``"middle"``
     clip : boolean
         Whether a mark be clipped to the enclosing group’s width and height.
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -9994,6 +10234,8 @@ class OverlayMarkDef(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -10124,7 +10366,7 @@ class OverlayMarkDef(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -10134,20 +10376,34 @@ class OverlayMarkDef(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
     x2Offset : float
         Offset for x2-position.
     xOffset : float
         Offset for x-position.
-    y : float
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     y2Offset : float
         Offset for y2-position.
     yOffset : float
@@ -10160,30 +10416,31 @@ class OverlayMarkDef(VegaLiteSchema):
                  color=Undefined, cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined,
                  dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
                  filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined,
-                 x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined,
-                 y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                 fontWeight=Undefined, height=Undefined, href=Undefined, interpolate=Undefined,
+                 limit=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, style=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                 x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                 yOffset=Undefined, **kwds):
         super(OverlayMarkDef, self).__init__(align=align, angle=angle, baseline=baseline, clip=clip,
                                              color=color, cornerRadius=cornerRadius, cursor=cursor,
                                              dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                                              fillOpacity=fillOpacity, filled=filled, font=font,
                                              fontSize=fontSize, fontStyle=fontStyle,
-                                             fontWeight=fontWeight, href=href, interpolate=interpolate,
-                                             limit=limit, opacity=opacity, order=order, orient=orient,
-                                             radius=radius, shape=shape, size=size, stroke=stroke,
-                                             strokeCap=strokeCap, strokeDash=strokeDash,
-                                             strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                             strokeMiterLimit=strokeMiterLimit,
+                                             fontWeight=fontWeight, height=height, href=href,
+                                             interpolate=interpolate, limit=limit, opacity=opacity,
+                                             order=order, orient=orient, radius=radius, shape=shape,
+                                             size=size, stroke=stroke, strokeCap=strokeCap,
+                                             strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                             strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                              strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                              style=style, tension=tension, text=text, theta=theta,
-                                             tooltip=tooltip, x=x, x2=x2, x2Offset=x2Offset,
-                                             xOffset=xOffset, y=y, y2=y2, y2Offset=y2Offset,
-                                             yOffset=yOffset, **kwds)
+                                             tooltip=tooltip, width=width, x=x, x2=x2,
+                                             x2Offset=x2Offset, xOffset=xOffset, y=y, y2=y2,
+                                             y2Offset=y2Offset, yOffset=yOffset, **kwds)
 
 
 class Padding(VegaLiteSchema):
@@ -10226,7 +10483,6 @@ class PartsMixinsBoxPlotPart(VegaLiteSchema):
     """PartsMixinsBoxPlotPart schema wrapper
 
     Mapping(required=[])
-    Make all properties in T optional
 
     Attributes
     ----------
@@ -10255,7 +10511,6 @@ class PartsMixinsErrorBandPart(VegaLiteSchema):
     """PartsMixinsErrorBandPart schema wrapper
 
     Mapping(required=[])
-    Make all properties in T optional
 
     Attributes
     ----------
@@ -10276,7 +10531,6 @@ class PartsMixinsErrorBarPart(VegaLiteSchema):
     """PartsMixinsErrorBarPart schema wrapper
 
     Mapping(required=[])
-    Make all properties in T optional
 
     Attributes
     ----------
@@ -10334,17 +10588,26 @@ class PositionFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     axis : anyOf(:class:`Axis`, None)
         An object defining properties of axis's gridlines, ticks and labels.
         If ``null``, the axis for the encoding channel will be removed.
 
         **Default value:** If undefined, default `axis properties
         <https://vega.github.io/vega-lite/docs/axis.html>`__ are applied.
+
+        **See also:** `axis <https://vega.github.io/vega-lite/docs/axis.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -10363,26 +10626,35 @@ class PositionFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     impute : :class:`ImputeParams`
         An object defining the properties of the Impute Operation to be applied.
         The field value of the other positional channel is taken as ``key`` of the
         ``Impute`` Operation.
         The field of the ``color`` channel if specified is used as ``groupby`` of the
         ``Impute`` Operation.
+
+        **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -10393,6 +10665,9 @@ class PositionFieldDef(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -10423,6 +10698,9 @@ class PositionFieldDef(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     stack : anyOf(:class:`StackOffset`, None, boolean)
         Type of stacking offset if the field should be stacked.
         ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
@@ -10451,6 +10729,9 @@ class PositionFieldDef(VegaLiteSchema):
         (2) the stacked measure channel (x or y) has a linear scale;
         (3) At least one of non-position channels mapped to an unaggregated field that is
         different from x and y.  Otherwise, ``null`` by default.
+
+        **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -10458,6 +10739,9 @@ class PositionFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -10537,7 +10821,7 @@ class Projection(VegaLiteSchema):
 
     parallel : float
 
-    precision : string
+    precision : float
         Sets the threshold for the projection’s `adaptive resampling
         <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
         value corresponds to the `Douglas–Peucker distance
@@ -10623,7 +10907,7 @@ class ProjectionConfig(VegaLiteSchema):
 
     parallel : float
 
-    precision : string
+    precision : float
         Sets the threshold for the projection’s `adaptive resampling
         <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
         value corresponds to the `Douglas–Peucker distance
@@ -10683,7 +10967,7 @@ class ProjectionType(VegaLiteSchema):
 
     enum('albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant', 'conicConformal',
     'conicEqualArea', 'conicEquidistant', 'equirectangular', 'gnomonic', 'identity', 'mercator',
-    'orthographic', 'stereographic', 'transverseMercator')
+    'naturalEarth1', 'orthographic', 'stereographic', 'transverseMercator')
     """
     _schema = {'$ref': '#/definitions/ProjectionType'}
     _rootschema = Root._schema
@@ -10734,6 +11018,281 @@ class RangeConfigValue(VegaLiteSchema):
         super(RangeConfigValue, self).__init__(*args, **kwds)
 
 
+class RectConfig(VegaLiteSchema):
+    """RectConfig schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    align : :class:`Align`
+        The horizontal alignment of the text. One of ``"left"``, ``"right"``, ``"center"``.
+    angle : float
+        The rotation angle of the text, in degrees.
+    baseline : :class:`TextBaseline`
+        The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
+
+        **Default value:** ``"middle"``
+    binSpacing : float
+        Offset between bars for binned field.  Ideal value for this is either 0 (Preferred
+        by statisticians) or 1 (Vega-Lite Default, D3 example style).
+
+        **Default value:** ``1``
+    color : :class:`Color`
+        Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
+        ``color`` and will override ``color``.
+
+        **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
+        ``"#4682b4"``
+
+        **Note:** This property cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
+    continuousBandSize : float
+        The default size of the bars on continuous scales.
+
+        **Default value:** ``5``
+    cornerRadius : float
+        The radius in pixels of rounded rectangle corners.
+
+        **Default value:** ``0``
+    cursor : :class:`Cursor`
+        The mouse cursor used over the mark. Any valid `CSS cursor type
+        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
+    dir : :class:`Dir`
+        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
+        (right-to-left). This property determines on which side is truncated in response to
+        the limit parameter.
+
+        **Default value:** ``"ltr"``
+    discreteBandSize : float
+        The default size of the bars with discrete dimensions.  If unspecified, the default
+        size is  ``bandSize-1``,
+        which provides 1 pixel offset between bars.
+    dx : float
+        The horizontal offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
+    dy : float
+        The vertical offset, in pixels, between the text label and its anchor point. The
+        offset is applied after rotation by the *angle* property.
+    ellipsis : string
+        The ellipsis string for text truncated in response to the limit parameter.
+
+        **Default value:** ``"…"``
+    fill : :class:`Color`
+        Default Fill Color.  This has higher precedence than ``config.color``
+
+        **Default value:** (None)
+    fillOpacity : float
+        The fill opacity (value between [0,1]).
+
+        **Default value:** ``1``
+    filled : boolean
+        Whether the mark's color should be used as fill color instead of stroke color.
+
+        **Default value:** ``false`` for ``point``, ``line`` and ``rule`` ; otherwise,
+        ``true``.
+
+        **Note:** This property cannot be used in a `style config
+        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
+    font : string
+        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
+    fontSize : float
+        The font size, in pixels.
+    fontStyle : :class:`FontStyle`
+        The font style (e.g., ``"italic"`` ).
+    fontWeight : :class:`FontWeight`
+        The font weight.
+        This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
+        ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
+        ).
+    height : float
+        Height of the marks.
+    href : string
+        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
+    interpolate : :class:`Interpolate`
+        The line interpolation method to use for line and area marks. One of the following:
+
+
+        * ``"linear"`` : piecewise linear segments, as in a polyline.
+        * ``"linear-closed"`` : close the linear segments to form a polygon.
+        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
+          function.
+        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
+          step function.
+        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
+          step function.
+        * ``"basis"`` : a B-spline, with control point duplication on the ends.
+        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
+        * ``"basis-closed"`` : a closed B-spline, as in a loop.
+        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
+        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
+          but will intersect other control points.
+        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
+        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
+          straighten the spline.
+        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
+    limit : float
+        The maximum length of the text mark in pixels. The text value will be automatically
+        truncated if the rendered size exceeds the limit.
+
+        **Default value:** ``0``, indicating no limit
+    opacity : float
+        The overall opacity (value between [0,1]).
+
+        **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
+        ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
+    order : anyOf(None, boolean)
+        For line and trail marks, this ``order`` property can be set to ``null`` or
+        ``false`` to make the lines use the original order in the data sources.
+    orient : :class:`Orientation`
+        The orientation of a non-stacked bar, tick, area, and line charts.
+        The value is either horizontal (default) or vertical.
+
+
+        * For bar, rule and tick, this determines whether the size of the bar and tick
+        should be applied to x or y dimension.
+        * For area, this property determines the orient property of the Vega output.
+        * For line and trail marks, this property determines the sort order of the points in
+          the line
+        if ``config.sortLineBy`` is not specified.
+        For stacked charts, this is always determined by the orientation of the stack;
+        therefore explicitly specified value will be ignored.
+    radius : float
+        Polar coordinate radial offset, in pixels, of the text label from the origin
+        determined by the ``x`` and ``y`` properties.
+    shape : string
+        Shape of the point marks. Supported values include:
+
+
+        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
+          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
+          ``"triangle-left"``.
+        * the line symbol ``"stroke"``
+        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
+        * a custom `SVG path string
+          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
+          sizing, custom shape paths should be defined within a square bounding box with
+          coordinates ranging from -1 to 1 along both the x and y dimensions.)
+
+        **Default value:** ``"circle"``
+    size : float
+        Default size for marks.
+
+
+        * For ``point`` / ``circle`` / ``square``, this represents the pixel area of the
+          marks. For example: in the case of circles, the radius is determined in part by
+          the square root of the size value.
+        * For ``bar``, this represents the band size of the bar, in pixels.
+        * For ``text``, this represents the font size, in pixels.
+
+        **Default value:** ``30`` for point, circle, square marks; ``rangeStep`` - 1 for bar
+        marks with discrete dimensions; ``5`` for bar marks with continuous dimensions;
+        ``11`` for text marks.
+    stroke : :class:`Color`
+        Default Stroke Color.  This has higher precedence than ``config.color``
+
+        **Default value:** (None)
+    strokeCap : :class:`StrokeCap`
+        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
+        ``"square"``.
+
+        **Default value:** ``"square"``
+    strokeDash : List(float)
+        An array of alternating stroke, space lengths for creating dashed or dotted lines.
+    strokeDashOffset : float
+        The offset (in pixels) into which to begin drawing with the stroke dash array.
+    strokeJoin : :class:`StrokeJoin`
+        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
+
+        **Default value:** ``"miter"``
+    strokeMiterLimit : float
+        The miter limit at which to bevel a line join.
+    strokeOpacity : float
+        The stroke opacity (value between [0,1]).
+
+        **Default value:** ``1``
+    strokeWidth : float
+        The stroke width, in pixels.
+    tension : float
+        Depending on the interpolation type, sets the tension parameter (for line and area
+        marks).
+    text : string
+        Placeholder text if the ``text`` channel is not specified
+    theta : float
+        Polar coordinate angle, in radians, of the text label from the origin determined by
+        the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
+        ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
+        radians, with ``0`` indicating "north".
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
+        The tooltip text string to show upon mouse hover or an object defining which fields
+        should the tooltip be derived from.
+
+
+        * If ``tooltip`` is ``{"content": "encoding"}``, then all fields from ``encoding``
+          will be used.
+        * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
+          highlighted data point will be used.
+        * If set to ``null``, then no tooltip will be used.
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
+        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
+        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    y : anyOf(float, enum('height'))
+        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
+        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    """
+    _schema = {'$ref': '#/definitions/RectConfig'}
+    _rootschema = Root._schema
+
+    def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
+                 color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
+                 cursor=Undefined, dir=Undefined, discreteBandSize=Undefined, dx=Undefined,
+                 dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
+                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
+                 fontWeight=Undefined, height=Undefined, href=Undefined, interpolate=Undefined,
+                 limit=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 y2=Undefined, **kwds):
+        super(RectConfig, self).__init__(align=align, angle=angle, baseline=baseline,
+                                         binSpacing=binSpacing, color=color,
+                                         continuousBandSize=continuousBandSize,
+                                         cornerRadius=cornerRadius, cursor=cursor, dir=dir,
+                                         discreteBandSize=discreteBandSize, dx=dx, dy=dy,
+                                         ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
+                                         filled=filled, font=font, fontSize=fontSize,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, height=height,
+                                         href=href, interpolate=interpolate, limit=limit,
+                                         opacity=opacity, order=order, orient=orient, radius=radius,
+                                         shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
+                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                         tension=tension, text=text, theta=theta, tooltip=tooltip,
+                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
+
+
 class RepeatMapping(VegaLiteSchema):
     """RepeatMapping schema wrapper
 
@@ -10758,7 +11317,8 @@ class RepeatRef(VegaLiteSchema):
     """RepeatRef schema wrapper
 
     Mapping(required=[repeat])
-    Reference to a repeated value.
+    A ValueDef with optional Condition<ValueDef | FieldDef>
+     Reference to a repeated value.
 
     Attributes
     ----------
@@ -10897,6 +11457,14 @@ class Scale(VegaLiteSchema):
     Attributes
     ----------
 
+    align : float
+        The alignment of the steps within the scale range.
+
+        This value must lie in the range ``[0,1]``. A value of ``0.5`` indicates that the
+        steps should be centered within the range. A value of ``0`` or ``1`` may be used to
+        shift the bands to one side, say to position them adjacent to an axis.
+
+        **Default value:** ``0.5``
     base : float
         The logarithm base of the ``log`` scale (default ``10`` ).
     bins : List(float)
@@ -10989,7 +11557,8 @@ class Scale(VegaLiteSchema):
         **Default value:** For *continuous* scales, derived from the `scale config
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__ 's
         ``continuousPadding``.
-        For *band and point* scales, see ``paddingInner`` and ``paddingOuter``.
+        For *band and point* scales, see ``paddingInner`` and ``paddingOuter``.  By default,
+        Vega-Lite sets padding such that *width/height = number of unique values * step*.
     paddingInner : float
         The inner padding (spacing) within each band step of band scales, as a fraction of
         the step size. This value must lie in the range [0,1].
@@ -11007,6 +11576,8 @@ class Scale(VegaLiteSchema):
         **Default value:** derived from the `scale config
         <https://vega.github.io/vega-lite/docs/scale.html#config>`__ 's ``bandPaddingOuter``
         for band scales and ``pointPadding`` for point scales.
+        By default, Vega-Lite sets outer padding such that *width/height = number of unique
+        values * step*.
     range : anyOf(List(float), List(string), string)
         The range of the scale. One of:
 
@@ -11112,14 +11683,14 @@ class Scale(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/Scale'}
     _rootschema = Root._schema
 
-    def __init__(self, base=Undefined, bins=Undefined, clamp=Undefined, constant=Undefined,
-                 domain=Undefined, exponent=Undefined, interpolate=Undefined, nice=Undefined,
-                 padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined, range=Undefined,
-                 rangeStep=Undefined, round=Undefined, scheme=Undefined, type=Undefined, zero=Undefined,
-                 **kwds):
-        super(Scale, self).__init__(base=base, bins=bins, clamp=clamp, constant=constant, domain=domain,
-                                    exponent=exponent, interpolate=interpolate, nice=nice,
-                                    padding=padding, paddingInner=paddingInner,
+    def __init__(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined,
+                 constant=Undefined, domain=Undefined, exponent=Undefined, interpolate=Undefined,
+                 nice=Undefined, padding=Undefined, paddingInner=Undefined, paddingOuter=Undefined,
+                 range=Undefined, rangeStep=Undefined, round=Undefined, scheme=Undefined,
+                 type=Undefined, zero=Undefined, **kwds):
+        super(Scale, self).__init__(align=align, base=base, bins=bins, clamp=clamp, constant=constant,
+                                    domain=domain, exponent=exponent, interpolate=interpolate,
+                                    nice=nice, padding=padding, paddingInner=paddingInner,
                                     paddingOuter=paddingOuter, range=range, rangeStep=rangeStep,
                                     round=round, scheme=scheme, type=type, zero=zero, **kwds)
 
@@ -11143,7 +11714,8 @@ class ScaleConfig(VegaLiteSchema):
     bandPaddingOuter : float
         Default outer padding for ``x`` and ``y`` band-ordinal scales.
 
-        If not specified, by default, band scale's paddingOuter is paddingInner/2.
+        **Default value:** ``paddingInner/2`` (which makes *width/height = number of unique
+        values * step* )
     barBandPaddingInner : float
         Default inner padding for ``x`` and ``y`` band-ordinal scales of ``"bar"`` marks.
 
@@ -11204,7 +11776,8 @@ class ScaleConfig(VegaLiteSchema):
     pointPadding : float
         Default outer padding for ``x`` and ``y`` point-ordinal scales.
 
-        **Default value:** ``0.5``
+        **Default value:** ``0.5`` (which makes *width/height = number of unique values *
+        step* )
     quantileCount : float
         Default range cardinality for `quantile
         <https://vega.github.io/vega-lite/docs/scale.html#quantile>`__ scale.
@@ -11433,6 +12006,9 @@ class SecondaryFieldDef(VegaLiteSchema):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -11451,20 +12027,26 @@ class SecondaryFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -11472,6 +12054,9 @@ class SecondaryFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -11580,28 +12165,29 @@ class SelectionInit(VegaLiteSchema):
         super(SelectionInit, self).__init__(*args, **kwds)
 
 
-class SelectionInitArray(VegaLiteSchema):
-    """SelectionInitArray schema wrapper
+class SelectionInitInterval(VegaLiteSchema):
+    """SelectionInitInterval schema wrapper
 
-    anyOf(List(boolean), List(float), List(string), List(:class:`DateTime`))
+    anyOf(List([boolean, boolean]), List([float, float]), List([string, string]),
+    List([:class:`DateTime`, :class:`DateTime`]))
     """
-    _schema = {'$ref': '#/definitions/SelectionInitArray'}
+    _schema = {'$ref': '#/definitions/SelectionInitInterval'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
-        super(SelectionInitArray, self).__init__(*args, **kwds)
+        super(SelectionInitInterval, self).__init__(*args, **kwds)
 
 
-class SelectionInitArrayMapping(VegaLiteSchema):
-    """SelectionInitArrayMapping schema wrapper
+class SelectionInitIntervalMapping(VegaLiteSchema):
+    """SelectionInitIntervalMapping schema wrapper
 
     Mapping(required=[])
     """
-    _schema = {'$ref': '#/definitions/SelectionInitArrayMapping'}
+    _schema = {'$ref': '#/definitions/SelectionInitIntervalMapping'}
     _rootschema = Root._schema
 
     def __init__(self, **kwds):
-        super(SelectionInitArrayMapping, self).__init__(**kwds)
+        super(SelectionInitIntervalMapping, self).__init__(**kwds)
 
 
 class SelectionInitMapping(VegaLiteSchema):
@@ -11736,11 +12322,17 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -11759,6 +12351,9 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -11773,20 +12368,26 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -11797,6 +12398,9 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -11827,6 +12431,9 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -11834,6 +12441,9 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -11870,16 +12480,25 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
 class ShapeValueDefWithCondition(VegaLiteSchema):
     """ShapeValueDefWithCondition schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDefTypeForShape`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
+    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ShapeValueDefWithCondition'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(ShapeValueDefWithCondition, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ShapeValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
 class SignalRef(VegaLiteSchema):
@@ -11904,8 +12523,8 @@ class SingleDefUnitChannel(VegaLiteSchema):
     """SingleDefUnitChannel schema wrapper
 
     enum('x', 'y', 'x2', 'y2', 'longitude', 'latitude', 'longitude2', 'latitude2', 'color',
-    'fill', 'stroke', 'strokeWidth', 'size', 'shape', 'fillOpacity', 'strokeOpacity', 'opacity',
-    'text', 'tooltip', 'href', 'key')
+    'fill', 'stroke', 'opacity', 'fillOpacity', 'strokeOpacity', 'strokeWidth', 'size', 'shape',
+    'key', 'text', 'tooltip', 'href')
     """
     _schema = {'$ref': '#/definitions/SingleDefUnitChannel'}
     _rootschema = Root._schema
@@ -11923,7 +12542,14 @@ class SingleSelection(VegaLiteSchema):
     ----------
 
     type : enum('single')
+        Determines the default event processing and data query for the selection. Vega-Lite
+        currently supports three selection types:
 
+
+        * ``single`` -- to select a single discrete data value on ``click``.
+        * ``multi`` -- to select multiple discrete data value; the first value is selected
+          on ``click`` and additional values toggled on shift- ``click``.
+        * ``interval`` -- to select a continuous range of data values on ``drag``.
     bind : anyOf(:class:`Binding`, Mapping(required=[]))
         Establish a two-way binding between a single selection and input elements
         (also known as dynamic query widgets). A binding takes the form of
@@ -11931,8 +12557,8 @@ class SingleSelection(VegaLiteSchema):
         <https://vega.github.io/vega/docs/signals/#bind>`__
         or can be a mapping between projected field/encodings and binding definitions.
 
-        See the `bind transform <https://vega.github.io/vega-lite/docs/bind.html>`__
-        documentation for more information.
+        **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
+        documentation.
     clear : anyOf(:class:`EventStream`, boolean)
         Clears the selection, emptying it of all values. Can be an
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
@@ -11940,26 +12566,35 @@ class SingleSelection(VegaLiteSchema):
 
         **Default value:** ``dblclick``.
 
-        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
-        for more information.
+        **See also:** `clear <https://vega.github.io/vega-lite/docs/clear.html>`__
+        documentation.
     empty : enum('all', 'none')
         By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
+
+        **See also:** `encodings <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     fields : List(:class:`FieldName`)
         An array of field names whose values must match for a data tuple to
         fall within the selection.
+
+        **See also:** `fields <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     init : :class:`SelectionInitMapping`
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/project.html>`__ and initial values.
+
+        **See also:** `init <https://vega.github.io/vega-lite/docs/init.html>`__
+        documentation.
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.
 
-        See the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`__
-        documentation for more information.
+        **See also:** `nearest <https://vega.github.io/vega-lite/docs/nearest.html>`__
+        documentation.
     on : :class:`EventStream`
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection.
@@ -11969,6 +12604,9 @@ class SingleSelection(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
+
+        **See also:** `resolve
+        <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     """
     _schema = {'$ref': '#/definitions/SingleSelection'}
     _rootschema = Root._schema
@@ -11996,8 +12634,8 @@ class SingleSelectionConfig(VegaLiteSchema):
         <https://vega.github.io/vega/docs/signals/#bind>`__
         or can be a mapping between projected field/encodings and binding definitions.
 
-        See the `bind transform <https://vega.github.io/vega-lite/docs/bind.html>`__
-        documentation for more information.
+        **See also:** `bind <https://vega.github.io/vega-lite/docs/bind.html>`__
+        documentation.
     clear : anyOf(:class:`EventStream`, boolean)
         Clears the selection, emptying it of all values. Can be an
         `EventStream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
@@ -12005,26 +12643,35 @@ class SingleSelectionConfig(VegaLiteSchema):
 
         **Default value:** ``dblclick``.
 
-        See the `clear <https://vega.github.io/vega-lite/docs/clear.html>`__ documentation
-        for more information.
+        **See also:** `clear <https://vega.github.io/vega-lite/docs/clear.html>`__
+        documentation.
     empty : enum('all', 'none')
         By default, ``all`` data values are considered to lie within an empty selection.
         When set to ``none``, empty selections contain no data values.
     encodings : List(:class:`SingleDefUnitChannel`)
         An array of encoding channels. The corresponding data field values
         must match for a data tuple to fall within the selection.
+
+        **See also:** `encodings <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     fields : List(:class:`FieldName`)
         An array of field names whose values must match for a data tuple to
         fall within the selection.
+
+        **See also:** `fields <https://vega.github.io/vega-lite/docs/project.html>`__
+        documentation.
     init : :class:`SelectionInitMapping`
         Initialize the selection with a mapping between `projected channels or field names
         <https://vega.github.io/vega-lite/docs/project.html>`__ and initial values.
+
+        **See also:** `init <https://vega.github.io/vega-lite/docs/init.html>`__
+        documentation.
     nearest : boolean
         When true, an invisible voronoi diagram is computed to accelerate discrete
         selection. The data value *nearest* the mouse cursor is added to the selection.
 
-        See the `nearest transform <https://vega.github.io/vega-lite/docs/nearest.html>`__
-        documentation for more information.
+        **See also:** `nearest <https://vega.github.io/vega-lite/docs/nearest.html>`__
+        documentation.
     on : :class:`EventStream`
         A `Vega event stream <https://vega.github.io/vega/docs/event-streams/>`__ (object or
         selector) that triggers the selection.
@@ -12034,6 +12681,9 @@ class SingleSelectionConfig(VegaLiteSchema):
         With layered and multi-view displays, a strategy that determines how
         selections' data queries are resolved when applied in a filter transform,
         conditional encoding rule, or scale domain.
+
+        **See also:** `resolve
+        <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     """
     _schema = {'$ref': '#/definitions/SingleSelectionConfig'}
     _rootschema = Root._schema
@@ -12257,11 +12907,17 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -12280,6 +12936,9 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -12294,20 +12953,26 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -12318,6 +12983,9 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -12348,6 +13016,9 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -12355,6 +13026,9 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -12432,11 +13106,17 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -12455,6 +13135,9 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -12469,20 +13152,26 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -12493,6 +13182,9 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -12523,6 +13215,9 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -12530,6 +13225,9 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -12566,31 +13264,50 @@ class StringFieldDefWithCondition(VegaLiteSchema):
 class StringValueDefWithConditionTypeForShape(VegaLiteSchema):
     """StringValueDefWithConditionTypeForShape schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDefTypeForShape`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
+    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/StringValueDefWithCondition<TypeForShape>'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(StringValueDefWithConditionTypeForShape, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(StringValueDefWithConditionTypeForShape, self).__init__(condition=condition, value=value,
+                                                                      **kwds)
 
 
 class StringValueDefWithCondition(VegaLiteSchema):
     """StringValueDefWithCondition schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/StringValueDefWithCondition'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(StringValueDefWithCondition, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(StringValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
 class StrokeCap(VegaLiteSchema):
@@ -12669,7 +13386,7 @@ class TextConfig(VegaLiteSchema):
         The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
 
         **Default value:** ``"middle"``
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -12728,6 +13445,8 @@ class TextConfig(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -12846,7 +13565,7 @@ class TextConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -12856,16 +13575,30 @@ class TextConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    y : float
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     """
     _schema = {'$ref': '#/definitions/TextConfig'}
     _rootschema = Root._schema
@@ -12874,26 +13607,28 @@ class TextConfig(VegaLiteSchema):
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
                  ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined, filled=Undefined,
                  font=Undefined, fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined,
-                 href=Undefined, interpolate=Undefined, limit=Undefined, opacity=Undefined,
-                 order=Undefined, orient=Undefined, radius=Undefined, shape=Undefined,
-                 shortTimeLabels=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, x=Undefined,
-                 x2=Undefined, y=Undefined, y2=Undefined, **kwds):
+                 height=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
+                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
+                 shape=Undefined, shortTimeLabels=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, y=Undefined,
+                 y2=Undefined, **kwds):
         super(TextConfig, self).__init__(align=align, angle=angle, baseline=baseline, color=color,
                                          cornerRadius=cornerRadius, cursor=cursor, dir=dir, dx=dx,
                                          dy=dy, ellipsis=ellipsis, fill=fill, fillOpacity=fillOpacity,
                                          filled=filled, font=font, fontSize=fontSize,
-                                         fontStyle=fontStyle, fontWeight=fontWeight, href=href,
-                                         interpolate=interpolate, limit=limit, opacity=opacity,
-                                         order=order, orient=orient, radius=radius, shape=shape,
-                                         shortTimeLabels=shortTimeLabels, size=size, stroke=stroke,
-                                         strokeCap=strokeCap, strokeDash=strokeDash,
+                                         fontStyle=fontStyle, fontWeight=fontWeight, height=height,
+                                         href=href, interpolate=interpolate, limit=limit,
+                                         opacity=opacity, order=order, orient=orient, radius=radius,
+                                         shape=shape, shortTimeLabels=shortTimeLabels, size=size,
+                                         stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
                                          strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
                                          strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
                                          strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, tooltip=tooltip, x=x, x2=x2, y=y, y2=y2, **kwds)
+                                         theta=theta, tooltip=tooltip, width=width, x=x, x2=x2, y=y,
+                                         y2=y2, **kwds)
 
 
 class TextFieldDef(VegaLiteSchema):
@@ -12937,11 +13672,17 @@ class TextFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -12960,20 +13701,26 @@ class TextFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -13008,6 +13755,9 @@ class TextFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -13081,11 +13831,17 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -13104,6 +13860,9 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
@@ -13117,14 +13876,17 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -13159,6 +13921,9 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -13195,16 +13960,25 @@ class TextFieldDefWithCondition(VegaLiteSchema):
 class TextValueDefWithCondition(VegaLiteSchema):
     """TextValueDefWithCondition schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
-    :class:`ConditionOnlyDefTextFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
+    List(:class:`ConditionalValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : :class:`Value`
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/TextValueDefWithCondition'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(TextValueDefWithCondition, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(TextValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
 class TickConfig(VegaLiteSchema):
@@ -13227,7 +14001,7 @@ class TickConfig(VegaLiteSchema):
         The vertical alignment of the text. One of ``"top"``, ``"middle"``, ``"bottom"``.
 
         **Default value:** ``"middle"``
-    color : string
+    color : :class:`Color`
         Default color.  Note that ``fill`` and ``stroke`` have higher precedence than
         ``color`` and will override ``color``.
 
@@ -13286,6 +14060,8 @@ class TickConfig(VegaLiteSchema):
         This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
         ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
         ).
+    height : float
+        Height of the marks.
     href : string
         A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
     interpolate : :class:`Interpolate`
@@ -13406,7 +14182,7 @@ class TickConfig(VegaLiteSchema):
         Thickness of the tick mark.
 
         **Default value:**  ``1``
-    tooltip : anyOf(string, :class:`TooltipContent`, None)
+    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
         The tooltip text string to show upon mouse hover or an object defining which fields
         should the tooltip be derived from.
 
@@ -13416,16 +14192,30 @@ class TickConfig(VegaLiteSchema):
         * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
           highlighted data point will be used.
         * If set to ``null``, then no tooltip will be used.
-    x : float
+    width : float
+        Width of the marks.
+    x : anyOf(float, enum('width'))
         X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        ``x2``.
-    x2 : float
+        specified ``x2`` or ``width``.
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    x2 : anyOf(float, enum('width'))
         X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-    y : float
+
+        The ``value`` of this channel can be a number or a string ``"width"`` for the width
+        of the plot.
+    y : anyOf(float, enum('height'))
         Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        ``y2``
-    y2 : float
+        specified ``y2`` or ``height``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
+    y2 : anyOf(float, enum('width'))
         Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
+
+        The ``value`` of this channel can be a number or a string ``"height"`` for the
+        height of the plot.
     """
     _schema = {'$ref': '#/definitions/TickConfig'}
     _rootschema = Root._schema
@@ -13434,26 +14224,27 @@ class TickConfig(VegaLiteSchema):
                  color=Undefined, cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined,
                  dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
                  filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, href=Undefined, interpolate=Undefined, limit=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, size=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, thickness=Undefined,
-                 tooltip=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
+                 fontWeight=Undefined, height=Undefined, href=Undefined, interpolate=Undefined,
+                 limit=Undefined, opacity=Undefined, order=Undefined, orient=Undefined,
+                 radius=Undefined, shape=Undefined, size=Undefined, stroke=Undefined,
+                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 thickness=Undefined, tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                 y=Undefined, y2=Undefined, **kwds):
         super(TickConfig, self).__init__(align=align, angle=angle, bandSize=bandSize, baseline=baseline,
                                          color=color, cornerRadius=cornerRadius, cursor=cursor, dir=dir,
                                          dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                                          fillOpacity=fillOpacity, filled=filled, font=font,
                                          fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         href=href, interpolate=interpolate, limit=limit,
+                                         height=height, href=href, interpolate=interpolate, limit=limit,
                                          opacity=opacity, order=order, orient=orient, radius=radius,
                                          shape=shape, size=size, stroke=stroke, strokeCap=strokeCap,
                                          strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
                                          strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
                                          strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                          tension=tension, text=text, theta=theta, thickness=thickness,
-                                         tooltip=tooltip, x=x, x2=x2, y=y, y2=y2, **kwds)
+                                         tooltip=tooltip, width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
 class TimeUnit(VegaLiteSchema):
@@ -13777,8 +14568,9 @@ class TopLevelConcatSpec(VegaLiteSchema):
     config : :class:`Config`
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     datasets : :class:`Datasets`
         A global data store for named datasets. This is a mapping from names to inline
         datasets.
@@ -13880,8 +14672,9 @@ class TopLevelHConcatSpec(VegaLiteSchema):
     config : :class:`Config`
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     datasets : :class:`Datasets`
         A global data store for named datasets. This is a mapping from names to inline
         datasets.
@@ -14023,8 +14816,9 @@ class TopLevelRepeatSpec(VegaLiteSchema):
     config : :class:`Config`
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     datasets : :class:`Datasets`
         A global data store for named datasets. This is a mapping from names to inline
         datasets.
@@ -14126,8 +14920,9 @@ class TopLevelVConcatSpec(VegaLiteSchema):
     config : :class:`Config`
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     datasets : :class:`Datasets`
         A global data store for named datasets. This is a mapping from names to inline
         datasets.
@@ -14211,8 +15006,9 @@ class TopLevelLayerSpec(VegaLiteSchema):
     config : :class:`Config`
         Vega-Lite configuration object.  This property can only be defined at the top-level
         of a specification.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     datasets : :class:`Datasets`
         A global data store for named datasets. This is a mapping from names to inline
         datasets.
@@ -14339,8 +15135,9 @@ class TopLevelFacetSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     facet : anyOf(:class:`FacetFieldDef`, :class:`FacetMapping`)
         Definition for how to facet the data.  One of:
         1) `a field definition for faceting the plot by one field
@@ -14504,8 +15301,9 @@ class TopLevelUnitSpec(VegaLiteSchema):
     Attributes
     ----------
 
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     mark : :class:`AnyMark`
         A string describing the mark type (one of ``"bar"``, ``"circle"``, ``"square"``,
         ``"tick"``, ``"line"``,
@@ -14837,11 +15635,17 @@ class TypedFieldDef(VegaLiteSchema):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     aggregate : :class:`Aggregate`
         Aggregation function for the field
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -14860,20 +15664,26 @@ class TypedFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -14881,6 +15691,9 @@ class TypedFieldDef(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -14925,8 +15738,9 @@ class UnitSpec(VegaLiteSchema):
         ``"tick"``, ``"line"``,
         ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
         definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
-    data : :class:`Data`
-        An object describing the data source
+    data : anyOf(:class:`Data`, None)
+        An object describing the data source. Set to ``null`` to ignore the parent's data
+        source. If no data is set, it is derived from the parent.
     description : string
         Description of this mark for commenting purpose.
     encoding : :class:`Encoding`
@@ -15145,160 +15959,102 @@ class NumberValueDef(VegaLiteSchema):
 class ValueDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
     """ValueDefWithConditionMarkPropFieldDefstringnull schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldDef,(string|null)>'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(ValueDefWithConditionMarkPropFieldDefstringnull, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ValueDefWithConditionMarkPropFieldDefstringnull, self).__init__(condition=condition,
+                                                                              value=value, **kwds)
 
 
 class ValueDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
     """ValueDefWithConditionMarkPropFieldDefnumber schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
+    List(:class:`ConditionalNumberValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldDef,number>'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(ValueDefWithConditionMarkPropFieldDefnumber, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ValueDefWithConditionMarkPropFieldDefnumber, self).__init__(condition=condition,
+                                                                          value=value, **kwds)
 
 
 class ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema):
     """ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDefTypeForShape`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
+    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldDef<TypeForShape>,(string|null)>'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull, self).__init__(*args, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull, self).__init__(condition=condition,
+                                                                                          value=value,
+                                                                                          **kwds)
 
 
 class ValueDefWithConditionTextFieldDefValue(VegaLiteSchema):
     """ValueDefWithConditionTextFieldDefValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
-    :class:`ConditionOnlyDefTextFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
+    List(:class:`ConditionalValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : :class:`Value`
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<TextFieldDef,Value>'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(ValueDefWithConditionTextFieldDefValue, self).__init__(*args, **kwds)
-
-
-class ValueDefWithOptionalConditionMarkPropFieldDefstringnull(VegaLiteSchema):
-    """ValueDefWithOptionalConditionMarkPropFieldDefstringnull schema wrapper
-
-    Mapping(required=[value])
-    A ValueDef with optional Condition<ValueDef | FieldDef>
-
-    Attributes
-    ----------
-
-    value : anyOf(string, None)
-        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
-        between ``0`` to ``1`` for opacity).
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ValueDefWithOptionalCondition<MarkPropFieldDef,(string|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, value=Undefined, condition=Undefined, **kwds):
-        super(ValueDefWithOptionalConditionMarkPropFieldDefstringnull, self).__init__(value=value,
-                                                                                      condition=condition,
-                                                                                      **kwds)
-
-
-class ValueDefWithOptionalConditionMarkPropFieldDefnumber(VegaLiteSchema):
-    """ValueDefWithOptionalConditionMarkPropFieldDefnumber schema wrapper
-
-    Mapping(required=[value])
-    A ValueDef with optional Condition<ValueDef | FieldDef>
-
-    Attributes
-    ----------
-
-    value : float
-        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
-        between ``0`` to ``1`` for opacity).
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ValueDefWithOptionalCondition<MarkPropFieldDef,number>'}
-    _rootschema = Root._schema
-
-    def __init__(self, value=Undefined, condition=Undefined, **kwds):
-        super(ValueDefWithOptionalConditionMarkPropFieldDefnumber, self).__init__(value=value,
-                                                                                  condition=condition,
-                                                                                  **kwds)
-
-
-class ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema):
-    """ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull schema wrapper
-
-    Mapping(required=[value])
-    A ValueDef with optional Condition<ValueDef | FieldDef>
-
-    Attributes
-    ----------
-
-    value : anyOf(string, None)
-        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
-        between ``0`` to ``1`` for opacity).
-    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ValueDefWithOptionalCondition<MarkPropFieldDef<TypeForShape>,(string|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, value=Undefined, condition=Undefined, **kwds):
-        super(ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull, self).__init__(value=value,
-                                                                                                  condition=condition,
-                                                                                                  **kwds)
-
-
-class ValueDefWithOptionalConditionTextFieldDefValue(VegaLiteSchema):
-    """ValueDefWithOptionalConditionTextFieldDefValue schema wrapper
-
-    Mapping(required=[value])
-    A ValueDef with optional Condition<ValueDef | FieldDef>
-
-    Attributes
-    ----------
-
-    value : :class:`Value`
-        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
-        between ``0`` to ``1`` for opacity).
-    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
-    List(:class:`ConditionalValueDef`))
-        A field definition or one or more value definition(s) with a selection predicate.
-    """
-    _schema = {'$ref': '#/definitions/ValueDefWithOptionalCondition<TextFieldDef,Value>'}
-    _rootschema = Root._schema
-
-    def __init__(self, value=Undefined, condition=Undefined, **kwds):
-        super(ValueDefWithOptionalConditionTextFieldDefValue, self).__init__(value=value,
-                                                                             condition=condition, **kwds)
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ValueDefWithConditionTextFieldDefValue, self).__init__(condition=condition, value=value,
+                                                                     **kwds)
 
 
 class ViewBackground(VegaLiteSchema):
@@ -15313,7 +16069,7 @@ class ViewBackground(VegaLiteSchema):
         The radius in pixels of rounded rectangle corners.
 
         **Default value:** ``0``
-    fill : anyOf(string, None)
+    fill : anyOf(:class:`Color`, None)
         The fill color.
 
         **Default value:** ``undefined``
@@ -15326,7 +16082,7 @@ class ViewBackground(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    stroke : anyOf(string, None)
+    stroke : anyOf(:class:`Color`, None)
         The stroke color.
 
         **Default value:** ``"#ddd"``
@@ -15351,7 +16107,7 @@ class ViewBackground(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : float
         The stroke width, in pixels.
-    style : string
+    style : anyOf(string, List(string))
         A string or array of strings indicating the name of custom styles to apply to the
         view background. A style is a named collection of mark property defaults defined
         within the `style configuration
@@ -15391,7 +16147,7 @@ class ViewConfig(VegaLiteSchema):
         The radius in pixels of rounded rectangle corners.
 
         **Default value:** ``0``
-    fill : anyOf(string, None)
+    fill : anyOf(:class:`Color`, None)
         The fill color.
 
         **Default value:** ``undefined``
@@ -15409,7 +16165,7 @@ class ViewConfig(VegaLiteSchema):
 
         **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
         ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    stroke : anyOf(string, None)
+    stroke : anyOf(:class:`Color`, None)
         The stroke color.
 
         **Default value:** ``"#ddd"``
