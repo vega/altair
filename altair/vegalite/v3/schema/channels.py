@@ -97,6 +97,9 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -115,6 +118,9 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -129,20 +135,26 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -153,6 +165,9 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -183,6 +198,9 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -190,6 +208,9 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -243,6 +264,9 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
@@ -258,16 +282,25 @@ class Color(FieldChannelMixin, core.StringFieldDefWithCondition):
 class ColorValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """ColorValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "color"
 
-    def __init__(self, value, **kwds):
-        super(ColorValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(ColorValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Column(FieldChannelMixin, core.FacetFieldDef):
@@ -285,6 +318,9 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -303,20 +339,26 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     header : :class:`Header`
         An object defining properties of a facet's header.
     sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
@@ -352,6 +394,9 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -405,6 +450,9 @@ class Column(FieldChannelMixin, core.FacetFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "column"
@@ -433,6 +481,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -451,20 +502,26 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -472,6 +529,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -525,6 +585,9 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "detail"
@@ -550,6 +613,9 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -568,20 +634,26 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     header : :class:`Header`
         An object defining properties of a facet's header.
     sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
@@ -617,6 +689,9 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -670,6 +745,9 @@ class Facet(FieldChannelMixin, core.FacetFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "facet"
@@ -698,6 +776,9 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -716,6 +797,9 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -730,20 +814,26 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -754,6 +844,9 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -784,6 +877,9 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -791,6 +887,9 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -844,6 +943,9 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
@@ -859,16 +961,25 @@ class Fill(FieldChannelMixin, core.StringFieldDefWithCondition):
 class FillValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """FillValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fill"
 
-    def __init__(self, value, **kwds):
-        super(FillValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(FillValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
@@ -887,6 +998,9 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -905,6 +1019,9 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -919,20 +1036,26 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -943,6 +1066,9 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -973,6 +1099,9 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -980,6 +1109,9 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1033,6 +1165,9 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
@@ -1048,16 +1183,25 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 class FillOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     """FillOpacityValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
+    List(:class:`ConditionalNumberValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "fillOpacity"
 
-    def __init__(self, value, **kwds):
-        super(FillOpacityValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(FillOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
@@ -1076,6 +1220,9 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1094,6 +1241,9 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
@@ -1107,14 +1257,17 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -1149,6 +1302,9 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1202,6 +1358,9 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
@@ -1218,16 +1377,25 @@ class Href(FieldChannelMixin, core.TextFieldDefWithCondition):
 class HrefValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """HrefValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
-    :class:`ConditionOnlyDefTextFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
+    List(:class:`ConditionalValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : :class:`Value`
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "href"
 
-    def __init__(self, value, **kwds):
-        super(HrefValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(HrefValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Key(FieldChannelMixin, core.FieldDefWithoutScale):
@@ -1246,6 +1414,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1264,20 +1435,26 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1285,6 +1462,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1338,6 +1518,9 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "key"
@@ -1363,6 +1546,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1381,20 +1567,26 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1402,6 +1594,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1455,6 +1650,9 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "latitude"
@@ -1502,6 +1700,9 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1520,20 +1721,26 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1541,6 +1748,9 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1606,6 +1816,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1624,20 +1837,26 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1645,6 +1864,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1698,6 +1920,9 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "longitude"
@@ -1745,6 +1970,9 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1763,20 +1991,26 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1784,6 +2018,9 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1850,6 +2087,9 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -1868,6 +2108,9 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -1882,20 +2125,26 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -1906,6 +2155,9 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -1936,6 +2188,9 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -1943,6 +2198,9 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -1996,6 +2254,9 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
@@ -2011,16 +2272,25 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 class OpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     """OpacityValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
+    List(:class:`ConditionalNumberValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "opacity"
 
-    def __init__(self, value, **kwds):
-        super(OpacityValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(OpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Order(FieldChannelMixin, core.OrderFieldDef):
@@ -2038,6 +2308,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2056,20 +2329,26 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
     timeUnit : :class:`TimeUnit`
@@ -2079,6 +2358,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -2132,6 +2414,9 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "order"
@@ -2177,6 +2462,9 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2195,20 +2483,26 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     header : :class:`Header`
         An object defining properties of a facet's header.
     sort : anyOf(:class:`SortArray`, :class:`SortOrder`, :class:`EncodingSortField`, None)
@@ -2244,6 +2538,9 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -2297,6 +2594,9 @@ class Row(FieldChannelMixin, core.FacetFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "row"
@@ -2325,6 +2625,9 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2343,6 +2646,9 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -2357,20 +2663,26 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -2381,6 +2693,9 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -2411,6 +2726,9 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2418,6 +2736,9 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -2471,6 +2792,9 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
@@ -2486,16 +2810,25 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
 class ShapeValue(ValueChannelMixin, core.ShapeValueDefWithCondition):
     """ShapeValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDefTypeForShape`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
+    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "shape"
 
-    def __init__(self, value, **kwds):
-        super(ShapeValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(ShapeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
@@ -2514,6 +2847,9 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2532,6 +2868,9 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -2546,20 +2885,26 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -2570,6 +2915,9 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -2600,6 +2948,9 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2607,6 +2958,9 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -2660,6 +3014,9 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
@@ -2675,16 +3032,25 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
 class SizeValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     """SizeValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
+    List(:class:`ConditionalNumberValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "size"
 
-    def __init__(self, value, **kwds):
-        super(SizeValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(SizeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
@@ -2703,6 +3069,9 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2721,6 +3090,9 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalStringValueDef`,
     List(:class:`ConditionalStringValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -2735,20 +3107,26 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -2759,6 +3137,9 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -2789,6 +3170,9 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2796,6 +3180,9 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -2849,6 +3236,9 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
@@ -2864,16 +3254,25 @@ class Stroke(FieldChannelMixin, core.StringFieldDefWithCondition):
 class StrokeValue(ValueChannelMixin, core.StringValueDefWithCondition):
     """StrokeValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefstringnull`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
+    List(:class:`ConditionalStringValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "stroke"
 
-    def __init__(self, value, **kwds):
-        super(StrokeValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
@@ -2892,6 +3291,9 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -2910,6 +3312,9 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -2924,20 +3329,26 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -2948,6 +3359,9 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -2978,6 +3392,9 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -2985,6 +3402,9 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3038,6 +3458,9 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
@@ -3054,16 +3477,25 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 class StrokeOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     """StrokeOpacityValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
+    List(:class:`ConditionalNumberValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeOpacity"
 
-    def __init__(self, value, **kwds):
-        super(StrokeOpacityValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(StrokeOpacityValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
@@ -3082,6 +3514,9 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3100,6 +3535,9 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalNumberValueDef`,
     List(:class:`ConditionalNumberValueDef`))
         One or more value definition(s) with `a selection or a test predicate
@@ -3114,20 +3552,26 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     legend : anyOf(:class:`Legend`, None)
         An object defining properties of the legend.
         If ``null``, the legend for the encoding channel will be removed.
 
         **Default value:** If undefined, default `legend properties
         <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -3138,6 +3582,9 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -3168,6 +3615,9 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3175,6 +3625,9 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3228,6 +3681,9 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
@@ -3243,16 +3699,25 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
 class StrokeWidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     """StrokeWidthValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionMarkPropFieldDefnumber`,
-    :class:`ConditionOnlyDefMarkPropFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
+    List(:class:`ConditionalNumberValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : float
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "strokeWidth"
 
-    def __init__(self, value, **kwds):
-        super(StrokeWidthValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(StrokeWidthValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
@@ -3271,6 +3736,9 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3289,6 +3757,9 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
@@ -3302,14 +3773,17 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -3344,6 +3818,9 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3397,6 +3874,9 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
@@ -3413,16 +3893,25 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
 class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """TextValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
-    :class:`ConditionOnlyDefTextFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
+    List(:class:`ConditionalValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : :class:`Value`
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "text"
 
-    def __init__(self, value, **kwds):
-        super(TextValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(TextValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
@@ -3441,6 +3930,9 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3459,6 +3951,9 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     condition : anyOf(:class:`ConditionalValueDef`, List(:class:`ConditionalValueDef`))
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
@@ -3472,14 +3967,17 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     format : string
         The text formatting pattern for labels of guides (axes, legends, headers) and text
         marks.
@@ -3514,6 +4012,9 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3567,6 +4068,9 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
@@ -3583,16 +4087,25 @@ class Tooltip(FieldChannelMixin, core.TextFieldDefWithCondition):
 class TooltipValue(ValueChannelMixin, core.TextValueDefWithCondition):
     """TooltipValue schema wrapper
 
-    anyOf(:class:`ValueDefWithOptionalConditionTextFieldDefValue`,
-    :class:`ConditionOnlyDefTextFieldDef`)
-    A ValueDef with Condition<ValueDef | FieldDef> where either the conition or the value are
+    Mapping(required=[])
+    A ValueDef with Condition<ValueDef | FieldDef> where either the condition or the value are
     optional.
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalTextFieldDef`, :class:`ConditionalValueDef`,
+    List(:class:`ConditionalValueDef`))
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : :class:`Value`
+        A constant value in visual domain (e.g., ``"red"`` / "#0099ff" for color, values
+        between ``0`` to ``1`` for opacity).
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "tooltip"
 
-    def __init__(self, value, **kwds):
-        super(TooltipValue, self).__init__(value=value, **kwds)
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(TooltipValue, self).__init__(value=value, condition=condition, **kwds)
 
 
 class X(FieldChannelMixin, core.PositionFieldDef):
@@ -3610,12 +4123,18 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     axis : anyOf(:class:`Axis`, None)
         An object defining properties of axis's gridlines, ticks and labels.
         If ``null``, the axis for the encoding channel will be removed.
 
         **Default value:** If undefined, default `axis properties
         <https://vega.github.io/vega-lite/docs/axis.html>`__ are applied.
+
+        **See also:** `axis <https://vega.github.io/vega-lite/docs/axis.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3634,26 +4153,35 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     impute : :class:`ImputeParams`
         An object defining the properties of the Impute Operation to be applied.
         The field value of the other positional channel is taken as ``key`` of the
         ``Impute`` Operation.
         The field of the ``color`` channel if specified is used as ``groupby`` of the
         ``Impute`` Operation.
+
+        **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -3664,6 +4192,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -3694,6 +4225,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     stack : anyOf(:class:`StackOffset`, None, boolean)
         Type of stacking offset if the field should be stacked.
         ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
@@ -3722,6 +4256,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         (2) the stacked measure channel (x or y) has a linear scale;
         (3) At least one of non-position channels mapped to an unaggregated field that is
         different from x and y.  Otherwise, ``null`` by default.
+
+        **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3729,6 +4266,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3782,6 +4322,9 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "x"
@@ -3831,6 +4374,9 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3849,20 +4395,26 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3870,6 +4422,9 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -3937,6 +4492,9 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -3955,20 +4513,26 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -3976,6 +4540,9 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -4043,6 +4610,9 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4061,20 +4631,26 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -4082,6 +4658,9 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -4147,12 +4726,18 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     axis : anyOf(:class:`Axis`, None)
         An object defining properties of axis's gridlines, ticks and labels.
         If ``null``, the axis for the encoding channel will be removed.
 
         **Default value:** If undefined, default `axis properties
         <https://vega.github.io/vega-lite/docs/axis.html>`__ are applied.
+
+        **See also:** `axis <https://vega.github.io/vega-lite/docs/axis.html>`__
+        documentation.
     bin : anyOf(boolean, :class:`BinParams`, enum('binned'), None)
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4171,26 +4756,35 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     impute : :class:`ImputeParams`
         An object defining the properties of the Impute Operation to be applied.
         The field value of the other positional channel is taken as ``key`` of the
         ``Impute`` Operation.
         The field of the ``color`` channel if specified is used as ``groupby`` of the
         ``Impute`` Operation.
+
+        **See also:** `impute <https://vega.github.io/vega-lite/docs/impute.html>`__
+        documentation.
     scale : anyOf(:class:`Scale`, None)
         An object defining properties of the channel's scale, which is the function that
         transforms values in the data domain (numbers, dates, strings, etc) to visual values
@@ -4201,6 +4795,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **Default value:** If undefined, default `scale properties
         <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
     sort : :class:`Sort`
         Sort order for the encoded field.
 
@@ -4231,6 +4828,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         **Default value:** ``"ascending"``
 
         **Note:** ``null`` is not supported for ``row`` and ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
     stack : anyOf(:class:`StackOffset`, None, boolean)
         Type of stacking offset if the field should be stacked.
         ``stack`` is only applicable for ``x`` and ``y`` channels with continuous domains.
@@ -4259,6 +4859,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         (2) the stacked measure channel (x or y) has a linear scale;
         (3) At least one of non-position channels mapped to an unaggregated field that is
         different from x and y.  Otherwise, ``null`` by default.
+
+        **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
+        documentation.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -4266,6 +4869,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -4319,6 +4925,9 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
           ``type`` as they have exactly the same type as their primary channels (e.g.,
           ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
     """
     _class_is_valid_at_instantiation = False
     _encoding_name = "y"
@@ -4368,6 +4977,9 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4386,20 +4998,26 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -4407,6 +5025,9 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -4474,6 +5095,9 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4492,20 +5116,26 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -4513,6 +5143,9 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
@@ -4580,6 +5213,9 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         (e.g., ``mean``, ``sum``, ``median``, ``min``, ``max``, ``count`` ).
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
     bin : None
         A flag for binning a ``quantitative`` field, `an object defining binning parameters
         <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
@@ -4598,20 +5234,26 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
 
         **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
     field : :class:`Field`
         **Required.** A string defining the name of the field from which to pull a data
         value
         or an object defining iterated values from the `repeat
         <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
 
-        **Note:** Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access
-        nested objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
         If field names contain dots or brackets but are not nested, you can use ``\\`` to
         escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
-
-        **Note:** ``field`` is not required if ``aggregate`` is ``count``.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
     timeUnit : :class:`TimeUnit`
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
@@ -4619,6 +5261,9 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
 
         **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
     title : anyOf(string, None)
         A title for the field. If ``null``, the title will be removed.
 
