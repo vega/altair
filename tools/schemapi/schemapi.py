@@ -104,7 +104,6 @@ class SchemaValidationError(jsonschema.ValidationError):
             return six.text_type(self).encode("utf-8")
 
 
-
 class UndefinedType(object):
     """A singleton object for marking undefined attributes"""
     __instance = None
@@ -524,3 +523,28 @@ class _FromDict(object):
             return cls(dct)
         else:
             return cls(dct)
+
+
+class _PropertySetter(object):
+    def __init__(self, prop, schema):
+        self.prop = prop
+        self.schema = schema
+
+    def __get__(self, obj, cls):
+        self.obj = obj
+        self.cls = cls
+        return self
+
+    def __call__(self, *args, **kwargs):
+        obj = self.obj.copy()
+        # TODO: use schema to validate
+        obj[self.prop] = (args[0] if args else kwargs)
+        return obj
+
+
+def with_property_setters(cls):
+    """Decorator to add property setters to a Schema class."""
+    schema = cls.resolve_references()
+    for prop, propschema in schema.get('properties', {}).items():
+        setattr(cls, prop, _PropertySetter(prop, propschema))
+    return cls
