@@ -1,6 +1,11 @@
 # Altair Change Log
 
 ## Version 3.2.0 (unreleased)
+
+Upgraded to Vega-Lite version 3.4 (See [Vega-Lite 3.4 Release Notes](https://github.com/vega/vega-lite/releases/tag/v3.4.0)).
+
+Following are changes to Altair in addition to those that came with VL 3.4:
+
 ### Enhancements
 
 - Selector values can be used directly in expressions (#1599)
