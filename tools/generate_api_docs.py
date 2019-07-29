@@ -68,18 +68,18 @@ Low-Level Schema Wrappers
 
 
 def iter_objects(mod, ignore_private=True, restrict_to_type=None, restrict_to_subclass=None):
-  for name in dir(mod):
-    obj = getattr(mod, name)
-    if ignore_private:
-      if name.startswith('_'):
-        continue
-    if restrict_to_type is not None:
-      if not isinstance(obj, restrict_to_type):
-        continue
-    if restrict_to_subclass is not None:
-      if not (isinstance(obj, type) and issubclass(obj, restrict_to_subclass)):
-        continue
-    yield name
+    for name in dir(mod):
+        obj = getattr(mod, name)
+        if ignore_private:
+            if name.startswith('_'):
+                continue
+        if restrict_to_type is not None:
+            if not isinstance(obj, restrict_to_type):
+                continue
+        if restrict_to_subclass is not None:
+            if not (isinstance(obj, type) and issubclass(obj, restrict_to_subclass)):
+                continue
+        yield name
 
 
 def toplevel_charts():
@@ -99,6 +99,7 @@ def lowlevel_wrappers():
 
 
 def write_api_file():
+    print("Updating API docs\n  ->{}".format(API_FILENAME))
     sep = '\n   '
     with open(API_FILENAME, 'w') as f:
         f.write(API_TEMPLATE.format(

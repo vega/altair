@@ -17,6 +17,7 @@ sys.path.insert(0, abspath(dirname(__file__)))
 from schemapi import codegen
 from schemapi.codegen import CodeSnippet
 from schemapi.utils import get_valid_identifier, SchemaInfo, indent_arglist, resolve_references
+import generate_api_docs
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
@@ -527,6 +528,8 @@ def main():
     copy_schemapi_util()
     vegalite_main(args.skip_download)
     vega_main(args.skip_download)
+
+    generate_api_docs.write_api_file()
 
 
 if __name__ == '__main__':
