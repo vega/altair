@@ -18,12 +18,13 @@ Top-Level Objects
    :nosignatures:
 
    Chart
-   LayerChart
-   HConcatChart
-   VConcatChart
    ConcatChart
    FacetChart
+   HConcatChart
+   LayerChart
    RepeatChart
+   TopLevelMixin
+   VConcatChart
 
 Encoding Channels
 -----------------
@@ -38,11 +39,10 @@ Encoding Channels
    Column
    Detail
    Facet
-   FieldChannelMixin
    Fill
-   FillValue
    FillOpacity
    FillOpacityValue
+   FillValue
    Href
    HrefValue
    Key
@@ -64,33 +64,31 @@ Encoding Channels
    Size
    SizeValue
    Stroke
-   StrokeValue
    StrokeOpacity
    StrokeOpacityValue
+   StrokeValue
    StrokeWidth
    StrokeWidthValue
    Text
    TextValue
    Tooltip
    TooltipValue
-   Undefined
-   ValueChannelMixin
    X
    X2
    X2Value
-   XValue
    XError
    XError2
    XError2Value
    XErrorValue
+   XValue
    Y
    Y2
    Y2Value
-   YValue
    YError
    YError2
    YError2Value
    YErrorValue
+   YValue
 
 API Functions
 -------------
@@ -100,23 +98,24 @@ API Functions
    :toctree: generated/api/
    :nosignatures:
 
-   layer
-   concat
-   vconcat
-   hconcat
-   repeat
-   value
-   selection
-   selection_interval
-   selection_multi
-   selection_single
    binding
    binding_checkbox
    binding_radio
    binding_range
    binding_select
+   concat
    condition
+   hconcat
+   layer
+   pipe
+   repeat
+   selection
+   selection_interval
+   selection_multi
+   selection_single
    topo_feature
+   value
+   vconcat
 
 Low-Level Schema Wrappers
 -------------------------
@@ -141,7 +140,6 @@ Low-Level Schema Wrappers
    AxisConfig
    AxisOrient
    AxisResolveMap
-   BarConfig
    BaseLegendLayout
    BaseMarkConfig
    BaseTitleConfig
@@ -158,13 +156,11 @@ Low-Level Schema Wrappers
    BrushConfig
    CalculateTransform
    Color
+   ColorName
    CompositeMark
    CompositeMarkDef
    CompositionConfig
    ConcatSpec
-   ConditionOnlyDefMarkPropFieldDef
-   ConditionOnlyDefMarkPropFieldDefTypeForShape
-   ConditionOnlyDefTextFieldDef
    ConditionalMarkPropFieldDef
    ConditionalMarkPropFieldDefTypeForShape
    ConditionalNumberValueDef
@@ -238,6 +234,7 @@ Low-Level Schema Wrappers
    HConcatSpec
    Header
    HeaderConfig
+   HexColor
    ImputeMethod
    ImputeParams
    ImputeSequence
@@ -299,6 +296,7 @@ Low-Level Schema Wrappers
    ProjectionType
    RangeConfig
    RangeConfigValue
+   RectConfig
    RepeatMapping
    RepeatRef
    RepeatSpec
@@ -324,8 +322,8 @@ Low-Level Schema Wrappers
    SelectionDef
    SelectionDomain
    SelectionInit
-   SelectionInitArray
-   SelectionInitArrayMapping
+   SelectionInitInterval
+   SelectionInitIntervalMapping
    SelectionInitMapping
    SelectionNot
    SelectionOperand
@@ -385,7 +383,6 @@ Low-Level Schema Wrappers
    Transform
    TypeForShape
    TypedFieldDef
-   Undefined
    UnitSpec
    UrlData
    UtcMultiTimeUnit
@@ -396,10 +393,6 @@ Low-Level Schema Wrappers
    ValueDefWithConditionMarkPropFieldDefnumber
    ValueDefWithConditionMarkPropFieldDefstringnull
    ValueDefWithConditionTextFieldDefValue
-   ValueDefWithOptionalConditionMarkPropFieldDefTypeForShapestringnull
-   ValueDefWithOptionalConditionMarkPropFieldDefnumber
-   ValueDefWithOptionalConditionMarkPropFieldDefstringnull
-   ValueDefWithOptionalConditionTextFieldDefValue
    VegaLiteSchema
    ViewBackground
    ViewConfig
