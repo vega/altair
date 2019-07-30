@@ -374,13 +374,13 @@ argmax     An input data object containing the maximum field value.             
 average    The mean (average) field value. Identical to mean.                           :ref:`gallery_layer_line_color_rule`
 count      The total count of data objects in the group.                                :ref:`gallery_simple_heatmap`
 distinct   The count of distinct field values.                                          N/A
-max        The maximum field value.                                                     :ref:`gallery_boxplot_max_min`
+max        The maximum field value.                                                     :ref:`gallery_boxplot`
 mean       The mean (average) field value.                                              :ref:`gallery_scatter_with_layered_histogram`
-median     The median field value                                                       :ref:`gallery_boxplot_max_min`
-min        The minimum field value.                                                     :ref:`gallery_boxplot_max_min`
+median     The median field value                                                       :ref:`gallery_boxplot`
+min        The minimum field value.                                                     :ref:`gallery_boxplot`
 missing    The count of null or undefined field values.                                 N/A
-q1         The lower quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
-q3         The upper quartile boundary of values.                                       :ref:`gallery_boxplot_max_min`
+q1         The lower quartile boundary of values.                                       :ref:`gallery_boxplot`
+q3         The upper quartile boundary of values.                                       :ref:`gallery_boxplot`
 ci0        The lower boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_sorted_error_bars_with_ci`
 ci1        The upper boundary of the bootstrapped 95% confidence interval of the mean.  :ref:`gallery_sorted_error_bars_with_ci`
 stderr     The standard error of the field values.                                      N/A

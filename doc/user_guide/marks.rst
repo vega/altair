@@ -33,7 +33,7 @@ In addition, Altair provides the following compound marks:
 ==========  ==============================  ================================  ==================================
 Mark Name   Method                          Description                       Example
 ==========  ==============================  ================================  ==================================
-box plot    :meth:`~Chart.mark_boxplot`     A box plot.                       :ref:`gallery_boxplot_max_min`
+box plot    :meth:`~Chart.mark_boxplot`     A box plot.                       :ref:`gallery_boxplot`
 error band  :meth:`~Chart.mark_errorband`   A continuous band around a line.  N/A
 error bar   :meth:`~Chart.mark_errorbar`    An errorbar around a point.       N/A
 ==========  ==============================  ================================  ==================================
