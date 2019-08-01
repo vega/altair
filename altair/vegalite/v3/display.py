@@ -74,10 +74,10 @@ colab_renderer = HTMLRenderer(mode='vega-lite',
                               vegalite_version=VEGALITE_VERSION)
 
 zeppelin_renderer = HTMLRenderer(mode='vega-lite',
-                              fullhtml=True, requirejs=False,
-                              vega_version=VEGA_VERSION,
-                              vegaembed_version=VEGAEMBED_VERSION,
-                              vegalite_version=VEGALITE_VERSION)
+                                fullhtml=True, requirejs=False,
+                                vega_version=VEGA_VERSION,
+                                vegaembed_version=VEGAEMBED_VERSION,
+                                vegalite_version=VEGALITE_VERSION)
 
 kaggle_renderer = HTMLRenderer(mode='vega-lite',
                                fullhtml=False, requirejs=True,
