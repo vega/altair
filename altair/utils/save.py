@@ -17,7 +17,7 @@ def write_file_or_filename(fp, content, mode='w'):
 def save(chart, fp, vega_version, vegaembed_version,
          format=None, mode=None, vegalite_version=None,
          embed_options=None, json_kwds=None, webdriver='chrome',
-         scale_factor=1):
+         scale_factor=1, **kwargs):
     """Save a chart to file in a variety of formats
 
     Supported formats are [json, html, png, svg]
@@ -51,6 +51,8 @@ def save(chart, fp, vega_version, vegaembed_version,
         Webdriver to use for png or svg output
     scale_factor : float
         scale_factor to use to change size/resolution of png or svg output
+    **kwargs :
+        additional kwargs passed to spec_to_mimebundle.
     """
     if json_kwds is None:
         json_kwds = {}
@@ -91,7 +93,7 @@ def save(chart, fp, vega_version, vegaembed_version,
                                         vegalite_version=vegalite_version,
                                         vegaembed_version=vegaembed_version,
                                         embed_options=embed_options,
-                                        json_kwds=json_kwds)
+                                        json_kwds=json_kwds, **kwargs)
         write_file_or_filename(fp, mimebundle['text/html'], mode='w')
     elif format in ['png', 'svg']:
         mimebundle = spec_to_mimebundle(spec=spec, format=format, mode=mode,
@@ -99,7 +101,7 @@ def save(chart, fp, vega_version, vegaembed_version,
                                         vegalite_version=vegalite_version,
                                         vegaembed_version=vegaembed_version,
                                         webdriver=webdriver,
-                                        scale_factor=scale_factor)
+                                        scale_factor=scale_factor, **kwargs)
         if format == 'png':
             write_file_or_filename(fp, mimebundle['image/png'], mode='wb')
         else:
