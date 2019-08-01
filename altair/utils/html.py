@@ -46,8 +46,7 @@ requirejs.config({
 {%- endif %}
   <div id="{{ output_div }}"></div>
   <script>
-    {%- if requirejs %}
-    {%- if not fullhtml %}
+    {%- if requirejs and not fullhtml %}
     requirejs.config({
         "paths": {
             "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
@@ -56,9 +55,13 @@ requirejs.config({
             "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
         }
     });
-    {%- endif %}
-    require(['vega-embed'], function(vegaEmbed){
-    {%- endif %} (function(vegaEmbed) {
+    {% endif %}
+    {% if requirejs -%}
+    require(['vega-embed'],
+    {%- else -%}
+    (
+    {%- endif -%}
+    function(vegaEmbed) {
       var spec = {{ spec }};
       var embedOpt = {{ embed_options }};
 
@@ -73,10 +76,7 @@ requirejs.config({
       const el = document.getElementById('{{ output_div }}');
       vegaEmbed("#{{ output_div }}", spec, embedOpt)
         .catch(error => showError(el, error));
-    })(vegaEmbed);
-    {%- if requirejs %}
-    });
-    {%- endif %}
+    }){% if not requirejs %}(vegaEmbed){% endif %};
 
   </script>
 {%- if fullhtml %}
