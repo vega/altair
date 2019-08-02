@@ -1262,31 +1262,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         return self._add_transform(core.WindowTransform(window=window, frame=frame, groupby=groupby,
                                                         ignorePeers=ignorePeers, sort=sort))
 
-    @utils.use_signature(core.Resolve)
-    def _set_resolve(self, **kwargs):
-        """Copy the chart and update the resolve property with kwargs"""
-        if not hasattr(self, 'resolve'):
-            raise ValueError("{} object has no attribute "
-                             "'resolve'".format(self.__class__))
-        copy = self.copy(deep=['resolve'])
-        if copy.resolve is Undefined:
-            copy.resolve = core.Resolve()
-        for key, val in kwargs.items():
-            copy.resolve[key] = val
-        return copy
-
-    @utils.use_signature(core.AxisResolveMap)
-    def resolve_axis(self, *args, **kwargs):
-        return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
-
-    @utils.use_signature(core.LegendResolveMap)
-    def resolve_legend(self, *args, **kwargs):
-        return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
-
-    @utils.use_signature(core.ScaleResolveMap)
-    def resolve_scale(self, *args, **kwargs):
-        return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
-
     # Display-related methods
 
     def _repr_mimebundle_(self, include, exclude):
@@ -1379,25 +1354,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
               files=files, jupyter_warning=jupyter_warning,
               open_browser=open_browser, http_server=http_server)
 
-
-class EncodingMixin(object):
-    @utils.use_signature(core.FacetedEncoding)
-    def encode(self, *args, **kwargs):
-        # Convert args to kwargs based on their types.
-        kwargs = utils.infer_encoding_types(args, kwargs, channels)
-
-        # get a copy of the dict representation of the previous encoding
-        copy = self.copy(deep=['encoding'])
-        encoding = copy._get('encoding', {})
-        if isinstance(encoding, core.VegaLiteSchema):
-            encoding = {k: v for k, v in encoding._kwds.items()
-                        if v is not Undefined}
-
-        # update with the new encodings, and apply them to the copy
-        encoding.update(kwargs)
-        copy.encoding = core.FacetedEncoding(**encoding)
-        return copy
-
     def facet(self, facet=Undefined, row=Undefined, column=Undefined, data=Undefined,
               columns=Undefined, **kwargs):
         """Create a facet chart from the current chart.
@@ -1449,7 +1405,53 @@ class EncodingMixin(object):
         return FacetChart(spec=self, facet=facet, data=data, columns=columns, **kwargs)
 
 
-class Chart(TopLevelMixin, EncodingMixin, mixins.MarkMethodMixin,
+class _ResolveMixin(object):
+    @utils.use_signature(core.Resolve)
+    def _set_resolve(self, **kwargs):
+        """Copy the chart and update the resolve property with kwargs"""
+        if not hasattr(self, 'resolve'):
+            raise ValueError("{} object has no attribute "
+                             "'resolve'".format(self.__class__))
+        copy = self.copy(deep=['resolve'])
+        if copy.resolve is Undefined:
+            copy.resolve = core.Resolve()
+        for key, val in kwargs.items():
+            copy.resolve[key] = val
+        return copy
+
+    @utils.use_signature(core.AxisResolveMap)
+    def resolve_axis(self, *args, **kwargs):
+        return self._set_resolve(axis=core.AxisResolveMap(*args, **kwargs))
+
+    @utils.use_signature(core.LegendResolveMap)
+    def resolve_legend(self, *args, **kwargs):
+        return self._set_resolve(legend=core.LegendResolveMap(*args, **kwargs))
+
+    @utils.use_signature(core.ScaleResolveMap)
+    def resolve_scale(self, *args, **kwargs):
+        return self._set_resolve(scale=core.ScaleResolveMap(*args, **kwargs))
+
+
+class _EncodingMixin(object):
+    @utils.use_signature(core.FacetedEncoding)
+    def encode(self, *args, **kwargs):
+        # Convert args to kwargs based on their types.
+        kwargs = utils.infer_encoding_types(args, kwargs, channels)
+
+        # get a copy of the dict representation of the previous encoding
+        copy = self.copy(deep=['encoding'])
+        encoding = copy._get('encoding', {})
+        if isinstance(encoding, core.VegaLiteSchema):
+            encoding = {k: v for k, v in encoding._kwds.items()
+                        if v is not Undefined}
+
+        # update with the new encodings, and apply them to the copy
+        encoding.update(kwargs)
+        copy.encoding = core.FacetedEncoding(**encoding)
+        return copy
+
+
+class Chart(TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin,
             core.TopLevelUnitSpec):
     """Create a basic Altair/Vega-Lite chart.
 
@@ -1640,7 +1642,7 @@ def _check_if_can_be_layered(spec):
 
 
 @utils.use_signature(core.TopLevelRepeatSpec)
-class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
+class RepeatChart(TopLevelMixin, _ResolveMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
     def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'RepeatChart')
@@ -1698,7 +1700,7 @@ def repeat(repeater='repeat'):
 
 
 @utils.use_signature(core.TopLevelConcatSpec)
-class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
+class ConcatChart(TopLevelMixin, _ResolveMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets"""
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
         # TODO: move common data to top level?
@@ -1735,7 +1737,7 @@ def concat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelHConcatSpec)
-class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
+class HConcatChart(TopLevelMixin, _ResolveMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
@@ -1771,7 +1773,7 @@ def hconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelVConcatSpec)
-class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
+class VConcatChart(TopLevelMixin, _ResolveMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
     def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
@@ -1807,7 +1809,7 @@ def vconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelLayerSpec)
-class LayerChart(TopLevelMixin, EncodingMixin, core.TopLevelLayerSpec):
+class LayerChart(TopLevelMixin, _ResolveMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
@@ -1878,7 +1880,7 @@ def layer(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelFacetSpec)
-class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
+class FacetChart(TopLevelMixin, _ResolveMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'FacetChart')
