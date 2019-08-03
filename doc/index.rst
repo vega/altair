@@ -42,6 +42,7 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/interactions
    user_guide/configuration
    user_guide/compound_charts
+   user_guide/scale_resolve
    user_guide/saving_charts
    user_guide/customization
    user_guide/times_and_dates
