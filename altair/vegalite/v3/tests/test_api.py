@@ -30,6 +30,37 @@ OP_DICT = {
 }
 
 
+def _make_chart_type(chart_type):
+    data = pd.DataFrame({
+        'x': [28, 55, 43, 91, 81, 53, 19, 87],
+        'y': [43, 91, 81, 53, 19, 87, 52, 28],
+        'color': list('AAAABBBB'),
+    })
+    base = alt.Chart(data).mark_point().encode(
+        x='x',
+        y='y',
+        color='color',
+    )
+
+    if chart_type in ['layer', 'hconcat', 'vconcat', 'concat']:
+        func = getattr(alt, chart_type)
+        return func(base.mark_square(), base.mark_circle())
+    elif chart_type == 'facet':
+        return base.facet('color')
+    elif chart_type == 'facet_encoding':
+        return base.encode(facet='color')
+    elif chart_type == 'repeat':
+        return base.encode(
+            alt.X(alt.repeat(), type='quantitative')
+        ).repeat(
+            ['x', 'y']
+        )
+    elif chart_type == 'chart':
+        return base
+    else:
+        raise ValueError("chart_type='{}' is not recognized".format(chart_type))
+
+
 @pytest.fixture
 def basic_chart():
     data = pd.DataFrame({
@@ -767,3 +798,45 @@ def test_layer_errors():
     with pytest.raises(ValueError) as err:
         alt.layer(simple_chart) + facet_chart2
     assert str(err.value) == "Faceted charts cannot be layered."
+
+
+@pytest.mark.parametrize(
+    'chart_type',
+    ['layer', 'hconcat', 'vconcat', 'concat', 'facet', 'facet_encoding', 'repeat']
+)
+def test_resolve(chart_type):
+    chart = _make_chart_type(chart_type)
+    chart = chart.resolve_scale(
+        x='independent',
+    ).resolve_legend(
+        color='independent'
+    ).resolve_axis(
+        y='independent'
+    )
+    dct = chart.to_dict()
+    assert dct['resolve'] == {
+        'scale': {'x': 'independent'},
+        'legend': {'color': 'independent'},
+        'axis': {'y': 'independent'},
+    }
+
+
+# TODO: test vconcat, hconcat, concat when schema allows them.
+# This is blocked by https://github.com/vega/vega-lite/issues/5261
+@pytest.mark.parametrize('chart_type', ['chart', 'layer', 'facet_encoding'])
+@pytest.mark.parametrize('facet_arg', [None, 'facet', 'row', 'column'])
+def test_facet(chart_type, facet_arg):
+    chart = _make_chart_type(chart_type)
+    if facet_arg is None:
+        chart = chart.facet('color:N', columns=2)
+    else:
+        chart = chart.facet(**{facet_arg: 'color:N', 'columns': 2})
+    dct = chart.to_dict()
+
+    assert 'spec' in dct
+    assert dct['columns'] == 2
+    expected = {'field': 'color', 'type': 'nominal'}
+    if facet_arg is None or facet_arg == 'facet':
+        assert dct['facet'] == expected
+    else:
+        assert dct['facet'][facet_arg] == expected
