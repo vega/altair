@@ -1404,8 +1404,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         return FacetChart(spec=self, facet=facet, data=data, columns=columns, **kwargs)
 
-
-class _ResolveMixin(object):
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
         """Copy the chart and update the resolve property with kwargs"""
@@ -1642,7 +1640,7 @@ def _check_if_can_be_layered(spec):
 
 
 @utils.use_signature(core.TopLevelRepeatSpec)
-class RepeatChart(TopLevelMixin, _ResolveMixin, core.TopLevelRepeatSpec):
+class RepeatChart(TopLevelMixin, core.TopLevelRepeatSpec):
     """A chart repeated across rows and columns with small changes"""
     def __init__(self, data=Undefined, spec=Undefined, repeat=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'RepeatChart')
@@ -1700,7 +1698,7 @@ def repeat(repeater='repeat'):
 
 
 @utils.use_signature(core.TopLevelConcatSpec)
-class ConcatChart(TopLevelMixin, _ResolveMixin, core.TopLevelConcatSpec):
+class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
     """A chart with horizontally-concatenated facets"""
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
         # TODO: move common data to top level?
@@ -1737,7 +1735,7 @@ def concat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelHConcatSpec)
-class HConcatChart(TopLevelMixin, _ResolveMixin, core.TopLevelHConcatSpec):
+class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
     """A chart with horizontally-concatenated facets"""
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
         # TODO: move common data to top level?
@@ -1773,7 +1771,7 @@ def hconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelVConcatSpec)
-class VConcatChart(TopLevelMixin, _ResolveMixin, core.TopLevelVConcatSpec):
+class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
     """A chart with vertically-concatenated facets"""
     def __init__(self, data=Undefined, vconcat=(), **kwargs):
         # TODO: move common data to top level?
@@ -1809,7 +1807,7 @@ def vconcat(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelLayerSpec)
-class LayerChart(TopLevelMixin, _ResolveMixin, _EncodingMixin, core.TopLevelLayerSpec):
+class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, data=Undefined, layer=(), **kwargs):
         # TODO: move common data to top level?
@@ -1880,7 +1878,7 @@ def layer(*charts, **kwargs):
 
 
 @utils.use_signature(core.TopLevelFacetSpec)
-class FacetChart(TopLevelMixin, _ResolveMixin, core.TopLevelFacetSpec):
+class FacetChart(TopLevelMixin, core.TopLevelFacetSpec):
     """A Chart with layers within a single panel"""
     def __init__(self, data=Undefined, spec=Undefined, facet=Undefined, **kwargs):
         _check_if_valid_subspec(spec, 'FacetChart')
