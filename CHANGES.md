@@ -1,5 +1,13 @@
 # Altair Change Log
 
+## Version 3.3.0 (unreleased)
+
+### Enhancements
+
+### Bug Fixes
+
+### Backward-Incompatible Changes
+
 ## Version 3.2.0 (released August 5, 2019)
 
 Upgraded to Vega-Lite version 3.4 (See [Vega-Lite 3.4 Release Notes](https://github.com/vega/vega-lite/releases/tag/v3.4.0)).
