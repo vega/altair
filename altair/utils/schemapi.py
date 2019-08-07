@@ -250,8 +250,7 @@ class SchemaBase(object):
 
     def __eq__(self, other):
         return (type(self) is type(other)
-                and self._args == other._args
-                and self._kwds == other._kwds)
+                and self.to_dict() == other.to_dict())
 
     def to_dict(self, validate=True, ignore=None, context=None):
         """Return a dictionary representation of the object
