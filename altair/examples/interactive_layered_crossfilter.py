@@ -26,13 +26,13 @@ base = alt.Chart().mark_bar().encode(
     height=130
 )
 
-# blue background with selection
-background = base.add_selection(brush)
+# gray background with selection
+background = base.encode(
+    color=alt.value('#ddd')
+).add_selection(brush)
 
-# yellow highlights on the transformed data
-highlight = base.encode(
-    color=alt.value('goldenrod')
-).transform_filter(brush)
+# blue highlights on the transformed data
+highlight = base.transform_filter(brush)
 
 # layer the two charts & repeat
 alt.layer(
