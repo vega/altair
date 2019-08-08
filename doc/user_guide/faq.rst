@@ -209,4 +209,4 @@ And then enable the data transformer::
     import altair as alt
     alt.data_transformers.enable('data_server')
 
-Note that this may not approach on some cloud-based Jupyter notebook services.
+Note that this approach may not work on some cloud-based Jupyter notebook services.
