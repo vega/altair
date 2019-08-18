@@ -79,8 +79,8 @@ def _prepare_data(data, context):
     if data is Undefined:
         return data
 
-    # convert dataframes to dict
-    if isinstance(data, pd.DataFrame):
+    # convert dataframes  or objects with __geo_interface__ to dict
+    if isinstance(data, pd.DataFrame) or hasattr(data, '__geo_interface__'):
         data = pipe(data, data_transformers.get())
 
     # convert string input to a URLData

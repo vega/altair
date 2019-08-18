@@ -3,6 +3,7 @@ Utility routines
 """
 import collections
 from copy import deepcopy
+import json
 import itertools
 import re
 import sys
@@ -108,6 +109,62 @@ def infer_vegalite_type(data):
                       "Defaulting to nominal.".format(typ))
         return 'nominal'
 
+def sanitize_geo_interface(geo):
+    """Santize a geo_interface to prepare it for serialization.
+    
+    * Make a copy
+    * Convert type array or _Array to list
+    * Convert tuples to lists (using json.loads/dumps)
+    * Register properties as foreign members where possible
+    """
+    geo = deepcopy(geo)
+
+    for key in geo.keys():
+        # some bbox are _Array or array types, convert to list
+        if str(type(geo[key]).__name__).startswith(('_Array','array')):
+            geo[key] = geo[key].tolist()
+    
+    # parse (nested) tuples as lists
+    geo = deepcopy(json.loads(json.dumps(geo)))
+
+    # Try to parse the object properties as foreign members, expect the reserved keys
+    if geo['type'] == 'FeatureCollection':
+        reserved_keys = [
+            "type",
+            "bbox",
+            "coordinates",
+            "geometries",
+            "geometry",
+            "properties",
+            "features"
+        ]
+        reserved_keys_used = bool(
+            set(geo['features'][0]["properties"].keys()).intersection(reserved_keys)
+        )
+        for feat in geo['features']:
+            reserved_keys = False
+            for k, v in list(feat["properties"].items()):
+                if not reserved_keys_used or k in reserved_keys:
+                    feat[k] = v
+                    feat["properties"].pop(k, None)
+            if not reserved_keys_used:
+                feat.pop("properties", None)
+        geo = geo['features']
+    elif geo['type'] == 'Feature':   
+        reserved_keys_used = bool(
+            set(geo["properties"].keys()).intersection(reserved_keys)
+        )       
+        for k, v in list(geo["properties"].items()):
+            if not reserved_keys_used or k in reserved_keys:
+                geo[k] = v
+                geo["properties"].pop(k, None)
+        if not reserved_keys_used:
+            geo.pop("properties", None)        
+    else:
+        geo = [{'type':'Feature', 'geometry':geo}]
+
+    return geo
+
 
 def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
@@ -166,6 +223,10 @@ def sanitize_dataframe(df):
                              'not supported by Altair. Please convert to '
                              'either a timestamp or a numerical value.'
                              ''.format(col_name=col_name, dtype=dtype))
+        elif str(dtype).startswith('geometry'):
+            # from geopandas >=0.6.1 the type geometry is used for. Pass here
+            # otherwise it will give an error on np.issubdtype(dtype, np.integer)
+            continue                            
         elif np.issubdtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
