@@ -840,3 +840,22 @@ def test_facet(chart_type, facet_arg):
         assert dct['facet'] == expected
     else:
         assert dct['facet'][facet_arg] == expected
+
+
+def test_sequence():
+    data = alt.sequence(100)
+    assert data.to_dict() == {'sequence': {'start': 0, 'stop': 100}}
+
+    data = alt.sequence(5, 10)
+    assert data.to_dict() == {'sequence': {'start': 5, 'stop': 10}}
+
+    data = alt.sequence(0, 1, 0.1, as_='x')
+    assert data.to_dict() == {'sequence': {'start': 0, 'stop': 1, 'step': 0.1, 'as': 'x'}}
+
+
+def test_graticule():
+    data = alt.graticule()
+    assert data.to_dict() == {'graticule': True}
+
+    data = alt.graticule(step=[15, 15])
+    assert data.to_dict() == {'graticule': {'step': [15, 15]}}
