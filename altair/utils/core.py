@@ -125,19 +125,21 @@ def sanitize_geo_interface(geo):
             geo[key] = geo[key].tolist()
     
     # parse (nested) tuples as lists
-    geo = deepcopy(json.loads(json.dumps(geo)))
+    geo = json.loads(json.dumps(geo))
+
+    reserved_keys = [
+        "type",
+        "bbox",
+        "coordinates",
+        "geometries",
+        "geometry",
+        "properties",
+        "features"
+    ]
 
     # Try to parse the object properties as foreign members, expect the reserved keys
     if geo['type'] == 'FeatureCollection':
-        reserved_keys = [
-            "type",
-            "bbox",
-            "coordinates",
-            "geometries",
-            "geometry",
-            "properties",
-            "features"
-        ]
+
         reserved_keys_used = bool(
             set(geo['features'][0]["properties"].keys()).intersection(reserved_keys)
         )
