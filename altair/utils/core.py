@@ -117,6 +117,7 @@ def sanitize_geo_interface(geo):
     * Convert tuples to lists (using json.loads/dumps)
     * Register properties as foreign members where possible
     """
+
     geo = deepcopy(geo)
 
     for key in geo.keys():
@@ -127,43 +128,49 @@ def sanitize_geo_interface(geo):
     # parse (nested) tuples as lists
     geo = json.loads(json.dumps(geo))
 
-    reserved_keys = [
+    reserved_members = [
         "type",
-        "bbox",
-        "coordinates",
-        "geometries",
         "geometry",
         "properties",
-        "features"
     ]
 
-    # Try to parse the object properties as foreign members, expect the reserved keys
+    # try to parse the object properties as foreign members
+    # except for the reserved keys and existing members
     if geo['type'] == 'FeatureCollection':
-
-        reserved_keys_used = bool(
-            set(geo['features'][0]["properties"].keys()).intersection(reserved_keys)
-        )
-        for feat in geo['features']:
-            reserved_keys = False
-            for k, v in list(feat["properties"].items()):
-                if not reserved_keys_used or k in reserved_keys:
-                    feat[k] = v
-                    feat["properties"].pop(k, None)
-            if not reserved_keys_used:
-                feat.pop("properties", None)
+        
         geo = geo['features']
-    elif geo['type'] == 'Feature':   
-        reserved_keys_used = bool(
-            set(geo["properties"].keys()).intersection(reserved_keys)
-        )       
+        if len(geo) > 0:
+            reserved_members_used = bool(
+                set(geo[0]["properties"].keys()).intersection(reserved_members)
+            )
+            current_members = list(geo[0].keys())
+            false_members = reserved_members + current_members
+
+            for feat in geo:
+                for k, v in list(feat["properties"].items()):
+                    if not reserved_members_used or k not in false_members:
+                        feat[k] = v
+                        feat["properties"].pop(k, None)
+                if not reserved_members_used:
+                    feat.pop("properties", None)
+        
+    
+    elif geo['type'] == 'Feature':  
+        reserved_members_used = bool(
+            set(geo["properties"].keys()).intersection(reserved_members)
+        )
+        current_members = list(geo.keys())
+        false_members = reserved_members + current_members
+
         for k, v in list(geo["properties"].items()):
-            if not reserved_keys_used or k in reserved_keys:
+            if not reserved_members_used or k not in false_members:
                 geo[k] = v
                 geo["properties"].pop(k, None)
-        if not reserved_keys_used:
+        if not reserved_members_used:
             geo.pop("properties", None)        
+    
     else:
-        geo = [{'type':'Feature', 'geometry':geo}]
+        geo = {'type': 'Feature', 'geometry': geo}
 
     return geo
 
@@ -226,7 +233,7 @@ def sanitize_dataframe(df):
                              'either a timestamp or a numerical value.'
                              ''.format(col_name=col_name, dtype=dtype))
         elif str(dtype).startswith('geometry'):
-            # from geopandas >=0.6.1 the type geometry is used for. Pass here
+            # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
             continue                            
         elif np.issubdtype(dtype, np.integer):
