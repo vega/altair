@@ -12,10 +12,10 @@ def not_raises(ExpectedException):
         yield
 
     except ExpectedException as error:
-        raise AssertionError(f"Raised exception {error} when it should not!")
+        raise AssertionError("Raised exception {}".format(error))
 
     except Exception as error:
-        raise AssertionError(f"An unexpected exception {error} raised.")
+        raise AssertionError("An unexpected exception {} raised.".format(error))
 
 def geom_obj(geom):
     class Geom(object):
