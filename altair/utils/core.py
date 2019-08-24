@@ -140,33 +140,37 @@ def sanitize_geo_interface(geo):
         
         geo = geo['features']
         if len(geo) > 0:
-            reserved_members_used = bool(
-                set(geo[0]["properties"].keys()).intersection(reserved_members)
-            )
+
             current_members = list(geo[0].keys())
             false_members = reserved_members + current_members
 
+            false_members_used = bool(
+                set(geo[0]["properties"].keys()).intersection(false_members)
+            )            
+
             for feat in geo:
                 for k, v in list(feat["properties"].items()):
-                    if not reserved_members_used or k not in false_members:
+                    if not false_members_used or k not in false_members:
                         feat[k] = v
                         feat["properties"].pop(k, None)
-                if not reserved_members_used:
+                if not false_members_used:
                     feat.pop("properties", None)
         
     
     elif geo['type'] == 'Feature':  
-        reserved_members_used = bool(
-            set(geo["properties"].keys()).intersection(reserved_members)
-        )
+
         current_members = list(geo.keys())
         false_members = reserved_members + current_members
 
+        false_members_used = bool(
+            set(geo["properties"].keys()).intersection(false_members)
+        )        
+
         for k, v in list(geo["properties"].items()):
-            if not reserved_members_used or k not in false_members:
+            if not false_members_used or k not in false_members:
                 geo[k] = v
                 geo["properties"].pop(k, None)
-        if not reserved_members_used:
+        if not false_members_used:
             geo.pop("properties", None)        
     
     else:

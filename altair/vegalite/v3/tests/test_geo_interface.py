@@ -215,3 +215,41 @@ def test_geo_interface_feature_collection():
     assert 'coordinates' in chart['datasets'][ds_key][1]['geometry'] 
     assert chart['datasets'][ds_key][0]['type'] == 'Feature'
     assert chart['datasets'][ds_key][1]['type'] == 'Feature' 
+
+# typical output of a __geo_interface__ from geopandas GeoDataFrame
+# notic that the index value is registerd as a commonly used identifier
+# with the name "id" (in this case 49).
+# if there also is a column name used with "id", it should stay within
+# the properties group.
+def test_geo_interface_feature_collection_gdf():
+    geom = {
+        'bbox': (19.89, -26.82, 29.43, -17.66),
+        'features': [
+            {'bbox': (19.89, -26.82, 29.43, -17.66),
+            'geometry': {
+                'coordinates': [[
+                    [6.90, 53.48],
+                    [5.98, 51.85],
+                    [6.07, 53.51],
+                    [6.90, 53.48]
+                ]], 
+                'type': 'Polygon'},
+            'id': '49',
+            'properties': {
+                'continent': 'Africa','gdp_md_est': 35900.0,
+                'id': 'BWA',
+                'iso_a3': 'BWA',
+                'name': 'Botswana',
+                'pop_est': 2214858},
+            'type': 'Feature'}
+        ],
+        'type': 'FeatureCollection'
+    }
+    feat = geom_obj(geom)
+
+    with not_raises(jsonschema.ValidationError):
+        chart = alt.Chart(feat).mark_geoshape().to_dict()
+
+    ds_key = list(chart['datasets'].keys())[0]
+    assert chart['datasets'][ds_key][0]['id'] == '49'
+    assert chart['datasets'][ds_key][0]['properties']['id'] == 'BWA'  
