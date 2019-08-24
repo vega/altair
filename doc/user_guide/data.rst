@@ -245,16 +245,17 @@ Python protocol for Geospatial Data. The protocol follows a GeoJSON-like structu
 store geo-spatial vector data.
 
 To make working with Geospatial Data as similar as working with long-form structured data 
-the geo_interface is serialized in order to be interpreted by Altair and to provide 
-users a similar experience as when working with tabular data such as Pandas.
+the geo_interface is serialized in order to:
+- make it be correctly interpreted by Altair
+- provide users a similar experience as when working with tabular data such as Pandas.
 
 Altair can interpret a spatial bounded entity (a Feature) or a list of Features 
-(FeatureCollection). In order for correct interpreation it is made sure that all records 
-containing a single geometry, such as Point, LineString, Polygon, MultiPoint, 
-MultiLineString, MultiPolygon, and GeometryCollection are stored as a Feature entity.
+(FeatureCollection). In order for correct interpretation it is made sure that all records 
+contains a single geometry (one of Point, LineString, Polygon, MultiPoint, 
+MultiLineString, MultiPolygon, and GeometryCollection) and is stored as a Feature entity.
 
-So the most basic Feature is an entity that only contains a Geometry object. For example
-a simple Polygon:
+The most basic Feature is an entity that only contains a Geometry object. For example
+a Polygon:
 
 .. altair-plot::
     :output: repr
@@ -275,8 +276,9 @@ a simple Polygon:
 
 Often, the Feature contains also additional metadata next to the Geometry object.
 The `__geo_interface__` provides two approaches to store metadata.
-- Stored as a dictionary within the key `properties` (so called properties member)
-- Stored directly on the top-level of the Feature (so called foreign members).
+- Metadata stored as a dictionary within the key `properties` (so called properties 
+member)
+- Metada stored directly on the top-level of the Feature (so called foreign members).
 
 Altair aims to serialize the metadata directly on the top-level of the Feature to 
 avoid the need of nested dictionaries. In some situations this is not possible 
@@ -338,7 +340,7 @@ GeoPandas vs Pandas
 A `GeoDataFrame` is a `DataFrame` including a special column with spatial geometries.
 Where Altair only accesses dataframe columns and not dataframe indices for a 
 `DataFrame` this is not the case for a `GeoDataFrame`. The `__geo_interface__` of a
-`GeoDataFrame` registers the draframe indices as a commonly used identifier on the 
+`GeoDataFrame` registers the dataframe indices as a commonly used identifier on the 
 top-level of each Feature with the key-name "id". If there is a column name in your 
 `GeoDataFrame` with the name "id", it is accesible as "properties.id" in Altair.
 
@@ -353,26 +355,27 @@ Try to avoid putting projected data into Altair, but reproject your spatial data
 EPSG:4326 first.
 
 If your data comes in a different projection with units in meters than the projection
-type `(type: 'identity', reflectY': True)` might be an option. It draws the geomtries 
-in a cartesian grid without applying a projection configuration.
+and you don't have the option to reproject try the projection type 
+`(type: 'identity', reflectY': True)`. It draws the geometries in a cartesian grid 
+without applying a projection configuration.
 
 .. _data-winding-order:
 
 Winding order
 ~~~~~~~~~~~~~
-LineString and Polygon geometries contain coordinates in an order: lines go in a 
-certain direction, and polygon rings do too. The GeoJSON-like structure of the 
-__geo_interface__ recommends the right-hand rule winding order. Meaning that the
-exterior rings should be counterclockwise and interior rings are clockwise. While it
-recommends the right-hand rule winding order, it does not reject geometries do not use
-the right-hand rule.
+LineString, Polygon and MultiPolygon geometries contain coordinates in an order: lines 
+go in a certain direction, and polygon rings do too. The GeoJSON-like structure of the 
+__geo_interface__ recommends the right-hand rule winding order for Polygon and 
+MultiPolygons. Meaning that the exterior rings should be counterclockwise and interior 
+rings are clockwise. While it recommends the right-hand rule winding order, it does not 
+reject geometries do not use the right-hand rule.
 
-Altair does NOT follow the right-hand rule for geometires, but uses the left-hand rule. 
+Altair does NOT follow the right-hand rule for geometries, but uses the left-hand rule. 
 Meaning that exterior rings should be clockwise and interior rings should be 
 counterclockwise. 
 
-If you face a problem regarding winding orders, try to force the left-hand rule on your
-data before usage in Altair. 
+If you face a problem regarding winding order, try to force the left-hand rule on your
+data before usage in Altair:
 
 .. altair-plot::
     :output: repr
