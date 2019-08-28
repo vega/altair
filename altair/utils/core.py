@@ -109,70 +109,49 @@ def infer_vegalite_type(data):
                       "Defaulting to nominal.".format(typ))
         return 'nominal'
 
+def merge_props_geom(feat):
+    """
+    Merge properties with geometry
+    * Overwrites 'type' and 'geometry' entries if existing    
+    """
+    
+    try:
+        feat['properties'].update({k: feat[k] for k in ('type', 'geometry')})
+        props_geom = feat['properties']
+    except (AttributeError, KeyError):
+        # AttributeError when 'properties' equals None
+        # KeyError when 'properties' is non-existing        
+        props_geom = {k: feat[k] for k in ('type', 'geometry')}    
+
+    return props_geom   
+
 def sanitize_geo_interface(geo):
     """Santize a geo_interface to prepare it for serialization.
     
     * Make a copy
     * Convert type array or _Array to list
     * Convert tuples to lists (using json.loads/dumps)
-    * Register properties as foreign members where possible
+    * Merge properties with geometry
     """
 
     geo = deepcopy(geo)
 
-    for key in geo.keys():
-        # some bbox are _Array or array types, convert to list
+    # convert type _Array or array to list
+    for key in geo.keys():        
         if str(type(geo[key]).__name__).startswith(('_Array','array')):
             geo[key] = geo[key].tolist()
     
-    # parse (nested) tuples as lists
+    # convert (nested) tuples to lists
     geo = json.loads(json.dumps(geo))
 
-    reserved_members = [
-        "type",
-        "geometry",
-        "properties",
-    ]
-
-    # try to parse the object properties as foreign members
-    # except for the reserved keys and existing members
+    # sanitize features
     if geo['type'] == 'FeatureCollection':
-        
         geo = geo['features']
-        if len(geo) > 0:
-
-            current_members = list(geo[0].keys())
-            false_members = reserved_members + current_members
-
-            false_members_used = bool(
-                set(geo[0]["properties"].keys()).intersection(false_members)
-            )            
-
-            for feat in geo:
-                for k, v in list(feat["properties"].items()):
-                    if not false_members_used or k not in false_members:
-                        feat[k] = v
-                        feat["properties"].pop(k, None)
-                if not false_members_used:
-                    feat.pop("properties", None)
-        
-    
+        if len(geo) > 0:          
+            for idx, feat in enumerate(geo):
+                geo[idx] = merge_props_geom(feat)
     elif geo['type'] == 'Feature':  
-
-        current_members = list(geo.keys())
-        false_members = reserved_members + current_members
-
-        false_members_used = bool(
-            set(geo["properties"].keys()).intersection(false_members)
-        )        
-
-        for k, v in list(geo["properties"].items()):
-            if not false_members_used or k not in false_members:
-                geo[k] = v
-                geo["properties"].pop(k, None)
-        if not false_members_used:
-            geo.pop("properties", None)        
-    
+        geo = merge_props_geom(geo)
     else:
         geo = {'type': 'Feature', 'geometry': geo}
 

@@ -277,20 +277,13 @@ a Polygon:
 Often, the Feature contains also additional metadata next to the Geometry object.
 The `__geo_interface__` provides two approaches to store metadata.
 - Metadata stored as a dictionary within the key `properties` (so called properties 
-member)
-- Metada stored directly on the top-level of the Feature (so called foreign members).
+member). This properties member must exist in a valid Feature entity.
+- Metada may be stored directly as foreign members on the top-level of the Feature. 
+But there is no normative processing model for usage of this declaration.
 
-Altair aims to serialize the metadata directly on the top-level of the Feature to 
-avoid the need of nested dictionaries. In some situations this is not possible 
-and Altair will store the metadata within the properties member.
-
-Generally speaking the serialization of metadata to the top-level of the Feature
-entity is not possible in two situations.
-1. When the properties member contain a name/value pair equal to of one of the 
-reserved keys required on the top-level of the Feature. These are `type`, `geometry` 
-and `properties`.
-2. When the properties member contain a name/value pair which is already registered
-on the top-level of the Feature, albeit not being a reserved key.
+Altair serializes the metadata from the properties in combination with the declared
+geometry as Feature entities. This result of this approach is that the keys `type` 
+and `geometry` in the properties member will be overwriten if used.
 
 So an `__geo_interface__` that is registered as such
 
@@ -317,32 +310,24 @@ Is serialized as such:
 
     {
         "type": "Feature",
-        "id": "feat_1",
         "geometry": {...},
         "foo": "xx",
         "bah": "yy",
-        "properties": {
-            "id": 1,
-            "type": "zz"
-        },
-        "title": "Example Feature"
+        "id": 1
     }
 
-The nested `"type": "zz"` cannot be serialized, since the reserved `"type":"Feature"`
-exists on the top-level and the nested `"id": 1` cannot be serialized since there is
-already an `"id": "feat_1"` entry on the top-level. Both `"foo": "xx"` and 
-`"bah": "yy"` were succesfully serialized to the top-level.
+The nested `"type": "zz"` in the properties member is overwriten by `"type":"Feature"`
+and only the metadata stored in the properties member is serialized. Meaning that 
+foreign members and the commonly used identifier are not serialized.
 
 .. _data-geopandas-vs-pandas:
 
 GeoPandas vs Pandas
 ~~~~~~~~~~~~~~~~~~~
 A `GeoDataFrame` is a `DataFrame` including a special column with spatial geometries.
-Where Altair only accesses dataframe columns and not dataframe indices for a 
-`DataFrame` this is not the case for a `GeoDataFrame`. The `__geo_interface__` of a
-`GeoDataFrame` registers the dataframe indices as a commonly used identifier on the 
-top-level of each Feature with the key-name "id". If there is a column name in your 
-`GeoDataFrame` with the name "id", it is accesible as "properties.id" in Altair.
+The column-name containing the spatial geometries defaults to `geometry`. To directly
+use a `GeoDataFrame` with Altair means in practice that only the column-name `type` 
+should be avoided.
 
 .. _data-projections:
 
@@ -354,8 +339,8 @@ its geographic coordinate reference system with units in decimal degrees.
 Try to avoid putting projected data into Altair, but reproject your spatial data to
 EPSG:4326 first.
 
-If your data comes in a different projection with units in meters than the projection
-and you don't have the option to reproject try the projection type 
+If your data comes in a different projection (eg. with units in meters) and you don't 
+have the option to reproject the data, than try using the project configuration 
 `(type: 'identity', reflectY': True)`. It draws the geometries in a cartesian grid 
 without applying a projection configuration.
 
