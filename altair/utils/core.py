@@ -3,6 +3,7 @@ Utility routines
 """
 import collections
 from copy import deepcopy
+import json
 import itertools
 import re
 import sys
@@ -108,6 +109,55 @@ def infer_vegalite_type(data):
                       "Defaulting to nominal.".format(typ))
         return 'nominal'
 
+def merge_props_geom(feat):
+    """
+    Merge properties with geometry
+    * Overwrites 'type' and 'geometry' entries if existing    
+    """
+
+    geom = {k: feat[k] for k in ('type', 'geometry')}
+    try:
+        feat['properties'].update(geom)
+        props_geom = feat['properties']
+    except (AttributeError, KeyError):
+        # AttributeError when 'properties' equals None
+        # KeyError when 'properties' is non-existing        
+        props_geom = geom   
+
+    return props_geom   
+
+def sanitize_geo_interface(geo):
+    """Santize a geo_interface to prepare it for serialization.
+    
+    * Make a copy
+    * Convert type array or _Array to list
+    * Convert tuples to lists (using json.loads/dumps)
+    * Merge properties with geometry
+    """
+
+    geo = deepcopy(geo)
+
+    # convert type _Array or array to list
+    for key in geo.keys():        
+        if str(type(geo[key]).__name__).startswith(('_Array','array')):
+            geo[key] = geo[key].tolist()
+    
+    # convert (nested) tuples to lists
+    geo = json.loads(json.dumps(geo))
+
+    # sanitize features
+    if geo['type'] == 'FeatureCollection':
+        geo = geo['features']
+        if len(geo) > 0:          
+            for idx, feat in enumerate(geo):
+                geo[idx] = merge_props_geom(feat)
+    elif geo['type'] == 'Feature':  
+        geo = merge_props_geom(geo)
+    else:
+        geo = {'type': 'Feature', 'geometry': geo}
+
+    return geo
+
 
 def sanitize_dataframe(df):
     """Sanitize a DataFrame to prepare it for serialization.
@@ -166,6 +216,10 @@ def sanitize_dataframe(df):
                              'not supported by Altair. Please convert to '
                              'either a timestamp or a numerical value.'
                              ''.format(col_name=col_name, dtype=dtype))
+        elif str(dtype).startswith('geometry'):
+            # geopandas >=0.6.1 uses the dtype geometry. Continue here
+            # otherwise it will give an error on np.issubdtype(dtype, np.integer)
+            continue                            
         elif np.issubdtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)

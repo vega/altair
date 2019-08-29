@@ -8,11 +8,12 @@ Specifying Data in Altair
 Each top-level chart object (i.e. :class:`Chart`, :class:`LayerChart`,
 and :class:`VConcatChart`, :class:`HConcatChart`, :class:`RepeatChart`,
 :class:`FacetChart`) accepts a dataset as its first argument.
-The dataset can be specified in one of three ways:
+The dataset can be specified in one of the following ways:
 
 - as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
+- as an object that supports the `__geo_interface__` (eg. `Geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_)
 
 For example, here we specify data via a DataFrame:
 
@@ -233,3 +234,137 @@ to be folded. The ``as_`` argument is optional, with the default being ``["key",
 .. _Pandas pivot documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html
 .. _Pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
 .. _Reshaping and Pivot Tables: https://pandas.pydata.org/pandas-docs/stable/reshaping.html
+
+.. _data-geo-interface:
+
+Geospatial Data
+~~~~~~~~~~~~~~~
+Working with geographical data in Altair is possible if the object contains a 
+`__geo_interface__` attribute. This attribute represents the geo_interface which is a 
+Python protocol for Geospatial Data. The protocol follows a GeoJSON-like structure to 
+store geo-spatial vector data.
+
+To make working with Geospatial Data as similar as working with long-form structured data 
+the geo_interface is serialized in order to:
+- make it be correctly interpreted by Altair
+- provide users a similar experience as when working with tabular data such as Pandas.
+
+Altair can interpret a spatial bounded entity (a Feature) or a list of Features 
+(FeatureCollection). In order for correct interpretation it is made sure that all records 
+contain a single geometry (one of Point, LineString, Polygon, MultiPoint, 
+MultiLineString, MultiPolygon, and GeometryCollection) and is stored as a Feature entity.
+
+The most basic Feature is an entity that only contains a Geometry object. For example
+a Polygon:
+
+.. code:: python
+
+    {
+        "type": "Feature",
+        "geometry": {
+            "coordinates": [[
+                [0, 0],
+                [0, 2],
+                [2, 2],
+                [2, 0],
+                [0, 0]
+            ]],
+            "type": "Polygon"
+        }
+    }
+
+Often, the Feature contains also additional metadata next to the Geometry object.
+The `__geo_interface__` provides two approaches to store metadata.
+- Metadata stored as a dictionary within the key `properties` (so called properties 
+member). This properties member must exist in a valid Feature entity.
+- Metada may be stored directly as foreign members on the top-level of the Feature. 
+There is no normative processing model for usage of this declaration.
+
+Altair serializes the metadata from the properties in combination with the declared
+geometry as Feature entities. The result of this approach is that the keys `type` 
+and `geometry` in the properties member will be overwriten if used.
+
+So a `__geo_interface__` that is registered as such
+
+.. code:: python
+
+    {
+        "type": "Feature",
+        "id": "f1",
+        "geometry": {...},
+        "properties": {
+            "id": 1,
+            "foo": "xx",
+            "bah": "yy",
+            "type": "zz"
+        },
+        "title": "Example Feature"
+    }
+
+Is serialized as such:
+
+.. code:: python
+
+    {
+        "type": "Feature",
+        "geometry": {...},
+        "foo": "xx",
+        "bah": "yy",
+        "id": 1
+    }
+
+The nested `"type": "zz"` in the properties member is overwriten by `"type":"Feature"`
+and only the metadata stored in the properties member is serialized. Meaning that 
+foreign members and the commonly used identifier are not serialized.
+
+.. _data-geopandas-vs-pandas:
+
+GeoPandas vs Pandas
+~~~~~~~~~~~~~~~~~~~
+A `GeoDataFrame` is a `DataFrame` including a special column with spatial geometries.
+The column-name containing the spatial geometries defaults to `geometry`. To directly
+use a `GeoDataFrame` with Altair means in practice that only the column-name `type` 
+should be avoided.
+
+.. _data-projections:
+
+Projections
+~~~~~~~~~~~
+Altair works best when the Geospatial Data adopts the World Geodetic System 1984 as 
+its geographic coordinate reference system with units in decimal degrees.
+
+Try to avoid putting projected data into Altair, but reproject your spatial data to
+EPSG:4326 first.
+
+If your data comes in a different projection (eg. with units in meters) and you don't 
+have the option to reproject the data, try using the project configuration 
+`(type: 'identity', reflectY': True)`. It draws the geometries in a cartesian grid 
+without applying a projection.
+
+.. _data-winding-order:
+
+Winding order
+~~~~~~~~~~~~~
+LineString, Polygon and MultiPolygon geometries contain coordinates in an order: lines 
+go in a certain direction, and polygon rings do too. The GeoJSON-like structure of the 
+__geo_interface__ recommends the right-hand rule winding order for Polygon and 
+MultiPolygons. Meaning that the exterior rings should be counterclockwise and interior 
+rings are clockwise. While it recommends the right-hand rule winding order, it does not 
+reject geometries that do not use the right-hand rule.
+
+Altair does NOT follow the right-hand rule for geometries, but uses the left-hand rule. 
+Meaning that exterior rings should be clockwise and interior rings should be 
+counterclockwise. 
+
+If you face a problem regarding winding order, try to force the left-hand rule on your
+data before usage in Altair using GeoPandas for example as such:
+
+.. code:: python
+
+    from shapely.ops import orient # version >=1.7a2
+    gdf = gdf.geometry.apply(orient, args=(-1,))
+
+
+.. _Protocol geo_interface: https://gist.github.com/sgillies/2217756
+.. _Packages supporting the geo_interface: https://github.com/mlaloux/Python-geo_interface-applications
+.. _The GeoJSON format: https://tools.ietf.org/html/rfc7946#section-3.1.9 

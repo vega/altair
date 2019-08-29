@@ -7,6 +7,7 @@ from toolz.curried import curry, pipe  # noqa
 from typing import Callable
 
 from .core import sanitize_dataframe
+from .core import sanitize_geo_interface 
 from .plugin_registry import PluginRegistry
 
 
@@ -58,7 +59,12 @@ def limit_rows(data, max_rows=5000):
     If max_rows is None, then do not perform any check.
     """
     check_data_type(data)
-    if isinstance(data, pd.DataFrame):
+    if hasattr(data, '__geo_interface__'):
+        if data.__geo_interface__['type'] == 'FeatureCollection':
+            values = data.__geo_interface__['features']
+        else:
+            values = data.__geo_interface__
+    elif isinstance(data, pd.DataFrame):
         values = data
     elif isinstance(data, dict):
         if 'values' in data:
@@ -125,7 +131,12 @@ def to_csv(data, prefix='altair-data', extension='csv',
 def to_values(data):
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    if isinstance(data, pd.DataFrame):
+    if hasattr(data, '__geo_interface__'):
+        if isinstance(data, pd.DataFrame):
+            data = sanitize_dataframe(data)        
+        data = sanitize_geo_interface(data.__geo_interface__)
+        return {'values': data}
+    elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {'values': data.to_dict(orient='records')}
     elif isinstance(data, dict):
@@ -136,8 +147,8 @@ def to_values(data):
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)):
-        raise TypeError('Expected dict or DataFrame, got: {}'.format(type(data)))
+    if not isinstance(data, (dict, pd.DataFrame)) and not hasattr(data, '__geo_interface__'):
+        raise TypeError('Expected dict, DataFrame or a __geo_interface__ attribute, got: {}'.format(type(data)))
 
 
 # ==============================================================================
@@ -151,7 +162,12 @@ def _compute_data_hash(data_str):
 def _data_to_json_string(data):
     """Return a JSON string representation of the input data"""
     check_data_type(data)
-    if isinstance(data, pd.DataFrame):
+    if hasattr(data, '__geo_interface__'):
+        if isinstance(data, pd.DataFrame):
+            data = sanitize_dataframe(data)        
+        data = sanitize_geo_interface(data.__geo_interface__)
+        return json.dumps(data)
+    elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_json(orient='records')
     elif isinstance(data, dict):
@@ -166,7 +182,10 @@ def _data_to_json_string(data):
 def _data_to_csv_string(data):
     """return a CSV string representation of the input data"""
     check_data_type(data)
-    if isinstance(data, pd.DataFrame):
+    if hasattr(data, '__geo_interface__'):    
+        raise NotImplementedError("to_csv does not work with data that "
+                                  "contains the __geo_interface__ attribute")
+    elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
