@@ -21,10 +21,10 @@ def test_geo_interface_polygon_feature():
         "type": "Polygon"
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
-    
-    ds_key = list(chart['datasets'].keys())[0]
-    assert chart['datasets'][ds_key]['type'] == 'Feature'
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
+    assert spec['data']['values']['type'] == 'Feature'
 
 # merge geometry with empty properties dictionary
 def test_geo_interface_removal_empty_properties():
@@ -43,10 +43,10 @@ def test_geo_interface_removal_empty_properties():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
-    
-    ds_key = list(chart['datasets'].keys())[0]
-    assert chart['datasets'][ds_key]['type'] == 'Feature'
+
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
+    assert spec['data']['values']['type'] == 'Feature'
 
 # only register metadata in the properties member
 def test_geo_interface_register_foreign_member():
@@ -65,12 +65,12 @@ def test_geo_interface_register_foreign_member():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
-    ds_key = list(chart['datasets'].keys())[0]
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
     with pytest.raises(KeyError):
-        chart['datasets'][ds_key]['id']    
-    assert chart['datasets'][ds_key]['foo'] == 'bah'
+        spec['data']['values']['id']    
+    assert spec['data']['values']['foo'] == 'bah'
 
 
 # correct serializing of arrays and nested tuples
@@ -92,10 +92,10 @@ def test_geo_interface_serializing_arrays_tuples():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
-    ds_key = list(chart['datasets'].keys())[0]
-    assert chart['datasets'][ds_key]['geometry']['coordinates'][0][0] == [6.90, 53.48]
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
+    assert spec['data']['values']['geometry']['coordinates'][0][0] == [6.9, 53.48]
 
 # overwrite existing 'type' value in properties with `Feature`
 def test_geo_interface_reserved_members():
@@ -114,10 +114,10 @@ def test_geo_interface_reserved_members():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
-    ds_key = list(chart['datasets'].keys())[0]
-    assert chart['datasets'][ds_key]['type'] == 'Feature'
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
+    assert spec['data']['values']['type'] == 'Feature'
 
 # an empty FeatureCollection is valid
 def test_geo_interface_empty_feature_collection():
@@ -126,10 +126,10 @@ def test_geo_interface_empty_feature_collection():
         "features": []
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
-    ds_key = list(chart['datasets'].keys())[0]
-    assert chart['datasets'][ds_key] == []
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
+    assert spec['data']['values'] == []
 
 # Features in a FeatureCollection only keep properties and geometry
 def test_geo_interface_feature_collection():
@@ -176,15 +176,15 @@ def test_geo_interface_feature_collection():
         ]
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
-    ds_key = list(chart['datasets'].keys())[0]
-    assert chart['datasets'][ds_key][0]['id'] == 1
-    assert chart['datasets'][ds_key][1]['id'] == 2
-    assert 'coordinates' in chart['datasets'][ds_key][0]['geometry']
-    assert 'coordinates' in chart['datasets'][ds_key][1]['geometry'] 
-    assert chart['datasets'][ds_key][0]['type'] == 'Feature'
-    assert chart['datasets'][ds_key][1]['type'] == 'Feature' 
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
+    assert spec['data']['values'][0]['id'] == 1
+    assert spec['data']['values'][1]['id'] == 2
+    assert 'coordinates' in spec['data']['values'][0]['geometry']
+    assert 'coordinates' in spec['data']['values'][1]['geometry'] 
+    assert spec['data']['values'][0]['type'] == 'Feature'
+    assert spec['data']['values'][1]['type'] == 'Feature' 
 
 # typical output of a __geo_interface__ from geopandas GeoDataFrame
 # notic that the index value is registerd as a commonly used identifier
@@ -215,7 +215,7 @@ def test_geo_interface_feature_collection_gdf():
         'type': 'FeatureCollection'
     }
     feat = geom_obj(geom)
-    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
-    ds_key = list(chart['datasets'].keys())[0]
-    assert chart['datasets'][ds_key][0]['id'] == 'BWA'
+    with alt.data_transformers.enable(consolidate_datasets=False):
+        spec = alt.Chart(feat).mark_geoshape().to_dict()
+    assert spec['data']['values'][0]['id'] == 'BWA'
