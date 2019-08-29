@@ -1,21 +1,5 @@
 import pytest
-import jsonschema
-
 import altair.vegalite.v3 as alt
-
-from contextlib import contextmanager
-
-
-@contextmanager
-def not_raises(ExpectedException):
-    try:
-        yield
-
-    except ExpectedException as error:
-        raise AssertionError("Raised exception {}".format(error))
-
-    except Exception as error:
-        raise AssertionError("An unexpected exception {} raised.".format(error))
 
 def geom_obj(geom):
     class Geom(object):
@@ -37,9 +21,7 @@ def test_geo_interface_polygon_feature():
         "type": "Polygon"
     }
     feat = geom_obj(geom)
-    
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
     
     ds_key = list(chart['datasets'].keys())[0]
     assert chart['datasets'][ds_key]['type'] == 'Feature'
@@ -61,9 +43,7 @@ def test_geo_interface_removal_empty_properties():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
     
     ds_key = list(chart['datasets'].keys())[0]
     assert chart['datasets'][ds_key]['type'] == 'Feature'
@@ -85,9 +65,7 @@ def test_geo_interface_register_foreign_member():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
     ds_key = list(chart['datasets'].keys())[0]
     with pytest.raises(KeyError):
@@ -114,9 +92,7 @@ def test_geo_interface_serializing_arrays_tuples():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
     ds_key = list(chart['datasets'].keys())[0]
     assert chart['datasets'][ds_key]['geometry']['coordinates'][0][0] == [6.90, 53.48]
@@ -138,9 +114,7 @@ def test_geo_interface_reserved_members():
         "type": "Feature"
     }
     feat = geom_obj(geom)
-
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
     ds_key = list(chart['datasets'].keys())[0]
     assert chart['datasets'][ds_key]['type'] == 'Feature'
@@ -152,9 +126,7 @@ def test_geo_interface_empty_feature_collection():
         "features": []
     }
     feat = geom_obj(geom)
-
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
     ds_key = list(chart['datasets'].keys())[0]
     assert chart['datasets'][ds_key] == []
@@ -204,9 +176,7 @@ def test_geo_interface_feature_collection():
         ]
     }
     feat = geom_obj(geom)
-
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
     ds_key = list(chart['datasets'].keys())[0]
     assert chart['datasets'][ds_key][0]['id'] == 1
@@ -245,9 +215,7 @@ def test_geo_interface_feature_collection_gdf():
         'type': 'FeatureCollection'
     }
     feat = geom_obj(geom)
-
-    with not_raises(jsonschema.ValidationError):
-        chart = alt.Chart(feat).mark_geoshape().to_dict()
+    chart = alt.Chart(feat).mark_geoshape().to_dict()
 
     ds_key = list(chart['datasets'].keys())[0]
     assert chart['datasets'][ds_key][0]['id'] == 'BWA'

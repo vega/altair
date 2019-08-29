@@ -114,14 +114,15 @@ def merge_props_geom(feat):
     Merge properties with geometry
     * Overwrites 'type' and 'geometry' entries if existing    
     """
-    
+
+    geom = {k: feat[k] for k in ('type', 'geometry')}
     try:
-        feat['properties'].update({k: feat[k] for k in ('type', 'geometry')})
+        feat['properties'].update(geom)
         props_geom = feat['properties']
     except (AttributeError, KeyError):
         # AttributeError when 'properties' equals None
         # KeyError when 'properties' is non-existing        
-        props_geom = {k: feat[k] for k in ('type', 'geometry')}    
+        props_geom = geom   
 
     return props_geom   
 

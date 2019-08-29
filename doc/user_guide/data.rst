@@ -13,7 +13,7 @@ The dataset can be specified in one of the following ways:
 - as a `Pandas DataFrame <http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html>`_
 - as a :class:`Data` or related object (i.e. :class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
 - as a url string pointing to a ``json`` or ``csv`` formatted text file
-- as an object that supports the `__geo_interface__`
+- as an object that supports the `__geo_interface__` (eg. `Geopandas GeoDataFrame <http://geopandas.org/data_structures.html#geodataframe>`_, `Shapely Geometries <https://shapely.readthedocs.io/en/latest/manual.html#geometric-objects>`_, `GeoJSON Objects <https://github.com/jazzband/geojson#geojson-objects>`_)
 
 For example, here we specify data via a DataFrame:
 
@@ -251,14 +251,13 @@ the geo_interface is serialized in order to:
 
 Altair can interpret a spatial bounded entity (a Feature) or a list of Features 
 (FeatureCollection). In order for correct interpretation it is made sure that all records 
-contains a single geometry (one of Point, LineString, Polygon, MultiPoint, 
+contain a single geometry (one of Point, LineString, Polygon, MultiPoint, 
 MultiLineString, MultiPolygon, and GeometryCollection) and is stored as a Feature entity.
 
 The most basic Feature is an entity that only contains a Geometry object. For example
 a Polygon:
 
-.. altair-plot::
-    :output: repr
+.. code:: python
 
     {
         "type": "Feature",
@@ -279,16 +278,15 @@ The `__geo_interface__` provides two approaches to store metadata.
 - Metadata stored as a dictionary within the key `properties` (so called properties 
 member). This properties member must exist in a valid Feature entity.
 - Metada may be stored directly as foreign members on the top-level of the Feature. 
-But there is no normative processing model for usage of this declaration.
+There is no normative processing model for usage of this declaration.
 
 Altair serializes the metadata from the properties in combination with the declared
-geometry as Feature entities. This result of this approach is that the keys `type` 
+geometry as Feature entities. The result of this approach is that the keys `type` 
 and `geometry` in the properties member will be overwriten if used.
 
-So an `__geo_interface__` that is registered as such
+So a `__geo_interface__` that is registered as such
 
-.. altair-plot::
-    :output: repr
+.. code:: python
 
     {
         "type": "Feature",
@@ -305,8 +303,7 @@ So an `__geo_interface__` that is registered as such
 
 Is serialized as such:
 
-.. altair-plot::
-    :output: repr
+.. code:: python
 
     {
         "type": "Feature",
@@ -340,9 +337,9 @@ Try to avoid putting projected data into Altair, but reproject your spatial data
 EPSG:4326 first.
 
 If your data comes in a different projection (eg. with units in meters) and you don't 
-have the option to reproject the data, than try using the project configuration 
+have the option to reproject the data, try using the project configuration 
 `(type: 'identity', reflectY': True)`. It draws the geometries in a cartesian grid 
-without applying a projection configuration.
+without applying a projection.
 
 .. _data-winding-order:
 
@@ -353,17 +350,16 @@ go in a certain direction, and polygon rings do too. The GeoJSON-like structure 
 __geo_interface__ recommends the right-hand rule winding order for Polygon and 
 MultiPolygons. Meaning that the exterior rings should be counterclockwise and interior 
 rings are clockwise. While it recommends the right-hand rule winding order, it does not 
-reject geometries do not use the right-hand rule.
+reject geometries that do not use the right-hand rule.
 
 Altair does NOT follow the right-hand rule for geometries, but uses the left-hand rule. 
 Meaning that exterior rings should be clockwise and interior rings should be 
 counterclockwise. 
 
 If you face a problem regarding winding order, try to force the left-hand rule on your
-data before usage in Altair:
+data before usage in Altair using GeoPandas for example as such:
 
-.. altair-plot::
-    :output: repr
+.. code:: python
 
     from shapely.ops import orient # version >=1.7a2
     gdf = gdf.geometry.apply(orient, args=(-1,))
