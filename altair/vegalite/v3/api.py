@@ -93,7 +93,8 @@ def _prepare_data(data, context):
 
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data, core.UrlData,
-                             core.InlineData, core.NamedData)):
+                             core.InlineData, core.NamedData,
+                             core.GraticuleGenerator, core.SequenceGenerator)):
         warnings.warn("data of type {} not recognized".format(type(data)))
 
     return data
@@ -1962,3 +1963,25 @@ def _combine_subchart_data(data, subcharts):
             subcharts = [remove_data(c) for c in subcharts]
 
     return data, subcharts
+
+
+@utils.use_signature(core.SequenceParams)
+def sequence(start, stop=None, step=Undefined, as_=Undefined, **kwds):
+  """Sequence generator."""
+  if stop is None:
+    start, stop = 0, start
+  params = core.SequenceParams(
+    start=start, stop=stop, step=step, **{'as': as_}
+  )
+  return core.SequenceGenerator(sequence=params, **kwds)
+
+
+@utils.use_signature(core.GraticuleParams)
+def graticule(**kwds):
+  """Graticule generator."""
+  if not kwds:
+      # graticule: True indicates default parameters
+      graticule = True
+  else:
+      graticule = core.GraticuleParams(**kwds)
+  return core.GraticuleGenerator(graticule=graticule)
