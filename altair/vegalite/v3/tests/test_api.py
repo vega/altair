@@ -863,4 +863,4 @@ def test_graticule():
 
 def test_sphere():
     data = alt.sphere()
-    assert data.to_dict == {'sphere': True}
+    assert data.to_dict() == {'sphere': True}
