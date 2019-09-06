@@ -276,6 +276,24 @@ lines on a geographic visualization, known as a graticule. These can be created 
        rotate=[0, -45, 0]
    )
 
+Sphere Generator
+^^^^^^^^^^^^^^^^
+Finally when visualizing the globe a sphere can be used as a background layer
+within a map to represent the extent of the Earth. This sphere data can be
+created using Altair's :func:`sphere` generator function. Here is an example:
+
+.. altair-plot::
+
+   import altair as alt
+
+   sphere_data = alt.sphere()
+   grat_data = alt.graticule(step=[15, 15])
+
+   background = alt.Chart(sphere_data).mark_geoshape(fill='aliceblue')
+   lines = alt.Chart(grat_data).mark_geoshape(stroke='lightgrey')
+
+   alt.layer(background, lines).project('naturalEarth1')
+
 .. _Pandas: http://pandas.pydata.org/
 .. _Pandas pivot documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.pivot.html
 .. _Pandas melt documentation: https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.melt.html#pandas.DataFrame.melt
