@@ -94,7 +94,8 @@ def _prepare_data(data, context):
     # if data is still not a recognized type, then return
     if not isinstance(data, (dict, core.Data, core.UrlData,
                              core.InlineData, core.NamedData,
-                             core.GraticuleGenerator, core.SequenceGenerator)):
+                             core.GraticuleGenerator, core.SequenceGenerator,
+                             core.SphereGenerator)):
         warnings.warn("data of type {} not recognized".format(type(data)))
 
     return data
@@ -1985,3 +1986,8 @@ def graticule(**kwds):
   else:
       graticule = core.GraticuleParams(**kwds)
   return core.GraticuleGenerator(graticule=graticule)
+
+
+def sphere():
+  """Sphere generator."""
+  return core.SphereGenerator(sphere=True)

@@ -859,3 +859,8 @@ def test_graticule():
 
     data = alt.graticule(step=[15, 15])
     assert data.to_dict() == {'graticule': {'step': [15, 15]}}
+
+
+def test_sphere():
+    data = alt.sphere()
+    assert data.to_dict() == {'sphere': True}
