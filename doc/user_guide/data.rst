@@ -271,7 +271,7 @@ lines on a geographic visualization, known as a graticule. These can be created 
 
    data = alt.graticule(step=[15, 15])
 
-   alt.Chart(data).mark_geoshape().project(
+   alt.Chart(data).mark_geoshape(stroke='black').project(
        'orthographic',
        rotate=[0, -45, 0]
    )
