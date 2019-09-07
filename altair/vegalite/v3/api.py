@@ -1988,9 +1988,6 @@ def graticule(**kwds):
   return core.GraticuleGenerator(graticule=graticule)
 
 
-def sphere(**kwds):
+def sphere():
   """Sphere generator."""
-  if not kwds:
-      # sphere: True indicates default parameters
-      sphere = True
-  return core.SphereGenerator(sphere=sphere, **kwds)
+  return core.SphereGenerator(sphere=True)
