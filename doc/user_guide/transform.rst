@@ -77,13 +77,13 @@ grouped by the number of Cylinders.
 The Altair shorthand string::
 
     # ...
-    y='mean(acceleration):Q',
+    x='mean(Acceleration):Q',
     # ...
 
 is made available for convenience, and is equivalent to the longer form::
 
     # ...
-    y=alt.Y(field='acceleration', aggregate='mean', type='quantitative'),
+    x=alt.X(field='Acceleration', aggregate='mean', type='quantitative'),
     # ...
 
 For more information on shorthand encodings specifications, see
