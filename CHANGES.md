@@ -116,7 +116,7 @@ feature lists.
 - new ``columns`` keyword that allows wrapped faceting, repeating, and concatenation.
 - many, many bug fixes
 - tooltips can now be automatically populated using the ``tooltip`` mark configuration.
-- ability to specify initial condisions for selections
+- ability to specify initial conditions for selections
 
 ## Version 2.4.1 (Released February 21, 2019)
 
