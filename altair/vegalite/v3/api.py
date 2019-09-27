@@ -177,17 +177,17 @@ class Selection(object):
         return {'selection': self.name}
 
     def __invert__(self):
-        return core.SelectionNot(**{'not': self.name})
+        return Selection(core.SelectionNot(**{'not': self.name}), self.selection)
 
     def __and__(self, other):
         if isinstance(other, Selection):
             other = other.name
-        return core.SelectionAnd(**{'and': [self.name, other]})
+        return Selection(core.SelectionAnd(**{'and': [self.name, other]}), self.selection)      
 
     def __or__(self, other):
         if isinstance(other, Selection):
             other = other.name
-        return core.SelectionOr(**{'or': [self.name, other]})
+        return Selection(core.SelectionOr(**{'or': [self.name, other]}), self.selection)      
    
     def __getattr__(self, field_name):
         return expr.core.GetAttrExpression(self.name, field_name)
