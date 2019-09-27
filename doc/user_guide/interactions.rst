@@ -250,24 +250,27 @@ over them with your mouse:
 
     multi_mouseover = alt.selection_multi(on='mouseover', toggle=False, empty='none')
     make_example(multi_mouseover)
-    
+
 Composing Multiple Selections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Altair also supports combining multiple selections using the `&`, `|` and `~` 
-for respectively `AND`, `OR` and `NOT` logical composition operands.
+Altair also supports combining multiple selections using the ``&``, ``|``
+and ``~`` for respectively ``AND``, ``OR`` and ``NOT`` logical composition
+operands.
 
-In the following example there are two people who can make an interval selection 
-in the chart. The person Alex makes an selection box when the control-key is 
-selected and Morgan can make an selection box when the shift-key is selected.
-We use the alt.Brushconfig() to give the selection box of Morgan a different 
-style. 
-Now, we color the rectangles when they fall within Alex's or Morgan's selection.
+In the following example there are two people who can make an interval
+selection in the chart. The person Alex makes a selection box when the
+alt-key (macOS: option-key) is selected and Morgan can make a selection
+box when the shift-key is selected.
+We use the alt.Brushconfig() to give the selection box of Morgan a different
+style.
+Now, we color the rectangles when they fall within Alex's or Morgan's
+selection.
 
 .. altair-plot::
 
     alex = alt.selection_interval(
-        on="[mousedown[event.ctrlKey], mouseup] > mousemove",
+        on="[mousedown[event.altKey], mouseup] > mousemove",
         name='alex'
     )
     morgan = alt.selection_interval(
@@ -279,7 +282,7 @@ Now, we color the rectangles when they fall within Alex's or Morgan's selection.
     alt.Chart(cars).mark_rect().encode(
         x='Cylinders:O',
         y='Origin:O',
-        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))    
+        color=alt.condition(alex | morgan, 'count()', alt.ColorValue("grey"))
     ).add_selection(
         alex, morgan
     ).properties(
@@ -289,10 +292,11 @@ Now, we color the rectangles when they fall within Alex's or Morgan's selection.
 
 With these operators, selections can be combined in arbitrary ways:
 
-- "selection": {"not": {"and": ["alex", "morgan"]}}: to select the rectangles 
-that fall outside Alex's and Morgan's selections.
-- alex | ~morgan: to select the rectangles that fall within Alex's selection or 
-outside the selection of Morgan
+- ``~(alex & morgan)``: to select the rectangles that fall outside
+  Alex's and Morgan's selections.
+
+- ``alex | ~morgan``: to select the rectangles that fall within Alex's
+  selection or outside the selection of Morgan
 
 
 Selection Targets: Fields and Encodings
