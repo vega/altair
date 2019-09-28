@@ -1,7 +1,7 @@
 """
 Becker's Barley Trellis Plot
 ----------------------------
-The example demonstrates the trellis charts created by Richard Becker, William Cleveland and others in the 1990s. Using the visualization technique below they identified an anomoly in a widely used agriculatural dataset, which they termed `"The Morris Mistake." <https://www.albany.edu/acc/courses/acc522fall2007/lecturenotes/trellis.usermanual.pdf>`_. It became their favored way of showcasing the power of this pioneering plot.
+The example demonstrates the trellis charts created by Richard Becker, William Cleveland and others in the 1990s. Using the visualization technique below they identified an anomoly in a widely used agriculatural dataset, which they termed `"The Morris Mistake." <http://ml.stat.purdue.edu/stat695t/writings/Trellis.User.pdf>`_. It became their favored way of showcasing the power of this pioneering plot.
 """
 # category: case studies
 import altair as alt
