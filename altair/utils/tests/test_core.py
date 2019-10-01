@@ -82,11 +82,13 @@ def test_parse_shorthand():
     check('foobar:nominal', type='nominal', field='foobar')
     check('foobar:ordinal', type='ordinal', field='foobar')
     check('foobar:temporal', type='temporal', field='foobar')
+    check('foobar:geojson', type='geojson', field='foobar')    
 
     check('foobar:Q', type='quantitative', field='foobar')
     check('foobar:N', type='nominal', field='foobar')
     check('foobar:O', type='ordinal', field='foobar')
     check('foobar:T', type='temporal', field='foobar')
+    check('foobar:G', type='geojson', field='foobar')    
 
     # Fields with aggregate and/or type
     check('average(foobar)', field='foobar', aggregate='average')
