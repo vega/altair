@@ -212,6 +212,7 @@ def test_undefined_singleton():
 
 
 def test_copy():
+    from copy import copy as cpy, deepcopy
     dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
        'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
        'd': ['x', 'y', 'z']}
@@ -245,6 +246,30 @@ def test_copy():
     assert mydct['b'] == dct['b']
     assert mydct['c'] == dct['c']
 
+    # Using copy module
+    myschema = MySchema.from_dict(dct)
+
+    # Make sure copy is deep
+    copy = deepcopy(myschema)
+    copy['a']['foo'] = 'new value'
+    copy['b'] = ['A', 'B', 'C']
+    copy['c'] = 164
+    assert myschema.to_dict() == dct
+
+    # For copy module the top level for shallow copy is myschema, i.e. all
+    # attributes are shallow and change the original data
+    copy = cpy(myschema)
+    copy['a']['foo'] = 'baz'
+    copy['b'] = ['A', 'B', 'C']
+    copy['c'] = 164
+    mydct = myschema.to_dict()
+    assert mydct['a']['foo'] == 'baz'
+    assert mydct['b'] == ['A', 'B', 'C']
+    assert mydct['c'] == 164
+    assert mydct['a2'] == dct['a2']
+    assert mydct['b2'] == dct['b2']
+    assert mydct['d'] == dct['d']
+
 
 def test_attribute_error():
     m = MySchema()
@@ -262,6 +287,22 @@ def test_to_from_json():
     new_dct = MySchema.from_json(json_str).to_dict()
 
     assert new_dct == dct
+
+
+def test_to_from_pickle():
+    import pickle
+    from io import BytesIO
+    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
+           'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
+           'd': ['x', 'y', 'z'], 'e': ['g', 'h']}
+
+    myschema = MySchema.from_dict(dct)
+    output = BytesIO()
+    pickle.dump(myschema, output)
+    output.seek(0)
+    myschema_new = pickle.load(output)
+
+    assert myschema_new.to_dict() == dct
 
 
 def test_class_with_no_schema():
