@@ -132,6 +132,7 @@ quantitative  ``Q``           a continuous real-valued quantity
 ordinal       ``O``           a discrete ordered quantity
 nominal       ``N``           a discrete unordered category
 temporal      ``T``           a time or date value
+geojson       ``G``           a geographic shape
 ============  ==============  ================================================
 
 If types are not specified for data input as a DataFrame, Altair defaults to

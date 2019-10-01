@@ -476,7 +476,6 @@ def test_filter_transform_selection_predicates():
     assert chart.to_dict()['transform'] == [{'filter': {'selection': {'or': ['s1', 's2']}}}]
 
 
-
 def test_resolve_methods():
     chart = alt.LayerChart().resolve_axis(x='shared', y='independent')
     assert chart.resolve == alt.Resolve(axis=alt.AxisResolveMap(x='shared', y='independent'))

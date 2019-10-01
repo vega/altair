@@ -47,7 +47,8 @@ def infer_dtype(value):
 TYPECODE_MAP = {'ordinal': 'O',
                 'nominal': 'N',
                 'quantitative': 'Q',
-                'temporal': 'T'}
+                'temporal': 'T',
+                'geojson': 'G'}
 
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
