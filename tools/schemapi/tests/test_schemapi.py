@@ -265,6 +265,7 @@ def test_copy():
     assert mydct['a2'] == dct['a2']
     assert mydct['b2'] == dct['b2']
     assert mydct['d'] == dct['d']
+    assert copy.to_dict() == myschema.to_dict()
 
 
 def test_attribute_error():
