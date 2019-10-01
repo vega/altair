@@ -359,12 +359,9 @@ def test_selection():
     assert set(chart.selection.keys()) == {'selec_1', 'selec_2', 'selec_3'}
 
     # test logical operations
-    assert isinstance(single & multi, alt.Selection)
-    assert isinstance(single | multi, alt.Selection)
-    assert isinstance(~single, alt.Selection)
-    assert isinstance((single & multi)[0].group, alt.SelectionAnd)
-    assert isinstance((single | multi)[0].group, alt.SelectionOr)
-    assert isinstance((~single)[0].group, alt.SelectionNot)
+    assert isinstance(single & multi, alt.SelectionAnd)
+    assert isinstance(single | multi, alt.SelectionOr)
+    assert isinstance(~single, alt.SelectionNot)
 
     # test that default names increment (regression for #1454)
     sel1 = alt.selection_single()
@@ -477,16 +474,6 @@ def test_filter_transform_selection_predicates():
 
     chart = base.transform_filter(selector1 | selector2)
     assert chart.to_dict()['transform'] == [{'filter': {'selection': {'or': ['s1', 's2']}}}]
-
-    chart = base.transform_filter(selector1 | ~selector2)
-    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'or': ['s1', {'not': 's2'}]}}}]
-
-    chart = base.transform_filter(~selector1 | ~selector2)
-    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'or': [{'not': 's1'}, {'not': 's2'}]}}}]
-
-    chart = base.transform_filter(~(selector1 & selector2))
-    assert chart.to_dict()['transform'] == [{'filter': {'selection': {'not': {'and': ['s1', 's2']}}}}]        
-
 
 
 def test_resolve_methods():
