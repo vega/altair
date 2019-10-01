@@ -215,6 +215,8 @@ class SchemaBase(object):
 
     def __getattr__(self, attr):
         # reminder: getattr is called after the normal lookups
+        if attr == '_kwds': 
+            raise AttributeError()
         if attr in self._kwds:
             return self._kwds[attr]
         else:
