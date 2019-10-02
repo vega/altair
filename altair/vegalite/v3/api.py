@@ -564,7 +564,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     def project(self, type='mercator', center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                 coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
                 parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
-                rotate=Undefined, spacing=Undefined, tilt=Undefined, **kwds):
+                reflectX=Undefined, reflectY=Undefined, rotate=Undefined, scale=Undefined,
+                spacing=Undefined, tilt=Undefined, translate=Undefined, **kwds):
         """Add a geographic projection to the chart.
 
         This is generally used either with ``mark_geoshape`` or with the
@@ -572,8 +573,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Available projection types are
         ['albers', 'albersUsa', 'azimuthalEqualArea', 'azimuthalEquidistant',
-        'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equirectangular',
-        'gnomonic', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
+        'conicConformal', 'conicEqualArea', 'conicEquidistant', 'equalEarth', 'equirectangular',
+        'gnomonic', 'identity', 'mercator', 'orthographic', 'stereographic', 'transverseMercator']
 
         Attributes
         ----------
@@ -619,6 +620,10 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         ratio : float
 
+        reflectX : boolean
+
+        reflectY : boolean        
+
         rotate : List(float)
             Sets the projection’s three-axis rotation to the specified angles, which must be a
             two- or three-element array of numbers [`lambda`, `phi`, `gamma`] specifying the
@@ -626,16 +631,23 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             pitch and roll.)
 
             **Default value:** `[0, 0, 0]`
+        scale : float
+            Sets the projection's scale (zoom) value, overriding automatic fitting.            
+
         spacing : float
 
         tilt : float
+
+        translate : List(float)
+            Sets the projection's translation (pan) value, overriding automatic fitting.        
 
         """
         projection = core.Projection(center=center, clipAngle=clipAngle, clipExtent=clipExtent,
                                      coefficient=coefficient, distance=distance, fraction=fraction,
                                      lobes=lobes, parallel=parallel, precision=precision,
-                                     radius=radius, ratio=ratio, rotate=rotate, spacing=spacing,
-                                     tilt=tilt, type=type, **kwds)
+                                     radius=radius, ratio=ratio, reflectX=reflectX,
+                                     reflectY=reflectY, rotate=rotate, scale=scale, spacing=spacing,
+                                     tilt=tilt, translate=translate, type=type, **kwds)
         return self.properties(projection=projection)
 
     def _add_transform(self, *transforms):
