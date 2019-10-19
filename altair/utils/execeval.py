@@ -2,6 +2,13 @@ import ast
 import sys
 
 
+if sys.version_info > (3,8):
+    Module = ast.Module
+else:
+    # Mock the Python >= 3.8 API
+    Module = lambda nodelist, type_ignores: ast.Module(nodelist)
+
+
 class _CatchDisplay(object):
     """Class to temporarily catch sys.displayhook"""
     def __init__(self):
@@ -39,7 +46,7 @@ def eval_block(code, namespace=None, filename='<string>'):
         to_exec, to_eval = tree.body, []
 
     for node in to_exec:
-        compiled = compile(ast.Module([node]),
+        compiled = compile(Module([node], []),
                            filename=filename, mode='exec')
         exec(compiled, namespace)
 
