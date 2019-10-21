@@ -31,10 +31,12 @@ For example, suppose we are creating a scatter plot of the ``cars`` dataset:
 Suppose you wish to change the color of the points to red, and the opacity
 of the points to 20%. There are three possible approaches to these:
 
+1. “Global Config” acts on an entire chart object
+2. “Local Config” acts on one mark of the chart
+3. “Encoding” channels can also be used to set some chart properties
+
 Global Config
 ~~~~~~~~~~~~~
-*See :ref:`user-guide-configuration` for a full
-discussion of global configuration options*
 
 First, every chart type has a ``"config"`` property at the top level that acts
 as a sort of theme for the whole chart and all of its sub-charts.
@@ -61,7 +63,7 @@ There are a couple things to be aware of when using this kind of global configur
 2. The global configuration is only permissible at the top-level; so, for example,
    if you tried to layer the above chart with another, it would result in an error.
 
-For more information on top-level configurations, see :ref:`user-guide-configuration`.
+For a full discussion of global configuration options, see :ref:`user-guide-configuration`.
 
 Local Config
 ~~~~~~~~~~~~
@@ -356,7 +358,7 @@ Hide it by setting the `strokeWidth` or the `strokeOpacity` options on
 It is also possible to completely remove all borders and axes by
 combining the above option with setting `axis` to `None` during encoding.
 
-..altair-plot::
+.. altair-plot::
 
     import altair as alt
     from vega_datasets import data
