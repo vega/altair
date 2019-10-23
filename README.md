@@ -44,7 +44,7 @@ alt.Chart(cars).mark_point().encode(
 ![Altair Visualization](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars.png)
 
 One of the unique features of Altair, inherited from Vega-Lite, is a declarative grammar of not just visualization, but _interaction_. 
-With a few modifications to the example above we can created a linked histogram which is filtered based on a selection of the scatter plot.
+With a few modifications to the example above we can create a linked histogram that is filtered based on a selection of the scatter plot.
 
 ```python 
 import altair as alt
@@ -173,12 +173,12 @@ using a mishmash of APIs. For individuals just learning data science, this
 forces them to focus on learning APIs rather than exploring their data.
 
 Another challenge is current plotting APIs require the user to write code,
-even for incidental details of a visualization. This results in unfortunate
+even for incidental details of a visualization. This results in an unfortunate
 and unnecessary cognitive burden as the visualization type (histogram,
 scatterplot, etc.) can often be inferred using basic information such as the
 columns of interest and the data types of those columns.
 
-For example, if you are interested in a visualization of two numerical
+For example, if you are interested in the visualization of two numerical
 columns, a scatterplot is almost certainly a good starting point. If you add
 a categorical column to that, you probably want to encode that column using
 colors or facets. If inferring the visualization proves difficult at times, a
@@ -247,7 +247,7 @@ See [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIB
 
 [![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
 
-If you use Altair in an academic work, please consider citing http://joss.theoj.org/papers/10.21105/joss.01057 as
+If you use Altair in academic work, please consider citing http://joss.theoj.org/papers/10.21105/joss.01057 as
 
 ```bib
 @article{Altair2018,
