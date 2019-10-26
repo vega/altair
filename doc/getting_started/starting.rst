@@ -115,7 +115,7 @@ adding a ``y`` encoding channel, mapped to the ``"b"`` column:
     )
 
 The type of the data in the ``"b"`` column is again automatically-inferred
-by altair, and this time is treated as a *quantitative* type (i.e. real-valued).
+by Altair, and this time is treated as a *quantitative* type (i.e. real-valued).
 Additionally, we see that grid lines and appropriate axis titles are
 automatically added as well.
 
@@ -240,7 +240,7 @@ Publishing your Visualization
 
 Once you have visualized your data, perhaps you would like to publish it
 somewhere on the web. This can be done straightforwardly using the
-Vega-Embed_ javascript package.
+Vega-Embed_ Javascript package.
 A simple example of a stand-alone HTML document can be generated for any
 chart using the :meth:`Chart.save` method:
 
