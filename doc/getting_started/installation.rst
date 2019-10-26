@@ -187,7 +187,7 @@ with the above installation commands:
 - Six_
 - Toolz_
 
-To run altair's full test suite and build Altair's documentation requires a few
+To run Altair's full test suite and build Altair's documentation requires a few
 additional dependencies:
 
 - flake8
