@@ -31,11 +31,11 @@ Altair version 3 works best with JupyterLab version 1.0 or later.
 
 To install JupyterLab and Altair with conda, run the following command::
 
-    $ conda install -c conda-forge altair vega_datasets jupyterlab
+    $ conda install -c conda-forge altair vega vega_datasets jupyterlab
 
 To install JupyterLab and Altair with pip, run the following command::
 
-    $ pip install -U altair vega_datasets jupyterlab
+    $ pip install -U altair vega vega_datasets jupyterlab
 
 Once this is finished, run::
 
