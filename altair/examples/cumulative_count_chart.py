@@ -13,7 +13,7 @@ from vega_datasets import data
 source = data.movies.url
 
 alt.Chart(source).transform_window(
-    cumulative_count="count(count)",
+    cumulative_count="count()",
     sort=[{"field": "IMDB_Rating"}],
 ).mark_area().encode(
     x="IMDB_Rating:Q",
