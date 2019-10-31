@@ -282,7 +282,7 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
     >>> parse_shorthand('name') == {'field': 'name'}
     True
 
-    >> parse_shorthand('name:Q') == {'field': 'name', 'type': 'quantitative'}
+    >>> parse_shorthand('name:Q') == {'field': 'name', 'type': 'quantitative'}
     True
 
     >>> parse_shorthand('average(col)') == {'aggregate': 'average', 'field': 'col'}
