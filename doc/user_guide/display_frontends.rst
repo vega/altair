@@ -214,7 +214,7 @@ There are a few options available for this:
 Built-in ``serve()`` method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Altair includes a :meth:`Chart.serve` method which will seamlessly convert a
-chart to HTML, start a webserver serving that HTML, and open your system's
+chart to HTML, start a web server serving that HTML, and open your system's
 default web browser to view it.
 
 For example, you can serve a chart to a web browser like this::

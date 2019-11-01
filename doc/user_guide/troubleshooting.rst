@@ -54,7 +54,7 @@ make certain you have JupyterLab version 1.0 or later.
 JavaScript output is disabled in JupyterLab
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are using JupyterLab and see the following ouput::
+If you are using JupyterLab and see the following output::
 
     JavaScript output is disabled in JupyterLab
 

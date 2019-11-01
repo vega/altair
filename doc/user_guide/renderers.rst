@@ -17,7 +17,7 @@ Altair ships with the following renderers:
 
       alt.renderers.enable('jupyterlab')  # Note: identical to enable('default')
 
-  for more details on version and system requireements, see :ref:`display-jupyterlab`.
+  for more details on version and system requirements, see :ref:`display-jupyterlab`.
 
 **nteract**
   nteract_ works with the default renderer and requires no additional enable
