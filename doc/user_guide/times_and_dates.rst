@@ -72,7 +72,7 @@ If it contains a green "OK":
    ).properties(width=40, height=25)
 
 then it means that your browser parses dates as Altair expects, either because
-it is ES6-compliant or because your computer locale happens to nbe set to
+it is ES6-compliant or because your computer locale happens to be set to
 the UTC+0 (GMT) timezone.
 
 Altair and Pandas Datetimes
@@ -184,7 +184,7 @@ same output being visualized differently by different users.
 If you want timezone-aware data to appear the same to every user regardless of
 location, the best approach is to adopt a standard timezone in which to render
 the data. One commonly-used standard is `Coordinated Universal Time (UTC)`_.
-In Altair, any of the ``timeUnit`` binnings can be prefixed with ``utc`` in
+In Altair, any of the ``timeUnit`` bins can be prefixed with ``utc`` in
 order to extract UTC time units.
 
 Here is the above chart visualized in UTC time, which will render the same way

@@ -21,7 +21,7 @@ this rendering (see :ref:`installation` for details).
 For other frontends that don't have vega-lite rendering built-in, it is
 possible to work with Altair charts using either the ``vegascope`` project,
 or the build-in :meth:`Chart.serve` or :meth:`Chart.save` methods.
-For more information on thse, see :ref:`display-general`.
+For more information on these, see :ref:`display-general`.
 
 .. _faq-no-display:
 

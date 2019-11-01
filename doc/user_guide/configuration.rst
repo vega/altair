@@ -225,8 +225,7 @@ Title Configuration
 -------------------
 The :meth:`Chart.configure_title` method allows configuration of the chart
 title, including the font, color, placement, and orientation.
-Here is an example 
-here is an example:
+Here is an example:
 
 .. altair-plot::
 
@@ -258,7 +257,7 @@ Additional title configuration options are listed in the following table:
 
 View Configuration
 ------------------
-The :meth:`Chart.configure_view` method allows you to configure aspecs of the
+The :meth:`Chart.configure_view` method allows you to configure aspects of the
 chart's *view*, i.e. the area of the screen in which the data and scales are
 drawn. Here is an example to demonstrate some of the visual features that can
 be controlled:
@@ -422,7 +421,7 @@ If you want to restore the default theme, use:
    :output: none
 
    alt.themes.enable('default')
-	    
+
 
 For more ideas on themes, see the `Vega Themes`_ repository.
 
