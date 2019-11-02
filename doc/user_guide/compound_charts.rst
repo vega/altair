@@ -211,7 +211,7 @@ the concatenated panels is modification of *one or more encodings*.
 
 For example, suppose you would like to create a multi-panel scatter-plot to show
 different projections of a multi-dimensional dataset.
-Let's first create sucha chart manually using ``hconcat`` and ``vconcat``, before
+Let's first create such a chart manually using ``hconcat`` and ``vconcat``, before
 showing how ``repeat`` can be used to build the chart more efficiently:
 
 .. altair-plot::

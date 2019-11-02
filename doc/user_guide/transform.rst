@@ -157,7 +157,7 @@ In the first case we set ``bin = True``, which uses the default bin settings.
 In the second case, we exercise more fine-tuned control over the bin parameters
 by passing a :class:`~altair.Bin` object.
 
-If you are using the same binnings in multiple chart components, it can be useful
+If you are using the same bins in multiple chart components, it can be useful
 to instead define the binning at the top level, using :meth:`~Chart.transform_bin`
 method.
 
@@ -196,8 +196,8 @@ And here is the transformed color scale using a top-level bin transform:
 
 The advantage of the top-level transform is that the same named field can be
 used in multiple places in the chart if desired.
-Note the slight difference in binning behavior between the encoding-based binnings
-(which preserve the range of the bins) and the transform-based binnings (which
+Note the slight difference in binning behavior between the encoding-based bins
+(which preserve the range of the bins) and the transform-based bins (which
 collapse each bin to a single representative value.
 
 Transform Options
@@ -495,7 +495,7 @@ a set of fields each containing a list of entries:
        {'label': 'A', 'values': generate_data(20)},
        {'label': 'B', 'values': generate_data(30)},
        {'label': 'C', 'values': generate_data(40)},
-       {'label': 'D', 'values': generate_data(50)},   
+       {'label': 'D', 'values': generate_data(50)},
    ]
 
 This kind of data structure does not work well in the context of dataframe
@@ -612,8 +612,8 @@ data directly, the line skips the missing entries:
    )
    raw
 
-This is not always desireable, because (particularly for a line plot with
-no points) it can imply the esistence of data that is not there.
+This is not always desirable, because (particularly for a line plot with
+no points) it can imply the existence of data that is not there.
 
 Impute via Encodings
 ^^^^^^^^^^^^^^^^^^^^
@@ -741,7 +741,7 @@ And here is an output that is equivalent to Altair's Join Aggregate:
    :output: repr
 
    pd.merge(df, mean, on='label', suffixes=['', '_mean'])
-   
+
 Notice that the join aggregate joins the aggregated value with the original
 dataframe, such that the aggregated values can be used in tandem with the
 original values if desired.
@@ -756,7 +756,7 @@ standard deviation, which requires calculations on the joined data:
    from vega_datasets import data
 
    alt.Chart(data.movies.url).transform_filter(
-       'datum.IMDB_Rating != null  && datum.Rotten_Tomatoes_Rating != null'  
+       'datum.IMDB_Rating != null  && datum.Rotten_Tomatoes_Rating != null'
    ).transform_joinaggregate(
        IMDB_mean='mean(IMDB_Rating)',
        IMDB_std='stdev(IMDB_Rating)',

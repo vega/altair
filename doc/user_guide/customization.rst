@@ -199,7 +199,7 @@ chart.
 
 Adjusting Axis Labels
 ---------------------
-Altair also gives you tool to easily configure the appearance of axis labels.
+Altair also gives you tools to easily configure the appearance of axis labels.
 For example consider this plot:
 
 .. altair-plot::
@@ -411,7 +411,7 @@ Color Domain and Range
 ~~~~~~~~~~~~~~~~~~~~~~
 
 To make a custom mapping of discrete values to colors, use the
-`domain` and `range` paramaters of the :class:`Scale` class for
+`domain` and `range` parameters of the :class:`Scale` class for
 values and colors respectively.
 
 .. altair-plot::
