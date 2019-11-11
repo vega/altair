@@ -273,7 +273,7 @@ def main(app):
         if next_ex:
             example['next_ref'] = "gallery_{name}".format(**next_ex)
         target_filename = os.path.join(target_dir, example['name'] + '.rst')
-        with open(os.path.join(target_filename), 'w') as f:
+        with open(os.path.join(target_filename), 'w', encoding='utf-8') as f:
             f.write(EXAMPLE_TEMPLATE.render(example))
 
 

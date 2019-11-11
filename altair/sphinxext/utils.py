@@ -155,7 +155,7 @@ def get_docstring_and_rest(filename):
     except AttributeError:
         # this block can be removed when python 3.6 support is dropped
         if node.body and isinstance(node.body[0], ast.Expr) and \
-                         isinstance(node.body[0].value, ast.Str):
+                         isinstance(node.body[0].value, (ast.Str, ast.Constant)):
             docstring_node = node.body[0]
             docstring = docstring_node.value.s
             # python2.7: Code was read in bytes needs decoding to utf-8
@@ -163,7 +163,8 @@ def get_docstring_and_rest(filename):
             # make ast output unicode strings
             if hasattr(docstring, 'decode') and not isinstance(docstring, six.text_type):
                 docstring = docstring.decode('utf-8')
-            lineno = docstring_node.lineno  # The last line of the string.
+            # python3.8: has end_lineno
+            lineno = getattr(docstring_node, 'end_lineno', None) or docstring_node.lineno  # The last line of the string.
             # This get the content of the file after the docstring last line
             # Note: 'maxsplit' argument is not a keyword argument in python2
             rest = content.split('\n', lineno)[-1]
