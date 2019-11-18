@@ -1882,8 +1882,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         if not selections or not self.layer:
             return self
         copy = self.copy()
-        copy.layer = [chart.add_selection(*selections)
-                        for chart in copy.layer]
+        copy.layer[0] = copy.layer[0].add_selection(*selections)
         return copy
 
 

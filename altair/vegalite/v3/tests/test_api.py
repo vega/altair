@@ -535,7 +535,15 @@ def test_facet_add_selections():
     assert chart1.to_dict() == chart2.to_dict()
 
 
-@pytest.mark.parametrize('charttype', [alt.layer, alt.concat, alt.hconcat, alt.vconcat])
+def test_layer_add_selection():
+    base = alt.Chart('data.csv').mark_point()
+    selection = alt.selection_single()
+    chart1 = alt.layer(base.add_selection(selection), base)
+    chart2 = alt.layer(base, base).add_selection(selection)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+@pytest.mark.parametrize('charttype', [alt.concat, alt.hconcat, alt.vconcat])
 def test_compound_add_selections(charttype):
     base = alt.Chart('data.csv').mark_point()
     selection = alt.selection_single()
