@@ -85,7 +85,13 @@ kaggle_renderer = HTMLRenderer(mode='vega-lite',
                                vegaembed_version=VEGAEMBED_VERSION,
                                vegalite_version=VEGALITE_VERSION)
 
+html_renderer = HTMLRenderer(mode='vega-lite', template='universal',
+                             vega_version=VEGA_VERSION,
+                             vegaembed_version=VEGAEMBED_VERSION,
+                             vegalite_version=VEGALITE_VERSION)
+
 renderers.register('default', default_renderer)
+renderers.register('html', html_renderer)
 renderers.register('jupyterlab', default_renderer)
 renderers.register('nteract', default_renderer)
 renderers.register('colab', colab_renderer)
