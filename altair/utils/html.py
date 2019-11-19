@@ -90,10 +90,12 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template("""
     const outputDiv = "{{ output_div }}";
     const baseUrl = "{{ base_url }}"
     const element = document.getElementById(outputDiv);
+    const vegaVersion = "{{ vega_version }}";
+    const vegaLiteVersion = "{{ vegalite_version }}";
+    const vegaEmbedVersion = "{{ vegaembed_version }}";
 
     function loadScript(url) {
-      var fullUrl = `${baseUrl}/${url}`
-      console.log(`loadScript("${fullUrl}")`);
+      var fullUrl = `${baseUrl}/${url}`;
       return new Promise(function(resolve, reject) {
         var s = document.createElement('script');
         s.src = fullUrl;
@@ -105,7 +107,7 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template("""
     }
 
     function showError(e) {
-      element.innerHTML = `<div class="error" style="color:red;">${e}</div>`
+      element.innerHTML = `<div class="error" style="color:red;">${e}</div>`;
     }
 
     function displayChart(vegaEmbed) {
@@ -117,23 +119,21 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template("""
     }
 
     if(typeof define === "function" && define.amd) {
-      console.log("loading vega libraries viaw requirejs");
       requirejs.config({
         paths: {
-          "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
-          "vega-lib": "{{ base_url }}/vega-lib?noext",
-          "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
-          "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+          "vega": `${baseUrl}/vega@${vegaVersion}?noext`,
+          "vega-lib": `${baseUrl}/vega-lib?noext`,
+          "vega-lite": `${baseUrl}/vega-lite@${vegaLiteVersion}?noext`,
+          "vega-embed": `${baseUrl}/vega-embed@${vegaEmbedVersion}?noext`,
         }
       });
       require(["vega-embed"], displayChart);
     } else if (typeof vegaEmbed === "function") {
-      console.log("vegaEmbed already loaded");
       displayChart(vegaEmbed);
     } else {
-      loadScript('vega@{{ vega_version }}?noext')
-        .then(() => loadScript('vega-lite@{{ vegalite_version }}?noext'))
-        .then(() => loadScript('vega-embed@{{ vegaembed_version }}?noext'))
+      loadScript(`vega@${vegaVersion}?noext`)
+        .then(() => loadScript(`vega-lite@${vegaLiteVersion}?noext`))
+        .then(() => loadScript(`vega-embed@${vegaEmbedVersion}?noext`))
         .catch(url => showError(`Error loading javascript from ${url}`))
         .then(() => displayChart(vegaEmbed));
     }
