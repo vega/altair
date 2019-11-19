@@ -88,52 +88,44 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template("""
     const spec = {{ spec }};
     const embedOpt = {{ embed_options }};
     const outputDiv = "{{ output_div }}";
-    const baseUrl = "{{ base_url }}"
     const element = document.getElementById(outputDiv);
-    const vegaVersion = "{{ vega_version }}";
-    const vegaLiteVersion = "{{ vegalite_version }}";
-    const vegaEmbedVersion = "{{ vegaembed_version }}";
+    const paths = {
+      "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
+      "vega-lib": "{{ base_url }}/vega-lib?noext",
+      "vega-lite": "{{ base_url }}/vega-lite@{{ vegalite_version }}?noext",
+      "vega-embed": "{{ base_url }}/vega-embed@{{ vegaembed_version }}?noext",
+    };
 
-    function loadScript(url) {
-      var fullUrl = `${baseUrl}/${url}`;
+    function loadScript(lib) {
       return new Promise(function(resolve, reject) {
         var s = document.createElement('script');
-        s.src = fullUrl;
+        s.src = paths[lib];
         s.async = true;
-        s.onload = function(){resolve(fullUrl);};
-        s.onerror = function(){reject(fullUrl);};
+        s.onload = () => resolve(paths[lib]);
+        s.onerror = () => reject(paths[lib]);
         document.getElementsByTagName("head")[0].appendChild(s);
       });
     }
 
-    function showError(e) {
-      element.innerHTML = `<div class="error" style="color:red;">${e}</div>`;
+    function showError(err) {
+      element.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
     }
 
     function displayChart(vegaEmbed) {
       vegaEmbed("#" + outputDiv, spec, embedOpt)
-        .catch(error => {
-          showError("JavaScript Error: " + error.message + "<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.");
-          throw error;
-        });
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
     }
 
     if(typeof define === "function" && define.amd) {
-      requirejs.config({
-        paths: {
-          "vega": `${baseUrl}/vega@${vegaVersion}?noext`,
-          "vega-lib": `${baseUrl}/vega-lib?noext`,
-          "vega-lite": `${baseUrl}/vega-lite@${vegaLiteVersion}?noext`,
-          "vega-embed": `${baseUrl}/vega-embed@${vegaEmbedVersion}?noext`,
-        }
-      });
-      require(["vega-embed"], displayChart);
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading javascript: ${err.message}`));
     } else if (typeof vegaEmbed === "function") {
       displayChart(vegaEmbed);
     } else {
-      loadScript(`vega@${vegaVersion}?noext`)
-        .then(() => loadScript(`vega-lite@${vegaLiteVersion}?noext`))
-        .then(() => loadScript(`vega-embed@${vegaEmbedVersion}?noext`))
+      loadScript("vega")
+        .then(() => loadScript("vega-lite"))
+        .then(() => loadScript("vega-embed"))
         .catch(url => showError(`Error loading javascript from ${url}`))
         .then(() => displayChart(vegaEmbed));
     }
