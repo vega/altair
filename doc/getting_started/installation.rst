@@ -184,7 +184,6 @@ with the above installation commands:
 - jsonschema_
 - NumPy_
 - Pandas_
-- Six_
 - Toolz_
 
 To run Altair's full test suite and build Altair's documentation requires a few
@@ -230,7 +229,6 @@ development version directly from GitHub using:
 .. _jsonschema: https://github.com/Julian/jsonschema
 .. _NumPy: http://www.numpy.org/
 .. _Pandas: http://pandas.pydata.org
-.. _Six: http://six.readthedocs.io/
 .. _Toolz: https://github.com/pytoolz/toolz
 .. _vega_datasets: https://github.com/altair-viz/vega_datasets
 

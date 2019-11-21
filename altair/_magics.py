@@ -9,7 +9,6 @@ import warnings
 import IPython
 from IPython.core import magic_arguments
 import pandas as pd
-import six
 from toolz import pipe
 
 from altair.vegalite import v2 as vegalite_v2
@@ -57,7 +56,7 @@ def _prepare_data(data, data_transformers):
         return data
     elif isinstance(data, pd.DataFrame):
         return pipe(data, data_transformers.get())
-    elif isinstance(data, six.string_types):
+    elif isinstance(data, str):
         return {'url': data}
     else:
         warnings.warn("data of type {} not recognized".format(type(data)))

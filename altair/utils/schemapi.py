@@ -8,7 +8,6 @@ import inspect
 import json
 
 import jsonschema
-import six
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -97,7 +96,7 @@ class SchemaValidationError(jsonschema.ValidationError):
             contents = {key: getattr(err, key) for key in spec.args[1:]}
         return contents
 
-    def __unicode__(self):
+    def __str__(self):
         cls = self.obj.__class__
         schema_path = ['{}.{}'.format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
@@ -111,13 +110,6 @@ class SchemaValidationError(jsonschema.ValidationError):
 
         {}
         """.format(schema_path, self.validator, self.message)
-
-    if six.PY3:
-        __str__ = __unicode__
-    else:
-        def __str__(self):
-            return six.text_type(self).encode("utf-8")
-
 
 
 class UndefinedType(object):

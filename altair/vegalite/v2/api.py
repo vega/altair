@@ -3,9 +3,9 @@
 import warnings
 
 import hashlib
+import io
 import json
 import jsonschema
-import six
 import pandas as pd
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
@@ -84,7 +84,7 @@ def _prepare_data(data, context):
         data = pipe(data, data_transformers.get())
 
     # convert string input to a URLData
-    if isinstance(data, six.string_types):
+    if isinstance(data, str):
         data = core.UrlData(data)
 
     # consolidate inline data to top-level datasets
@@ -120,9 +120,9 @@ class FacetMapping(core.FacetMapping):
         copy = self.copy()
         context = kwargs.get('context', {})
         data = context.get('data', None)
-        if isinstance(self.row, six.string_types):
+        if isinstance(self.row, str):
             copy.row = core.FacetFieldDef(**utils.parse_shorthand(self.row, data))
-        if isinstance(self.column, six.string_types):
+        if isinstance(self.column, str):
             copy.column = core.FacetFieldDef(**utils.parse_shorthand(self.column, data))
         return super(FacetMapping, copy).to_dict(*args, **kwargs)
 
@@ -328,8 +328,7 @@ def condition(predicate, if_true, if_false, **kwargs):
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    test_predicates = (six.string_types, expr.Expression, 
-                       core.LogicalOperandPredicate)
+    test_predicates = (str, expr.Expression, core.LogicalOperandPredicate)
 
     if isinstance(predicate, NamedSelection):
         condition = {'selection': predicate._get_name()}
@@ -347,7 +346,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # convert to dict for now; the from_dict call below will wrap this
         # dict in the appropriate schema
         if_true = if_true.to_dict()
-    elif isinstance(if_true, six.string_types):
+    elif isinstance(if_true, str):
         if_true = {'shorthand': if_true}
         if_true.update(kwargs)
     condition.update(if_true)
@@ -357,7 +356,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
         selection.condition = condition
-    elif isinstance(if_false, six.string_types):
+    elif isinstance(if_false, str):
         selection = {'condition': condition, 'shorthand': if_false}
         selection.update(kwargs)
     else:
@@ -1176,7 +1175,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         from ...utils.server import serve
 
-        html = six.StringIO()
+        html = io.StringIO()
         self.save(html, format='html', **kwargs)
         html.seek(0)
 

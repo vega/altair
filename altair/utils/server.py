@@ -8,9 +8,10 @@ import sys
 import threading
 import webbrowser
 import socket
+from http import server
+from io import BytesIO as IO
 import itertools
 import random
-from ._py3k_compat import server, IO
 
 JUPYTER_WARNING = """
 Note: if you're in the Jupyter notebook, Chart.serve() is not the best

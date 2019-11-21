@@ -1,13 +1,11 @@
 import json
 
-import six
-
 from .mimebundle import spec_to_mimebundle
 
 
 def write_file_or_filename(fp, content, mode='w'):
     """Write content to fp, whether fp is a string or a file-like object"""
-    if isinstance(fp, six.string_types):
+    if isinstance(fp, str):
         with open(fp, mode) as f:
             f.write(content)
     else:
@@ -61,7 +59,7 @@ def save(chart, fp, vega_version, vegaembed_version,
         embed_options = {}
 
     if format is None:
-        if isinstance(fp, six.string_types):
+        if isinstance(fp, str):
             format = fp.split('.')[-1]
         else:
             raise ValueError("must specify file format: "
@@ -86,7 +84,7 @@ def save(chart, fp, vega_version, vegaembed_version,
 
     if format == 'json':
         json_spec = json.dumps(spec, **json_kwds)
-        write_file_or_filename(fp, six.u(json_spec), mode='w')
+        write_file_or_filename(fp, json_spec, mode='w')
     elif format == 'html':
         mimebundle = spec_to_mimebundle(spec=spec, format=format, mode=mode,
                                         vega_version=vega_version,
