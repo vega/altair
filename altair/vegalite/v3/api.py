@@ -1546,16 +1546,9 @@ class Chart(TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin,
         jsonschema.ValidationError :
             if validate=True and dct does not conform to the schema
         """
-        # First try from_dict for the Chart type
-        try:
-            return super(Chart, cls).from_dict(dct, validate=validate)
-        except jsonschema.ValidationError:
-            pass
-
-        # If this fails, try with all other top level types
         for class_ in TopLevelMixin.__subclasses__():
             if class_ is Chart:
-                continue
+                class_ = super(Chart, cls)
             try:
                 return class_.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:

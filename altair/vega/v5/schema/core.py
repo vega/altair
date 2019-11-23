@@ -16,7 +16,7 @@ def load_schema():
 class VegaSchema(SchemaBase):
     @classmethod
     def _default_wrapper_classes(cls):
-        return VegaSchema.__subclasses__()
+        return _subclasses(VegaSchema)
 
 
 class Root(VegaSchema):
