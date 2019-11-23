@@ -402,9 +402,9 @@ def test_transforms():
     kwds = {
         'joinaggregate': [
             alt.JoinAggregateFieldDef(
-                field=alt.FieldName('x'),
-                op=alt.AggregateOp('min'),
-                **{'as': alt.FieldName('min')})
+                field='x',
+                op='min',
+                **{'as': 'min'})
         ],
         'groupby': ['key']
     }
