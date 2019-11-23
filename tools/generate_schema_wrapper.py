@@ -308,7 +308,7 @@ def generate_vega_schema_wrapper(schema_file):
     with open(schema_file, encoding='utf8') as f:
         rootschema = json.load(f)
     contents = [HEADER,
-                "from altair.utils.schemapi import SchemaBase, Undefined",
+                "from altair.utils.schemapi import SchemaBase, Undefined, _subclasses",
                 LOAD_SCHEMA.format(schemafile='vega-schema.json')]
     contents.append(BASE_SCHEMA.format(basename=basename))
     contents.append(schema_class('Root', schema=rootschema, basename=basename,
