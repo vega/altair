@@ -105,6 +105,7 @@ API Functions
    binding_select
    concat
    condition
+   graticule
    hconcat
    layer
    pipe
@@ -113,6 +114,8 @@ API Functions
    selection_interval
    selection_multi
    selection_single
+   sequence
+   sphere
    topo_feature
    value
    vconcat

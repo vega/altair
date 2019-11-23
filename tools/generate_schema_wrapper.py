@@ -62,7 +62,7 @@ BASE_SCHEMA = """
 class {basename}(SchemaBase):
     @classmethod
     def _default_wrapper_classes(cls):
-        return {basename}.__subclasses__()
+        return _subclasses({basename})
 """
 
 LOAD_SCHEMA = '''
@@ -223,6 +223,32 @@ def copy_schemapi_util():
             dest.writelines(source.readlines())
 
 
+def toposort(graph):
+    """Topological sort of a directed acyclic graph.
+
+    Parameters
+    ----------
+    graph : dict of lists
+        Mapping of node labels to list of child node labels.
+        This is assumed to represent a graph with no cycles.
+        
+    Returns
+    -------
+    order : list
+        topological order of input graph.
+    """
+    stack = []
+    visited = {}
+    def visit(nodes):
+        for node in sorted(nodes, reverse=True):
+            if not visited.get(node):
+                visited[node] = True
+                visit(graph.get(node, []))
+                stack.insert(0, node)
+    visit(graph)
+    return stack
+
+
 def generate_vegalite_schema_wrapper(schema_file):
     """Generate a schema wrapper at the given path."""
     # TODO: generate simple tests for each wrapper
@@ -230,21 +256,46 @@ def generate_vegalite_schema_wrapper(schema_file):
 
     with open(schema_file, encoding='utf8') as f:
         rootschema = json.load(f)
-    contents = [HEADER,
-                "from altair.utils.schemapi import SchemaBase, Undefined",
-                LOAD_SCHEMA.format(schemafile='vega-lite-schema.json')]
-    contents.append(BASE_SCHEMA.format(basename=basename))
-    contents.append(schema_class('Root', schema=rootschema, basename=basename,
-                                 schemarepr=CodeSnippet('load_schema()')))
+
+    definitions = {}
 
     for name in rootschema['definitions']:
         defschema = {'$ref': '#/definitions/' + name}
         defschema_repr = {'$ref': '#/definitions/' + name}
+        name = get_valid_identifier(name)
+        definitions[name] = SchemaGenerator(
+            name, schema=defschema, schemarepr=defschema_repr,
+            rootschema=rootschema, basename=basename,
+            rootschemarepr=CodeSnippet("Root._schema"),
+        )
 
-        contents.append(schema_class(get_valid_identifier(name),
-                                     schema=defschema, schemarepr=defschema_repr,
-                                     rootschema=rootschema, basename=basename,
-                                     rootschemarepr=CodeSnippet("Root._schema")))
+    graph = {}
+
+    for name, schema in definitions.items():
+        graph[name] = []
+        for child in schema.subclasses():
+            child = get_valid_identifier(child)
+            graph[name].append(child)
+            child = definitions[child]
+            if child.basename == basename:
+                child.basename = [name]
+            else:
+                child.basename.append(name)
+
+    contents = [HEADER,
+                "from altair.utils.schemapi import SchemaBase, Undefined, _subclasses",
+                LOAD_SCHEMA.format(schemafile='vega-lite-schema.json')]
+    contents.append(BASE_SCHEMA.format(basename=basename))
+    contents.append(schema_class('Root',
+            schema=rootschema,
+            basename=basename,
+            schemarepr=CodeSnippet('load_schema()')
+        )
+    )
+
+    for name in toposort(graph):
+        contents.append(definitions[name].schema_class())
+
     contents.append('')  # end with newline
     return '\n'.join(contents)
 
@@ -257,7 +308,7 @@ def generate_vega_schema_wrapper(schema_file):
     with open(schema_file, encoding='utf8') as f:
         rootschema = json.load(f)
     contents = [HEADER,
-                "from altair.utils.schemapi import SchemaBase, Undefined",
+                "from altair.utils.schemapi import SchemaBase, Undefined, _subclasses",
                 LOAD_SCHEMA.format(schemafile='vega-schema.json')]
     contents.append(BASE_SCHEMA.format(basename=basename))
     contents.append(schema_class('Root', schema=rootschema, basename=basename,

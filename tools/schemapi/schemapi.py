@@ -36,6 +36,17 @@ def debug_mode(arg):
         DEBUG_MODE = original
 
 
+def _subclasses(cls):
+    """Breadth-first sequence of classes which inherit from cls."""
+    seen = set()
+    current_set = {cls}
+    while current_set:
+        seen |= current_set
+        current_set = set.union(*(set(cls.__subclasses__()) for cls in current_set))
+        for cls in current_set - seen:
+            yield cls
+
+
 def _todict(obj, validate, context):
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
@@ -333,7 +344,7 @@ class SchemaBase(object):
     @classmethod
     def _default_wrapper_classes(cls):
         """Return the set of classes used within cls.from_dict()"""
-        return SchemaBase.__subclasses__()
+        return _subclasses(SchemaBase)
 
     @classmethod
     def from_dict(cls, dct, validate=True, _wrapper_classes=None):

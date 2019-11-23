@@ -65,8 +65,8 @@ class SchemaGenerator(object):
         The dictionary defining the schema class
     rootschema : dict (optional)
         The root schema for the class
-    basename : string (default: "SchemaBase")
-        The name of the base class to use in the class definition
+    basename : string or tuple (default: "SchemaBase")
+        The name(s) of the base class(es) to use in the class definition
     schemarepr : CodeSnippet or object, optional
         An object whose repr will be used in the place of the explicit schema.
         This can be useful, for example, when the generated code should reference
@@ -107,6 +107,11 @@ class SchemaGenerator(object):
         self.nodefault = nodefault
         self.kwargs = kwargs
 
+    def subclasses(self):
+        """Return a list of subclass names, if any."""
+        info = SchemaInfo(self.schema, self.rootschema)
+        return [child.refname for child in info.anyOf if child.is_reference()]
+
     def schema_class(self):
         """Generate code for a schema class"""
         rootschema = self.rootschema if self.rootschema is not None else self.schema
@@ -117,9 +122,13 @@ class SchemaGenerator(object):
                 rootschemarepr = CodeSnippet('_schema')
             else:
                 rootschemarepr = rootschema
+        if isinstance(self.basename, str):
+            basename = self.basename
+        else:
+            basename = ', '.join(self.basename)
         return self.schema_class_template.format(
             classname=self.classname,
-            basename=self.basename,
+            basename=basename,
             schema=schemarepr,
             rootschema=rootschemarepr,
             docstring=self.docstring(indent=4),

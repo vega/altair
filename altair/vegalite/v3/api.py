@@ -92,10 +92,7 @@ def _prepare_data(data, context):
         data = _consolidate_data(data, context)
 
     # if data is still not a recognized type, then return
-    if not isinstance(data, (dict, core.Data, core.UrlData,
-                             core.InlineData, core.NamedData,
-                             core.GraticuleGenerator, core.SequenceGenerator,
-                             core.SphereGenerator)):
+    if not isinstance(data, (dict, core.Data)):
         warnings.warn("data of type {} not recognized".format(type(data)))
 
     return data
@@ -294,19 +291,12 @@ def condition(predicate, if_true, if_false, **kwargs):
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    selection_predicates = (core.SelectionNot, core.SelectionOr,
-                            core.SelectionAnd, core.SelectionOperand)
-    test_predicates = (six.string_types, expr.Expression, core.Predicate,
-                       core.LogicalOperandPredicate, core.LogicalNotPredicate,
-                       core.LogicalOrPredicate, core.LogicalAndPredicate,
-                       core.FieldEqualPredicate, core.FieldOneOfPredicate,
-                       core.FieldRangePredicate, core.FieldLTPredicate,
-                       core.FieldGTPredicate, core.FieldLTEPredicate,
-                       core.FieldGTEPredicate, core.SelectionPredicate)
+    test_predicates = (six.string_types, expr.Expression, 
+                       core.LogicalOperandPredicate)
 
     if isinstance(predicate, Selection):
         condition = {'selection': predicate.name}
-    elif isinstance(predicate, selection_predicates):
+    elif isinstance(predicate, core.SelectionOperand):
         condition = {'selection': predicate}
     elif isinstance(predicate, test_predicates):
         condition = {'test': predicate}
@@ -971,11 +961,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         alt.FilterTransform : underlying transform object
 
         """
-        selection_predicates = (core.SelectionNot, core.SelectionOr,
-                                core.SelectionAnd, core.SelectionOperand)
         if isinstance(filter, Selection):
             filter = {'selection': filter.name}
-        elif isinstance(filter, selection_predicates):
+        elif isinstance(filter, core.SelectionOperand):
             filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
@@ -1546,16 +1534,9 @@ class Chart(TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin,
         jsonschema.ValidationError :
             if validate=True and dct does not conform to the schema
         """
-        # First try from_dict for the Chart type
-        try:
-            return super(Chart, cls).from_dict(dct, validate=validate)
-        except jsonschema.ValidationError:
-            pass
-
-        # If this fails, try with all other top level types
         for class_ in TopLevelMixin.__subclasses__():
             if class_ is Chart:
-                continue
+                class_ = super(Chart, cls)
             try:
                 return class_.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:
