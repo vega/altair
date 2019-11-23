@@ -92,8 +92,7 @@ def _prepare_data(data, context):
         data = _consolidate_data(data, context)
 
     # if data is still not a recognized type, then return
-    if not isinstance(data, (dict, core.Data, core.UrlData,
-                             core.InlineData, core.NamedData)):
+    if not isinstance(data, (dict, core.Data)):
         warnings.warn("data of type {} not recognized".format(type(data)))
 
     return data
@@ -329,19 +328,12 @@ def condition(predicate, if_true, if_false, **kwargs):
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    selection_predicates = (core.SelectionNot, core.SelectionOr,
-                            core.SelectionAnd, core.SelectionOperand)
-    test_predicates = (six.string_types, expr.Expression, core.Predicate,
-                       core.LogicalOperandPredicate, core.LogicalNotPredicate,
-                       core.LogicalOrPredicate, core.LogicalAndPredicate,
-                       core.FieldEqualPredicate, core.FieldOneOfPredicate,
-                       core.FieldRangePredicate, core.FieldLTPredicate,
-                       core.FieldGTPredicate, core.FieldLTEPredicate,
-                       core.FieldGTEPredicate, core.SelectionPredicate)
+    test_predicates = (six.string_types, expr.Expression, 
+                       core.LogicalOperandPredicate)
 
     if isinstance(predicate, NamedSelection):
         condition = {'selection': predicate._get_name()}
-    elif isinstance(predicate, selection_predicates):
+    elif isinstance(predicate, core.SelectionOperand):
         condition = {'selection': predicate}
     elif isinstance(predicate, test_predicates):
         condition = {'test': predicate}
@@ -872,11 +864,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         alt.FilterTransform : underlying transform object
 
         """
-        selection_predicates = (core.SelectionNot, core.SelectionOr,
-                                core.SelectionAnd, core.SelectionOperand)
         if isinstance(filter, NamedSelection):
             filter = {'selection': filter._get_name()}
-        elif isinstance(filter, selection_predicates):
+        elif isinstance(filter, core.SelectionOperand):
             filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
