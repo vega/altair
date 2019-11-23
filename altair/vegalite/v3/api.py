@@ -915,9 +915,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> chart.transform[0]
         JoinAggregateTransform({
           joinaggregate: [JoinAggregateFieldDef({
-            as: FieldName('x'),
-            field: FieldName('y'),
-            op: AggregateOp('sum')
+            as: 'x',
+            field: 'y',
+            op: 'sum'
           })]
         })
 
@@ -932,7 +932,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             dct = {'as': key,
                    'field': parsed.get('field', Undefined),
                    'op': parsed.get('aggregate', Undefined)}
-            joinaggregate.append(core.JoinAggregateFieldDef.from_dict(dct))
+            joinaggregate.append(core.JoinAggregateFieldDef(**dct))
         return self._add_transform(core.JoinAggregateTransform(
             joinaggregate=joinaggregate, groupby=groupby
         ))
