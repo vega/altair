@@ -37,7 +37,7 @@ def debug_mode(arg):
 
 
 def _subclasses(cls):
-    """Breadth-first sequence of classes which inherit from cls."""
+    """Breadth-first sequence of all classes which inherit from cls."""
     seen = set()
     current_set = {cls}
     while current_set:
@@ -496,7 +496,9 @@ class _FromDict(object):
             return args[0] if args else kwds
 
         if cls is None:
-            # TODO: do something more than simply selecting the last match?
+            # If there are multiple matches, we use the last one in the dict.
+            # Our class dict is constructed breadth-first from top to bottom,
+            # so the last class that matches is the most specific.
             matches = self.class_dict[self.hash_schema(schema)]
             cls = matches[-1] if matches else _passthrough
         schema = _resolve_references(schema, rootschema)

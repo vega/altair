@@ -1,4 +1,7 @@
+import copy
+import io
 import jsonschema
+import pickle
 import pytest
 
 from ..schemapi import (UndefinedType, SchemaBase, Undefined, _FromDict,
@@ -207,12 +210,16 @@ def test_undefined_singleton():
     assert Undefined is UndefinedType()
 
 
-def test_copy():
-    from copy import copy as cpy, deepcopy
-    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
-       'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-       'd': ['x', 'y', 'z']}
+@pytest.fixture
+def dct():
+    return {
+        'a': {'foo': 'bar'}, 'a2': {'foo': 42},
+        'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
+        'd': ['x', 'y', 'z']
+    }
 
+
+def test_copy_method(dct):
     myschema = MySchema.from_dict(dct)
 
     # Make sure copy is deep
@@ -242,30 +249,15 @@ def test_copy():
     assert mydct['b'] == dct['b']
     assert mydct['c'] == dct['c']
 
-    # Using copy module
+
+def test_copy_module(dct):
     myschema = MySchema.from_dict(dct)
 
-    # Make sure copy is deep
-    copy = deepcopy(myschema)
-    copy['a']['foo'] = 'new value'
-    copy['b'] = ['A', 'B', 'C']
-    copy['c'] = 164
+    cp = copy.deepcopy(myschema)
+    cp['a']['foo'] = 'new value'
+    cp['b'] = ['A', 'B', 'C']
+    cp['c'] = 164
     assert myschema.to_dict() == dct
-
-    # For copy module the top level for shallow copy is myschema, i.e. all
-    # attributes are shallow and change the original data
-    copy = cpy(myschema)
-    copy['a']['foo'] = 'baz'
-    copy['b'] = ['A', 'B', 'C']
-    copy['c'] = 164
-    mydct = myschema.to_dict()
-    assert mydct['a']['foo'] == 'baz'
-    assert mydct['b'] == ['A', 'B', 'C']
-    assert mydct['c'] == 164
-    assert mydct['a2'] == dct['a2']
-    assert mydct['b2'] == dct['b2']
-    assert mydct['d'] == dct['d']
-    assert copy.to_dict() == myschema.to_dict()
 
 
 def test_attribute_error():
@@ -276,25 +268,16 @@ def test_attribute_error():
                               "'invalid_attribute'")
 
 
-def test_to_from_json():
-    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
-           'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-           'd': ['x', 'y', 'z'], 'e': ['g', 'h']}
+def test_to_from_json(dct):
     json_str = MySchema.from_dict(dct).to_json()
     new_dct = MySchema.from_json(json_str).to_dict()
 
     assert new_dct == dct
 
 
-def test_to_from_pickle():
-    import pickle
-    from io import BytesIO
-    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
-           'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-           'd': ['x', 'y', 'z'], 'e': ['g', 'h']}
-
+def test_to_from_pickle(dct):
     myschema = MySchema.from_dict(dct)
-    output = BytesIO()
+    output = io.BytesIO()
     pickle.dump(myschema, output)
     output.seek(0)
     myschema_new = pickle.load(output)
