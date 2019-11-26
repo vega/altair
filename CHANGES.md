@@ -4,9 +4,21 @@
 
 ### Enhancements
 
+- Add inheritance structure to low-level schema classes (#1803)
+- Add ``html`` renderer which works across frontends (#1793)
+- Support Python 3.8 (#1740, #1781)
+- Add ``:G`` shorthand for geojson type (#1714)
+- Add data generator interface: ``alt.sequence``, ``alt.graticule``,
+  ``alt.sphere()`` (#1667, #1687)
+- Support geographic data sources via ``__geo_interface__`` (#1664)
+
 ### Bug Fixes
 
-### Backward-Incompatible Changes
+- Support ``pickle`` and ``copy.deepcopy`` for chart objects (#1805)
+- Fix bug when specifying ``count()`` within ``transform_joinaggregate()`` (#1751)
+- Fix ``LayerChart.add_selection`` (#1794)
+- Fix arguments to ``project()`` method (#1717)
+- Fix composition of multiple selections (#1707)
 
 ## Version 3.2.0 (released August 5, 2019)
 
