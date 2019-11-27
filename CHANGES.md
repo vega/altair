@@ -1,5 +1,10 @@
 # Altair Change Log
 
+## Version 4.0.0 (unreleased)
+### Enhancements
+### Bug Fixes
+### Backward-Incompatible Changes
+
 ## Version 3.3.0 (released Nov 27, 2019)
 
 Last release to support Python 2
