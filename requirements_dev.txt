@@ -1,10 +1,8 @@
 docutils
+ipython
 flake8
 pytest
 sphinx
 m2r
 vega_datasets
 recommonmark
-
-ipython<6; python_version < '3'  # ipython 6 not compatible with python 2
-ipython; python_version >= '3'
