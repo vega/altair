@@ -74,7 +74,7 @@ author = 'Brian Granger and Jake VanderPlas'
 # built documents.
 #
 # The short X.Y version.
-version = '3.3.0dev0'
+version = '3.3.0'
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -319,4 +319,4 @@ numpydoc_show_class_members = False
 altairplot_links = {'editor': True, 'source': True, 'export': True}
 altairplot_vega_js_url = "https://cdn.jsdelivr.net/npm/vega@5.4"
 altairplot_vegalite_js_url = "https://cdn.jsdelivr.net/npm/vega-lite@3.4"
-altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@4.2"
+altairplot_vegaembed_js_url = "https://cdn.jsdelivr.net/npm/vega-embed@5.1"
