@@ -84,11 +84,8 @@ requirejs.config({
 HTML_TEMPLATE_UNIVERSAL = jinja2.Template("""
 <div id="{{ output_div }}"></div>
 <script type="text/javascript">
-  (function(){
-    const spec = {{ spec }};
-    const embedOpt = {{ embed_options }};
-    const outputDiv = "{{ output_div }}";
-    const element = document.getElementById(outputDiv);
+  (function(spec, embedOpt){
+    const outputDiv = document.getElementById("{{ output_div }}");
     const paths = {
       "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
       "vega-lib": "{{ base_url }}/vega-lib?noext",
@@ -102,34 +99,34 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template("""
         s.src = paths[lib];
         s.async = true;
         s.onload = () => resolve(paths[lib]);
-        s.onerror = () => reject(paths[lib]);
+        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
         document.getElementsByTagName("head")[0].appendChild(s);
       });
     }
 
     function showError(err) {
-      element.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
       throw err;
     }
 
     function displayChart(vegaEmbed) {
-      vegaEmbed("#" + outputDiv, spec, embedOpt)
+      vegaEmbed(outputDiv, spec, embedOpt)
         .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
     }
 
     if(typeof define === "function" && define.amd) {
       requirejs.config({paths});
-      require(["vega-embed"], displayChart, err => showError(`Error loading javascript: ${err.message}`));
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
     } else if (typeof vegaEmbed === "function") {
       displayChart(vegaEmbed);
     } else {
       loadScript("vega")
         .then(() => loadScript("vega-lite"))
         .then(() => loadScript("vega-embed"))
-        .catch(url => showError(`Error loading javascript from ${url}`))
+        .catch(showError)
         .then(() => displayChart(vegaEmbed));
     }
-  })();
+  })({{ spec }}, {{ embed_options }});
 </script>
 """)
 
