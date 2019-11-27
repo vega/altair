@@ -1,7 +1,4 @@
-from __future__ import division
-
 import ast
-import six
 import hashlib
 import itertools
 import json
@@ -161,7 +158,7 @@ def get_docstring_and_rest(filename):
             # python2.7: Code was read in bytes needs decoding to utf-8
             # unless future unicode_literals is imported in source which
             # make ast output unicode strings
-            if hasattr(docstring, 'decode') and not isinstance(docstring, six.text_type):
+            if hasattr(docstring, 'decode') and not isinstance(docstring, str):
                 docstring = docstring.decode('utf-8')
             # python3.8: has end_lineno
             lineno = getattr(docstring_node, 'end_lineno', None) or docstring_node.lineno  # The last line of the string.

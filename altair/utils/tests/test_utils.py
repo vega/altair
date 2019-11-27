@@ -4,7 +4,6 @@ import json
 
 import numpy as np
 import pandas as pd
-import six
 
 from .. import infer_vegalite_type, sanitize_dataframe
 
@@ -86,7 +85,7 @@ def test_sanitize_dataframe_colnames():
 
     # Test that RangeIndex is converted to strings
     df = sanitize_dataframe(df)
-    assert [isinstance(col, six.string_types) for col in df.columns]
+    assert [isinstance(col, str) for col in df.columns]
 
     # Test that non-string columns result in an error
     df.columns = [4, 'foo', 'bar']

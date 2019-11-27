@@ -3,7 +3,6 @@
 # The contents of this file are automatically written by
 # tools/generate_schema_wrapper.py. Do not modify directly.
 
-import six
 from . import core
 import pandas as pd
 from altair.utils.schemapi import Undefined
@@ -29,7 +28,7 @@ class FieldChannelMixin(object):
 
         if shorthand is Undefined:
             parsed = {}
-        elif isinstance(shorthand, six.string_types):
+        elif isinstance(shorthand, str):
             parsed = parse_shorthand(shorthand, data=context.get('data', None))
             type_required = 'type' in self._kwds
             type_in_shorthand = 'type' in parsed

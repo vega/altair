@@ -42,8 +42,7 @@ Once this is finished, run::
     $ jupyter lab
 
 In the browser window that launches, select "File"->"New"->"Notebook" and then
-click "Select" without changing the kernel  (it should say "Python 2" or
-"Python 3" depending on which Python version you are running).
+click "Select" without changing the kernel  (it should say "Python 3").
 
 In the notebook that opens, you can run the following code to ensure everything
 is properly set up:
@@ -102,9 +101,8 @@ Once the packages and extensions are installed, launch the notebook by running::
     $ jupyter notebook
 
 In the browser window that launches, click the *New* drop-down menu and
-select either "Python 2" or "Python 3", depending on which version of Python
-you are using (note that the kernel you choose *must* match the kernel where
-you installed the vega extension).
+select either "Python 3" (note that the kernel you choose *must* match
+the kernel where you installed the vega extension).
 
 In the notebook that opens, you can run the following code to ensure everything
 is properly set up:
@@ -179,12 +177,11 @@ Dependencies
 Altair has the following dependencies, all of which are installed automatically
 with the above installation commands:
 
-- python 2.7, 3.5 or newer
+- python 3.5 or newer
 - entrypoints_
 - jsonschema_
 - NumPy_
 - Pandas_
-- Six_
 - Toolz_
 
 To run Altair's full test suite and build Altair's documentation requires a few
@@ -198,6 +195,7 @@ additional dependencies:
 - docutils
 - vega_datasets_
 - ipython
+  
 
 
 Development Install
@@ -230,7 +228,6 @@ development version directly from GitHub using:
 .. _jsonschema: https://github.com/Julian/jsonschema
 .. _NumPy: http://www.numpy.org/
 .. _Pandas: http://pandas.pydata.org
-.. _Six: http://six.readthedocs.io/
 .. _Toolz: https://github.com/pytoolz/toolz
 .. _vega_datasets: https://github.com/altair-viz/vega_datasets
 

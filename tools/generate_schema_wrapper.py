@@ -95,7 +95,7 @@ class FieldChannelMixin(object):
 
         if shorthand is Undefined:
             parsed = {}
-        elif isinstance(shorthand, six.string_types):
+        elif isinstance(shorthand, str):
             parsed = parse_shorthand(shorthand, data=context.get('data', None))
             type_required = 'type' in self._kwds
             type_in_shorthand = 'type' in parsed
@@ -330,8 +330,7 @@ def generate_vegalite_channel_wrappers(schemafile, version, imports=None):
     with open(schemafile, encoding='utf8') as f:
         schema = json.load(f)
     if imports is None:
-        imports = ["import six",
-                   "from . import core",
+        imports = ["from . import core",
                    "import pandas as pd",
                    "from altair.utils.schemapi import Undefined",
                    "from altair.utils import parse_shorthand"]

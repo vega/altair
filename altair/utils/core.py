@@ -11,7 +11,6 @@ import traceback
 import warnings
 
 import jsonschema
-import six
 import pandas as pd
 import numpy as np
 
@@ -180,7 +179,7 @@ def sanitize_dataframe(df):
         df.columns = df.columns.astype(str)
 
     for col in df.columns:
-        if not isinstance(col, six.string_types):
+        if not isinstance(col, str):
             raise ValueError('Dataframe contains invalid column name: {0!r}. '
                              'Column names must be strings'.format(col))
 
@@ -412,7 +411,7 @@ def update_subtraits(obj, attrs, **kwargs):
     else:
         dct = obj
 
-    if isinstance(attrs, six.string_types):
+    if isinstance(attrs, str):
         attrs = (attrs,)
 
     if len(attrs) == 0:
@@ -539,7 +538,7 @@ def infer_encoding_types(args, kwargs, channels):
         if isinstance(obj, SchemaBase):
             return obj
 
-        if isinstance(obj, six.string_types):
+        if isinstance(obj, str):
             obj = {'shorthand': obj}
 
         if isinstance(obj, (list, tuple)):
