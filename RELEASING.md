@@ -74,3 +74,6 @@
 14. Double-check that a conda-forge pull request is generated from the updated
     pip package by the conda-forge bot (may take up to ~an hour):
     https://github.com/conda-forge/altair-feedstock/pulls
+
+15. Copy CHANGES.md section into release notes within
+    https://github.com/altair-viz/altair/releases/, and publish the release.
