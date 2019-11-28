@@ -8,7 +8,7 @@ except ImportError:
     IPYTHON_AVAILABLE = False
     pass
 
-from altair.vegalite.v3 import VegaLite
+from altair.vegalite.v4 import VegaLite
 from altair.vega.v5 import Vega
 
 
@@ -31,7 +31,7 @@ the_data = table
 """.format(DATA_RECORDS))
 
 
-VEGA_SPEC = {'$schema': 'https://vega.github.io/schema/vega/v3.json',
+VEGA_SPEC = {'$schema': 'https://vega.github.io/schema/vega/v5.json',
  'axes': [{'orient': 'bottom', 'scale': 'xscale'},
   {'orient': 'left', 'scale': 'yscale'}],
  'data': [{'name': 'table', 'values': DATA_RECORDS}],
@@ -72,7 +72,7 @@ VEGA_SPEC = {'$schema': 'https://vega.github.io/schema/vega/v3.json',
 
 
 VEGALITE_SPEC = {
- '$schema': 'https://vega.github.io/schema/vega-lite/v2.json',
+ '$schema': 'https://vega.github.io/schema/vega-lite/v4.json',
  'data': {'values': DATA_RECORDS},
  'description': 'A simple bar chart with embedded data.',
  'encoding': {'x': {'field': 'category', 'type': 'ordinal'},

@@ -12,6 +12,7 @@ import pandas as pd
 from toolz import pipe
 
 from altair.vegalite import v3 as vegalite_v3
+from altair.vegalite import v4 as vegalite_v4
 from altair.vega import v5 as vega_v5
 
 try:
@@ -28,6 +29,7 @@ RENDERERS = {
   },
   'vega-lite': {
       '3': vegalite_v3.VegaLite,
+      '4': vegalite_v4.VegaLite,
   }
 }
 
@@ -35,10 +37,11 @@ RENDERERS = {
 TRANSFORMERS = {
   'vega': {
       # Vega doesn't yet have specific data transformers; use vegalite
-      '5': vegalite_v3.data_transformers,
+      '5': vegalite_v4.data_transformers,
   },
   'vega-lite': {
       '3': vegalite_v3.data_transformers,
+      '4': vegalite_v4.data_transformers,
   }
 }
 
@@ -133,7 +136,7 @@ def vega(line, cell):
     'data',
     nargs='?',
     help='local variablename of a pandas DataFrame to be used as the dataset')
-@magic_arguments.argument('-v', '--version', dest='version', default='3')
+@magic_arguments.argument('-v', '--version', dest='version', default='4')
 @magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vegalite(line, cell):
     """Cell magic for displaying vega-lite visualizations in CoLab.

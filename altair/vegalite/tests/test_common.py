@@ -4,7 +4,7 @@ import pytest
 
 import pandas as pd
 
-from .. import v3
+from .. import v3, v4
 
 
 @pytest.fixture
@@ -39,7 +39,7 @@ def make_basic_chart(alt):
     )
 
 
-@pytest.mark.parametrize('alt', [v3])
+@pytest.mark.parametrize('alt', [v3, v4])
 def test_basic_chart_to_dict(alt, basic_spec):
     chart = alt.Chart('data.csv').mark_line().encode(
         alt.X('xval:Q'),
@@ -55,7 +55,7 @@ def test_basic_chart_to_dict(alt, basic_spec):
     assert dct == make_final_spec(alt, basic_spec)
 
 
-@pytest.mark.parametrize('alt', [v3])
+@pytest.mark.parametrize('alt', [v3, v4])
 def test_basic_chart_from_dict(alt, basic_spec):
     chart = alt.Chart.from_dict(basic_spec)
     dct = chart.to_dict()
@@ -67,7 +67,7 @@ def test_basic_chart_from_dict(alt, basic_spec):
     assert dct == make_final_spec(alt, basic_spec)
 
 
-@pytest.mark.parametrize('alt', [v3])
+@pytest.mark.parametrize('alt', [v3, v4])
 def test_theme_enable(alt, basic_spec):
     active_theme = alt.themes.active
 
@@ -88,7 +88,7 @@ def test_theme_enable(alt, basic_spec):
         alt.themes.enable(active_theme)
 
 
-@pytest.mark.parametrize('alt', [v3])
+@pytest.mark.parametrize('alt', [v3, v4])
 def test_max_rows(alt):
     basic_chart = make_basic_chart(alt)
 
