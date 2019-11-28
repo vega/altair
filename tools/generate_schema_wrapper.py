@@ -22,11 +22,9 @@ import generate_api_docs
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
     'vega': {
-        'v4': 'v4.4.0',
-        'v5': 'v5.4.0',
+        'v5': 'v5.8.1',
     },
     'vega-lite': {
-        'v2': 'v2.6.0',
         'v3': 'v3.4.0',
     }
 }
