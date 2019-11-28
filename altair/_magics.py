@@ -11,9 +11,7 @@ from IPython.core import magic_arguments
 import pandas as pd
 from toolz import pipe
 
-from altair.vegalite import v2 as vegalite_v2
 from altair.vegalite import v3 as vegalite_v3
-from altair.vega import v4 as vega_v4
 from altair.vega import v5 as vega_v5
 
 try:
@@ -26,11 +24,9 @@ except ImportError:
 
 RENDERERS = {
   'vega': {
-      '4': vega_v4.Vega,
       '5': vega_v5.Vega,
   },
   'vega-lite': {
-      '2': vegalite_v2.VegaLite,
       '3': vegalite_v3.VegaLite,
   }
 }
@@ -39,12 +35,9 @@ RENDERERS = {
 TRANSFORMERS = {
   'vega': {
       # Vega doesn't yet have specific data transformers; use vegalite
-      '3': vegalite_v2.data_transformers,
-      '4': vegalite_v2.data_transformers,
-      '5': vegalite_v2.data_transformers,
+      '5': vegalite_v3.data_transformers,
   },
   'vega-lite': {
-      '2': vegalite_v2.data_transformers,
       '3': vegalite_v3.data_transformers,
   }
 }
