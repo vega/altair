@@ -10,25 +10,25 @@ from ..display import HTMLRenderer
 from .schema import SCHEMA_VERSION
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
 VEGA_VERSION = '5'
-VEGAEMBED_VERSION = '5'
+VEGAEMBED_VERSION = '6'
 
 
 # ==============================================================================
-# VegaLite v3 renderer logic
+# VegaLite v4 renderer logic
 # ==============================================================================
 
 
-# The MIME type for Vega-Lite 3.x releases.
-VEGALITE_MIME_TYPE = 'application/vnd.vegalite.v3+json'  # type: str
+# The MIME type for Vega-Lite 4.x releases.
+VEGALITE_MIME_TYPE = 'application/vnd.vegalite.v4+json'  # type: str
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = 'altair.vegalite.v3.renderer'  # type: str
+ENTRY_POINT_GROUP = 'altair.vegalite.v4.renderer'  # type: str
 
 # The display message when rendering fails
 DEFAULT_DISPLAY = """\
-<VegaLite 3 object>
+<VegaLite 4 object>
 
 If you see this message, it means the renderer has not been properly enabled
 for the frontend that you are using. For more information, see
@@ -104,23 +104,23 @@ renderers.enable('default')
 
 
 class VegaLite(Displayable):
-    """An IPython/Jupyter display class for rendering VegaLite 3."""
+    """An IPython/Jupyter display class for rendering VegaLite 4."""
 
     renderers = renderers
     schema_path = (__name__, 'schema/vega-lite-schema.json')
 
 
 def vegalite(spec, validate=True):
-    """Render and optionally validate a VegaLite 3 spec.
+    """Render and optionally validate a VegaLite 4 spec.
 
     This will use the currently enabled renderer to render the spec.
 
     Parameters
     ==========
     spec: dict
-        A fully compliant VegaLite 3 spec, with the data portion fully processed.
+        A fully compliant VegaLite 4 spec, with the data portion fully processed.
     validate: bool
-        Should the spec be validated against the VegaLite 3 schema?
+        Should the spec be validated against the VegaLite 4 schema?
     """
     from IPython.display import display
 

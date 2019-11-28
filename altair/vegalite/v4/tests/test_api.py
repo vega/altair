@@ -10,7 +10,7 @@ import jsonschema
 import pytest
 import pandas as pd
 
-import altair.vegalite.v3 as alt
+import altair.vegalite.v4 as alt
 from altair.utils import AltairDeprecationWarning
 
 try:
@@ -612,8 +612,8 @@ def test_chart_from_dict():
     ]
 
     for chart in charts:
-        print(chart)
-        chart_out = alt.Chart.from_dict(chart.to_dict())
+        with alt.themes.enable('none'):
+            chart_out = alt.Chart.from_dict(chart.to_dict())
         assert type(chart_out) is type(chart)
 
     # test that an invalid spec leads to a schema validation error

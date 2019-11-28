@@ -2,7 +2,7 @@ from contextlib import contextmanager
 
 import pytest
 
-import altair.vegalite.v3 as alt
+import altair.vegalite.v4 as alt
 
 
 @contextmanager

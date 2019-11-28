@@ -3,11 +3,11 @@ from ..data import (MaxRowsError, curry, default_data_transformer, limit_rows,
 
 
 # ==============================================================================
-# VegaLite 3 data transformers
+# VegaLite 4 data transformers
 # ==============================================================================
 
 
-ENTRY_POINT_GROUP = 'altair.vegalite.v3.data_transformer'  # type: str
+ENTRY_POINT_GROUP = 'altair.vegalite.v4.data_transformer'  # type: str
 
 
 data_transformers = DataTransformerRegistry(entry_point_group=ENTRY_POINT_GROUP)  # type: DataTransformerRegistry
