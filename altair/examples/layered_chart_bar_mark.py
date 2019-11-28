@@ -30,6 +30,4 @@ tick = base.mark_tick(
 
 (bar + tick).configure_tick(
     bandSize=35  # controls the width of the tick
-).configure_scale(
-    rangeStep=40  # controls the width of the bar
 )

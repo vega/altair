@@ -51,7 +51,7 @@ alt.Chart(source).transform_timeunit(
         header=alt.Header(labelAngle=0, labelAlign='right', format='%B')
     )
 ).properties(
-    bounds='flush', title='Seattle Weather', height=step
+    title='Seattle Weather', height=step
 ).configure_facet(
     spacing=0
 ).configure_view(
