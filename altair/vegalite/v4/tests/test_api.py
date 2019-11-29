@@ -11,7 +11,6 @@ import pytest
 import pandas as pd
 
 import altair.vegalite.v4 as alt
-from altair.utils import AltairDeprecationWarning
 
 try:
     import selenium
@@ -672,17 +671,6 @@ def test_consolidate_InlineData():
     with alt.data_transformers.enable(consolidate_datasets=True):
         dct = chart.to_dict()
     assert dct['data'] == data.to_dict()
-
-
-def test_deprecated_encodings():
-    base = alt.Chart('data.txt').mark_point()
-
-    with pytest.warns(AltairDeprecationWarning) as record:
-        chart1 = base.encode(strokeOpacity=alt.Strokeopacity('x:Q')).to_dict()
-    assert 'alt.StrokeOpacity' in record[0].message.args[0]
-    chart2 = base.encode(strokeOpacity=alt.StrokeOpacity('x:Q')).to_dict()
-
-    assert chart1 == chart2
 
 
 def test_repeat():

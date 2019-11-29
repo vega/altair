@@ -401,29 +401,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                                   embed_options=embed_options, json_kwds=json_kwds,
                                   fullhtml=fullhtml, requirejs=requirejs)
 
-    def savechart(self, fp, format=None, **kwargs):
-        """Save a chart to file in a variety of formats
-
-        Supported formats are json, html, png, svg
-
-        Parameters
-        ----------
-        fp : string filename or file-like object
-            file in which to write the chart.
-        format : string (optional)
-            the format to write: one of ['json', 'html', 'png', 'svg'].
-            If not specified, the format will be determined from the filename.
-        **kwargs :
-            Additional keyword arguments are passed to the output method
-            associated with the specified format.
-
-        """
-        warnings.warn(
-            "Chart.savechart is deprecated in favor of Chart.save",
-            DeprecationWarning
-        )
-        return self.save(fp, format=None, **kwargs)
-
     def save(self, fp, format=None, override_data_transformer=True,
              scale_factor=1.0,
              vegalite_version=VEGALITE_VERSION,
