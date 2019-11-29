@@ -50,7 +50,8 @@ EXTRACT_CODE = {
 
         if(mode === 'vega-lite'){
           // compile vega-lite to vega
-          const compiled = vl.compile(spec);
+          vegaLite = (typeof vegaLite === "undefined") ? vl : vegaLite;
+          const compiled = vegaLite.compile(spec);
           spec = compiled.spec;
         }
 
@@ -73,7 +74,8 @@ EXTRACT_CODE = {
 
         if(mode === 'vega-lite'){
           // compile vega-lite to vega
-          const compiled = vl.compile(spec);
+          vegaLite = (typeof vegaLite === "undefined") ? vl : vegaLite;
+          const compiled = vegaLite.compile(spec);
           spec = compiled.spec;
         }
 
@@ -94,6 +96,7 @@ EXTRACT_CODE = {
 
         if(mode === 'vega-lite'){
           // compile vega-lite to vega
+          vegaLite = (typeof vegaLite === "undefined") ? vl : vegaLite;
           const compiled = vl.compile(spec);
           spec = compiled.spec;
         }
