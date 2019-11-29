@@ -40,7 +40,7 @@ renderers = RendererRegistry(entry_point_group=ENTRY_POINT_GROUP)
 here = os.path.dirname(os.path.realpath(__file__))
 
 
-def default_renderer(spec, **metadata):
+def mimetype_renderer(spec, **metadata):
     return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY,
                                  **metadata)
 
@@ -66,40 +66,22 @@ def svg_renderer(spec, **metadata):
                               vegalite_version=VEGALITE_VERSION,
                               **metadata)
 
-colab_renderer = HTMLRenderer(mode='vega-lite',
-                              fullhtml=True, requirejs=False,
-                              output_div='altair-viz',
-                              vega_version=VEGA_VERSION,
-                              vegaembed_version=VEGAEMBED_VERSION,
-                              vegalite_version=VEGALITE_VERSION)
-
-zeppelin_renderer = HTMLRenderer(mode='vega-lite',
-                                fullhtml=True, requirejs=False,
-                                vega_version=VEGA_VERSION,
-                                vegaembed_version=VEGAEMBED_VERSION,
-                                vegalite_version=VEGALITE_VERSION)
-
-kaggle_renderer = HTMLRenderer(mode='vega-lite',
-                               fullhtml=False, requirejs=True,
-                               vega_version=VEGA_VERSION,
-                               vegaembed_version=VEGAEMBED_VERSION,
-                               vegalite_version=VEGALITE_VERSION)
-
 html_renderer = HTMLRenderer(mode='vega-lite', template='universal',
                              vega_version=VEGA_VERSION,
                              vegaembed_version=VEGAEMBED_VERSION,
                              vegalite_version=VEGALITE_VERSION)
 
-renderers.register('default', default_renderer)
+renderers.register('default', html_renderer)
 renderers.register('html', html_renderer)
-renderers.register('jupyterlab', default_renderer)
-renderers.register('nteract', default_renderer)
-renderers.register('colab', colab_renderer)
-renderers.register('kaggle', kaggle_renderer)
+renderers.register('colab', html_renderer)
+renderers.register('kaggle', html_renderer)
+renderers.register('zeppelin', html_renderer)
+renderers.register('mimetype', mimetype_renderer)
+renderers.register('jupyterlab', mimetype_renderer)
+renderers.register('nteract', mimetype_renderer)
 renderers.register('json', json_renderer)
 renderers.register('png', png_renderer)
 renderers.register('svg', svg_renderer)
-renderers.register('zeppelin', zeppelin_renderer)
 renderers.enable('default')
 
 

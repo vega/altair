@@ -1,23 +1,10 @@
 """Tests of various renderers"""
 
 import json
-import re
 
 import pytest
 
 import altair.vegalite.v4 as alt
-
-
-def _extract_embedOpt(html):
-    """Extract an embedOpt definition from an html string.
-
-    Note: this is very brittle, but works for the specific test in this file.
-    """
-    result = re.search(r"embedOpt\s+=\s+(?P<embedOpt>\{.*?\})", html)
-    if not result:
-        return None
-    else:
-        return json.loads(result.groupdict()['embedOpt'])
 
 
 @pytest.fixture
@@ -25,61 +12,56 @@ def chart():
     return alt.Chart('data.csv').mark_point()
 
 
-def test_colab_renderer_embed_options(chart):
+def test_html_renderer_embed_options(chart, renderer='html'):
     """Test that embed_options in renderer metadata are correctly manifest in html"""
-    def assert_actions_true(chart):
-        bundle = chart._repr_mimebundle_(None, None)
-        embedOpt = _extract_embedOpt(bundle['text/html'])
-        assert embedOpt == {'actions': True, 'mode': 'vega-lite'}
+    # Short of parsing the javascript, it's difficult to parse out the
+    # actions. So we use string matching
 
-    def assert_actions_false(chart):
-        bundle = chart._repr_mimebundle_(None, None)
-        embedOpt = _extract_embedOpt(bundle['text/html'])
-        assert embedOpt == {'actions': False, 'mode': 'vega-lite'}
+    def assert_has_options(chart, **opts):
+        html = chart._repr_mimebundle_(None, None)['text/html']
+        for key, val in opts.items():
+            assert json.dumps({key: val})[1:-1] in html
 
-    with alt.renderers.enable('colab', embed_options=dict(actions=False)):
-        assert_actions_false(chart)
+    with alt.renderers.enable(renderer):
+        assert_has_options(chart, mode='vega-lite')
 
-    with alt.renderers.enable('colab'):
-        with alt.renderers.enable(embed_options=dict(actions=True)):
-            assert_actions_true(chart)
-
-        with alt.renderers.set_embed_options(actions=False):
-            assert_actions_false(chart)
+        with alt.renderers.enable(embed_options=dict(actions={"export": True})):
+            assert_has_options(chart, mode='vega-lite', actions={'export': True})
 
         with alt.renderers.set_embed_options(actions=True):
-            assert_actions_true(chart)
+            assert_has_options(chart, mode='vega-lite', actions=True)
 
 
-def test_default_renderer_embed_options(chart, renderer='default'):
+def test_mimetype_renderer_embed_options(chart, renderer='mimetype'):
     # check that metadata is passed appropriately
     mimetype = alt.display.VEGALITE_MIME_TYPE
     spec = chart.to_dict()
-    with alt.renderers.enable(renderer, embed_options=dict(actions=False)):
-        bundle, metadata = chart._repr_mimebundle_(None, None)
-        assert set(bundle.keys()) == {mimetype, 'text/plain'}
-        assert bundle[mimetype] == spec
-        assert metadata == {mimetype: {'embed_options': {'actions': False}}}
-
-    # Sanity check: no metadata specified
     with alt.renderers.enable(renderer):
+        # Sanity check: no metadata specified
         bundle, metadata = chart._repr_mimebundle_(None, None)
         assert bundle[mimetype] == spec
         assert metadata == {}
+        with alt.renderers.set_embed_options(actions=False):
+            bundle, metadata = chart._repr_mimebundle_(None, None)
+            assert set(bundle.keys()) == {mimetype, 'text/plain'}
+            assert bundle[mimetype] == spec
+            assert metadata == {mimetype: {'embed_options': {'actions': False}}}
+
 
 
 def test_json_renderer_embed_options(chart, renderer='json'):
     """Test that embed_options in renderer metadata are correctly manifest in html"""
     mimetype = 'application/json'
     spec = chart.to_dict()
-    with alt.renderers.enable('json', option='foo'):
-        bundle, metadata = chart._repr_mimebundle_(None, None)
-        assert set(bundle.keys()) == {mimetype, 'text/plain'}
-        assert bundle[mimetype] == spec
-        assert metadata == {mimetype: {'option': 'foo'}}
-
-    # Sanity check: no options specified
     with alt.renderers.enable(renderer):
+        # Sanity check: no options specified
         bundle, metadata = chart._repr_mimebundle_(None, None)
         assert bundle[mimetype] == spec
         assert metadata == {}
+
+        with alt.renderers.enable(option='foo'):
+            bundle, metadata = chart._repr_mimebundle_(None, None)
+            assert set(bundle.keys()) == {mimetype, 'text/plain'}
+            assert bundle[mimetype] == spec
+            assert metadata == {mimetype: {'option': 'foo'}}
+
