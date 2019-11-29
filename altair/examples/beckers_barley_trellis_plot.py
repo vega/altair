@@ -20,7 +20,6 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
         'variety:N',
         title="",
         sort=alt.EncodingSortField(field='yield', op='sum', order='descending'),
-        scale=alt.Scale(rangeStep=20),
         axis=alt.Axis(grid=True)
     ),
     color=alt.Color('year:N', legend=alt.Legend(title="Year")),
@@ -29,4 +28,6 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
         title="",
         sort=alt.EncodingSortField(field='yield', op='sum', order='descending'),
     )
+).properties(
+    height=alt.Step(20)
 ).configure_view(stroke="transparent")

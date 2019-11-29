@@ -17,10 +17,9 @@ alt.Chart(source).mark_area().encode(
         title='Population',
         axis=alt.Axis(format='~s')
     ),
-    facet='year:O'
+    facet=alt.Facet('year:O', columns=5),
 ).properties(
     title='US Age Distribution By Year',
-    columns=5,
     width=90,
     height=80
 )

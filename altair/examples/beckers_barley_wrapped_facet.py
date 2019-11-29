@@ -15,9 +15,8 @@ alt.Chart(source).mark_point().encode(
     alt.X('median(yield):Q', scale=alt.Scale(zero=False)),
     y='variety:O',
     color='year:N',
-    facet='site:O',
+    facet=alt.Facet('site:O', columns=2),
 ).properties(
-    columns=2,
     width=200,
     height=100,
 )
