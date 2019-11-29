@@ -18,7 +18,7 @@ source = data.seattle_weather.url
 step = 20
 overlap = 1
 
-alt.Chart(source).transform_timeunit(
+alt.Chart(source, height=step).transform_timeunit(
     Month='month(date)'
 ).transform_joinaggregate(
     mean_temp='mean(temp_max)', groupby=['Month']
@@ -44,14 +44,16 @@ alt.Chart(source).transform_timeunit(
         'mean_temp:Q',
         legend=None,
         scale=alt.Scale(domain=[30, 5], scheme='redyellowblue')
-    ),
-    alt.Row(
+    )
+).facet(
+    row=alt.Row(
         'Month:T',
         title=None,
         header=alt.Header(labelAngle=0, labelAlign='right', format='%B')
     )
 ).properties(
-    title='Seattle Weather', height=step
+    title='Seattle Weather',
+    bounds='flush'
 ).configure_facet(
     spacing=0
 ).configure_view(
