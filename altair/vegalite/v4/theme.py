@@ -12,8 +12,7 @@ class VegaTheme(object):
         
     def __call__(self):
         return {"usermeta": {"embedOptions": {"theme": self.theme}},
-                "config": {"view": {"width": 400, "height": 300},
-                           "mark": {"tooltip": None}}}
+                "config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}}
 
     def __repr__(self):
         return "VegaTheme({!r})".format(self.theme)
@@ -25,11 +24,9 @@ class VegaTheme(object):
 ENTRY_POINT_GROUP = 'altair.vegalite.v4.theme'  # type: str
 themes = ThemeRegistry(entry_point_group=ENTRY_POINT_GROUP)
 
-themes.register('default', lambda: {"config": {"view": {"width": 400, "height": 300},
-                                               "mark": {"tooltip": None}}})
+themes.register('default', lambda: {"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}})
 themes.register('opaque', lambda: {"config": {"background": "white",
-                                              "view": {"width": 400, "height": 300},
-                                              "mark": {"tooltip": None}}})
+                                              "view": {"continuousWidth": 400, "continuousHeight": 300}}})
 themes.register('none', lambda: {})
   
 for theme in VEGA_THEMES:

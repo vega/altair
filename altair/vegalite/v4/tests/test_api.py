@@ -578,24 +578,16 @@ def test_LookupData():
 
 def test_themes():
     chart = alt.Chart('foo.txt').mark_point()
-    active = alt.themes.active
 
-    try:
-        alt.themes.enable('default')
-        assert chart.to_dict()['config'] == {"mark": {"tooltip": None},
-                                             "view": {"width": 400, "height": 300}}
+    with alt.themes.enable('default'):
+        assert chart.to_dict()['config'] == {"view": {"continuousWidth": 400, "continuousHeight": 300}}
 
-        alt.themes.enable('opaque')
+    with alt.themes.enable('opaque'):
         assert chart.to_dict()['config'] == {"background": "white",
-                                             "mark": {"tooltip": None},
-                                             "view": {"width": 400, "height": 300}}
+                                             "view": {"continuousWidth": 400, "continuousHeight": 300}}
 
-        alt.themes.enable('none')
+    with alt.themes.enable('none'):
         assert 'config' not in chart.to_dict()
-
-    finally:
-        # re-enable the original active theme
-        alt.themes.enable(active)
 
 
 def test_chart_from_dict():
@@ -612,8 +604,7 @@ def test_chart_from_dict():
     ]
 
     for chart in charts:
-        with alt.themes.enable('none'):
-            chart_out = alt.Chart.from_dict(chart.to_dict())
+        chart_out = alt.Chart.from_dict(chart.to_dict())
         assert type(chart_out) is type(chart)
 
     # test that an invalid spec leads to a schema validation error
