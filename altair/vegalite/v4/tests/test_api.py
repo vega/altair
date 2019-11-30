@@ -391,6 +391,25 @@ def test_transforms():
     kwds = {'as': 'calc', 'calculate': 'datum.a * 4'}
     assert chart.transform == [alt.CalculateTransform(**kwds)]
 
+    # density transform
+    chart = alt.Chart().transform_density('x', as_=['value', 'density'])
+    kwds = {'as': ['value', 'density'], 'density': 'x'}
+    assert chart.transform == [alt.DensityTransform(**kwds)]
+
+    # filter transform
+    chart = alt.Chart().transform_filter("datum.a < 4")
+    assert chart.transform == [alt.FilterTransform(filter="datum.a < 4")]
+
+    # flatten transform
+    chart = alt.Chart().transform_flatten(['A', 'B'], ['X', 'Y'])
+    kwds = {'as': ['X', 'Y'], 'flatten': ['A', 'B']}
+    assert chart.transform == [alt.FlattenTransform(**kwds)]
+
+    # fold transform
+    chart = alt.Chart().transform_fold(['A', 'B', 'C'], as_=['key', 'val'])
+    kwds = {'as': ['key', 'val'], 'fold': ['A', 'B', 'C']}
+    assert chart.transform == [alt.FoldTransform(**kwds)]
+
     # impute transform
     chart = alt.Chart().transform_impute("field", "key", groupby=["x"])
     kwds = {"impute": "field", "key": "key", "groupby": ["x"]}
@@ -409,29 +428,44 @@ def test_transforms():
     }
     assert chart.transform == [alt.JoinAggregateTransform(**kwds)]
 
-    # filter transform
-    chart = alt.Chart().transform_filter("datum.a < 4")
-    assert chart.transform == [alt.FilterTransform(filter="datum.a < 4")]
+    # loess transform
+    chart = alt.Chart().transform_loess('x', 'y', as_=['xx', 'yy'])
+    kwds = {'on': 'x', 'loess': 'y', 'as': ['xx', 'yy']}
+    assert chart.transform == [alt.LoessTransform(**kwds)]
 
-    # flatten transform
-    chart = alt.Chart().transform_flatten(['A', 'B'], ['X', 'Y'])
-    kwds = {'as': ['X', 'Y'], 'flatten': ['A', 'B']}
-    assert chart.transform == [alt.FlattenTransform(**kwds)]
-
-    # fold transform
-    chart = alt.Chart().transform_fold(['A', 'B', 'C'], as_=['key', 'val'])
-    kwds = {'as': ['key', 'val'], 'fold': ['A', 'B', 'C']}
-    assert chart.transform == [alt.FoldTransform(**kwds)]
-
-    # lookup transform
+    # lookup transform (data)
     lookup_data = alt.LookupData(alt.UrlData('foo.csv'), 'id', ['rate'])
-    chart = alt.Chart().transform_lookup(from_=lookup_data, as_='a',
-                                         lookup='a', default='b')
+    chart = alt.Chart().transform_lookup('a', from_=lookup_data,
+                                         as_='a', default='b')
     kwds = {'from': lookup_data,
             'as': 'a',
             'lookup': 'a',
             'default': 'b'}
     assert chart.transform == [alt.LookupTransform(**kwds)]
+
+    # lookup transform (selection)
+    lookup_selection = alt.LookupSelection(key='key', selection='sel')
+    chart = alt.Chart().transform_lookup('a', from_=lookup_selection,
+                                         as_='a', default='b')
+    kwds = {'from': lookup_selection,
+            'as': 'a',
+            'lookup': 'a',
+            'default': 'b'}
+    assert chart.transform == [alt.LookupTransform(**kwds)]
+
+    # pivot transform
+    chart = alt.Chart().transform_pivot('x', 'y')
+    assert chart.transform == [alt.PivotTransform(pivot='x', value='y')]
+
+    # quantile transform
+    chart = alt.Chart().transform_quantile('x', as_=['prob', 'value'])
+    kwds = {'quantile': 'x', 'as': ['prob', 'value']}
+    assert chart.transform == [alt.QuantileTransform(**kwds)]
+
+    # regression transform
+    chart = alt.Chart().transform_regression('x', 'y', as_=['xx', 'yy'])
+    kwds = {'on': 'x', 'regression': 'y', 'as': ['xx', 'yy']}
+    assert chart.transform == [alt.RegressionTransform(**kwds)]
 
     # sample transform
     chart = alt.Chart().transform_sample()
