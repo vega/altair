@@ -478,33 +478,31 @@ But since ``mark_bar(size=10)`` only controls the width of the bars, it might be
       y='value:Q'
   )
 
-The width of the chart containing the bar plot can be controlled through two mechanisms:
+The width of the chart containing the bar plot can be controlled through setting the ``width``
+property of the chart, either to a pixel value for any chart, or to a step value
+in the case of discrete scales.
 
-1. Setting the ``width`` of chart, so the width of the bars are adjusted to fit the width of the chart.
-
-2. Setting the ``rangeStep`` property of the bars in the :class:`Scale` class. The ``rangeStep`` allocates the width (in pixels) for each bar, so the width of the chart becomes the number of bars multiply the ``rangeStep``.
-
-An example using the first mechanism (using ``width``):
+Here is an example of setting the width to a single value for the whole chart:
 
 .. altair-plot::
 
   alt.Chart(data).mark_bar(size=30).encode(
       x='name:O',
       y='value:Q'
-  ).properties(width=100)
+  ).properties(width=200)
 
 The width of the bars are set using ``mark_bar(size=30)`` and the width of the chart is set using ``properties(width=100)``
 
-An example using the second mechanism (using ``rangeStep``):
+Here is an example of setting the step width for a discrete scale:
 
 .. altair-plot::
 
   alt.Chart(data).mark_bar(size=30).encode(
-      alt.X('name:N', scale=alt.Scale(rangeStep=100)),
+      x='name:N',
       y='value:Q'
-  )
+  ).properties(width=alt.Step(100))
 
-The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the the chart is set using ``alt.Scale(rangeStep=100)``
+The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the the chart is set using ``width=alt.Step(100)``
 
 .. note::
 
