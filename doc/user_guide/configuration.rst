@@ -275,8 +275,8 @@ be controlled:
     )
 
     chart.configure_view(
-        height=200,
-        width=200,
+        continuousHeight=200,
+        continuousWidth=200,
         strokeWidth=4,
         fill='#FFEEDD',
         stroke='red',

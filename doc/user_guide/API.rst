@@ -73,6 +73,8 @@ Encoding Channels
    TextValue
    Tooltip
    TooltipValue
+   Url
+   UrlValue
    X
    X2
    X2Value
@@ -133,6 +135,7 @@ Low-Level Schema Wrappers
    AggregateTransform
    AggregatedFieldDef
    Align
+   AllSortString
    AnyMark
    AreaConfig
    ArgmaxDef
@@ -145,8 +148,9 @@ Low-Level Schema Wrappers
    AxisResolveMap
    BaseLegendLayout
    BaseMarkConfig
-   BaseTitleConfig
+   BaseTitleNoSignals
    Baseline
+   BinExtent
    BinParams
    BinTransform
    BindCheckbox
@@ -159,39 +163,88 @@ Low-Level Schema Wrappers
    BrushConfig
    CalculateTransform
    Color
+   ColorGradientFieldDefWithCondition
+   ColorGradientValueDefWithCondition
    ColorName
    CompositeMark
    CompositeMarkDef
    CompositionConfig
    ConcatSpec
+   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined105503503undefined105503503null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined377890894undefined377890894null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined61636408undefined61636408null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined702672441undefined702672441null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined720879958undefined720879958null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined742391737undefined742391737null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined927251285undefined927251285null
+   ConditionalAxisPropertyalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null
    ConditionalMarkPropFieldDef
    ConditionalMarkPropFieldDefTypeForShape
    ConditionalNumberValueDef
    ConditionalPredicateMarkPropFieldDef
    ConditionalPredicateMarkPropFieldDefTypeForShape
    ConditionalPredicateNumberValueDef
+   ConditionalPredicateStringFieldDef
    ConditionalPredicateStringValueDef
-   ConditionalPredicateTextFieldDef
-   ConditionalPredicateValueDef
+   ConditionalPredicateValueDefGradientstringnull
+   ConditionalPredicateValueDefText
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined105503503undefined105503503null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined377890894undefined377890894null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined61636408undefined61636408null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined702672441undefined702672441null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined720879958undefined720879958null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined742391737undefined742391737null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined927251285undefined927251285null
+   ConditionalPredicateValueDefalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null
+   ConditionalPredicateValueDefstring
    ConditionalSelectionMarkPropFieldDef
    ConditionalSelectionMarkPropFieldDefTypeForShape
    ConditionalSelectionNumberValueDef
+   ConditionalSelectionStringFieldDef
    ConditionalSelectionStringValueDef
-   ConditionalSelectionTextFieldDef
-   ConditionalSelectionValueDef
+   ConditionalSelectionValueDefGradientstringnull
+   ConditionalSelectionValueDefText
+   ConditionalSelectionValueDefstring
+   ConditionalStringFieldDef
    ConditionalStringValueDef
-   ConditionalTextFieldDef
-   ConditionalValueDef
+   ConditionalValueDefGradientstringnull
+   ConditionalValueDefText
+   ConditionalValueDefstring
    Config
    CsvDataFormat
    Cursor
    Data
    DataFormat
+   DataLookupTransform
    DataSource
    Datasets
    DateTime
    Day
+   DensityTransform
+   DerivedStream
    DictInlineDataset
+   DictSelectionInit
+   DictSelectionInitInterval
    Dir
    DsvDataFormat
    Element
@@ -205,16 +258,21 @@ Low-Level Schema Wrappers
    ErrorBarDef
    ErrorBarExtent
    EventStream
+   EventType
+   ExcludeMappedValueRefBaseTitle
+   Expr
+   FacetEncodingFieldDef
    FacetFieldDef
    FacetMapping
    FacetSpec
    FacetedEncoding
    FacetedUnitSpec
    Field
+   FieldDefWithConditionMarkPropFieldDefGradientstringnull
    FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull
    FieldDefWithConditionMarkPropFieldDefnumber
-   FieldDefWithConditionMarkPropFieldDefstringnull
-   FieldDefWithConditionTextFieldDefValue
+   FieldDefWithConditionStringFieldDefText
+   FieldDefWithConditionStringFieldDefstring
    FieldDefWithoutScale
    FieldEqualPredicate
    FieldGTEPredicate
@@ -226,12 +284,15 @@ Low-Level Schema Wrappers
    FieldRangePredicate
    FieldValidPredicate
    FilterTransform
+   FitType
    FlattenTransform
    FoldTransform
    FontStyle
    FontWeight
    Generator
    GenericUnitSpecEncodingAnyMark
+   Gradient
+   GradientStop
    GraticuleGenerator
    GraticuleParams
    HConcatSpec
@@ -262,23 +323,29 @@ Low-Level Schema Wrappers
    LegendOrient
    LegendResolveMap
    LineConfig
+   LinearGradient
    LocalMultiTimeUnit
    LocalSingleTimeUnit
+   LoessTransform
    LogicalAndPredicate
    LogicalNotPredicate
    LogicalOperandPredicate
    LogicalOrPredicate
    LookupData
+   LookupSelection
    LookupTransform
    Mark
    MarkConfig
    MarkDef
+   MarkType
+   MergedStream
    Month
    MultiSelection
    MultiSelectionConfig
    MultiTimeUnit
    NamedData
    NiceTime
+   NonArgAggregateOp
    NumberValueDef
    NumericFieldDefWithCondition
    NumericValueDefWithCondition
@@ -292,14 +359,18 @@ Low-Level Schema Wrappers
    PartsMixinsBoxPlotPart
    PartsMixinsErrorBandPart
    PartsMixinsErrorBarPart
+   PivotTransform
    PositionFieldDef
    Predicate
    Projection
    ProjectionConfig
    ProjectionType
+   QuantileTransform
+   RadialGradient
    RangeConfig
    RangeConfigValue
    RectConfig
+   RegressionTransform
    RepeatMapping
    RepeatRef
    RepeatSpec
@@ -309,6 +380,7 @@ Low-Level Schema Wrappers
    RowColLayoutAlign
    RowColboolean
    RowColnumber
+   RowColumnEncodingFieldDef
    SampleTransform
    Scale
    ScaleConfig
@@ -323,11 +395,12 @@ Low-Level Schema Wrappers
    SelectionAnd
    SelectionConfig
    SelectionDef
-   SelectionDomain
+   SelectionExtent
    SelectionInit
    SelectionInitInterval
    SelectionInitIntervalMapping
    SelectionInitMapping
+   SelectionLookupTransform
    SelectionNot
    SelectionOperand
    SelectionOr
@@ -344,6 +417,8 @@ Low-Level Schema Wrappers
    SingleTimeUnit
    Sort
    SortArray
+   SortByChannel
+   SortByChannelDesc
    SortByEncoding
    SortField
    SortOrder
@@ -352,20 +427,23 @@ Low-Level Schema Wrappers
    StackOffset
    StackTransform
    StandardType
+   Step
+   Stream
+   StringFieldDef
    StringFieldDefWithCondition
-   StringFieldDefWithConditionTypeForShape
    StringValueDefWithCondition
    StringValueDefWithConditionTypeForShape
    StrokeCap
    StrokeJoin
    StyleConfigIndex
    SymbolShape
+   Text
    TextBaseline
    TextConfig
-   TextFieldDef
    TextFieldDefWithCondition
    TextValueDefWithCondition
    TickConfig
+   TimeInterval
    TimeUnit
    TimeUnitTransform
    TitleAnchor
@@ -392,13 +470,20 @@ Low-Level Schema Wrappers
    UtcSingleTimeUnit
    VConcatSpec
    Value
+   ValueDefWithConditionMarkPropFieldDefGradientstringnull
    ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull
    ValueDefWithConditionMarkPropFieldDefnumber
    ValueDefWithConditionMarkPropFieldDefstringnull
-   ValueDefWithConditionTextFieldDefValue
+   ValueDefWithConditionStringFieldDefText
+   Vector2DateTime
+   Vector2Vector2number
+   Vector2boolean
+   Vector2number
+   Vector2string
    VegaLiteSchema
    ViewBackground
    ViewConfig
+   WindowEventType
    WindowFieldDef
    WindowOnlyOp
    WindowTransform

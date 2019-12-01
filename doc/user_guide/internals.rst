@@ -37,8 +37,8 @@ from which we can output the JSON representation:
         y='Miles_per_Gallon:Q',
         color='Origin:N',
     ).configure_view(
-        height=300,
-        width=400,
+        continuousHeight=300,
+        continuousWidth=400,
     )
 
     print(chart.to_json(indent=2))
@@ -97,8 +97,8 @@ the above chart using these low-level object types directly:
         ),
         config=alt.Config(
             view=alt.ViewConfig(
-                height=300,
-                width=400
+                continuousHeight=300,
+                continuousWidth=400
             )
         )
     )
@@ -127,7 +127,7 @@ For example, consider the
 from the Vega-Lite documentation, which has the following JSON specification::
 
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
       "description": "A simple bar chart with embedded data.",
       "data": {
         "values": [
@@ -152,7 +152,7 @@ construct an Altair chart object from this string of Vega-Lite JSON:
 
     alt.Chart.from_json("""
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
       "description": "A simple bar chart with embedded data.",
       "data": {
         "values": [
@@ -177,7 +177,7 @@ you can use the :meth:`~Chart.from_dict` method to construct the chart object:
     import altair as alt
 
     alt.Chart.from_dict({
-      "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
       "description": "A simple bar chart with embedded data.",
       "data": {
         "values": [
