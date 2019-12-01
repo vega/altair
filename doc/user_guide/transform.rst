@@ -30,12 +30,17 @@ Transform                                  Method                               
 :ref:`user-guide-aggregate-transform`      :meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
 :ref:`user-guide-bin-transform`            :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
 :ref:`user-guide-calculate-transform`      :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
+:ref:`user-guide-density-transform`        :meth:`~Chart.transform_density`           Create a new data column with the kernel density estimate of the input.
 :ref:`user-guide-filter-transform`         :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
 :ref:`user-guide-flatten-transform`        :meth:`~Chart.transform_flatten`           Flatten array data into columns.
-:ref:`user-guide-fold-transform`           :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data.
+:ref:`user-guide-fold-transform`           :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data (opposite of pivot).
 :ref:`user-guide-impute-transform`         :meth:`~Chart.transform_impute`            Impute missing data.
 :ref:`user-guide-joinaggregate-transform`  :meth:`~Chart.transform_joinaggregate`     Aggregate transform joined to original data.
+:ref:`user-guide-loess-transform`          :meth:`~Chart.transform_loess`             Create a new column with LOESS smoothing of data.
 :ref:`user-guide-lookup-transform`         :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
+:ref:`user-guide-pivot-transform`          :meth:`~Chart.transform_pivot`             Convert long-form data into wide-form data (opposite of fold).
+:ref:`user-guide-quantile-transform`       :meth:`~Chart.transform_quantile`          Compute empirical quantiles of a dataset.
+:ref:`user-guide-regression-transform`     :meth:`~Chart.transform_regression`        Fit a regression model to a dataset.
 :ref:`user-guide-sample-transform`         :meth:`~Chart.transform_sample`            Random sub-sample of the rows in the dataset.
 :ref:`user-guide-stack-transform`          :meth:`~Chart.transform_stack`             Compute stacked version of values.
 :ref:`user-guide-timeunit-transform`       :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
@@ -268,6 +273,62 @@ The :meth:`~Chart.transform_calculate` method is built on the :class:`~Calculate
 class, which has the following options:
 
 .. altair-object-table:: altair.CalculateTransform
+
+.. _user-guide-density-transform:
+
+Density Transform
+~~~~~~~~~~~~~~~~~
+The density transform performs one-dimensional
+`kernel density estimation <https://en.wikipedia.org/wiki/Kernel_density_estimation>`_
+over input data and generates a new column of samples of the estimated densities.
+
+Here is a simple example, showing the distribution of IMDB ratings from the movies
+dataset:
+
+.. altair-plot::
+   
+   import altair as alt
+   from vega_datasets import data
+   
+   alt.Chart(data.movies.url).transform_density(
+       'IMDB_Rating',
+       as_=['IMDB_Rating', 'density'],
+   ).mark_area().encode(
+       x="IMDB_Rating:Q",
+       y='density:Q',
+   )
+
+The density can also be computed on a per-group basis, by specifying the ``groupby``
+argument. Here we split the above denity computation across movie genres:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+   
+   alt.Chart(
+       data.movies.url,
+       width=120,
+       height=80
+   ).transform_filter(
+       'isValid(datum.Major_Genre)'
+   ).transform_density(
+       'IMDB_Rating',
+       groupby=['Major_Genre'],
+       as_=['IMDB_Rating', 'density'],
+       extent=[1, 10],
+   ).mark_area().encode(
+       x="IMDB_Rating:Q",
+       y='density:Q',
+   ).facet(
+       'Major_Genre:N',
+       columns=4
+   )
+
+
+Other availabl options and settings are summarized in this table:
+
+.. altair-object-table:: altair.DensityTransform
 
 .. _user-guide-filter-transform:
 
