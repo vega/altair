@@ -19,6 +19,7 @@ area        :meth:`~Chart.mark_area`      A filled area plot.                   
 bar         :meth:`~Chart.mark_bar`       A bar plot.                                          :ref:`gallery_simple_bar_chart`
 circle      :meth:`~Chart.mark_circle`    A scatter plot with filled circles.                  :ref:`gallery_one_dot_per_zipcode`
 geoshape    :meth:`~Chart.mark_geoshape`  A geographic shape                                   :ref:`gallery_choropleth`
+image       :meth:`~Chart.mark_image`     A scatter plot with image markers.                   :ref:`gallery_scatter_image_marks`
 line        :meth:`~Chart.mark_line`      A line plot.                                         :ref:`gallery_simple_line_chart`
 point       :meth:`~Chart.mark_point`     A scatter plot with configurable point shapes.       :ref:`gallery_scatter_linked_brush`
 rect        :meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps                :ref:`gallery_simple_heatmap`
