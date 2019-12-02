@@ -600,7 +600,7 @@ Fold Transform
 ~~~~~~~~~~~~~~
 The fold transform is, in short, a way to convert wide-form data to long-form
 data directly without any preprocessing (see :ref:`data-long-vs-wide` for more
-information).
+information). Fold transforms are the opposite of the :ref:`user-guide-pivot-transform`.
 
 So, for example, if your data consist of multiple columns that record parallel
 data for different categories, you can use the fold transform to encode based
@@ -1012,6 +1012,41 @@ class, which has the following options:
 
 Pivot Transform
 ~~~~~~~~~~~~~~~
+The pivot transform is, in short, a way to convert long-form data to wide-form
+data directly without any preprocessing (see :ref:`data-long-vs-wide` for more
+information). Pivot transforms are useful for creating matrix or cross-tabulation
+data, acting as an inverse to the :ref:`user-guide-fold-transform`.
+
+Here is an example, using Olympic medals data:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+
+   df = pd.DataFrame.from_records([
+       {"country": "Norway", "type": "gold", "count": 14},
+       {"country": "Norway", "type": "silver", "count": 14},
+       {"country": "Norway", "type": "bronze", "count": 11},
+       {"country": "Germany", "type": "gold", "count": 14},
+       {"country": "Germany", "type": "silver", "count": 10},
+       {"country": "Germany", "type": "bronze", "count": 7},
+       {"country": "Canada", "type": "gold", "count": 11},
+       {"country": "Canada", "type": "silver", "count": 8},
+       {"country": "Canada", "type": "bronze", "count": 10}
+   ])
+
+   alt.Chart(df).transform_pivot(
+       'type',
+       groupby=['country'],
+       value='count'
+   ).mark_bar().encode(
+       x='gold:Q',
+       y='country:N',
+   )
+
+Transform Options
+^^^^^^^^^^^^^^^^^
 The :meth:`~Chart.transform_pivot` method is built on the :class:`~PivotTransform`
 class, which has the following options:
 
@@ -1021,6 +1056,31 @@ class, which has the following options:
 
 Quantile Transform
 ~~~~~~~~~~~~~~~~~~
+The quantile transform calculates empirical `quantile <https://en.wikipedia.org/wiki/Quantile>`_
+values for input data. If a groupby parameter is provided, quantiles are estimated
+separately per group. Among other uses, the quantile transform is useful for creating
+`quantile-quantile (Q-Q) plots <https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot>`_.
+
+Here is an example of a quantile plot of normally-distributed data:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+   import numpy as np
+
+   np.random.seed(42)
+   df = pd.DataFrame({'x': np.random.randn(200)})
+
+   alt.Chart(df).transform_quantile(
+       'x', step=0.01
+   ).mark_point().encode(
+       x='prob:Q',
+       y='value:Q'
+   )
+
+Transform Options
+^^^^^^^^^^^^^^^^^
 The :meth:`~Chart.transform_quantile` method is built on the :class:`~QuantileTransform`
 class, which has the following options:
 
@@ -1030,6 +1090,49 @@ class, which has the following options:
 
 Regression Transform
 ~~~~~~~~~~~~~~~~~~~~
+
+The regression transform fits two-dimensional regression models to smooth and
+predict data. This transform can fit multiple models for input data (one per group) 
+nd generates new data objects that represent points for summary trend lines.
+Alternatively, this transform can be used to generate a set of objects containing
+regression model parameters, one per group.
+
+This transform supports parametric models for the following functional forms:
+
+- linear (``linear``): *y = a + b * x*
+- logarithmic (``log``): *y = a + b * log(x)*
+- exponential (``exp``): *y = a + eb * x*
+- power (``pow``): *y = a * xb*
+- quadratic (``quad``): *y = a + b * x + c * x2*
+- polynomial (``poly``): *y = a + b * x + … + k * xorder*
+
+All models are fit using ordinary least squares.
+For non-parametric locally weighted regression, see the
+:ref:`user-guide-loess-transform`.
+
+Here is an example of a simple linear regression plotted on top of data:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+   import numpy as np
+
+   np.random.seed(42)
+   x = np.linspace(0, 10)
+   y = x - 5 + np.random.randn(len(x))
+
+   df = pd.DataFrame({'x': x, 'y': y})
+
+   chart = alt.Chart(df).mark_point().encode(
+       x='x',
+       y='y'
+   )
+
+   chart + chart.transform_regression('x', 'y').mark_line()
+
+Transform Options
+^^^^^^^^^^^^^^^^^
 The :meth:`~Chart.transform_regression` method is built on the :class:`~RegressionTransform`
 class, which has the following options:
 
