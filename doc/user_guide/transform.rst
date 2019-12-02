@@ -1093,7 +1093,7 @@ Regression Transform
 
 The regression transform fits two-dimensional regression models to smooth and
 predict data. This transform can fit multiple models for input data (one per group) 
-nd generates new data objects that represent points for summary trend lines.
+and generates new data objects that represent points for summary trend lines.
 Alternatively, this transform can be used to generate a set of objects containing
 regression model parameters, one per group.
 
