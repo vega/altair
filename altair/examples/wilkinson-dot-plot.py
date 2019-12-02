@@ -1,7 +1,7 @@
 """
 Wilkinson Dot Plot
 ------------------
-An example of a [Wilkinson Dot Plot](https://en.wikipedia.org/wiki/Dot_plot_(statistics))
+An example of a `Wilkinson Dot Plot <https://en.wikipedia.org/wiki/Dot_plot_(statistics)>`_
 """
 # category: other charts
 
