@@ -19,7 +19,8 @@ alt.Chart(source).transform_fold(
 ).transform_density(
     density='value', 
     bandwidth=0.3, 
-    groupby=['Measurement_type']
+    groupby=['Measurement_type'], 
+    extent= [0, 8]
 ).mark_area().encode(
     alt.X('value:Q'), 
     alt.Y('density:Q'),
