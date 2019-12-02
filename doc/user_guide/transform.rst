@@ -30,12 +30,17 @@ Transform                                  Method                               
 :ref:`user-guide-aggregate-transform`      :meth:`~Chart.transform_aggregate`         Create a new data column by aggregating an existing column.
 :ref:`user-guide-bin-transform`            :meth:`~Chart.transform_bin`               Create a new data column by binning an existing column.
 :ref:`user-guide-calculate-transform`      :meth:`~Chart.transform_calculate`         Create a new data column using an arithmetic calculation on an existing column.
+:ref:`user-guide-density-transform`        :meth:`~Chart.transform_density`           Create a new data column with the kernel density estimate of the input.
 :ref:`user-guide-filter-transform`         :meth:`~Chart.transform_filter`            Select a subset of data based on a condition.
 :ref:`user-guide-flatten-transform`        :meth:`~Chart.transform_flatten`           Flatten array data into columns.
-:ref:`user-guide-fold-transform`           :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data.
+:ref:`user-guide-fold-transform`           :meth:`~Chart.transform_fold`              Convert wide-form data into long-form data (opposite of pivot).
 :ref:`user-guide-impute-transform`         :meth:`~Chart.transform_impute`            Impute missing data.
 :ref:`user-guide-joinaggregate-transform`  :meth:`~Chart.transform_joinaggregate`     Aggregate transform joined to original data.
+:ref:`user-guide-loess-transform`          :meth:`~Chart.transform_loess`             Create a new column with LOESS smoothing of data.
 :ref:`user-guide-lookup-transform`         :meth:`~Chart.transform_lookup`            One-sided join of two datasets based on a lookup key.
+:ref:`user-guide-pivot-transform`          :meth:`~Chart.transform_pivot`             Convert long-form data into wide-form data (opposite of fold).
+:ref:`user-guide-quantile-transform`       :meth:`~Chart.transform_quantile`          Compute empirical quantiles of a dataset.
+:ref:`user-guide-regression-transform`     :meth:`~Chart.transform_regression`        Fit a regression model to a dataset.
 :ref:`user-guide-sample-transform`         :meth:`~Chart.transform_sample`            Random sub-sample of the rows in the dataset.
 :ref:`user-guide-stack-transform`          :meth:`~Chart.transform_stack`             Compute stacked version of values.
 :ref:`user-guide-timeunit-transform`       :meth:`~Chart.transform_timeunit`          Discretize/group a date by a time unit (day, month, year, etc.)
@@ -268,6 +273,65 @@ The :meth:`~Chart.transform_calculate` method is built on the :class:`~Calculate
 class, which has the following options:
 
 .. altair-object-table:: altair.CalculateTransform
+
+.. _user-guide-density-transform:
+
+Density Transform
+~~~~~~~~~~~~~~~~~
+The density transform performs one-dimensional
+`kernel density estimation <https://en.wikipedia.org/wiki/Kernel_density_estimation>`_
+over input data and generates a new column of samples of the estimated densities.
+
+Here is a simple example, showing the distribution of IMDB ratings from the movies
+dataset:
+
+.. altair-plot::
+   
+   import altair as alt
+   from vega_datasets import data
+   
+   alt.Chart(data.movies.url).transform_density(
+       'IMDB_Rating',
+       as_=['IMDB_Rating', 'density'],
+   ).mark_area().encode(
+       x="IMDB_Rating:Q",
+       y='density:Q',
+   )
+
+The density can also be computed on a per-group basis, by specifying the ``groupby``
+argument. Here we split the above denity computation across movie genres:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+   
+   alt.Chart(
+       data.movies.url,
+       width=120,
+       height=80
+   ).transform_filter(
+       'isValid(datum.Major_Genre)'
+   ).transform_density(
+       'IMDB_Rating',
+       groupby=['Major_Genre'],
+       as_=['IMDB_Rating', 'density'],
+       extent=[1, 10],
+   ).mark_area().encode(
+       x="IMDB_Rating:Q",
+       y='density:Q',
+   ).facet(
+       'Major_Genre:N',
+       columns=4
+   )
+
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_density` method is built on the
+:class:`~DensityTransform` class, which has the following options:
+
+.. altair-object-table:: altair.DensityTransform
 
 .. _user-guide-filter-transform:
 
@@ -536,7 +600,7 @@ Fold Transform
 ~~~~~~~~~~~~~~
 The fold transform is, in short, a way to convert wide-form data to long-form
 data directly without any preprocessing (see :ref:`data-long-vs-wide` for more
-information).
+information). Fold transforms are the opposite of the :ref:`user-guide-pivot-transform`.
 
 So, for example, if your data consist of multiple columns that record parallel
 data for different categories, you can use the fold transform to encode based
@@ -777,6 +841,46 @@ The :meth:`~Chart.transform_joinaggregate` method is built on the
 
 .. altair-object-table:: altair.JoinAggregateTransform
 
+.. _user-guide-loess-transform:
+
+LOESS Transform
+~~~~~~~~~~~~~~~
+The LOESS transform (LOcally Estimated Scatterplot Smoothing) uses a
+locally-estimated regression  to produce a trend line.
+LOESS performs a sequence of local weighted regressions over a sliding
+window of nearest-neighbor points. For standard parametric regression options,
+see the :ref:`user-guide-regression-transform`.
+
+Here is an example of using LOESS to smooth samples from a Gaussian random walk:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+   import numpy as np
+   
+   np.random.seed(42)
+   
+   df = pd.DataFrame({
+       'x': range(100),
+       'y': np.random.randn(100).cumsum()
+   })
+   
+   chart = alt.Chart(df).mark_point().encode(
+       x='x',
+       y='y'
+   )
+   
+   chart + chart.transform_loess('x', 'y').mark_line()
+
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_loess` method is built on the
+:class:`~LoessTransform` class, which has the following options:
+
+.. altair-object-table:: altair.LoessTransform
+
 .. _user-guide-lookup-transform:
 
 Lookup Transform
@@ -903,6 +1007,136 @@ The :meth:`~Chart.transform_lookup` method is built on the :class:`~LookupTransf
 class, which has the following options:
 
 .. altair-object-table:: altair.LookupTransform
+
+.. _user-guide-pivot-transform:
+
+Pivot Transform
+~~~~~~~~~~~~~~~
+The pivot transform is, in short, a way to convert long-form data to wide-form
+data directly without any preprocessing (see :ref:`data-long-vs-wide` for more
+information). Pivot transforms are useful for creating matrix or cross-tabulation
+data, acting as an inverse to the :ref:`user-guide-fold-transform`.
+
+Here is an example, using Olympic medals data:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+
+   df = pd.DataFrame.from_records([
+       {"country": "Norway", "type": "gold", "count": 14},
+       {"country": "Norway", "type": "silver", "count": 14},
+       {"country": "Norway", "type": "bronze", "count": 11},
+       {"country": "Germany", "type": "gold", "count": 14},
+       {"country": "Germany", "type": "silver", "count": 10},
+       {"country": "Germany", "type": "bronze", "count": 7},
+       {"country": "Canada", "type": "gold", "count": 11},
+       {"country": "Canada", "type": "silver", "count": 8},
+       {"country": "Canada", "type": "bronze", "count": 10}
+   ])
+
+   alt.Chart(df).transform_pivot(
+       'type',
+       groupby=['country'],
+       value='count'
+   ).mark_bar().encode(
+       x='gold:Q',
+       y='country:N',
+   )
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_pivot` method is built on the :class:`~PivotTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.PivotTransform
+
+.. _user-guide-quantile-transform:
+
+Quantile Transform
+~~~~~~~~~~~~~~~~~~
+The quantile transform calculates empirical `quantile <https://en.wikipedia.org/wiki/Quantile>`_
+values for input data. If a groupby parameter is provided, quantiles are estimated
+separately per group. Among other uses, the quantile transform is useful for creating
+`quantile-quantile (Q-Q) plots <https://en.wikipedia.org/wiki/Q%E2%80%93Q_plot>`_.
+
+Here is an example of a quantile plot of normally-distributed data:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+   import numpy as np
+
+   np.random.seed(42)
+   df = pd.DataFrame({'x': np.random.randn(200)})
+
+   alt.Chart(df).transform_quantile(
+       'x', step=0.01
+   ).mark_point().encode(
+       x='prob:Q',
+       y='value:Q'
+   )
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_quantile` method is built on the :class:`~QuantileTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.QuantileTransform
+
+.. _user-guide-regression-transform:
+
+Regression Transform
+~~~~~~~~~~~~~~~~~~~~
+
+The regression transform fits two-dimensional regression models to smooth and
+predict data. This transform can fit multiple models for input data (one per group) 
+nd generates new data objects that represent points for summary trend lines.
+Alternatively, this transform can be used to generate a set of objects containing
+regression model parameters, one per group.
+
+This transform supports parametric models for the following functional forms:
+
+- linear (``linear``): *y = a + b * x*
+- logarithmic (``log``): *y = a + b * log(x)*
+- exponential (``exp``): *y = a + eb * x*
+- power (``pow``): *y = a * xb*
+- quadratic (``quad``): *y = a + b * x + c * x2*
+- polynomial (``poly``): *y = a + b * x + … + k * xorder*
+
+All models are fit using ordinary least squares.
+For non-parametric locally weighted regression, see the
+:ref:`user-guide-loess-transform`.
+
+Here is an example of a simple linear regression plotted on top of data:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+   import numpy as np
+
+   np.random.seed(42)
+   x = np.linspace(0, 10)
+   y = x - 5 + np.random.randn(len(x))
+
+   df = pd.DataFrame({'x': x, 'y': y})
+
+   chart = alt.Chart(df).mark_point().encode(
+       x='x',
+       y='y'
+   )
+
+   chart + chart.transform_regression('x', 'y').mark_line()
+
+Transform Options
+^^^^^^^^^^^^^^^^^
+The :meth:`~Chart.transform_regression` method is built on the :class:`~RegressionTransform`
+class, which has the following options:
+
+.. altair-object-table:: altair.RegressionTransform
 
 .. _user-guide-sample-transform:
 
