@@ -36,11 +36,11 @@ def test_myschema_decorator():
     assert myschema.to_dict() == {'a': {'foo': 'bar'}, 'b': ['foo', 'bar']}
 
     assert MySchema.__doc__.startswith('MySchema schema wrapper')
-    argspec = inspect.getargspec(MySchema.__init__)
+    argspec = inspect.getfullargspec(MySchema.__init__)
     assert argspec.args == ['self', 'a' ,'b', 'a2', 'b2', 'c', 'd']
     assert argspec.defaults == 6 * (Undefined,)
     assert argspec.varargs is None
-    assert argspec.keywords == 'kwds'
+    assert argspec.varkw == 'kwds'
 
 
 def test_stringarray_decorator():
@@ -51,7 +51,7 @@ def test_stringarray_decorator():
     assert arr.to_dict() == ['a', 'b', 'c']
 
     assert arr.__doc__.startswith('StringArray schema wrapper')
-    argspec = inspect.getargspec(StringArray.__init__)
+    argspec = inspect.getfullargspec(StringArray.__init__)
     assert argspec.args == ['self']
     assert argspec.varargs == 'args'
-    assert argspec.keywords is None
+    assert argspec.varkw is None
