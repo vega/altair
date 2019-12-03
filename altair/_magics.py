@@ -118,7 +118,7 @@ def vega(line, cell):
             raise ValueError("%%vega: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:
-        spec = yaml.load(cell)
+        spec = yaml.load(cell, Loader=yaml.FullLoader)
 
     if data:
         spec['data'] = []
@@ -163,7 +163,7 @@ def vegalite(line, cell):
             raise ValueError("%%vegalite: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:
-        spec = yaml.load(cell)
+        spec = yaml.load(cell, Loader=yaml.FullLoader)
 
     if args.data is not None:
         data = _get_variable(args.data)

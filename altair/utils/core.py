@@ -1,7 +1,7 @@
 """
 Utility routines
 """
-import collections
+from collections.abc import Mapping
 from copy import deepcopy
 import json
 import itertools
@@ -454,9 +454,9 @@ def update_nested(original, update, copy=False):
     if copy:
         original = deepcopy(original)
     for key, val in update.items():
-        if isinstance(val, collections.Mapping):
+        if isinstance(val, Mapping):
             orig_val = original.get(key, {})
-            if isinstance(orig_val, collections.Mapping):
+            if isinstance(orig_val, Mapping):
                 original[key] = update_nested(orig_val, val)
             else:
                 original[key] = val
