@@ -568,8 +568,7 @@ def test_LookupData():
     df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
     lookup = alt.LookupData(data=df, key='x')
 
-    with alt.data_transformers.enable(consolidate_datasets=False):
-        dct = lookup.to_dict()
+    dct = lookup.to_dict()
     assert dct['key'] == 'x'
     assert dct['data'] == {'values': [{'x': 1, 'y': 4},
                                       {'x': 2, 'y': 5},

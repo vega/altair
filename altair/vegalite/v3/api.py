@@ -63,7 +63,7 @@ def _consolidate_data(data, context):
     return data
 
 
-def _prepare_data(data, context):
+def _prepare_data(data, context=None):
     """Convert input data to data for use within schema
 
     Parameters
@@ -71,7 +71,7 @@ def _prepare_data(data, context):
     data :
         The input dataset in the form of a DataFrame, dictionary, altair data
         object, or other type that is recognized by the data transformers.
-    context : dict
+    context : dict (optional)
         The to_dict context in which the data is being prepared. This is used
         to keep track of information that needs to be passed up and down the
         recursive serialization routine, such as global named datasets.
@@ -88,7 +88,7 @@ def _prepare_data(data, context):
         data = core.UrlData(data)
 
     # consolidate inline data to top-level datasets
-    if data_transformers.consolidate_datasets:
+    if context is not None and data_transformers.consolidate_datasets:
         data = _consolidate_data(data, context)
 
     # if data is still not a recognized type, then return
@@ -107,8 +107,7 @@ class LookupData(core.LookupData):
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
         copy = self.copy(deep=False)
-        context = kwargs.get('context', {})
-        copy.data = _prepare_data(copy.data, context)
+        copy.data = _prepare_data(copy.data, kwargs.get('context'))
         return super(LookupData, copy).to_dict(*args, **kwargs)
 
 
