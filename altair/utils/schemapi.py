@@ -492,11 +492,11 @@ class _FromDict(object):
             return args[0] if args else kwds
 
         if cls is None:
-            # If there are multiple matches, we use the last one in the dict.
+            # If there are multiple matches, we use the first one in the dict.
             # Our class dict is constructed breadth-first from top to bottom,
-            # so the last class that matches is the most specific.
+            # so the first class that matches is the most general match.
             matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[-1] if matches else _passthrough
+            cls = matches[0] if matches else _passthrough
         schema = _resolve_references(schema, rootschema)
 
         if 'anyOf' in schema or 'oneOf' in schema:
