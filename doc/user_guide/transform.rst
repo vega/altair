@@ -1045,6 +1045,35 @@ Here is an example, using Olympic medals data:
        y='country:N',
    )
 
+The pivot transform, when combined with other elements of the Altair grammar, enables some
+very interesting chart types. For example, here we use pivot to create a single tooltip for
+values on multiple lines:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+   
+   source = data.stocks()
+   base = alt.Chart(source).encode(x='date:T')
+   columns = sorted(source.symbol.unique())
+   selection = alt.selection_single(
+       fields=['date'], nearest=True, on='mouseover', empty='none', clear='mouseout'
+   )
+   
+   lines = base.mark_line().encode(y='price:Q', color='symbol:N')
+   points = lines.mark_point().transform_filter(selection)
+   
+   rule = base.transform_pivot(
+       'symbol', value='price', groupby=['date']
+   ).mark_rule().encode(
+       opacity=alt.condition(selection, alt.value(0.3), alt.value(0)),
+       tooltip=[alt.Tooltip(c, type='quantitative') for c in columns]
+   ).add_selection(selection)
+   
+   lines + points + rule
+
+
 Transform Options
 ^^^^^^^^^^^^^^^^^
 The :meth:`~Chart.transform_pivot` method is built on the :class:`~PivotTransform`
