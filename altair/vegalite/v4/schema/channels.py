@@ -4564,7 +4564,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    impute : :class:`ImputeParams`
+    impute : anyOf(:class:`ImputeParams`, None)
         An object defining the properties of the Impute Operation to be applied.
         The field value of the other positional channel is taken as ``key`` of the
         ``Impute`` Operation.
@@ -5190,7 +5190,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    impute : :class:`ImputeParams`
+    impute : anyOf(:class:`ImputeParams`, None)
         An object defining the properties of the Impute Operation to be applied.
         The field value of the other positional channel is taken as ``key`` of the
         ``Impute`` Operation.

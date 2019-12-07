@@ -617,30 +617,23 @@ class Axis(VegaLiteSchema):
         **Default value:** ``true`` for `continuous scales
         <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ that are not
         binned; otherwise, ``false``.
-    gridColor : anyOf(anyOf(None, :class:`Color`),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null`)
+    gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ConditionalAxisColor`)
 
-    gridDash : anyOf(List(float),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined927251285undefined927251285null`)
+    gridDash : anyOf(List(float), :class:`ConditionalAxisNumberArray`)
 
-    gridDashOffset : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null`)
+    gridDashOffset : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    gridOpacity : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined702672441undefined702672441null`)
+    gridOpacity : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    gridWidth : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined742391737undefined742391737null`)
+    gridWidth : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    labelAlign : anyOf(:class:`Align`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null`)
+    labelAlign : anyOf(:class:`Align`, :class:`ConditionalAxisNumber`)
 
     labelAngle : float
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : anyOf(:class:`TextBaseline`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null`)
+    labelBaseline : anyOf(:class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`)
 
     labelBound : anyOf(float, boolean)
         Indicates if labels should be hidden if they exceed the axis range. If ``false``
@@ -650,8 +643,7 @@ class Axis(VegaLiteSchema):
         bounding box may exceed the axis range.
 
         **Default value:** ``false``.
-    labelColor : anyOf(anyOf(None, :class:`Color`),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null`)
+    labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ConditionalAxisColor`)
 
     labelExpr : string
         `Vega expression <https://vega.github.io/vega/docs/expressions/>`__ for customizing
@@ -677,24 +669,19 @@ class Axis(VegaLiteSchema):
         corresponding axis ticks.
 
         **Default value:** ``0``.
-    labelFont : anyOf(string,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null`)
+    labelFont : anyOf(string, :class:`ConditionalAxisString`)
 
-    labelFontSize : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined720879958undefined720879958null`)
+    labelFontSize : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    labelFontStyle : anyOf(:class:`FontStyle`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null`)
+    labelFontStyle : anyOf(:class:`FontStyle`, :class:`ConditionalAxisLabelFontStyle`)
 
-    labelFontWeight : anyOf(:class:`FontWeight`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null`)
+    labelFontWeight : anyOf(:class:`FontWeight`, :class:`ConditionalAxisLabelFontWeight`)
 
     labelLimit : float
         Maximum allowed pixel width of axis tick labels.
 
         **Default value:** ``180``
-    labelOpacity : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined377890894undefined377890894null`)
+    labelOpacity : anyOf(float, :class:`ConditionalAxisNumber`)
 
     labelOverlap : :class:`LabelOverlap`
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
@@ -750,18 +737,18 @@ class Axis(VegaLiteSchema):
     tickBand : enum('center', 'extent')
         For band scales, indicates if ticks and grid lines should be placed at the center of
         a band (default) or at the band extents to indicate intervals.
-    tickColor : anyOf(anyOf(None, :class:`Color`),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null`)
+    tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ConditionalAxisColor`)
 
     tickCount : float
         A desired number of ticks, for axes visualizing quantitative scales. The resulting
         number may be different so that values are "nice" (multiples of 2, 5, 10) and lie
         within the underlying scale's range.
-    tickDash : anyOf(List(float),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined105503503undefined105503503null`)
 
-    tickDashOffset : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined61636408undefined61636408null`)
+        **Default value** : Determine using a formula ``ceil(width/40)`` for x and
+        ``ceil(height/40)`` for y.
+    tickDash : anyOf(List(float), :class:`ConditionalAxisNumberArray`)
+
+    tickDashOffset : anyOf(float, :class:`ConditionalAxisNumber`)
 
     tickExtra : boolean
         Boolean flag indicating if an extra axis tick should be added for the initial
@@ -777,8 +764,7 @@ class Axis(VegaLiteSchema):
         **Default value** : ``undefined``
     tickOffset : float
         Position offset in pixels to apply to ticks, labels, and gridlines.
-    tickOpacity : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null`)
+    tickOpacity : anyOf(float, :class:`ConditionalAxisNumber`)
 
     tickRound : boolean
         Boolean flag indicating if pixel position values should be rounded to the nearest
@@ -789,8 +775,7 @@ class Axis(VegaLiteSchema):
         The size in pixels of axis ticks.
 
         **Default value:** ``5``
-    tickWidth : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null`)
+    tickWidth : anyOf(float, :class:`ConditionalAxisNumber`)
 
     ticks : boolean
         Boolean value that determines whether the axis should include ticks.
@@ -954,30 +939,23 @@ class AxisConfig(VegaLiteSchema):
         **Default value:** ``true`` for `continuous scales
         <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ that are not
         binned; otherwise, ``false``.
-    gridColor : anyOf(anyOf(None, :class:`Color`),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null`)
+    gridColor : anyOf(anyOf(None, :class:`Color`), :class:`ConditionalAxisColor`)
 
-    gridDash : anyOf(List(float),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined927251285undefined927251285null`)
+    gridDash : anyOf(List(float), :class:`ConditionalAxisNumberArray`)
 
-    gridDashOffset : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null`)
+    gridDashOffset : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    gridOpacity : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined702672441undefined702672441null`)
+    gridOpacity : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    gridWidth : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined742391737undefined742391737null`)
+    gridWidth : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    labelAlign : anyOf(:class:`Align`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null`)
+    labelAlign : anyOf(:class:`Align`, :class:`ConditionalAxisNumber`)
 
     labelAngle : float
         The rotation angle of the axis labels.
 
         **Default value:** ``-90`` for nominal and ordinal fields; ``0`` otherwise.
-    labelBaseline : anyOf(:class:`TextBaseline`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null`)
+    labelBaseline : anyOf(:class:`TextBaseline`, :class:`ConditionalAxisLabelBaseline`)
 
     labelBound : anyOf(float, boolean)
         Indicates if labels should be hidden if they exceed the axis range. If ``false``
@@ -987,8 +965,7 @@ class AxisConfig(VegaLiteSchema):
         bounding box may exceed the axis range.
 
         **Default value:** ``false``.
-    labelColor : anyOf(anyOf(None, :class:`Color`),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null`)
+    labelColor : anyOf(anyOf(None, :class:`Color`), :class:`ConditionalAxisColor`)
 
     labelFlush : anyOf(boolean, float)
         Indicates if the first and last axis labels should be aligned flush with the scale
@@ -1008,24 +985,19 @@ class AxisConfig(VegaLiteSchema):
         corresponding axis ticks.
 
         **Default value:** ``0``.
-    labelFont : anyOf(string,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null`)
+    labelFont : anyOf(string, :class:`ConditionalAxisString`)
 
-    labelFontSize : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined720879958undefined720879958null`)
+    labelFontSize : anyOf(float, :class:`ConditionalAxisNumber`)
 
-    labelFontStyle : anyOf(:class:`FontStyle`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null`)
+    labelFontStyle : anyOf(:class:`FontStyle`, :class:`ConditionalAxisLabelFontStyle`)
 
-    labelFontWeight : anyOf(:class:`FontWeight`,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null`)
+    labelFontWeight : anyOf(:class:`FontWeight`, :class:`ConditionalAxisLabelFontWeight`)
 
     labelLimit : float
         Maximum allowed pixel width of axis tick labels.
 
         **Default value:** ``180``
-    labelOpacity : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined377890894undefined377890894null`)
+    labelOpacity : anyOf(float, :class:`ConditionalAxisNumber`)
 
     labelOverlap : :class:`LabelOverlap`
         The strategy to use for resolving overlap of axis labels. If ``false`` (the
@@ -1065,21 +1037,14 @@ class AxisConfig(VegaLiteSchema):
         a y-axis oriented towards the right edge of the chart).
 
         **Default value:** ``"bottom"`` for x-axes and ``"left"`` for y-axes.
-    shortTimeLabels : boolean
-        Whether month names and weekday names should be abbreviated.
-
-        **Default value:**  ``false``
     tickBand : enum('center', 'extent')
         For band scales, indicates if ticks and grid lines should be placed at the center of
         a band (default) or at the band extents to indicate intervals.
-    tickColor : anyOf(anyOf(None, :class:`Color`),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null`)
+    tickColor : anyOf(anyOf(None, :class:`Color`), :class:`ConditionalAxisColor`)
 
-    tickDash : anyOf(List(float),
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined105503503undefined105503503null`)
+    tickDash : anyOf(List(float), :class:`ConditionalAxisNumberArray`)
 
-    tickDashOffset : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined61636408undefined61636408null`)
+    tickDashOffset : anyOf(float, :class:`ConditionalAxisNumber`)
 
     tickExtra : boolean
         Boolean flag indicating if an extra axis tick should be added for the initial
@@ -1088,8 +1053,7 @@ class AxisConfig(VegaLiteSchema):
         conjunction with ``"bandPosition": 1`` and an axis ``"padding"`` value of ``0``.
     tickOffset : float
         Position offset in pixels to apply to ticks, labels, and gridlines.
-    tickOpacity : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null`)
+    tickOpacity : anyOf(float, :class:`ConditionalAxisNumber`)
 
     tickRound : boolean
         Boolean flag indicating if pixel position values should be rounded to the nearest
@@ -1100,8 +1064,7 @@ class AxisConfig(VegaLiteSchema):
         The size in pixels of axis ticks.
 
         **Default value:** ``5``
-    tickWidth : anyOf(float,
-    :class:`ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null`)
+    tickWidth : anyOf(float, :class:`ConditionalAxisNumber`)
 
     ticks : boolean
         Boolean value that determines whether the axis should include ticks.
@@ -1159,15 +1122,15 @@ class AxisConfig(VegaLiteSchema):
                  labelFontStyle=Undefined, labelFontWeight=Undefined, labelLimit=Undefined,
                  labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined,
                  labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined,
-                 orient=Undefined, shortTimeLabels=Undefined, tickBand=Undefined, tickColor=Undefined,
-                 tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined,
-                 tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined,
-                 tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined,
-                 titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
-                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
-                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
-                 titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined,
-                 titleX=Undefined, titleY=Undefined, translate=Undefined, **kwds):
+                 orient=Undefined, tickBand=Undefined, tickColor=Undefined, tickDash=Undefined,
+                 tickDashOffset=Undefined, tickExtra=Undefined, tickOffset=Undefined,
+                 tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined,
+                 ticks=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined,
+                 titleAngle=Undefined, titleBaseline=Undefined, titleColor=Undefined,
+                 titleFont=Undefined, titleFontSize=Undefined, titleFontStyle=Undefined,
+                 titleFontWeight=Undefined, titleLimit=Undefined, titleLineHeight=Undefined,
+                 titleOpacity=Undefined, titlePadding=Undefined, titleX=Undefined, titleY=Undefined,
+                 translate=Undefined, **kwds):
         super(AxisConfig, self).__init__(bandPosition=bandPosition, domain=domain,
                                          domainColor=domainColor, domainDash=domainDash,
                                          domainDashOffset=domainDashOffset, domainOpacity=domainOpacity,
@@ -1183,19 +1146,19 @@ class AxisConfig(VegaLiteSchema):
                                          labelOpacity=labelOpacity, labelOverlap=labelOverlap,
                                          labelPadding=labelPadding, labelSeparation=labelSeparation,
                                          labels=labels, maxExtent=maxExtent, minExtent=minExtent,
-                                         orient=orient, shortTimeLabels=shortTimeLabels,
-                                         tickBand=tickBand, tickColor=tickColor, tickDash=tickDash,
-                                         tickDashOffset=tickDashOffset, tickExtra=tickExtra,
-                                         tickOffset=tickOffset, tickOpacity=tickOpacity,
-                                         tickRound=tickRound, tickSize=tickSize, tickWidth=tickWidth,
-                                         ticks=ticks, title=title, titleAlign=titleAlign,
-                                         titleAnchor=titleAnchor, titleAngle=titleAngle,
-                                         titleBaseline=titleBaseline, titleColor=titleColor,
-                                         titleFont=titleFont, titleFontSize=titleFontSize,
-                                         titleFontStyle=titleFontStyle, titleFontWeight=titleFontWeight,
-                                         titleLimit=titleLimit, titleLineHeight=titleLineHeight,
-                                         titleOpacity=titleOpacity, titlePadding=titlePadding,
-                                         titleX=titleX, titleY=titleY, translate=translate, **kwds)
+                                         orient=orient, tickBand=tickBand, tickColor=tickColor,
+                                         tickDash=tickDash, tickDashOffset=tickDashOffset,
+                                         tickExtra=tickExtra, tickOffset=tickOffset,
+                                         tickOpacity=tickOpacity, tickRound=tickRound,
+                                         tickSize=tickSize, tickWidth=tickWidth, ticks=ticks,
+                                         title=title, titleAlign=titleAlign, titleAnchor=titleAnchor,
+                                         titleAngle=titleAngle, titleBaseline=titleBaseline,
+                                         titleColor=titleColor, titleFont=titleFont,
+                                         titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
+                                         titleFontWeight=titleFontWeight, titleLimit=titleLimit,
+                                         titleLineHeight=titleLineHeight, titleOpacity=titleOpacity,
+                                         titlePadding=titlePadding, titleX=titleX, titleY=titleY,
+                                         translate=translate, **kwds)
 
 
 class AxisOrient(VegaLiteSchema):
@@ -1515,8 +1478,8 @@ class BaseMarkConfig(VegaLiteSchema):
                                              width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
-class BaseTitleNoSignals(VegaLiteSchema):
-    """BaseTitleNoSignals schema wrapper
+class BaseTitleNoValueRefs(VegaLiteSchema):
+    """BaseTitleNoValueRefs schema wrapper
 
     Mapping(required=[])
 
@@ -1583,7 +1546,7 @@ class BaseTitleNoSignals(VegaLiteSchema):
     subtitlePadding : float
         The padding in pixels between title and subtitle text.
     """
-    _schema = {'$ref': '#/definitions/BaseTitleNoSignals'}
+    _schema = {'$ref': '#/definitions/BaseTitleNoValueRefs'}
     _rootschema = Root._schema
 
     def __init__(self, align=Undefined, anchor=Undefined, angle=Undefined, baseline=Undefined,
@@ -1593,17 +1556,18 @@ class BaseTitleNoSignals(VegaLiteSchema):
                  subtitleFont=Undefined, subtitleFontSize=Undefined, subtitleFontStyle=Undefined,
                  subtitleFontWeight=Undefined, subtitleLineHeight=Undefined, subtitlePadding=Undefined,
                  **kwds):
-        super(BaseTitleNoSignals, self).__init__(align=align, anchor=anchor, angle=angle,
-                                                 baseline=baseline, color=color, dx=dx, dy=dy,
-                                                 font=font, fontSize=fontSize, fontStyle=fontStyle,
-                                                 fontWeight=fontWeight, frame=frame, limit=limit,
-                                                 lineHeight=lineHeight, offset=offset, orient=orient,
-                                                 subtitleColor=subtitleColor, subtitleFont=subtitleFont,
-                                                 subtitleFontSize=subtitleFontSize,
-                                                 subtitleFontStyle=subtitleFontStyle,
-                                                 subtitleFontWeight=subtitleFontWeight,
-                                                 subtitleLineHeight=subtitleLineHeight,
-                                                 subtitlePadding=subtitlePadding, **kwds)
+        super(BaseTitleNoValueRefs, self).__init__(align=align, anchor=anchor, angle=angle,
+                                                   baseline=baseline, color=color, dx=dx, dy=dy,
+                                                   font=font, fontSize=fontSize, fontStyle=fontStyle,
+                                                   fontWeight=fontWeight, frame=frame, limit=limit,
+                                                   lineHeight=lineHeight, offset=offset, orient=orient,
+                                                   subtitleColor=subtitleColor,
+                                                   subtitleFont=subtitleFont,
+                                                   subtitleFontSize=subtitleFontSize,
+                                                   subtitleFontStyle=subtitleFontStyle,
+                                                   subtitleFontWeight=subtitleFontWeight,
+                                                   subtitleLineHeight=subtitleLineHeight,
+                                                   subtitlePadding=subtitlePadding, **kwds)
 
 
 class BinExtent(VegaLiteSchema):
@@ -1735,6 +1699,8 @@ class BindRadioSelect(Binding):
 
     element : :class:`Element`
 
+    labels : List(string)
+
     name : string
 
     type : string
@@ -1744,9 +1710,10 @@ class BindRadioSelect(Binding):
     _rootschema = Root._schema
 
     def __init__(self, input=Undefined, options=Undefined, debounce=Undefined, element=Undefined,
-                 name=Undefined, type=Undefined, **kwds):
+                 labels=Undefined, name=Undefined, type=Undefined, **kwds):
         super(BindRadioSelect, self).__init__(input=input, options=options, debounce=debounce,
-                                              element=element, name=name, type=type, **kwds)
+                                              element=element, labels=labels, name=name, type=type,
+                                              **kwds)
 
 
 class BindRange(Binding):
@@ -2139,6 +2106,32 @@ class ColorName(Color):
         super(ColorName, self).__init__(*args)
 
 
+class ColorScheme(VegaLiteSchema):
+    """ColorScheme schema wrapper
+
+    anyOf(:class:`Categorical`, :class:`SequentialSingleHue`, :class:`SequentialMultiHue`,
+    :class:`Diverging`, :class:`Cyclical`)
+    """
+    _schema = {'$ref': '#/definitions/ColorScheme'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(ColorScheme, self).__init__(*args, **kwds)
+
+
+class Categorical(ColorScheme):
+    """Categorical schema wrapper
+
+    enum('accent', 'category10', 'category20', 'category20b', 'category20c', 'dark2', 'paired',
+    'pastel1', 'pastel2', 'set1', 'set2', 'set3', 'tableau10', 'tableau20')
+    """
+    _schema = {'$ref': '#/definitions/Categorical'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(Categorical, self).__init__(*args)
+
+
 class CompositeMark(AnyMark):
     """CompositeMark schema wrapper
 
@@ -2286,490 +2279,306 @@ class CompositionConfig(VegaLiteSchema):
         super(CompositionConfig, self).__init__(columns=columns, spacing=spacing, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null
-    schema wrapper
+class ConditionalAxisColor(VegaLiteSchema):
+    """ConditionalAxisColor schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null`))
+    condition : anyOf(:class:`ConditionalPredicateValueDefColornull`,
+    List(:class:`ConditionalPredicateValueDefColornull`))
 
-    value : anyOf(:class:`Align`, None)
+    value : anyOf(:class:`Color`, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisColor'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null, self).__init__(condition=condition,
-                                                                                                                                                                              value=value,
-                                                                                                                                                                              **kwds)
+        super(ConditionalAxisColor, self).__init__(condition=condition, value=value, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null
-    schema wrapper
+class ConditionalAxisLabelBaseline(VegaLiteSchema):
+    """ConditionalAxisLabelBaseline schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null`))
+    condition : anyOf(:class:`ConditionalPredicateValueDefTextBaselinenull`,
+    List(:class:`ConditionalPredicateValueDefTextBaselinenull`))
 
     value : anyOf(:class:`TextBaseline`, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisLabelBaseline'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null, self).__init__(condition=condition,
-                                                                                                                                                                              value=value,
-                                                                                                                                                                              **kwds)
+        super(ConditionalAxisLabelBaseline, self).__init__(condition=condition, value=value, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null
-    schema wrapper
+class ConditionalAxisLabelFontStyle(VegaLiteSchema):
+    """ConditionalAxisLabelFontStyle schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null`))
-
-    value : anyOf(:class:`FontWeight`, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null, self).__init__(condition=condition,
-                                                                                                                                                                                value=value,
-                                                                                                                                                                                **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null`))
+    condition : anyOf(:class:`ConditionalPredicateValueDefFontStylenull`,
+    List(:class:`ConditionalPredicateValueDefFontStylenull`))
 
     value : anyOf(:class:`FontStyle`, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisLabelFontStyle'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null, self).__init__(condition=condition,
-                                                                                                                                                                              value=value,
-                                                                                                                                                                              **kwds)
+        super(ConditionalAxisLabelFontStyle, self).__init__(condition=condition, value=value, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null
-    schema wrapper
+class ConditionalAxisLabelFontWeight(VegaLiteSchema):
+    """ConditionalAxisLabelFontWeight schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null`))
+    condition : anyOf(:class:`ConditionalPredicateValueDefFontWeightnull`,
+    List(:class:`ConditionalPredicateValueDefFontWeightnull`))
 
-    value : anyOf(anyOf(None, :class:`Color`), None)
+    value : anyOf(:class:`FontWeight`, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisLabelFontWeight'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null, self).__init__(condition=condition,
-                                                                                                                                                                                     value=value,
-                                                                                                                                                                                     **kwds)
+        super(ConditionalAxisLabelFontWeight, self).__init__(condition=condition, value=value, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null
-    schema wrapper
+class ConditionalAxisNumber(VegaLiteSchema):
+    """ConditionalAxisNumber schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null`))
+    condition : anyOf(:class:`ConditionalPredicateValueDefnumbernull`,
+    List(:class:`ConditionalPredicateValueDefnumbernull`))
 
-    value : anyOf(anyOf(None, :class:`Color`), None)
+    value : anyOf(float, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisNumber'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null, self).__init__(condition=condition,
-                                                                                                                                                                                     value=value,
-                                                                                                                                                                                     **kwds)
+        super(ConditionalAxisNumber, self).__init__(condition=condition, value=value, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null
-    schema wrapper
+class ConditionalAxisNumberArray(VegaLiteSchema):
+    """ConditionalAxisNumberArray schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null`))
-
-    value : anyOf(anyOf(None, :class:`Color`), None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null, self).__init__(condition=condition,
-                                                                                                                                                                                   value=value,
-                                                                                                                                                                                   **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined105503503undefined105503503null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined105503503undefined105503503null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined105503503undefined105503503null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined105503503undefined105503503null`))
+    condition : anyOf(:class:`ConditionalPredicateValueDefnumbernull`,
+    List(:class:`ConditionalPredicateValueDefnumbernull`))
 
     value : anyOf(List(float), None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisNumberArray'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined105503503undefined105503503null, self).__init__(condition=condition,
-                                                                                                                                            value=value,
-                                                                                                                                            **kwds)
+        super(ConditionalAxisNumberArray, self).__init__(condition=condition, value=value, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null
-    schema wrapper
+class ConditionalAxisPropertyColornull(VegaLiteSchema):
+    """ConditionalAxisPropertyColornull schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null`))
+    condition : anyOf(:class:`ConditionalPredicateValueDefColornull`,
+    List(:class:`ConditionalPredicateValueDefColornull`))
+
+    value : anyOf(:class:`Color`, None)
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(Color|null)>'}
+    _rootschema = Root._schema
+
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ConditionalAxisPropertyColornull, self).__init__(condition=condition, value=value, **kwds)
+
+
+class ConditionalAxisPropertyFontStylenull(VegaLiteSchema):
+    """ConditionalAxisPropertyFontStylenull schema wrapper
+
+    Mapping(required=[condition, value])
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalPredicateValueDefFontStylenull`,
+    List(:class:`ConditionalPredicateValueDefFontStylenull`))
+
+    value : anyOf(:class:`FontStyle`, None)
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(FontStyle|null)>'}
+    _rootschema = Root._schema
+
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ConditionalAxisPropertyFontStylenull, self).__init__(condition=condition, value=value,
+                                                                   **kwds)
+
+
+class ConditionalAxisPropertyFontWeightnull(VegaLiteSchema):
+    """ConditionalAxisPropertyFontWeightnull schema wrapper
+
+    Mapping(required=[condition, value])
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalPredicateValueDefFontWeightnull`,
+    List(:class:`ConditionalPredicateValueDefFontWeightnull`))
+
+    value : anyOf(:class:`FontWeight`, None)
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(FontWeight|null)>'}
+    _rootschema = Root._schema
+
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ConditionalAxisPropertyFontWeightnull, self).__init__(condition=condition, value=value,
+                                                                    **kwds)
+
+
+class ConditionalAxisPropertyTextBaselinenull(VegaLiteSchema):
+    """ConditionalAxisPropertyTextBaselinenull schema wrapper
+
+    Mapping(required=[condition, value])
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalPredicateValueDefTextBaselinenull`,
+    List(:class:`ConditionalPredicateValueDefTextBaselinenull`))
+
+    value : anyOf(:class:`TextBaseline`, None)
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(TextBaseline|null)>'}
+    _rootschema = Root._schema
+
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ConditionalAxisPropertyTextBaselinenull, self).__init__(condition=condition, value=value,
+                                                                      **kwds)
+
+
+class ConditionalAxisPropertynumbernull(VegaLiteSchema):
+    """ConditionalAxisPropertynumbernull schema wrapper
+
+    Mapping(required=[condition, value])
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalPredicateValueDefnumbernull`,
+    List(:class:`ConditionalPredicateValueDefnumbernull`))
 
     value : anyOf(float, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(number|null)>'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null, self).__init__(condition=condition,
-                                                                                                                                              value=value,
-                                                                                                                                              **kwds)
+        super(ConditionalAxisPropertynumbernull, self).__init__(condition=condition, value=value, **kwds)
 
 
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null
-    schema wrapper
+class ConditionalAxisPropertystringnull(VegaLiteSchema):
+    """ConditionalAxisPropertystringnull schema wrapper
 
     Mapping(required=[condition, value])
 
     Attributes
     ----------
 
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null`))
-
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null, self).__init__(condition=condition,
-                                                                                                                                              value=value,
-                                                                                                                                              **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null`))
-
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null, self).__init__(condition=condition,
-                                                                                                                                              value=value,
-                                                                                                                                              **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined377890894undefined377890894null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined377890894undefined377890894null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined377890894undefined377890894null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined377890894undefined377890894null`))
-
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined377890894undefined377890894null, self).__init__(condition=condition,
-                                                                                                                                            value=value,
-                                                                                                                                            **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined61636408undefined61636408null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined61636408undefined61636408null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined61636408undefined61636408null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined61636408undefined61636408null`))
-
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined61636408undefined61636408null, self).__init__(condition=condition,
-                                                                                                                                          value=value,
-                                                                                                                                          **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined702672441undefined702672441null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined702672441undefined702672441null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined702672441undefined702672441null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined702672441undefined702672441null`))
-
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined702672441undefined702672441null, self).__init__(condition=condition,
-                                                                                                                                            value=value,
-                                                                                                                                            **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined720879958undefined720879958null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined720879958undefined720879958null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined720879958undefined720879958null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined720879958undefined720879958null`))
-
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined720879958undefined720879958null, self).__init__(condition=condition,
-                                                                                                                                            value=value,
-                                                                                                                                            **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined742391737undefined742391737null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined742391737undefined742391737null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined742391737undefined742391737null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined742391737undefined742391737null`))
-
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined742391737undefined742391737null, self).__init__(condition=condition,
-                                                                                                                                            value=value,
-                                                                                                                                            **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined927251285undefined927251285null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined927251285undefined927251285null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined927251285undefined927251285null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined927251285undefined927251285null`))
-
-    value : anyOf(List(float), None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>'}
-    _rootschema = Root._schema
-
-    def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined927251285undefined927251285null, self).__init__(condition=condition,
-                                                                                                                                            value=value,
-                                                                                                                                            **kwds)
-
-
-class ConditionalAxisPropertyalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null(VegaLiteSchema):
-    """ConditionalAxisPropertyalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null
-    schema wrapper
-
-    Mapping(required=[condition, value])
-
-    Attributes
-    ----------
-
-    condition :
-    anyOf(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null`,
-    List(:class:`ConditionalPredicateValueDefalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null`))
+    condition : anyOf(:class:`ConditionalPredicateStringValueDef`,
+    List(:class:`ConditionalPredicateStringValueDef`))
 
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>'}
+    _schema = {'$ref': '#/definitions/ConditionalAxisProperty<(string|null)>'}
     _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
-        super(ConditionalAxisPropertyalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null, self).__init__(condition=condition,
-                                                                                                                                              value=value,
-                                                                                                                                              **kwds)
+        super(ConditionalAxisPropertystringnull, self).__init__(condition=condition, value=value, **kwds)
+
+
+class ConditionalAxisString(VegaLiteSchema):
+    """ConditionalAxisString schema wrapper
+
+    Mapping(required=[condition, value])
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalPredicateStringValueDef`,
+    List(:class:`ConditionalPredicateStringValueDef`))
+
+    value : anyOf(string, None)
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _schema = {'$ref': '#/definitions/ConditionalAxisString'}
+    _rootschema = Root._schema
+
+    def __init__(self, condition=Undefined, value=Undefined, **kwds):
+        super(ConditionalAxisString, self).__init__(condition=condition, value=value, **kwds)
 
 
 class ConditionalMarkPropFieldDef(VegaLiteSchema):
@@ -3228,9 +3037,8 @@ class ConditionalPredicateNumberValueDef(ConditionalNumberValueDef):
         super(ConditionalPredicateNumberValueDef, self).__init__(test=test, value=value, **kwds)
 
 
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null
-    schema wrapper
+class ConditionalPredicateValueDefColornull(VegaLiteSchema):
+    """ConditionalPredicateValueDefColornull schema wrapper
 
     Mapping(required=[test, value])
 
@@ -3239,73 +3047,20 @@ class ConditionalPredicateValueDefalias72493180067988681037249318000208413defali
 
     test : :class:`LogicalOperandPredicate`
         Predicate for triggering the condition
-    value : anyOf(:class:`Align`, None)
+    value : anyOf(:class:`Color`, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>>'}
+    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(Color|null)>>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null, self).__init__(test=test,
-                                                                                                                                                                                   value=value,
-                                                                                                                                                                                   **kwds)
+        super(ConditionalPredicateValueDefColornull, self).__init__(test=test, value=value, **kwds)
 
 
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(:class:`TextBaseline`, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null, self).__init__(test=test,
-                                                                                                                                                                                   value=value,
-                                                                                                                                                                                   **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(:class:`FontWeight`, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null, self).__init__(test=test,
-                                                                                                                                                                                     value=value,
-                                                                                                                                                                                     **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null
-    schema wrapper
+class ConditionalPredicateValueDefFontStylenull(VegaLiteSchema):
+    """ConditionalPredicateValueDefFontStylenull schema wrapper
 
     Mapping(required=[test, value])
 
@@ -3319,18 +3074,15 @@ class ConditionalPredicateValueDefalias72493180067988681037249318000208413defali
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>>'}
+    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(FontStyle|null)>>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null, self).__init__(test=test,
-                                                                                                                                                                                   value=value,
-                                                                                                                                                                                   **kwds)
+        super(ConditionalPredicateValueDefFontStylenull, self).__init__(test=test, value=value, **kwds)
 
 
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null
-    schema wrapper
+class ConditionalPredicateValueDefFontWeightnull(VegaLiteSchema):
+    """ConditionalPredicateValueDefFontWeightnull schema wrapper
 
     Mapping(required=[test, value])
 
@@ -3339,23 +3091,20 @@ class ConditionalPredicateValueDefalias72493180067988681037249318000208413nullde
 
     test : :class:`LogicalOperandPredicate`
         Predicate for triggering the condition
-    value : anyOf(anyOf(None, :class:`Color`), None)
+    value : anyOf(:class:`FontWeight`, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>>'}
+    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(FontWeight|null)>>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null, self).__init__(test=test,
-                                                                                                                                                                                          value=value,
-                                                                                                                                                                                          **kwds)
+        super(ConditionalPredicateValueDefFontWeightnull, self).__init__(test=test, value=value, **kwds)
 
 
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null
-    schema wrapper
+class ConditionalPredicateValueDefTextBaselinenull(VegaLiteSchema):
+    """ConditionalPredicateValueDefTextBaselinenull schema wrapper
 
     Mapping(required=[test, value])
 
@@ -3364,73 +3113,21 @@ class ConditionalPredicateValueDefalias72493180067988681037249318000208413nullde
 
     test : :class:`LogicalOperandPredicate`
         Predicate for triggering the condition
-    value : anyOf(anyOf(None, :class:`Color`), None)
+    value : anyOf(:class:`TextBaseline`, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>>'}
+    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(TextBaseline|null)>>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null, self).__init__(test=test,
-                                                                                                                                                                                          value=value,
-                                                                                                                                                                                          **kwds)
+        super(ConditionalPredicateValueDefTextBaselinenull, self).__init__(test=test, value=value,
+                                                                           **kwds)
 
 
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(anyOf(None, :class:`Color`), None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null, self).__init__(test=test,
-                                                                                                                                                                                        value=value,
-                                                                                                                                                                                        **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined105503503undefined105503503null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined105503503undefined105503503null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(List(float), None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined105503503undefined105503503null, self).__init__(test=test,
-                                                                                                                                                 value=value,
-                                                                                                                                                 **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null
-    schema wrapper
+class ConditionalPredicateValueDefnumbernull(VegaLiteSchema):
+    """ConditionalPredicateValueDefnumbernull schema wrapper
 
     Mapping(required=[test, value])
 
@@ -3444,238 +3141,11 @@ class ConditionalPredicateValueDefalias72493180067988681037249318000208413number
         definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
         values between ``0`` to ``1`` for opacity).
     """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>>'}
+    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(number|null)>>'}
     _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null, self).__init__(test=test,
-                                                                                                                                                   value=value,
-                                                                                                                                                   **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null, self).__init__(test=test,
-                                                                                                                                                   value=value,
-                                                                                                                                                   **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null, self).__init__(test=test,
-                                                                                                                                                   value=value,
-                                                                                                                                                   **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined377890894undefined377890894null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined377890894undefined377890894null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined377890894undefined377890894null, self).__init__(test=test,
-                                                                                                                                                 value=value,
-                                                                                                                                                 **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined61636408undefined61636408null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined61636408undefined61636408null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined61636408undefined61636408null, self).__init__(test=test,
-                                                                                                                                               value=value,
-                                                                                                                                               **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined702672441undefined702672441null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined702672441undefined702672441null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined702672441undefined702672441null, self).__init__(test=test,
-                                                                                                                                                 value=value,
-                                                                                                                                                 **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined720879958undefined720879958null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined720879958undefined720879958null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined720879958undefined720879958null, self).__init__(test=test,
-                                                                                                                                                 value=value,
-                                                                                                                                                 **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined742391737undefined742391737null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined742391737undefined742391737null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(float, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined742391737undefined742391737null, self).__init__(test=test,
-                                                                                                                                                 value=value,
-                                                                                                                                                 **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined927251285undefined927251285null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined927251285undefined927251285null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(List(float), None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined927251285undefined927251285null, self).__init__(test=test,
-                                                                                                                                                 value=value,
-                                                                                                                                                 **kwds)
-
-
-class ConditionalPredicateValueDefalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null(VegaLiteSchema):
-    """ConditionalPredicateValueDefalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null
-    schema wrapper
-
-    Mapping(required=[test, value])
-
-    Attributes
-    ----------
-
-    test : :class:`LogicalOperandPredicate`
-        Predicate for triggering the condition
-    value : anyOf(string, None)
-        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
-        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
-        values between ``0`` to ``1`` for opacity).
-    """
-    _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>>'}
-    _rootschema = Root._schema
-
-    def __init__(self, test=Undefined, value=Undefined, **kwds):
-        super(ConditionalPredicateValueDefalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null, self).__init__(test=test,
-                                                                                                                                                   value=value,
-                                                                                                                                                   **kwds)
+        super(ConditionalPredicateValueDefnumbernull, self).__init__(test=test, value=value, **kwds)
 
 
 class ConditionalSelectionMarkPropFieldDef(ConditionalMarkPropFieldDef):
@@ -4708,7 +4178,7 @@ class Config(VegaLiteSchema):
     area : :class:`AreaConfig`
         Area-Specific Config
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -4851,7 +4321,7 @@ class Config(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__. The keys represent
         styles names; the values have to be valid `mark configuration objects
         <https://vega.github.io/vega-lite/docs/mark.html#config>`__.
-    text : :class:`TextConfig`
+    text : :class:`MarkConfig`
         Text-Specific Config
     tick : :class:`TickConfig`
         Tick-Specific Config
@@ -4916,6 +4386,18 @@ class Cursor(VegaLiteSchema):
 
     def __init__(self, *args):
         super(Cursor, self).__init__(*args)
+
+
+class Cyclical(ColorScheme):
+    """Cyclical schema wrapper
+
+    enum('rainbow', 'sinebow')
+    """
+    _schema = {'$ref': '#/definitions/Cyclical'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(Cyclical, self).__init__(*args)
 
 
 class Data(VegaLiteSchema):
@@ -5064,6 +4546,38 @@ class Dir(VegaLiteSchema):
 
     def __init__(self, *args):
         super(Dir, self).__init__(*args)
+
+
+class Diverging(ColorScheme):
+    """Diverging schema wrapper
+
+    enum('blueorange', 'blueorange-3', 'blueorange-4', 'blueorange-5', 'blueorange-6',
+    'blueorange-7', 'blueorange-8', 'blueorange-9', 'blueorange-10', 'blueorange-11',
+    'brownbluegreen', 'brownbluegreen-3', 'brownbluegreen-4', 'brownbluegreen-5',
+    'brownbluegreen-6', 'brownbluegreen-7', 'brownbluegreen-8', 'brownbluegreen-9',
+    'brownbluegreen-10', 'brownbluegreen-11', 'purplegreen', 'purplegreen-3', 'purplegreen-4',
+    'purplegreen-5', 'purplegreen-6', 'purplegreen-7', 'purplegreen-8', 'purplegreen-9',
+    'purplegreen-10', 'purplegreen-11', 'pinkyellowgreen', 'pinkyellowgreen-3',
+    'pinkyellowgreen-4', 'pinkyellowgreen-5', 'pinkyellowgreen-6', 'pinkyellowgreen-7',
+    'pinkyellowgreen-8', 'pinkyellowgreen-9', 'pinkyellowgreen-10', 'pinkyellowgreen-11',
+    'purpleorange', 'purpleorange-3', 'purpleorange-4', 'purpleorange-5', 'purpleorange-6',
+    'purpleorange-7', 'purpleorange-8', 'purpleorange-9', 'purpleorange-10', 'purpleorange-11',
+    'redblue', 'redblue-3', 'redblue-4', 'redblue-5', 'redblue-6', 'redblue-7', 'redblue-8',
+    'redblue-9', 'redblue-10', 'redblue-11', 'redgrey', 'redgrey-3', 'redgrey-4', 'redgrey-5',
+    'redgrey-6', 'redgrey-7', 'redgrey-8', 'redgrey-9', 'redgrey-10', 'redgrey-11',
+    'redyellowblue', 'redyellowblue-3', 'redyellowblue-4', 'redyellowblue-5', 'redyellowblue-6',
+    'redyellowblue-7', 'redyellowblue-8', 'redyellowblue-9', 'redyellowblue-10',
+    'redyellowblue-11', 'redyellowgreen', 'redyellowgreen-3', 'redyellowgreen-4',
+    'redyellowgreen-5', 'redyellowgreen-6', 'redyellowgreen-7', 'redyellowgreen-8',
+    'redyellowgreen-9', 'redyellowgreen-10', 'redyellowgreen-11', 'spectral', 'spectral-3',
+    'spectral-4', 'spectral-5', 'spectral-6', 'spectral-7', 'spectral-8', 'spectral-9',
+    'spectral-10', 'spectral-11')
+    """
+    _schema = {'$ref': '#/definitions/Diverging'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(Diverging, self).__init__(*args)
 
 
 class DsvDataFormat(DataFormat):
@@ -7928,10 +7442,6 @@ class HeaderConfig(VegaLiteSchema):
         A boolean flag indicating if labels should be included as part of the header.
 
         **Default value:** ``true``.
-    shortTimeLabels : boolean
-        Whether month names and weekday names should be abbreviated.
-
-        **Default value:**  ``false``
     title : None
         Set to null to disable title for the axis, legend, or header.
     titleAlign : :class:`Align`
@@ -7984,22 +7494,22 @@ class HeaderConfig(VegaLiteSchema):
                  labelAnchor=Undefined, labelAngle=Undefined, labelColor=Undefined, labelExpr=Undefined,
                  labelFont=Undefined, labelFontSize=Undefined, labelFontStyle=Undefined,
                  labelLimit=Undefined, labelOrient=Undefined, labelPadding=Undefined, labels=Undefined,
-                 shortTimeLabels=Undefined, title=Undefined, titleAlign=Undefined,
-                 titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
-                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
-                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
-                 titleLineHeight=Undefined, titleOrient=Undefined, titlePadding=Undefined, **kwds):
+                 title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
+                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
+                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
+                 titleLimit=Undefined, titleLineHeight=Undefined, titleOrient=Undefined,
+                 titlePadding=Undefined, **kwds):
         super(HeaderConfig, self).__init__(format=format, formatType=formatType, labelAlign=labelAlign,
                                            labelAnchor=labelAnchor, labelAngle=labelAngle,
                                            labelColor=labelColor, labelExpr=labelExpr,
                                            labelFont=labelFont, labelFontSize=labelFontSize,
                                            labelFontStyle=labelFontStyle, labelLimit=labelLimit,
                                            labelOrient=labelOrient, labelPadding=labelPadding,
-                                           labels=labels, shortTimeLabels=shortTimeLabels, title=title,
-                                           titleAlign=titleAlign, titleAnchor=titleAnchor,
-                                           titleAngle=titleAngle, titleBaseline=titleBaseline,
-                                           titleColor=titleColor, titleFont=titleFont,
-                                           titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
+                                           labels=labels, title=title, titleAlign=titleAlign,
+                                           titleAnchor=titleAnchor, titleAngle=titleAngle,
+                                           titleBaseline=titleBaseline, titleColor=titleColor,
+                                           titleFont=titleFont, titleFontSize=titleFontSize,
+                                           titleFontStyle=titleFontStyle,
                                            titleFontWeight=titleFontWeight, titleLimit=titleLimit,
                                            titleLineHeight=titleLineHeight, titleOrient=titleOrient,
                                            titlePadding=titlePadding, **kwds)
@@ -8847,6 +8357,18 @@ class Legend(VegaLiteSchema):
                                      **kwds)
 
 
+class LegendBinding(VegaLiteSchema):
+    """LegendBinding schema wrapper
+
+    anyOf(enum('legend'), :class:`LegendStreamBinding`)
+    """
+    _schema = {'$ref': '#/definitions/LegendBinding'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args, **kwds):
+        super(LegendBinding, self).__init__(*args, **kwds)
+
+
 class LegendConfig(VegaLiteSchema):
     """LegendConfig schema wrapper
 
@@ -8990,10 +8512,6 @@ class LegendConfig(VegaLiteSchema):
         The vertical padding in pixels between symbol legend entries.
 
         **Default value:** ``2``.
-    shortTimeLabels : boolean
-        Whether month names and weekday names should be abbreviated.
-
-        **Default value:**  ``false``
     strokeColor : anyOf(None, :class:`Color`)
         Border stroke color for the full legend.
     strokeDash : List(float)
@@ -9091,6 +8609,10 @@ class LegendConfig(VegaLiteSchema):
         The padding, in pixels, between title and legend.
 
         **Default value:** ``5``.
+    unselectedOpacity : float
+        The opacity of unselected legend entries.
+
+        **Default value:** 0.35.
     """
     _schema = {'$ref': '#/definitions/LegendConfig'}
     _rootschema = Root._schema
@@ -9108,17 +8630,17 @@ class LegendConfig(VegaLiteSchema):
                  labelOffset=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
                  labelPadding=Undefined, labelSeparation=Undefined, layout=Undefined, legendX=Undefined,
                  legendY=Undefined, offset=Undefined, orient=Undefined, padding=Undefined,
-                 rowPadding=Undefined, shortTimeLabels=Undefined, strokeColor=Undefined,
-                 strokeDash=Undefined, strokeWidth=Undefined, symbolBaseFillColor=Undefined,
-                 symbolBaseStrokeColor=Undefined, symbolDash=Undefined, symbolDashOffset=Undefined,
-                 symbolDirection=Undefined, symbolFillColor=Undefined, symbolLimit=Undefined,
-                 symbolOffset=Undefined, symbolOpacity=Undefined, symbolSize=Undefined,
-                 symbolStrokeColor=Undefined, symbolStrokeWidth=Undefined, symbolType=Undefined,
-                 tickCount=Undefined, title=Undefined, titleAlign=Undefined, titleAnchor=Undefined,
-                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
-                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
-                 titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined,
-                 titleOrient=Undefined, titlePadding=Undefined, **kwds):
+                 rowPadding=Undefined, strokeColor=Undefined, strokeDash=Undefined,
+                 strokeWidth=Undefined, symbolBaseFillColor=Undefined, symbolBaseStrokeColor=Undefined,
+                 symbolDash=Undefined, symbolDashOffset=Undefined, symbolDirection=Undefined,
+                 symbolFillColor=Undefined, symbolLimit=Undefined, symbolOffset=Undefined,
+                 symbolOpacity=Undefined, symbolSize=Undefined, symbolStrokeColor=Undefined,
+                 symbolStrokeWidth=Undefined, symbolType=Undefined, tickCount=Undefined,
+                 title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleBaseline=Undefined,
+                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
+                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
+                 titleLineHeight=Undefined, titleOpacity=Undefined, titleOrient=Undefined,
+                 titlePadding=Undefined, unselectedOpacity=Undefined, **kwds):
         super(LegendConfig, self).__init__(clipHeight=clipHeight, columnPadding=columnPadding,
                                            columns=columns, cornerRadius=cornerRadius,
                                            fillColor=fillColor, gradientDirection=gradientDirection,
@@ -9143,8 +8665,8 @@ class LegendConfig(VegaLiteSchema):
                                            labelSeparation=labelSeparation, layout=layout,
                                            legendX=legendX, legendY=legendY, offset=offset,
                                            orient=orient, padding=padding, rowPadding=rowPadding,
-                                           shortTimeLabels=shortTimeLabels, strokeColor=strokeColor,
-                                           strokeDash=strokeDash, strokeWidth=strokeWidth,
+                                           strokeColor=strokeColor, strokeDash=strokeDash,
+                                           strokeWidth=strokeWidth,
                                            symbolBaseFillColor=symbolBaseFillColor,
                                            symbolBaseStrokeColor=symbolBaseStrokeColor,
                                            symbolDash=symbolDash, symbolDashOffset=symbolDashOffset,
@@ -9159,7 +8681,8 @@ class LegendConfig(VegaLiteSchema):
                                            titleFontSize=titleFontSize, titleFontStyle=titleFontStyle,
                                            titleFontWeight=titleFontWeight, titleLimit=titleLimit,
                                            titleLineHeight=titleLineHeight, titleOpacity=titleOpacity,
-                                           titleOrient=titleOrient, titlePadding=titlePadding, **kwds)
+                                           titleOrient=titleOrient, titlePadding=titlePadding,
+                                           unselectedOpacity=unselectedOpacity, **kwds)
 
 
 class LegendLayout(VegaLiteSchema):
@@ -9260,6 +8783,24 @@ class LegendResolveMap(VegaLiteSchema):
                                                opacity=opacity, shape=shape, size=size, stroke=stroke,
                                                strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                                **kwds)
+
+
+class LegendStreamBinding(LegendBinding):
+    """LegendStreamBinding schema wrapper
+
+    Mapping(required=[legend])
+
+    Attributes
+    ----------
+
+    legend : anyOf(string, :class:`Stream`)
+
+    """
+    _schema = {'$ref': '#/definitions/LegendStreamBinding'}
+    _rootschema = Root._schema
+
+    def __init__(self, legend=Undefined, **kwds):
+        super(LegendStreamBinding, self).__init__(legend=legend, **kwds)
 
 
 class LineConfig(VegaLiteSchema):
@@ -9745,7 +9286,7 @@ class LookupSelection(VegaLiteSchema):
     key : :class:`FieldName`
         Key in data to lookup.
     selection : string
-
+        Selection name to look up.
     fields : List(:class:`FieldName`)
         Fields in foreign data or selection to lookup.
         If not specified, the entire object is queried.
@@ -10525,6 +10066,15 @@ class MultiSelectionConfig(VegaLiteSchema):
     Attributes
     ----------
 
+    bind : :class:`LegendBinding`
+        When set, a selection is populated by interacting with the corresponding legend.
+        Direct manipulation interaction is disabled by default;
+        to re-enable it, set the selection's `on
+        <https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties>`__
+        property.
+
+        Legend bindings are restricted to selections that only specify a single field or
+        encoding.
     clear : anyOf(:class:`Stream`, string, boolean)
         Clears the selection, emptying it of all values. Can be a
         `Event Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
@@ -10588,12 +10138,13 @@ class MultiSelectionConfig(VegaLiteSchema):
     _schema = {'$ref': '#/definitions/MultiSelectionConfig'}
     _rootschema = Root._schema
 
-    def __init__(self, clear=Undefined, empty=Undefined, encodings=Undefined, fields=Undefined,
-                 init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined, toggle=Undefined,
-                 **kwds):
-        super(MultiSelectionConfig, self).__init__(clear=clear, empty=empty, encodings=encodings,
-                                                   fields=fields, init=init, nearest=nearest, on=on,
-                                                   resolve=resolve, toggle=toggle, **kwds)
+    def __init__(self, bind=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
+                 fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined,
+                 toggle=Undefined, **kwds):
+        super(MultiSelectionConfig, self).__init__(bind=bind, clear=clear, empty=empty,
+                                                   encodings=encodings, fields=fields, init=init,
+                                                   nearest=nearest, on=on, resolve=resolve,
+                                                   toggle=toggle, **kwds)
 
 
 class NamedData(DataSource):
@@ -11613,7 +11164,7 @@ class PositionFieldDef(VegaLiteSchema):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    impute : :class:`ImputeParams`
+    impute : anyOf(:class:`ImputeParams`, None)
         An object defining the properties of the Impute Operation to be applied.
         The field value of the other positional channel is taken as ``key`` of the
         ``Impute`` Operation.
@@ -11950,20 +11501,20 @@ class Projection(VegaLiteSchema):
     Attributes
     ----------
 
-    center : List(float)
-        Sets the projection’s center to the specified center, a two-element array of
-        longitude and latitude in degrees.
+    center : :class:`Vector2number`
+        The projection’s center to the specified center, a two-element array of longitude
+        and latitude in degrees.
 
         **Default value:** ``[0, 0]``
     clipAngle : float
-        Sets the projection’s clipping circle radius to the specified angle in degrees. If
+        The projection’s clipping circle radius to the specified angle in degrees. If
         ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
         rather than small-circle clipping.
-    clipExtent : List(List(float))
-        Sets the projection’s viewport clip extent to the specified bounds in pixels. The
-        extent bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is
-        the left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is
-        the bottom. If ``null``, no viewport clipping is performed.
+    clipExtent : :class:`Vector2Vector2number`
+        The projection’s viewport clip extent to the specified bounds in pixels. The extent
+        bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
+        left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
+        bottom. If ``null``, no viewport clipping is performed.
     coefficient : float
 
     distance : float
@@ -11974,8 +11525,10 @@ class Projection(VegaLiteSchema):
 
     parallel : float
 
+    parallels : List(float)
+
     precision : float
-        Sets the threshold for the projection’s `adaptive resampling
+        The threshold for the projection’s `adaptive resampling
         <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
         value corresponds to the `Douglas–Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
@@ -11989,21 +11542,21 @@ class Projection(VegaLiteSchema):
 
     reflectY : boolean
 
-    rotate : List(float)
-        Sets the projection’s three-axis rotation to the specified angles, which must be a
-        two- or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying
-        the rotation angles in degrees about each spherical axis. (These correspond to yaw,
+    rotate : anyOf(:class:`Vector2number`, :class:`Vector3number`)
+        The projection’s three-axis rotation to the specified angles, which must be a two-
+        or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
+        rotation angles in degrees about each spherical axis. (These correspond to yaw,
         pitch and roll.)
 
         **Default value:** ``[0, 0, 0]``
     scale : float
-        Sets the projection's scale (zoom) value, overriding automatic fitting.
+        The projection's scale (zoom) value, overriding automatic fitting.
     spacing : float
 
     tilt : float
 
-    translate : List(float)
-        Sets the projection's translation (pan) value, overriding automatic fitting.
+    translate : :class:`Vector2number`
+        The projection's translation (pan) value, overriding automatic fitting.
     type : :class:`ProjectionType`
         The cartographic projection to use. This value is case-insensitive, for example
         ``"albers"`` and ``"Albers"`` indicate the same projection type. You can find all
@@ -12017,15 +11570,17 @@ class Projection(VegaLiteSchema):
 
     def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                  coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
-                 parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
-                 reflectX=Undefined, reflectY=Undefined, rotate=Undefined, scale=Undefined,
-                 spacing=Undefined, tilt=Undefined, translate=Undefined, type=Undefined, **kwds):
+                 parallel=Undefined, parallels=Undefined, precision=Undefined, radius=Undefined,
+                 ratio=Undefined, reflectX=Undefined, reflectY=Undefined, rotate=Undefined,
+                 scale=Undefined, spacing=Undefined, tilt=Undefined, translate=Undefined,
+                 type=Undefined, **kwds):
         super(Projection, self).__init__(center=center, clipAngle=clipAngle, clipExtent=clipExtent,
                                          coefficient=coefficient, distance=distance, fraction=fraction,
-                                         lobes=lobes, parallel=parallel, precision=precision,
-                                         radius=radius, ratio=ratio, reflectX=reflectX,
-                                         reflectY=reflectY, rotate=rotate, scale=scale, spacing=spacing,
-                                         tilt=tilt, translate=translate, type=type, **kwds)
+                                         lobes=lobes, parallel=parallel, parallels=parallels,
+                                         precision=precision, radius=radius, ratio=ratio,
+                                         reflectX=reflectX, reflectY=reflectY, rotate=rotate,
+                                         scale=scale, spacing=spacing, tilt=tilt, translate=translate,
+                                         type=type, **kwds)
 
 
 class ProjectionConfig(VegaLiteSchema):
@@ -12036,20 +11591,20 @@ class ProjectionConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    center : List(float)
-        Sets the projection’s center to the specified center, a two-element array of
-        longitude and latitude in degrees.
+    center : :class:`Vector2number`
+        The projection’s center to the specified center, a two-element array of longitude
+        and latitude in degrees.
 
         **Default value:** ``[0, 0]``
     clipAngle : float
-        Sets the projection’s clipping circle radius to the specified angle in degrees. If
+        The projection’s clipping circle radius to the specified angle in degrees. If
         ``null``, switches to `antimeridian <http://bl.ocks.org/mbostock/3788999>`__ cutting
         rather than small-circle clipping.
-    clipExtent : List(List(float))
-        Sets the projection’s viewport clip extent to the specified bounds in pixels. The
-        extent bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is
-        the left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is
-        the bottom. If ``null``, no viewport clipping is performed.
+    clipExtent : :class:`Vector2Vector2number`
+        The projection’s viewport clip extent to the specified bounds in pixels. The extent
+        bounds are specified as an array ``[[x0, y0], [x1, y1]]``, where ``x0`` is the
+        left-side of the viewport, ``y0`` is the top, ``x1`` is the right and ``y1`` is the
+        bottom. If ``null``, no viewport clipping is performed.
     coefficient : float
 
     distance : float
@@ -12060,8 +11615,10 @@ class ProjectionConfig(VegaLiteSchema):
 
     parallel : float
 
+    parallels : List(float)
+
     precision : float
-        Sets the threshold for the projection’s `adaptive resampling
+        The threshold for the projection’s `adaptive resampling
         <http://bl.ocks.org/mbostock/3795544>`__ to the specified value in pixels. This
         value corresponds to the `Douglas–Peucker distance
         <http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm>`__.
@@ -12075,21 +11632,21 @@ class ProjectionConfig(VegaLiteSchema):
 
     reflectY : boolean
 
-    rotate : List(float)
-        Sets the projection’s three-axis rotation to the specified angles, which must be a
-        two- or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying
-        the rotation angles in degrees about each spherical axis. (These correspond to yaw,
+    rotate : anyOf(:class:`Vector2number`, :class:`Vector3number`)
+        The projection’s three-axis rotation to the specified angles, which must be a two-
+        or three-element array of numbers [ ``lambda``, ``phi``, ``gamma`` ] specifying the
+        rotation angles in degrees about each spherical axis. (These correspond to yaw,
         pitch and roll.)
 
         **Default value:** ``[0, 0, 0]``
     scale : float
-        Sets the projection's scale (zoom) value, overriding automatic fitting.
+        The projection's scale (zoom) value, overriding automatic fitting.
     spacing : float
 
     tilt : float
 
-    translate : List(float)
-        Sets the projection's translation (pan) value, overriding automatic fitting.
+    translate : :class:`Vector2number`
+        The projection's translation (pan) value, overriding automatic fitting.
     type : :class:`ProjectionType`
         The cartographic projection to use. This value is case-insensitive, for example
         ``"albers"`` and ``"Albers"`` indicate the same projection type. You can find all
@@ -12103,15 +11660,17 @@ class ProjectionConfig(VegaLiteSchema):
 
     def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                  coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
-                 parallel=Undefined, precision=Undefined, radius=Undefined, ratio=Undefined,
-                 reflectX=Undefined, reflectY=Undefined, rotate=Undefined, scale=Undefined,
-                 spacing=Undefined, tilt=Undefined, translate=Undefined, type=Undefined, **kwds):
+                 parallel=Undefined, parallels=Undefined, precision=Undefined, radius=Undefined,
+                 ratio=Undefined, reflectX=Undefined, reflectY=Undefined, rotate=Undefined,
+                 scale=Undefined, spacing=Undefined, tilt=Undefined, translate=Undefined,
+                 type=Undefined, **kwds):
         super(ProjectionConfig, self).__init__(center=center, clipAngle=clipAngle,
                                                clipExtent=clipExtent, coefficient=coefficient,
                                                distance=distance, fraction=fraction, lobes=lobes,
-                                               parallel=parallel, precision=precision, radius=radius,
-                                               ratio=ratio, reflectX=reflectX, reflectY=reflectY,
-                                               rotate=rotate, scale=scale, spacing=spacing, tilt=tilt,
+                                               parallel=parallel, parallels=parallels,
+                                               precision=precision, radius=radius, ratio=ratio,
+                                               reflectX=reflectX, reflectY=reflectY, rotate=rotate,
+                                               scale=scale, spacing=spacing, tilt=tilt,
                                                translate=translate, type=type, **kwds)
 
 
@@ -12192,18 +11751,24 @@ class RangeConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    category : anyOf(List(string), :class:`SchemeConfig`)
-        Default range for *nominal* (categorical) fields.
-    diverging : anyOf(List(string), :class:`SchemeConfig`)
-        Default range for diverging *quantitative* fields.
-    heatmap : anyOf(List(string), :class:`SchemeConfig`)
-        Default range for *quantitative* heatmaps.
-    ordinal : anyOf(List(string), :class:`SchemeConfig`)
-        Default range for *ordinal* fields.
-    ramp : anyOf(List(string), :class:`SchemeConfig`)
-        Default range for *quantitative* and *temporal* fields.
+    category : anyOf(:class:`RangeScheme`, List(string))
+        Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for categorical
+        data.
+    diverging : anyOf(:class:`RangeScheme`, List(string))
+        Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for diverging
+        quantitative ramps.
+    heatmap : anyOf(:class:`RangeScheme`, List(string))
+        Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for
+        quantitative heatmaps.
+    ordinal : anyOf(:class:`RangeScheme`, List(string))
+        Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for
+        rank-ordered data.
+    ramp : anyOf(:class:`RangeScheme`, List(string))
+        Default `color scheme <https://vega.github.io/vega/docs/schemes/>`__ for sequential
+        quantitative ramps.
     symbol : List(:class:`SymbolShape`)
-        Default range palette for the ``shape`` channel.
+        Array of `symbol <https://vega.github.io/vega/docs/marks/symbol/>`__ names or paths
+        for the default shape palette.
     """
     _schema = {'$ref': '#/definitions/RangeConfig'}
     _rootschema = Root._schema
@@ -12214,16 +11779,52 @@ class RangeConfig(VegaLiteSchema):
                                           ordinal=ordinal, ramp=ramp, symbol=symbol, **kwds)
 
 
-class RangeConfigValue(VegaLiteSchema):
-    """RangeConfigValue schema wrapper
+class RangeRawArray(VegaLiteSchema):
+    """RangeRawArray schema wrapper
 
-    anyOf(List(anyOf(float, string)), :class:`SchemeConfig`, Mapping(required=[step]))
+    List(anyOf(float, :class:`SignalRef`))
     """
-    _schema = {'$ref': '#/definitions/RangeConfigValue'}
+    _schema = {'$ref': '#/definitions/RangeRawArray'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(RangeRawArray, self).__init__(*args)
+
+
+class RangeScheme(VegaLiteSchema):
+    """RangeScheme schema wrapper
+
+    anyOf(:class:`RangeEnum`, :class:`RangeRaw`, :class:`SignalRef`, Mapping(required=[scheme]))
+    """
+    _schema = {'$ref': '#/definitions/RangeScheme'}
     _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
-        super(RangeConfigValue, self).__init__(*args, **kwds)
+        super(RangeScheme, self).__init__(*args, **kwds)
+
+
+class RangeEnum(RangeScheme):
+    """RangeEnum schema wrapper
+
+    enum('width', 'height', 'symbol', 'category', 'ordinal', 'ramp', 'diverging', 'heatmap')
+    """
+    _schema = {'$ref': '#/definitions/RangeEnum'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(RangeEnum, self).__init__(*args)
+
+
+class RangeRaw(RangeScheme):
+    """RangeRaw schema wrapper
+
+    List(anyOf(None, boolean, string, float, :class:`SignalRef`, :class:`RangeRawArray`))
+    """
+    _schema = {'$ref': '#/definitions/RangeRaw'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(RangeRaw, self).__init__(*args)
 
 
 class RectConfig(VegaLiteSchema):
@@ -12985,9 +12586,9 @@ class Scale(VegaLiteSchema):
         For * `continuous <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ *
         scales, expands the scale domain to accommodate the specified number of pixels on
         each of the scale range. The scale range must represent pixels for this parameter to
-        function as intended. Padding adjustment is performed prior to all other
-        adjustments, including the effects of the ``zero``, ``nice``, ``domainMin``, and
-        ``domainMax`` properties.
+        function as intended. Padding adjustment is performed prior to all other
+        adjustments, including the effects of the  ``zero``,  ``nice``,  ``domainMin``, and
+        ``domainMax``  properties.
 
         For * `band <https://vega.github.io/vega-lite/docs/scale.html#band>`__ * scales,
         shortcut for setting ``paddingInner`` and ``paddingOuter`` to the same value.
@@ -13019,7 +12620,7 @@ class Scale(VegaLiteSchema):
         for band scales and ``pointPadding`` for point scales.
         By default, Vega-Lite sets outer padding such that *width/height = number of unique
         values * step*.
-    range : anyOf(List(float), List(string), string)
+    range : anyOf(List(float), List(string), :class:`RangeEnum`)
         The range of the scale. One of:
 
 
@@ -13341,28 +12942,6 @@ class ScaleType(VegaLiteSchema):
         super(ScaleType, self).__init__(*args)
 
 
-class SchemeConfig(RangeConfigValue):
-    """SchemeConfig schema wrapper
-
-    Mapping(required=[scheme])
-
-    Attributes
-    ----------
-
-    scheme : string
-
-    count : float
-
-    extent : List(float)
-
-    """
-    _schema = {'$ref': '#/definitions/SchemeConfig'}
-    _rootschema = Root._schema
-
-    def __init__(self, scheme=Undefined, count=Undefined, extent=Undefined, **kwds):
-        super(SchemeConfig, self).__init__(scheme=scheme, count=count, extent=extent, **kwds)
-
-
 class SchemeParams(VegaLiteSchema):
     """SchemeParams schema wrapper
 
@@ -13668,6 +13247,15 @@ class MultiSelection(SelectionDef):
         * ``"multi"`` -- to select multiple discrete data value; the first value is selected
           on ``click`` and additional values toggled on shift- ``click``.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
+    bind : :class:`LegendBinding`
+        When set, a selection is populated by interacting with the corresponding legend.
+        Direct manipulation interaction is disabled by default;
+        to re-enable it, set the selection's `on
+        <https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties>`__
+        property.
+
+        Legend bindings are restricted to selections that only specify a single field or
+        encoding.
     clear : anyOf(:class:`Stream`, string, boolean)
         Clears the selection, emptying it of all values. Can be a
         `Event Stream <https://vega.github.io/vega/docs/event-streams/>`__ or ``false`` to
@@ -13731,12 +13319,13 @@ class MultiSelection(SelectionDef):
     _schema = {'$ref': '#/definitions/MultiSelection'}
     _rootschema = Root._schema
 
-    def __init__(self, type=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
-                 fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined,
-                 toggle=Undefined, **kwds):
-        super(MultiSelection, self).__init__(type=type, clear=clear, empty=empty, encodings=encodings,
-                                             fields=fields, init=init, nearest=nearest, on=on,
-                                             resolve=resolve, toggle=toggle, **kwds)
+    def __init__(self, type=Undefined, bind=Undefined, clear=Undefined, empty=Undefined,
+                 encodings=Undefined, fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined,
+                 resolve=Undefined, toggle=Undefined, **kwds):
+        super(MultiSelection, self).__init__(type=type, bind=bind, clear=clear, empty=empty,
+                                             encodings=encodings, fields=fields, init=init,
+                                             nearest=nearest, on=on, resolve=resolve, toggle=toggle,
+                                             **kwds)
 
 
 class SelectionExtent(BinExtent):
@@ -13999,6 +13588,49 @@ class SequenceParams(VegaLiteSchema):
         super(SequenceParams, self).__init__(start=start, stop=stop, step=step, **kwds)
 
 
+class SequentialMultiHue(ColorScheme):
+    """SequentialMultiHue schema wrapper
+
+    enum('viridis', 'inferno', 'magma', 'plasma', 'bluegreen', 'bluegreen-3', 'bluegreen-4',
+    'bluegreen-5', 'bluegreen-6', 'bluegreen-7', 'bluegreen-8', 'bluegreen-9', 'bluepurple',
+    'bluepurple-3', 'bluepurple-4', 'bluepurple-5', 'bluepurple-6', 'bluepurple-7',
+    'bluepurple-8', 'bluepurple-9', 'greenblue', 'greenblue-3', 'greenblue-4', 'greenblue-5',
+    'greenblue-6', 'greenblue-7', 'greenblue-8', 'greenblue-9', 'orangered', 'orangered-3',
+    'orangered-4', 'orangered-5', 'orangered-6', 'orangered-7', 'orangered-8', 'orangered-9',
+    'purplebluegreen', 'purplebluegreen-3', 'purplebluegreen-4', 'purplebluegreen-5',
+    'purplebluegreen-6', 'purplebluegreen-7', 'purplebluegreen-8', 'purplebluegreen-9',
+    'purpleblue', 'purpleblue-3', 'purpleblue-4', 'purpleblue-5', 'purpleblue-6',
+    'purpleblue-7', 'purpleblue-8', 'purpleblue-9', 'purplered', 'purplered-3', 'purplered-4',
+    'purplered-5', 'purplered-6', 'purplered-7', 'purplered-8', 'purplered-9', 'redpurple',
+    'redpurple-3', 'redpurple-4', 'redpurple-5', 'redpurple-6', 'redpurple-7', 'redpurple-8',
+    'redpurple-9', 'yellowgreenblue', 'yellowgreenblue-3', 'yellowgreenblue-4',
+    'yellowgreenblue-5', 'yellowgreenblue-6', 'yellowgreenblue-7', 'yellowgreenblue-8',
+    'yellowgreenblue-9', 'yellowgreen', 'yellowgreen-3', 'yellowgreen-4', 'yellowgreen-5',
+    'yellowgreen-6', 'yellowgreen-7', 'yellowgreen-8', 'yellowgreen-9', 'yelloworangebrown',
+    'yelloworangebrown-3', 'yelloworangebrown-4', 'yelloworangebrown-5', 'yelloworangebrown-6',
+    'yelloworangebrown-7', 'yelloworangebrown-8', 'yelloworangebrown-9', 'yelloworangered',
+    'yelloworangered-3', 'yelloworangered-4', 'yelloworangered-5', 'yelloworangered-6',
+    'yelloworangered-7', 'yelloworangered-8', 'yelloworangered-9')
+    """
+    _schema = {'$ref': '#/definitions/SequentialMultiHue'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(SequentialMultiHue, self).__init__(*args)
+
+
+class SequentialSingleHue(ColorScheme):
+    """SequentialSingleHue schema wrapper
+
+    enum('blues', 'greens', 'greys', 'purples', 'reds', 'oranges')
+    """
+    _schema = {'$ref': '#/definitions/SequentialSingleHue'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(SequentialSingleHue, self).__init__(*args)
+
+
 class ShapeFieldDefWithCondition(VegaLiteSchema):
     """ShapeFieldDefWithCondition schema wrapper
 
@@ -14224,7 +13856,7 @@ class ShapeValueDefWithCondition(VegaLiteSchema):
         super(ShapeValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
 
 
-class SignalRef(LayoutBounds):
+class SignalRef(LayoutBounds, RangeScheme):
     """SignalRef schema wrapper
 
     Mapping(required=[signal])
@@ -14273,10 +13905,19 @@ class SingleSelection(SelectionDef):
         * ``"multi"`` -- to select multiple discrete data value; the first value is selected
           on ``click`` and additional values toggled on shift- ``click``.
         * ``"interval"`` -- to select a continuous range of data values on ``drag``.
-    bind : anyOf(:class:`Binding`, Mapping(required=[]))
-        Establish a two-way binding between a single selection and input elements
-        (also known as dynamic query widgets). A binding takes the form of
-        Vega's `input element binding definition
+    bind : anyOf(:class:`Binding`, Mapping(required=[]), :class:`LegendBinding`)
+        When set, a selection is populated by input elements (also known as dynamic query
+        widgets)
+        or by interacting with the corresponding legend. Direct manipulation interaction is
+        disabled by default;
+        to re-enable it, set the selection's `on
+        <https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties>`__
+        property.
+
+        Legend bindings are restricted to selections that only specify a single field or
+        encoding.
+
+        Query widget binding takes the form of Vega's `input element binding definition
         <https://vega.github.io/vega/docs/signals/#bind>`__
         or can be a mapping between projected field/encodings and binding definitions.
 
@@ -14350,10 +13991,19 @@ class SingleSelectionConfig(VegaLiteSchema):
     Attributes
     ----------
 
-    bind : anyOf(:class:`Binding`, Mapping(required=[]))
-        Establish a two-way binding between a single selection and input elements
-        (also known as dynamic query widgets). A binding takes the form of
-        Vega's `input element binding definition
+    bind : anyOf(:class:`Binding`, Mapping(required=[]), :class:`LegendBinding`)
+        When set, a selection is populated by input elements (also known as dynamic query
+        widgets)
+        or by interacting with the corresponding legend. Direct manipulation interaction is
+        disabled by default;
+        to re-enable it, set the selection's `on
+        <https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties>`__
+        property.
+
+        Legend bindings are restricted to selections that only specify a single field or
+        encoding.
+
+        Query widget binding takes the form of Vega's `input element binding definition
         <https://vega.github.io/vega/docs/signals/#bind>`__
         or can be a mapping between projected field/encodings and binding definitions.
 
@@ -14814,6 +14464,18 @@ class FacetedUnitSpec(Spec):
         ``"tick"``, ``"line"``,
         ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
         definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     data : anyOf(:class:`Data`, None)
         An object describing the data source. Set to ``null`` to ignore the parent's data
         source. If no data is set, it is derived from the parent.
@@ -14884,13 +14546,13 @@ class FacetedUnitSpec(Spec):
     _schema = {'$ref': '#/definitions/FacetedUnitSpec'}
     _rootschema = Root._schema
 
-    def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, projection=Undefined, resolve=Undefined,
-                 selection=Undefined, title=Undefined, transform=Undefined, view=Undefined,
-                 width=Undefined, **kwds):
-        super(FacetedUnitSpec, self).__init__(mark=mark, data=data, description=description,
-                                              encoding=encoding, height=height, name=name,
-                                              projection=projection, resolve=resolve,
+    def __init__(self, mark=Undefined, bounds=Undefined, data=Undefined, description=Undefined,
+                 encoding=Undefined, height=Undefined, name=Undefined, projection=Undefined,
+                 resolve=Undefined, selection=Undefined, title=Undefined, transform=Undefined,
+                 view=Undefined, width=Undefined, **kwds):
+        super(FacetedUnitSpec, self).__init__(mark=mark, bounds=bounds, data=data,
+                                              description=description, encoding=encoding, height=height,
+                                              name=name, projection=projection, resolve=resolve,
                                               selection=selection, title=title, transform=transform,
                                               view=view, width=width, **kwds)
 
@@ -15781,335 +15443,6 @@ class Baseline(TextBaseline):
 
     def __init__(self, *args):
         super(Baseline, self).__init__(*args)
-
-
-class TextConfig(VegaLiteSchema):
-    """TextConfig schema wrapper
-
-    Mapping(required=[])
-
-    Attributes
-    ----------
-
-    align : :class:`Align`
-        The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule).
-        One of ``"left"``, ``"right"``, ``"center"``.
-    angle : float
-        The rotation angle of the text, in degrees.
-    aspect : boolean
-        Whether to keep aspect ratio of image marks.
-    baseline : :class:`TextBaseline`
-        The vertical alignment of the text or ranged marks (area, bar, image, rect, rule).
-        One of ``"top"``, ``"middle"``, ``"bottom"``.
-
-        **Default value:** ``"middle"``
-    color : anyOf(:class:`Color`, :class:`Gradient`)
-        Default color.
-
-        **Default value:** :raw-html:`<span style="color: #4682b4;">&#9632;</span>`
-        ``"#4682b4"``
-
-        **Note:**
-
-
-        * This property cannot be used in a `style config
-          <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-        * The ``fill`` and ``stroke`` properties have higher precedence than ``color`` and
-          will override ``color``.
-    cornerRadius : float
-        The radius in pixels of rounded rectangle corners.
-
-        **Default value:** ``0``
-    cornerRadiusBottomLeft : float
-        The radius in pixels of rounded rectangle bottom left corner.
-
-        **Default value:** ``0``
-    cornerRadiusBottomRight : float
-        The radius in pixels of rounded rectangle bottom right corner.
-
-        **Default value:** ``0``
-    cornerRadiusTopLeft : float
-        The radius in pixels of rounded rectangle top right corner.
-
-        **Default value:** ``0``
-    cornerRadiusTopRight : float
-        The radius in pixels of rounded rectangle top left corner.
-
-        **Default value:** ``0``
-    cursor : :class:`Cursor`
-        The mouse cursor used over the mark. Any valid `CSS cursor type
-        <https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values>`__ can be used.
-    dir : :class:`Dir`
-        The direction of the text. One of ``"ltr"`` (left-to-right) or ``"rtl"``
-        (right-to-left). This property determines on which side is truncated in response to
-        the limit parameter.
-
-        **Default value:** ``"ltr"``
-    dx : float
-        The horizontal offset, in pixels, between the text label and its anchor point. The
-        offset is applied after rotation by the *angle* property.
-    dy : float
-        The vertical offset, in pixels, between the text label and its anchor point. The
-        offset is applied after rotation by the *angle* property.
-    ellipsis : string
-        The ellipsis string for text truncated in response to the limit parameter.
-
-        **Default value:** ``"…"``
-    fill : anyOf(:class:`Color`, :class:`Gradient`, None)
-        Default Fill Color. This has higher precedence than ``config.color``.
-
-        **Default value:** (None)
-    fillOpacity : float
-        The fill opacity (value between [0,1]).
-
-        **Default value:** ``1``
-    filled : boolean
-        Whether the mark's color should be used as fill color instead of stroke color.
-
-        **Default value:** ``false`` for all ``point``, ``line``, and ``rule`` marks as well
-        as ``geoshape`` marks for `graticule
-        <https://vega.github.io/vega-lite/docs/data.html#graticule>`__ data sources;
-        otherwise, ``true``.
-
-        **Note:** This property cannot be used in a `style config
-        <https://vega.github.io/vega-lite/docs/mark.html#style-config>`__.
-    font : string
-        The typeface to set the text in (e.g., ``"Helvetica Neue"`` ).
-    fontSize : float
-        The font size, in pixels.
-    fontStyle : :class:`FontStyle`
-        The font style (e.g., ``"italic"`` ).
-    fontWeight : :class:`FontWeight`
-        The font weight.
-        This can be either a string (e.g ``"bold"``, ``"normal"`` ) or a number ( ``100``,
-        ``200``, ``300``, ..., ``900`` where ``"normal"`` = ``400`` and ``"bold"`` = ``700``
-        ).
-    height : float
-        Height of the marks.
-    href : string
-        A URL to load upon mouse click. If defined, the mark acts as a hyperlink.
-    interpolate : :class:`Interpolate`
-        The line interpolation method to use for line and area marks. One of the following:
-
-
-        * ``"linear"`` : piecewise linear segments, as in a polyline.
-        * ``"linear-closed"`` : close the linear segments to form a polygon.
-        * ``"step"`` : alternate between horizontal and vertical segments, as in a step
-          function.
-        * ``"step-before"`` : alternate between vertical and horizontal segments, as in a
-          step function.
-        * ``"step-after"`` : alternate between horizontal and vertical segments, as in a
-          step function.
-        * ``"basis"`` : a B-spline, with control point duplication on the ends.
-        * ``"basis-open"`` : an open B-spline; may not intersect the start or end.
-        * ``"basis-closed"`` : a closed B-spline, as in a loop.
-        * ``"cardinal"`` : a Cardinal spline, with control point duplication on the ends.
-        * ``"cardinal-open"`` : an open Cardinal spline; may not intersect the start or end,
-          but will intersect other control points.
-        * ``"cardinal-closed"`` : a closed Cardinal spline, as in a loop.
-        * ``"bundle"`` : equivalent to basis, except the tension parameter is used to
-          straighten the spline.
-        * ``"monotone"`` : cubic interpolation that preserves monotonicity in y.
-    invalid : enum('filter', None)
-        Defines how Vega-Lite should handle marks for invalid values ( ``null`` and ``NaN``
-        ).
-
-
-        * If set to ``"filter"`` (default), all data items with null values will be skipped
-          (for line, trail, and area marks) or filtered (for other marks).
-        * If ``null``, all data items are included. In this case, invalid values will be
-          interpreted as zeroes.
-    limit : float
-        The maximum length of the text mark in pixels. The text value will be automatically
-        truncated if the rendered size exceeds the limit.
-
-        **Default value:** ``0``, indicating no limit
-    lineBreak : string
-        A delimiter, such as a newline character, upon which to break text strings into
-        multiple lines. This property will be ignored if the text property is array-valued.
-    lineHeight : float
-        The height, in pixels, of each line of text in a multi-line text mark.
-    opacity : float
-        The overall opacity (value between [0,1]).
-
-        **Default value:** ``0.7`` for non-aggregate plots with ``point``, ``tick``,
-        ``circle``, or ``square`` marks or layered ``bar`` charts and ``1`` otherwise.
-    order : anyOf(None, boolean)
-        For line and trail marks, this ``order`` property can be set to ``null`` or
-        ``false`` to make the lines use the original order in the data sources.
-    orient : :class:`Orientation`
-        The orientation of a non-stacked bar, tick, area, and line charts.
-        The value is either horizontal (default) or vertical.
-
-
-        * For bar, rule and tick, this determines whether the size of the bar and tick
-        should be applied to x or y dimension.
-        * For area, this property determines the orient property of the Vega output.
-        * For line and trail marks, this property determines the sort order of the points in
-          the line
-        if ``config.sortLineBy`` is not specified.
-        For stacked charts, this is always determined by the orientation of the stack;
-        therefore explicitly specified value will be ignored.
-    radius : float
-        Polar coordinate radial offset, in pixels, of the text label from the origin
-        determined by the ``x`` and ``y`` properties.
-    shape : string
-        Shape of the point marks. Supported values include:
-
-
-        * plotting shapes: ``"circle"``, ``"square"``, ``"cross"``, ``"diamond"``,
-          ``"triangle-up"``, ``"triangle-down"``, ``"triangle-right"``, or
-          ``"triangle-left"``.
-        * the line symbol ``"stroke"``
-        * centered directional shapes ``"arrow"``, ``"wedge"``, or ``"triangle"``
-        * a custom `SVG path string
-          <https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths>`__ (For correct
-          sizing, custom shape paths should be defined within a square bounding box with
-          coordinates ranging from -1 to 1 along both the x and y dimensions.)
-
-        **Default value:** ``"circle"``
-    shortTimeLabels : boolean
-        Whether month names and weekday names should be abbreviated.
-    size : float
-        Default size for marks.
-
-
-        * For ``point`` / ``circle`` / ``square``, this represents the pixel area of the
-          marks. For example: in the case of circles, the radius is determined in part by
-          the square root of the size value.
-        * For ``bar``, this represents the band size of the bar, in pixels.
-        * For ``text``, this represents the font size, in pixels.
-
-        **Default value:**
-
-
-        * ``30`` for point, circle, square marks; width/height's ``step``
-        * ``2`` for bar marks with discrete dimensions;
-        * ``5`` for bar marks with continuous dimensions;
-        * ``11`` for text marks.
-    stroke : anyOf(:class:`Color`, :class:`Gradient`, None)
-        Default Stroke Color. This has higher precedence than ``config.color``.
-
-        **Default value:** (None)
-    strokeCap : :class:`StrokeCap`
-        The stroke cap for line ending style. One of ``"butt"``, ``"round"``, or
-        ``"square"``.
-
-        **Default value:** ``"square"``
-    strokeDash : List(float)
-        An array of alternating stroke, space lengths for creating dashed or dotted lines.
-    strokeDashOffset : float
-        The offset (in pixels) into which to begin drawing with the stroke dash array.
-    strokeJoin : :class:`StrokeJoin`
-        The stroke line join method. One of ``"miter"``, ``"round"`` or ``"bevel"``.
-
-        **Default value:** ``"miter"``
-    strokeMiterLimit : float
-        The miter limit at which to bevel a line join.
-    strokeOpacity : float
-        The stroke opacity (value between [0,1]).
-
-        **Default value:** ``1``
-    strokeWidth : float
-        The stroke width, in pixels.
-    tension : float
-        Depending on the interpolation type, sets the tension parameter (for line and area
-        marks).
-    text : :class:`Text`
-        Placeholder text if the ``text`` channel is not specified
-    theta : float
-        Polar coordinate angle, in radians, of the text label from the origin determined by
-        the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
-        ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
-        radians, with ``0`` indicating "north".
-    timeUnitBand : float
-        Default relative band size for a time unit. If set to ``1``, the bandwidth of the
-        marks will be equal to the time unit band step.
-        If set to ``0.5``, bandwidth of the marks will be half of the time unit band step.
-    timeUnitBandPosition : float
-        Default relative band position for a time unit. If set to ``0``, the marks will be
-        positioned at the beginning of the time unit band step.
-        If set to ``0.5``, the marks will be positioned in the middle of the time unit band
-        step.
-    tooltip : anyOf(:class:`Value`, :class:`TooltipContent`, None)
-        The tooltip text string to show upon mouse hover or an object defining which fields
-        should the tooltip be derived from.
-
-
-        * If ``tooltip`` is ``true`` or ``{"content": "encoding"}``, then all fields from
-          ``encoding`` will be used.
-        * If ``tooltip`` is ``{"content": "data"}``, then all fields that appear in the
-          highlighted data point will be used.
-        * If set to ``null`` or ``false``, then no tooltip will be used.
-
-        See the `tooltip <https://vega.github.io/vega-lite/docs/tooltip.html>`__
-        documentation for a detailed discussion about tooltip  in Vega-Lite.
-
-        **Default value:** ``null``
-    width : float
-        Width of the marks.
-    x : anyOf(float, enum('width'))
-        X coordinates of the marks, or width of horizontal ``"bar"`` and ``"area"`` without
-        specified ``x2`` or ``width``.
-
-        The ``value`` of this channel can be a number or a string ``"width"`` for the width
-        of the plot.
-    x2 : anyOf(float, enum('width'))
-        X2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-
-        The ``value`` of this channel can be a number or a string ``"width"`` for the width
-        of the plot.
-    y : anyOf(float, enum('height'))
-        Y coordinates of the marks, or height of vertical ``"bar"`` and ``"area"`` without
-        specified ``y2`` or ``height``.
-
-        The ``value`` of this channel can be a number or a string ``"height"`` for the
-        height of the plot.
-    y2 : anyOf(float, enum('height'))
-        Y2 coordinates for ranged ``"area"``, ``"bar"``, ``"rect"``, and  ``"rule"``.
-
-        The ``value`` of this channel can be a number or a string ``"height"`` for the
-        height of the plot.
-    """
-    _schema = {'$ref': '#/definitions/TextConfig'}
-    _rootschema = Root._schema
-
-    def __init__(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                 color=Undefined, cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusTopLeft=Undefined,
-                 cornerRadiusTopRight=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined,
-                 dy=Undefined, ellipsis=Undefined, fill=Undefined, fillOpacity=Undefined,
-                 filled=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, height=Undefined, href=Undefined, interpolate=Undefined,
-                 invalid=Undefined, limit=Undefined, lineBreak=Undefined, lineHeight=Undefined,
-                 opacity=Undefined, order=Undefined, orient=Undefined, radius=Undefined,
-                 shape=Undefined, shortTimeLabels=Undefined, size=Undefined, stroke=Undefined,
-                 strokeCap=Undefined, strokeDash=Undefined, strokeDashOffset=Undefined,
-                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOpacity=Undefined,
-                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
-                 timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
-                 width=Undefined, x=Undefined, x2=Undefined, y=Undefined, y2=Undefined, **kwds):
-        super(TextConfig, self).__init__(align=align, angle=angle, aspect=aspect, baseline=baseline,
-                                         color=color, cornerRadius=cornerRadius,
-                                         cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                                         cornerRadiusBottomRight=cornerRadiusBottomRight,
-                                         cornerRadiusTopLeft=cornerRadiusTopLeft,
-                                         cornerRadiusTopRight=cornerRadiusTopRight, cursor=cursor,
-                                         dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
-                                         fillOpacity=fillOpacity, filled=filled, font=font,
-                                         fontSize=fontSize, fontStyle=fontStyle, fontWeight=fontWeight,
-                                         height=height, href=href, interpolate=interpolate,
-                                         invalid=invalid, limit=limit, lineBreak=lineBreak,
-                                         lineHeight=lineHeight, opacity=opacity, order=order,
-                                         orient=orient, radius=radius, shape=shape,
-                                         shortTimeLabels=shortTimeLabels, size=size, stroke=stroke,
-                                         strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
-                                         strokeWidth=strokeWidth, tension=tension, text=text,
-                                         theta=theta, timeUnitBand=timeUnitBand,
-                                         timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip,
-                                         width=width, x=x, x2=x2, y=y, y2=y2, **kwds)
 
 
 class TextFieldDefWithCondition(VegaLiteSchema):
@@ -17026,7 +16359,7 @@ class TopLevelConcatSpec(TopLevelSpec):
 
         **Default value:** ``"all"``.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -17176,7 +16509,7 @@ class TopLevelFacetSpec(TopLevelSpec):
 
         **Default value:** ``"all"``.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -17297,7 +16630,7 @@ class TopLevelHConcatSpec(TopLevelSpec):
     hconcat : List(:class:`Spec`)
         A list of views to be concatenated and put into a row.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -17398,7 +16731,7 @@ class TopLevelLayerSpec(TopLevelSpec):
         operator <https://vega.github.io/vega-lite/docs/facet.html>`__ and place a layer
         inside a facet.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -17550,7 +16883,7 @@ class TopLevelRepeatSpec(TopLevelSpec):
 
         **Default value:** ``"all"``.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -17680,7 +17013,7 @@ class TopLevelUnitSpec(TopLevelSpec):
         ``"area"``, ``"point"``, ``"rule"``, ``"geoshape"``, and ``"text"`` ) or a `mark
         definition object <https://vega.github.io/vega-lite/docs/mark.html#mark-def>`__.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -17690,6 +17023,18 @@ class TopLevelUnitSpec(TopLevelSpec):
         CSS color property to use as the background of the entire view.
 
         **Default value:** ``"white"``
+    bounds : enum('full', 'flush')
+        The bounds calculation method to use for determining the extent of a sub-plot. One
+        of ``full`` (the default) or ``flush``.
+
+
+        * If set to ``full``, the entire calculated bounds (including axes, title, and
+          legend) will be used.
+        * If set to ``flush``, only the specified width and height values for the sub-view
+          will be used. The ``flush`` setting can be useful when attempting to place
+          sub-plots without axes or legends into a uniform grid structure.
+
+        **Default value:** ``"full"``
     config : :class:`Config`
         Vega-Lite configuration object. This property can only be defined at the top-level
         of a specification.
@@ -17783,15 +17128,15 @@ class TopLevelUnitSpec(TopLevelSpec):
     _rootschema = Root._schema
 
     def __init__(self, data=Undefined, mark=Undefined, autosize=Undefined, background=Undefined,
-                 config=Undefined, datasets=Undefined, description=Undefined, encoding=Undefined,
-                 height=Undefined, name=Undefined, padding=Undefined, projection=Undefined,
-                 resolve=Undefined, selection=Undefined, title=Undefined, transform=Undefined,
-                 usermeta=Undefined, view=Undefined, width=Undefined, **kwds):
+                 bounds=Undefined, config=Undefined, datasets=Undefined, description=Undefined,
+                 encoding=Undefined, height=Undefined, name=Undefined, padding=Undefined,
+                 projection=Undefined, resolve=Undefined, selection=Undefined, title=Undefined,
+                 transform=Undefined, usermeta=Undefined, view=Undefined, width=Undefined, **kwds):
         super(TopLevelUnitSpec, self).__init__(data=data, mark=mark, autosize=autosize,
-                                               background=background, config=config, datasets=datasets,
-                                               description=description, encoding=encoding,
-                                               height=height, name=name, padding=padding,
-                                               projection=projection, resolve=resolve,
+                                               background=background, bounds=bounds, config=config,
+                                               datasets=datasets, description=description,
+                                               encoding=encoding, height=height, name=name,
+                                               padding=padding, projection=projection, resolve=resolve,
                                                selection=selection, title=title, transform=transform,
                                                usermeta=usermeta, view=view, width=width, **kwds)
 
@@ -17807,7 +17152,7 @@ class TopLevelVConcatSpec(TopLevelSpec):
     vconcat : List(:class:`Spec`)
         A list of views to be concatenated and put into a column.
     autosize : anyOf(:class:`AutosizeType`, :class:`AutoSizeParams`)
-        Sets how the visualization size should be determined. If a string, should be one of
+        How the visualization size should be determined. If a string, should be one of
         ``"pad"``, ``"fit"`` or ``"none"``.
         Object values can additionally specify parameters for content sizing and automatic
         resizing.
@@ -18287,81 +17632,35 @@ class LoessTransform(Transform):
 class LookupTransform(Transform):
     """LookupTransform schema wrapper
 
-    anyOf(:class:`DataLookupTransform`, :class:`SelectionLookupTransform`)
+    Mapping(required=[lookup, from])
+
+    Attributes
+    ----------
+
+    lookup : string
+        Key in primary data source.
+    default : string
+        The default value to use if lookup fails.
+
+        **Default value:** ``null``
+    as : anyOf(:class:`FieldName`, List(:class:`FieldName`))
+        The output fields on which to store the looked up data values.
+
+        For data lookups, this property may be left blank if ``from.fields``
+        has been specified (those field names will be used); if ``from.fields``
+        has not been specified, ``as`` must be a string.
+
+        For selection lookups, this property is optional: if unspecified,
+        looked up values will be stored under a property named for the selection;
+        and if specified, it must correspond to ``from.fields``.
+    from : anyOf(:class:`LookupData`, :class:`LookupSelection`)
+        Data source or selection for secondary data reference.
     """
     _schema = {'$ref': '#/definitions/LookupTransform'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(LookupTransform, self).__init__(*args, **kwds)
-
-
-class DataLookupTransform(LookupTransform):
-    """DataLookupTransform schema wrapper
-
-    Mapping(required=[from, lookup])
-
-    Attributes
-    ----------
-
-    lookup : string
-        Key in primary data source.
-    default : string
-        The default value to use if lookup fails.
-
-        **Default value:** ``null``
-    as : anyOf(:class:`FieldName`, List(:class:`FieldName`))
-        The output fields on which to store the looked up data values.
-
-        For data lookups, this property may be left blank if ``from.fields``
-        has been specified (those field names will be used); if ``from.fields``
-        has not been specified, ``as`` must be a string.
-
-        For selection lookups, this property is optional: if unspecified,
-        looked up values will be stored under a property named for the selection;
-        and if specified, it must correspond to ``from.fields``.
-    from : :class:`LookupData`
-        Secondary data reference.
-    """
-    _schema = {'$ref': '#/definitions/DataLookupTransform'}
-    _rootschema = Root._schema
-
     def __init__(self, lookup=Undefined, default=Undefined, **kwds):
-        super(DataLookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
-
-
-class SelectionLookupTransform(LookupTransform):
-    """SelectionLookupTransform schema wrapper
-
-    Mapping(required=[from, lookup])
-
-    Attributes
-    ----------
-
-    lookup : string
-        Key in primary data source.
-    default : string
-        The default value to use if lookup fails.
-
-        **Default value:** ``null``
-    as : anyOf(:class:`FieldName`, List(:class:`FieldName`))
-        The output fields on which to store the looked up data values.
-
-        For data lookups, this property may be left blank if ``from.fields``
-        has been specified (those field names will be used); if ``from.fields``
-        has not been specified, ``as`` must be a string.
-
-        For selection lookups, this property is optional: if unspecified,
-        looked up values will be stored under a property named for the selection;
-        and if specified, it must correspond to ``from.fields``.
-    from : :class:`LookupSelection`
-        The selection to use as the secondary data reference.
-    """
-    _schema = {'$ref': '#/definitions/SelectionLookupTransform'}
-    _rootschema = Root._schema
-
-    def __init__(self, lookup=Undefined, default=Undefined, **kwds):
-        super(SelectionLookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
+        super(LookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
 
 
 class PivotTransform(Transform):
@@ -19100,6 +18399,18 @@ class Vector2string(SelectionInitInterval):
         super(Vector2string, self).__init__(*args)
 
 
+class Vector3number(VegaLiteSchema):
+    """Vector3number schema wrapper
+
+    List([float, float, float])
+    """
+    _schema = {'$ref': '#/definitions/Vector3<number>'}
+    _rootschema = Root._schema
+
+    def __init__(self, *args):
+        super(Vector3number, self).__init__(*args)
+
+
 class ViewBackground(VegaLiteSchema):
     """ViewBackground schema wrapper
 
@@ -19214,6 +18525,8 @@ class ViewConfig(VegaLiteSchema):
         The fill opacity (value between [0,1]).
 
         **Default value:** ``1``
+    height : float
+        Default height
     opacity : float
         The overall opacity (value between [0,1]).
 
@@ -19246,24 +18559,27 @@ class ViewConfig(VegaLiteSchema):
         **Default value:** ``1``
     strokeWidth : float
         The stroke width, in pixels.
+    width : float
+        Default width
     """
     _schema = {'$ref': '#/definitions/ViewConfig'}
     _rootschema = Root._schema
 
     def __init__(self, clip=Undefined, continuousHeight=Undefined, continuousWidth=Undefined,
                  cornerRadius=Undefined, discreteHeight=Undefined, discreteWidth=Undefined,
-                 fill=Undefined, fillOpacity=Undefined, opacity=Undefined, step=Undefined,
-                 stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 fill=Undefined, fillOpacity=Undefined, height=Undefined, opacity=Undefined,
+                 step=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, **kwds):
+                 strokeOpacity=Undefined, strokeWidth=Undefined, width=Undefined, **kwds):
         super(ViewConfig, self).__init__(clip=clip, continuousHeight=continuousHeight,
                                          continuousWidth=continuousWidth, cornerRadius=cornerRadius,
                                          discreteHeight=discreteHeight, discreteWidth=discreteWidth,
-                                         fill=fill, fillOpacity=fillOpacity, opacity=opacity, step=step,
-                                         stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                         strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                         strokeMiterLimit=strokeMiterLimit, strokeOpacity=strokeOpacity,
-                                         strokeWidth=strokeWidth, **kwds)
+                                         fill=fill, fillOpacity=fillOpacity, height=height,
+                                         opacity=opacity, step=step, stroke=stroke, strokeCap=strokeCap,
+                                         strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
+                                         strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                                         strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
+                                         width=width, **kwds)
 
 
 class WindowEventType(VegaLiteSchema):
