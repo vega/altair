@@ -381,8 +381,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -614,7 +612,7 @@
               "description": "Color of gridlines.\n\n__Default value:__ `\"lightGray\"`."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>"
+              "$ref": "#/definitions/ConditionalAxisColor"
             }
           ]
         },
@@ -628,7 +626,7 @@
               "type": "array"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumberArray"
             }
           ]
         },
@@ -639,7 +637,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -652,7 +650,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -664,7 +662,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -675,7 +673,7 @@
               "description": "Horizontal text alignment of axis tick labels, overriding the default setting for the current axis orientation."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -692,7 +690,7 @@
               "description": "Vertical text baseline of axis tick labels, overriding the default setting for the current axis orientation. Can be `\"top\"`, `\"middle\"`, `\"bottom\"`, or `\"alphabetic\"`."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>"
+              "$ref": "#/definitions/ConditionalAxisLabelBaseline"
             }
           ]
         },
@@ -717,7 +715,7 @@
               "description": "The color of the tick label, can be in hex color code or regular color name."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>"
+              "$ref": "#/definitions/ConditionalAxisColor"
             }
           ]
         },
@@ -743,7 +741,7 @@
               "type": "string"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>"
+              "$ref": "#/definitions/ConditionalAxisString"
             }
           ]
         },
@@ -755,7 +753,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -766,7 +764,7 @@
               "description": "Font style of the title."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>"
+              "$ref": "#/definitions/ConditionalAxisLabelFontStyle"
             }
           ]
         },
@@ -777,7 +775,7 @@
               "description": "Font weight of axis tick labels."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>"
+              "$ref": "#/definitions/ConditionalAxisLabelFontWeight"
             }
           ]
         },
@@ -792,7 +790,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -854,12 +852,13 @@
               "description": "The color of the axis's tick.\n\n__Default value:__ `\"gray\"`"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>"
+              "$ref": "#/definitions/ConditionalAxisColor"
             }
           ]
         },
         "tickCount": {
-          "description": "A desired number of ticks, for axes visualizing quantitative scales. The resulting number may be different so that values are \"nice\" (multiples of 2, 5, 10) and lie within the underlying scale's range.",
+          "description": "A desired number of ticks, for axes visualizing quantitative scales. The resulting number may be different so that values are \"nice\" (multiples of 2, 5, 10) and lie within the underlying scale's range.\n\n__Default value__: Determine using a formula `ceil(width/40)` for x and `ceil(height/40)` for y.",
+          "minimum": 0,
           "type": "number"
         },
         "tickDash": {
@@ -872,7 +871,7 @@
               "type": "array"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumberArray"
             }
           ]
         },
@@ -883,7 +882,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -906,7 +905,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -927,7 +926,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1115,7 +1114,7 @@
               "description": "Color of gridlines.\n\n__Default value:__ `\"lightGray\"`."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>"
+              "$ref": "#/definitions/ConditionalAxisColor"
             }
           ]
         },
@@ -1129,7 +1128,7 @@
               "type": "array"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumberArray"
             }
           ]
         },
@@ -1140,7 +1139,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1153,7 +1152,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1165,7 +1164,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1176,7 +1175,7 @@
               "description": "Horizontal text alignment of axis tick labels, overriding the default setting for the current axis orientation."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1193,7 +1192,7 @@
               "description": "Vertical text baseline of axis tick labels, overriding the default setting for the current axis orientation. Can be `\"top\"`, `\"middle\"`, `\"bottom\"`, or `\"alphabetic\"`."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>"
+              "$ref": "#/definitions/ConditionalAxisLabelBaseline"
             }
           ]
         },
@@ -1218,7 +1217,7 @@
               "description": "The color of the tick label, can be in hex color code or regular color name."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>"
+              "$ref": "#/definitions/ConditionalAxisColor"
             }
           ]
         },
@@ -1240,7 +1239,7 @@
               "type": "string"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>"
+              "$ref": "#/definitions/ConditionalAxisString"
             }
           ]
         },
@@ -1252,7 +1251,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1263,7 +1262,7 @@
               "description": "Font style of the title."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>"
+              "$ref": "#/definitions/ConditionalAxisLabelFontStyle"
             }
           ]
         },
@@ -1274,7 +1273,7 @@
               "description": "Font weight of axis tick labels."
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>"
+              "$ref": "#/definitions/ConditionalAxisLabelFontWeight"
             }
           ]
         },
@@ -1289,7 +1288,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1321,10 +1320,6 @@
           "$ref": "#/definitions/AxisOrient",
           "description": "The orientation of the axis. One of `\"top\"`, `\"bottom\"`, `\"left\"` or `\"right\"`. The orientation can be used to further specialize the axis type (e.g., a y-axis oriented towards the right edge of the chart).\n\n__Default value:__ `\"bottom\"` for x-axes and `\"left\"` for y-axes."
         },
-        "shortTimeLabels": {
-          "description": "Whether month names and weekday names should be abbreviated.\n\n__Default value:__  `false`",
-          "type": "boolean"
-        },
         "tickBand": {
           "description": "For band scales, indicates if ticks and grid lines should be placed at the center of a band (default) or at the band extents to indicate intervals.",
           "enum": [
@@ -1347,7 +1342,7 @@
               "description": "The color of the axis's tick.\n\n__Default value:__ `\"gray\"`"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>"
+              "$ref": "#/definitions/ConditionalAxisColor"
             }
           ]
         },
@@ -1361,7 +1356,7 @@
               "type": "array"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumberArray"
             }
           ]
         },
@@ -1372,7 +1367,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1391,7 +1386,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1412,7 +1407,7 @@
               "type": "number"
             },
             {
-              "$ref": "#/definitions/ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>"
+              "$ref": "#/definitions/ConditionalAxisNumber"
             }
           ]
         },
@@ -1782,8 +1777,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -1860,7 +1853,7 @@
       },
       "type": "object"
     },
-    "BaseTitleNoSignals": {
+    "BaseTitleNoValueRefs": {
       "$ref": "#/definitions/ExcludeMappedValueRef<BaseTitle>"
     },
     "Baseline": {
@@ -2038,6 +2031,12 @@
             "select"
           ],
           "type": "string"
+        },
+        "labels": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "name": {
           "type": "string"
@@ -2348,6 +2347,25 @@
       ],
       "type": "object"
     },
+    "Categorical": {
+      "enum": [
+        "accent",
+        "category10",
+        "category20",
+        "category20b",
+        "category20c",
+        "dark2",
+        "paired",
+        "pastel1",
+        "pastel2",
+        "set1",
+        "set2",
+        "set3",
+        "tableau10",
+        "tableau20"
+      ],
+      "type": "string"
+    },
     "Color": {
       "anyOf": [
         {
@@ -2519,6 +2537,25 @@
         "rebeccapurple"
       ],
       "type": "string"
+    },
+    "ColorScheme": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Categorical"
+        },
+        {
+          "$ref": "#/definitions/SequentialSingleHue"
+        },
+        {
+          "$ref": "#/definitions/SequentialMultiHue"
+        },
+        {
+          "$ref": "#/definitions/Diverging"
+        },
+        {
+          "$ref": "#/definitions/Cyclical"
+        }
+      ]
     },
     "Encoding": {
       "additionalProperties": false,
@@ -2965,17 +3002,35 @@
         }
       ]
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>": {
+    "ConditionalAxisColor": {
+      "$ref": "#/definitions/ConditionalAxisProperty<(Color|null)>"
+    },
+    "ConditionalAxisLabelBaseline": {
+      "$ref": "#/definitions/ConditionalAxisProperty<(TextBaseline|null)>"
+    },
+    "ConditionalAxisLabelFontStyle": {
+      "$ref": "#/definitions/ConditionalAxisProperty<(FontStyle|null)>"
+    },
+    "ConditionalAxisLabelFontWeight": {
+      "$ref": "#/definitions/ConditionalAxisProperty<(FontWeight|null)>"
+    },
+    "ConditionalAxisNumber": {
+      "$ref": "#/definitions/ConditionalAxisProperty<(number|null)>"
+    },
+    "ConditionalAxisNumberArray": {
+      "$ref": "#/definitions/ConditionalAxisProperty<(number[]|null)>"
+    },
+    "ConditionalAxisProperty<(Color|null)>": {
       "additionalProperties": false,
       "properties": {
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>>"
+              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(Color|null)>>"
             },
             {
               "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>>"
+                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(Color|null)>>"
               },
               "type": "array"
             }
@@ -2984,8 +3039,7 @@
         "value": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Align",
-              "description": "Horizontal text alignment of axis tick labels, overriding the default setting for the current axis orientation."
+              "$ref": "#/definitions/Color"
             },
             {
               "type": "null"
@@ -3000,17 +3054,17 @@
       ],
       "type": "object"
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>": {
+    "ConditionalAxisProperty<(FontStyle|null)>": {
       "additionalProperties": false,
       "properties": {
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>>"
+              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(FontStyle|null)>>"
             },
             {
               "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>>"
+                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(FontStyle|null)>>"
               },
               "type": "array"
             }
@@ -3019,8 +3073,7 @@
         "value": {
           "anyOf": [
             {
-              "$ref": "#/definitions/TextBaseline",
-              "description": "Vertical text baseline of axis tick labels, overriding the default setting for the current axis orientation. Can be `\"top\"`, `\"middle\"`, `\"bottom\"`, or `\"alphabetic\"`."
+              "$ref": "#/definitions/FontStyle"
             },
             {
               "type": "null"
@@ -3035,17 +3088,17 @@
       ],
       "type": "object"
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>": {
+    "ConditionalAxisProperty<(FontWeight|null)>": {
       "additionalProperties": false,
       "properties": {
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>>"
+              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(FontWeight|null)>>"
             },
             {
               "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>>"
+                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(FontWeight|null)>>"
               },
               "type": "array"
             }
@@ -3054,8 +3107,7 @@
         "value": {
           "anyOf": [
             {
-              "$ref": "#/definitions/FontWeight",
-              "description": "Font weight of axis tick labels."
+              "$ref": "#/definitions/FontWeight"
             },
             {
               "type": "null"
@@ -3070,17 +3122,17 @@
       ],
       "type": "object"
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>": {
+    "ConditionalAxisProperty<(TextBaseline|null)>": {
       "additionalProperties": false,
       "properties": {
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>>"
+              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(TextBaseline|null)>>"
             },
             {
               "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>>"
+                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(TextBaseline|null)>>"
               },
               "type": "array"
             }
@@ -3089,8 +3141,7 @@
         "value": {
           "anyOf": [
             {
-              "$ref": "#/definitions/FontStyle",
-              "description": "Font style of the title."
+              "$ref": "#/definitions/TextBaseline"
             },
             {
               "type": "null"
@@ -3105,17 +3156,17 @@
       ],
       "type": "object"
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>": {
+    "ConditionalAxisProperty<(number[]|null)>": {
       "additionalProperties": false,
       "properties": {
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>>"
+              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(number[]|null)>>"
             },
             {
               "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>>"
+                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(number[]|null)>>"
               },
               "type": "array"
             }
@@ -3124,133 +3175,6 @@
         "value": {
           "anyOf": [
             {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/Color"
-                }
-              ],
-              "description": "The color of the tick label, can be in hex color code or regular color name."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/Color"
-                }
-              ],
-              "description": "Color of gridlines.\n\n__Default value:__ `\"lightGray\"`."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/Color"
-                }
-              ],
-              "description": "The color of the axis's tick.\n\n__Default value:__ `\"gray\"`"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "An array of alternating [stroke, space] lengths for dashed tick mark lines.",
               "items": {
                 "type": "number"
               },
@@ -3269,36 +3193,28 @@
       ],
       "type": "object"
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>": {
+    "ConditionalAxisProperty<(number|null)>": {
       "additionalProperties": false,
       "properties": {
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>>"
+              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(number|null)>>"
             },
             {
               "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>>"
+                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(number|null)>>"
               },
               "type": "array"
             }
           ]
         },
         "value": {
-          "anyOf": [
-            {
-              "description": "An array of alternating [stroke, space] lengths for dashed grid lines.",
-              "items": {
-                "type": "number"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity).",
+          "type": [
+            "number",
+            "null"
+          ]
         }
       },
       "required": [
@@ -3307,34 +3223,28 @@
       ],
       "type": "object"
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>": {
+    "ConditionalAxisProperty<(string|null)>": {
       "additionalProperties": false,
       "properties": {
         "condition": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>>"
+              "$ref": "#/definitions/ConditionalPredicate<StringValueDef>"
             },
             {
               "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>>"
+                "$ref": "#/definitions/ConditionalPredicate<StringValueDef>"
               },
               "type": "array"
             }
           ]
         },
         "value": {
-          "anyOf": [
-            {
-              "description": "The width, in pixels, of ticks.\n\n__Default value:__ `1`",
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity).",
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "required": [
@@ -3343,289 +3253,8 @@
       ],
       "type": "object"
     },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "Opacity of the ticks.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The pixel offset at which to start drawing with the grid dash array.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The opacity of the labels.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The pixel offset at which to start drawing with the tick mark dash array.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The stroke opacity of grid (value between [0,1])\n\n__Default value:__ `1`",
-              "maximum": 1,
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The font size of the label, in pixels.",
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The grid width, in pixels.\n\n__Default value:__ `1`",
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalAxisProperty<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>": {
-      "additionalProperties": false,
-      "properties": {
-        "condition": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>>"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>>"
-              },
-              "type": "array"
-            }
-          ]
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The font of the tick label.",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "condition",
-        "value"
-      ],
-      "type": "object"
+    "ConditionalAxisString": {
+      "$ref": "#/definitions/ConditionalAxisProperty<(string|null)>"
     },
     "ConditionalPredicate<MarkPropFieldDef>": {
       "additionalProperties": false,
@@ -3866,6 +3495,81 @@
       ],
       "type": "object"
     },
+    "ConditionalPredicate<ValueDef<(Color|null)>>": {
+      "additionalProperties": false,
+      "properties": {
+        "test": {
+          "$ref": "#/definitions/LogicalOperand<Predicate>",
+          "description": "Predicate for triggering the condition"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Color"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+        }
+      },
+      "required": [
+        "test",
+        "value"
+      ],
+      "type": "object"
+    },
+    "ConditionalPredicate<ValueDef<(FontStyle|null)>>": {
+      "additionalProperties": false,
+      "properties": {
+        "test": {
+          "$ref": "#/definitions/LogicalOperand<Predicate>",
+          "description": "Predicate for triggering the condition"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FontStyle"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+        }
+      },
+      "required": [
+        "test",
+        "value"
+      ],
+      "type": "object"
+    },
+    "ConditionalPredicate<ValueDef<(FontWeight|null)>>": {
+      "additionalProperties": false,
+      "properties": {
+        "test": {
+          "$ref": "#/definitions/LogicalOperand<Predicate>",
+          "description": "Predicate for triggering the condition"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FontWeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+        }
+      },
+      "required": [
+        "test",
+        "value"
+      ],
+      "type": "object"
+    },
     "ConditionalPredicate<ValueDef<(Gradient|string|null)>>": {
       "additionalProperties": false,
       "properties": {
@@ -3894,7 +3598,7 @@
       ],
       "type": "object"
     },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-6039-6088-981995915-0-10466|undefined)870796116,undefined>870796116|null)>>": {
+    "ConditionalPredicate<ValueDef<(TextBaseline|null)>>": {
       "additionalProperties": false,
       "properties": {
         "test": {
@@ -3904,8 +3608,7 @@
         "value": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Align",
-              "description": "Horizontal text alignment of axis tick labels, overriding the default setting for the current axis orientation."
+              "$ref": "#/definitions/TextBaseline"
             },
             {
               "type": "null"
@@ -3920,7 +3623,7 @@
       ],
       "type": "object"
     },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9003-9055-981995915-0-10466|undefined)186452232,undefined>186452232|null)>>": {
+    "ConditionalPredicate<ValueDef<(number[]|null)>>": {
       "additionalProperties": false,
       "properties": {
         "test": {
@@ -3930,184 +3633,6 @@
         "value": {
           "anyOf": [
             {
-              "$ref": "#/definitions/TextBaseline",
-              "description": "Vertical text baseline of axis tick labels, overriding the default setting for the current axis orientation. Can be `\"top\"`, `\"middle\"`, `\"bottom\"`, or `\"alphabetic\"`."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9098-9247-981995915-0-10466|undefined)1209375024,undefined>1209375024|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/FontWeight",
-              "description": "Font weight of axis tick labels."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(def-alias-981995915-9247-9388-981995915-0-10466|undefined)679934267,undefined>679934267|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/FontStyle",
-              "description": "Font style of the title."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)1719818830,undefined>1719818830|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/Color"
-                }
-              ],
-              "description": "The color of the tick label, can be in hex color code or regular color name."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)2086385775,undefined>2086385775|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/Color"
-                }
-              ],
-              "description": "Color of gridlines.\n\n__Default value:__ `\"lightGray\"`."
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(null|def-alias-1203634144-2468-2565-1203634144-0-2566|undefined)565543918,undefined>565543918|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "$ref": "#/definitions/Color"
-                }
-              ],
-              "description": "The color of the axis's tick.\n\n__Default value:__ `\"gray\"`"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)105503503,undefined>105503503|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "An array of alternating [stroke, space] lengths for dashed tick mark lines.",
               "items": {
                 "type": "number"
               },
@@ -4126,7 +3651,7 @@
       ],
       "type": "object"
     },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number[]|undefined)927251285,undefined>927251285|null)>>": {
+    "ConditionalPredicate<ValueDef<(number|null)>>": {
       "additionalProperties": false,
       "properties": {
         "test": {
@@ -4134,258 +3659,11 @@
           "description": "Predicate for triggering the condition"
         },
         "value": {
-          "anyOf": [
-            {
-              "description": "An array of alternating [stroke, space] lengths for dashed grid lines.",
-              "items": {
-                "type": "number"
-              },
-              "type": "array"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1626350768,undefined>1626350768|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The width, in pixels, of ticks.\n\n__Default value:__ `1`",
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1791665056,undefined>1791665056|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "Opacity of the ticks.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)1806960624,undefined>1806960624|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The pixel offset at which to start drawing with the grid dash array.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)377890894,undefined>377890894|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The opacity of the labels.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)61636408,undefined>61636408|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The pixel offset at which to start drawing with the tick mark dash array.",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)702672441,undefined>702672441|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The stroke opacity of grid (value between [0,1])\n\n__Default value:__ `1`",
-              "maximum": 1,
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)720879958,undefined>720879958|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The font size of the label, in pixels.",
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(number|undefined)742391737,undefined>742391737|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The grid width, in pixels.\n\n__Default value:__ `1`",
-              "minimum": 0,
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
-        }
-      },
-      "required": [
-        "test",
-        "value"
-      ],
-      "type": "object"
-    },
-    "ConditionalPredicate<ValueDef<(alias-724931800-67988-68103-724931800-0-208413<(string|undefined)1723860780,undefined>1723860780|null)>>": {
-      "additionalProperties": false,
-      "properties": {
-        "test": {
-          "$ref": "#/definitions/LogicalOperand<Predicate>",
-          "description": "Predicate for triggering the condition"
-        },
-        "value": {
-          "anyOf": [
-            {
-              "description": "The font of the tick label.",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+          "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity).",
+          "type": [
+            "number",
+            "null"
+          ]
         }
       },
       "required": [
@@ -4827,7 +4105,7 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "axis": {
           "$ref": "#/definitions/AxisConfig",
@@ -4991,7 +4269,7 @@
           "description": "An object hash that defines key-value mappings to determine default properties for marks with a given [style](https://vega.github.io/vega-lite/docs/mark.html#mark-def). The keys represent styles names; the values have to be valid [mark configuration objects](https://vega.github.io/vega-lite/docs/mark.html#config)."
         },
         "text": {
-          "$ref": "#/definitions/TextConfig",
+          "$ref": "#/definitions/MarkConfig",
           "description": "Text-Specific Config"
         },
         "tick": {
@@ -5083,6 +4361,13 @@
       ],
       "type": "string"
     },
+    "Cyclical": {
+      "enum": [
+        "rainbow",
+        "sinebow"
+      ],
+      "type": "string"
+    },
     "Data": {
       "anyOf": [
         {
@@ -5108,42 +4393,6 @@
           "$ref": "#/definitions/TopoDataFormat"
         }
       ]
-    },
-    "DataLookupTransform": {
-      "additionalProperties": false,
-      "properties": {
-        "as": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/FieldName"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/FieldName"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "The output fields on which to store the looked up data values.\n\nFor data lookups, this property may be left blank if `from.fields`\nhas been specified (those field names will be used); if `from.fields`\nhas not been specified, `as` must be a string.\n\nFor selection lookups, this property is optional: if unspecified,\nlooked up values will be stored under a property named for the selection;\nand if specified, it must correspond to `from.fields`."
-        },
-        "default": {
-          "description": "The default value to use if lookup fails.\n\n__Default value:__ `null`",
-          "type": "string"
-        },
-        "from": {
-          "$ref": "#/definitions/LookupData",
-          "description": "Secondary data reference."
-        },
-        "lookup": {
-          "description": "Key in primary data source.",
-          "type": "string"
-        }
-      },
-      "required": [
-        "from",
-        "lookup"
-      ],
-      "type": "object"
     },
     "DataSource": {
       "anyOf": [
@@ -5379,6 +4628,111 @@
       "enum": [
         "ltr",
         "rtl"
+      ],
+      "type": "string"
+    },
+    "Diverging": {
+      "enum": [
+        "blueorange",
+        "blueorange-3",
+        "blueorange-4",
+        "blueorange-5",
+        "blueorange-6",
+        "blueorange-7",
+        "blueorange-8",
+        "blueorange-9",
+        "blueorange-10",
+        "blueorange-11",
+        "brownbluegreen",
+        "brownbluegreen-3",
+        "brownbluegreen-4",
+        "brownbluegreen-5",
+        "brownbluegreen-6",
+        "brownbluegreen-7",
+        "brownbluegreen-8",
+        "brownbluegreen-9",
+        "brownbluegreen-10",
+        "brownbluegreen-11",
+        "purplegreen",
+        "purplegreen-3",
+        "purplegreen-4",
+        "purplegreen-5",
+        "purplegreen-6",
+        "purplegreen-7",
+        "purplegreen-8",
+        "purplegreen-9",
+        "purplegreen-10",
+        "purplegreen-11",
+        "pinkyellowgreen",
+        "pinkyellowgreen-3",
+        "pinkyellowgreen-4",
+        "pinkyellowgreen-5",
+        "pinkyellowgreen-6",
+        "pinkyellowgreen-7",
+        "pinkyellowgreen-8",
+        "pinkyellowgreen-9",
+        "pinkyellowgreen-10",
+        "pinkyellowgreen-11",
+        "purpleorange",
+        "purpleorange-3",
+        "purpleorange-4",
+        "purpleorange-5",
+        "purpleorange-6",
+        "purpleorange-7",
+        "purpleorange-8",
+        "purpleorange-9",
+        "purpleorange-10",
+        "purpleorange-11",
+        "redblue",
+        "redblue-3",
+        "redblue-4",
+        "redblue-5",
+        "redblue-6",
+        "redblue-7",
+        "redblue-8",
+        "redblue-9",
+        "redblue-10",
+        "redblue-11",
+        "redgrey",
+        "redgrey-3",
+        "redgrey-4",
+        "redgrey-5",
+        "redgrey-6",
+        "redgrey-7",
+        "redgrey-8",
+        "redgrey-9",
+        "redgrey-10",
+        "redgrey-11",
+        "redyellowblue",
+        "redyellowblue-3",
+        "redyellowblue-4",
+        "redyellowblue-5",
+        "redyellowblue-6",
+        "redyellowblue-7",
+        "redyellowblue-8",
+        "redyellowblue-9",
+        "redyellowblue-10",
+        "redyellowblue-11",
+        "redyellowgreen",
+        "redyellowgreen-3",
+        "redyellowgreen-4",
+        "redyellowgreen-5",
+        "redyellowgreen-6",
+        "redyellowgreen-7",
+        "redyellowgreen-8",
+        "redyellowgreen-9",
+        "redyellowgreen-10",
+        "redyellowgreen-11",
+        "spectral",
+        "spectral-3",
+        "spectral-4",
+        "spectral-5",
+        "spectral-6",
+        "spectral-7",
+        "spectral-8",
+        "spectral-9",
+        "spectral-10",
+        "spectral-11"
       ],
       "type": "string"
     },
@@ -6466,6 +5820,14 @@
       "additionalProperties": false,
       "description": "Unit spec that can have a composite mark and row or column channels (shorthand for a facet spec).",
       "properties": {
+        "bounds": {
+          "description": "The bounds calculation method to use for determining the extent of a sub-plot. One of `full` (the default) or `flush`.\n\n- If set to `full`, the entire calculated bounds (including axes, title, and legend) will be used.\n- If set to `flush`, only the specified width and height values for the sub-view will be used. The `flush` setting can be useful when attempting to place sub-plots without axes or legends into a uniform grid structure.\n\n__Default value:__ `\"full\"`",
+          "enum": [
+            "full",
+            "flush"
+          ],
+          "type": "string"
+        },
         "data": {
           "anyOf": [
             {
@@ -8320,10 +7682,6 @@
           "description": "A boolean flag indicating if labels should be included as part of the header.\n\n__Default value:__ `true`.",
           "type": "boolean"
         },
-        "shortTimeLabels": {
-          "description": "Whether month names and weekday names should be abbreviated.\n\n__Default value:__  `false`",
-          "type": "boolean"
-        },
         "title": {
           "description": "Set to null to disable title for the axis, legend, or header.",
           "type": "null"
@@ -9449,6 +8807,19 @@
       },
       "type": "object"
     },
+    "LegendBinding": {
+      "anyOf": [
+        {
+          "enum": [
+            "legend"
+          ],
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/LegendStreamBinding"
+        }
+      ]
+    },
     "LegendConfig": {
       "additionalProperties": false,
       "properties": {
@@ -9628,10 +8999,6 @@
         "rowPadding": {
           "description": "The vertical padding in pixels between symbol legend entries.\n\n__Default value:__ `2`.",
           "type": "number"
-        },
-        "shortTimeLabels": {
-          "description": "Whether month names and weekday names should be abbreviated.\n\n__Default value:__  `false`",
-          "type": "boolean"
         },
         "strokeColor": {
           "anyOf": [
@@ -9814,6 +9181,10 @@
         "titlePadding": {
           "description": "The padding, in pixels, between title and legend.\n\n__Default value:__ `5`.",
           "type": "number"
+        },
+        "unselectedOpacity": {
+          "description": "The opacity of unselected legend entries.\n\n__Default value:__ 0.35.",
+          "type": "number"
         }
       },
       "type": "object"
@@ -9952,6 +9323,25 @@
           "$ref": "#/definitions/ResolveMode"
         }
       },
+      "type": "object"
+    },
+    "LegendStreamBinding": {
+      "additionalProperties": false,
+      "properties": {
+        "legend": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/Stream"
+            }
+          ]
+        }
+      },
+      "required": [
+        "legend"
+      ],
       "type": "object"
     },
     "LineConfig": {
@@ -10200,8 +9590,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -10572,6 +9960,7 @@
           "description": "Key in data to lookup."
         },
         "selection": {
+          "description": "Selection name to look up.",
           "type": "string"
         }
       },
@@ -10582,14 +9971,47 @@
       "type": "object"
     },
     "LookupTransform": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/DataLookupTransform"
+      "additionalProperties": false,
+      "properties": {
+        "as": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/FieldName"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/FieldName"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "The output fields on which to store the looked up data values.\n\nFor data lookups, this property may be left blank if `from.fields`\nhas been specified (those field names will be used); if `from.fields`\nhas not been specified, `as` must be a string.\n\nFor selection lookups, this property is optional: if unspecified,\nlooked up values will be stored under a property named for the selection;\nand if specified, it must correspond to `from.fields`."
         },
-        {
-          "$ref": "#/definitions/SelectionLookupTransform"
+        "default": {
+          "description": "The default value to use if lookup fails.\n\n__Default value:__ `null`",
+          "type": "string"
+        },
+        "from": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/LookupData"
+            },
+            {
+              "$ref": "#/definitions/LookupSelection"
+            }
+          ],
+          "description": "Data source or selection for secondary data reference."
+        },
+        "lookup": {
+          "description": "Key in primary data source.",
+          "type": "string"
         }
-      ]
+      },
+      "required": [
+        "lookup",
+        "from"
+      ],
+      "type": "object"
     },
     "Mark": {
       "description": "All types of primitive marks.",
@@ -10839,8 +10261,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -11216,8 +10636,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -11415,6 +10833,10 @@
     "MultiSelection": {
       "additionalProperties": false,
       "properties": {
+        "bind": {
+          "$ref": "#/definitions/LegendBinding",
+          "description": "When set, a selection is populated by interacting with the corresponding legend. Direct manipulation interaction is disabled by default;\nto re-enable it, set the selection's [`on`](https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties) property.\n\nLegend bindings are restricted to selections that only specify a single field or encoding."
+        },
         "clear": {
           "anyOf": [
             {
@@ -11500,6 +10922,10 @@
     "MultiSelectionConfig": {
       "additionalProperties": false,
       "properties": {
+        "bind": {
+          "$ref": "#/definitions/LegendBinding",
+          "description": "When set, a selection is populated by interacting with the corresponding legend. Direct manipulation interaction is disabled by default;\nto re-enable it, set the selection's [`on`](https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties) property.\n\nLegend bindings are restricted to selections that only specify a single field or encoding."
+        },
         "clear": {
           "anyOf": [
             {
@@ -11965,8 +11391,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -12334,7 +11758,14 @@
           "description": "__Required.__ A string defining the name of the field from which to pull a data value\nor an object defining iterated values from the [`repeat`](https://vega.github.io/vega-lite/docs/repeat.html) operator.\n\n__See also:__ [`field`](https://vega.github.io/vega-lite/docs/field.html) documentation.\n\n__Notes:__\n1)  Dots (`.`) and brackets (`[` and `]`) can be used to access nested objects (e.g., `\"field\": \"foo.bar\"` and `\"field\": \"foo['bar']\"`).\nIf field names contain dots or brackets but are not nested, you can use `\\\\` to escape dots and brackets (e.g., `\"a\\\\.b\"` and `\"a\\\\[0\\\\]\"`).\nSee more details about escaping in the [field documentation](https://vega.github.io/vega-lite/docs/field.html).\n2) `field` is not required if `aggregate` is `count`."
         },
         "impute": {
-          "$ref": "#/definitions/ImputeParams",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ImputeParams"
+            },
+            {
+              "type": "null"
+            }
+          ],
           "description": "An object defining the properties of the Impute Operation to be applied.\nThe field value of the other positional channel is taken as `key` of the `Impute` Operation.\nThe field of the `color` channel if specified is used as `groupby` of the `Impute` Operation.\n\n__See also:__ [`impute`](https://vega.github.io/vega-lite/docs/impute.html) documentation."
         },
         "scale": {
@@ -12429,25 +11860,16 @@
       "additionalProperties": false,
       "properties": {
         "center": {
-          "description": "Sets the projection’s center to the specified center, a two-element array of longitude and latitude in degrees.\n\n__Default value:__ `[0, 0]`",
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
+          "$ref": "#/definitions/Vector2<number>",
+          "description": "The projection’s center to the specified center, a two-element array of longitude and latitude in degrees.\n\n__Default value:__ `[0, 0]`"
         },
         "clipAngle": {
-          "description": "Sets the projection’s clipping circle radius to the specified angle in degrees. If `null`, switches to [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting rather than small-circle clipping.",
+          "description": "The projection’s clipping circle radius to the specified angle in degrees. If `null`, switches to [antimeridian](http://bl.ocks.org/mbostock/3788999) cutting rather than small-circle clipping.",
           "type": "number"
         },
         "clipExtent": {
-          "description": "Sets the projection’s viewport clip extent to the specified bounds in pixels. The extent bounds are specified as an array `[[x0, y0], [x1, y1]]`, where `x0` is the left-side of the viewport, `y0` is the top, `x1` is the right and `y1` is the bottom. If `null`, no viewport clipping is performed.",
-          "items": {
-            "items": {
-              "type": "number"
-            },
-            "type": "array"
-          },
-          "type": "array"
+          "$ref": "#/definitions/Vector2<Vector2<number>>",
+          "description": "The projection’s viewport clip extent to the specified bounds in pixels. The extent bounds are specified as an array `[[x0, y0], [x1, y1]]`, where `x0` is the left-side of the viewport, `y0` is the top, `x1` is the right and `y1` is the bottom. If `null`, no viewport clipping is performed."
         },
         "coefficient": {
           "type": "number"
@@ -12464,8 +11886,14 @@
         "parallel": {
           "type": "number"
         },
+        "parallels": {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
         "precision": {
-          "description": "Sets the threshold for the projection’s [adaptive resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in pixels. This value corresponds to the [Douglas–Peucker distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm). If precision is not specified, returns the projection’s current resampling precision which defaults to `√0.5 ≅ 0.70710…`.",
+          "description": "The threshold for the projection’s [adaptive resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in pixels. This value corresponds to the [Douglas–Peucker distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm). If precision is not specified, returns the projection’s current resampling precision which defaults to `√0.5 ≅ 0.70710…`.",
           "type": "number"
         },
         "radius": {
@@ -12481,14 +11909,18 @@
           "type": "boolean"
         },
         "rotate": {
-          "description": "Sets the projection’s three-axis rotation to the specified angles, which must be a two- or three-element array of numbers [`lambda`, `phi`, `gamma`] specifying the rotation angles in degrees about each spherical axis. (These correspond to yaw, pitch and roll.)\n\n__Default value:__ `[0, 0, 0]`",
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Vector2<number>"
+            },
+            {
+              "$ref": "#/definitions/Vector3<number>"
+            }
+          ],
+          "description": "The projection’s three-axis rotation to the specified angles, which must be a two- or three-element array of numbers [`lambda`, `phi`, `gamma`] specifying the rotation angles in degrees about each spherical axis. (These correspond to yaw, pitch and roll.)\n\n__Default value:__ `[0, 0, 0]`"
         },
         "scale": {
-          "description": "Sets the projection's scale (zoom) value, overriding automatic fitting.",
+          "description": "The projection's scale (zoom) value, overriding automatic fitting.",
           "type": "number"
         },
         "spacing": {
@@ -12498,11 +11930,8 @@
           "type": "number"
         },
         "translate": {
-          "description": "Sets the projection's translation (pan) value, overriding automatic fitting.",
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
+          "$ref": "#/definitions/Vector2<number>",
+          "description": "The projection's translation (pan) value, overriding automatic fitting."
         },
         "type": {
           "$ref": "#/definitions/ProjectionType",
@@ -12633,82 +12062,80 @@
       "type": "object"
     },
     "RangeConfig": {
-      "additionalProperties": {
-        "$ref": "#/definitions/RangeConfigValue"
-      },
+      "additionalProperties": false,
       "properties": {
         "category": {
           "anyOf": [
             {
+              "$ref": "#/definitions/RangeScheme"
+            },
+            {
               "items": {
                 "type": "string"
               },
               "type": "array"
-            },
-            {
-              "$ref": "#/definitions/SchemeConfig"
             }
           ],
-          "description": "Default range for _nominal_ (categorical) fields."
+          "description": "Default [color scheme](https://vega.github.io/vega/docs/schemes/) for categorical data."
         },
         "diverging": {
           "anyOf": [
             {
+              "$ref": "#/definitions/RangeScheme"
+            },
+            {
               "items": {
                 "type": "string"
               },
               "type": "array"
-            },
-            {
-              "$ref": "#/definitions/SchemeConfig"
             }
           ],
-          "description": "Default range for diverging _quantitative_ fields."
+          "description": "Default [color scheme](https://vega.github.io/vega/docs/schemes/) for diverging quantitative ramps."
         },
         "heatmap": {
           "anyOf": [
             {
+              "$ref": "#/definitions/RangeScheme"
+            },
+            {
               "items": {
                 "type": "string"
               },
               "type": "array"
-            },
-            {
-              "$ref": "#/definitions/SchemeConfig"
             }
           ],
-          "description": "Default range for _quantitative_ heatmaps."
+          "description": "Default [color scheme](https://vega.github.io/vega/docs/schemes/) for quantitative heatmaps."
         },
         "ordinal": {
           "anyOf": [
             {
+              "$ref": "#/definitions/RangeScheme"
+            },
+            {
               "items": {
                 "type": "string"
               },
               "type": "array"
-            },
-            {
-              "$ref": "#/definitions/SchemeConfig"
             }
           ],
-          "description": "Default range for _ordinal_ fields."
+          "description": "Default [color scheme](https://vega.github.io/vega/docs/schemes/) for rank-ordered data."
         },
         "ramp": {
           "anyOf": [
             {
+              "$ref": "#/definitions/RangeScheme"
+            },
+            {
               "items": {
                 "type": "string"
               },
               "type": "array"
-            },
-            {
-              "$ref": "#/definitions/SchemeConfig"
             }
           ],
-          "description": "Default range for _quantitative_ and _temporal_ fields."
+          "description": "Default [color scheme](https://vega.github.io/vega/docs/schemes/) for sequential quantitative ramps."
         },
         "symbol": {
-          "description": "Default range palette for the `shape` channel.",
+          "description": "Array of [symbol](https://vega.github.io/vega/docs/marks/symbol/) names or paths for the default shape palette.",
           "items": {
             "$ref": "#/definitions/SymbolShape"
           },
@@ -12717,29 +12144,123 @@
       },
       "type": "object"
     },
-    "RangeConfigValue": {
+    "RangeEnum": {
+      "enum": [
+        "width",
+        "height",
+        "symbol",
+        "category",
+        "ordinal",
+        "ramp",
+        "diverging",
+        "heatmap"
+      ],
+      "type": "string"
+    },
+    "RangeRaw": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "$ref": "#/definitions/SignalRef"
+          },
+          {
+            "$ref": "#/definitions/RangeRawArray"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "RangeRawArray": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "number"
+          },
+          {
+            "$ref": "#/definitions/SignalRef"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "RangeScheme": {
       "anyOf": [
         {
-          "items": {
-            "type": [
-              "number",
-              "string"
-            ]
-          },
-          "type": "array"
+          "$ref": "#/definitions/RangeEnum"
         },
         {
-          "$ref": "#/definitions/SchemeConfig"
+          "$ref": "#/definitions/RangeRaw"
+        },
+        {
+          "$ref": "#/definitions/SignalRef"
         },
         {
           "additionalProperties": false,
           "properties": {
-            "step": {
-              "type": "number"
+            "count": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "$ref": "#/definitions/SignalRef"
+                }
+              ]
+            },
+            "extent": {
+              "anyOf": [
+                {
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "$ref": "#/definitions/SignalRef"
+                      }
+                    ]
+                  },
+                  "type": "array"
+                },
+                {
+                  "$ref": "#/definitions/SignalRef"
+                }
+              ]
+            },
+            "scheme": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "$ref": "#/definitions/SignalRef"
+                },
+                {
+                  "$ref": "#/definitions/ColorScheme"
+                }
+              ]
             }
           },
           "required": [
-            "step"
+            "scheme"
           ],
           "type": "object"
         }
@@ -12989,8 +12510,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -13493,7 +13012,7 @@
               "type": "array"
             },
             {
-              "type": "string"
+              "$ref": "#/definitions/RangeEnum"
             }
           ],
           "description": "The range of the scale. One of:\n\n- A string indicating a [pre-defined named scale range](https://vega.github.io/vega-lite/docs/scale.html#range-config) (e.g., example, `\"symbol\"`, or `\"diverging\"`).\n\n- For [continuous scales](https://vega.github.io/vega-lite/docs/scale.html#continuous), two-element array indicating  minimum and maximum values, or an array with more than two entries for specifying a [piecewise scale](https://vega.github.io/vega-lite/docs/scale.html#piecewise).\n\n- For [discrete](https://vega.github.io/vega-lite/docs/scale.html#discrete) and [discretizing](https://vega.github.io/vega-lite/docs/scale.html#discretizing) scales, an array of desired output values.\n\n__Notes:__\n\n1) For color scales you can also specify a color [`scheme`](https://vega.github.io/vega-lite/docs/scale.html#scheme) instead of `range`.\n\n2) Any directly specified `range` for `x` and `y` channels will be ignored. Range can be customized via the view's corresponding [size](https://vega.github.io/vega-lite/docs/size.html) (`width` and `height`)."
@@ -13730,27 +13249,6 @@
       ],
       "type": "string"
     },
-    "SchemeConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "count": {
-          "type": "number"
-        },
-        "extent": {
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
-        },
-        "scheme": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "scheme"
-      ],
-      "type": "object"
-    },
     "SchemeParams": {
       "additionalProperties": false,
       "properties": {
@@ -13910,42 +13408,6 @@
     "SelectionInitMapping": {
       "$ref": "#/definitions/Dict<SelectionInit>"
     },
-    "SelectionLookupTransform": {
-      "additionalProperties": false,
-      "properties": {
-        "as": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/FieldName"
-            },
-            {
-              "items": {
-                "$ref": "#/definitions/FieldName"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "The output fields on which to store the looked up data values.\n\nFor data lookups, this property may be left blank if `from.fields`\nhas been specified (those field names will be used); if `from.fields`\nhas not been specified, `as` must be a string.\n\nFor selection lookups, this property is optional: if unspecified,\nlooked up values will be stored under a property named for the selection;\nand if specified, it must correspond to `from.fields`."
-        },
-        "default": {
-          "description": "The default value to use if lookup fails.\n\n__Default value:__ `null`",
-          "type": "string"
-        },
-        "from": {
-          "$ref": "#/definitions/LookupSelection",
-          "description": "The selection to use as the secondary data reference."
-        },
-        "lookup": {
-          "description": "Key in primary data source.",
-          "type": "string"
-        }
-      },
-      "required": [
-        "from",
-        "lookup"
-      ],
-      "type": "object"
-    },
     "SelectionPredicate": {
       "additionalProperties": false,
       "properties": {
@@ -14010,6 +13472,122 @@
       ],
       "type": "object"
     },
+    "SequentialMultiHue": {
+      "enum": [
+        "viridis",
+        "inferno",
+        "magma",
+        "plasma",
+        "bluegreen",
+        "bluegreen-3",
+        "bluegreen-4",
+        "bluegreen-5",
+        "bluegreen-6",
+        "bluegreen-7",
+        "bluegreen-8",
+        "bluegreen-9",
+        "bluepurple",
+        "bluepurple-3",
+        "bluepurple-4",
+        "bluepurple-5",
+        "bluepurple-6",
+        "bluepurple-7",
+        "bluepurple-8",
+        "bluepurple-9",
+        "greenblue",
+        "greenblue-3",
+        "greenblue-4",
+        "greenblue-5",
+        "greenblue-6",
+        "greenblue-7",
+        "greenblue-8",
+        "greenblue-9",
+        "orangered",
+        "orangered-3",
+        "orangered-4",
+        "orangered-5",
+        "orangered-6",
+        "orangered-7",
+        "orangered-8",
+        "orangered-9",
+        "purplebluegreen",
+        "purplebluegreen-3",
+        "purplebluegreen-4",
+        "purplebluegreen-5",
+        "purplebluegreen-6",
+        "purplebluegreen-7",
+        "purplebluegreen-8",
+        "purplebluegreen-9",
+        "purpleblue",
+        "purpleblue-3",
+        "purpleblue-4",
+        "purpleblue-5",
+        "purpleblue-6",
+        "purpleblue-7",
+        "purpleblue-8",
+        "purpleblue-9",
+        "purplered",
+        "purplered-3",
+        "purplered-4",
+        "purplered-5",
+        "purplered-6",
+        "purplered-7",
+        "purplered-8",
+        "purplered-9",
+        "redpurple",
+        "redpurple-3",
+        "redpurple-4",
+        "redpurple-5",
+        "redpurple-6",
+        "redpurple-7",
+        "redpurple-8",
+        "redpurple-9",
+        "yellowgreenblue",
+        "yellowgreenblue-3",
+        "yellowgreenblue-4",
+        "yellowgreenblue-5",
+        "yellowgreenblue-6",
+        "yellowgreenblue-7",
+        "yellowgreenblue-8",
+        "yellowgreenblue-9",
+        "yellowgreen",
+        "yellowgreen-3",
+        "yellowgreen-4",
+        "yellowgreen-5",
+        "yellowgreen-6",
+        "yellowgreen-7",
+        "yellowgreen-8",
+        "yellowgreen-9",
+        "yelloworangebrown",
+        "yelloworangebrown-3",
+        "yelloworangebrown-4",
+        "yelloworangebrown-5",
+        "yelloworangebrown-6",
+        "yelloworangebrown-7",
+        "yelloworangebrown-8",
+        "yelloworangebrown-9",
+        "yelloworangered",
+        "yelloworangered-3",
+        "yelloworangered-4",
+        "yelloworangered-5",
+        "yelloworangered-6",
+        "yelloworangered-7",
+        "yelloworangered-8",
+        "yelloworangered-9"
+      ],
+      "type": "string"
+    },
+    "SequentialSingleHue": {
+      "enum": [
+        "blues",
+        "greens",
+        "greys",
+        "purples",
+        "reds",
+        "oranges"
+      ],
+      "type": "string"
+    },
     "ShapeFieldDefWithCondition": {
       "$ref": "#/definitions/FieldDefWithCondition<MarkPropFieldDef<TypeForShape>,(string|null)>"
     },
@@ -14067,9 +13645,12 @@
                 "$ref": "#/definitions/Binding"
               },
               "type": "object"
+            },
+            {
+              "$ref": "#/definitions/LegendBinding"
             }
           ],
-          "description": "Establish a two-way binding between a single selection and input elements\n(also known as dynamic query widgets). A binding takes the form of\nVega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\n__See also:__ [`bind`](https://vega.github.io/vega-lite/docs/bind.html) documentation."
+          "description": "When set, a selection is populated by input elements (also known as dynamic query widgets)\nor by interacting with the corresponding legend. Direct manipulation interaction is disabled by default;\nto re-enable it, set the selection's [`on`](https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties) property.\n\nLegend bindings are restricted to selections that only specify a single field or encoding.\n\nQuery widget binding takes the form of Vega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\n__See also:__ [`bind`](https://vega.github.io/vega-lite/docs/bind.html) documentation."
         },
         "clear": {
           "anyOf": [
@@ -14156,9 +13737,12 @@
                 "$ref": "#/definitions/Binding"
               },
               "type": "object"
+            },
+            {
+              "$ref": "#/definitions/LegendBinding"
             }
           ],
-          "description": "Establish a two-way binding between a single selection and input elements\n(also known as dynamic query widgets). A binding takes the form of\nVega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\n__See also:__ [`bind`](https://vega.github.io/vega-lite/docs/bind.html) documentation."
+          "description": "When set, a selection is populated by input elements (also known as dynamic query widgets)\nor by interacting with the corresponding legend. Direct manipulation interaction is disabled by default;\nto re-enable it, set the selection's [`on`](https://vega.github.io/vega-lite/docs/selection.html#common-selection-properties) property.\n\nLegend bindings are restricted to selections that only specify a single field or encoding.\n\nQuery widget binding takes the form of Vega's [input element binding definition](https://vega.github.io/vega/docs/signals/#bind)\nor can be a mapping between projected field/encodings and binding definitions.\n\n__See also:__ [`bind`](https://vega.github.io/vega-lite/docs/bind.html) documentation."
         },
         "clear": {
           "anyOf": [
@@ -14631,336 +14215,6 @@
         }
       ]
     },
-    "TextConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "align": {
-          "$ref": "#/definitions/Align",
-          "description": "The horizontal alignment of the text or ranged marks (area, bar, image, rect, rule). One of `\"left\"`, `\"right\"`, `\"center\"`."
-        },
-        "angle": {
-          "description": "The rotation angle of the text, in degrees.",
-          "maximum": 360,
-          "minimum": 0,
-          "type": "number"
-        },
-        "aspect": {
-          "description": "Whether to keep aspect ratio of image marks.",
-          "type": "boolean"
-        },
-        "baseline": {
-          "$ref": "#/definitions/TextBaseline",
-          "description": "The vertical alignment of the text or ranged marks (area, bar, image, rect, rule). One of `\"top\"`, `\"middle\"`, `\"bottom\"`.\n\n__Default value:__ `\"middle\"`"
-        },
-        "color": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Color"
-            },
-            {
-              "$ref": "#/definitions/Gradient"
-            }
-          ],
-          "description": "Default color.\n\n__Default value:__ <span style=\"color: #4682b4;\">&#9632;</span> `\"#4682b4\"`\n\n__Note:__\n- This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).\n- The `fill` and `stroke` properties have higher precedence than `color` and will override `color`."
-        },
-        "cornerRadius": {
-          "description": "The radius in pixels of rounded rectangle corners.\n\n__Default value:__ `0`",
-          "type": "number"
-        },
-        "cornerRadiusBottomLeft": {
-          "description": "The radius in pixels of rounded rectangle bottom left corner.\n\n__Default value:__ `0`",
-          "type": "number"
-        },
-        "cornerRadiusBottomRight": {
-          "description": "The radius in pixels of rounded rectangle bottom right corner.\n\n__Default value:__ `0`",
-          "type": "number"
-        },
-        "cornerRadiusTopLeft": {
-          "description": "The radius in pixels of rounded rectangle top right corner.\n\n__Default value:__ `0`",
-          "type": "number"
-        },
-        "cornerRadiusTopRight": {
-          "description": "The radius in pixels of rounded rectangle top left corner.\n\n__Default value:__ `0`",
-          "type": "number"
-        },
-        "cursor": {
-          "$ref": "#/definitions/Cursor",
-          "description": "The mouse cursor used over the mark. Any valid [CSS cursor type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used."
-        },
-        "dir": {
-          "$ref": "#/definitions/Dir",
-          "description": "The direction of the text. One of `\"ltr\"` (left-to-right) or `\"rtl\"` (right-to-left). This property determines on which side is truncated in response to the limit parameter.\n\n__Default value:__ `\"ltr\"`"
-        },
-        "dx": {
-          "description": "The horizontal offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
-          "type": "number"
-        },
-        "dy": {
-          "description": "The vertical offset, in pixels, between the text label and its anchor point. The offset is applied after rotation by the _angle_ property.",
-          "type": "number"
-        },
-        "ellipsis": {
-          "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
-          "type": "string"
-        },
-        "fill": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Color"
-            },
-            {
-              "$ref": "#/definitions/Gradient"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Default Fill Color. This has higher precedence than `config.color`.\n\n__Default value:__ (None)"
-        },
-        "fillOpacity": {
-          "description": "The fill opacity (value between [0,1]).\n\n__Default value:__ `1`",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "filled": {
-          "description": "Whether the mark's color should be used as fill color instead of stroke color.\n\n__Default value:__ `false` for all `point`, `line`, and `rule` marks as well as `geoshape` marks for [`graticule`](https://vega.github.io/vega-lite/docs/data.html#graticule) data sources; otherwise, `true`.\n\n__Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).",
-          "type": "boolean"
-        },
-        "font": {
-          "description": "The typeface to set the text in (e.g., `\"Helvetica Neue\"`).",
-          "type": "string"
-        },
-        "fontSize": {
-          "description": "The font size, in pixels.",
-          "type": "number"
-        },
-        "fontStyle": {
-          "$ref": "#/definitions/FontStyle",
-          "description": "The font style (e.g., `\"italic\"`)."
-        },
-        "fontWeight": {
-          "$ref": "#/definitions/FontWeight",
-          "description": "The font weight.\nThis can be either a string (e.g `\"bold\"`, `\"normal\"`) or a number (`100`, `200`, `300`, ..., `900` where `\"normal\"` = `400` and `\"bold\"` = `700`)."
-        },
-        "height": {
-          "description": "Height of the marks.",
-          "type": "number"
-        },
-        "href": {
-          "description": "A URL to load upon mouse click. If defined, the mark acts as a hyperlink.",
-          "format": "uri",
-          "type": "string"
-        },
-        "interpolate": {
-          "$ref": "#/definitions/Interpolate",
-          "description": "The line interpolation method to use for line and area marks. One of the following:\n- `\"linear\"`: piecewise linear segments, as in a polyline.\n- `\"linear-closed\"`: close the linear segments to form a polygon.\n- `\"step\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"step-before\"`: alternate between vertical and horizontal segments, as in a step function.\n- `\"step-after\"`: alternate between horizontal and vertical segments, as in a step function.\n- `\"basis\"`: a B-spline, with control point duplication on the ends.\n- `\"basis-open\"`: an open B-spline; may not intersect the start or end.\n- `\"basis-closed\"`: a closed B-spline, as in a loop.\n- `\"cardinal\"`: a Cardinal spline, with control point duplication on the ends.\n- `\"cardinal-open\"`: an open Cardinal spline; may not intersect the start or end, but will intersect other control points.\n- `\"cardinal-closed\"`: a closed Cardinal spline, as in a loop.\n- `\"bundle\"`: equivalent to basis, except the tension parameter is used to straighten the spline.\n- `\"monotone\"`: cubic interpolation that preserves monotonicity in y."
-        },
-        "invalid": {
-          "description": "Defines how Vega-Lite should handle marks for invalid values (`null` and `NaN`).\n- If set to `\"filter\"` (default), all data items with null values will be skipped (for line, trail, and area marks) or filtered (for other marks).\n- If `null`, all data items are included. In this case, invalid values will be interpreted as zeroes.",
-          "enum": [
-            "filter",
-            null
-          ],
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "limit": {
-          "description": "The maximum length of the text mark in pixels. The text value will be automatically truncated if the rendered size exceeds the limit.\n\n__Default value:__ `0`, indicating no limit",
-          "type": "number"
-        },
-        "lineBreak": {
-          "description": "A delimiter, such as a newline character, upon which to break text strings into multiple lines. This property will be ignored if the text property is array-valued.",
-          "type": "string"
-        },
-        "lineHeight": {
-          "description": "The height, in pixels, of each line of text in a multi-line text mark.",
-          "type": "number"
-        },
-        "opacity": {
-          "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "order": {
-          "description": "For line and trail marks, this `order` property can be set to `null` or `false` to make the lines use the original order in the data sources.",
-          "type": [
-            "null",
-            "boolean"
-          ]
-        },
-        "orient": {
-          "$ref": "#/definitions/Orientation",
-          "description": "The orientation of a non-stacked bar, tick, area, and line charts.\nThe value is either horizontal (default) or vertical.\n- For bar, rule and tick, this determines whether the size of the bar and tick\nshould be applied to x or y dimension.\n- For area, this property determines the orient property of the Vega output.\n- For line and trail marks, this property determines the sort order of the points in the line\nif `config.sortLineBy` is not specified.\nFor stacked charts, this is always determined by the orientation of the stack;\ntherefore explicitly specified value will be ignored."
-        },
-        "radius": {
-          "description": "Polar coordinate radial offset, in pixels, of the text label from the origin determined by the `x` and `y` properties.",
-          "minimum": 0,
-          "type": "number"
-        },
-        "shape": {
-          "description": "Shape of the point marks. Supported values include:\n- plotting shapes: `\"circle\"`, `\"square\"`, `\"cross\"`, `\"diamond\"`, `\"triangle-up\"`, `\"triangle-down\"`, `\"triangle-right\"`, or `\"triangle-left\"`.\n- the line symbol `\"stroke\"`\n- centered directional shapes `\"arrow\"`, `\"wedge\"`, or `\"triangle\"`\n- a custom [SVG path string](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths) (For correct sizing, custom shape paths should be defined within a square bounding box with coordinates ranging from -1 to 1 along both the x and y dimensions.)\n\n__Default value:__ `\"circle\"`",
-          "type": "string"
-        },
-        "shortTimeLabels": {
-          "description": "Whether month names and weekday names should be abbreviated.",
-          "type": "boolean"
-        },
-        "size": {
-          "description": "Default size for marks.\n- For `point`/`circle`/`square`, this represents the pixel area of the marks. For example: in the case of circles, the radius is determined in part by the square root of the size value.\n- For `bar`, this represents the band size of the bar, in pixels.\n- For `text`, this represents the font size, in pixels.\n\n__Default value:__\n- `30` for point, circle, square marks; width/height's `step`\n- `2` for bar marks with discrete dimensions;\n- `5` for bar marks with continuous dimensions;\n- `11` for text marks.",
-          "minimum": 0,
-          "type": "number"
-        },
-        "stroke": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Color"
-            },
-            {
-              "$ref": "#/definitions/Gradient"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Default Stroke Color. This has higher precedence than `config.color`.\n\n__Default value:__ (None)"
-        },
-        "strokeCap": {
-          "$ref": "#/definitions/StrokeCap",
-          "description": "The stroke cap for line ending style. One of `\"butt\"`, `\"round\"`, or `\"square\"`.\n\n__Default value:__ `\"square\"`"
-        },
-        "strokeDash": {
-          "description": "An array of alternating stroke, space lengths for creating dashed or dotted lines.",
-          "items": {
-            "type": "number"
-          },
-          "type": "array"
-        },
-        "strokeDashOffset": {
-          "description": "The offset (in pixels) into which to begin drawing with the stroke dash array.",
-          "type": "number"
-        },
-        "strokeJoin": {
-          "$ref": "#/definitions/StrokeJoin",
-          "description": "The stroke line join method. One of `\"miter\"`, `\"round\"` or `\"bevel\"`.\n\n__Default value:__ `\"miter\"`"
-        },
-        "strokeMiterLimit": {
-          "description": "The miter limit at which to bevel a line join.",
-          "type": "number"
-        },
-        "strokeOpacity": {
-          "description": "The stroke opacity (value between [0,1]).\n\n__Default value:__ `1`",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "strokeWidth": {
-          "description": "The stroke width, in pixels.",
-          "minimum": 0,
-          "type": "number"
-        },
-        "tension": {
-          "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
-          "type": "number"
-        },
-        "text": {
-          "$ref": "#/definitions/Text",
-          "description": "Placeholder text if the `text` channel is not specified"
-        },
-        "theta": {
-          "description": "Polar coordinate angle, in radians, of the text label from the origin determined by the `x` and `y` properties. Values for `theta` follow the same convention of `arc` mark `startAngle` and `endAngle` properties: angles are measured in radians, with `0` indicating \"north\".",
-          "type": "number"
-        },
-        "timeUnitBand": {
-          "description": "Default relative band size for a time unit. If set to `1`, the bandwidth of the marks will be equal to the time unit band step.\nIf set to `0.5`, bandwidth of the marks will be half of the time unit band step.",
-          "type": "number"
-        },
-        "timeUnitBandPosition": {
-          "description": "Default relative band position for a time unit. If set to `0`, the marks will be positioned at the beginning of the time unit band step.\nIf set to `0.5`, the marks will be positioned in the middle of the time unit band step.",
-          "type": "number"
-        },
-        "tooltip": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Value"
-            },
-            {
-              "$ref": "#/definitions/TooltipContent"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
-        },
-        "width": {
-          "description": "Width of the marks.",
-          "type": "number"
-        },
-        "x": {
-          "anyOf": [
-            {
-              "type": "number"
-            },
-            {
-              "enum": [
-                "width"
-              ],
-              "type": "string"
-            }
-          ],
-          "description": "X coordinates of the marks, or width of horizontal `\"bar\"` and `\"area\"` without specified `x2` or `width`.\n\nThe `value` of this channel can be a number or a string `\"width\"` for the width of the plot."
-        },
-        "x2": {
-          "anyOf": [
-            {
-              "type": "number"
-            },
-            {
-              "enum": [
-                "width"
-              ],
-              "type": "string"
-            }
-          ],
-          "description": "X2 coordinates for ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`.\n\nThe `value` of this channel can be a number or a string `\"width\"` for the width of the plot."
-        },
-        "y": {
-          "anyOf": [
-            {
-              "type": "number"
-            },
-            {
-              "enum": [
-                "height"
-              ],
-              "type": "string"
-            }
-          ],
-          "description": "Y coordinates of the marks, or height of vertical `\"bar\"` and `\"area\"` without specified `y2` or `height`.\n\nThe `value` of this channel can be a number or a string `\"height\"` for the height of the plot."
-        },
-        "y2": {
-          "anyOf": [
-            {
-              "type": "number"
-            },
-            {
-              "enum": [
-                "height"
-              ],
-              "type": "string"
-            }
-          ],
-          "description": "Y2 coordinates for ranged `\"area\"`, `\"bar\"`, `\"rect\"`, and  `\"rule\"`.\n\nThe `value` of this channel can be a number or a string `\"height\"` for the height of the plot."
-        }
-      },
-      "type": "object"
-    },
     "TextFieldDefWithCondition": {
       "$ref": "#/definitions/FieldDefWithCondition<StringFieldDef,Text>"
     },
@@ -15201,8 +14455,6 @@
         },
         "tension": {
           "description": "Depending on the interpolation type, sets the tension parameter (for line and area marks).",
-          "maximum": 1,
-          "minimum": 0,
           "type": "number"
         },
         "text": {
@@ -15362,7 +14614,7 @@
       ]
     },
     "TitleConfig": {
-      "$ref": "#/definitions/BaseTitleNoSignals"
+      "$ref": "#/definitions/BaseTitleNoValueRefs"
     },
     "TitleFrame": {
       "enum": [
@@ -15577,7 +14829,7 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "background": {
           "$ref": "#/definitions/Color",
@@ -15704,7 +14956,7 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "background": {
           "$ref": "#/definitions/Color",
@@ -15824,7 +15076,7 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "background": {
           "$ref": "#/definitions/Color",
@@ -15963,7 +15215,7 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "background": {
           "$ref": "#/definitions/Color",
@@ -16072,7 +15324,7 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "background": {
           "$ref": "#/definitions/Color",
@@ -16229,7 +15481,7 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "background": {
           "$ref": "#/definitions/Color",
@@ -16399,11 +15651,19 @@
               "$ref": "#/definitions/AutoSizeParams"
             }
           ],
-          "description": "Sets how the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
+          "description": "How the visualization size should be determined. If a string, should be one of `\"pad\"`, `\"fit\"` or `\"none\"`.\nObject values can additionally specify parameters for content sizing and automatic resizing.\n\n__Default value__: `pad`"
         },
         "background": {
           "$ref": "#/definitions/Color",
           "description": "CSS color property to use as the background of the entire view.\n\n__Default value:__ `\"white\"`"
+        },
+        "bounds": {
+          "description": "The bounds calculation method to use for determining the extent of a sub-plot. One of `full` (the default) or `flush`.\n\n- If set to `full`, the entire calculated bounds (including axes, title, and legend) will be used.\n- If set to `flush`, only the specified width and height values for the sub-view will be used. The `flush` setting can be useful when attempting to place sub-plots without axes or legends into a uniform grid structure.\n\n__Default value:__ `\"full\"`",
+          "enum": [
+            "full",
+            "flush"
+          ],
+          "type": "string"
         },
         "config": {
           "$ref": "#/definitions/Config",
@@ -17030,6 +16290,22 @@
       "minItems": 2,
       "type": "array"
     },
+    "Vector3<number>": {
+      "items": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
     "ViewBackground": {
       "additionalProperties": false,
       "properties": {
@@ -17198,6 +16474,11 @@
           "minimum": 0,
           "type": "number"
         },
+        "height": {
+          "deprecated": "Since Vega-Lite 4.0. Please use continuousHeight and discreteHeight instead.",
+          "description": "Default height",
+          "type": "number"
+        },
         "opacity": {
           "description": "The overall opacity (value between [0,1]).\n\n__Default value:__ `0.7` for non-aggregate plots with `point`, `tick`, `circle`, or `square` marks or layered `bar` charts and `1` otherwise.",
           "maximum": 1,
@@ -17251,6 +16532,11 @@
         "strokeWidth": {
           "description": "The stroke width, in pixels.",
           "minimum": 0,
+          "type": "number"
+        },
+        "width": {
+          "deprecated": "Since Vega-Lite 4.0. Please use continuousWidth and discreteWidth instead.",
+          "description": "Default width",
           "type": "number"
         }
       },

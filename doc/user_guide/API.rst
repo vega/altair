@@ -148,7 +148,7 @@ Low-Level Schema Wrappers
    AxisResolveMap
    BaseLegendLayout
    BaseMarkConfig
-   BaseTitleNoSignals
+   BaseTitleNoValueRefs
    Baseline
    BinExtent
    BinParams
@@ -162,32 +162,29 @@ Low-Level Schema Wrappers
    BoxPlotDef
    BrushConfig
    CalculateTransform
+   Categorical
    Color
    ColorGradientFieldDefWithCondition
    ColorGradientValueDefWithCondition
    ColorName
+   ColorScheme
    CompositeMark
    CompositeMarkDef
    CompositionConfig
    ConcatSpec
-   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined105503503undefined105503503null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined377890894undefined377890894null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined61636408undefined61636408null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined702672441undefined702672441null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined720879958undefined720879958null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined742391737undefined742391737null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413numberundefined927251285undefined927251285null
-   ConditionalAxisPropertyalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null
+   ConditionalAxisColor
+   ConditionalAxisLabelBaseline
+   ConditionalAxisLabelFontStyle
+   ConditionalAxisLabelFontWeight
+   ConditionalAxisNumber
+   ConditionalAxisNumberArray
+   ConditionalAxisPropertyColornull
+   ConditionalAxisPropertyFontStylenull
+   ConditionalAxisPropertyFontWeightnull
+   ConditionalAxisPropertyTextBaselinenull
+   ConditionalAxisPropertynumbernull
+   ConditionalAxisPropertystringnull
+   ConditionalAxisString
    ConditionalMarkPropFieldDef
    ConditionalMarkPropFieldDefTypeForShape
    ConditionalNumberValueDef
@@ -196,26 +193,13 @@ Low-Level Schema Wrappers
    ConditionalPredicateNumberValueDef
    ConditionalPredicateStringFieldDef
    ConditionalPredicateStringValueDef
+   ConditionalPredicateValueDefColornull
+   ConditionalPredicateValueDefFontStylenull
+   ConditionalPredicateValueDefFontWeightnull
    ConditionalPredicateValueDefGradientstringnull
    ConditionalPredicateValueDefText
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591560396088981995915010466undefined870796116undefined870796116null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590039055981995915010466undefined186452232undefined186452232null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591590989247981995915010466undefined1209375024undefined1209375024null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413defalias98199591592479388981995915010466undefined679934267undefined679934267null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined1719818830undefined1719818830null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined2086385775undefined2086385775null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413nulldefalias120363414424682565120363414402566undefined565543918undefined565543918null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined105503503undefined105503503null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1626350768undefined1626350768null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1791665056undefined1791665056null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined1806960624undefined1806960624null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined377890894undefined377890894null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined61636408undefined61636408null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined702672441undefined702672441null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined720879958undefined720879958null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined742391737undefined742391737null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413numberundefined927251285undefined927251285null
-   ConditionalPredicateValueDefalias72493180067988681037249318000208413stringundefined1723860780undefined1723860780null
+   ConditionalPredicateValueDefTextBaselinenull
+   ConditionalPredicateValueDefnumbernull
    ConditionalPredicateValueDefstring
    ConditionalSelectionMarkPropFieldDef
    ConditionalSelectionMarkPropFieldDefTypeForShape
@@ -233,9 +217,9 @@ Low-Level Schema Wrappers
    Config
    CsvDataFormat
    Cursor
+   Cyclical
    Data
    DataFormat
-   DataLookupTransform
    DataSource
    Datasets
    DateTime
@@ -246,6 +230,7 @@ Low-Level Schema Wrappers
    DictSelectionInit
    DictSelectionInitInterval
    Dir
+   Diverging
    DsvDataFormat
    Element
    Encoding
@@ -318,10 +303,12 @@ Low-Level Schema Wrappers
    LayoutAlign
    LayoutBounds
    Legend
+   LegendBinding
    LegendConfig
    LegendLayout
    LegendOrient
    LegendResolveMap
+   LegendStreamBinding
    LineConfig
    LinearGradient
    LocalMultiTimeUnit
@@ -368,7 +355,10 @@ Low-Level Schema Wrappers
    QuantileTransform
    RadialGradient
    RangeConfig
-   RangeConfigValue
+   RangeEnum
+   RangeRaw
+   RangeRawArray
+   RangeScheme
    RectConfig
    RegressionTransform
    RepeatMapping
@@ -389,7 +379,6 @@ Low-Level Schema Wrappers
    ScaleResolveMap
    ScaleType
    SchemaBase
-   SchemeConfig
    SchemeParams
    SecondaryFieldDef
    SelectionAnd
@@ -400,7 +389,6 @@ Low-Level Schema Wrappers
    SelectionInitInterval
    SelectionInitIntervalMapping
    SelectionInitMapping
-   SelectionLookupTransform
    SelectionNot
    SelectionOperand
    SelectionOr
@@ -408,6 +396,8 @@ Low-Level Schema Wrappers
    SelectionResolution
    SequenceGenerator
    SequenceParams
+   SequentialMultiHue
+   SequentialSingleHue
    ShapeFieldDefWithCondition
    ShapeValueDefWithCondition
    SignalRef
@@ -439,7 +429,6 @@ Low-Level Schema Wrappers
    SymbolShape
    Text
    TextBaseline
-   TextConfig
    TextFieldDefWithCondition
    TextValueDefWithCondition
    TickConfig
@@ -480,6 +469,7 @@ Low-Level Schema Wrappers
    Vector2boolean
    Vector2number
    Vector2string
+   Vector3number
    VegaLiteSchema
    ViewBackground
    ViewConfig

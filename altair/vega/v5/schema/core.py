@@ -419,9 +419,13 @@ class encodeEntry(VegaSchema):
 
     strokeDashOffset : :class:`numberValue`
 
+    strokeForeground : :class:`booleanValue`
+
     strokeJoin : :class:`strokeJoinValue`
 
     strokeMiterLimit : :class:`numberValue`
+
+    strokeOffset : :class:`numberValue`
 
     strokeOpacity : :class:`numberValue`
 
@@ -468,11 +472,12 @@ class encodeEntry(VegaSchema):
                  orient=Undefined, outerRadius=Undefined, padAngle=Undefined, path=Undefined,
                  radius=Undefined, scaleX=Undefined, scaleY=Undefined, shape=Undefined, size=Undefined,
                  smooth=Undefined, startAngle=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeJoin=Undefined,
-                 strokeMiterLimit=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
-                 tension=Undefined, text=Undefined, theta=Undefined, tooltip=Undefined, url=Undefined,
-                 width=Undefined, x=Undefined, x2=Undefined, xc=Undefined, y=Undefined, y2=Undefined,
-                 yc=Undefined, zindex=Undefined, **kwds):
+                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeForeground=Undefined,
+                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
+                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
+                 theta=Undefined, tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined,
+                 x2=Undefined, xc=Undefined, y=Undefined, y2=Undefined, yc=Undefined, zindex=Undefined,
+                 **kwds):
         super(encodeEntry, self).__init__(align=align, angle=angle, aspect=aspect, baseline=baseline,
                                           clip=clip, cornerRadius=cornerRadius,
                                           cornerRadiusBottomLeft=cornerRadiusBottomLeft,
@@ -489,8 +494,9 @@ class encodeEntry(VegaSchema):
                                           radius=radius, scaleX=scaleX, scaleY=scaleY, shape=shape,
                                           size=size, smooth=smooth, startAngle=startAngle,
                                           stroke=stroke, strokeCap=strokeCap, strokeDash=strokeDash,
-                                          strokeDashOffset=strokeDashOffset, strokeJoin=strokeJoin,
-                                          strokeMiterLimit=strokeMiterLimit,
+                                          strokeDashOffset=strokeDashOffset,
+                                          strokeForeground=strokeForeground, strokeJoin=strokeJoin,
+                                          strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                                           strokeOpacity=strokeOpacity, strokeWidth=strokeWidth,
                                           tension=tension, text=text, theta=theta, tooltip=tooltip,
                                           url=url, width=width, x=x, x2=x2, xc=xc, y=y, y2=y2, yc=yc,
@@ -1420,6 +1426,9 @@ class isocontourTransform(VegaSchema):
 
     thresholds : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
 
+    translate : oneOf(List(anyOf(float, :class:`signal`, :class:`expr`, :class:`paramField`)),
+    :class:`signal`)
+
     zero : anyOf(boolean, :class:`signal`)
 
     as : anyOf(string, :class:`signal`, None)
@@ -1430,11 +1439,11 @@ class isocontourTransform(VegaSchema):
 
     def __init__(self, type=Undefined, field=Undefined, levels=Undefined, nice=Undefined,
                  resolve=Undefined, scale=Undefined, signal=Undefined, smooth=Undefined,
-                 thresholds=Undefined, zero=Undefined, **kwds):
+                 thresholds=Undefined, translate=Undefined, zero=Undefined, **kwds):
         super(isocontourTransform, self).__init__(type=type, field=field, levels=levels, nice=nice,
                                                   resolve=resolve, scale=scale, signal=signal,
-                                                  smooth=smooth, thresholds=thresholds, zero=zero,
-                                                  **kwds)
+                                                  smooth=smooth, thresholds=thresholds,
+                                                  translate=translate, zero=zero, **kwds)
 
 
 class kde2dTransform(VegaSchema):

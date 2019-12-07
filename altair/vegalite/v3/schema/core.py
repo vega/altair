@@ -10149,9 +10149,9 @@ class Scale(VegaLiteSchema):
         For * `continuous <https://vega.github.io/vega-lite/docs/scale.html#continuous>`__ *
         scales, expands the scale domain to accommodate the specified number of pixels on
         each of the scale range. The scale range must represent pixels for this parameter to
-        function as intended. Padding adjustment is performed prior to all other
-        adjustments, including the effects of the ``zero``, ``nice``, ``domainMin``, and
-        ``domainMax`` properties.
+        function as intended. Padding adjustment is performed prior to all other
+        adjustments, including the effects of the  ``zero``,  ``nice``,  ``domainMin``, and
+        ``domainMax``  properties.
 
         For * `band <https://vega.github.io/vega-lite/docs/scale.html#band>`__ * scales,
         shortcut for setting ``paddingInner`` and ``paddingOuter`` to the same value.

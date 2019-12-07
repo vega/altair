@@ -937,12 +937,12 @@ class ConfigMethodMixin(object):
         copy.config["square"] = core.MarkConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.TextConfig)
+    @use_signature(core.MarkConfig)
     def configure_text(self, *args, **kwargs):
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        copy.config["text"] = core.TextConfig(*args, **kwargs)
+        copy.config["text"] = core.MarkConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.TickConfig)
