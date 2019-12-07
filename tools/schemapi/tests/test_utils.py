@@ -1,6 +1,6 @@
 import pytest
 
-from ..utils import get_valid_identifier
+from ..utils import get_valid_identifier, SchemaInfo
 from ..schemapi import _FromDict
 
 
@@ -31,3 +31,16 @@ def test_hash_schema(refschema, use_json):
     copy['description'] = "A schema"
     copy['title'] = "Schema to test"
     assert _FromDict.hash_schema(refschema) == _FromDict.hash_schema(copy)
+
+@pytest.mark.parametrize('schema, expected', [
+    ({}, 'Any'),
+    ({'type': 'number'}, 'float'),
+    ({'enum': ['A', 'B', 'C']}, "enum('A', 'B', 'C')"),
+    ({'type': 'array'}, 'List(Any)'),
+    ({'type': 'object'}, 'Mapping(required=[])'),
+    ({"type": "string", "not": {'enum': ['A', 'B', 'C']}}, "not enum('A', 'B', 'C')"),
+])
+def test_medium_description(schema, expected):
+    description = SchemaInfo(schema).medium_description
+    assert description == expected
+

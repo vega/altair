@@ -188,7 +188,7 @@ class SchemaInfo(object):
             return '[{0}]'.format(', '.join(self.child(s).short_description
                                             for s in self.schema))
         elif self.is_empty():
-            return 'any object'
+            return 'Any'
         elif self.is_enum():
             return 'enum({})'.format(', '.join(map(repr, self.enum)))
         elif self.is_anyOf():
@@ -266,7 +266,7 @@ class SchemaInfo(object):
 
     @property
     def not_(self):
-        return self.child(self.schema.get('not_', {}))
+        return self.child(self.schema.get('not', {}))
 
     @property
     def items(self):
@@ -299,7 +299,7 @@ class SchemaInfo(object):
         return 'enum' in self.schema
 
     def is_empty(self):
-        return set(self.schema.keys()) - set(EXCLUDE_KEYS) == {}
+        return not (set(self.schema.keys()) - set(EXCLUDE_KEYS))
 
     def is_compound(self):
         return any(key in self.schema for key in ['anyOf', 'allOf', 'oneOf'])

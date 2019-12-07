@@ -1414,7 +1414,7 @@ class BaseMarkConfig(VegaLiteSchema):
         the ``x`` and ``y`` properties. Values for ``theta`` follow the same convention of
         ``arc`` mark ``startAngle`` and ``endAngle`` properties: angles are measured in
         radians, with ``0`` indicating "north".
-    tooltip : Mapping(required=[])
+    tooltip : Any
         The tooltip text to show upon mouse hover.
     width : float
         Width of the marks.
@@ -1693,7 +1693,7 @@ class BindRadioSelect(Binding):
 
     input : enum('radio', 'select')
 
-    options : List(Mapping(required=[]))
+    options : List(Any)
 
     debounce : float
 
@@ -7557,7 +7557,7 @@ class ImputeParams(VegaLiteSchema):
 
         **Default value:** :  ``[null, null]`` indicating that the window includes all
         objects.
-    keyvals : anyOf(List(Mapping(required=[])), :class:`ImputeSequence`)
+    keyvals : anyOf(List(Any), :class:`ImputeSequence`)
         Defines the key values that should be considered for imputation.
         An array of key values or an object defining a `number sequence
         <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
@@ -7573,7 +7573,7 @@ class ImputeParams(VegaLiteSchema):
         One of ``"value"``, ``"mean"``, ``"median"``, ``"max"`` or ``"min"``.
 
         **Default value:**  ``"value"``
-    value : Mapping(required=[])
+    value : Any
         The field value to use when the imputation ``method`` is ``"value"``.
     """
     _schema = {'$ref': '#/definitions/ImputeParams'}
@@ -17546,7 +17546,7 @@ class ImputeTransform(Transform):
     groupby : List(:class:`FieldName`)
         An optional array of fields by which to group the values.
         Imputation will then be performed on a per-group basis.
-    keyvals : anyOf(List(Mapping(required=[])), :class:`ImputeSequence`)
+    keyvals : anyOf(List(Any), :class:`ImputeSequence`)
         Defines the key values that should be considered for imputation.
         An array of key values or an object defining a `number sequence
         <https://vega.github.io/vega-lite/docs/impute.html#sequence-def>`__.
@@ -17562,7 +17562,7 @@ class ImputeTransform(Transform):
         One of ``"value"``, ``"mean"``, ``"median"``, ``"max"`` or ``"min"``.
 
         **Default value:**  ``"value"``
-    value : Mapping(required=[])
+    value : Any
         The field value to use when the imputation ``method`` is ``"value"``.
     """
     _schema = {'$ref': '#/definitions/ImputeTransform'}
