@@ -426,7 +426,7 @@ data before usage in Altair using GeoPandas for example as such:
 .. code:: python
 
     from shapely.ops import orient # version >=1.7a2
-    gdf = gdf.geometry.apply(orient, args=(-1,))
+    gdf.geometry = gdf.geometry.apply(orient, args=(-1,))
 
 
 .. _Protocol geo_interface: https://gist.github.com/sgillies/2217756
