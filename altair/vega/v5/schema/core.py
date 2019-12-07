@@ -774,7 +774,7 @@ class projection(VegaSchema):
 
     extent : oneOf(List(oneOf(List(:class:`numberOrSignal`), :class:`signal`)), :class:`signal`)
 
-    fit : oneOf(Mapping(required=[]), List(Mapping(required=[])))
+    fit : oneOf(Mapping(required=[]), List(Any))
 
     parallels : oneOf(List(:class:`numberOrSignal`), :class:`signal`)
 
@@ -868,7 +868,7 @@ class scope(VegaSchema):
 class signalName(VegaSchema):
     """signalName schema wrapper
 
-    not Mapping(required=[])
+    not enum('parent', 'datum', 'event', 'item')
     """
     _schema = {'$ref': '#/defs/signalName'}
     _rootschema = Root._schema
@@ -977,7 +977,7 @@ class crossfilterTransform(VegaSchema):
     fields : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
     :class:`signal`)
 
-    query : oneOf(List(Mapping(required=[])), :class:`signal`)
+    query : oneOf(List(Any), :class:`signal`)
 
     type : enum('crossfilter')
 
@@ -1000,7 +1000,7 @@ class resolvefilterTransform(VegaSchema):
     Attributes
     ----------
 
-    filter : Mapping(required=[])
+    filter : Any
 
     ignore : anyOf(float, :class:`signal`)
 
@@ -1339,11 +1339,11 @@ class graticuleTransform(VegaSchema):
 
     type : enum('graticule')
 
-    extent : oneOf(List(Mapping(required=[])), :class:`signal`)
+    extent : oneOf(List(Any), :class:`signal`)
 
-    extentMajor : oneOf(List(Mapping(required=[])), :class:`signal`)
+    extentMajor : oneOf(List(Any), :class:`signal`)
 
-    extentMinor : oneOf(List(Mapping(required=[])), :class:`signal`)
+    extentMinor : oneOf(List(Any), :class:`signal`)
 
     precision : anyOf(float, :class:`signal`)
 
@@ -2182,13 +2182,13 @@ class imputeTransform(VegaSchema):
     groupby : oneOf(List(oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)),
     :class:`signal`)
 
-    keyvals : oneOf(List(Mapping(required=[])), :class:`signal`)
+    keyvals : oneOf(List(Any), :class:`signal`)
 
     method : anyOf(enum('value', 'mean', 'median', 'max', 'min'), :class:`signal`)
 
     signal : string
 
-    value : Mapping(required=[])
+    value : Any
 
     """
     _schema = {'$ref': '#/defs/imputeTransform'}
@@ -2301,7 +2301,7 @@ class lookupTransform(VegaSchema):
 
     type : enum('lookup')
 
-    default : Mapping(required=[])
+    default : Any
 
     signal : string
 
@@ -2586,7 +2586,7 @@ class voronoiTransform(VegaSchema):
 
     y : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
-    extent : oneOf(List(Mapping(required=[])), :class:`signal`)
+    extent : oneOf(List(Any), :class:`signal`)
 
     signal : string
 
@@ -3458,7 +3458,7 @@ class signal(VegaSchema):
 class arrayOrSignal(VegaSchema):
     """arrayOrSignal schema wrapper
 
-    oneOf(List(Mapping(required=[])), :class:`signal`)
+    oneOf(List(Any), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/arrayOrSignal'}
     _rootschema = Root._schema
