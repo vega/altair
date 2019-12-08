@@ -68,6 +68,12 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/custom_renderers
    user_guide/data_transformers
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Release Notes
+   
+   releases/changes
+
 Bug Reports & Questions
 -----------------------
 
