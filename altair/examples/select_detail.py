@@ -52,7 +52,7 @@ points = base.mark_point(filled=True, size=200).encode(
     x='mean(x)',
     y='mean(y)',
     color=alt.condition(selector, 'id:O', alt.value('lightgray'), legend=None),
-).interactive()
+)
 
 timeseries = base.mark_line().encode(
     x='time',
