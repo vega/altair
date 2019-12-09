@@ -41,7 +41,7 @@ points = base.mark_point(filled=True, size=200).encode(
                         'gender:N',
                         alt.value('lightgray'),
                         scale=color_scale),
-).interactive()
+)
 
 hists = base.mark_bar(opacity=0.5, thickness=100).encode(
     x=alt.X('age',
