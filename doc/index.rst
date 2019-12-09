@@ -48,7 +48,6 @@ beautiful and effective visualizations with a minimal amount of code.
    user_guide/times_and_dates
    user_guide/faq
    user_guide/troubleshooting
-   user_guide/renderers
    user_guide/internals
    user_guide/API
    user_guide/ecosystem
