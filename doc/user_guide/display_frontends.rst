@@ -1,205 +1,124 @@
 .. _displaying-charts:
 
-Displaying Charts in Various Frontends
-======================================
+Displaying Altair Charts
+========================
 
-Altair provides a high-level API for creating visualizations that are
-encoded as declarative JSON objects. To display a visualization, those JSON
-objects must be displayed using the `Vega-Lite`_ and `Vega`_ JavaScript packages.
-This step of displaying a Vega-Lite or Vega JSON object is encoding in a renderer
-abstraction. This section of the documentation describes renderers and how you
-can use them to display Altair visualizations.
+Altair produces `Vega-Lite`_ visualizations, which require a Javascript frontend to
+display the charts.
+Because notebook environments combine a Python backend with a Javascript frontend,
+many users find them convenient for using Altair.
 
-You may need to install an additional Python/npm package to display Altair
-charts for a given frontend user-interface. See instructions for:
-:ref:`display-notebook`, :ref:`display-jupyterlab`, :ref:`display-nteract`
-and :ref:`display-colab`.
+Altair charts work out-of-the-box on `Jupyter Notebook`_, `JupyterLab`_, `Zeppelin`_,
+and related notebook environments, so long as there is a web connection to load the
+required javascript libraries.
 
-.. _altair-vega-versions:
+Altair can also be used with various IDEs that are enabled to display Altair charts,
+and can be used offline in most platforms with an appropriate frontend extension enabled;
+details are below.
 
-Vega-Lite/Vega versions
------------------------
-
-As of version 2.0, Altair includes support for multiple version of both
-Vega-Lite (2.x and 1.x) and Vega (3.x and 2.x) in a single Python package.
-The default usage, including all examples in this documentation, makes use of
-the newest available versions (Vega-Lite 2.X and Vega 3.X).
-
-The vega-lite version used by default can be found as follows:
-
-.. code-block:: python
-
-   >>> import altair as alt
-   >>> alt.schema.SCHEMA_VERSION
-   'v2.3.0'
-
-If you wish to use an older version of these libraries, see :ref:`importing`
-for more information. We strongly recommend all users transition to
-Vega-Lite 2.x and Vega 3.x. These versions support many new features, are more
-stable, and Altair 2.0 works best with them.
-
-For all users, the important point here is that you must have a renderer
-installed that works with the appropriate version.
 
 .. _renderers:
 
-Renderers
----------
+Altair's Renderer Framework
+---------------------------
+Because different display systems have different requirements and constraints, Altair provides
+an API to switch between various *renderers* to tune Altair's chart representation.
+These can be chosen with the renderer registry in ``alt.renderers``.
+Some of the built-in renderers are:
 
-Altair displays visualizations using renderers. There are two aspects of renderers:
+``alt.renderers.enable('html')``
+  *(the default)* Output an HTML representation of the chart. The HTML renderer works
+  in JupyterLab_, `Jupyter Notebook`_, `Zeppelin`_, and many related notebook frontends,
+  as well as Jupyter ecosystem tools like nbviewer_ and nbconvert_ HTML output.
+  It requires a web connection in order to load relevant Javascript libraries.
 
-* The Python side :ref:`renderer-api` that sends display data to various frontend
-  user-interfaces.
-* Frontend user-interfaces that interpret that display data and render a visualization.
-  See relevant instructions for:
+``alt.renderers.enable('mimebundle')``
+  *(default prior to Altair 4.0):* Output a vega-lite specific mimetype that can be
+  interpreted by appropriate frontend extensions to display charts.
+  It works out-of-the-box with newer versions of JupyterLab_, nteract_, and `VSCode-Python`_.
 
-  * :ref:`display-notebook`
-  * :ref:`display-jupyterlab`
-  * :ref:`display-nteract`
-  * :ref:`display-colab`
-
-.. _renderer-api:
-
-Renderer API
-~~~~~~~~~~~~
-
-In Altair, a renderer is any function that accepts a Vega-Lite or Vega
-visualization specification as a Python ``dict``, and returns a Python ``dict``
-in Jupyter's `MIME Bundle format
-<https://jupyter-client.readthedocs.io/en/stable/messaging.html#display-data>`_.
-The keys of the MIME bundle should be MIME types (such as ``image/png``) and the
-values should be the data for that MIME type (text, base64 encoded binary or
-JSON). The type signature of a renderer is thus::
-
-    def renderer(spec: dict) -> dict:
-        ...
-
-Altair and various user-interfaces have standardized on a couple of custom MIME types
-for Vega and Vega-Lite:
-
-* Vega-Lite 2.x: ``application/vnd.vegalite.v2+json``
-* Vega-Lite 1.x: ``application/vnd.vegalite.v1+json``
-* Vega 3.x: ``application/vnd.vega.v3+json``
-* Vega 2.x: ``application/vnd.vega.v2+json``
-
-The default renderers simply take a JSON spec and return a MIME bundle with one
-of these MIME types::
-
-    def default_renderer(spec):
-        bundle = {}
-        metadata = {}
-        bundle['text/plain'] = '<VegaLite object>`
-        bundle[mime_type] = 'application/vnd.vegalite.v2+json'
-        return bundle, metadata
-
-If a renderer needs to do custom display logic that doesn't use Jupyter's display
-system, it can return an empty MIME bundle ``dict``::
-
-    def non_jupyter_renderer(spec):
-        # Custom display logic that uses the spec
-        ...
-        # Return empty MIME bundle
-        return {}
-
-Altair offers an API to list the known renderers, register new ones and enable
-a given one. To return the registered renderers as a Python list::
-
-    >>> import altair as alt
-    >>> alt.renderers.names()
-    ['default', 'json']
-
-To enable the JSON renderer, which results in a collapsible JSON tree view
-in JupyterLab/nteract::
-
-    >>> alt.renderers.enable('json')
-
-To register and enable a new renderer::
-
-    >>> alt.renderers.register('custom_renderer', custom_renderer)
-    >>> alt.renderers.enable('custom_renderer')
-
-Renderers can also be registered using the `entrypoints`_ API of Python packages.
-For an example, see `ipyvega`_.
-
-This same ``renderer`` objects exists separately on all of the Python APIs
-for Vega-Lite/Vega described in :ref:`importing`.
-
-.. _display-notebook:
-
-Displaying in the Jupyter Notebook
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To render Vega-Lite 2.x or Vega 3.x in the Jupyter Notebook (as mentioned above
-we recommend these versions), you will need to install and enable the
-`ipyvega`_ Python package using conda:
-
-.. code-block:: bash
-
-    $ conda install vega --channel conda-forge
-
-or ``pip``:
-
-.. code-block:: bash
-
-    $ pip install jupyter pandas vega
-    $ jupyter nbextension install --sys-prefix --py vega # not needed in notebook >= 5.3
-
-
-For Vega-Lite 1.x or Vega 2.x, you will need to install and enable the `ipyvega`_ Python
-package using:
-
-.. code-block:: bash
-
-    $ conda install vega --channel conda-forge
-
-or ``pip``:
-
-.. code-block:: bash
-
-    $ pip install jupyter pandas vega
-    $ jupyter nbextension install --sys-prefix --py vega # not needed in notebook >= 5.3
-
-Once you have installed one of these packages, enable the corresponding renderer in Altair::
-
-    alt.renderers.enable('notebook')
-
+Other renderers can be installed by third-party packages via Python's entrypoints_ system;
+see :ref:`renderer-api`.
 
 
 .. _display-jupyterlab:
 
 Displaying in JupyterLab
-~~~~~~~~~~~~~~~~~~~~~~~~
-JupyterLab version 1.0 and later includes built-in support for Altair 3 charts
-(If you are using older versions of Altair, they will work with JupyterLab
-versions between 0.32 and 0.35).
+------------------------
+JupyterLab 1.0 and later will work with Altair's default ``html`` renderer with
+a live web connection.
 
-These will work out of the box with Altair imported as::
+For offline rendering in JupyterLab, use::
 
-    import altair as alt
+    alt.renderers.enable('mimetype')
 
-The Vega jupyterlab extension is included with the main jupyterlab installation,
-so no additional steps are necessary.
+and ensure you have the proper version of the vega labextension installed; for
+Altair 4 this can be installed with:
+
+.. code-block:: bash
+
+    $ jupyter labextension install @jupyterlab/vega6-extension
+
+In JupyterLab version 2.0 or newer, this extension is installed by default.
+
+
+.. _display-notebook:
+
+Displaying in the Jupyter Notebook
+----------------------------------
+The classic Jupyter Notebook will work with Altair's default ``html`` renderer
+with a live web connection.
+
+For offline rendering in Jupyter Notebook, use::
+
+    alt.renderers.enable('notebook')
+    
+which is provided by the `ipyvega`_ extension.
+This can be installed and enabled either pip::
+
+.. code-block:: bash
+
+    $ pip install vega
+
+or conda::
+
+.. code-block:: bash
+
+    $ conda install vega --channel conda-forge
+
+In older versions of the notebook (<5.3) you need to additionally enable the extension:
+
+.. code-block:: bash
+
+    $ jupyter nbextension install --sys-prefix --py vega
+
 
 .. _display-nteract:
 
 Displaying in nteract
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
+nteract_ cannot display HTML outputs natively, and so Altair's default ``html`` renderer
+will not work. However, nteract natively includes vega and vega-lite mimetype-based rendering.
+To use Altair in nteract, ensure you are using a version that supports the vega-lite v4
+mimetype, and use::
 
-Current versions of nteract have Vega and Vega-Lite built-in, and will render
-Altair plots without any extra configuration.
+    alt.renderers.enable('mimetype')
 
-.. _display-colab:
 
-Displaying in Colab
-~~~~~~~~~~~~~~~~~~~
-Google's Colab is a cloud-based notebook backed by Google Drive.
-Colab comes with Altair pre-installed and with the ``'colab'`` renderer
-enabled, so Altair will work out-of-the-box.
+.. _display-vscode:
+
+Displaying in VSCode
+--------------------
+`VSCode-Python`_ includes a vega-lite renderer to display charts in-app via the
+vega-lite mimetype output. You can enable it by running::
+
+    alt.renderers.enable('mimetype')
+
 
 .. _display-general:
 
 Working in non-Notebook Environments
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 The Vega-Lite specifications produced by Altair can be produced in any Python
 environment, but to render these specifications currently requires a javascript
 engine. For this reason, Altair works most seamlessly with the browser-based
@@ -210,6 +129,49 @@ have a built-in javascript engine, you'll need to somehow connect your charts
 to a second tool that can execute javascript.
 
 There are a few options available for this:
+
+Vega-enabled IDEs
+~~~~~~~~~~~~~~~~~
+Some IDEs have extensions that natively recognize and display Altair charts.
+Examples are:
+
+- The `VSCode-Python`_ extension, which supports native Altair and Vega-Lite
+  chart display as of November 2019.
+- The Hydrogen_ project, which is built on nteract_ and renders Altair charts
+  via the ``mimebundle`` renderer.
+
+The Vegascope Renderer
+~~~~~~~~~~~~~~~~~~~~~~
+For other IDEs, a useful companion is the `VegaScope`_ project, which provides
+an Altair renderer that works directly from a Python terminal.
+Start by installing the package::
+
+    $ pip install vegascope
+
+Now in your Python script you can enable the vegascope renderer::
+
+    import altair as alt
+    alt.renderers.enable('vegascope')
+
+    # load a simple dataset as a pandas DataFrame
+    from vega_datasets import data
+    cars = data.cars()
+
+    chart = alt.Chart(cars).mark_point().encode(
+        x='Horsepower',
+        y='Miles_per_Gallon',
+        color='Origin',
+    ).interactive()
+
+In an IPython environment, this will automatically trigger vegascope to serve
+the chart in a background process to your web browser, and unlike Altair's
+:meth:`Chart.serve` method, any subsequently created charts will use
+the same server.
+
+If you are in a non-IPython terminal, you can trigger the renderer manually
+using the :meth:`Chart.display` method::
+
+   chart.display()
 
 Built-in ``serve()`` method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -245,44 +207,87 @@ a web browser. Once you have created your chart, run::
 
 and use a web browser to open this file.
 
-The Vegascope Renderer
-~~~~~~~~~~~~~~~~~~~~~~
-The `VegaScope`_ project provides an Altair renderer that works seamlessly with
-the IPython terminal. Start by installing the package::
+.. _renderer-api:
 
-    $ pip install vegascope
+Renderer API
+============
 
-Now in your Python script you can enable the vegascope renderer::
+If you want to enable Altair rendering with behavior not provided by the built-in
+renderers, you can use the renderer API to create that custom behavior.
+In Altair, a renderer is any function that accepts a Vega-Lite or Vega
+visualization specification as a Python ``dict``, and returns a Python ``dict``
+in Jupyter's `MIME Bundle format
+<https://jupyter-client.readthedocs.io/en/stable/messaging.html#display-data>`_.
+The keys of the MIME bundle should be MIME types (such as ``image/png``) and the
+values should be the data for that MIME type (text, base64 encoded binary or
+JSON). The type signature of a renderer is thus::
 
-    import altair as alt
-    alt.renderers.enable('vegascope')
+    def renderer(spec: dict) -> dict:
+        ...
 
-    # load a simple dataset as a pandas DataFrame
-    from vega_datasets import data
-    cars = data.cars()
+Altair's default ``html`` rendeer returns a cross-platform HTML representation using
+the ``"text/html"`` mimetype; schematically it looks like this::
 
-    chart = alt.Chart(cars).mark_point().encode(
-        x='Horsepower',
-        y='Miles_per_Gallon',
-        color='Origin',
-    ).interactive()
+    def default_renderer(spec):
+        bundle = {'text/html': generate_html(spec)}
+        metadata = {}
+        return bundle, metadata
 
-In an IPython environment, this will automatically trigger vegascope to serve
-the chart in a background process to your web browser, and unlike Altair's
-:meth:`Chart.serve` method, any subsequently created charts will use
-the same server.
+Propertly-configured Jupyter frontends know how to interpret and display charts using
+custom vega-specific mimetypes; for example:
 
-If you are in a non-IPython environment, you can trigger the renderer manually
-using the :meth:`Chart.display` method::
+* Vega-Lite 4.x: ``application/vnd.vegalite.v4+json``
+* Vega 5.x: ``application/vnd.vega.v5+json``
 
-   chart.display()
+Altair's ``mimetype`` renderer uses this mechanism to return the spec directly::
+
+    def default_renderer(spec):
+        bundle = {}
+        metadata = {}
+        bundle['text/plain'] = '<VegaLite 4 object>`
+        bundle['application/vnd.vegalite.v4+json'] = spec
+        return bundle, metadata
+
+If a renderer needs to do custom display logic that doesn't use Jupyter's display
+system, it can return an empty MIME bundle dict::
+
+    def non_jupyter_renderer(spec):
+        # Custom display logic that uses the spec
+        ...
+        # Return empty MIME bundle
+        return {}
+
+Altair offers an API to list the known renderers, register new ones and enable
+a given one. To return the registered renderers as a Python list::
+
+    >>> import altair as alt
+    >>> alt.renderers.names()
+    ['html', 'mimebundle', 'json', ...]
+
+To enable the JSON renderer, which results in a collapsible JSON tree view
+in JupyterLab/nteract::
+
+    >>> alt.renderers.enable('json')
+
+To register and enable a new renderer::
+
+    >>> alt.renderers.register('custom_renderer', custom_renderer)
+    >>> alt.renderers.enable('custom_renderer')
+
+Renderers can also be registered using the `entrypoints`_ API of Python packages.
+For an example, see `ipyvega`_.
 
 .. _entrypoints: https://github.com/takluyver/entrypoints
 .. _ipyvega: https://github.com/vega/ipyvega/
 .. _JupyterLab: http://jupyterlab.readthedocs.io/en/stable/
 .. _nteract: https://nteract.io
+.. _nbconvert: https://nbconvert.readthedocs.io/
+.. _nbviewer: https://nbviewer.jupyter.org/
 .. _Colab: https://colab.research.google.com
+.. _Hydrogen: https://github.com/nteract/hydrogen
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
 .. _Vega-Lite: http://vega.github.io/vega-lite
 .. _Vega: https://vega.github.io/vega/
 .. _VegaScope: https://github.com/scikit-hep/vegascope
+.. _VSCode-Python: https://code.visualstudio.com/docs/python/python-tutorial
+.. _Zeppelin: https://zeppelin.apache.org/
