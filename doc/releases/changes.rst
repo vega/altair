@@ -14,21 +14,23 @@ on Python 3.5 and newer.
 Enhancements
 ~~~~~~~~~~~~
 
-- Support for interactive legends: :ref:`gallery_interactive_legend`
+- Support for interactive legends: (see :ref:`gallery_interactive_legend`)
 
-- Lookup transform responsive to selections: :ref:`user-guide-lookup-transform`
+- Responsive chart width and height: (see :ref:`customization-chart-size`)
 
-- Bins responsive to selections: :ref:`gallery_histogram_responsive`
+- Lookup transform responsive to selections: (see :ref:`user-guide-lookup-transform`)
 
-- New Regression transform: :ref:`user-guide-regression-transform`
+- Bins responsive to selections: (see :ref:`gallery_histogram_responsive`)
 
-- New LOESS transform: :ref:`user-guide-loess-transform`
+- New Regression transform: (see :ref:`user-guide-regression-transform`)
 
-- New density transform: :ref:`user-guide-density-transform`
+- New LOESS transform: (see :ref:`user-guide-loess-transform`)
 
-- New pivot transform: :ref:`user-guide-pivot-transform`
+- New density transform: (see :ref:`user-guide-density-transform`)
 
-- Image mark :ref:`user-guide-mark`
+- New pivot transform: (see :ref:`user-guide-pivot-transform`)
+
+- Image mark (see :ref:`user-guide-mark`)
 
 - New default ``html`` renderer, directly compatible with Jupyter Notebook and
   JupyterLab without the need for frontend extensions, as well as tools like
@@ -37,7 +39,7 @@ Enhancements
 
       alt.renderers.enable('mimetype')
 
-- Support per-corner radius for bar marks: :ref:`gallery_bar_rounded`
+- Support per-corner radius for bar marks: (see :ref:`gallery_bar_rounded`)
 
 Grammar Changes
 ~~~~~~~~~~~~~~~

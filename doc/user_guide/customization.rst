@@ -23,7 +23,7 @@ For example, suppose we are creating a scatter plot of the ``cars`` dataset:
    from vega_datasets import data
    cars = data.cars.url
 
-   alt.Chart(cars).mark_point().encode(
+   alt.Chart(cars).mark_point().encode( 
        x='Acceleration:Q',
        y='Horsepower:Q'
    )
@@ -507,3 +507,57 @@ The width of the bars are set using ``mark_bar(size=30)`` and the width that is 
 .. note::
 
    If both ``width`` and ``rangeStep`` are specified, then ``rangeStep`` will be ignored.
+
+
+.. _customization-chart-size:
+
+Adjusting Chart Size
+--------------------
+The size of charts can be adjusted using the ``width`` and ``height`` properties.
+For example:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+   
+   cars = data.cars()
+   
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()'
+   ).properties(
+       width=200,
+       height=150
+   )
+
+Note that in the case of faceted or other compound charts, this width and height applies to
+the subchart rather than to the overall chart:
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()',
+       column='Cylinders:Q'
+   ).properties(
+       width=100,
+       height=100
+   )
+
+If you want your chart size to respond to the width of the HTML page or container in which
+it is rendererd, you can set ``width`` or ``height`` to the string ``"container"``:
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()',
+   ).properties(
+       width='container',
+       height=200
+   )
+
+Note that this will only scale with the container if its parent element has a size determined
+outside the chart itself; For example, the container may be a ``<div>`` element that has style
+``width: 100%; height: 300px``. 
