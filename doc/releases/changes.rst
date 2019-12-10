@@ -18,7 +18,7 @@ Enhancements
 
 - Lookup transform responsive to selections: :ref:`user-guide-lookup-transform`
 
-- Bins responsive to selections: :ref:`user-guide-bin-transform`
+- Bins responsive to selections: :ref:`gallery_histogram_responsive`
 
 - New Regression transform: :ref:`user-guide-regression-transform`
 
