@@ -19,7 +19,7 @@ alt.Chart(source, title="The Morris Mistake").mark_point().encode(
     alt.Y(
         'variety:N',
         title="",
-        sort=alt.EncodingSortField(field='yield', op='sum', order='descending'),
+        sort='-x',
         axis=alt.Axis(grid=True)
     ),
     color=alt.Color('year:N', legend=alt.Legend(title="Year")),
