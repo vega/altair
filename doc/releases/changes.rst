@@ -4,16 +4,59 @@ Altair Change Log
 =================
 
 Version 4.0.0 (unreleased)
---------------------------
+----------------------------
+Version 4.0.0 is based on Vega-Lite version 4.0, which you can read about at
+https://github.com/vega/vega-lite/releases/tag/v4.0.0.
+
+It is the first version of Altair to drop Python 2 compatibility, and is tested
+on Python 3.5 and newer.
 
 Enhancements
 ~~~~~~~~~~~~
 
-Bug Fixes
-~~~~~~~~~
+- Support for interactive legends: :ref:`gallery_interactive_legend`
 
-Backward-Incompatible Changes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Lookup transform responsive to selections: :ref:`user-guide-lookup-transform`
+
+- Bins responsive to selections: :ref:`user-guide-bin-transform`
+
+- New Regression transform: :ref:`user-guide-regression-transform`
+
+- New LOESS transform: :ref:`user-guide-loess-transform`
+
+- New density transform: :ref:`user-guide-density-transform`
+
+- New pivot transform: :ref:`user-guide-pivot-transform`
+
+- Image mark :ref:`user-guide-mark`
+
+- New default ``html`` renderer, directly compatible with Jupyter Notebook and
+  JupyterLab without the need for frontend extensions, as well as tools like
+  nbviewer and nbconvert, and related notebook environments such as Zeppelin,
+  Colab, Kaggle Kernels, and DataBricks. To enable the old default renderer, use::
+
+      alt.renderers.enable('mimetype')
+
+- Support per-corner radius for bar marks: :ref:`gallery_bar_rounded`
+
+Grammar Changes
+~~~~~~~~~~~~~~~
+
+- Sort-by-field can now use the field name directly. So instead of::
+
+      alt.Y('y:Q', sort=alt.EncodingSortField('x', order='descending'))
+
+  you can now use::
+
+      alt.Y('y:Q', sort="-x")
+
+- The ``rangeStep`` argument to :class:`Scale` and :meth:`Chart.configure_scale` is deprecated.
+  instead, use ``chart.properties(width={"step": rangeStep})`` or
+  ``chart.configure_view(step=rangeStep)``.
+
+- ``align``, ``center``, ``spacing``, and ``columns`` are no longer valid chart properties, but
+  are moved to the encoding classes to which they refer.
+
 
 Version 3.3.0 (released Nov 27, 2019)
 -------------------------------------
