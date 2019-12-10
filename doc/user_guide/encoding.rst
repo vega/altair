@@ -560,7 +560,11 @@ x-axis, using the barley dataset:
         title='By Yield'
     )
 
-    (ascending | descending | explicit) & (sortchannel | sortfield)
+    alt.concat(
+        ascending, descending, explicit,
+        sortchannel, sortfield,
+        columns=3
+    )
 
 The last two charts are the same because the default aggregation 
 (see :ref:`encoding-aggregates`) is ``mean``. To highlight the 
