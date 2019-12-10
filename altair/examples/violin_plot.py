@@ -1,7 +1,7 @@
 """
 Violin Plot
 -----------
-This example shows how to make a Violin Plot using Altair's density trnasform.
+This example shows how to make a Violin Plot using Altair's density transform.
 """
 # category: other charts
 import altair as alt
