@@ -215,10 +215,8 @@ open_close_color = alt.condition("datum.open < datum.close",
 
 rule = alt.Chart(source).mark_rule().encode(
     alt.X(
-        'yearmonthdate(date):T',
-        scale=alt.Scale(domain=[{"month": 5, "date": 31, "year": 2009},
-                                {"month": 7, "date": 1, "year": 2009}]),
-        axis=alt.Axis(format='%m/%d', title='Date in 2009')
+        'yearmonthdate(date):O',
+        axis=alt.Axis(format='%m/%d', labelAngle=-45, title='Date in 2009')
     ),
     alt.Y(
         'low',
@@ -229,8 +227,8 @@ rule = alt.Chart(source).mark_rule().encode(
     color=open_close_color
 )
 
-bar = alt.Chart(source).mark_bar().encode(
-    x='yearmonthdate(date):T',
+bar = alt.Chart(source).mark_bar(width=10).encode(
+    x='yearmonthdate(date):O',
     y='open',
     y2='close',
     color=open_close_color
