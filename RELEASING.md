@@ -23,7 +23,7 @@
 5. Double-check that all vega-lite/vega/vega-embed versions are up-to-date:
 
    - URLs in ``doc/conf.py``
-   - versions in ``altair/vegalite/v3/display.py``
+   - versions in ``altair/vegalite/v4/display.py``
 
 6. Commit change and push to master
 
