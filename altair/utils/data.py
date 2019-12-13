@@ -1,4 +1,5 @@
 import json
+import os
 import random
 import hashlib
 
@@ -95,7 +96,7 @@ def sample(data, n=None, frac=None):
 
 @curry
 def to_json(data, prefix='altair-data', extension='json',
-            filename="{prefix}-{hash}.{extension}"):
+            filename="{prefix}-{hash}.{extension}", urlpath=""):
     """
     Write the data model to a .json file and return a url based data model.
     """
@@ -106,14 +107,14 @@ def to_json(data, prefix='altair-data', extension='json',
     with open(filename, 'w') as f:
         f.write(data_json)
     return {
-        'url': filename,
+        'url': os.path.join(urlpath, filename),
         'format': {'type': 'json'}
     }
 
 
 @curry
 def to_csv(data, prefix='altair-data', extension='csv',
-           filename="{prefix}-{hash}.{extension}"):
+           filename="{prefix}-{hash}.{extension}", urlpath=""):
     """Write the data model to a .csv file and return a url based data model."""
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
@@ -122,7 +123,7 @@ def to_csv(data, prefix='altair-data', extension='csv',
     with open(filename, 'w') as f:
         f.write(data_csv)
     return {
-        'url': filename,
+        'url': os.path.join(urlpath, filename),
         'format': {'type': 'csv'}
     }
 
