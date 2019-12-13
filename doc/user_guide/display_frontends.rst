@@ -35,7 +35,8 @@ Some of the built-in renderers are:
 ``alt.renderers.enable('mimebundle')``
   *(default prior to Altair 4.0):* Output a vega-lite specific mimetype that can be
   interpreted by appropriate frontend extensions to display charts.
-  It works out-of-the-box with newer versions of JupyterLab_, nteract_, and `VSCode-Python`_.
+  It works with newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does
+  not work with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
 Other renderers can be installed by third-party packages via Python's entrypoints_ system;
 see :ref:`renderer-api`.
@@ -74,13 +75,13 @@ For offline rendering in Jupyter Notebook, use::
     alt.renderers.enable('notebook')
     
 which is provided by the `ipyvega`_ extension.
-This can be installed and enabled either pip::
+This can be installed and enabled either using pip:
 
 .. code-block:: bash
 
     $ pip install vega
 
-or conda::
+or conda:
 
 .. code-block:: bash
 
