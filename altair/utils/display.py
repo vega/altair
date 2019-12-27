@@ -2,6 +2,7 @@ import json
 import pkgutil
 import textwrap
 from typing import Callable, Dict
+import uuid
 
 from jsonschema import validate
 
@@ -150,13 +151,11 @@ class HTMLRenderer(object):
     """Object to render charts as HTML, with a unique output div each time"""
     def __init__(self, output_div='altair-viz-{}', **kwargs):
         self._output_div = output_div
-        self._output_count = 0
         self.kwargs = kwargs
 
     @property
     def output_div(self):
-        self._output_count += 1
-        return self._output_div.format(self._output_count)
+        return self._output_div.format(uuid.uuid4().hex)
 
     def __call__(self, spec, **metadata):
         kwargs = self.kwargs.copy()
