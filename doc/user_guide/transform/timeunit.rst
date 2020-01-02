@@ -13,7 +13,7 @@ These are the available time units:
 
 - ``"year"``, ``"yearquarter"``, ``"yearquartermonth"``, ``"yearmonth"``,
   ``"yearmonthdate"``, ``"yearmonthdatehours"``, ``"yearmonthdatehoursminutes"``,
-  ``"yearmonthdatehoursseconds"``.
+  ``"yearmonthdatehoursminutesseconds"``.
 - ``"quarter"``, ``"quartermonth"``
 - ``"month"``, ``"monthdate"``
 - ``"date"`` (Day of month, i.e., 1 - 31)
