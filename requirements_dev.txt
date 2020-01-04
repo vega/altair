@@ -1,8 +1,9 @@
 docutils
-ipython
 flake8
-pytest
-sphinx
+ipython
 m2r
-vega_datasets
+pytest
 recommonmark
+selenium
+sphinx
+vega_datasets
