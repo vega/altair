@@ -226,6 +226,14 @@ the y labels as a dollar value:
        y=alt.Y('y', axis=alt.Axis(format='$', title='dollar amount'))
    )
 
+Axis labels can also be easily removed:
+
+.. altair-plot::
+
+   alt.Chart(df).mark_circle().encode(
+       x=alt.X('x', axis=alt.Axis(labels=False)),
+       y=alt.Y('y', axis=alt.Axis(labels=False))
+   )
 
 Additional formatting codes are available; for a listing of these see the
 `d3 Format Code Documentation <https://github.com/d3/d3-format/blob/master/README.md#format>`_.
