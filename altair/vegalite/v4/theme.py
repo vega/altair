@@ -2,7 +2,7 @@
 
 from ...utils.theme import ThemeRegistry
 
-VEGA_THEMES = ['ggplot2', 'quartz', 'vox', 'fivethirtyeight', 'dark', 'latimes']
+VEGA_THEMES = ['ggplot2', 'quartz', 'vox', 'fivethirtyeight', 'dark', 'latimes', 'urbaninstitute']
 
 
 class VegaTheme(object):
