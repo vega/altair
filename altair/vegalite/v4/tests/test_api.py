@@ -237,7 +237,9 @@ def test_save(format, basic_chart):
     else:
         out = io.BytesIO()
         mode = 'rb'
+    
     fid, filename = tempfile.mkstemp(suffix='.' + format)
+    os.close(fid)
 
     try:
         try:
