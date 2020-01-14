@@ -7,7 +7,8 @@ Version 4.0.1 (released Jan 14, 2020)
 -------------------------------------
 Bug Fixes
 ~~~~~~~~~
-Fix issue with duplicate chart divs in HTML renderer (#1888)
+- Update Vega-Lite version to 4.0.2
+- Fix issue with duplicate chart divs in HTML renderer (#1888)
 
 Version 4.0.0 (released Dec 10, 2019)
 -------------------------------------
