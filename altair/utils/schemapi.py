@@ -8,6 +8,8 @@ import inspect
 import json
 
 import jsonschema
+import numpy as np
+import pandas as pd
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -54,13 +56,17 @@ def _todict(obj, validate, context):
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
         return obj.to_dict(validate=validate, context=context)
-    elif isinstance(obj, (list, tuple)):
+    elif isinstance(obj, (list, tuple, np.ndarray)):
         return [_todict(v, validate, context) for v in obj]
     elif isinstance(obj, dict):
         return {k: _todict(v, validate, context) for k, v in obj.items()
                 if v is not Undefined}
     elif hasattr(obj, 'to_dict'):
         return obj.to_dict()
+    elif isinstance(obj, np.number):
+        return float(obj)
+    elif isinstance(obj, (pd.Timestamp, np.datetime64)):
+        return pd.Timestamp(obj).isoformat()
     else:
         return obj
 
