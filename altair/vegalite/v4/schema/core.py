@@ -542,13 +542,13 @@ class AutoSizeParams(VegaLiteSchema):
 class AutosizeType(VegaLiteSchema):
     """AutosizeType schema wrapper
 
-    anyOf(enum('pad'), enum('none'), :class:`FitType`)
+    enum('pad', 'none', 'fit', 'fit-x', 'fit-y')
     """
     _schema = {'$ref': '#/definitions/AutosizeType'}
     _rootschema = Root._schema
 
-    def __init__(self, *args, **kwds):
-        super(AutosizeType, self).__init__(*args, **kwds)
+    def __init__(self, *args):
+        super(AutosizeType, self).__init__(*args)
 
 
 class Axis(VegaLiteSchema):
@@ -6965,18 +6965,6 @@ class FieldName(Field):
 
     def __init__(self, *args):
         super(FieldName, self).__init__(*args)
-
-
-class FitType(AutosizeType):
-    """FitType schema wrapper
-
-    enum('fit', 'fit-x', 'fit-y')
-    """
-    _schema = {'$ref': '#/definitions/FitType'}
-    _rootschema = Root._schema
-
-    def __init__(self, *args):
-        super(FitType, self).__init__(*args)
 
 
 class FontStyle(VegaLiteSchema):

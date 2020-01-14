@@ -3,8 +3,14 @@
 Altair Change Log
 =================
 
-Version 4.0.0 (unreleased)
-----------------------------
+Version 4.0.1 (released Jan 14, 2020)
+-------------------------------------
+Bug Fixes
+~~~~~~~~~
+Fix issue with duplicate chart divs in HTML renderer (#1888)
+
+Version 4.0.0 (released Dec 10, 2019)
+-------------------------------------
 Version 4.0.0 is based on Vega-Lite version 4.0, which you can read about at
 https://github.com/vega/vega-lite/releases/tag/v4.0.0.
 
