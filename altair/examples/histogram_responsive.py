@@ -9,7 +9,7 @@ change on the top panel.
 import altair as alt
 from vega_datasets import data
 
-source = data.flights_5k()
+source = data.flights_5k.url
 
 brush = alt.selection_interval(encodings=['x'])
 
