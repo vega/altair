@@ -1,8 +1,11 @@
 import copy
 import io
+import json
 import jsonschema
 import pickle
 import pytest
+
+import numpy as np
 
 from ..schemapi import (UndefinedType, SchemaBase, Undefined, _FromDict,
                         SchemaValidationError)
@@ -320,3 +323,17 @@ def test_schema_validation_error():
     assert "validating {!r}".format(the_err.validator) in message
     assert the_err.message in message
 
+
+def test_serialize_numpy_types():
+    m = MySchema(
+        a={'date': np.datetime64('2019-01-01')},
+        a2={'int64': np.int64(1), 'float64': np.float64(2)},
+        b2=np.arange(4),
+    )
+    out = m.to_json()
+    dct = json.loads(out)
+    assert dct == {
+        'a': {'date': '2019-01-01T00:00:00'},
+        'a2': {'int64': 1, 'float64': 2},
+        'b2': [0, 1, 2, 3],
+    }
