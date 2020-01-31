@@ -171,6 +171,9 @@ def sanitize_dataframe(df):
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
+    * Convert Nullable integers to objects and replace NaN with None
+    * Convert Nullable boolean to objects and replace NaN with None
+    * convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
     df = df.copy()
@@ -200,9 +203,19 @@ def sanitize_dataframe(df):
             # https://github.com/pydata/pandas/issues/10778
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
+        elif str(dtype) == "string":
+            # dedicated string datatype (since 1.0)
+            # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif str(dtype) == 'bool':
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
+        elif str(dtype) == "boolean":
+            # dedicated boolean datatype (since 1.0)
+            # https://pandas.io/docs/user_guide/boolean.html
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif str(dtype).startswith('datetime'):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
@@ -220,6 +233,19 @@ def sanitize_dataframe(df):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
             continue                            
+        elif str(dtype) in {
+            "Int8",
+            "Int16",
+            "Int32",
+            "Int64",
+            "UInt8",
+            "UInt16",
+            "UInt32",
+            "UInt64",
+        }:  # nullable integer datatypes (since 24.0)
+            # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif np.issubdtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)

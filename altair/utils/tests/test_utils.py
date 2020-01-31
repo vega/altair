@@ -106,3 +106,90 @@ def test_sanitize_dataframe_infs():
     df_clean = sanitize_dataframe(df)
     assert list(df_clean.dtypes) == [object]
     assert list(df_clean['x']) == [0, 1, 2, None, None, None]
+
+
+@pytest.mark.skipif(
+    not hasattr(pd, "Int64Dtype"),
+    reason="Nullable integers not supported in pandas v{}".format(pd.__version__)
+    )
+def test_sanitize_nullable_integers():
+
+    df = pd.DataFrame(
+        {
+            "int_np": [1, 2, 3, 4, 5],
+            "int64": pd.Series([1, 2, 3, None, 5], dtype="UInt8"),
+            "int64_nan": pd.Series([1, 2, 3, float("nan"), 5], dtype="Int64"),
+            "float": [1.0, 2.0, 3.0, 4, 5.0],
+            "float_null": [1, 2, None, 4, 5],
+            "float_inf": [1, 2, None, 4, (float("inf"))],
+        }
+    )
+
+    df_clean = sanitize_dataframe(df)
+    assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
+
+    result_python = {
+        col_name: list(col) for col_name, col in df_clean.iteritems()
+    }
+    assert result_python == {
+        "int_np": [1, 2, 3, 4, 5],
+        "int64": [1, 2, 3, None, 5],
+        "int64_nan": [1, 2, 3, None, 5],
+        "float": [1.0, 2.0, 3.0, 4.0, 5.0],
+        "float_null": [1.0, 2.0, None, 4.0, 5.0],
+        "float_inf": [1.0, 2.0, None, 4.0, None],
+    }
+
+
+@pytest.mark.skipif(
+    not hasattr(pd, "StringDtype"),
+    reason="dedicated String dtype not supported in pandas v{}".format(pd.__version__)
+    )
+def test_sanitize_string_dtype():
+    df = pd.DataFrame(
+        {
+            "string_object": ["a", "b", "c", "d"],
+            "string_string": pd.array(["a", "b", "c", "d"], dtype="string"),
+            "string_object_null": ["a", "b", None, "d"],
+            "string_string_null": pd.array(["a", "b", None, "d"], dtype="string"),
+        }
+    )
+
+    df_clean = sanitize_dataframe(df)
+    assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
+
+    result_python = {
+        col_name: list(col) for col_name, col in df_clean.iteritems()
+    }
+    assert result_python == {
+        "string_object": ["a", "b", "c", "d"],
+        "string_string": ["a", "b", "c", "d"],
+        "string_object_null": ["a", "b", None, "d"],
+        "string_string_null": ["a", "b", None, "d"],
+    }
+
+
+@pytest.mark.skipif(
+    not hasattr(pd, "BooleanDtype"),
+    reason="Nullable boolean dtype not supported in pandas v{}".format(pd.__version__)
+    )
+def test_sanitize_boolean_dtype():
+    df = pd.DataFrame(
+        {
+            "bool_none": pd.array([True, False, None], dtype="boolean"),
+            "none": pd.array([None, None, None], dtype="boolean"),
+            "bool": pd.array([True, False, True], dtype="boolean"),
+        }
+    )
+
+    df_clean = sanitize_dataframe(df)
+    assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
+
+    result_python = {
+        col_name: list(col) for col_name, col in df_clean.iteritems()
+    }
+    assert result_python == {
+            "bool_none": [True, False, None],
+            "none": [None, None, None],
+            "bool": [True, False, True],
+    }
