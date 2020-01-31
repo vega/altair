@@ -108,20 +108,22 @@ def test_sanitize_dataframe_infs():
     assert list(df_clean['x']) == [0, 1, 2, None, None, None]
 
 
+@pytest.mark.skipif(
+    not hasattr(pd, "Int64Dtype"),
+    reason="Nullable integers not supported in pandas v{}".format(pd.__version__)
+    )
 def test_sanitize_nullable_integers():
-    try:
-        df = pd.DataFrame(
-            {
-                "int_np": [1, 2, 3, 4, 5],
-                "int64": pd.Series([1, 2, 3, None, 5], dtype="UInt8"),
-                "int64_nan": pd.Series([1, 2, 3, float("nan"), 5], dtype="Int64"),
-                "float": [1.0, 2.0, 3.0, 4, 5.0],
-                "float_null": [1, 2, None, 4, 5],
-                "float_inf": [1, 2, None, 4, (float("inf"))],
-            }
-        )
-    except TypeError:  # dtype not supported
-        return
+
+    df = pd.DataFrame(
+        {
+            "int_np": [1, 2, 3, 4, 5],
+            "int64": pd.Series([1, 2, 3, None, 5], dtype="UInt8"),
+            "int64_nan": pd.Series([1, 2, 3, float("nan"), 5], dtype="Int64"),
+            "float": [1.0, 2.0, 3.0, 4, 5.0],
+            "float_null": [1, 2, None, 4, 5],
+            "float_inf": [1, 2, None, 4, (float("inf"))],
+        }
+    )
 
     df_clean = sanitize_dataframe(df)
     assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
@@ -139,18 +141,19 @@ def test_sanitize_nullable_integers():
     }
 
 
+@pytest.mark.skipif(
+    not hasattr(pd, "StringDtype"),
+    reason="dedicated String dtype not supported in pandas v{}".format(pd.__version__)
+    )
 def test_sanitize_string_dtype():
-    try:
-        df = pd.DataFrame(
-            {
-                "string_object": ["a", "b", "c", "d"],
-                "string_string": pd.array(["a", "b", "c", "d"], dtype="string"),
-                "string_object_null": ["a", "b", None, "d"],
-                "string_string_null": pd.array(["a", "b", None, "d"], dtype="string"),
-            }
-        )
-    except TypeError:  # dtype not supported
-        return
+    df = pd.DataFrame(
+        {
+            "string_object": ["a", "b", "c", "d"],
+            "string_string": pd.array(["a", "b", "c", "d"], dtype="string"),
+            "string_object_null": ["a", "b", None, "d"],
+            "string_string_null": pd.array(["a", "b", None, "d"], dtype="string"),
+        }
+    )
 
     df_clean = sanitize_dataframe(df)
     assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
