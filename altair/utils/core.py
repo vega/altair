@@ -172,6 +172,7 @@ def sanitize_dataframe(df):
     * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
     * Convert Nullable integers to objects and replace NaN with None
+    * Convert Nullable boolean to objects and replace NaN with None
     * convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
@@ -210,6 +211,11 @@ def sanitize_dataframe(df):
         elif str(dtype) == 'bool':
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
+        elif str(dtype) == "boolean":
+            # dedicated boolean datatype (since 1.0)
+            # https://pandas.io/docs/user_guide/boolean.html
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif str(dtype).startswith('datetime'):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.

@@ -167,3 +167,29 @@ def test_sanitize_string_dtype():
         "string_object_null": ["a", "b", None, "d"],
         "string_string_null": ["a", "b", None, "d"],
     }
+
+
+@pytest.mark.skipif(
+    not hasattr(pd, "BooleanDtype"),
+    reason="Nullable boolean dtype not supported in pandas v{}".format(pd.__version__)
+    )
+def test_sanitize_boolean_dtype():
+    df = pd.DataFrame(
+        {
+            "bool_none": pd.array([True, False, None], dtype="boolean"),
+            "none": pd.array([None, None, None], dtype="boolean"),
+            "bool": pd.array([True, False, True], dtype="boolean"),
+        }
+    )
+
+    df_clean = sanitize_dataframe(df)
+    assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
+
+    result_python = {
+        col_name: list(col) for col_name, col in df_clean.iteritems()
+    }
+    assert result_python == {
+            "bool_none": [True, False, None],
+            "none": [None, None, None],
+            "bool": [True, False, True],
+    }
