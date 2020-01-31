@@ -171,6 +171,8 @@ def sanitize_dataframe(df):
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
+    * Convert Nullable integers to objects and replace NaN with None
+    * convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
     df = df.copy()
