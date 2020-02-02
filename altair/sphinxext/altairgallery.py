@@ -132,7 +132,7 @@ def save_example_pngs(examples, image_dir, make_thumbnails=True):
                 chart.save(image_file)
                 hashes[filename] = example_hash
             except ImportError:
-                warnings.warn("Could not import selenium: using generic image")
+                warnings.warn("Unable to save image: using generic image")
                 create_generic_image(image_file)
 
             with open(hash_file, 'w') as f:

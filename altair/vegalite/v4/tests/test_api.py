@@ -13,9 +13,9 @@ import pandas as pd
 import altair.vegalite.v4 as alt
 
 try:
-    import selenium
+    import altair_saver  # noqa: F401
 except ImportError:
-    selenium = None
+    altair_saver = None
 
 
 def getargs(*args, **kwargs):
@@ -229,43 +229,38 @@ def test_selection_expression():
 
 
 @pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
-@pytest.mark.skipif('not selenium')
 def test_save(format, basic_chart):
-    if format in ['html', 'json', 'svg']:
-        out = io.StringIO()
-        mode = 'r'
-    else:
+    if format == 'png':
         out = io.BytesIO()
         mode = 'rb'
+    else:
+        out = io.StringIO()
+        mode = 'r'
+
+    if format in ['svg', 'png'] and not altair_saver:
+        with pytest.raises(ValueError) as err:
+            basic_chart.save(out, format=format)
+        assert "github.com/altair-viz/altair_saver" in str(err.value)
+        return
+
+    basic_chart.save(out, format=format)
+    out.seek(0)
+    content = out.read()
+
+    if format == 'json':
+        assert '$schema' in json.loads(content)
+    if format == 'html':
+        assert content.startswith('<!DOCTYPE html>')
     
     fid, filename = tempfile.mkstemp(suffix='.' + format)
     os.close(fid)
 
     try:
-        try:
-            basic_chart.save(out, format=format)
-            basic_chart.save(filename)
-        except ValueError as err:
-            if str(err).startswith('Internet connection'):
-                pytest.skip("web connection required for png/svg export")
-            else:
-                raise
-
-        out.seek(0)
+        basic_chart.save(filename)
         with open(filename, mode) as f:
-            assert f.read() == out.read()
+            assert f.read() == content
     finally:
         os.remove(filename)
-
-    out.seek(0)
-
-    if format == 'json':
-        spec = json.load(out)
-        assert '$schema' in spec
-
-    elif format == 'html':
-        content = out.read()
-        assert content.startswith('<!DOCTYPE html>')
 
 
 def test_facet():
