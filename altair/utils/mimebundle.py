@@ -35,9 +35,8 @@ def spec_to_mimebundle(spec, format, mode=None,
 
     Note
     ----
-    The png, svg, and vega outputs require the pillow and selenium Python modules
-    to be installed. Additionally they requires either chromedriver
-    (if webdriver=='chrome') or geckodriver (if webdriver=='firefox')
+    The png, svg, pdf, and vega outputs require the altair_saver package
+    to be installed.
     """
     if mode not in ['vega', 'vega-lite']:
         raise ValueError("mode must be either 'vega' or 'vega-lite'")
