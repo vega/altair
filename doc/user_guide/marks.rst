@@ -19,6 +19,7 @@ area        :meth:`~Chart.mark_area`      A filled area plot.                   
 bar         :meth:`~Chart.mark_bar`       A bar plot.                                          :ref:`gallery_simple_bar_chart`
 circle      :meth:`~Chart.mark_circle`    A scatter plot with filled circles.                  :ref:`gallery_one_dot_per_zipcode`
 geoshape    :meth:`~Chart.mark_geoshape`  A geographic shape                                   :ref:`gallery_choropleth`
+image       :meth:`~Chart.mark_image`     A scatter plot with image markers.                   :ref:`user-guide-image-mark`
 line        :meth:`~Chart.mark_line`      A line plot.                                         :ref:`gallery_simple_line_chart`
 point       :meth:`~Chart.mark_point`     A scatter plot with configurable point shapes.       :ref:`gallery_scatter_linked_brush`
 rect        :meth:`~Chart.mark_rect`      A filled rectangle, used for heatmaps                :ref:`gallery_simple_heatmap`
@@ -34,8 +35,8 @@ In addition, Altair provides the following compound marks:
 Mark Name   Method                          Description                       Example
 ==========  ==============================  ================================  ==================================
 box plot    :meth:`~Chart.mark_boxplot`     A box plot.                       :ref:`gallery_boxplot`
-error band  :meth:`~Chart.mark_errorband`   A continuous band around a line.  N/A
-error bar   :meth:`~Chart.mark_errorbar`    An errorbar around a point.       N/A
+error band  :meth:`~Chart.mark_errorband`   A continuous band around a line.  :ref:`gallery_line_with_ci`
+error bar   :meth:`~Chart.mark_errorbar`    An errorbar around a point.       :ref:`gallery_errorbars_with_ci`
 ==========  ==============================  ================================  ==================================
 
 In Altair, marks can be most conveniently specified by the ``mark_*`` methods
@@ -60,6 +61,34 @@ arguments to represent points as red semi-transparent filled circles:
        y='Miles_per_Gallon:Q'
    )
 
+.. _user-guide-image-mark:
+
+Image Mark
+~~~~~~~~~~
+The image mark, unlike other simple marks, requires the mark to include a
+``url`` encoding, which specifies the PNG to use for the image:
+
+.. altair-plot::
+
+   import altair as alt
+   import pandas as pd
+   
+   source = pd.DataFrame.from_records([
+         {"x": 0.5, "y": 0.5, "img": "https://vega.github.io/vega-datasets/data/ffox.png"},
+         {"x": 1.5, "y": 1.5, "img": "https://vega.github.io/vega-datasets/data/gimp.png"},
+         {"x": 2.5, "y": 2.5, "img": "https://vega.github.io/vega-datasets/data/7zip.png"}
+   ])
+   
+   alt.Chart(source).mark_image(
+       width=50, 
+       height=50
+   ).encode(
+       x='x', 
+       y='y', 
+       url='img'
+   )
+
+.. _user-guide-compound-marks:
 
 Compound Marks
 ~~~~~~~~~~~~~~

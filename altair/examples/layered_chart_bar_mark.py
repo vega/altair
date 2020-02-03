@@ -13,23 +13,20 @@ source = pd.DataFrame({
     'goal': [25, 47, 30, 27, 38, 19, 4]
 })
 
-base = alt.Chart(source)
-
-bar = base.mark_bar().encode(
+bar = alt.Chart(source).mark_bar().encode(
     x='project',
     y='score'
+).properties(
+    width=alt.Step(40)  # controls width of bar.
 )
 
-tick = base.mark_tick(
+tick = alt.Chart(source).mark_tick(
     color='red',
-    thickness=2
+    thickness=2,
+    size=40 * 0.9,  # controls width of tick.
 ).encode(
     x='project',
     y='goal'
 )
 
-(bar + tick).configure_tick(
-    bandSize=35  # controls the width of the tick
-).configure_scale(
-    rangeStep=40  # controls the width of the bar
-)
+bar + tick

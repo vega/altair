@@ -27,7 +27,7 @@ def get_install_requirements(path):
 
 
 def version(path):
-    """Obtain the packge version from a python file e.g. pkg/__init__.py
+    """Obtain the package version from a python file e.g. pkg/__init__.py
 
     See <https://packaging.python.org/en/latest/single_source_version.html>.
     """
@@ -69,6 +69,7 @@ URL                 = 'http://altair-viz.github.io'
 DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
 INSTALL_REQUIRES    = get_install_requirements("requirements.txt")
+PYTHON_REQUIRES     = ">=3.5"
 DEV_REQUIRES        = get_install_requirements("requirements_dev.txt")
 VERSION             = version('altair/__init__.py')
 
@@ -86,6 +87,7 @@ setup(name=NAME,
       packages=PACKAGES,
       include_package_data=True,
       install_requires=INSTALL_REQUIRES,
+      python_requires=PYTHON_REQUIRES,
       extras_require={
         'dev': DEV_REQUIRES
       },
@@ -95,7 +97,6 @@ setup(name=NAME,
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',

@@ -4,7 +4,8 @@ import inspect
 import json
 
 import jsonschema
-import six
+import numpy as np
+import pandas as pd
 
 
 # If DEBUG_MODE is True, then schema objects are converted to dict and
@@ -36,17 +37,32 @@ def debug_mode(arg):
         DEBUG_MODE = original
 
 
+def _subclasses(cls):
+    """Breadth-first sequence of all classes which inherit from cls."""
+    seen = set()
+    current_set = {cls}
+    while current_set:
+        seen |= current_set
+        current_set = set.union(*(set(cls.__subclasses__()) for cls in current_set))
+        for cls in current_set - seen:
+            yield cls
+
+
 def _todict(obj, validate, context):
     """Convert an object to a dict representation."""
     if isinstance(obj, SchemaBase):
         return obj.to_dict(validate=validate, context=context)
-    elif isinstance(obj, (list, tuple)):
+    elif isinstance(obj, (list, tuple, np.ndarray)):
         return [_todict(v, validate, context) for v in obj]
     elif isinstance(obj, dict):
         return {k: _todict(v, validate, context) for k, v in obj.items()
                 if v is not Undefined}
     elif hasattr(obj, 'to_dict'):
         return obj.to_dict()
+    elif isinstance(obj, np.number):
+        return float(obj)
+    elif isinstance(obj, (pd.Timestamp, np.datetime64)):
+        return pd.Timestamp(obj).isoformat()
     else:
         return obj
 
@@ -82,7 +98,7 @@ class SchemaValidationError(jsonschema.ValidationError):
             contents = {key: getattr(err, key) for key in spec.args[1:]}
         return contents
 
-    def __unicode__(self):
+    def __str__(self):
         cls = self.obj.__class__
         schema_path = ['{}.{}'.format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
@@ -96,13 +112,6 @@ class SchemaValidationError(jsonschema.ValidationError):
 
         {}
         """.format(schema_path, self.validator, self.message)
-
-    if six.PY3:
-        __str__ = __unicode__
-    else:
-        def __str__(self):
-            return six.text_type(self).encode("utf-8")
-
 
 
 class UndefinedType(object):
@@ -215,6 +224,8 @@ class SchemaBase(object):
 
     def __getattr__(self, attr):
         # reminder: getattr is called after the normal lookups
+        if attr == '_kwds': 
+            raise AttributeError()
         if attr in self._kwds:
             return self._kwds[attr]
         else:
@@ -333,7 +344,7 @@ class SchemaBase(object):
     @classmethod
     def _default_wrapper_classes(cls):
         """Return the set of classes used within cls.from_dict()"""
-        return SchemaBase.__subclasses__()
+        return _subclasses(SchemaBase)
 
     @classmethod
     def from_dict(cls, dct, validate=True, _wrapper_classes=None):
@@ -483,9 +494,11 @@ class _FromDict(object):
             return args[0] if args else kwds
 
         if cls is None:
-            # TODO: do something more than simply selecting the last match?
+            # If there are multiple matches, we use the first one in the dict.
+            # Our class dict is constructed breadth-first from top to bottom,
+            # so the first class that matches is the most general match.
             matches = self.class_dict[self.hash_schema(schema)]
-            cls = matches[-1] if matches else _passthrough
+            cls = matches[0] if matches else _passthrough
         schema = _resolve_references(schema, rootschema)
 
         if 'anyOf' in schema or 'oneOf' in schema:

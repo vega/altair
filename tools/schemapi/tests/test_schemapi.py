@@ -1,5 +1,11 @@
+import copy
+import io
+import json
 import jsonschema
+import pickle
 import pytest
+
+import numpy as np
 
 from ..schemapi import (UndefinedType, SchemaBase, Undefined, _FromDict,
                         SchemaValidationError)
@@ -207,11 +213,16 @@ def test_undefined_singleton():
     assert Undefined is UndefinedType()
 
 
-def test_copy():
-    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
-       'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-       'd': ['x', 'y', 'z']}
+@pytest.fixture
+def dct():
+    return {
+        'a': {'foo': 'bar'}, 'a2': {'foo': 42},
+        'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
+        'd': ['x', 'y', 'z']
+    }
 
+
+def test_copy_method(dct):
     myschema = MySchema.from_dict(dct)
 
     # Make sure copy is deep
@@ -242,6 +253,16 @@ def test_copy():
     assert mydct['c'] == dct['c']
 
 
+def test_copy_module(dct):
+    myschema = MySchema.from_dict(dct)
+
+    cp = copy.deepcopy(myschema)
+    cp['a']['foo'] = 'new value'
+    cp['b'] = ['A', 'B', 'C']
+    cp['c'] = 164
+    assert myschema.to_dict() == dct
+
+
 def test_attribute_error():
     m = MySchema()
     with pytest.raises(AttributeError) as err:
@@ -250,14 +271,21 @@ def test_attribute_error():
                               "'invalid_attribute'")
 
 
-def test_to_from_json():
-    dct = {'a': {'foo': 'bar'}, 'a2': {'foo': 42},
-           'b': ['a', 'b', 'c'], 'b2': [1, 2, 3], 'c': 42,
-           'd': ['x', 'y', 'z'], 'e': ['g', 'h']}
+def test_to_from_json(dct):
     json_str = MySchema.from_dict(dct).to_json()
     new_dct = MySchema.from_json(json_str).to_dict()
 
     assert new_dct == dct
+
+
+def test_to_from_pickle(dct):
+    myschema = MySchema.from_dict(dct)
+    output = io.BytesIO()
+    pickle.dump(myschema, output)
+    output.seek(0)
+    myschema_new = pickle.load(output)
+
+    assert myschema_new.to_dict() == dct
 
 
 def test_class_with_no_schema():
@@ -294,3 +322,18 @@ def test_schema_validation_error():
     assert 'test_schemapi.MySchema->a' in message
     assert "validating {!r}".format(the_err.validator) in message
     assert the_err.message in message
+
+
+def test_serialize_numpy_types():
+    m = MySchema(
+        a={'date': np.datetime64('2019-01-01')},
+        a2={'int64': np.int64(1), 'float64': np.float64(2)},
+        b2=np.arange(4),
+    )
+    out = m.to_json()
+    dct = json.loads(out)
+    assert dct == {
+        'a': {'date': '2019-01-01T00:00:00'},
+        'a2': {'int64': 1, 'float64': 2},
+        'b2': [0, 1, 2, 3],
+    }

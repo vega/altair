@@ -488,8 +488,8 @@ For line marks, the `order` channel encodes the order in which data points are c
         order='year'
     )
 
-Sorting Legends and Axes
-~~~~~~~~~~~~~~~~~~~~~~~~
+Sorting
+~~~~~~~
 
 Specific channels can take a  :class:`sort` property which determines the
 order of the scale being used for the channel. There are a number of different
@@ -498,12 +498,15 @@ sort options available:
 - ``sort='ascending'`` (Default) will sort the field's value in ascending order.
   for string data, this uses standard alphabetical order.
 - ``sort='descending'`` will sort the field's value in descending order
+- passing the name of an encoding channel to ``sort``, such as ``"x"`` or ``"y"``, allows for 
+  sorting by that channel. An optional minus prefix can be used for a descending 
+  sort. For example ``sort='-x'`` would sort by the x channel in descending order.
 - passing a list to ``sort`` allows you to explicitly set the order in which
   you would like the encoding to appear
 - passing a :class:`EncodingSortField` class to ``sort`` allows you to sort
   an axis by the value of some other field in the dataset.
 
-Here is an example of applying these four different sort approaches on the
+Here is an example of applying these five different sort approaches on the
 x-axis, using the barley dataset:
 
 .. altair-plot::
@@ -541,6 +544,14 @@ x-axis, using the barley dataset:
         title='Explicit'
     )
 
+    # Sort according to encoding channel
+    sortchannel = base.encode(
+        alt.X(field='site', type='nominal',
+              sort='y')
+    ).properties(
+        title='By Channel'
+    )
+
     # Sort according to another field
     sortfield = base.encode(
         alt.X(field='site', type='nominal',
@@ -549,7 +560,46 @@ x-axis, using the barley dataset:
         title='By Yield'
     )
 
-    ascending | descending | explicit | sortfield
+    alt.concat(
+        ascending, descending, explicit,
+        sortchannel, sortfield,
+        columns=3
+    )
+
+The last two charts are the same because the default aggregation 
+(see :ref:`encoding-aggregates`) is ``mean``. To highlight the 
+difference between sorting via channel and sorting via field consider the 
+following example where we don't aggregate the data:
+
+.. altair-plot::
+
+    import altair as alt
+    from vega_datasets import data
+
+    barley = data.barley()
+    base = alt.Chart(barley).mark_point().encode(
+        y='yield:Q',
+    ).properties(width=200)
+    
+    # Sort according to encoding channel
+    sortchannel = base.encode(
+        alt.X(field='site', type='nominal',
+              sort='y')
+    ).properties(
+        title='By Channel'
+    )
+
+    # Sort according to another field
+    sortfield = base.encode(
+        alt.X(field='site', type='nominal',
+              sort=alt.EncodingSortField(field='yield', op='min'))
+    ).properties(
+        title='By Min Yield'
+    )
+    sortchannel | sortfield
+
+By passing a :class:`EncodingSortField` class to ``sort`` we have more control over 
+the sorting process.
 
 
 Sorting Legends

@@ -9,12 +9,10 @@ import warnings
 import IPython
 from IPython.core import magic_arguments
 import pandas as pd
-import six
 from toolz import pipe
 
-from altair.vegalite import v2 as vegalite_v2
 from altair.vegalite import v3 as vegalite_v3
-from altair.vega import v4 as vega_v4
+from altair.vegalite import v4 as vegalite_v4
 from altair.vega import v5 as vega_v5
 
 try:
@@ -27,12 +25,11 @@ except ImportError:
 
 RENDERERS = {
   'vega': {
-      '4': vega_v4.Vega,
       '5': vega_v5.Vega,
   },
   'vega-lite': {
-      '2': vegalite_v2.VegaLite,
       '3': vegalite_v3.VegaLite,
+      '4': vegalite_v4.VegaLite,
   }
 }
 
@@ -40,13 +37,11 @@ RENDERERS = {
 TRANSFORMERS = {
   'vega': {
       # Vega doesn't yet have specific data transformers; use vegalite
-      '3': vegalite_v2.data_transformers,
-      '4': vegalite_v2.data_transformers,
-      '5': vegalite_v2.data_transformers,
+      '5': vegalite_v4.data_transformers,
   },
   'vega-lite': {
-      '2': vegalite_v2.data_transformers,
       '3': vegalite_v3.data_transformers,
+      '4': vegalite_v4.data_transformers,
   }
 }
 
@@ -57,7 +52,7 @@ def _prepare_data(data, data_transformers):
         return data
     elif isinstance(data, pd.DataFrame):
         return pipe(data, data_transformers.get())
-    elif isinstance(data, six.string_types):
+    elif isinstance(data, str):
         return {'url': data}
     else:
         warnings.warn("data of type {} not recognized".format(type(data)))
@@ -123,7 +118,7 @@ def vega(line, cell):
             raise ValueError("%%vega: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:
-        spec = yaml.load(cell)
+        spec = yaml.load(cell, Loader=yaml.FullLoader)
 
     if data:
         spec['data'] = []
@@ -141,7 +136,7 @@ def vega(line, cell):
     'data',
     nargs='?',
     help='local variablename of a pandas DataFrame to be used as the dataset')
-@magic_arguments.argument('-v', '--version', dest='version', default='3')
+@magic_arguments.argument('-v', '--version', dest='version', default='4')
 @magic_arguments.argument('-j', '--json', dest='json', action='store_true')
 def vegalite(line, cell):
     """Cell magic for displaying vega-lite visualizations in CoLab.
@@ -168,7 +163,7 @@ def vegalite(line, cell):
             raise ValueError("%%vegalite: spec is not valid JSON. "
                              "Install pyyaml to parse spec as yaml")
     else:
-        spec = yaml.load(cell)
+        spec = yaml.load(cell, Loader=yaml.FullLoader)
 
     if args.data is not None:
         data = _get_variable(args.data)

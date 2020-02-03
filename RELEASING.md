@@ -12,7 +12,7 @@
    Navigate to http://localhost:8000 and ensure it looks OK (particularly
    do a visual scan of the gallery thumbnails).
 
-3. Make sure CHANGES.md is up to date for the release: compare against PRs
+3. Make sure changes.rst is up to date for the release: compare against PRs
    merged since the last release & update top heading with release date.
 
 4. Update version to, e.g. 2.0.0
@@ -23,7 +23,7 @@
 5. Double-check that all vega-lite/vega/vega-embed versions are up-to-date:
 
    - URLs in ``doc/conf.py``
-   - versions in ``altair/vegalite/v3/display.py``
+   - versions in ``altair/vegalite/v4/display.py``
 
 6. Commit change and push to master
 
@@ -60,10 +60,15 @@
 
 12. add a new changelog entry for the unreleased version:
 
-        ## Version 2.1.0 (unreleased)
-        ### Enhancements
-        ### Bug Fixes
-        ### Backward-Incompatible Changes
+       Version 2.1.0 (unreleased)
+       --------------------------
+
+       Enhancements
+       ~~~~~~~~~~~~
+       Bug Fixes
+       ~~~~~~~~~
+       Backward-Incompatible Changes
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 13. Commit change and push to master
 
@@ -74,3 +79,6 @@
 14. Double-check that a conda-forge pull request is generated from the updated
     pip package by the conda-forge bot (may take up to ~an hour):
     https://github.com/conda-forge/altair-feedstock/pulls
+
+15. Copy changes.rst section into release notes within
+    https://github.com/altair-viz/altair/releases/, and publish the release.

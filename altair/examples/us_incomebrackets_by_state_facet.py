@@ -16,7 +16,7 @@ alt.Chart(source).mark_geoshape().encode(
     shape='geo:G',
     color='pct:Q',
     tooltip=['name:N', 'pct:Q'],
-    facet='group:N'
+    facet=alt.Facet('group:N', columns=2),
 ).transform_lookup(
     lookup='id',
     from_=alt.LookupData(data=states, key='id'),
@@ -24,7 +24,6 @@ alt.Chart(source).mark_geoshape().encode(
 ).properties(
     width=300,
     height=175,
-    columns=2
 ).project(
     type='albersUsa'
 )

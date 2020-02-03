@@ -10,7 +10,7 @@ from ..display import HTMLRenderer
 from .schema import SCHEMA_VERSION
 VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
 VEGA_VERSION = '5'
-VEGAEMBED_VERSION = '4'
+VEGAEMBED_VERSION = '5'
 
 
 # ==============================================================================
@@ -85,7 +85,13 @@ kaggle_renderer = HTMLRenderer(mode='vega-lite',
                                vegaembed_version=VEGAEMBED_VERSION,
                                vegalite_version=VEGALITE_VERSION)
 
+html_renderer = HTMLRenderer(mode='vega-lite', template='universal',
+                             vega_version=VEGA_VERSION,
+                             vegaembed_version=VEGAEMBED_VERSION,
+                             vegalite_version=VEGALITE_VERSION)
+
 renderers.register('default', default_renderer)
+renderers.register('html', html_renderer)
 renderers.register('jupyterlab', default_renderer)
 renderers.register('nteract', default_renderer)
 renderers.register('colab', colab_renderer)

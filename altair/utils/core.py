@@ -1,7 +1,7 @@
 """
 Utility routines
 """
-import collections
+from collections.abc import Mapping
 from copy import deepcopy
 import json
 import itertools
@@ -11,7 +11,6 @@ import traceback
 import warnings
 
 import jsonschema
-import six
 import pandas as pd
 import numpy as np
 
@@ -172,6 +171,9 @@ def sanitize_dataframe(df):
     * Convert np.int dtypes to Python int objects
     * Convert floats to objects and replace NaNs/infs with None.
     * Convert DateTime dtypes into appropriate string representations
+    * Convert Nullable integers to objects and replace NaN with None
+    * Convert Nullable boolean to objects and replace NaN with None
+    * convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
     df = df.copy()
@@ -180,7 +182,7 @@ def sanitize_dataframe(df):
         df.columns = df.columns.astype(str)
 
     for col in df.columns:
-        if not isinstance(col, six.string_types):
+        if not isinstance(col, str):
             raise ValueError('Dataframe contains invalid column name: {0!r}. '
                              'Column names must be strings'.format(col))
 
@@ -201,9 +203,19 @@ def sanitize_dataframe(df):
             # https://github.com/pydata/pandas/issues/10778
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
+        elif str(dtype) == "string":
+            # dedicated string datatype (since 1.0)
+            # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif str(dtype) == 'bool':
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
+        elif str(dtype) == "boolean":
+            # dedicated boolean datatype (since 1.0)
+            # https://pandas.io/docs/user_guide/boolean.html
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif str(dtype).startswith('datetime'):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
@@ -221,6 +233,19 @@ def sanitize_dataframe(df):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
             continue                            
+        elif str(dtype) in {
+            "Int8",
+            "Int16",
+            "Int32",
+            "Int64",
+            "UInt8",
+            "UInt16",
+            "UInt32",
+            "UInt64",
+        }:  # nullable integer datatypes (since 24.0)
+            # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
+            col = df[col_name].astype(object)
+            df[col_name] = col.where(col.notnull(), None)
         elif np.issubdtype(dtype, np.integer):
             # convert integers to objects; np.int is not JSON serializable
             df[col_name] = df[col_name].astype(object)
@@ -412,7 +437,7 @@ def update_subtraits(obj, attrs, **kwargs):
     else:
         dct = obj
 
-    if isinstance(attrs, six.string_types):
+    if isinstance(attrs, str):
         attrs = (attrs,)
 
     if len(attrs) == 0:
@@ -455,9 +480,9 @@ def update_nested(original, update, copy=False):
     if copy:
         original = deepcopy(original)
     for key, val in update.items():
-        if isinstance(val, collections.Mapping):
+        if isinstance(val, Mapping):
             orig_val = original.get(key, {})
-            if isinstance(orig_val, collections.Mapping):
+            if isinstance(orig_val, Mapping):
                 original[key] = update_nested(orig_val, val)
             else:
                 original[key] = val
@@ -539,7 +564,7 @@ def infer_encoding_types(args, kwargs, channels):
         if isinstance(obj, SchemaBase):
             return obj
 
-        if isinstance(obj, six.string_types):
+        if isinstance(obj, str):
             obj = {'shorthand': obj}
 
         if isinstance(obj, (list, tuple)):

@@ -23,7 +23,7 @@ For example, suppose we are creating a scatter plot of the ``cars`` dataset:
    from vega_datasets import data
    cars = data.cars.url
 
-   alt.Chart(cars).mark_point().encode(
+   alt.Chart(cars).mark_point().encode( 
        x='Acceleration:Q',
        y='Horsepower:Q'
    )
@@ -226,6 +226,14 @@ the y labels as a dollar value:
        y=alt.Y('y', axis=alt.Axis(format='$', title='dollar amount'))
    )
 
+Axis labels can also be easily removed:
+
+.. altair-plot::
+
+   alt.Chart(df).mark_circle().encode(
+       x=alt.X('x', axis=alt.Axis(labels=False)),
+       y=alt.Y('y', axis=alt.Axis(labels=False))
+   )
 
 Additional formatting codes are available; for a listing of these see the
 `d3 Format Code Documentation <https://github.com/d3/d3-format/blob/master/README.md#format>`_.
@@ -478,34 +486,86 @@ But since ``mark_bar(size=10)`` only controls the width of the bars, it might be
       y='value:Q'
   )
 
-The width of the chart containing the bar plot can be controlled through two mechanisms:
+The width of the chart containing the bar plot can be controlled through setting the ``width``
+property of the chart, either to a pixel value for any chart, or to a step value
+in the case of discrete scales.
 
-1. Setting the ``width`` of chart, so the width of the bars are adjusted to fit the width of the chart.
-
-2. Setting the ``rangeStep`` property of the bars in the :class:`Scale` class. The ``rangeStep`` allocates the width (in pixels) for each bar, so the width of the chart becomes the number of bars multiply the ``rangeStep``.
-
-An example using the first mechanism (using ``width``):
+Here is an example of setting the width to a single value for the whole chart:
 
 .. altair-plot::
 
   alt.Chart(data).mark_bar(size=30).encode(
       x='name:O',
       y='value:Q'
-  ).properties(width=100)
+  ).properties(width=200)
 
 The width of the bars are set using ``mark_bar(size=30)`` and the width of the chart is set using ``properties(width=100)``
 
-An example using the second mechanism (using ``rangeStep``):
+Here is an example of setting the step width for a discrete scale:
 
 .. altair-plot::
 
   alt.Chart(data).mark_bar(size=30).encode(
-      alt.X('name:N', scale=alt.Scale(rangeStep=100)),
+      x='name:N',
       y='value:Q'
-  )
+  ).properties(width=alt.Step(100))
 
-The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the the chart is set using ``alt.Scale(rangeStep=100)``
+The width of the bars are set using ``mark_bar(size=30)`` and the width that is allocated for each bar bar in the the chart is set using ``width=alt.Step(100)``
 
 .. note::
 
    If both ``width`` and ``rangeStep`` are specified, then ``rangeStep`` will be ignored.
+
+
+.. _customization-chart-size:
+
+Adjusting Chart Size
+--------------------
+The size of charts can be adjusted using the ``width`` and ``height`` properties.
+For example:
+
+.. altair-plot::
+
+   import altair as alt
+   from vega_datasets import data
+   
+   cars = data.cars()
+   
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()'
+   ).properties(
+       width=200,
+       height=150
+   )
+
+Note that in the case of faceted or other compound charts, this width and height applies to
+the subchart rather than to the overall chart:
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()',
+       column='Cylinders:Q'
+   ).properties(
+       width=100,
+       height=100
+   )
+
+If you want your chart size to respond to the width of the HTML page or container in which
+it is rendererd, you can set ``width`` or ``height`` to the string ``"container"``:
+
+.. altair-plot::
+
+   alt.Chart(cars).mark_bar().encode(
+       x='Origin',
+       y='count()',
+   ).properties(
+       width='container',
+       height=200
+   )
+
+Note that this will only scale with the container if its parent element has a size determined
+outside the chart itself; For example, the container may be a ``<div>`` element that has style
+``width: 100%; height: 300px``. 

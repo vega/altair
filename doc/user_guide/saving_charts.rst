@@ -5,64 +5,7 @@
 Saving Altair Charts
 --------------------
 Altair chart objects have a :meth:`Chart.save` method which allows charts
-to be saved in a variety of formats.
-
-.. _saving-png:
-
-PNG and SVG format
-~~~~~~~~~~~~~~~~~~
-To save an Altair chart object as a PNG or SVG image, you can use
-
-.. code-block:: python
-
-    chart.save('chart.png')
-    chart.save('chart.svg')
-
-However, saving these images requires some additional dependencies to run the
-javascript code necessary to interpret the Vega-Lite specification and output
-it in the form of an image.
-
-Altair is set up to do this conversion using selenium and headless Chrome or
-Firefox, which requires the following:
-
-- the Selenium_ python package. This can be installed using::
-
-      $ conda install selenium
-
-  or::
-
-      $ pip install selenium
-
-- a recent version of `Google Chrome`_ or `Mozilla Firefox`_. Please see the
-  Chrome or Firefox installation page for installation details for your own
-  operating system.
-
-- `Chrome Driver`_ or `Gecko Driver`_, which allows Chrome or Firefox
-  respectively to be run in a *headless* state (i.e. to execute Javascript
-  code without opening an actual browser window).
-  If you use homebrew on OSX, this can be installed with::
-
-      $ brew cask install chromedriver
-      $ brew install geckodriver
-
-  See the ``chromedriver`` or ``geckodriver`` documentation for details on
-  installation.
-
-Once those dependencies are installed, you should be able to save charts as
-``png`` or ``svg``. Altair defaults to using chromedriver. If you'd like to use geckodriver::
-
-    chart.save('chart.png', webdriver='firefox')
-
-Figure Size/Resolution
-^^^^^^^^^^^^^^^^^^^^^^
-When using ``chart.save()`` above, the resolution of the resulting PNG is
-controlled by the resolution of your screen. The easiest way to produce a
-higher-resolution PNG image is to scale the image to make it larger, and thus
-to contain more pixels at a given resolution.
-
-This can be done with the ``scale_factor`` argument, which defaults to 1.0::
-
-    chart.save('chart.png', scale_factor=2.0)
+to be saved in a variety of formats. 
 
 .. saving-json:
 
@@ -94,11 +37,11 @@ The contents of the resulting file will look something like this:
 .. code-block:: json
 
     {
-      "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
       "config": {
         "view": {
-          "height": 300,
-          "width": 400
+          "continuousHeight": 300,
+          "continuousWidth": 400
         }
       },
       "data": {
@@ -127,8 +70,8 @@ This JSON can then be inserted into any web page using the vegaEmbed_ library.
 
 HTML format
 ~~~~~~~~~~~
-If you wish for Altair to take care of the embedding for you, you can save a
-file using
+If you wish for Altair to take care of the HTML embedding for you, you can
+save a chart directly to an HTML file using
 
 .. code-block:: python
 
@@ -147,18 +90,18 @@ javascript-enabled web browser:
     <html>
     <head>
       <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-lite@3"></script>
-      <script src="https://cdn.jsdelivr.net/npm/vega-embed@4"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
     </head>
     <body>
       <div id="vis"></div>
       <script type="text/javascript">
         var spec = {
-          "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+          "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
           "config": {
             "view": {
-              "height": 300,
-              "width": 400
+              "continuousHeight": 300,
+              "continuousWidth": 400
             }
           },
           "data": {
@@ -188,7 +131,7 @@ javascript-enabled web browser:
 
 You can view the result here: `chart.html </_static/chart.html>`_.
 
-By default ``canvas`` is used for rendering the visualization in vegaEmbed. To 
+By default, ``canvas`` is used for rendering the visualization in vegaEmbed. To 
 change to ``svg`` rendering, use the ``embed_options`` as such:
 
 .. code-block:: python
@@ -198,13 +141,47 @@ change to ``svg`` rendering, use the ``embed_options`` as such:
 
 .. note::
 
-   This is not the same as ``alt.renderers.enable('svg')``, what renders a 
-   static ``svg`` image.
+   This is not the same as ``alt.renderers.enable('svg')``, what renders the 
+   chart as a static ``svg`` image within a Jupyter notebook.
+
+.. _saving-png:
+
+PNG, SVG, and PDF format
+~~~~~~~~~~~~~~~~~~~~~~~~
+To save an Altair chart object as a PNG, SVG, or PDF image, you can use
+
+.. code-block:: python
+
+    chart.save('chart.png')
+    chart.save('chart.svg')
+    chart.save('chart.pdf')
+
+However, saving these images requires some additional extensions to run the
+javascript code necessary to interpret the Vega-Lite specification and output
+it in the form of an image.
+
+Altair can do this via the altair_saver_ package, which can be installed with::
+
+    $ conda install altair_saver
+
+or::
+
+    $ pip install altair_saver
+
+See the altair_saver_ documentation for information about additional installation
+requirements.
+
+Figure Size/Resolution
+^^^^^^^^^^^^^^^^^^^^^^
+When using ``chart.save()`` above, the resolution of the resulting PNG is
+controlled by the resolution of your screen. The easiest way to produce a
+higher-resolution PNG image is to scale the image to make it larger, and thus
+to contain more pixels at a given resolution.
+
+This can be done with the ``scale_factor`` argument, which defaults to 1.0::
+
+    chart.save('chart.png', scale_factor=2.0)
 
 
-.. _Selenium: http://selenium-python.readthedocs.io/
-.. _Google Chrome: https://www.google.com/chrome/
-.. _Mozilla Firefox: https://www.mozilla.org/firefox/
-.. _Chrome Driver: https://sites.google.com/a/chromium.org/chromedriver/
-.. _Gecko Driver: https://github.com/mozilla/geckodriver/releases
+.. _altair_saver http://github.com/altair-viz/altair_saver/
 .. _vegaEmbed: https://github.com/vega/vega-embed

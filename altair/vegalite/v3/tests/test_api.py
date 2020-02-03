@@ -14,9 +14,9 @@ import altair.vegalite.v3 as alt
 from altair.utils import AltairDeprecationWarning
 
 try:
-    import selenium
+    import altair_saver  # noqa: F401
 except ImportError:
-    selenium = None
+    altair_saver = None
 
 
 def getargs(*args, **kwargs):
@@ -230,41 +230,38 @@ def test_selection_expression():
 
 
 @pytest.mark.parametrize('format', ['html', 'json', 'png', 'svg'])
-@pytest.mark.skipif('not selenium')
 def test_save(format, basic_chart):
-    if format in ['html', 'json', 'svg']:
-        out = io.StringIO()
-        mode = 'r'
-    else:
+    if format == 'png':
         out = io.BytesIO()
         mode = 'rb'
-    fid, filename = tempfile.mkstemp(suffix='.' + format)
+    else:
+        out = io.StringIO()
+        mode = 'r'
 
-    try:
-        try:
+    if format in ['svg', 'png'] and not altair_saver:
+        with pytest.raises(ValueError) as err:
             basic_chart.save(out, format=format)
-            basic_chart.save(filename)
-        except ValueError as err:
-            if str(err).startswith('Internet connection'):
-                pytest.skip("web connection required for png/svg export")
-            else:
-                raise
+        assert "github.com/altair-viz/altair_saver" in str(err.value)
+        return
 
-        out.seek(0)
-        with open(filename, mode) as f:
-            assert f.read() == out.read()
-    finally:
-        os.remove(filename)
-
+    basic_chart.save(out, format=format)
     out.seek(0)
+    content = out.read()
 
     if format == 'json':
-        spec = json.load(out)
-        assert '$schema' in spec
-
-    elif format == 'html':
-        content = out.read()
+        assert '$schema' in json.loads(content)
+    if format == 'html':
         assert content.startswith('<!DOCTYPE html>')
+    
+    fid, filename = tempfile.mkstemp(suffix='.' + format)
+    os.close(fid)
+
+    try:
+        basic_chart.save(filename)
+        with open(filename, mode) as f:
+            assert f.read() == content
+    finally:
+        os.remove(filename)
 
 
 def test_facet():
@@ -402,9 +399,9 @@ def test_transforms():
     kwds = {
         'joinaggregate': [
             alt.JoinAggregateFieldDef(
-                field=alt.FieldName('x'),
-                op=alt.AggregateOp('min'),
-                **{'as': alt.FieldName('min')})
+                field='x',
+                op='min',
+                **{'as': 'min'})
         ],
         'groupby': ['key']
     }
@@ -535,7 +532,15 @@ def test_facet_add_selections():
     assert chart1.to_dict() == chart2.to_dict()
 
 
-@pytest.mark.parametrize('charttype', [alt.layer, alt.concat, alt.hconcat, alt.vconcat])
+def test_layer_add_selection():
+    base = alt.Chart('data.csv').mark_point()
+    selection = alt.selection_single()
+    chart1 = alt.layer(base.add_selection(selection), base)
+    chart2 = alt.layer(base, base).add_selection(selection)
+    assert chart1.to_dict() == chart2.to_dict()
+
+
+@pytest.mark.parametrize('charttype', [alt.concat, alt.hconcat, alt.vconcat])
 def test_compound_add_selections(charttype):
     base = alt.Chart('data.csv').mark_point()
     selection = alt.selection_single()
@@ -560,8 +565,7 @@ def test_LookupData():
     df = pd.DataFrame({'x': [1, 2, 3], 'y': [4, 5, 6]})
     lookup = alt.LookupData(data=df, key='x')
 
-    with alt.data_transformers.enable(consolidate_datasets=False):
-        dct = lookup.to_dict()
+    dct = lookup.to_dict()
     assert dct['key'] == 'x'
     assert dct['data'] == {'values': [{'x': 1, 'y': 4},
                                       {'x': 2, 'y': 5},

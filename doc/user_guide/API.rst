@@ -73,6 +73,8 @@ Encoding Channels
    TextValue
    Tooltip
    TooltipValue
+   Url
+   UrlValue
    X
    X2
    X2Value
@@ -105,6 +107,7 @@ API Functions
    binding_select
    concat
    condition
+   graticule
    hconcat
    layer
    pipe
@@ -113,6 +116,8 @@ API Functions
    selection_interval
    selection_multi
    selection_single
+   sequence
+   sphere
    topo_feature
    value
    vconcat
@@ -130,6 +135,7 @@ Low-Level Schema Wrappers
    AggregateTransform
    AggregatedFieldDef
    Align
+   AllSortString
    AnyMark
    AreaConfig
    ArgmaxDef
@@ -142,8 +148,9 @@ Low-Level Schema Wrappers
    AxisResolveMap
    BaseLegendLayout
    BaseMarkConfig
-   BaseTitleConfig
+   BaseTitleNoValueRefs
    Baseline
+   BinExtent
    BinParams
    BinTransform
    BindCheckbox
@@ -155,41 +162,75 @@ Low-Level Schema Wrappers
    BoxPlotDef
    BrushConfig
    CalculateTransform
+   Categorical
    Color
+   ColorGradientFieldDefWithCondition
+   ColorGradientValueDefWithCondition
    ColorName
+   ColorScheme
    CompositeMark
    CompositeMarkDef
    CompositionConfig
    ConcatSpec
+   ConditionalAxisColor
+   ConditionalAxisLabelBaseline
+   ConditionalAxisLabelFontStyle
+   ConditionalAxisLabelFontWeight
+   ConditionalAxisNumber
+   ConditionalAxisNumberArray
+   ConditionalAxisPropertyColornull
+   ConditionalAxisPropertyFontStylenull
+   ConditionalAxisPropertyFontWeightnull
+   ConditionalAxisPropertyTextBaselinenull
+   ConditionalAxisPropertynumbernull
+   ConditionalAxisPropertystringnull
+   ConditionalAxisString
    ConditionalMarkPropFieldDef
    ConditionalMarkPropFieldDefTypeForShape
    ConditionalNumberValueDef
    ConditionalPredicateMarkPropFieldDef
    ConditionalPredicateMarkPropFieldDefTypeForShape
    ConditionalPredicateNumberValueDef
+   ConditionalPredicateStringFieldDef
    ConditionalPredicateStringValueDef
-   ConditionalPredicateTextFieldDef
-   ConditionalPredicateValueDef
+   ConditionalPredicateValueDefColornull
+   ConditionalPredicateValueDefFontStylenull
+   ConditionalPredicateValueDefFontWeightnull
+   ConditionalPredicateValueDefGradientstringnull
+   ConditionalPredicateValueDefText
+   ConditionalPredicateValueDefTextBaselinenull
+   ConditionalPredicateValueDefnumbernull
+   ConditionalPredicateValueDefstring
    ConditionalSelectionMarkPropFieldDef
    ConditionalSelectionMarkPropFieldDefTypeForShape
    ConditionalSelectionNumberValueDef
+   ConditionalSelectionStringFieldDef
    ConditionalSelectionStringValueDef
-   ConditionalSelectionTextFieldDef
-   ConditionalSelectionValueDef
+   ConditionalSelectionValueDefGradientstringnull
+   ConditionalSelectionValueDefText
+   ConditionalSelectionValueDefstring
+   ConditionalStringFieldDef
    ConditionalStringValueDef
-   ConditionalTextFieldDef
-   ConditionalValueDef
+   ConditionalValueDefGradientstringnull
+   ConditionalValueDefText
+   ConditionalValueDefstring
    Config
    CsvDataFormat
    Cursor
+   Cyclical
    Data
    DataFormat
    DataSource
    Datasets
    DateTime
    Day
+   DensityTransform
+   DerivedStream
    DictInlineDataset
+   DictSelectionInit
+   DictSelectionInitInterval
    Dir
+   Diverging
    DsvDataFormat
    Element
    Encoding
@@ -202,16 +243,21 @@ Low-Level Schema Wrappers
    ErrorBarDef
    ErrorBarExtent
    EventStream
+   EventType
+   ExcludeMappedValueRefBaseTitle
+   Expr
+   FacetEncodingFieldDef
    FacetFieldDef
    FacetMapping
    FacetSpec
    FacetedEncoding
    FacetedUnitSpec
    Field
+   FieldDefWithConditionMarkPropFieldDefGradientstringnull
    FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull
    FieldDefWithConditionMarkPropFieldDefnumber
-   FieldDefWithConditionMarkPropFieldDefstringnull
-   FieldDefWithConditionTextFieldDefValue
+   FieldDefWithConditionStringFieldDefText
+   FieldDefWithConditionStringFieldDefstring
    FieldDefWithoutScale
    FieldEqualPredicate
    FieldGTEPredicate
@@ -223,12 +269,15 @@ Low-Level Schema Wrappers
    FieldRangePredicate
    FieldValidPredicate
    FilterTransform
+   FitType
    FlattenTransform
    FoldTransform
    FontStyle
    FontWeight
    Generator
    GenericUnitSpecEncodingAnyMark
+   Gradient
+   GradientStop
    GraticuleGenerator
    GraticuleParams
    HConcatSpec
@@ -254,28 +303,36 @@ Low-Level Schema Wrappers
    LayoutAlign
    LayoutBounds
    Legend
+   LegendBinding
    LegendConfig
    LegendLayout
    LegendOrient
    LegendResolveMap
+   LegendStreamBinding
    LineConfig
+   LinearGradient
    LocalMultiTimeUnit
    LocalSingleTimeUnit
+   LoessTransform
    LogicalAndPredicate
    LogicalNotPredicate
    LogicalOperandPredicate
    LogicalOrPredicate
    LookupData
+   LookupSelection
    LookupTransform
    Mark
    MarkConfig
    MarkDef
+   MarkType
+   MergedStream
    Month
    MultiSelection
    MultiSelectionConfig
    MultiTimeUnit
    NamedData
    NiceTime
+   NonArgAggregateOp
    NumberValueDef
    NumericFieldDefWithCondition
    NumericValueDefWithCondition
@@ -289,14 +346,21 @@ Low-Level Schema Wrappers
    PartsMixinsBoxPlotPart
    PartsMixinsErrorBandPart
    PartsMixinsErrorBarPart
+   PivotTransform
    PositionFieldDef
    Predicate
    Projection
    ProjectionConfig
    ProjectionType
+   QuantileTransform
+   RadialGradient
    RangeConfig
-   RangeConfigValue
+   RangeEnum
+   RangeRaw
+   RangeRawArray
+   RangeScheme
    RectConfig
+   RegressionTransform
    RepeatMapping
    RepeatRef
    RepeatSpec
@@ -306,6 +370,7 @@ Low-Level Schema Wrappers
    RowColLayoutAlign
    RowColboolean
    RowColnumber
+   RowColumnEncodingFieldDef
    SampleTransform
    Scale
    ScaleConfig
@@ -314,13 +379,12 @@ Low-Level Schema Wrappers
    ScaleResolveMap
    ScaleType
    SchemaBase
-   SchemeConfig
    SchemeParams
    SecondaryFieldDef
    SelectionAnd
    SelectionConfig
    SelectionDef
-   SelectionDomain
+   SelectionExtent
    SelectionInit
    SelectionInitInterval
    SelectionInitIntervalMapping
@@ -332,6 +396,8 @@ Low-Level Schema Wrappers
    SelectionResolution
    SequenceGenerator
    SequenceParams
+   SequentialMultiHue
+   SequentialSingleHue
    ShapeFieldDefWithCondition
    ShapeValueDefWithCondition
    SignalRef
@@ -341,6 +407,8 @@ Low-Level Schema Wrappers
    SingleTimeUnit
    Sort
    SortArray
+   SortByChannel
+   SortByChannelDesc
    SortByEncoding
    SortField
    SortOrder
@@ -349,20 +417,22 @@ Low-Level Schema Wrappers
    StackOffset
    StackTransform
    StandardType
+   Step
+   Stream
+   StringFieldDef
    StringFieldDefWithCondition
-   StringFieldDefWithConditionTypeForShape
    StringValueDefWithCondition
    StringValueDefWithConditionTypeForShape
    StrokeCap
    StrokeJoin
    StyleConfigIndex
    SymbolShape
+   Text
    TextBaseline
-   TextConfig
-   TextFieldDef
    TextFieldDefWithCondition
    TextValueDefWithCondition
    TickConfig
+   TimeInterval
    TimeUnit
    TimeUnitTransform
    TitleAnchor
@@ -389,13 +459,21 @@ Low-Level Schema Wrappers
    UtcSingleTimeUnit
    VConcatSpec
    Value
+   ValueDefWithConditionMarkPropFieldDefGradientstringnull
    ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull
    ValueDefWithConditionMarkPropFieldDefnumber
    ValueDefWithConditionMarkPropFieldDefstringnull
-   ValueDefWithConditionTextFieldDefValue
+   ValueDefWithConditionStringFieldDefText
+   Vector2DateTime
+   Vector2Vector2number
+   Vector2boolean
+   Vector2number
+   Vector2string
+   Vector3number
    VegaLiteSchema
    ViewBackground
    ViewConfig
+   WindowEventType
    WindowFieldDef
    WindowOnlyOp
    WindowTransform

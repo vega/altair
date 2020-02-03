@@ -3,9 +3,9 @@
 import warnings
 
 import hashlib
+import io
 import json
 import jsonschema
-import six
 import pandas as pd
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
@@ -63,7 +63,7 @@ def _consolidate_data(data, context):
     return data
 
 
-def _prepare_data(data, context):
+def _prepare_data(data, context=None):
     """Convert input data to data for use within schema
 
     Parameters
@@ -71,7 +71,7 @@ def _prepare_data(data, context):
     data :
         The input dataset in the form of a DataFrame, dictionary, altair data
         object, or other type that is recognized by the data transformers.
-    context : dict
+    context : dict (optional)
         The to_dict context in which the data is being prepared. This is used
         to keep track of information that needs to be passed up and down the
         recursive serialization routine, such as global named datasets.
@@ -84,18 +84,15 @@ def _prepare_data(data, context):
         data = pipe(data, data_transformers.get())
 
     # convert string input to a URLData
-    if isinstance(data, six.string_types):
+    if isinstance(data, str):
         data = core.UrlData(data)
 
     # consolidate inline data to top-level datasets
-    if data_transformers.consolidate_datasets:
+    if context is not None and data_transformers.consolidate_datasets:
         data = _consolidate_data(data, context)
 
     # if data is still not a recognized type, then return
-    if not isinstance(data, (dict, core.Data, core.UrlData,
-                             core.InlineData, core.NamedData,
-                             core.GraticuleGenerator, core.SequenceGenerator,
-                             core.SphereGenerator)):
+    if not isinstance(data, (dict, core.Data)):
         warnings.warn("data of type {} not recognized".format(type(data)))
 
     return data
@@ -110,8 +107,7 @@ class LookupData(core.LookupData):
     def to_dict(self, *args, **kwargs):
         """Convert the chart to a dictionary suitable for JSON export"""
         copy = self.copy(deep=False)
-        context = kwargs.get('context', {})
-        copy.data = _prepare_data(copy.data, context)
+        copy.data = _prepare_data(copy.data, kwargs.get('context'))
         return super(LookupData, copy).to_dict(*args, **kwargs)
 
 
@@ -123,9 +119,9 @@ class FacetMapping(core.FacetMapping):
         copy = self.copy(deep=False)
         context = kwargs.get('context', {})
         data = context.get('data', None)
-        if isinstance(self.row, six.string_types):
+        if isinstance(self.row, str):
             copy.row = core.FacetFieldDef(**utils.parse_shorthand(self.row, data))
-        if isinstance(self.column, six.string_types):
+        if isinstance(self.column, str):
             copy.column = core.FacetFieldDef(**utils.parse_shorthand(self.column, data))
         return super(FacetMapping, copy).to_dict(*args, **kwargs)
 
@@ -294,19 +290,11 @@ def condition(predicate, if_true, if_false, **kwargs):
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    selection_predicates = (core.SelectionNot, core.SelectionOr,
-                            core.SelectionAnd, core.SelectionOperand)
-    test_predicates = (six.string_types, expr.Expression, core.Predicate,
-                       core.LogicalOperandPredicate, core.LogicalNotPredicate,
-                       core.LogicalOrPredicate, core.LogicalAndPredicate,
-                       core.FieldEqualPredicate, core.FieldOneOfPredicate,
-                       core.FieldRangePredicate, core.FieldLTPredicate,
-                       core.FieldGTPredicate, core.FieldLTEPredicate,
-                       core.FieldGTEPredicate, core.SelectionPredicate)
+    test_predicates = (str, expr.Expression, core.LogicalOperandPredicate)
 
     if isinstance(predicate, Selection):
         condition = {'selection': predicate.name}
-    elif isinstance(predicate, selection_predicates):
+    elif isinstance(predicate, core.SelectionOperand):
         condition = {'selection': predicate}
     elif isinstance(predicate, test_predicates):
         condition = {'test': predicate}
@@ -320,7 +308,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # convert to dict for now; the from_dict call below will wrap this
         # dict in the appropriate schema
         if_true = if_true.to_dict()
-    elif isinstance(if_true, six.string_types):
+    elif isinstance(if_true, str):
         if_true = {'shorthand': if_true}
         if_true.update(kwargs)
     condition.update(if_true)
@@ -330,7 +318,7 @@ def condition(predicate, if_true, if_false, **kwargs):
         # already. So use this SchemaBase wrapper if possible.
         selection = if_false.copy()
         selection.condition = condition
-    elif isinstance(if_false, six.string_types):
+    elif isinstance(if_false, str):
         selection = {'condition': condition, 'shorthand': if_false}
         selection.update(kwargs)
     else:
@@ -925,9 +913,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         >>> chart.transform[0]
         JoinAggregateTransform({
           joinaggregate: [JoinAggregateFieldDef({
-            as: FieldName('x'),
-            field: FieldName('y'),
-            op: AggregateOp('sum')
+            as: 'x',
+            field: 'y',
+            op: 'sum'
           })]
         })
 
@@ -942,7 +930,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             dct = {'as': key,
                    'field': parsed.get('field', Undefined),
                    'op': parsed.get('aggregate', Undefined)}
-            joinaggregate.append(core.JoinAggregateFieldDef.from_dict(dct))
+            joinaggregate.append(core.JoinAggregateFieldDef(**dct))
         return self._add_transform(core.JoinAggregateTransform(
             joinaggregate=joinaggregate, groupby=groupby
         ))
@@ -971,11 +959,9 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         alt.FilterTransform : underlying transform object
 
         """
-        selection_predicates = (core.SelectionNot, core.SelectionOr,
-                                core.SelectionAnd, core.SelectionOperand)
         if isinstance(filter, Selection):
             filter = {'selection': filter.name}
-        elif isinstance(filter, selection_predicates):
+        elif isinstance(filter, core.SelectionOperand):
             filter = {'selection': filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
@@ -1360,7 +1346,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         from ...utils.server import serve
 
-        html = six.StringIO()
+        html = io.StringIO()
         self.save(html, format='html', **kwargs)
         html.seek(0)
 
@@ -1455,7 +1441,7 @@ class _EncodingMixin(object):
             data, self.data = self.data, Undefined
 
         if facet_specified:
-            if isinstance(facet, six.string_types):
+            if isinstance(facet, str):
                 facet = channels.Facet(facet)
         else:
             facet = FacetMapping(row=row, column=column)
@@ -1546,16 +1532,9 @@ class Chart(TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin,
         jsonschema.ValidationError :
             if validate=True and dct does not conform to the schema
         """
-        # First try from_dict for the Chart type
-        try:
-            return super(Chart, cls).from_dict(dct, validate=validate)
-        except jsonschema.ValidationError:
-            pass
-
-        # If this fails, try with all other top level types
         for class_ in TopLevelMixin.__subclasses__():
             if class_ is Chart:
-                continue
+                class_ = super(Chart, cls)
             try:
                 return class_.from_dict(dct, validate=validate)
             except jsonschema.ValidationError:
@@ -1882,8 +1861,7 @@ class LayerChart(TopLevelMixin, _EncodingMixin, core.TopLevelLayerSpec):
         if not selections or not self.layer:
             return self
         copy = self.copy()
-        copy.layer = [chart.add_selection(*selections)
-                        for chart in copy.layer]
+        copy.layer[0] = copy.layer[0].add_selection(*selections)
         return copy
 
 
