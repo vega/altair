@@ -5,6 +5,7 @@ import keyword
 import pkgutil
 import re
 import textwrap
+import urllib
 
 import jsonschema
 
@@ -27,15 +28,19 @@ def resolve_references(schema, root=None):
     return schema
 
 
-def get_valid_identifier(prop, replacement_character='', allow_unicode=False):
+def get_valid_identifier(prop, replacement_character='', allow_unicode=False, url_decode=True):
     """Given a string property, generate a valid Python identifier
 
     Parameters
     ----------
+    prop: string
+        Name of property to decode.
     replacement_character: string, default ''
         The character to replace invalid characters with.
     allow_unicode: boolean, default False
         If True, then allow Python 3-style unicode identifiers.
+    url_decode: boolean, default True
+        If True, decode URL characters in identifier names.
 
     Examples
     --------
@@ -50,7 +55,14 @@ def get_valid_identifier(prop, replacement_character='', allow_unicode=False):
 
     >>> get_valid_identifier('$*#$')
     '_'
+
+    >>> get_valid_identifier("Name%3Cstring%3E")
+    'Namestring'
     """
+    # Decode URL characters.
+    if url_decode:
+        prop = urllib.parse.unquote(prop)
+
     # First substitute-out all non-valid characters.
     flags = re.UNICODE if allow_unicode else re.ASCII
     valid = re.sub(r'\W', replacement_character, prop, flags=flags)
