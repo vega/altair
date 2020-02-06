@@ -248,7 +248,7 @@ See [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIB
 If you use Altair in academic work, please consider citing http://joss.theoj.org/papers/10.21105/joss.01057 as
 
 ```bib
-@article{Altair2018,
+@article{2018-altair,
   doi = {10.21105/joss.01057},
   url = {https://doi.org/10.21105/joss.01057},
   year  = {2018},
@@ -257,6 +257,16 @@ If you use Altair in academic work, please consider citing http://joss.theoj.org
   author = {Jacob VanderPlas and Brian Granger and Jeffrey Heer and Dominik Moritz and Kanit Wongsuphasawat and Arvind Satyanarayan and Eitan Lees and Ilia Timofeev and Ben Welsh and Scott Sievert},
   title = {Altair: Interactive Statistical Visualizations for Python},
   journal = {Journal of Open Source Software}
+}
+```
+Please additionally consider citing the [vega-lite](http://vega.github.io/vega-lite/) project, which Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
+```bib
+@article{2017-vega-lite,
+ title = {Vega-Lite: A Grammar of Interactive Graphics},
+ author = {Arvind Satyanarayan AND Dominik Moritz AND Kanit Wongsuphasawat AND Jeffrey Heer},
+ journal = {IEEE Trans. Visualization \& Comp. Graphics (Proc. InfoVis)},
+ year = {2017},
+ url = {http://idl.cs.washington.edu/papers/vega-lite},
 }
 ```
 
