@@ -10,11 +10,14 @@ import altair as alt
 import pandas as pd
 import numpy as np
 
-np.random.seed(42)
+np.random.seed(1)
 
-source = pd.DataFrame(np.cumsum(np.random.randn(100, 3), 0),
-                      columns=['A', 'B', 'C'], 
-                      index=pd.RangeIndex(100, name='x')).reset_index()
+source = pd.DataFrame({
+    'x': np.arange(100),
+    'A': np.random.randn(100).cumsum(),
+    'B': np.random.randn(100).cumsum(),
+    'C': np.random.randn(100).cumsum(),
+})
 
 base = alt.Chart(source).mark_circle(opacity=0.5).transform_fold(
     fold=['A', 'B', 'C'], 
