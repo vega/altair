@@ -14,6 +14,7 @@ def load_schema():
 
 
 class VegaSchema(SchemaBase):
+    _rootschema = load_schema()
     @classmethod
     def _default_wrapper_classes(cls):
         return _subclasses(VegaSchema)
@@ -24,8 +25,7 @@ class Root(VegaSchema):
 
     allOf(:class:`scope`, Mapping(required=[]))
     """
-    _schema = load_schema()
-    _rootschema = _schema
+    _schema = VegaSchema._rootschema
 
     def __init__(self, autosize=Undefined, axes=Undefined, background=Undefined, config=Undefined,
                  data=Undefined, description=Undefined, encode=Undefined, height=Undefined,
@@ -45,7 +45,6 @@ class autosize(VegaSchema):
     oneOf(enum('pad', 'fit', 'fit-x', 'fit-y', 'none'), Mapping(required=[type]))
     """
     _schema = {'$ref': '#/defs/autosize'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(autosize, self).__init__(*args, **kwds)
@@ -209,7 +208,6 @@ class axis(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/axis'}
-    _rootschema = Root._schema
 
     def __init__(self, orient=Undefined, scale=Undefined, bandPosition=Undefined, domain=Undefined,
                  domainColor=Undefined, domainDash=Undefined, domainDashOffset=Undefined,
@@ -271,7 +269,6 @@ class background(VegaSchema):
     string
     """
     _schema = {'$ref': '#/defs/background'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(background, self).__init__(*args)
@@ -284,7 +281,6 @@ class bind(VegaSchema):
     Mapping(required=[input]), Mapping(required=[input]))
     """
     _schema = {'$ref': '#/defs/bind'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(bind, self).__init__(*args, **kwds)
@@ -297,7 +293,6 @@ class data(VegaSchema):
     name]), Mapping(required=[values, name]))
     """
     _schema = {'$ref': '#/defs/data'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(data, self).__init__(*args, **kwds)
@@ -315,7 +310,6 @@ class rule(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/rule'}
-    _rootschema = Root._schema
 
     def __init__(self, test=Undefined, **kwds):
         super(rule, self).__init__(test=test, **kwds)
@@ -459,7 +453,6 @@ class encodeEntry(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/encodeEntry'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
                  clip=Undefined, cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
@@ -509,7 +502,6 @@ class encode(VegaSchema):
     Mapping(required=[])
     """
     _schema = {'$ref': '#/defs/encode'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(encode, self).__init__(**kwds)
@@ -521,7 +513,6 @@ class layout(VegaSchema):
     oneOf(Mapping(required=[]), :class:`signal`)
     """
     _schema = {'$ref': '#/defs/layout'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(layout, self).__init__(*args, **kwds)
@@ -543,7 +534,6 @@ class guideEncode(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/guideEncode'}
-    _rootschema = Root._schema
 
     def __init__(self, interactive=Undefined, name=Undefined, style=Undefined, **kwds):
         super(guideEncode, self).__init__(interactive=interactive, name=name, style=style, **kwds)
@@ -557,7 +547,6 @@ class legend(VegaSchema):
     Mapping(required=[strokeDash]), Mapping(required=[strokeWidth])))
     """
     _schema = {'$ref': '#/defs/legend'}
-    _rootschema = Root._schema
 
     def __init__(self, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined,
                  cornerRadius=Undefined, direction=Undefined, encode=Undefined, fill=Undefined,
@@ -647,7 +636,6 @@ class mark(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/mark'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, clip=Undefined, encode=Undefined, interactive=Undefined,
                  key=Undefined, name=Undefined, on=Undefined, role=Undefined, sort=Undefined,
@@ -663,7 +651,6 @@ class markGroup(VegaSchema):
     allOf(Mapping(required=[type]), :class:`mark`, :class:`scope`)
     """
     _schema = {'$ref': '#/defs/markGroup'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, axes=Undefined, clip=Undefined, data=Undefined, encode=Undefined,
                  interactive=Undefined, key=Undefined, layout=Undefined, legends=Undefined,
@@ -684,7 +671,6 @@ class markVisual(VegaSchema):
     allOf(Mapping(required=[]), :class:`mark`)
     """
     _schema = {'$ref': '#/defs/markVisual'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, clip=Undefined, encode=Undefined, interactive=Undefined,
                  key=Undefined, name=Undefined, on=Undefined, role=Undefined, sort=Undefined,
@@ -700,7 +686,6 @@ class listener(VegaSchema):
     oneOf(:class:`signal`, Mapping(required=[scale]), :class:`stream`)
     """
     _schema = {'$ref': '#/defs/listener'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(listener, self).__init__(*args, **kwds)
@@ -713,7 +698,6 @@ class onEvents(VegaSchema):
     Mapping(required=[update]))))
     """
     _schema = {'$ref': '#/defs/onEvents'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(onEvents, self).__init__(*args)
@@ -725,7 +709,6 @@ class onTrigger(VegaSchema):
     List(Mapping(required=[trigger]))
     """
     _schema = {'$ref': '#/defs/onTrigger'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(onTrigger, self).__init__(*args)
@@ -737,7 +720,6 @@ class onMarkTrigger(VegaSchema):
     List(Mapping(required=[trigger]))
     """
     _schema = {'$ref': '#/defs/onMarkTrigger'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(onMarkTrigger, self).__init__(*args)
@@ -749,7 +731,6 @@ class padding(VegaSchema):
     oneOf(float, Mapping(required=[]))
     """
     _schema = {'$ref': '#/defs/padding'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(padding, self).__init__(*args, **kwds)
@@ -794,7 +775,6 @@ class projection(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/projection'}
-    _rootschema = Root._schema
 
     def __init__(self, name=Undefined, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                  extent=Undefined, fit=Undefined, parallels=Undefined, pointRadius=Undefined,
@@ -817,7 +797,6 @@ class scale(VegaSchema):
     Mapping(required=[type, name]), Mapping(required=[type, name]))
     """
     _schema = {'$ref': '#/defs/scale'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(scale, self).__init__(*args, **kwds)
@@ -855,7 +834,6 @@ class scope(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/scope'}
-    _rootschema = Root._schema
 
     def __init__(self, axes=Undefined, data=Undefined, encode=Undefined, layout=Undefined,
                  legends=Undefined, marks=Undefined, projections=Undefined, scales=Undefined,
@@ -871,7 +849,6 @@ class signalName(VegaSchema):
     not enum('parent', 'datum', 'event', 'item')
     """
     _schema = {'$ref': '#/defs/signalName'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(signalName, self).__init__(*args)
@@ -884,7 +861,6 @@ class signal(VegaSchema):
     init]))
     """
     _schema = {'$ref': '#/defs/signal'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(signal, self).__init__(*args, **kwds)
@@ -897,7 +873,6 @@ class stream(VegaSchema):
     Mapping(required=[merge])))
     """
     _schema = {'$ref': '#/defs/stream'}
-    _rootschema = Root._schema
 
     def __init__(self, between=Undefined, consume=Undefined, debounce=Undefined, filter=Undefined,
                  markname=Undefined, marktype=Undefined, throttle=Undefined, **kwds):
@@ -911,7 +886,6 @@ class title(VegaSchema):
     oneOf(string, Mapping(required=[]))
     """
     _schema = {'$ref': '#/defs/title'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(title, self).__init__(*args, **kwds)
@@ -939,7 +913,6 @@ class transform(VegaSchema):
     :class:`identifierTransform`, :class:`voronoiTransform`, :class:`wordcloudTransform`)
     """
     _schema = {'$ref': '#/defs/transform'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(transform, self).__init__(*args, **kwds)
@@ -960,7 +933,6 @@ class transformMark(VegaSchema):
     :class:`identifierTransform`, :class:`voronoiTransform`, :class:`wordcloudTransform`)
     """
     _schema = {'$ref': '#/defs/transformMark'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(transformMark, self).__init__(*args, **kwds)
@@ -985,7 +957,6 @@ class crossfilterTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/crossfilterTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, fields=Undefined, query=Undefined, type=Undefined, signal=Undefined, **kwds):
         super(crossfilterTransform, self).__init__(fields=fields, query=query, type=type, signal=signal,
@@ -1010,7 +981,6 @@ class resolvefilterTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/resolvefilterTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, filter=Undefined, ignore=Undefined, type=Undefined, signal=Undefined, **kwds):
         super(resolvefilterTransform, self).__init__(filter=filter, ignore=ignore, type=type,
@@ -1047,7 +1017,6 @@ class linkpathTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/linkpathTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, orient=Undefined, require=Undefined, shape=Undefined,
                  signal=Undefined, sourceX=Undefined, sourceY=Undefined, targetX=Undefined,
@@ -1081,7 +1050,6 @@ class pieTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/pieTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, endAngle=Undefined, field=Undefined, signal=Undefined,
                  sort=Undefined, startAngle=Undefined, **kwds):
@@ -1114,7 +1082,6 @@ class stackTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/stackTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, groupby=Undefined, offset=Undefined,
                  signal=Undefined, sort=Undefined, **kwds):
@@ -1156,7 +1123,6 @@ class forceTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/forceTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, alpha=Undefined, alphaMin=Undefined, alphaTarget=Undefined,
                  forces=Undefined, iterations=Undefined, restart=Undefined, signal=Undefined,
@@ -1203,7 +1169,6 @@ class contourTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/contourTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, size=Undefined, type=Undefined, bandwidth=Undefined, cellSize=Undefined,
                  count=Undefined, nice=Undefined, signal=Undefined, smooth=Undefined,
@@ -1234,7 +1199,6 @@ class geojsonTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/geojsonTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, fields=Undefined, geojson=Undefined, signal=Undefined, **kwds):
         super(geojsonTransform, self).__init__(type=type, fields=fields, geojson=geojson, signal=signal,
@@ -1263,7 +1227,6 @@ class geopathTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/geopathTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, pointRadius=Undefined, projection=Undefined,
                  signal=Undefined, **kwds):
@@ -1292,7 +1255,6 @@ class geopointTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/geopointTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, fields=Undefined, projection=Undefined, type=Undefined, signal=Undefined, **kwds):
         super(geopointTransform, self).__init__(fields=fields, projection=projection, type=type,
@@ -1321,7 +1283,6 @@ class geoshapeTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/geoshapeTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, pointRadius=Undefined, projection=Undefined,
                  signal=Undefined, **kwds):
@@ -1357,7 +1318,6 @@ class graticuleTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/graticuleTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, extent=Undefined, extentMajor=Undefined, extentMinor=Undefined,
                  precision=Undefined, signal=Undefined, step=Undefined, stepMajor=Undefined,
@@ -1392,7 +1352,6 @@ class heatmapTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/heatmapTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, color=Undefined, field=Undefined, opacity=Undefined,
                  resolve=Undefined, signal=Undefined, **kwds):
@@ -1435,7 +1394,6 @@ class isocontourTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/isocontourTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, levels=Undefined, nice=Undefined,
                  resolve=Undefined, scale=Undefined, signal=Undefined, smooth=Undefined,
@@ -1479,7 +1437,6 @@ class kde2dTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/kde2dTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, size=Undefined, type=Undefined, x=Undefined, y=Undefined, bandwidth=Undefined,
                  cellSize=Undefined, counts=Undefined, groupby=Undefined, signal=Undefined,
@@ -1508,7 +1465,6 @@ class nestTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/nestTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, generate=Undefined, keys=Undefined, signal=Undefined, **kwds):
         super(nestTransform, self).__init__(type=type, generate=generate, keys=keys, signal=signal,
@@ -1541,7 +1497,6 @@ class packTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/packTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, padding=Undefined, radius=Undefined,
                  signal=Undefined, size=Undefined, sort=Undefined, **kwds):
@@ -1575,7 +1530,6 @@ class partitionTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/partitionTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, padding=Undefined, round=Undefined,
                  signal=Undefined, size=Undefined, sort=Undefined, **kwds):
@@ -1601,7 +1555,6 @@ class stratifyTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/stratifyTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, key=Undefined, parentKey=Undefined, type=Undefined, signal=Undefined, **kwds):
         super(stratifyTransform, self).__init__(key=key, parentKey=parentKey, type=type, signal=signal,
@@ -1636,7 +1589,6 @@ class treeTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/treeTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, method=Undefined, nodeSize=Undefined,
                  separation=Undefined, signal=Undefined, size=Undefined, sort=Undefined, **kwds):
@@ -1659,7 +1611,6 @@ class treelinksTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/treelinksTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, signal=Undefined, **kwds):
         super(treelinksTransform, self).__init__(type=type, signal=signal, **kwds)
@@ -1708,7 +1659,6 @@ class treemapTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/treemapTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, field=Undefined, method=Undefined, padding=Undefined,
                  paddingBottom=Undefined, paddingInner=Undefined, paddingLeft=Undefined,
@@ -1747,7 +1697,6 @@ class loessTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/loessTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, x=Undefined, y=Undefined, bandwidth=Undefined, groupby=Undefined,
                  signal=Undefined, **kwds):
@@ -1786,7 +1735,6 @@ class regressionTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/regressionTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, x=Undefined, y=Undefined, extent=Undefined, groupby=Undefined,
                  method=Undefined, order=Undefined, params=Undefined, signal=Undefined, **kwds):
@@ -1828,7 +1776,6 @@ class aggregateTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/aggregateTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, cross=Undefined, drop=Undefined, fields=Undefined,
                  groupby=Undefined, key=Undefined, ops=Undefined, signal=Undefined, **kwds):
@@ -1879,7 +1826,6 @@ class binTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/binTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, extent=Undefined, field=Undefined, type=Undefined, anchor=Undefined,
                  base=Undefined, divide=Undefined, interval=Undefined, maxbins=Undefined,
@@ -1907,7 +1853,6 @@ class collectTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/collectTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, signal=Undefined, sort=Undefined, **kwds):
         super(collectTransform, self).__init__(type=type, signal=signal, sort=sort, **kwds)
@@ -1937,7 +1882,6 @@ class countpatternTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/countpatternTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, type=Undefined, case=Undefined, pattern=Undefined,
                  signal=Undefined, stopwords=Undefined, **kwds):
@@ -1963,7 +1907,6 @@ class crossTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/crossTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, filter=Undefined, signal=Undefined, **kwds):
         super(crossTransform, self).__init__(type=type, filter=filter, signal=signal, **kwds)
@@ -1999,7 +1942,6 @@ class densityTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/densityTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, distribution=Undefined, extent=Undefined, maxsteps=Undefined,
                  method=Undefined, minsteps=Undefined, signal=Undefined, steps=Undefined, **kwds):
@@ -2033,7 +1975,6 @@ class dotbinTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/dotbinTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, type=Undefined, groupby=Undefined, signal=Undefined,
                  smooth=Undefined, step=Undefined, **kwds):
@@ -2057,7 +1998,6 @@ class extentTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/extentTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, type=Undefined, signal=Undefined, **kwds):
         super(extentTransform, self).__init__(field=field, type=type, signal=signal, **kwds)
@@ -2079,7 +2019,6 @@ class filterTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/filterTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, expr=Undefined, type=Undefined, signal=Undefined, **kwds):
         super(filterTransform, self).__init__(expr=expr, type=type, signal=signal, **kwds)
@@ -2106,7 +2045,6 @@ class flattenTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/flattenTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, fields=Undefined, type=Undefined, index=Undefined, signal=Undefined, **kwds):
         super(flattenTransform, self).__init__(fields=fields, type=type, index=index, signal=signal,
@@ -2132,7 +2070,6 @@ class foldTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/foldTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, fields=Undefined, type=Undefined, signal=Undefined, **kwds):
         super(foldTransform, self).__init__(fields=fields, type=type, signal=signal, **kwds)
@@ -2158,7 +2095,6 @@ class formulaTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/formulaTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, expr=Undefined, type=Undefined, initonly=Undefined, signal=Undefined, **kwds):
         super(formulaTransform, self).__init__(expr=expr, type=type, initonly=initonly, signal=signal,
@@ -2192,7 +2128,6 @@ class imputeTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/imputeTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, key=Undefined, type=Undefined, groupby=Undefined,
                  keyvals=Undefined, method=Undefined, signal=Undefined, value=Undefined, **kwds):
@@ -2230,7 +2165,6 @@ class joinaggregateTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/joinaggregateTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, fields=Undefined, groupby=Undefined, key=Undefined,
                  ops=Undefined, signal=Undefined, **kwds):
@@ -2275,7 +2209,6 @@ class kdeTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/kdeTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, type=Undefined, bandwidth=Undefined, counts=Undefined,
                  cumulative=Undefined, extent=Undefined, groupby=Undefined, maxsteps=Undefined,
@@ -2314,7 +2247,6 @@ class lookupTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/lookupTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, fields=Undefined, key=Undefined, type=Undefined, default=Undefined,
                  signal=Undefined, values=Undefined, **kwds):
@@ -2351,7 +2283,6 @@ class pivotTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/pivotTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, type=Undefined, value=Undefined, groupby=Undefined,
                  key=Undefined, limit=Undefined, op=Undefined, signal=Undefined, **kwds):
@@ -2378,7 +2309,6 @@ class projectTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/projectTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, fields=Undefined, signal=Undefined, **kwds):
         super(projectTransform, self).__init__(type=type, fields=fields, signal=signal, **kwds)
@@ -2409,7 +2339,6 @@ class quantileTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/quantileTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, type=Undefined, groupby=Undefined, probs=Undefined,
                  signal=Undefined, step=Undefined, **kwds):
@@ -2433,7 +2362,6 @@ class sampleTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/sampleTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, signal=Undefined, size=Undefined, **kwds):
         super(sampleTransform, self).__init__(type=type, signal=signal, size=size, **kwds)
@@ -2461,7 +2389,6 @@ class sequenceTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/sequenceTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, start=Undefined, stop=Undefined, type=Undefined, signal=Undefined,
                  step=Undefined, **kwds):
@@ -2495,7 +2422,6 @@ class timeunitTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/timeunitTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, type=Undefined, interval=Undefined, signal=Undefined,
                  step=Undefined, timezone=Undefined, units=Undefined, **kwds):
@@ -2540,7 +2466,6 @@ class windowTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/windowTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, fields=Undefined, frame=Undefined, groupby=Undefined,
                  ignorePeers=Undefined, ops=Undefined, params=Undefined, signal=Undefined,
@@ -2566,7 +2491,6 @@ class identifierTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/identifierTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, signal=Undefined, **kwds):
         super(identifierTransform, self).__init__(type=type, signal=signal, **kwds)
@@ -2596,7 +2520,6 @@ class voronoiTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/voronoiTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, x=Undefined, y=Undefined, extent=Undefined, signal=Undefined,
                  size=Undefined, **kwds):
@@ -2640,7 +2563,6 @@ class wordcloudTransform(VegaSchema):
 
     """
     _schema = {'$ref': '#/defs/wordcloudTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, font=Undefined, fontSize=Undefined, fontSizeRange=Undefined,
                  fontStyle=Undefined, fontWeight=Undefined, padding=Undefined, rotate=Undefined,
@@ -2658,7 +2580,6 @@ class labelOverlap(VegaSchema):
     oneOf(boolean, enum('parity', 'greedy'), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/labelOverlap'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(labelOverlap, self).__init__(*args, **kwds)
@@ -2670,7 +2591,6 @@ class tickBand(VegaSchema):
     oneOf(enum('center', 'extent'), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/tickBand'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(tickBand, self).__init__(*args, **kwds)
@@ -2683,7 +2603,6 @@ class tickCount(VegaSchema):
     'year'), Mapping(required=[interval]), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/tickCount'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(tickCount, self).__init__(*args, **kwds)
@@ -2695,7 +2614,6 @@ class element(VegaSchema):
     string
     """
     _schema = {'$ref': '#/refs/element'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(element, self).__init__(*args)
@@ -2715,7 +2633,6 @@ class paramField(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/paramField'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, **kwds):
         super(paramField, self).__init__(field=field, **kwds)
@@ -2728,7 +2645,6 @@ class field(VegaSchema):
     Mapping(required=[parent]))
     """
     _schema = {'$ref': '#/refs/field'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(field, self).__init__(*args, **kwds)
@@ -2741,7 +2657,6 @@ class scale(VegaSchema):
     Mapping(required=[parent]))
     """
     _schema = {'$ref': '#/refs/scale'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(scale, self).__init__(*args, **kwds)
@@ -2759,7 +2674,6 @@ class stringModifiers(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/stringModifiers'}
-    _rootschema = Root._schema
 
     def __init__(self, scale=Undefined, **kwds):
         super(stringModifiers, self).__init__(scale=scale, **kwds)
@@ -2789,7 +2703,6 @@ class numberModifiers(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/numberModifiers'}
-    _rootschema = Root._schema
 
     def __init__(self, band=Undefined, exponent=Undefined, extra=Undefined, mult=Undefined,
                  offset=Undefined, round=Undefined, scale=Undefined, **kwds):
@@ -2809,7 +2722,6 @@ class anyValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/anyValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(anyValue, self).__init__(*args, **kwds)
@@ -2827,7 +2739,6 @@ class numberValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/numberValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(numberValue, self).__init__(*args, **kwds)
@@ -2845,7 +2756,6 @@ class stringValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/stringValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(stringValue, self).__init__(*args, **kwds)
@@ -2863,7 +2773,6 @@ class textValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/textValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(textValue, self).__init__(*args, **kwds)
@@ -2881,7 +2790,6 @@ class booleanValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/booleanValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(booleanValue, self).__init__(*args, **kwds)
@@ -2899,7 +2807,6 @@ class arrayValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/arrayValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(arrayValue, self).__init__(*args, **kwds)
@@ -2917,7 +2824,6 @@ class fontWeightValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/fontWeightValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(fontWeightValue, self).__init__(*args, **kwds)
@@ -2935,7 +2841,6 @@ class anchorValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/anchorValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(anchorValue, self).__init__(*args, **kwds)
@@ -2953,7 +2858,6 @@ class alignValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/alignValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(alignValue, self).__init__(*args, **kwds)
@@ -2971,7 +2875,6 @@ class baselineValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/baselineValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(baselineValue, self).__init__(*args, **kwds)
@@ -2989,7 +2892,6 @@ class directionValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/directionValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(directionValue, self).__init__(*args, **kwds)
@@ -3007,7 +2909,6 @@ class orientValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/orientValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(orientValue, self).__init__(*args, **kwds)
@@ -3025,7 +2926,6 @@ class strokeCapValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/strokeCapValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(strokeCapValue, self).__init__(*args, **kwds)
@@ -3043,7 +2943,6 @@ class strokeJoinValue(VegaSchema):
     Mapping(required=[offset]))))
     """
     _schema = {'$ref': '#/refs/strokeJoinValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(strokeJoinValue, self).__init__(*args, **kwds)
@@ -3059,7 +2958,6 @@ class baseColorValue(VegaSchema):
     Mapping(required=[gradient]), Mapping(required=[color]))
     """
     _schema = {'$ref': '#/refs/baseColorValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(baseColorValue, self).__init__(*args, **kwds)
@@ -3081,7 +2979,6 @@ class colorRGB(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/colorRGB'}
-    _rootschema = Root._schema
 
     def __init__(self, b=Undefined, g=Undefined, r=Undefined, **kwds):
         super(colorRGB, self).__init__(b=b, g=g, r=r, **kwds)
@@ -3103,7 +3000,6 @@ class colorHSL(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/colorHSL'}
-    _rootschema = Root._schema
 
     def __init__(self, h=Undefined, l=Undefined, s=Undefined, **kwds):
         super(colorHSL, self).__init__(h=h, l=l, s=s, **kwds)
@@ -3125,7 +3021,6 @@ class colorLAB(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/colorLAB'}
-    _rootschema = Root._schema
 
     def __init__(self, a=Undefined, b=Undefined, l=Undefined, **kwds):
         super(colorLAB, self).__init__(a=a, b=b, l=l, **kwds)
@@ -3147,7 +3042,6 @@ class colorHCL(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/colorHCL'}
-    _rootschema = Root._schema
 
     def __init__(self, c=Undefined, h=Undefined, l=Undefined, **kwds):
         super(colorHCL, self).__init__(c=c, h=h, l=l, **kwds)
@@ -3159,7 +3053,6 @@ class colorValue(VegaSchema):
     oneOf(List(allOf(:class:`rule`, :class:`baseColorValue`)), :class:`baseColorValue`)
     """
     _schema = {'$ref': '#/refs/colorValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(colorValue, self).__init__(*args, **kwds)
@@ -3171,7 +3064,6 @@ class gradientStops(VegaSchema):
     List(Mapping(required=[offset, color]))
     """
     _schema = {'$ref': '#/refs/gradientStops'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(gradientStops, self).__init__(*args)
@@ -3201,7 +3093,6 @@ class linearGradient(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/linearGradient'}
-    _rootschema = Root._schema
 
     def __init__(self, gradient=Undefined, stops=Undefined, id=Undefined, x1=Undefined, x2=Undefined,
                  y1=Undefined, y2=Undefined, **kwds):
@@ -3237,7 +3128,6 @@ class radialGradient(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/radialGradient'}
-    _rootschema = Root._schema
 
     def __init__(self, gradient=Undefined, stops=Undefined, id=Undefined, r1=Undefined, r2=Undefined,
                  x1=Undefined, x2=Undefined, y1=Undefined, y2=Undefined, **kwds):
@@ -3259,7 +3149,6 @@ class expr(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/expr'}
-    _rootschema = Root._schema
 
     def __init__(self, expr=Undefined, **kwds):
         super(expr, self).__init__(expr=expr, **kwds)
@@ -3271,7 +3160,6 @@ class exprString(VegaSchema):
     string
     """
     _schema = {'$ref': '#/refs/exprString'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(exprString, self).__init__(*args)
@@ -3283,7 +3171,6 @@ class compare(VegaSchema):
     oneOf(Mapping(required=[]), Mapping(required=[]))
     """
     _schema = {'$ref': '#/refs/compare'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(compare, self).__init__(*args, **kwds)
@@ -3301,7 +3188,6 @@ class from_(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/from'}
-    _rootschema = Root._schema
 
     def __init__(self, data=Undefined, **kwds):
         super(from_, self).__init__(data=data, **kwds)
@@ -3322,7 +3208,6 @@ class facet(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/facet'}
-    _rootschema = Root._schema
 
     def __init__(self, facet=Undefined, data=Undefined, **kwds):
         super(facet, self).__init__(facet=facet, data=data, **kwds)
@@ -3334,7 +3219,6 @@ class markclip(VegaSchema):
     oneOf(:class:`booleanOrSignal`, Mapping(required=[path]), Mapping(required=[sphere]))
     """
     _schema = {'$ref': '#/refs/markclip'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(markclip, self).__init__(*args, **kwds)
@@ -3346,7 +3230,6 @@ class style(VegaSchema):
     oneOf(string, List(string))
     """
     _schema = {'$ref': '#/refs/style'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(style, self).__init__(*args, **kwds)
@@ -3358,7 +3241,6 @@ class marktype(VegaSchema):
     string
     """
     _schema = {'$ref': '#/refs/marktype'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(marktype, self).__init__(*args)
@@ -3370,7 +3252,6 @@ class scaleField(VegaSchema):
     oneOf(string, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/scaleField'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(scaleField, self).__init__(*args, **kwds)
@@ -3382,7 +3263,6 @@ class sortOrder(VegaSchema):
     oneOf(enum('ascending', 'descending'), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/sortOrder'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(sortOrder, self).__init__(*args, **kwds)
@@ -3394,7 +3274,6 @@ class scaleBins(VegaSchema):
     oneOf(List(:class:`numberOrSignal`), Mapping(required=[step]), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/scaleBins'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(scaleBins, self).__init__(*args, **kwds)
@@ -3406,7 +3285,6 @@ class scaleInterpolate(VegaSchema):
     oneOf(string, :class:`signal`, Mapping(required=[type]))
     """
     _schema = {'$ref': '#/refs/scaleInterpolate'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(scaleInterpolate, self).__init__(*args, **kwds)
@@ -3419,7 +3297,6 @@ class scaleData(VegaSchema):
     Mapping(required=[fields]))
     """
     _schema = {'$ref': '#/refs/scaleData'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(scaleData, self).__init__(*args, **kwds)
@@ -3431,7 +3308,6 @@ class selector(VegaSchema):
     string
     """
     _schema = {'$ref': '#/refs/selector'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(selector, self).__init__(*args)
@@ -3449,7 +3325,6 @@ class signal(VegaSchema):
 
     """
     _schema = {'$ref': '#/refs/signal'}
-    _rootschema = Root._schema
 
     def __init__(self, signal=Undefined, **kwds):
         super(signal, self).__init__(signal=signal, **kwds)
@@ -3461,7 +3336,6 @@ class arrayOrSignal(VegaSchema):
     oneOf(List(Any), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/arrayOrSignal'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(arrayOrSignal, self).__init__(*args, **kwds)
@@ -3473,7 +3347,6 @@ class booleanOrSignal(VegaSchema):
     oneOf(boolean, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/booleanOrSignal'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(booleanOrSignal, self).__init__(*args, **kwds)
@@ -3485,7 +3358,6 @@ class numberOrSignal(VegaSchema):
     oneOf(float, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/numberOrSignal'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(numberOrSignal, self).__init__(*args, **kwds)
@@ -3497,7 +3369,6 @@ class stringOrSignal(VegaSchema):
     oneOf(string, :class:`signal`)
     """
     _schema = {'$ref': '#/refs/stringOrSignal'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(stringOrSignal, self).__init__(*args, **kwds)
@@ -3509,7 +3380,6 @@ class textOrSignal(VegaSchema):
     oneOf(oneOf(string, List(string)), :class:`signal`)
     """
     _schema = {'$ref': '#/refs/textOrSignal'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(textOrSignal, self).__init__(*args, **kwds)

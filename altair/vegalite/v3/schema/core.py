@@ -14,6 +14,7 @@ def load_schema():
 
 
 class VegaLiteSchema(SchemaBase):
+    _rootschema = load_schema()
     @classmethod
     def _default_wrapper_classes(cls):
         return _subclasses(VegaLiteSchema)
@@ -29,8 +30,7 @@ class Root(VegaLiteSchema):
     This is the root class for all Vega-Lite specifications.
     (The json schema is generated from this type.)
     """
-    _schema = load_schema()
-    _rootschema = _schema
+    _schema = VegaLiteSchema._rootschema
 
     def __init__(self, *args, **kwds):
         super(Root, self).__init__(*args, **kwds)
@@ -42,7 +42,6 @@ class Aggregate(VegaLiteSchema):
     anyOf(:class:`AggregateOp`, :class:`ArgmaxDef`, :class:`ArgminDef`)
     """
     _schema = {'$ref': '#/definitions/Aggregate'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Aggregate, self).__init__(*args, **kwds)
@@ -56,7 +55,6 @@ class AggregateOp(Aggregate):
     'variance', 'variancep')
     """
     _schema = {'$ref': '#/definitions/AggregateOp'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(AggregateOp, self).__init__(*args)
@@ -82,7 +80,6 @@ class AggregatedFieldDef(VegaLiteSchema):
         The output field names to use for each aggregated field.
     """
     _schema = {'$ref': '#/definitions/AggregatedFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, op=Undefined, field=Undefined, **kwds):
         super(AggregatedFieldDef, self).__init__(op=op, field=field, **kwds)
@@ -94,7 +91,6 @@ class Align(VegaLiteSchema):
     enum('left', 'center', 'right')
     """
     _schema = {'$ref': '#/definitions/Align'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Align, self).__init__(*args)
@@ -106,7 +102,6 @@ class AnyMark(VegaLiteSchema):
     anyOf(:class:`CompositeMark`, :class:`CompositeMarkDef`, :class:`Mark`, :class:`MarkDef`)
     """
     _schema = {'$ref': '#/definitions/AnyMark'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(AnyMark, self).__init__(*args, **kwds)
@@ -367,7 +362,6 @@ class AreaConfig(VegaLiteSchema):
         height of the plot.
     """
     _schema = {'$ref': '#/definitions/AreaConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
@@ -409,7 +403,6 @@ class ArgmaxDef(Aggregate):
 
     """
     _schema = {'$ref': '#/definitions/ArgmaxDef'}
-    _rootschema = Root._schema
 
     def __init__(self, argmax=Undefined, **kwds):
         super(ArgmaxDef, self).__init__(argmax=argmax, **kwds)
@@ -427,7 +420,6 @@ class ArgminDef(Aggregate):
 
     """
     _schema = {'$ref': '#/definitions/ArgminDef'}
-    _rootschema = Root._schema
 
     def __init__(self, argmin=Undefined, **kwds):
         super(ArgminDef, self).__init__(argmin=argmin, **kwds)
@@ -463,7 +455,6 @@ class AutoSizeParams(VegaLiteSchema):
         **Default value** : ``"pad"``
     """
     _schema = {'$ref': '#/definitions/AutoSizeParams'}
-    _rootschema = Root._schema
 
     def __init__(self, contains=Undefined, resize=Undefined, type=Undefined, **kwds):
         super(AutoSizeParams, self).__init__(contains=contains, resize=resize, type=type, **kwds)
@@ -475,7 +466,6 @@ class AutosizeType(VegaLiteSchema):
     enum('pad', 'fit', 'none')
     """
     _schema = {'$ref': '#/definitions/AutosizeType'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(AutosizeType, self).__init__(*args)
@@ -774,7 +764,6 @@ class Axis(VegaLiteSchema):
         the marks) for grids.
     """
     _schema = {'$ref': '#/definitions/Axis'}
-    _rootschema = Root._schema
 
     def __init__(self, bandPosition=Undefined, domain=Undefined, domainColor=Undefined,
                  domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined,
@@ -1044,7 +1033,6 @@ class AxisConfig(VegaLiteSchema):
         Y-coordinate of the axis title relative to the axis group.
     """
     _schema = {'$ref': '#/definitions/AxisConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, bandPosition=Undefined, domain=Undefined, domainColor=Undefined,
                  domainDash=Undefined, domainDashOffset=Undefined, domainOpacity=Undefined,
@@ -1099,7 +1087,6 @@ class AxisOrient(VegaLiteSchema):
     enum('top', 'bottom', 'left', 'right')
     """
     _schema = {'$ref': '#/definitions/AxisOrient'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(AxisOrient, self).__init__(*args)
@@ -1119,7 +1106,6 @@ class AxisResolveMap(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/AxisResolveMap'}
-    _rootschema = Root._schema
 
     def __init__(self, x=Undefined, y=Undefined, **kwds):
         super(AxisResolveMap, self).__init__(x=x, y=y, **kwds)
@@ -1147,7 +1133,6 @@ class BaseLegendLayout(VegaLiteSchema):
         The pixel offset from the chart body for a legend orient group.
     """
     _schema = {'$ref': '#/definitions/BaseLegendLayout'}
-    _rootschema = Root._schema
 
     def __init__(self, anchor=Undefined, bounds=Undefined, center=Undefined, direction=Undefined,
                  margin=Undefined, offset=Undefined, **kwds):
@@ -1349,7 +1334,6 @@ class BaseMarkConfig(VegaLiteSchema):
         height of the plot.
     """
     _schema = {'$ref': '#/definitions/BaseMarkConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, cornerRadius=Undefined,
                  cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
@@ -1428,7 +1412,6 @@ class BaseTitleConfig(VegaLiteSchema):
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
     """
     _schema = {'$ref': '#/definitions/BaseTitleConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, anchor=Undefined, angle=Undefined, baseline=Undefined,
                  color=Undefined, dx=Undefined, dy=Undefined, font=Undefined, fontSize=Undefined,
@@ -1489,7 +1472,6 @@ class BinParams(VegaLiteSchema):
         An array of allowable step sizes to choose from.
     """
     _schema = {'$ref': '#/definitions/BinParams'}
-    _rootschema = Root._schema
 
     def __init__(self, anchor=Undefined, base=Undefined, binned=Undefined, divide=Undefined,
                  extent=Undefined, maxbins=Undefined, minstep=Undefined, nice=Undefined, step=Undefined,
@@ -1506,7 +1488,6 @@ class Binding(VegaLiteSchema):
     :class:`InputBinding`)
     """
     _schema = {'$ref': '#/definitions/Binding'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Binding, self).__init__(*args, **kwds)
@@ -1532,7 +1513,6 @@ class BindCheckbox(Binding):
 
     """
     _schema = {'$ref': '#/definitions/BindCheckbox'}
-    _rootschema = Root._schema
 
     def __init__(self, input=Undefined, debounce=Undefined, element=Undefined, name=Undefined,
                  type=Undefined, **kwds):
@@ -1562,7 +1542,6 @@ class BindRadioSelect(Binding):
 
     """
     _schema = {'$ref': '#/definitions/BindRadioSelect'}
-    _rootschema = Root._schema
 
     def __init__(self, input=Undefined, options=Undefined, debounce=Undefined, element=Undefined,
                  name=Undefined, type=Undefined, **kwds):
@@ -1596,7 +1575,6 @@ class BindRange(Binding):
 
     """
     _schema = {'$ref': '#/definitions/BindRange'}
-    _rootschema = Root._schema
 
     def __init__(self, input=Undefined, debounce=Undefined, element=Undefined, max=Undefined,
                  min=Undefined, name=Undefined, step=Undefined, type=Undefined, **kwds):
@@ -1638,7 +1616,6 @@ class BoxPlotConfig(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, box=Undefined, extent=Undefined, median=Undefined, outliers=Undefined,
                  rule=Undefined, size=Undefined, ticks=Undefined, **kwds):
@@ -1677,7 +1654,6 @@ class BrushConfig(VegaLiteSchema):
         The stroke width of the interval mark.
     """
     _schema = {'$ref': '#/definitions/BrushConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, fill=Undefined, fillOpacity=Undefined, stroke=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined, **kwds):
@@ -1692,7 +1668,6 @@ class Color(VegaLiteSchema):
     anyOf(:class:`ColorName`, :class:`HexColor`, string)
     """
     _schema = {'$ref': '#/definitions/Color'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Color, self).__init__(*args, **kwds)
@@ -1726,7 +1701,6 @@ class ColorName(Color):
     'whitesmoke', 'yellowgreen', 'rebeccapurple')
     """
     _schema = {'$ref': '#/definitions/ColorName'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ColorName, self).__init__(*args)
@@ -1738,7 +1712,6 @@ class CompositeMark(AnyMark):
     anyOf(:class:`BoxPlot`, :class:`ErrorBar`, :class:`ErrorBand`)
     """
     _schema = {'$ref': '#/definitions/CompositeMark'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(CompositeMark, self).__init__(*args, **kwds)
@@ -1750,7 +1723,6 @@ class BoxPlot(CompositeMark):
     enum('boxplot')
     """
     _schema = {'$ref': '#/definitions/BoxPlot'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(BoxPlot, self).__init__(*args)
@@ -1762,7 +1734,6 @@ class CompositeMarkDef(AnyMark):
     anyOf(:class:`BoxPlotDef`, :class:`ErrorBarDef`, :class:`ErrorBandDef`)
     """
     _schema = {'$ref': '#/definitions/CompositeMarkDef'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(CompositeMarkDef, self).__init__(*args, **kwds)
@@ -1826,7 +1797,6 @@ class BoxPlotDef(CompositeMarkDef):
 
     """
     _schema = {'$ref': '#/definitions/BoxPlotDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, box=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
                  median=Undefined, opacity=Undefined, orient=Undefined, outliers=Undefined,
@@ -1869,7 +1839,6 @@ class CompositionConfig(VegaLiteSchema):
         **Default value** : ``20``
     """
     _schema = {'$ref': '#/definitions/CompositionConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, columns=Undefined, spacing=Undefined, **kwds):
         super(CompositionConfig, self).__init__(columns=columns, spacing=spacing, **kwds)
@@ -1882,7 +1851,6 @@ class ConditionalMarkPropFieldDef(VegaLiteSchema):
     :class:`ConditionalSelectionMarkPropFieldDef`)
     """
     _schema = {'$ref': '#/definitions/ConditionalMarkPropFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(ConditionalMarkPropFieldDef, self).__init__(*args, **kwds)
@@ -1895,7 +1863,6 @@ class ConditionalMarkPropFieldDefTypeForShape(VegaLiteSchema):
     :class:`ConditionalSelectionMarkPropFieldDefTypeForShape`)
     """
     _schema = {'$ref': '#/definitions/ConditionalMarkPropFieldDef<TypeForShape>'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(ConditionalMarkPropFieldDefTypeForShape, self).__init__(*args, **kwds)
@@ -1908,7 +1875,6 @@ class ConditionalNumberValueDef(VegaLiteSchema):
     :class:`ConditionalSelectionNumberValueDef`)
     """
     _schema = {'$ref': '#/definitions/ConditionalNumberValueDef'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(ConditionalNumberValueDef, self).__init__(*args, **kwds)
@@ -2093,7 +2059,6 @@ class ConditionalPredicateMarkPropFieldDef(ConditionalMarkPropFieldDef):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -2285,7 +2250,6 @@ class ConditionalPredicateMarkPropFieldDefTypeForShape(ConditionalMarkPropFieldD
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<MarkPropFieldDef<TypeForShape>>'}
-    _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -2314,7 +2278,6 @@ class ConditionalPredicateNumberValueDef(ConditionalNumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<NumberValueDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
         super(ConditionalPredicateNumberValueDef, self).__init__(test=test, value=value, **kwds)
@@ -2501,7 +2464,6 @@ class ConditionalSelectionMarkPropFieldDef(ConditionalMarkPropFieldDef):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -2695,7 +2657,6 @@ class ConditionalSelectionMarkPropFieldDefTypeForShape(ConditionalMarkPropFieldD
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<MarkPropFieldDef<TypeForShape>>'}
-    _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -2727,7 +2688,6 @@ class ConditionalSelectionNumberValueDef(ConditionalNumberValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<NumberValueDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, value=Undefined, **kwds):
         super(ConditionalSelectionNumberValueDef, self).__init__(selection=selection, value=value,
@@ -2741,7 +2701,6 @@ class ConditionalStringValueDef(VegaLiteSchema):
     :class:`ConditionalSelectionStringValueDef`)
     """
     _schema = {'$ref': '#/definitions/ConditionalStringValueDef'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(ConditionalStringValueDef, self).__init__(*args, **kwds)
@@ -2762,7 +2721,6 @@ class ConditionalPredicateStringValueDef(ConditionalStringValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<StringValueDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
         super(ConditionalPredicateStringValueDef, self).__init__(test=test, value=value, **kwds)
@@ -2785,7 +2743,6 @@ class ConditionalSelectionStringValueDef(ConditionalStringValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<StringValueDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, value=Undefined, **kwds):
         super(ConditionalSelectionStringValueDef, self).__init__(selection=selection, value=value,
@@ -2798,7 +2755,6 @@ class ConditionalTextFieldDef(VegaLiteSchema):
     anyOf(:class:`ConditionalPredicateTextFieldDef`, :class:`ConditionalSelectionTextFieldDef`)
     """
     _schema = {'$ref': '#/definitions/ConditionalTextFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(ConditionalTextFieldDef, self).__init__(*args, **kwds)
@@ -2955,7 +2911,6 @@ class ConditionalPredicateTextFieldDef(ConditionalTextFieldDef):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<TextFieldDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, test=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
@@ -3120,7 +3075,6 @@ class ConditionalSelectionTextFieldDef(ConditionalTextFieldDef):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<TextFieldDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, type=Undefined, aggregate=Undefined, bin=Undefined,
                  field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
@@ -3138,7 +3092,6 @@ class ConditionalValueDef(VegaLiteSchema):
     anyOf(:class:`ConditionalPredicateValueDef`, :class:`ConditionalSelectionValueDef`)
     """
     _schema = {'$ref': '#/definitions/ConditionalValueDef'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(ConditionalValueDef, self).__init__(*args, **kwds)
@@ -3159,7 +3112,6 @@ class ConditionalPredicateValueDef(ConditionalValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalPredicate<ValueDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, test=Undefined, value=Undefined, **kwds):
         super(ConditionalPredicateValueDef, self).__init__(test=test, value=value, **kwds)
@@ -3182,7 +3134,6 @@ class ConditionalSelectionValueDef(ConditionalValueDef):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ConditionalSelection<ValueDef>'}
-    _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, value=Undefined, **kwds):
         super(ConditionalSelectionValueDef, self).__init__(selection=selection, value=value, **kwds)
@@ -3375,7 +3326,6 @@ class Config(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/spec.html#single>`__.
     """
     _schema = {'$ref': '#/definitions/Config'}
-    _rootschema = Root._schema
 
     def __init__(self, area=Undefined, autosize=Undefined, axis=Undefined, axisBand=Undefined,
                  axisBottom=Undefined, axisLeft=Undefined, axisRight=Undefined, axisTop=Undefined,
@@ -3414,7 +3364,6 @@ class Cursor(VegaLiteSchema):
     'col-resize', 'row-resize', 'all-scroll', 'zoom-in', 'zoom-out', 'grab', 'grabbing')
     """
     _schema = {'$ref': '#/definitions/Cursor'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Cursor, self).__init__(*args)
@@ -3426,7 +3375,6 @@ class Data(VegaLiteSchema):
     anyOf(:class:`DataSource`, :class:`Generator`)
     """
     _schema = {'$ref': '#/definitions/Data'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Data, self).__init__(*args, **kwds)
@@ -3439,7 +3387,6 @@ class DataFormat(VegaLiteSchema):
     :class:`TopoDataFormat`)
     """
     _schema = {'$ref': '#/definitions/DataFormat'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(DataFormat, self).__init__(*args, **kwds)
@@ -3478,7 +3425,6 @@ class CsvDataFormat(DataFormat):
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/CsvDataFormat'}
-    _rootschema = Root._schema
 
     def __init__(self, parse=Undefined, type=Undefined, **kwds):
         super(CsvDataFormat, self).__init__(parse=parse, type=type, **kwds)
@@ -3490,7 +3436,6 @@ class DataSource(Data):
     anyOf(:class:`UrlData`, :class:`InlineData`, :class:`NamedData`)
     """
     _schema = {'$ref': '#/definitions/DataSource'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(DataSource, self).__init__(*args, **kwds)
@@ -3502,7 +3447,6 @@ class Datasets(VegaLiteSchema):
     Mapping(required=[])
     """
     _schema = {'$ref': '#/definitions/Datasets'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(Datasets, self).__init__(**kwds)
@@ -3514,7 +3458,6 @@ class Day(VegaLiteSchema):
     float
     """
     _schema = {'$ref': '#/definitions/Day'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Day, self).__init__(*args)
@@ -3526,7 +3469,6 @@ class DictInlineDataset(VegaLiteSchema):
     Mapping(required=[])
     """
     _schema = {'$ref': '#/definitions/Dict<InlineDataset>'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(DictInlineDataset, self).__init__(**kwds)
@@ -3538,7 +3480,6 @@ class Dir(VegaLiteSchema):
     enum('ltr', 'rtl')
     """
     _schema = {'$ref': '#/definitions/Dir'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Dir, self).__init__(*args)
@@ -3581,7 +3522,6 @@ class DsvDataFormat(DataFormat):
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/DsvDataFormat'}
-    _rootschema = Root._schema
 
     def __init__(self, delimiter=Undefined, parse=Undefined, type=Undefined, **kwds):
         super(DsvDataFormat, self).__init__(delimiter=delimiter, parse=parse, type=type, **kwds)
@@ -3593,7 +3533,6 @@ class Element(VegaLiteSchema):
     string
     """
     _schema = {'$ref': '#/definitions/Element'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Element, self).__init__(*args)
@@ -3774,7 +3713,6 @@ class Encoding(VegaLiteSchema):
         ``"errorband"``.
     """
     _schema = {'$ref': '#/definitions/Encoding'}
-    _rootschema = Root._schema
 
     def __init__(self, color=Undefined, detail=Undefined, fill=Undefined, fillOpacity=Undefined,
                  href=Undefined, key=Undefined, latitude=Undefined, latitude2=Undefined,
@@ -3798,7 +3736,6 @@ class ErrorBand(CompositeMark):
     enum('errorband')
     """
     _schema = {'$ref': '#/definitions/ErrorBand'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ErrorBand, self).__init__(*args)
@@ -3855,7 +3792,6 @@ class ErrorBandConfig(VegaLiteSchema):
         The tension parameter for the interpolation type of the error band.
     """
     _schema = {'$ref': '#/definitions/ErrorBandConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, band=Undefined, borders=Undefined, extent=Undefined, interpolate=Undefined,
                  tension=Undefined, **kwds):
@@ -3935,7 +3871,6 @@ class ErrorBandDef(CompositeMarkDef):
         The tension parameter for the interpolation type of the error band.
     """
     _schema = {'$ref': '#/definitions/ErrorBandDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, band=Undefined, borders=Undefined, clip=Undefined,
                  color=Undefined, extent=Undefined, interpolate=Undefined, opacity=Undefined,
@@ -3951,7 +3886,6 @@ class ErrorBar(CompositeMark):
     enum('errorbar')
     """
     _schema = {'$ref': '#/definitions/ErrorBar'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ErrorBar, self).__init__(*args)
@@ -3983,7 +3917,6 @@ class ErrorBarConfig(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, extent=Undefined, rule=Undefined, ticks=Undefined, **kwds):
         super(ErrorBarConfig, self).__init__(extent=extent, rule=rule, ticks=ticks, **kwds)
@@ -4036,7 +3969,6 @@ class ErrorBarDef(CompositeMarkDef):
 
     """
     _schema = {'$ref': '#/definitions/ErrorBarDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, clip=Undefined, color=Undefined, extent=Undefined,
                  opacity=Undefined, orient=Undefined, rule=Undefined, ticks=Undefined, **kwds):
@@ -4050,7 +3982,6 @@ class ErrorBarExtent(VegaLiteSchema):
     enum('ci', 'iqr', 'stderr', 'stdev')
     """
     _schema = {'$ref': '#/definitions/ErrorBarExtent'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ErrorBarExtent, self).__init__(*args)
@@ -4062,7 +3993,6 @@ class EventStream(VegaLiteSchema):
     Any
     """
     _schema = {'$ref': '#/definitions/EventStream'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(EventStream, self).__init__(*args, **kwds)
@@ -4218,7 +4148,6 @@ class FacetFieldDef(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FacetFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  header=Undefined, sort=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -4241,7 +4170,6 @@ class FacetMapping(VegaLiteSchema):
         A field definition for the vertical facet of trellis plots.
     """
     _schema = {'$ref': '#/definitions/FacetMapping'}
-    _rootschema = Root._schema
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(FacetMapping, self).__init__(column=column, row=row, **kwds)
@@ -4430,7 +4358,6 @@ class FacetedEncoding(VegaLiteSchema):
         ``"errorband"``.
     """
     _schema = {'$ref': '#/definitions/FacetedEncoding'}
-    _rootschema = Root._schema
 
     def __init__(self, color=Undefined, column=Undefined, detail=Undefined, facet=Undefined,
                  fill=Undefined, fillOpacity=Undefined, href=Undefined, key=Undefined,
@@ -4456,7 +4383,6 @@ class Field(VegaLiteSchema):
     anyOf(:class:`FieldName`, :class:`RepeatRef`)
     """
     _schema = {'$ref': '#/definitions/Field'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Field, self).__init__(*args, **kwds)
@@ -4648,7 +4574,6 @@ class FieldDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition<MarkPropFieldDef<TypeForShape>,(string|null)>'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -4852,7 +4777,6 @@ class FieldDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition<MarkPropFieldDef,number>'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -5052,7 +4976,6 @@ class FieldDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition<MarkPropFieldDef,(string|null)>'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -5225,7 +5148,6 @@ class FieldDefWithConditionTextFieldDefValue(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithCondition<TextFieldDef,Value>'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
@@ -5361,7 +5283,6 @@ class FieldDefWithoutScale(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/FieldDefWithoutScale'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -5375,7 +5296,6 @@ class FieldName(Field):
     string
     """
     _schema = {'$ref': '#/definitions/FieldName'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(FieldName, self).__init__(*args)
@@ -5387,7 +5307,6 @@ class FontStyle(VegaLiteSchema):
     string
     """
     _schema = {'$ref': '#/definitions/FontStyle'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(FontStyle, self).__init__(*args)
@@ -5399,7 +5318,6 @@ class FontWeight(VegaLiteSchema):
     enum('normal', 'bold', 'lighter', 'bolder', 100, 200, 300, 400, 500, 600, 700, 800, 900)
     """
     _schema = {'$ref': '#/definitions/FontWeight'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(FontWeight, self).__init__(*args)
@@ -5411,7 +5329,6 @@ class Generator(Data):
     anyOf(:class:`SequenceGenerator`, :class:`SphereGenerator`, :class:`GraticuleGenerator`)
     """
     _schema = {'$ref': '#/definitions/Generator'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Generator, self).__init__(*args, **kwds)
@@ -5514,7 +5431,6 @@ class GenericUnitSpecEncodingAnyMark(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
     """
     _schema = {'$ref': '#/definitions/GenericUnitSpec<Encoding,AnyMark>'}
-    _rootschema = Root._schema
 
     def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
                  height=Undefined, name=Undefined, projection=Undefined, selection=Undefined,
@@ -5541,7 +5457,6 @@ class GraticuleGenerator(Generator):
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/GraticuleGenerator'}
-    _rootschema = Root._schema
 
     def __init__(self, graticule=Undefined, name=Undefined, **kwds):
         super(GraticuleGenerator, self).__init__(graticule=graticule, name=name, **kwds)
@@ -5577,7 +5492,6 @@ class GraticuleParams(VegaLiteSchema):
         **Default value:** ``[10, 10]``
     """
     _schema = {'$ref': '#/definitions/GraticuleParams'}
-    _rootschema = Root._schema
 
     def __init__(self, extent=Undefined, extentMajor=Undefined, extentMinor=Undefined,
                  precision=Undefined, step=Undefined, stepMajor=Undefined, stepMinor=Undefined, **kwds):
@@ -5718,7 +5632,6 @@ class Header(VegaLiteSchema):
         **Default value:** ``10``
     """
     _schema = {'$ref': '#/definitions/Header'}
-    _rootschema = Root._schema
 
     def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
                  labelAnchor=Undefined, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
@@ -5859,7 +5772,6 @@ class HeaderConfig(VegaLiteSchema):
         **Default value:** ``10``
     """
     _schema = {'$ref': '#/definitions/HeaderConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, format=Undefined, formatType=Undefined, labelAlign=Undefined,
                  labelAnchor=Undefined, labelAngle=Undefined, labelColor=Undefined, labelFont=Undefined,
@@ -5891,7 +5803,6 @@ class HexColor(Color):
     string
     """
     _schema = {'$ref': '#/definitions/HexColor'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(HexColor, self).__init__(*args)
@@ -5903,7 +5814,6 @@ class ImputeMethod(VegaLiteSchema):
     enum('value', 'median', 'max', 'min', 'mean')
     """
     _schema = {'$ref': '#/definitions/ImputeMethod'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ImputeMethod, self).__init__(*args)
@@ -5947,7 +5857,6 @@ class ImputeParams(VegaLiteSchema):
         The field value to use when the imputation ``method`` is ``"value"``.
     """
     _schema = {'$ref': '#/definitions/ImputeParams'}
-    _rootschema = Root._schema
 
     def __init__(self, frame=Undefined, keyvals=Undefined, method=Undefined, value=Undefined, **kwds):
         super(ImputeParams, self).__init__(frame=frame, keyvals=keyvals, method=method, value=value,
@@ -5972,7 +5881,6 @@ class ImputeSequence(VegaLiteSchema):
         **Default value:** ``1`` or ``-1`` if ``stop < start``
     """
     _schema = {'$ref': '#/definitions/ImputeSequence'}
-    _rootschema = Root._schema
 
     def __init__(self, stop=Undefined, start=Undefined, step=Undefined, **kwds):
         super(ImputeSequence, self).__init__(stop=stop, start=start, step=step, **kwds)
@@ -5997,7 +5905,6 @@ class InlineData(DataSource):
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/InlineData'}
-    _rootschema = Root._schema
 
     def __init__(self, values=Undefined, format=Undefined, name=Undefined, **kwds):
         super(InlineData, self).__init__(values=values, format=format, name=name, **kwds)
@@ -6010,7 +5917,6 @@ class InlineDataset(VegaLiteSchema):
     Mapping(required=[]))
     """
     _schema = {'$ref': '#/definitions/InlineDataset'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(InlineDataset, self).__init__(*args, **kwds)
@@ -6040,7 +5946,6 @@ class InputBinding(Binding):
 
     """
     _schema = {'$ref': '#/definitions/InputBinding'}
-    _rootschema = Root._schema
 
     def __init__(self, autocomplete=Undefined, debounce=Undefined, element=Undefined, input=Undefined,
                  name=Undefined, placeholder=Undefined, type=Undefined, **kwds):
@@ -6056,7 +5961,6 @@ class Interpolate(VegaLiteSchema):
     'basis-closed', 'cardinal', 'cardinal-open', 'cardinal-closed', 'bundle', 'monotone')
     """
     _schema = {'$ref': '#/definitions/Interpolate'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Interpolate, self).__init__(*args)
@@ -6151,7 +6055,6 @@ class IntervalSelectionConfig(VegaLiteSchema):
         documentation.
     """
     _schema = {'$ref': '#/definitions/IntervalSelectionConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, bind=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
                  fields=Undefined, init=Undefined, mark=Undefined, on=Undefined, resolve=Undefined,
@@ -6181,7 +6084,6 @@ class JoinAggregateFieldDef(VegaLiteSchema):
         The output name for the join aggregate operation.
     """
     _schema = {'$ref': '#/definitions/JoinAggregateFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, op=Undefined, field=Undefined, **kwds):
         super(JoinAggregateFieldDef, self).__init__(op=op, field=field, **kwds)
@@ -6227,7 +6129,6 @@ class JsonDataFormat(DataFormat):
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/JsonDataFormat'}
-    _rootschema = Root._schema
 
     def __init__(self, parse=Undefined, property=Undefined, type=Undefined, **kwds):
         super(JsonDataFormat, self).__init__(parse=parse, property=property, type=type, **kwds)
@@ -6239,7 +6140,6 @@ class LabelOverlap(VegaLiteSchema):
     anyOf(boolean, enum('parity'), enum('greedy'))
     """
     _schema = {'$ref': '#/definitions/LabelOverlap'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(LabelOverlap, self).__init__(*args, **kwds)
@@ -6367,7 +6267,6 @@ class LatLongFieldDef(VegaLiteSchema):
         documentation.
     """
     _schema = {'$ref': '#/definitions/LatLongFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, aggregate=Undefined, bin=Undefined, field=Undefined, timeUnit=Undefined,
                  title=Undefined, type=Undefined, **kwds):
@@ -6381,7 +6280,6 @@ class LayoutAlign(VegaLiteSchema):
     enum('all', 'each', 'none')
     """
     _schema = {'$ref': '#/definitions/LayoutAlign'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(LayoutAlign, self).__init__(*args)
@@ -6393,7 +6291,6 @@ class LayoutBounds(VegaLiteSchema):
     anyOf(enum('full'), enum('flush'), :class:`SignalRef`)
     """
     _schema = {'$ref': '#/definitions/LayoutBounds'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(LayoutBounds, self).__init__(*args, **kwds)
@@ -6661,7 +6558,6 @@ class Legend(VegaLiteSchema):
         To put them in front, use zindex = 1.
     """
     _schema = {'$ref': '#/definitions/Legend'}
-    _rootschema = Root._schema
 
     def __init__(self, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined,
                  cornerRadius=Undefined, direction=Undefined, fillColor=Undefined, format=Undefined,
@@ -6952,7 +6848,6 @@ class LegendConfig(VegaLiteSchema):
         **Default value:** ``5``.
     """
     _schema = {'$ref': '#/definitions/LegendConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, clipHeight=Undefined, columnPadding=Undefined, columns=Undefined,
                  cornerRadius=Undefined, fillColor=Undefined, gradientDirection=Undefined,
@@ -7058,7 +6953,6 @@ class LegendLayout(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/LegendLayout'}
-    _rootschema = Root._schema
 
     def __init__(self, anchor=Undefined, bottom=Undefined, bounds=Undefined, center=Undefined,
                  direction=Undefined, left=Undefined, margin=Undefined, offset=Undefined,
@@ -7075,7 +6969,6 @@ class LegendOrient(VegaLiteSchema):
     'bottom-right')
     """
     _schema = {'$ref': '#/definitions/LegendOrient'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(LegendOrient, self).__init__(*args)
@@ -7109,7 +7002,6 @@ class LegendResolveMap(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/LegendResolveMap'}
-    _rootschema = Root._schema
 
     def __init__(self, color=Undefined, fill=Undefined, fillOpacity=Undefined, opacity=Undefined,
                  shape=Undefined, size=Undefined, stroke=Undefined, strokeOpacity=Undefined,
@@ -7364,7 +7256,6 @@ class LineConfig(VegaLiteSchema):
         height of the plot.
     """
     _schema = {'$ref': '#/definitions/LineConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
@@ -7401,7 +7292,6 @@ class LogicalOperandPredicate(VegaLiteSchema):
     :class:`LogicalOrPredicate`, :class:`Predicate`)
     """
     _schema = {'$ref': '#/definitions/LogicalOperand<Predicate>'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(LogicalOperandPredicate, self).__init__(*args, **kwds)
@@ -7419,7 +7309,6 @@ class LogicalAndPredicate(LogicalOperandPredicate):
 
     """
     _schema = {'$ref': '#/definitions/LogicalAnd<Predicate>'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(LogicalAndPredicate, self).__init__(**kwds)
@@ -7437,7 +7326,6 @@ class LogicalNotPredicate(LogicalOperandPredicate):
 
     """
     _schema = {'$ref': '#/definitions/LogicalNot<Predicate>'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(LogicalNotPredicate, self).__init__(**kwds)
@@ -7455,7 +7343,6 @@ class LogicalOrPredicate(LogicalOperandPredicate):
 
     """
     _schema = {'$ref': '#/definitions/LogicalOr<Predicate>'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(LogicalOrPredicate, self).__init__(**kwds)
@@ -7478,7 +7365,6 @@ class LookupData(VegaLiteSchema):
         If not specified, the entire object is queried.
     """
     _schema = {'$ref': '#/definitions/LookupData'}
-    _rootschema = Root._schema
 
     def __init__(self, data=Undefined, key=Undefined, fields=Undefined, **kwds):
         super(LookupData, self).__init__(data=data, key=key, fields=fields, **kwds)
@@ -7492,7 +7378,6 @@ class Mark(AnyMark):
     All types of primitive marks.
     """
     _schema = {'$ref': '#/definitions/Mark'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Mark, self).__init__(*args)
@@ -7727,7 +7612,6 @@ class MarkConfig(VegaLiteSchema):
         height of the plot.
     """
     _schema = {'$ref': '#/definitions/MarkConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
@@ -8048,7 +7932,6 @@ class MarkDef(AnyMark):
         Offset for y-position.
     """
     _schema = {'$ref': '#/definitions/MarkDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, align=Undefined, angle=Undefined, baseline=Undefined,
                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
@@ -8088,7 +7971,6 @@ class Month(VegaLiteSchema):
     float
     """
     _schema = {'$ref': '#/definitions/Month'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Month, self).__init__(*args)
@@ -8163,7 +8045,6 @@ class MultiSelectionConfig(VegaLiteSchema):
         documentation.
     """
     _schema = {'$ref': '#/definitions/MultiSelectionConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, clear=Undefined, empty=Undefined, encodings=Undefined, fields=Undefined,
                  init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined, toggle=Undefined,
@@ -8187,7 +8068,6 @@ class NamedData(DataSource):
         An object that specifies the format for parsing the data.
     """
     _schema = {'$ref': '#/definitions/NamedData'}
-    _rootschema = Root._schema
 
     def __init__(self, name=Undefined, format=Undefined, **kwds):
         super(NamedData, self).__init__(name=name, format=format, **kwds)
@@ -8199,7 +8079,6 @@ class NiceTime(VegaLiteSchema):
     enum('second', 'minute', 'hour', 'day', 'week', 'month', 'year')
     """
     _schema = {'$ref': '#/definitions/NiceTime'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(NiceTime, self).__init__(*args)
@@ -8219,7 +8098,6 @@ class NumberValueDef(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/NumberValueDef'}
-    _rootschema = Root._schema
 
     def __init__(self, value=Undefined, **kwds):
         super(NumberValueDef, self).__init__(value=value, **kwds)
@@ -8411,7 +8289,6 @@ class NumericFieldDefWithCondition(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/NumericFieldDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -8440,7 +8317,6 @@ class NumericValueDefWithCondition(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/NumericValueDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(NumericValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
@@ -8570,7 +8446,6 @@ class OrderFieldDef(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/OrderFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  sort=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -8584,7 +8459,6 @@ class Orient(VegaLiteSchema):
     enum('left', 'right', 'top', 'bottom')
     """
     _schema = {'$ref': '#/definitions/Orient'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Orient, self).__init__(*args)
@@ -8596,7 +8470,6 @@ class Orientation(VegaLiteSchema):
     enum('horizontal', 'vertical')
     """
     _schema = {'$ref': '#/definitions/Orientation'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Orientation, self).__init__(*args)
@@ -8855,7 +8728,6 @@ class OverlayMarkDef(VegaLiteSchema):
         Offset for y-position.
     """
     _schema = {'$ref': '#/definitions/OverlayMarkDef'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, clip=Undefined,
                  color=Undefined, cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined,
@@ -8894,7 +8766,6 @@ class Padding(VegaLiteSchema):
     anyOf(float, Mapping(required=[]))
     """
     _schema = {'$ref': '#/definitions/Padding'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Padding, self).__init__(*args, **kwds)
@@ -8906,7 +8777,6 @@ class Parse(VegaLiteSchema):
     Mapping(required=[])
     """
     _schema = {'$ref': '#/definitions/Parse'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(Parse, self).__init__(**kwds)
@@ -8918,7 +8788,6 @@ class ParseValue(VegaLiteSchema):
     anyOf(None, string, enum('string'), enum('boolean'), enum('date'), enum('number'))
     """
     _schema = {'$ref': '#/definitions/ParseValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(ParseValue, self).__init__(*args, **kwds)
@@ -8944,7 +8813,6 @@ class PartsMixinsBoxPlotPart(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/PartsMixins<BoxPlotPart>'}
-    _rootschema = Root._schema
 
     def __init__(self, box=Undefined, median=Undefined, outliers=Undefined, rule=Undefined,
                  ticks=Undefined, **kwds):
@@ -8966,7 +8834,6 @@ class PartsMixinsErrorBandPart(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/PartsMixins<ErrorBandPart>'}
-    _rootschema = Root._schema
 
     def __init__(self, band=Undefined, borders=Undefined, **kwds):
         super(PartsMixinsErrorBandPart, self).__init__(band=band, borders=borders, **kwds)
@@ -8986,7 +8853,6 @@ class PartsMixinsErrorBarPart(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/PartsMixins<ErrorBarPart>'}
-    _rootschema = Root._schema
 
     def __init__(self, rule=Undefined, ticks=Undefined, **kwds):
         super(PartsMixinsErrorBarPart, self).__init__(rule=rule, ticks=ticks, **kwds)
@@ -9209,7 +9075,6 @@ class PositionFieldDef(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/PositionFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, axis=Undefined, bin=Undefined,
                  field=Undefined, impute=Undefined, scale=Undefined, sort=Undefined, stack=Undefined,
@@ -9228,7 +9093,6 @@ class Predicate(LogicalOperandPredicate):
     :class:`SelectionPredicate`, string)
     """
     _schema = {'$ref': '#/definitions/Predicate'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Predicate, self).__init__(*args, **kwds)
@@ -9250,7 +9114,6 @@ class FieldEqualPredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldEqualPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, equal=Undefined, field=Undefined, timeUnit=Undefined, **kwds):
         super(FieldEqualPredicate, self).__init__(equal=equal, field=field, timeUnit=timeUnit, **kwds)
@@ -9272,7 +9135,6 @@ class FieldGTEPredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldGTEPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, gte=Undefined, timeUnit=Undefined, **kwds):
         super(FieldGTEPredicate, self).__init__(field=field, gte=gte, timeUnit=timeUnit, **kwds)
@@ -9294,7 +9156,6 @@ class FieldGTPredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldGTPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, gt=Undefined, timeUnit=Undefined, **kwds):
         super(FieldGTPredicate, self).__init__(field=field, gt=gt, timeUnit=timeUnit, **kwds)
@@ -9316,7 +9177,6 @@ class FieldLTEPredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldLTEPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, lte=Undefined, timeUnit=Undefined, **kwds):
         super(FieldLTEPredicate, self).__init__(field=field, lte=lte, timeUnit=timeUnit, **kwds)
@@ -9338,7 +9198,6 @@ class FieldLTPredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldLTPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, lt=Undefined, timeUnit=Undefined, **kwds):
         super(FieldLTPredicate, self).__init__(field=field, lt=lt, timeUnit=timeUnit, **kwds)
@@ -9361,7 +9220,6 @@ class FieldOneOfPredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldOneOfPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, oneOf=Undefined, timeUnit=Undefined, **kwds):
         super(FieldOneOfPredicate, self).__init__(field=field, oneOf=oneOf, timeUnit=timeUnit, **kwds)
@@ -9384,7 +9242,6 @@ class FieldRangePredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldRangePredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, range=Undefined, timeUnit=Undefined, **kwds):
         super(FieldRangePredicate, self).__init__(field=field, range=range, timeUnit=timeUnit, **kwds)
@@ -9408,7 +9265,6 @@ class FieldValidPredicate(Predicate):
         Time unit for the field to be filtered.
     """
     _schema = {'$ref': '#/definitions/FieldValidPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, valid=Undefined, timeUnit=Undefined, **kwds):
         super(FieldValidPredicate, self).__init__(field=field, valid=valid, timeUnit=timeUnit, **kwds)
@@ -9485,7 +9341,6 @@ class Projection(VegaLiteSchema):
         **Default value:** ``mercator``
     """
     _schema = {'$ref': '#/definitions/Projection'}
-    _rootschema = Root._schema
 
     def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                  coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
@@ -9571,7 +9426,6 @@ class ProjectionConfig(VegaLiteSchema):
         **Default value:** ``mercator``
     """
     _schema = {'$ref': '#/definitions/ProjectionConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, center=Undefined, clipAngle=Undefined, clipExtent=Undefined,
                  coefficient=Undefined, distance=Undefined, fraction=Undefined, lobes=Undefined,
@@ -9595,7 +9449,6 @@ class ProjectionType(VegaLiteSchema):
     'naturalEarth1', 'orthographic', 'stereographic', 'transverseMercator')
     """
     _schema = {'$ref': '#/definitions/ProjectionType'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ProjectionType, self).__init__(*args)
@@ -9623,7 +9476,6 @@ class RangeConfig(VegaLiteSchema):
         Default range palette for the ``shape`` channel.
     """
     _schema = {'$ref': '#/definitions/RangeConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, category=Undefined, diverging=Undefined, heatmap=Undefined, ordinal=Undefined,
                  ramp=Undefined, symbol=Undefined, **kwds):
@@ -9637,7 +9489,6 @@ class RangeConfigValue(VegaLiteSchema):
     anyOf(List(anyOf(float, string)), :class:`SchemeConfig`, Mapping(required=[step]))
     """
     _schema = {'$ref': '#/definitions/RangeConfigValue'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(RangeConfigValue, self).__init__(*args, **kwds)
@@ -9885,7 +9736,6 @@ class RectConfig(VegaLiteSchema):
         height of the plot.
     """
     _schema = {'$ref': '#/definitions/RectConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, binSpacing=Undefined,
                  color=Undefined, continuousBandSize=Undefined, cornerRadius=Undefined,
@@ -9932,7 +9782,6 @@ class RepeatMapping(VegaLiteSchema):
         An array of fields to be repeated vertically.
     """
     _schema = {'$ref': '#/definitions/RepeatMapping'}
-    _rootschema = Root._schema
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(RepeatMapping, self).__init__(column=column, row=row, **kwds)
@@ -9952,7 +9801,6 @@ class RepeatRef(Field):
 
     """
     _schema = {'$ref': '#/definitions/RepeatRef'}
-    _rootschema = Root._schema
 
     def __init__(self, repeat=Undefined, **kwds):
         super(RepeatRef, self).__init__(repeat=repeat, **kwds)
@@ -9976,7 +9824,6 @@ class Resolve(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/Resolve'}
-    _rootschema = Root._schema
 
     def __init__(self, axis=Undefined, legend=Undefined, scale=Undefined, **kwds):
         super(Resolve, self).__init__(axis=axis, legend=legend, scale=scale, **kwds)
@@ -9988,7 +9835,6 @@ class ResolveMode(VegaLiteSchema):
     enum('independent', 'shared')
     """
     _schema = {'$ref': '#/definitions/ResolveMode'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ResolveMode, self).__init__(*args)
@@ -10008,7 +9854,6 @@ class RowColLayoutAlign(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/RowCol<LayoutAlign>'}
-    _rootschema = Root._schema
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(RowColLayoutAlign, self).__init__(column=column, row=row, **kwds)
@@ -10028,7 +9873,6 @@ class RowColboolean(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/RowCol<boolean>'}
-    _rootschema = Root._schema
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(RowColboolean, self).__init__(column=column, row=row, **kwds)
@@ -10048,7 +9892,6 @@ class RowColnumber(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/RowCol<number>'}
-    _rootschema = Root._schema
 
     def __init__(self, column=Undefined, row=Undefined, **kwds):
         super(RowColnumber, self).__init__(column=column, row=row, **kwds)
@@ -10286,7 +10129,6 @@ class Scale(VegaLiteSchema):
         **Note:** Log, time, and utc scales do not support ``zero``.
     """
     _schema = {'$ref': '#/definitions/Scale'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, base=Undefined, bins=Undefined, clamp=Undefined,
                  constant=Undefined, domain=Undefined, exponent=Undefined, interpolate=Undefined,
@@ -10428,7 +10270,6 @@ class ScaleConfig(VegaLiteSchema):
         **Default value:** ``false``
     """
     _schema = {'$ref': '#/definitions/ScaleConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, bandPaddingInner=Undefined, bandPaddingOuter=Undefined,
                  barBandPaddingInner=Undefined, barBandPaddingOuter=Undefined, clamp=Undefined,
@@ -10463,7 +10304,6 @@ class ScaleInterpolate(VegaLiteSchema):
     enum('rgb', 'lab', 'hcl', 'hsl', 'hsl-long', 'hcl-long', 'cubehelix', 'cubehelix-long')
     """
     _schema = {'$ref': '#/definitions/ScaleInterpolate'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ScaleInterpolate, self).__init__(*args)
@@ -10483,7 +10323,6 @@ class ScaleInterpolateParams(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/ScaleInterpolateParams'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, gamma=Undefined, **kwds):
         super(ScaleInterpolateParams, self).__init__(type=type, gamma=gamma, **kwds)
@@ -10521,7 +10360,6 @@ class ScaleResolveMap(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/ScaleResolveMap'}
-    _rootschema = Root._schema
 
     def __init__(self, color=Undefined, fill=Undefined, fillOpacity=Undefined, opacity=Undefined,
                  shape=Undefined, size=Undefined, stroke=Undefined, strokeOpacity=Undefined,
@@ -10539,7 +10377,6 @@ class ScaleType(VegaLiteSchema):
     'threshold', 'bin-ordinal', 'ordinal', 'point', 'band')
     """
     _schema = {'$ref': '#/definitions/ScaleType'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(ScaleType, self).__init__(*args)
@@ -10561,7 +10398,6 @@ class SchemeConfig(RangeConfigValue):
 
     """
     _schema = {'$ref': '#/definitions/SchemeConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, scheme=Undefined, count=Undefined, extent=Undefined, **kwds):
         super(SchemeConfig, self).__init__(scheme=scheme, count=count, extent=extent, **kwds)
@@ -10590,7 +10426,6 @@ class SchemeParams(VegaLiteSchema):
         scheme.
     """
     _schema = {'$ref': '#/definitions/SchemeParams'}
-    _rootschema = Root._schema
 
     def __init__(self, name=Undefined, count=Undefined, extent=Undefined, **kwds):
         super(SchemeParams, self).__init__(name=name, count=count, extent=extent, **kwds)
@@ -10684,7 +10519,6 @@ class SecondaryFieldDef(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/SecondaryFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, aggregate=Undefined, bin=Undefined, field=Undefined, timeUnit=Undefined,
                  title=Undefined, **kwds):
@@ -10728,7 +10562,6 @@ class SelectionConfig(VegaLiteSchema):
         selections on double-click by default.
     """
     _schema = {'$ref': '#/definitions/SelectionConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, interval=Undefined, multi=Undefined, single=Undefined, **kwds):
         super(SelectionConfig, self).__init__(interval=interval, multi=multi, single=single, **kwds)
@@ -10740,7 +10573,6 @@ class SelectionDef(VegaLiteSchema):
     anyOf(:class:`SingleSelection`, :class:`MultiSelection`, :class:`IntervalSelection`)
     """
     _schema = {'$ref': '#/definitions/SelectionDef'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(SelectionDef, self).__init__(*args, **kwds)
@@ -10844,7 +10676,6 @@ class IntervalSelection(SelectionDef):
         documentation.
     """
     _schema = {'$ref': '#/definitions/IntervalSelection'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, bind=Undefined, clear=Undefined, empty=Undefined,
                  encodings=Undefined, fields=Undefined, init=Undefined, mark=Undefined, on=Undefined,
@@ -10933,7 +10764,6 @@ class MultiSelection(SelectionDef):
         documentation.
     """
     _schema = {'$ref': '#/definitions/MultiSelection'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
                  fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined,
@@ -10949,7 +10779,6 @@ class SelectionDomain(VegaLiteSchema):
     anyOf(Mapping(required=[selection]), Mapping(required=[selection]))
     """
     _schema = {'$ref': '#/definitions/SelectionDomain'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(SelectionDomain, self).__init__(*args, **kwds)
@@ -10961,7 +10790,6 @@ class SelectionInit(VegaLiteSchema):
     anyOf(boolean, float, string, :class:`DateTime`)
     """
     _schema = {'$ref': '#/definitions/SelectionInit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(SelectionInit, self).__init__(*args, **kwds)
@@ -11008,7 +10836,6 @@ class DateTime(SelectionInit):
         Integer value representing the year.
     """
     _schema = {'$ref': '#/definitions/DateTime'}
-    _rootschema = Root._schema
 
     def __init__(self, date=Undefined, day=Undefined, hours=Undefined, milliseconds=Undefined,
                  minutes=Undefined, month=Undefined, quarter=Undefined, seconds=Undefined,
@@ -11025,7 +10852,6 @@ class SelectionInitInterval(VegaLiteSchema):
     List([:class:`DateTime`, :class:`DateTime`]))
     """
     _schema = {'$ref': '#/definitions/SelectionInitInterval'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(SelectionInitInterval, self).__init__(*args, **kwds)
@@ -11037,7 +10863,6 @@ class SelectionInitIntervalMapping(VegaLiteSchema):
     Mapping(required=[])
     """
     _schema = {'$ref': '#/definitions/SelectionInitIntervalMapping'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionInitIntervalMapping, self).__init__(**kwds)
@@ -11049,7 +10874,6 @@ class SelectionInitMapping(VegaLiteSchema):
     Mapping(required=[])
     """
     _schema = {'$ref': '#/definitions/SelectionInitMapping'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionInitMapping, self).__init__(**kwds)
@@ -11061,7 +10885,6 @@ class SelectionOperand(VegaLiteSchema):
     anyOf(:class:`SelectionNot`, :class:`SelectionAnd`, :class:`SelectionOr`, string)
     """
     _schema = {'$ref': '#/definitions/SelectionOperand'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(SelectionOperand, self).__init__(*args, **kwds)
@@ -11079,7 +10902,6 @@ class SelectionAnd(SelectionOperand):
 
     """
     _schema = {'$ref': '#/definitions/SelectionAnd'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionAnd, self).__init__(**kwds)
@@ -11097,7 +10919,6 @@ class SelectionNot(SelectionOperand):
 
     """
     _schema = {'$ref': '#/definitions/SelectionNot'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionNot, self).__init__(**kwds)
@@ -11115,7 +10936,6 @@ class SelectionOr(SelectionOperand):
 
     """
     _schema = {'$ref': '#/definitions/SelectionOr'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(SelectionOr, self).__init__(**kwds)
@@ -11133,7 +10953,6 @@ class SelectionPredicate(Predicate):
         Filter using a selection name.
     """
     _schema = {'$ref': '#/definitions/SelectionPredicate'}
-    _rootschema = Root._schema
 
     def __init__(self, selection=Undefined, **kwds):
         super(SelectionPredicate, self).__init__(selection=selection, **kwds)
@@ -11145,7 +10964,6 @@ class SelectionResolution(VegaLiteSchema):
     enum('global', 'union', 'intersect')
     """
     _schema = {'$ref': '#/definitions/SelectionResolution'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(SelectionResolution, self).__init__(*args)
@@ -11165,7 +10983,6 @@ class SequenceGenerator(Generator):
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/SequenceGenerator'}
-    _rootschema = Root._schema
 
     def __init__(self, sequence=Undefined, name=Undefined, **kwds):
         super(SequenceGenerator, self).__init__(sequence=sequence, name=name, **kwds)
@@ -11193,7 +11010,6 @@ class SequenceParams(VegaLiteSchema):
         **Default value:** ``"data"``
     """
     _schema = {'$ref': '#/definitions/SequenceParams'}
-    _rootschema = Root._schema
 
     def __init__(self, start=Undefined, stop=Undefined, step=Undefined, **kwds):
         super(SequenceParams, self).__init__(start=start, stop=stop, step=step, **kwds)
@@ -11385,7 +11201,6 @@ class ShapeFieldDefWithCondition(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/ShapeFieldDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -11414,7 +11229,6 @@ class ShapeValueDefWithCondition(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ShapeValueDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(ShapeValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
@@ -11432,7 +11246,6 @@ class SignalRef(LayoutBounds):
 
     """
     _schema = {'$ref': '#/definitions/SignalRef'}
-    _rootschema = Root._schema
 
     def __init__(self, signal=Undefined, **kwds):
         super(SignalRef, self).__init__(signal=signal, **kwds)
@@ -11446,7 +11259,6 @@ class SingleDefUnitChannel(VegaLiteSchema):
     'key', 'text', 'tooltip', 'href')
     """
     _schema = {'$ref': '#/definitions/SingleDefUnitChannel'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(SingleDefUnitChannel, self).__init__(*args)
@@ -11528,7 +11340,6 @@ class SingleSelection(SelectionDef):
         <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     """
     _schema = {'$ref': '#/definitions/SingleSelection'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, bind=Undefined, clear=Undefined, empty=Undefined,
                  encodings=Undefined, fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined,
@@ -11605,7 +11416,6 @@ class SingleSelectionConfig(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/selection-resolve.html>`__ documentation.
     """
     _schema = {'$ref': '#/definitions/SingleSelectionConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, bind=Undefined, clear=Undefined, empty=Undefined, encodings=Undefined,
                  fields=Undefined, init=Undefined, nearest=Undefined, on=Undefined, resolve=Undefined,
@@ -11622,7 +11432,6 @@ class Sort(VegaLiteSchema):
     :class:`SortByEncoding`, None)
     """
     _schema = {'$ref': '#/definitions/Sort'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Sort, self).__init__(*args, **kwds)
@@ -11659,7 +11468,6 @@ class EncodingSortField(Sort):
         not sort).
     """
     _schema = {'$ref': '#/definitions/EncodingSortField'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, op=Undefined, order=Undefined, **kwds):
         super(EncodingSortField, self).__init__(field=field, op=op, order=order, **kwds)
@@ -11671,7 +11479,6 @@ class SortArray(Sort):
     anyOf(List(float), List(string), List(boolean), List(:class:`DateTime`))
     """
     _schema = {'$ref': '#/definitions/SortArray'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(SortArray, self).__init__(*args, **kwds)
@@ -11694,7 +11501,6 @@ class SortByEncoding(Sort):
         not sort).
     """
     _schema = {'$ref': '#/definitions/SortByEncoding'}
-    _rootschema = Root._schema
 
     def __init__(self, encoding=Undefined, order=Undefined, **kwds):
         super(SortByEncoding, self).__init__(encoding=encoding, order=order, **kwds)
@@ -11716,7 +11522,6 @@ class SortField(VegaLiteSchema):
         (default), ``"descending"``, or ``null`` (no not sort).
     """
     _schema = {'$ref': '#/definitions/SortField'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, order=Undefined, **kwds):
         super(SortField, self).__init__(field=field, order=order, **kwds)
@@ -11728,7 +11533,6 @@ class SortOrder(Sort):
     enum('ascending', 'descending')
     """
     _schema = {'$ref': '#/definitions/SortOrder'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(SortOrder, self).__init__(*args)
@@ -11742,7 +11546,6 @@ class Spec(VegaLiteSchema):
     Any specification in Vega-Lite.
     """
     _schema = {'$ref': '#/definitions/Spec'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Spec, self).__init__(*args, **kwds)
@@ -11838,7 +11641,6 @@ class ConcatSpec(Spec):
         An array of data transformations such as filter and new field calculation.
     """
     _schema = {'$ref': '#/definitions/ConcatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, concat=Undefined, align=Undefined, bounds=Undefined, center=Undefined,
                  columns=Undefined, data=Undefined, description=Undefined, name=Undefined,
@@ -11945,7 +11747,6 @@ class FacetSpec(Spec):
         An array of data transformations such as filter and new field calculation.
     """
     _schema = {'$ref': '#/definitions/FacetSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, facet=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
                  center=Undefined, columns=Undefined, data=Undefined, description=Undefined,
@@ -12121,7 +11922,6 @@ class FacetedUnitSpec(Spec):
         <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
     """
     _schema = {'$ref': '#/definitions/FacetedUnitSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, mark=Undefined, align=Undefined, bounds=Undefined, center=Undefined,
                  columns=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
@@ -12183,7 +11983,6 @@ class HConcatSpec(Spec):
         An array of data transformations such as filter and new field calculation.
     """
     _schema = {'$ref': '#/definitions/HConcatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, hconcat=Undefined, bounds=Undefined, center=Undefined, data=Undefined,
                  description=Undefined, name=Undefined, resolve=Undefined, spacing=Undefined,
@@ -12293,7 +12092,6 @@ class LayerSpec(Spec):
         <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
     """
     _schema = {'$ref': '#/definitions/LayerSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, layer=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
                  height=Undefined, name=Undefined, projection=Undefined, resolve=Undefined,
@@ -12401,7 +12199,6 @@ class RepeatSpec(Spec):
         An array of data transformations such as filter and new field calculation.
     """
     _schema = {'$ref': '#/definitions/RepeatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, bounds=Undefined,
                  center=Undefined, columns=Undefined, data=Undefined, description=Undefined,
@@ -12427,7 +12224,6 @@ class SphereGenerator(Generator):
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/SphereGenerator'}
-    _rootschema = Root._schema
 
     def __init__(self, sphere=Undefined, name=Undefined, **kwds):
         super(SphereGenerator, self).__init__(sphere=sphere, name=name, **kwds)
@@ -12439,7 +12235,6 @@ class StackOffset(VegaLiteSchema):
     enum('zero', 'center', 'normalize')
     """
     _schema = {'$ref': '#/definitions/StackOffset'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(StackOffset, self).__init__(*args)
@@ -12451,7 +12246,6 @@ class StandardType(VegaLiteSchema):
     enum('quantitative', 'ordinal', 'temporal', 'nominal')
     """
     _schema = {'$ref': '#/definitions/StandardType'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(StandardType, self).__init__(*args)
@@ -12643,7 +12437,6 @@ class StringFieldDefWithCondition(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/StringFieldDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -12840,7 +12633,6 @@ class StringFieldDefWithConditionTypeForShape(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/StringFieldDefWithCondition<TypeForShape>'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
@@ -12871,7 +12663,6 @@ class StringValueDefWithCondition(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/StringValueDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(StringValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
@@ -12895,7 +12686,6 @@ class StringValueDefWithConditionTypeForShape(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/StringValueDefWithCondition<TypeForShape>'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(StringValueDefWithConditionTypeForShape, self).__init__(condition=condition, value=value,
@@ -12908,7 +12698,6 @@ class StrokeCap(VegaLiteSchema):
     enum('butt', 'round', 'square')
     """
     _schema = {'$ref': '#/definitions/StrokeCap'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(StrokeCap, self).__init__(*args)
@@ -12920,7 +12709,6 @@ class StrokeJoin(VegaLiteSchema):
     enum('miter', 'round', 'bevel')
     """
     _schema = {'$ref': '#/definitions/StrokeJoin'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(StrokeJoin, self).__init__(*args)
@@ -12932,7 +12720,6 @@ class StyleConfigIndex(VegaLiteSchema):
     Mapping(required=[])
     """
     _schema = {'$ref': '#/definitions/StyleConfigIndex'}
-    _rootschema = Root._schema
 
     def __init__(self, **kwds):
         super(StyleConfigIndex, self).__init__(**kwds)
@@ -12944,7 +12731,6 @@ class SymbolShape(VegaLiteSchema):
     string
     """
     _schema = {'$ref': '#/definitions/SymbolShape'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(SymbolShape, self).__init__(*args)
@@ -12956,7 +12742,6 @@ class TextBaseline(VegaLiteSchema):
     anyOf(enum('alphabetic'), :class:`Baseline`)
     """
     _schema = {'$ref': '#/definitions/TextBaseline'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(TextBaseline, self).__init__(*args, **kwds)
@@ -12968,7 +12753,6 @@ class Baseline(TextBaseline):
     enum('top', 'middle', 'bottom')
     """
     _schema = {'$ref': '#/definitions/Baseline'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Baseline, self).__init__(*args)
@@ -13205,7 +12989,6 @@ class TextConfig(VegaLiteSchema):
         height of the plot.
     """
     _schema = {'$ref': '#/definitions/TextConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, baseline=Undefined, color=Undefined,
                  cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined, dy=Undefined,
@@ -13384,7 +13167,6 @@ class TextFieldDef(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/TextFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  format=Undefined, formatType=Undefined, timeUnit=Undefined, title=Undefined, **kwds):
@@ -13550,7 +13332,6 @@ class TextFieldDefWithCondition(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/TextFieldDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
                  field=Undefined, format=Undefined, formatType=Undefined, timeUnit=Undefined,
@@ -13579,7 +13360,6 @@ class TextValueDefWithCondition(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/TextValueDefWithCondition'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(TextValueDefWithCondition, self).__init__(condition=condition, value=value, **kwds)
@@ -13822,7 +13602,6 @@ class TickConfig(VegaLiteSchema):
         height of the plot.
     """
     _schema = {'$ref': '#/definitions/TickConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, angle=Undefined, bandSize=Undefined, baseline=Undefined,
                  color=Undefined, cornerRadius=Undefined, cursor=Undefined, dir=Undefined, dx=Undefined,
@@ -13857,7 +13636,6 @@ class TimeUnit(VegaLiteSchema):
     anyOf(:class:`SingleTimeUnit`, :class:`MultiTimeUnit`)
     """
     _schema = {'$ref': '#/definitions/TimeUnit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(TimeUnit, self).__init__(*args, **kwds)
@@ -13869,7 +13647,6 @@ class MultiTimeUnit(TimeUnit):
     anyOf(:class:`LocalMultiTimeUnit`, :class:`UtcMultiTimeUnit`)
     """
     _schema = {'$ref': '#/definitions/MultiTimeUnit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(MultiTimeUnit, self).__init__(*args, **kwds)
@@ -13884,7 +13661,6 @@ class LocalMultiTimeUnit(MultiTimeUnit):
     'secondsmilliseconds')
     """
     _schema = {'$ref': '#/definitions/LocalMultiTimeUnit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(LocalMultiTimeUnit, self).__init__(*args)
@@ -13896,7 +13672,6 @@ class SingleTimeUnit(TimeUnit):
     anyOf(:class:`LocalSingleTimeUnit`, :class:`UtcSingleTimeUnit`)
     """
     _schema = {'$ref': '#/definitions/SingleTimeUnit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(SingleTimeUnit, self).__init__(*args, **kwds)
@@ -13909,7 +13684,6 @@ class LocalSingleTimeUnit(SingleTimeUnit):
     'milliseconds')
     """
     _schema = {'$ref': '#/definitions/LocalSingleTimeUnit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(LocalSingleTimeUnit, self).__init__(*args)
@@ -13921,7 +13695,6 @@ class TitleAnchor(VegaLiteSchema):
     enum(None, 'start', 'middle', 'end')
     """
     _schema = {'$ref': '#/definitions/TitleAnchor'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(TitleAnchor, self).__init__(*args)
@@ -13978,7 +13751,6 @@ class TitleConfig(VegaLiteSchema):
         Default title orientation ( ``"top"``, ``"bottom"``, ``"left"``, or ``"right"`` )
     """
     _schema = {'$ref': '#/definitions/TitleConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, align=Undefined, anchor=Undefined, angle=Undefined, baseline=Undefined,
                  color=Undefined, dx=Undefined, dy=Undefined, font=Undefined, fontSize=Undefined,
@@ -13996,7 +13768,6 @@ class TitleFrame(VegaLiteSchema):
     enum('bounds', 'group')
     """
     _schema = {'$ref': '#/definitions/TitleFrame'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(TitleFrame, self).__init__(*args)
@@ -14008,7 +13779,6 @@ class TitleOrient(VegaLiteSchema):
     enum('none', 'left', 'right', 'top', 'bottom')
     """
     _schema = {'$ref': '#/definitions/TitleOrient'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(TitleOrient, self).__init__(*args)
@@ -14088,7 +13858,6 @@ class TitleParams(VegaLiteSchema):
         **Default value:** ``0``.
     """
     _schema = {'$ref': '#/definitions/TitleParams'}
-    _rootschema = Root._schema
 
     def __init__(self, text=Undefined, align=Undefined, anchor=Undefined, angle=Undefined,
                  baseline=Undefined, color=Undefined, dx=Undefined, dy=Undefined, font=Undefined,
@@ -14114,7 +13883,6 @@ class TooltipContent(VegaLiteSchema):
 
     """
     _schema = {'$ref': '#/definitions/TooltipContent'}
-    _rootschema = Root._schema
 
     def __init__(self, content=Undefined, **kwds):
         super(TooltipContent, self).__init__(content=content, **kwds)
@@ -14131,7 +13899,6 @@ class TopLevelSpec(VegaLiteSchema):
     (The json schema is generated from this type.)
     """
     _schema = {'$ref': '#/definitions/TopLevelSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(TopLevelSpec, self).__init__(*args, **kwds)
@@ -14264,7 +14031,6 @@ class TopLevelConcatSpec(TopLevelSpec):
         schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelConcatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, concat=Undefined, align=Undefined, autosize=Undefined, background=Undefined,
                  bounds=Undefined, center=Undefined, columns=Undefined, config=Undefined,
@@ -14413,7 +14179,6 @@ class TopLevelFacetSpec(TopLevelSpec):
         schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelFacetSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, data=Undefined, facet=Undefined, spec=Undefined, align=Undefined,
                  autosize=Undefined, background=Undefined, bounds=Undefined, center=Undefined,
@@ -14513,7 +14278,6 @@ class TopLevelHConcatSpec(TopLevelSpec):
         schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelHConcatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, hconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
                  center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
@@ -14663,7 +14427,6 @@ class TopLevelLayerSpec(TopLevelSpec):
         schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelLayerSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, layer=Undefined, autosize=Undefined, background=Undefined, config=Undefined,
                  data=Undefined, datasets=Undefined, description=Undefined, encoding=Undefined,
@@ -14813,7 +14576,6 @@ class TopLevelRepeatSpec(TopLevelSpec):
         schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelRepeatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, repeat=Undefined, spec=Undefined, align=Undefined, autosize=Undefined,
                  background=Undefined, bounds=Undefined, center=Undefined, columns=Undefined,
@@ -15029,7 +14791,6 @@ class TopLevelUnitSpec(TopLevelSpec):
         schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelUnitSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, data=Undefined, mark=Undefined, align=Undefined, autosize=Undefined,
                  background=Undefined, bounds=Undefined, center=Undefined, columns=Undefined,
@@ -15132,7 +14893,6 @@ class TopLevelVConcatSpec(TopLevelSpec):
         schema.
     """
     _schema = {'$ref': '#/definitions/TopLevelVConcatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, vconcat=Undefined, autosize=Undefined, background=Undefined, bounds=Undefined,
                  center=Undefined, config=Undefined, data=Undefined, datasets=Undefined,
@@ -15193,7 +14953,6 @@ class TopoDataFormat(DataFormat):
         If no extension is detected, ``"json"`` will be used by default.
     """
     _schema = {'$ref': '#/definitions/TopoDataFormat'}
-    _rootschema = Root._schema
 
     def __init__(self, feature=Undefined, mesh=Undefined, parse=Undefined, type=Undefined, **kwds):
         super(TopoDataFormat, self).__init__(feature=feature, mesh=mesh, parse=parse, type=type, **kwds)
@@ -15209,7 +14968,6 @@ class Transform(VegaLiteSchema):
     :class:`WindowTransform`)
     """
     _schema = {'$ref': '#/definitions/Transform'}
-    _rootschema = Root._schema
 
     def __init__(self, *args, **kwds):
         super(Transform, self).__init__(*args, **kwds)
@@ -15230,7 +14988,6 @@ class AggregateTransform(Transform):
         objects will be used.
     """
     _schema = {'$ref': '#/definitions/AggregateTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, aggregate=Undefined, groupby=Undefined, **kwds):
         super(AggregateTransform, self).__init__(aggregate=aggregate, groupby=groupby, **kwds)
@@ -15253,7 +15010,6 @@ class BinTransform(Transform):
         The output fields at which to write the start and end bin values.
     """
     _schema = {'$ref': '#/definitions/BinTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, bin=Undefined, field=Undefined, **kwds):
         super(BinTransform, self).__init__(bin=bin, field=field, **kwds)
@@ -15274,7 +15030,6 @@ class CalculateTransform(Transform):
         The field for storing the computed formula value.
     """
     _schema = {'$ref': '#/definitions/CalculateTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, calculate=Undefined, **kwds):
         super(CalculateTransform, self).__init__(calculate=calculate, **kwds)
@@ -15311,7 +15066,6 @@ class FilterTransform(Transform):
         4) a logical operand that combines (1), (2), or (3).
     """
     _schema = {'$ref': '#/definitions/FilterTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, filter=Undefined, **kwds):
         super(FilterTransform, self).__init__(filter=filter, **kwds)
@@ -15337,7 +15091,6 @@ class FlattenTransform(Transform):
         **Default value:** The field name of the corresponding array field
     """
     _schema = {'$ref': '#/definitions/FlattenTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, flatten=Undefined, **kwds):
         super(FlattenTransform, self).__init__(flatten=flatten, **kwds)
@@ -15359,7 +15112,6 @@ class FoldTransform(Transform):
         **Default value:** ``["key", "value"]``
     """
     _schema = {'$ref': '#/definitions/FoldTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, fold=Undefined, **kwds):
         super(FoldTransform, self).__init__(fold=fold, **kwds)
@@ -15412,7 +15164,6 @@ class ImputeTransform(Transform):
         The field value to use when the imputation ``method`` is ``"value"``.
     """
     _schema = {'$ref': '#/definitions/ImputeTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, impute=Undefined, key=Undefined, frame=Undefined, groupby=Undefined,
                  keyvals=Undefined, method=Undefined, value=Undefined, **kwds):
@@ -15435,7 +15186,6 @@ class JoinAggregateTransform(Transform):
         unspecified, all data points will be in a single group.
     """
     _schema = {'$ref': '#/definitions/JoinAggregateTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, joinaggregate=Undefined, groupby=Undefined, **kwds):
         super(JoinAggregateTransform, self).__init__(joinaggregate=joinaggregate, groupby=groupby,
@@ -15465,7 +15215,6 @@ class LookupTransform(Transform):
         Secondary data reference.
     """
     _schema = {'$ref': '#/definitions/LookupTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, lookup=Undefined, default=Undefined, **kwds):
         super(LookupTransform, self).__init__(lookup=lookup, default=default, **kwds)
@@ -15485,7 +15234,6 @@ class SampleTransform(Transform):
         **Default value:** ``1000``
     """
     _schema = {'$ref': '#/definitions/SampleTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, sample=Undefined, **kwds):
         super(SampleTransform, self).__init__(sample=sample, **kwds)
@@ -15515,7 +15263,6 @@ class StackTransform(Transform):
         If a single string(eg."val") is provided, the end field will be "val_end".
     """
     _schema = {'$ref': '#/definitions/StackTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, groupby=Undefined, stack=Undefined, offset=Undefined, sort=Undefined, **kwds):
         super(StackTransform, self).__init__(groupby=groupby, stack=stack, offset=offset, sort=sort,
@@ -15538,7 +15285,6 @@ class TimeUnitTransform(Transform):
         The output field to write the timeUnit value.
     """
     _schema = {'$ref': '#/definitions/TimeUnitTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, field=Undefined, timeUnit=Undefined, **kwds):
         super(TimeUnitTransform, self).__init__(field=field, timeUnit=timeUnit, **kwds)
@@ -15550,7 +15296,6 @@ class TypeForShape(VegaLiteSchema):
     enum('nominal', 'ordinal', 'geojson')
     """
     _schema = {'$ref': '#/definitions/TypeForShape'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(TypeForShape, self).__init__(*args)
@@ -15679,7 +15424,6 @@ class TypedFieldDef(VegaLiteSchema):
         defined, axis/header/legend title will be used.
     """
     _schema = {'$ref': '#/definitions/TypedFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, type=Undefined, aggregate=Undefined, bin=Undefined, field=Undefined,
                  timeUnit=Undefined, title=Undefined, **kwds):
@@ -15784,7 +15528,6 @@ class UnitSpec(VegaLiteSchema):
         <https://vega.github.io/vega-lite/docs/size.html>`__ contains more examples.
     """
     _schema = {'$ref': '#/definitions/UnitSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, mark=Undefined, data=Undefined, description=Undefined, encoding=Undefined,
                  height=Undefined, name=Undefined, projection=Undefined, selection=Undefined,
@@ -15812,7 +15555,6 @@ class UrlData(DataSource):
         Provide a placeholder name and bind data at runtime.
     """
     _schema = {'$ref': '#/definitions/UrlData'}
-    _rootschema = Root._schema
 
     def __init__(self, url=Undefined, format=Undefined, name=Undefined, **kwds):
         super(UrlData, self).__init__(url=url, format=format, name=name, **kwds)
@@ -15828,7 +15570,6 @@ class UtcMultiTimeUnit(MultiTimeUnit):
     'utcsecondsmilliseconds')
     """
     _schema = {'$ref': '#/definitions/UtcMultiTimeUnit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(UtcMultiTimeUnit, self).__init__(*args)
@@ -15841,7 +15582,6 @@ class UtcSingleTimeUnit(SingleTimeUnit):
     'utcseconds', 'utcmilliseconds')
     """
     _schema = {'$ref': '#/definitions/UtcSingleTimeUnit'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(UtcSingleTimeUnit, self).__init__(*args)
@@ -15894,7 +15634,6 @@ class VConcatSpec(Spec):
         An array of data transformations such as filter and new field calculation.
     """
     _schema = {'$ref': '#/definitions/VConcatSpec'}
-    _rootschema = Root._schema
 
     def __init__(self, vconcat=Undefined, bounds=Undefined, center=Undefined, data=Undefined,
                  description=Undefined, name=Undefined, resolve=Undefined, spacing=Undefined,
@@ -15910,7 +15649,6 @@ class Value(VegaLiteSchema):
     anyOf(float, string, boolean, None)
     """
     _schema = {'$ref': '#/definitions/Value'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(Value, self).__init__(*args)
@@ -15934,7 +15672,6 @@ class ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull(VegaLiteSchema
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldDef<TypeForShape>,(string|null)>'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(ValueDefWithConditionMarkPropFieldDefTypeForShapestringnull, self).__init__(condition=condition,
@@ -15960,7 +15697,6 @@ class ValueDefWithConditionMarkPropFieldDefnumber(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldDef,number>'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(ValueDefWithConditionMarkPropFieldDefnumber, self).__init__(condition=condition,
@@ -15985,7 +15721,6 @@ class ValueDefWithConditionMarkPropFieldDefstringnull(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<MarkPropFieldDef,(string|null)>'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(ValueDefWithConditionMarkPropFieldDefstringnull, self).__init__(condition=condition,
@@ -16010,7 +15745,6 @@ class ValueDefWithConditionTextFieldDefValue(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/ValueDefWithCondition<TextFieldDef,Value>'}
-    _rootschema = Root._schema
 
     def __init__(self, condition=Undefined, value=Undefined, **kwds):
         super(ValueDefWithConditionTextFieldDefValue, self).__init__(condition=condition, value=value,
@@ -16078,7 +15812,6 @@ class ViewBackground(VegaLiteSchema):
         **Note:** Any specified view background properties will augment the default style.
     """
     _schema = {'$ref': '#/definitions/ViewBackground'}
-    _rootschema = Root._schema
 
     def __init__(self, cornerRadius=Undefined, fill=Undefined, fillOpacity=Undefined, opacity=Undefined,
                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
@@ -16158,7 +15891,6 @@ class ViewConfig(VegaLiteSchema):
         **Default value:** ``200``
     """
     _schema = {'$ref': '#/definitions/ViewConfig'}
-    _rootschema = Root._schema
 
     def __init__(self, clip=Undefined, cornerRadius=Undefined, fill=Undefined, fillOpacity=Undefined,
                  height=Undefined, opacity=Undefined, stroke=Undefined, strokeCap=Undefined,
@@ -16199,7 +15931,6 @@ class WindowFieldDef(VegaLiteSchema):
         The output name for the window operation.
     """
     _schema = {'$ref': '#/definitions/WindowFieldDef'}
-    _rootschema = Root._schema
 
     def __init__(self, op=Undefined, field=Undefined, param=Undefined, **kwds):
         super(WindowFieldDef, self).__init__(op=op, field=field, param=param, **kwds)
@@ -16212,7 +15943,6 @@ class WindowOnlyOp(VegaLiteSchema):
     'lead', 'first_value', 'last_value', 'nth_value')
     """
     _schema = {'$ref': '#/definitions/WindowOnlyOp'}
-    _rootschema = Root._schema
 
     def __init__(self, *args):
         super(WindowOnlyOp, self).__init__(*args)
@@ -16265,7 +15995,6 @@ class WindowTransform(Transform):
         ignorePeers parameter is ignored and treated as if set to ``true`` ).
     """
     _schema = {'$ref': '#/definitions/WindowTransform'}
-    _rootschema = Root._schema
 
     def __init__(self, window=Undefined, frame=Undefined, groupby=Undefined, ignorePeers=Undefined,
                  sort=Undefined, **kwds):
@@ -16287,7 +16016,6 @@ class XValueDef(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/XValueDef'}
-    _rootschema = Root._schema
 
     def __init__(self, value=Undefined, **kwds):
         super(XValueDef, self).__init__(value=value, **kwds)
@@ -16307,7 +16035,6 @@ class YValueDef(VegaLiteSchema):
         between ``0`` to ``1`` for opacity).
     """
     _schema = {'$ref': '#/definitions/YValueDef'}
-    _rootschema = Root._schema
 
     def __init__(self, value=Undefined, **kwds):
         super(YValueDef, self).__init__(value=value, **kwds)

@@ -33,7 +33,14 @@ SCHEMA_VERSION = {
 reLink = re.compile(r"(?<=\[)([^\]]+)(?=\]\([^\)]+\))",re.M)
 reSpecial = re.compile(r"[*_]{2,3}|`",re.M)
 
-class SchemaGenerator(codegen.SchemaGenerator):   
+class SchemaGenerator(codegen.SchemaGenerator):
+    schema_class_template = textwrap.dedent('''
+    class {classname}({basename}):
+        """{docstring}"""
+        _schema = {schema!r}
+
+        {init_code}
+    ''')
     def _process_description(self, description):
         description = ''.join([
             reSpecial.sub('',d) if i%2 else d 
@@ -59,6 +66,7 @@ SCHEMA_URL_TEMPLATE = ('https://vega.github.io/schema/'
 
 BASE_SCHEMA = """
 class {basename}(SchemaBase):
+    _rootschema = load_schema()
     @classmethod
     def _default_wrapper_classes(cls):
         return _subclasses({basename})
@@ -265,7 +273,7 @@ def generate_vegalite_schema_wrapper(schema_file):
         definitions[name] = SchemaGenerator(
             name, schema=defschema, schemarepr=defschema_repr,
             rootschema=rootschema, basename=basename,
-            rootschemarepr=CodeSnippet("Root._schema"),
+            rootschemarepr=CodeSnippet("{}._rootschema".format(basename)),
         )
 
     graph = {}
@@ -288,7 +296,7 @@ def generate_vegalite_schema_wrapper(schema_file):
     contents.append(schema_class('Root',
             schema=rootschema,
             basename=basename,
-            schemarepr=CodeSnippet('load_schema()')
+            schemarepr=CodeSnippet('{}._rootschema'.format(basename))
         )
     )
 
@@ -311,7 +319,7 @@ def generate_vega_schema_wrapper(schema_file):
                 LOAD_SCHEMA.format(schemafile='vega-schema.json')]
     contents.append(BASE_SCHEMA.format(basename=basename))
     contents.append(schema_class('Root', schema=rootschema, basename=basename,
-                                 schemarepr=CodeSnippet('load_schema()')))
+                                 schemarepr=CodeSnippet('{}._rootschema'.format(basename))))
     for deflist in ['defs', 'refs']:
         for name in rootschema[deflist]:
             defschema = {'$ref': '#/{}/{}'.format(deflist, name)}
