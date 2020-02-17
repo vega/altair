@@ -4,7 +4,7 @@ from ..utils import SchemaBase
 class DatumType(object):
     """An object to assist in building Vega-Lite Expressions"""
     def __repr__(self):
-        raise ValueError("must use datum.attribute")
+        return "datum"
 
     def __getattr__(self, attr):
         return GetAttrExpression("datum", attr)
