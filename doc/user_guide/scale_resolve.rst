@@ -76,7 +76,7 @@ each layer.
 
 In this case the axis colors act as a pseudo-legend.  Alternatively if you want
 a legend the :ref:`user-guide-filter-transform` and
-:ref:`user-guide-fold-transform` be applied.  Legends are only created in
+:ref:`user-guide-fold-transform` must be applied.  Legends are only created in
 Vega-Lite to represent an encoding.
 
 .. altair-plot::
