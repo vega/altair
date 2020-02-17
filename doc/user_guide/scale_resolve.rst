@@ -74,8 +74,9 @@ each layer.
 
     alt.layer(line_A, line_B).resolve_scale(y='independent')
 
-In this case the axis colors act as a pseudo-legend. Alternatively if you want
-a legend some transformations must be applied. Legends are only created in
+In this case the axis colors act as a pseudo-legend.  Alternatively if you want
+a legend the :ref:`user-guide-filter-transform` and
+:ref:`user-guide-fold-transform` be applied.  Legends are only created in
 Vega-Lite to represent an encoding.
 
 .. altair-plot::
