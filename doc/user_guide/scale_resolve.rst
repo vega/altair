@@ -104,4 +104,4 @@ Vega-Lite to represent an encoding.
 
 Note that dual axis charts might be misleading about
 relationships in your data. For further reading on the topic see `The case against dual axis
-charts<https://blog.datawrapper.de/dualaxis/>`_ by Lisa Charlotte Rost.
+charts <https://blog.datawrapper.de/dualaxis/>`__ by Lisa Charlotte Rost.
