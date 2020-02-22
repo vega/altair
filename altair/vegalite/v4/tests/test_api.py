@@ -263,7 +263,7 @@ def test_save(format, basic_chart):
         os.remove(filename)
 
 
-def test_facet():
+def test_facet_basic():
     # wrapped facet
     chart1 = alt.Chart('data.csv').mark_point().encode(
         x='x:Q',
