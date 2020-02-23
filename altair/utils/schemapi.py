@@ -497,6 +497,9 @@ class _FromDict(object):
         def _passthrough(*args, **kwds):
             return args[0] if args else kwds
 
+        if isinstance(dct, SchemaBase):
+            return dct
+
         if cls is None:
             # If there are multiple matches, we use the first one in the dict.
             # Our class dict is constructed breadth-first from top to bottom,
