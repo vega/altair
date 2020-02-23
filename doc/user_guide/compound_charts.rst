@@ -176,19 +176,24 @@ with a ``brush`` selection to add interaction:
 
     import altair as alt
     from vega_datasets import data
-    sp500 = data.sp500.url
+
+    source = data.sp500.url
 
     brush = alt.selection(type='interval', encodings=['x'])
 
-    upper = alt.Chart(sp500).mark_area().encode(
-        x=alt.X('date:T', scale=alt.Scale(domain=brush)),
-        y='price:Q'
+    base = alt.Chart(source).mark_area().encode(
+        x = 'date:T',
+        y = 'price:Q'
     ).properties(
         width=600,
         height=200
     )
 
-    lower = upper.properties(
+    upper = base.encode(
+        alt.X('date:T', scale=alt.Scale(domain=brush))
+    )
+
+    lower = base.properties(
         height=60
     ).add_selection(brush)
 
