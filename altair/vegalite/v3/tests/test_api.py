@@ -264,7 +264,7 @@ def test_save(format, basic_chart):
         os.remove(filename)
 
 
-def test_facet():
+def test_facet_basic():
     # wrapped facet
     chart1 = alt.Chart('data.csv').mark_point().encode(
         x='x:Q',
@@ -295,6 +295,7 @@ def test_facet():
     assert dct2['facet']['column'] == alt.Facet('category2:Q').to_dict()
     assert 'columns' not in dct2
     assert dct2['data'] == alt.UrlData('data.csv').to_dict()
+
 
 def test_facet_parse():
     chart = alt.Chart('data.csv').mark_point().encode(
