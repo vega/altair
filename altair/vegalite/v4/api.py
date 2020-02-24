@@ -1776,7 +1776,7 @@ class Chart(TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin,
         Returns
         -------
         chart :
-            self, with interactive axes added
+            self, with tooltips added for every column in data
 
         """
         if not isinstance(self.data, pd.DataFrame):
