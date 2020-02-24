@@ -1766,6 +1766,23 @@ class Chart(TopLevelMixin, _EncodingMixin, mixins.MarkMethodMixin,
         return self.add_selection(selection_interval(bind='scales',
                                                      encodings=encodings))
 
+    def with_tooltips(self):
+        """Add tooltips for all fields in the data
+
+        Parameters
+        ----------
+        
+
+        Returns
+        -------
+        chart :
+            self, with interactive axes added
+
+        """
+        if not isinstance(self.data, pd.DataFrame):
+            raise ValueError("with_tooltips() works only with pandas dataframes.")
+        return self.encode(tooltip=self.data.columns.tolist())
+
 
 def _check_if_valid_subspec(spec, classname):
     """Check if the spec is a valid sub-spec.
