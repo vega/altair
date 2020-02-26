@@ -400,6 +400,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
                                   embed_options=embed_options, json_kwds=json_kwds,
                                   fullhtml=fullhtml, requirejs=requirejs)
 
+    @utils.deprecation.deprecated("Chart.savechart is deprecated in favor of Chart.save")
     def savechart(self, fp, format=None, **kwargs):
         """Save a chart to file in a variety of formats
 
@@ -417,10 +418,6 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
             associated with the specified format.
 
         """
-        warnings.warn(
-            "Chart.savechart is deprecated in favor of Chart.save",
-            DeprecationWarning
-        )
         return self.save(fp, format=None, **kwargs)
 
     def save(self, fp, format=None, override_data_transformer=True,
