@@ -69,7 +69,7 @@ URL                 = 'http://altair-viz.github.io'
 DOWNLOAD_URL        = 'http://github.com/altair-viz/altair/'
 LICENSE             = 'BSD 3-clause'
 INSTALL_REQUIRES    = get_install_requirements("requirements.txt")
-PYTHON_REQUIRES     = ">=3.5"
+PYTHON_REQUIRES     = ">=3.6"
 DEV_REQUIRES        = get_install_requirements("requirements_dev.txt")
 VERSION             = version('altair/__init__.py')
 
@@ -97,7 +97,6 @@ setup(name=NAME,
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
