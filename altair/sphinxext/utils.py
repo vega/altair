@@ -8,6 +8,7 @@ import re
 def create_thumbnail(image_filename, thumb_filename, window_size=(280, 160)):
     """Create a thumbnail whose shortest dimension matches the window"""
     from PIL import Image
+
     im = Image.open(image_filename)
     im_width, im_height = im.size
     width, height = window_size
@@ -36,7 +37,7 @@ def create_generic_image(filename, shape=(200, 300), gradient=True):
     if gradient:
         # gradient from gray to white
         arr += np.linspace(128, 255, shape[1])[:, None]
-    im = Image.fromarray(arr.astype('uint8'))
+    im = Image.fromarray(arr.astype("uint8"))
     im.save(filename)
 
 
@@ -45,6 +46,7 @@ SyntaxError
 ===========
 Example script with invalid Python syntax
 """
+
 
 def _parse_source_file(filename):
     """Parse source file into AST node
@@ -73,16 +75,16 @@ def _parse_source_file(filename):
     # about the file encoding.
     # Minimal example to fail: ast.parse(u'# -*- coding: utf-8 -*-')
 
-    with open(filename, 'rb') as fid:
+    with open(filename, "rb") as fid:
         content = fid.read()
     # change from Windows format to UNIX for uniformity
-    content = content.replace(b'\r\n', b'\n')
+    content = content.replace(b"\r\n", b"\n")
 
     try:
         node = ast.parse(content)
-        return node, content.decode('utf-8')
+        return node, content.decode("utf-8")
     except SyntaxError:
-        return None, content.decode('utf-8')
+        return None, content.decode("utf-8")
 
 
 def get_docstring_and_rest(filename):
@@ -114,22 +116,23 @@ def get_docstring_and_rest(filename):
     node, content = _parse_source_file(filename)
 
     # Find the category comment
-    find_category = re.compile(r'^#\s*category:\s*(.*)$', re.MULTILINE)
+    find_category = re.compile(r"^#\s*category:\s*(.*)$", re.MULTILINE)
     match = find_category.search(content)
     if match is not None:
         category = match.groups()[0]
         # remove this comment from the content
-        content = find_category.sub('', content)
+        content = find_category.sub("", content)
     else:
         category = None
-
 
     if node is None:
         return SYNTAX_ERROR_DOCSTRING, category, content, 1
 
     if not isinstance(node, ast.Module):
-        raise TypeError("This function only supports modules. "
-                        "You provided {}".format(node.__class__.__name__))
+        raise TypeError(
+            "This function only supports modules. "
+            "You provided {}".format(node.__class__.__name__)
+        )
     try:
         # In python 3.7 module knows its docstring.
         # Everything else will raise an attribute error
@@ -137,6 +140,7 @@ def get_docstring_and_rest(filename):
 
         import tokenize
         from io import BytesIO
+
         ts = tokenize.tokenize(BytesIO(content).readline)
         ds_lines = 0
         # find the first string according to the tokenizer and get
@@ -146,33 +150,41 @@ def get_docstring_and_rest(filename):
                 ds_lines, _ = tk.end
                 break
         # grab the rest of the file
-        rest = '\n'.join(content.split('\n')[ds_lines:])
+        rest = "\n".join(content.split("\n")[ds_lines:])
         lineno = ds_lines + 1
 
     except AttributeError:
         # this block can be removed when python 3.6 support is dropped
-        if node.body and isinstance(node.body[0], ast.Expr) and \
-                         isinstance(node.body[0].value, (ast.Str, ast.Constant)):
+        if (
+            node.body
+            and isinstance(node.body[0], ast.Expr)
+            and isinstance(node.body[0].value, (ast.Str, ast.Constant))
+        ):
             docstring_node = node.body[0]
             docstring = docstring_node.value.s
             # python2.7: Code was read in bytes needs decoding to utf-8
             # unless future unicode_literals is imported in source which
             # make ast output unicode strings
-            if hasattr(docstring, 'decode') and not isinstance(docstring, str):
-                docstring = docstring.decode('utf-8')
+            if hasattr(docstring, "decode") and not isinstance(docstring, str):
+                docstring = docstring.decode("utf-8")
             # python3.8: has end_lineno
-            lineno = getattr(docstring_node, 'end_lineno', None) or docstring_node.lineno  # The last line of the string.
+            lineno = (
+                getattr(docstring_node, "end_lineno", None) or docstring_node.lineno
+            )  # The last line of the string.
             # This get the content of the file after the docstring last line
             # Note: 'maxsplit' argument is not a keyword argument in python2
-            rest = content.split('\n', lineno)[-1]
+            rest = content.split("\n", lineno)[-1]
             lineno += 1
         else:
-            docstring, rest = '', ''
+            docstring, rest = "", ""
 
     if not docstring:
-        raise ValueError(('Could not find docstring in file "{0}". '
-                          'A docstring is required for the example gallery.')
-                         .format(filename))
+        raise ValueError(
+            (
+                'Could not find docstring in file "{0}". '
+                "A docstring is required for the example gallery."
+            ).format(filename)
+        )
     return docstring, category, rest, lineno
 
 
@@ -180,9 +192,7 @@ def prev_this_next(it, sentinel=None):
     """Utility to return (prev, this, next) tuples from an iterator"""
     i1, i2, i3 = itertools.tee(it, 3)
     next(i3, None)
-    return zip(itertools.chain([sentinel], i1),
-               i2,
-               itertools.chain(i3, [sentinel]))
+    return zip(itertools.chain([sentinel], i1), i2, itertools.chain(i3, [sentinel]))
 
 
 def dict_hash(dct):

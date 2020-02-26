@@ -19,24 +19,34 @@ RendererType = Callable[..., MimeBundleType]
 
 class RendererRegistry(PluginRegistry[RendererType]):
     entrypoint_err_messages = {
-        'notebook': textwrap.dedent(
+        "notebook": textwrap.dedent(
             """
             To use the 'notebook' renderer, you must install the vega package
             and the associated Jupyter extension.
             See https://altair-viz.github.io/getting_started/installation.html
             for more information.
-            """),
-        'altair_viewer': textwrap.dedent(
+            """
+        ),
+        "altair_viewer": textwrap.dedent(
             """
             To use the 'altair_viewer' renderer, you must install the altair_viewer
             package; see http://github.com/altair-viz/altair_viewer/
             for more information.
-            """),
+            """
+        ),
     }
 
-    def set_embed_options(self, defaultStyle=None, renderer=None,
-                          width=None, height=None, padding=None,
-                          scaleFactor=None, actions=None, **kwargs):
+    def set_embed_options(
+        self,
+        defaultStyle=None,
+        renderer=None,
+        width=None,
+        height=None,
+        padding=None,
+        scaleFactor=None,
+        actions=None,
+        **kwargs,
+    ):
         """Set options for embeddings of Vega & Vega-Lite charts.
 
         Options are fully documented at https://github.com/vega/vega-embed.
@@ -70,11 +80,16 @@ class RendererRegistry(PluginRegistry[RendererType]):
         **kwargs :
             Additional options are passed directly to embed options.
         """
-        options = {'defaultStyle': defaultStyle, 'renderer': renderer,
-                   'width': width, 'height': height, 'padding': padding,
-                   'scaleFactor': scaleFactor, 'actions': actions}
-        kwargs.update({key: val for key, val in options.items()
-                       if val is not None})
+        options = {
+            "defaultStyle": defaultStyle,
+            "renderer": renderer,
+            "width": width,
+            "height": height,
+            "padding": padding,
+            "scaleFactor": scaleFactor,
+            "actions": actions,
+        }
+        kwargs.update({key: val for key, val in options.items() if val is not None})
         return self.enable(None, embed_options=kwargs)
 
 
@@ -99,7 +114,7 @@ class Displayable(object):
     """
 
     renderers = None
-    schema_path = ('altair', '')
+    schema_path = ("altair", "")
 
     def __init__(self, spec, validate=False):
         # type: (dict, bool) -> None
@@ -110,7 +125,7 @@ class Displayable(object):
     def _validate(self):
         # type: () -> None
         """Validate the spec against the schema."""
-        schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode('utf-8'))
+        schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode("utf-8"))
         validate(self.spec, schema_dict)
 
     def _repr_mimebundle_(self, include, exclude):
@@ -132,7 +147,7 @@ def default_renderer_base(spec, mime_type, str_repr, **options):
     metadata = {}
 
     bundle[mime_type] = spec
-    bundle['text/plain'] = str_repr
+    bundle["text/plain"] = str_repr
     if options:
         metadata[mime_type] = options
     return bundle, metadata
@@ -143,13 +158,15 @@ def json_renderer_base(spec, str_repr, **options):
 
     In JupyterLab/nteract this is rendered as a nice JSON tree.
     """
-    return default_renderer_base(spec, mime_type='application/json',
-                                 str_repr=str_repr, **options)
+    return default_renderer_base(
+        spec, mime_type="application/json", str_repr=str_repr, **options
+    )
 
 
 class HTMLRenderer(object):
     """Object to render charts as HTML, with a unique output div each time"""
-    def __init__(self, output_div='altair-viz-{}', **kwargs):
+
+    def __init__(self, output_div="altair-viz-{}", **kwargs):
         self._output_div = output_div
         self.kwargs = kwargs
 
@@ -160,5 +177,6 @@ class HTMLRenderer(object):
     def __call__(self, spec, **metadata):
         kwargs = self.kwargs.copy()
         kwargs.update(metadata)
-        return spec_to_mimebundle(spec, format='html',
-                                  output_div=self.output_div, **kwargs)
+        return spec_to_mimebundle(
+            spec, format="html", output_div=self.output_div, **kwargs
+        )

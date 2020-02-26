@@ -1,3 +1,4 @@
+black
 docutils
 ipython
 flake8

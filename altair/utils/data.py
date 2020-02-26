@@ -8,7 +8,7 @@ from toolz.curried import curry, pipe  # noqa
 from typing import Callable
 
 from .core import sanitize_dataframe
-from .core import sanitize_geo_interface 
+from .core import sanitize_geo_interface
 from .plugin_registry import PluginRegistry
 
 
@@ -17,16 +17,17 @@ from .plugin_registry import PluginRegistry
 # ==============================================================================
 DataTransformerType = Callable
 
+
 class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
-    _global_settings = {'consolidate_datasets': True}
+    _global_settings = {"consolidate_datasets": True}
 
     @property
     def consolidate_datasets(self):
-        return self._global_settings['consolidate_datasets']
+        return self._global_settings["consolidate_datasets"]
 
     @consolidate_datasets.setter
     def consolidate_datasets(self, value):
-        self._global_settings['consolidate_datasets'] = value
+        self._global_settings["consolidate_datasets"] = value
 
 
 # ==============================================================================
@@ -50,6 +51,7 @@ class DataTransformerRegistry(PluginRegistry[DataTransformerType]):
 
 class MaxRowsError(Exception):
     """Raised when a data model has too many rows."""
+
     pass
 
 
@@ -60,23 +62,25 @@ def limit_rows(data, max_rows=5000):
     If max_rows is None, then do not perform any check.
     """
     check_data_type(data)
-    if hasattr(data, '__geo_interface__'):
-        if data.__geo_interface__['type'] == 'FeatureCollection':
-            values = data.__geo_interface__['features']
+    if hasattr(data, "__geo_interface__"):
+        if data.__geo_interface__["type"] == "FeatureCollection":
+            values = data.__geo_interface__["features"]
         else:
             values = data.__geo_interface__
     elif isinstance(data, pd.DataFrame):
         values = data
     elif isinstance(data, dict):
-        if 'values' in data:
-            values = data['values']
+        if "values" in data:
+            values = data["values"]
         else:
             return data
     if max_rows is not None and len(values) > max_rows:
-        raise MaxRowsError('The number of rows in your dataset is greater '
-                           'than the maximum allowed ({}). '
-                           'For information on how to plot larger datasets '
-                           'in Altair, see the documentation'.format(max_rows))
+        raise MaxRowsError(
+            "The number of rows in your dataset is greater "
+            "than the maximum allowed ({}). "
+            "For information on how to plot larger datasets "
+            "in Altair, see the documentation".format(max_rows)
+        )
     return data
 
 
@@ -87,74 +91,83 @@ def sample(data, n=None, frac=None):
     if isinstance(data, pd.DataFrame):
         return data.sample(n=n, frac=frac)
     elif isinstance(data, dict):
-        if 'values' in data:
-            values = data['values']
-            n = n if n else int(frac*len(values))
+        if "values" in data:
+            values = data["values"]
+            n = n if n else int(frac * len(values))
             values = random.sample(values, n)
-            return {'values': values}
+            return {"values": values}
 
 
 @curry
-def to_json(data, prefix='altair-data', extension='json',
-            filename="{prefix}-{hash}.{extension}", urlpath=""):
+def to_json(
+    data,
+    prefix="altair-data",
+    extension="json",
+    filename="{prefix}-{hash}.{extension}",
+    urlpath="",
+):
     """
     Write the data model to a .json file and return a url based data model.
     """
     data_json = _data_to_json_string(data)
     data_hash = _compute_data_hash(data_json)
-    filename = filename.format(prefix=prefix, hash=data_hash,
-                               extension=extension)
-    with open(filename, 'w') as f:
+    filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
+    with open(filename, "w") as f:
         f.write(data_json)
-    return {
-        'url': os.path.join(urlpath, filename),
-        'format': {'type': 'json'}
-    }
+    return {"url": os.path.join(urlpath, filename), "format": {"type": "json"}}
 
 
 @curry
-def to_csv(data, prefix='altair-data', extension='csv',
-           filename="{prefix}-{hash}.{extension}", urlpath=""):
+def to_csv(
+    data,
+    prefix="altair-data",
+    extension="csv",
+    filename="{prefix}-{hash}.{extension}",
+    urlpath="",
+):
     """Write the data model to a .csv file and return a url based data model."""
     data_csv = _data_to_csv_string(data)
     data_hash = _compute_data_hash(data_csv)
-    filename = filename.format(prefix=prefix, hash=data_hash,
-                               extension=extension)
-    with open(filename, 'w') as f:
+    filename = filename.format(prefix=prefix, hash=data_hash, extension=extension)
+    with open(filename, "w") as f:
         f.write(data_csv)
-    return {
-        'url': os.path.join(urlpath, filename),
-        'format': {'type': 'csv'}
-    }
+    return {"url": os.path.join(urlpath, filename), "format": {"type": "csv"}}
 
 
 @curry
 def to_values(data):
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
-    if hasattr(data, '__geo_interface__'):
+    if hasattr(data, "__geo_interface__"):
         if isinstance(data, pd.DataFrame):
-            data = sanitize_dataframe(data)        
+            data = sanitize_dataframe(data)
         data = sanitize_geo_interface(data.__geo_interface__)
-        return {'values': data}
+        return {"values": data}
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
-        return {'values': data.to_dict(orient='records')}
+        return {"values": data.to_dict(orient="records")}
     elif isinstance(data, dict):
-        if 'values' not in data:
-            raise KeyError('values expected in data dict, but not present.')
+        if "values" not in data:
+            raise KeyError("values expected in data dict, but not present.")
         return data
 
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)) and not hasattr(data, '__geo_interface__'):
-        raise TypeError('Expected dict, DataFrame or a __geo_interface__ attribute, got: {}'.format(type(data)))
+    if not isinstance(data, (dict, pd.DataFrame)) and not hasattr(
+        data, "__geo_interface__"
+    ):
+        raise TypeError(
+            "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
+                type(data)
+            )
+        )
 
 
 # ==============================================================================
 # Private utilities
 # ==============================================================================
+
 
 def _compute_data_hash(data_str):
     return hashlib.md5(data_str.encode()).hexdigest()
@@ -163,36 +176,40 @@ def _compute_data_hash(data_str):
 def _data_to_json_string(data):
     """Return a JSON string representation of the input data"""
     check_data_type(data)
-    if hasattr(data, '__geo_interface__'):
+    if hasattr(data, "__geo_interface__"):
         if isinstance(data, pd.DataFrame):
-            data = sanitize_dataframe(data)        
+            data = sanitize_dataframe(data)
         data = sanitize_geo_interface(data.__geo_interface__)
         return json.dumps(data)
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
-        return data.to_json(orient='records')
+        return data.to_json(orient="records")
     elif isinstance(data, dict):
-        if 'values' not in data:
-            raise KeyError('values expected in data dict, but not present.')
-        return json.dumps(data['values'], sort_keys=True)
+        if "values" not in data:
+            raise KeyError("values expected in data dict, but not present.")
+        return json.dumps(data["values"], sort_keys=True)
     else:
-        raise NotImplementedError("to_json only works with data expressed as "
-                                  "a DataFrame or as a dict")
+        raise NotImplementedError(
+            "to_json only works with data expressed as " "a DataFrame or as a dict"
+        )
 
 
 def _data_to_csv_string(data):
     """return a CSV string representation of the input data"""
     check_data_type(data)
-    if hasattr(data, '__geo_interface__'):    
-        raise NotImplementedError("to_csv does not work with data that "
-                                  "contains the __geo_interface__ attribute")
+    if hasattr(data, "__geo_interface__"):
+        raise NotImplementedError(
+            "to_csv does not work with data that "
+            "contains the __geo_interface__ attribute"
+        )
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return data.to_csv(index=False)
     elif isinstance(data, dict):
-        if 'values' not in data:
-            raise KeyError('values expected in data dict, but not present')
-        return pd.DataFrame.from_dict(data['values']).to_csv(index=False)
+        if "values" not in data:
+            raise KeyError("values expected in data dict, but not present")
+        return pd.DataFrame.from_dict(data["values"]).to_csv(index=False)
     else:
-        raise NotImplementedError("to_csv only works with data expressed as "
-                                  "a DataFrame or as a dict")
+        raise NotImplementedError(
+            "to_csv only works with data expressed as " "a DataFrame or as a dict"
+        )

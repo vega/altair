@@ -8,7 +8,9 @@ def require_altair_saver(func):
     try:
         import altair_saver  # noqa: F401
     except ImportError:
-        return pytest.mark.skip("altair_saver not importable; cannot run saver tests")(func)
+        return pytest.mark.skip("altair_saver not importable; cannot run saver tests")(
+            func
+        )
     else:
         return func
 
@@ -154,8 +156,8 @@ def vega_spec():
     }
 
 
-#@require_altair_saver
-@pytest.mark.skip(reason='flaky')
+# @require_altair_saver
+@pytest.mark.skip(reason="flaky")
 def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
@@ -180,10 +182,7 @@ def test_spec_to_vegalite_mimebundle(vegalite_spec):
 
 def test_spec_to_vega_mimebundle(vega_spec):
     bundle = spec_to_mimebundle(
-        spec=vega_spec,
-        mode="vega",
-        format="vega",
-        vega_version=alt.VEGA_VERSION
+        spec=vega_spec, mode="vega", format="vega", vega_version=alt.VEGA_VERSION
     )
     assert bundle == {"application/vnd.vega.v5+json": vega_spec}
 

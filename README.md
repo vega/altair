@@ -2,6 +2,7 @@
 
 [![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 [![github actions](https://github.com/altair-viz/altair/workflows/build/badge.svg)](https://github.com/altair-viz/altair/actions?query=workflow%3Abuild)
+[![code style black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/altair)](https://pypi.org/project/altair)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altair-viz/altair_notebooks/master?urlpath=lab/tree/notebooks/Index.ipynb)

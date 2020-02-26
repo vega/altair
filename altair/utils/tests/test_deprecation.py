@@ -17,6 +17,7 @@ def test_deprecation_decorator():
     @deprecated(message="func is deprecated")
     def func(x):
         return x + 1
+
     with pytest.warns(AltairDeprecationWarning) as record:
         y = func(1)
     assert y == 2

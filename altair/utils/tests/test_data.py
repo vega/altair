@@ -4,8 +4,7 @@ import pytest
 import pandas as pd
 
 
-from ..data import (limit_rows, MaxRowsError, sample, pipe, to_values,
-                    to_json, to_csv)
+from ..data import limit_rows, MaxRowsError, sample, pipe, to_values, to_json, to_csv
 
 
 def _create_dataframe(N):
@@ -14,7 +13,7 @@ def _create_dataframe(N):
 
 
 def _create_data_with_values(N):
-    data = {'values': [{'x': i, 'y': i+1} for i in range(N)]}
+    data = {"values": [{"x": i, "y": i + 1} for i in range(N)]}
     return data
 
 
@@ -36,29 +35,29 @@ def test_sample():
     """Test the sample data transformer."""
     data = _create_dataframe(20)
     result = pipe(data, sample(n=10))
-    assert len(result)==10
+    assert len(result) == 10
     assert isinstance(result, pd.DataFrame)
     data = _create_data_with_values(20)
     result = sample(data, n=10)
     assert isinstance(result, dict)
-    assert 'values' in result
-    assert len(result['values'])==10
+    assert "values" in result
+    assert len(result["values"]) == 10
     data = _create_dataframe(20)
     result = pipe(data, sample(frac=0.5))
-    assert len(result)==10
+    assert len(result) == 10
     assert isinstance(result, pd.DataFrame)
     data = _create_data_with_values(20)
     result = sample(data, frac=0.5)
     assert isinstance(result, dict)
-    assert 'values' in result
-    assert len(result['values'])==10
+    assert "values" in result
+    assert len(result["values"]) == 10
 
 
 def test_to_values():
     """Test the to_values data transformer."""
     data = _create_dataframe(10)
     result = pipe(data, to_values)
-    assert result=={'values': data.to_dict(orient='records')}
+    assert result == {"values": data.to_dict(orient="records")}
 
 
 def test_type_error():
@@ -77,7 +76,7 @@ def test_dataframe_to_json():
     try:
         result1 = pipe(data, to_json)
         result2 = pipe(data, to_json)
-        filename = result1['url']
+        filename = result1["url"]
         output = pd.read_json(filename)
     finally:
         os.remove(filename)
@@ -95,13 +94,13 @@ def test_dict_to_json():
     try:
         result1 = pipe(data, to_json)
         result2 = pipe(data, to_json)
-        filename = result1['url']
-        output = pd.read_json(filename).to_dict(orient='records')
+        filename = result1["url"]
+        output = pd.read_json(filename).to_dict(orient="records")
     finally:
         os.remove(filename)
 
     assert result1 == result2
-    assert data == {'values': output}
+    assert data == {"values": output}
 
 
 def test_dataframe_to_csv():
@@ -113,7 +112,7 @@ def test_dataframe_to_csv():
     try:
         result1 = pipe(data, to_csv)
         result2 = pipe(data, to_csv)
-        filename = result1['url']
+        filename = result1["url"]
         output = pd.read_csv(filename)
     finally:
         os.remove(filename)
@@ -131,10 +130,10 @@ def test_dict_to_csv():
     try:
         result1 = pipe(data, to_csv)
         result2 = pipe(data, to_csv)
-        filename = result1['url']
-        output = pd.read_csv(filename).to_dict(orient='records')
+        filename = result1["url"]
+        output = pd.read_csv(filename).to_dict(orient="records")
     finally:
         os.remove(filename)
 
     assert result1 == result2
-    assert data == {'values': output}
+    assert data == {"values": output}

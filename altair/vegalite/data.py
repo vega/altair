@@ -1,9 +1,13 @@
-
 from toolz.curried import curry, pipe
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
-    MaxRowsError, limit_rows, sample, to_csv, to_json, to_values,
-    check_data_type
+    MaxRowsError,
+    limit_rows,
+    sample,
+    to_csv,
+    to_json,
+    to_values,
+    check_data_type,
 )
 from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
 
@@ -17,23 +21,23 @@ class DataTransformerRegistry(_DataTransformerRegistry):
     def disable_max_rows(self):
         """Disable the MaxRowsError."""
         options = self.options
-        if self.active == 'default':
+        if self.active == "default":
             options = options.copy()
-            options['max_rows'] = None
+            options["max_rows"] = None
         return self.enable(**options)
 
 
 __all__ = (
-    'DataTransformerRegistry',
-    'MaxRowsError',
-    'curry',
-    'sanitize_dataframe',
-    'default_data_transformer',
-    'limit_rows',
-    'pipe',
-    'sample',
-    'to_csv',
-    'to_json',
-    'to_values',
-    'check_data_type'
+    "DataTransformerRegistry",
+    "MaxRowsError",
+    "curry",
+    "sanitize_dataframe",
+    "default_data_transformer",
+    "limit_rows",
+    "pipe",
+    "sample",
+    "to_csv",
+    "to_json",
+    "to_values",
+    "check_data_type",
 )

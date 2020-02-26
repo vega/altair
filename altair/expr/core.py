@@ -3,6 +3,7 @@ from ..utils import SchemaBase
 
 class DatumType(object):
     """An object to assist in building Vega-Lite Expressions"""
+
     def __repr__(self):
         return "datum"
 
@@ -19,11 +20,11 @@ datum = DatumType()
 def _js_repr(val):
     """Return a javascript-safe string representation of val"""
     if val is True:
-        return 'true'
+        return "true"
     elif val is False:
-        return 'false'
+        return "false"
     elif val is None:
-        return 'null'
+        return "null"
     else:
         return repr(val)
 
@@ -35,7 +36,8 @@ class Expression(SchemaBase):
     a Python syntax. Calling ``repr(obj)`` will return a Javascript
     representation of the object and the operations it encodes.
     """
-    _schema = {'type': 'string'}
+
+    _schema = {"type": "string"}
 
     def to_dict(self, *args, **kwargs):
         return repr(self)
@@ -73,24 +75,24 @@ class Expression(SchemaBase):
     __rdiv__ = __rtruediv__
 
     def __mod__(self, other):
-        return BinaryExpression('%', self, other)
+        return BinaryExpression("%", self, other)
 
     def __rmod__(self, other):
-        return BinaryExpression('%', other, self)
+        return BinaryExpression("%", other, self)
 
     def __pow__(self, other):
         # "**" Javascript operator is not supported in all browsers
-        return FunctionExpression('pow', (self, other))
+        return FunctionExpression("pow", (self, other))
 
     def __rpow__(self, other):
         # "**" Javascript operator is not supported in all browsers
-        return FunctionExpression('pow', (other, self))
+        return FunctionExpression("pow", (other, self))
 
     def __neg__(self):
-        return UnaryExpression('-', self)
+        return UnaryExpression("-", self)
 
     def __pos__(self):
-        return UnaryExpression('+', self)
+        return UnaryExpression("+", self)
 
     # comparison operators
 
@@ -113,24 +115,24 @@ class Expression(SchemaBase):
         return BinaryExpression("<=", self, other)
 
     def __abs__(self):
-        return FunctionExpression('abs', (self,))
+        return FunctionExpression("abs", (self,))
 
     # logical operators
 
     def __and__(self, other):
-        return BinaryExpression('&&', self, other)
+        return BinaryExpression("&&", self, other)
 
     def __rand__(self, other):
-        return BinaryExpression('&&', other, self)
+        return BinaryExpression("&&", other, self)
 
     def __or__(self, other):
-        return BinaryExpression('||', self, other)
+        return BinaryExpression("||", self, other)
 
     def __ror__(self, other):
-        return BinaryExpression('||', other, self)
+        return BinaryExpression("||", other, self)
 
     def __invert__(self):
-        return UnaryExpression('!', self)
+        return UnaryExpression("!", self)
 
 
 class UnaryExpression(Expression):
@@ -146,9 +148,9 @@ class BinaryExpression(Expression):
         super(BinaryExpression, self).__init__(op=op, lhs=lhs, rhs=rhs)
 
     def __repr__(self):
-        return "({lhs} {op} {rhs})".format(op=self.op,
-                                           lhs=_js_repr(self.lhs),
-                                           rhs=_js_repr(self.rhs))
+        return "({lhs} {op} {rhs})".format(
+            op=self.op, lhs=_js_repr(self.lhs), rhs=_js_repr(self.rhs)
+        )
 
 
 class FunctionExpression(Expression):
@@ -156,7 +158,7 @@ class FunctionExpression(Expression):
         super(FunctionExpression, self).__init__(name=name, args=args)
 
     def __repr__(self):
-        args = ','.join(_js_repr(arg) for arg in self.args)
+        args = ",".join(_js_repr(arg) for arg in self.args)
         return "{name}({args})".format(name=self.name, args=args)
 
 

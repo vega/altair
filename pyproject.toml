@@ -1,0 +1,17 @@
+[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.mypy_cache
+  | build
+  | dist
+  | doc
+  | altair/examples
+  | altair/vega/v\d*/schema
+  | altair/vegalite/v\d*/schema
+)/
+'''

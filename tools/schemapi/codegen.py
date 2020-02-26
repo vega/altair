@@ -7,6 +7,7 @@ import re
 
 class CodeSnippet(object):
     """Object whose repr() is a string of code"""
+
     def __init__(self, code):
         self.code = code
 
@@ -38,16 +39,17 @@ def _get_args(info):
         additional = True
     elif info.is_value():
         nonkeyword = True
-        additional=False
+        additional = False
     elif info.is_object():
-        invalid_kwds = ({p for p in info.required if not is_valid_identifier(p)} |
-                        {p for p in info.properties if not is_valid_identifier(p)})
+        invalid_kwds = {p for p in info.required if not is_valid_identifier(p)} | {
+            p for p in info.properties if not is_valid_identifier(p)
+        }
         required = {p for p in info.required if is_valid_identifier(p)}
         kwds = {p for p in info.properties if is_valid_identifier(p)}
         kwds -= required
         nonkeyword = False
         additional = True
-        #additional = info.additionalProperties or info.patternProperties
+        # additional = info.additionalProperties or info.patternProperties
     else:
         raise ValueError("Schema object not understood")
 
@@ -78,26 +80,39 @@ class SchemaGenerator(object):
     **kwargs : dict
         Additional keywords for derived classes.
     """
-    schema_class_template = textwrap.dedent('''
+
+    schema_class_template = textwrap.dedent(
+        '''
     class {classname}({basename}):
         """{docstring}"""
         _schema = {schema!r}
         _rootschema = {rootschema!r}
 
         {init_code}
-    ''')
+    '''
+    )
 
-    init_template = textwrap.dedent("""
+    init_template = textwrap.dedent(
+        """
     def __init__({arglist}):
         super({classname}, self).__init__({super_arglist})
-    """).lstrip()
+    """
+    ).lstrip()
 
     def _process_description(self, description):
         return description
 
-    def __init__(self, classname, schema, rootschema=None,
-                 basename='SchemaBase', schemarepr=None, rootschemarepr=None,
-                 nodefault=(), **kwargs):
+    def __init__(
+        self,
+        classname,
+        schema,
+        rootschema=None,
+        basename="SchemaBase",
+        schemarepr=None,
+        rootschemarepr=None,
+        nodefault=(),
+        **kwargs,
+    ):
         self.classname = classname
         self.schema = schema
         self.rootschema = rootschema
@@ -119,13 +134,13 @@ class SchemaGenerator(object):
         rootschemarepr = self.rootschemarepr
         if rootschemarepr is None:
             if rootschema is self.schema:
-                rootschemarepr = CodeSnippet('_schema')
+                rootschemarepr = CodeSnippet("_schema")
             else:
                 rootschemarepr = rootschema
         if isinstance(self.basename, str):
             basename = self.basename
         else:
-            basename = ', '.join(self.basename)
+            basename = ", ".join(self.basename)
         return self.schema_class_template.format(
             classname=self.classname,
             basename=basename,
@@ -133,7 +148,7 @@ class SchemaGenerator(object):
             rootschema=rootschemarepr,
             docstring=self.docstring(indent=4),
             init_code=self.init_code(indent=4),
-            **self.kwargs
+            **self.kwargs,
         )
 
     def docstring(self, indent=0):
@@ -142,60 +157,63 @@ class SchemaGenerator(object):
         #       values, etc.
         # TODO: use _get_args here for more information on allOf objects
         info = SchemaInfo(self.schema, self.rootschema)
-        doc = ["{} schema wrapper".format(self.classname),
-               '',
-               info.medium_description]
+        doc = ["{} schema wrapper".format(self.classname), "", info.medium_description]
         if info.description:
-            doc += self._process_description( #remove condition description
-                re.sub(r"\n\{\n(\n|.)*\n\}",'',info.description)).splitlines()
+            doc += self._process_description(  # remove condition description
+                re.sub(r"\n\{\n(\n|.)*\n\}", "", info.description)
+            ).splitlines()
 
         if info.properties:
             nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
-            doc += ['',
-                    'Attributes',
-                    '----------',
-                    '']
+            doc += ["", "Attributes", "----------", ""]
             for prop in sorted(required) + sorted(kwds) + sorted(invalid_kwds):
                 propinfo = info.properties[prop]
-                doc += ["{} : {}".format(prop, propinfo.short_description),
-                        "    {}".format(self._process_description(propinfo.description))]
+                doc += [
+                    "{} : {}".format(prop, propinfo.short_description),
+                    "    {}".format(self._process_description(propinfo.description)),
+                ]
         if len(doc) > 1:
-            doc += ['']
+            doc += [""]
         return indent_docstring(doc, indent_level=indent, width=100, lstrip=True)
 
     def init_code(self, indent=0):
         """Return code suitablde for the __init__ function of a Schema class"""
         info = SchemaInfo(self.schema, rootschema=self.rootschema)
-        nonkeyword, required, kwds, invalid_kwds, additional =_get_args(info)
+        nonkeyword, required, kwds, invalid_kwds, additional = _get_args(info)
 
-        nodefault=set(self.nodefault)
+        nodefault = set(self.nodefault)
         required -= nodefault
         kwds -= nodefault
 
-        args = ['self']
+        args = ["self"]
         super_args = []
 
         if nodefault:
             args.extend(sorted(nodefault))
         elif nonkeyword:
-            args.append('*args')
-            super_args.append('*args')
+            args.append("*args")
+            super_args.append("*args")
 
-        args.extend('{}=Undefined'.format(p)
-                    for p in sorted(required) + sorted(kwds))
-        super_args.extend('{0}={0}'.format(p)
-                          for p in sorted(nodefault) + sorted(required) + sorted(kwds))
+        args.extend("{}=Undefined".format(p) for p in sorted(required) + sorted(kwds))
+        super_args.extend(
+            "{0}={0}".format(p)
+            for p in sorted(nodefault) + sorted(required) + sorted(kwds)
+        )
 
         if additional:
-            args.append('**kwds')
-            super_args.append('**kwds')
+            args.append("**kwds")
+            super_args.append("**kwds")
 
         arg_indent_level = 9 + indent
         super_arg_indent_level = 23 + len(self.classname) + indent
 
-        initfunc = self.init_template.format(classname=self.classname,
-                                             arglist=indent_arglist(args, indent_level=arg_indent_level),
-                                             super_arglist=indent_arglist(super_args, indent_level=super_arg_indent_level))
+        initfunc = self.init_template.format(
+            classname=self.classname,
+            arglist=indent_arglist(args, indent_level=arg_indent_level),
+            super_arglist=indent_arglist(
+                super_args, indent_level=super_arg_indent_level
+            ),
+        )
         if indent:
-            initfunc = ('\n' + indent * ' ').join(initfunc.splitlines())
+            initfunc = ("\n" + indent * " ").join(initfunc.splitlines())
         return initfunc
