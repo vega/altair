@@ -26,10 +26,10 @@ class RendererRegistry(PluginRegistry[RendererType]):
             See https://altair-viz.github.io/getting_started/installation.html
             for more information.
             """),
-        'vegascope': textwrap.dedent(
+        'altair_viewer': textwrap.dedent(
             """
-            To use the 'vegascope' renderer, you must install the vegascope
-            package; see http://github.com/diana-hep/vegascope/
+            To use the 'altair_viewer' renderer, you must install the altair_viewer
+            package; see http://github.com/altair-viz/altair_viewer/
             for more information.
             """),
     }

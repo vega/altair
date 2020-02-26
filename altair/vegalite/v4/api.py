@@ -1498,6 +1498,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         else:
             display(self)
 
+    @utils.deprecation.deprecated(message="serve() is deprecated. Use show() instead.")
     def serve(self, ip='127.0.0.1', port=8888, n_retries=50, files=None,
               jupyter_warning=True, open_browser=True, http_server=None,
               **kwargs):
@@ -1537,6 +1538,27 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         serve(html.read(), ip=ip, port=port, n_retries=n_retries,
               files=files, jupyter_warning=jupyter_warning,
               open_browser=open_browser, http_server=http_server)
+
+    def show(self, embed_opt=None, open_browser=None):
+        """Show the chart in an external browser window.
+
+        This requires a recent version of the altair_viewer package.
+
+        Parameters
+        ----------
+        embed_opt : dict (optional)
+            The Vega embed options that control the dispay of the chart.
+        open_browser : bool (optional)
+            Specify whether a browser window should be opened. If not specified,
+            a browser window will be opened only if the server is not already
+            connected to a browser.
+        """
+        try:
+            import altair_viewer
+        except ImportError:
+            raise ValueError("show() method requires the altair_viewer package. "
+                "See http://github.com/altair-viz/altair_viewer")
+        altair_viewer.show(self, embed_opt=embed_opt, open_browser=open_browser)
 
     @utils.use_signature(core.Resolve)
     def _set_resolve(self, **kwargs):
