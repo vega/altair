@@ -17,9 +17,6 @@ the following script from the root of the repository:
 $ python tools/generate_schema_wrapper.py
 ```
 
-Running this script requires Python 3.6 or newer, though it generates package
-code that is compatible with Python 2.7 and 3.5+.
-
 This script does a couple things:
 
 - downloads the appropriate schema files from the specified vega and vega-lite

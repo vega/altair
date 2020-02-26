@@ -23,7 +23,7 @@ Dependencies
 Altair has the following dependencies, all of which are installed automatically
 with the above installation commands:
 
-- python 3.5 or newer
+- python 3.6 or newer
 - entrypoints_
 - jsonschema_
 - NumPy_
