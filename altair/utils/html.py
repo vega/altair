@@ -85,7 +85,10 @@ HTML_TEMPLATE_UNIVERSAL = jinja2.Template("""
 <div id="{{ output_div }}"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("{{ output_div }}");
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "{{ output_div }}") {
+      outputDiv = document.getElementById("{{ output_div }}");
+    }
     const paths = {
       "vega": "{{ base_url }}/vega@{{ vega_version }}?noext",
       "vega-lib": "{{ base_url }}/vega-lib?noext",
