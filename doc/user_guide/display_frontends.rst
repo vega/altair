@@ -141,46 +141,26 @@ Examples are:
 - The Hydrogen_ project, which is built on nteract_ and renders Altair charts
   via the ``mimebundle`` renderer.
 
-The Vegascope Renderer
-~~~~~~~~~~~~~~~~~~~~~~
-For other IDEs, a useful companion is the `VegaScope`_ project, which provides
-an Altair renderer that works directly from a Python terminal.
+Altair Viewer
+~~~~~~~~~~~~~
+For non-notebook IDEs, a useful companion is the `Altair Viewer`_ package,
+which provides an Altair renderer that works directly from any Python terminal.
 Start by installing the package::
 
-    $ pip install vegascope
+    $ pip install altair_viewer
 
-Now in your Python script you can enable the vegascope renderer::
+When enabled, this will serve charts via a local HTTP server and automatically open
+a browser window in which to view them, with subsequent charts displayed in the
+same window.
+
+If you are using an IPython-compatible terminal ``altair_viewer`` can be enabled via
+Altair's standard renderer framework::
 
     import altair as alt
-    alt.renderers.enable('vegascope')
+    alt.renderers.enable('altair_viewer')
 
-    # load a simple dataset as a pandas DataFrame
-    from vega_datasets import data
-    cars = data.cars()
-
-    chart = alt.Chart(cars).mark_point().encode(
-        x='Horsepower',
-        y='Miles_per_Gallon',
-        color='Origin',
-    ).interactive()
-
-In an IPython environment, this will automatically trigger vegascope to serve
-the chart in a background process to your web browser, and unlike Altair's
-:meth:`Chart.serve` method, any subsequently created charts will use
-the same server.
-
-If you are in a non-IPython terminal, you can trigger the renderer manually
-using the :meth:`Chart.display` method::
-
-   chart.display()
-
-Built-in ``serve()`` method
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Altair includes a :meth:`Chart.serve` method which will seamlessly convert a
-chart to HTML, start a web server serving that HTML, and open your system's
-default web browser to view it.
-
-For example, you can serve a chart to a web browser like this::
+If you prefer to manually trigger chart display, you can use the built-in :meth:`Chart.show`
+method to manually trigger chart display::
 
     import altair as alt
 
@@ -194,10 +174,10 @@ For example, you can serve a chart to a web browser like this::
         color='Origin',
     ).interactive()
 
-    chart.serve()
+    chart.show()
 
-The command will block the Python interpreter, and will have to be canceled with
-``Ctrl-C`` to execute any further code.
+This command will block the Python interpreter until the browser window containing
+the chart is closed.
 
 Manual ``save()`` and display
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -284,11 +264,11 @@ For an example, see `ipyvega`_.
 .. _nteract: https://nteract.io
 .. _nbconvert: https://nbconvert.readthedocs.io/
 .. _nbviewer: https://nbviewer.jupyter.org/
+.. _Altair Viewer: https://github.com/altair-viz/altair_viewer/
 .. _Colab: https://colab.research.google.com
 .. _Hydrogen: https://github.com/nteract/hydrogen
 .. _Jupyter Notebook: https://jupyter-notebook.readthedocs.io/en/stable/
 .. _Vega-Lite: http://vega.github.io/vega-lite
 .. _Vega: https://vega.github.io/vega/
-.. _VegaScope: https://github.com/scikit-hep/vegascope
 .. _VSCode-Python: https://code.visualstudio.com/docs/python/python-tutorial
 .. _Zeppelin: https://zeppelin.apache.org/
