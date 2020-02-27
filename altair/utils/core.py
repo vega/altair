@@ -29,7 +29,7 @@ def infer_dtype(value):
     This is a compatibility function for pandas infer_dtype,
     with skipna=False regardless of the pandas version.
     """
-    if not hasattr(infer_dtype, '_supports_skipna'):
+    if not hasattr(infer_dtype, "_supports_skipna"):
         try:
             _ = _infer_dtype([1], skipna=False)
         except TypeError:
@@ -43,43 +43,107 @@ def infer_dtype(value):
         return _infer_dtype(value)
 
 
-TYPECODE_MAP = {'ordinal': 'O',
-                'nominal': 'N',
-                'quantitative': 'Q',
-                'temporal': 'T',
-                'geojson': 'G'}
+TYPECODE_MAP = {
+    "ordinal": "O",
+    "nominal": "N",
+    "quantitative": "Q",
+    "temporal": "T",
+    "geojson": "G",
+}
 
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
 
 # aggregates from vega-lite version 2.4.3
-AGGREGATES = ['argmax', 'argmin', 'average', 'count', 'distinct', 'max',
-              'mean', 'median', 'min', 'missing', 'q1', 'q3', 'ci0', 'ci1',
-              'stderr', 'stdev', 'stdevp', 'sum', 'valid', 'values',
-              'variance', 'variancep']
+AGGREGATES = [
+    "argmax",
+    "argmin",
+    "average",
+    "count",
+    "distinct",
+    "max",
+    "mean",
+    "median",
+    "min",
+    "missing",
+    "q1",
+    "q3",
+    "ci0",
+    "ci1",
+    "stderr",
+    "stdev",
+    "stdevp",
+    "sum",
+    "valid",
+    "values",
+    "variance",
+    "variancep",
+]
 
 # window aggregates from vega-lite version 2.5.2
-WINDOW_AGGREGATES = ["row_number", "rank", "dense_rank", "percent_rank",
-                     "cume_dist", "ntile", "lag", "lead", "first_value",
-                     "last_value", "nth_value"]
+WINDOW_AGGREGATES = [
+    "row_number",
+    "rank",
+    "dense_rank",
+    "percent_rank",
+    "cume_dist",
+    "ntile",
+    "lag",
+    "lead",
+    "first_value",
+    "last_value",
+    "nth_value",
+]
 
 # timeUnits from vega-lite version 3.0.0
-TIMEUNITS = ["utcyear", "utcquarter", "utcmonth", "utcday", "utcdate",
-             "utchours", "utcminutes", "utcseconds", "utcmilliseconds",
-             "utcyearquarter", "utcyearquartermonth", "utcyearmonth",
-             "utcyearmonthdate", "utcyearmonthdatehours",
-             "utcyearmonthdatehoursminutes",
-             "utcyearmonthdatehoursminutesseconds",
-             "utcquartermonth", "utcmonthdate", "utcmonthdatehours",
-             "utchoursminutes", "utchoursminutesseconds", "utcminutesseconds",
-             "utcsecondsmilliseconds",
-             "year", "quarter", "month", "day", "date", "hours", "minutes",
-             "seconds", "milliseconds", "yearquarter", "yearquartermonth",
-             "yearmonth", "yearmonthdate", "yearmonthdatehours",
-             "yearmonthdatehoursminutes",
-             "yearmonthdatehoursminutesseconds", "quartermonth", "monthdate",
-             "monthdatehours", "hoursminutes", "hoursminutesseconds", "minutesseconds",
-             "secondsmilliseconds"]
+TIMEUNITS = [
+    "utcyear",
+    "utcquarter",
+    "utcmonth",
+    "utcday",
+    "utcdate",
+    "utchours",
+    "utcminutes",
+    "utcseconds",
+    "utcmilliseconds",
+    "utcyearquarter",
+    "utcyearquartermonth",
+    "utcyearmonth",
+    "utcyearmonthdate",
+    "utcyearmonthdatehours",
+    "utcyearmonthdatehoursminutes",
+    "utcyearmonthdatehoursminutesseconds",
+    "utcquartermonth",
+    "utcmonthdate",
+    "utcmonthdatehours",
+    "utchoursminutes",
+    "utchoursminutesseconds",
+    "utcminutesseconds",
+    "utcsecondsmilliseconds",
+    "year",
+    "quarter",
+    "month",
+    "day",
+    "date",
+    "hours",
+    "minutes",
+    "seconds",
+    "milliseconds",
+    "yearquarter",
+    "yearquartermonth",
+    "yearmonth",
+    "yearmonthdate",
+    "yearmonthdatehours",
+    "yearmonthdatehoursminutes",
+    "yearmonthdatehoursminutesseconds",
+    "quartermonth",
+    "monthdate",
+    "monthdatehours",
+    "hoursminutes",
+    "hoursminutesseconds",
+    "minutesseconds",
+    "secondsmilliseconds",
+]
 
 
 def infer_vegalite_type(data):
@@ -96,18 +160,33 @@ def infer_vegalite_type(data):
 
     # TODO: Once this returns 'O', please update test_select_x and test_select_y in test_api.py
 
-    if typ in ['floating', 'mixed-integer-float', 'integer',
-               'mixed-integer', 'complex']:
-        return 'quantitative'
-    elif typ in ['string', 'bytes', 'categorical', 'boolean', 'mixed', 'unicode']:
-        return 'nominal'
-    elif typ in ['datetime', 'datetime64', 'timedelta',
-                 'timedelta64', 'date', 'time', 'period']:
-        return 'temporal'
+    if typ in [
+        "floating",
+        "mixed-integer-float",
+        "integer",
+        "mixed-integer",
+        "complex",
+    ]:
+        return "quantitative"
+    elif typ in ["string", "bytes", "categorical", "boolean", "mixed", "unicode"]:
+        return "nominal"
+    elif typ in [
+        "datetime",
+        "datetime64",
+        "timedelta",
+        "timedelta64",
+        "date",
+        "time",
+        "period",
+    ]:
+        return "temporal"
     else:
-        warnings.warn("I don't know how to infer vegalite type from '{}'.  "
-                      "Defaulting to nominal.".format(typ))
-        return 'nominal'
+        warnings.warn(
+            "I don't know how to infer vegalite type from '{}'.  "
+            "Defaulting to nominal.".format(typ)
+        )
+        return "nominal"
+
 
 def merge_props_geom(feat):
     """
@@ -115,16 +194,17 @@ def merge_props_geom(feat):
     * Overwrites 'type' and 'geometry' entries if existing    
     """
 
-    geom = {k: feat[k] for k in ('type', 'geometry')}
+    geom = {k: feat[k] for k in ("type", "geometry")}
     try:
-        feat['properties'].update(geom)
-        props_geom = feat['properties']
+        feat["properties"].update(geom)
+        props_geom = feat["properties"]
     except (AttributeError, KeyError):
         # AttributeError when 'properties' equals None
-        # KeyError when 'properties' is non-existing        
-        props_geom = geom   
+        # KeyError when 'properties' is non-existing
+        props_geom = geom
 
-    return props_geom   
+    return props_geom
+
 
 def sanitize_geo_interface(geo):
     """Santize a geo_interface to prepare it for serialization.
@@ -138,23 +218,23 @@ def sanitize_geo_interface(geo):
     geo = deepcopy(geo)
 
     # convert type _Array or array to list
-    for key in geo.keys():        
-        if str(type(geo[key]).__name__).startswith(('_Array','array')):
+    for key in geo.keys():
+        if str(type(geo[key]).__name__).startswith(("_Array", "array")):
             geo[key] = geo[key].tolist()
-    
+
     # convert (nested) tuples to lists
     geo = json.loads(json.dumps(geo))
 
     # sanitize features
-    if geo['type'] == 'FeatureCollection':
-        geo = geo['features']
-        if len(geo) > 0:          
+    if geo["type"] == "FeatureCollection":
+        geo = geo["features"]
+        if len(geo) > 0:
             for idx, feat in enumerate(geo):
                 geo[idx] = merge_props_geom(feat)
-    elif geo['type'] == 'Feature':  
+    elif geo["type"] == "Feature":
         geo = merge_props_geom(geo)
     else:
-        geo = {'type': 'Feature', 'geometry': geo}
+        geo = {"type": "Feature", "geometry": geo}
 
     return geo
 
@@ -183,13 +263,15 @@ def sanitize_dataframe(df):
 
     for col in df.columns:
         if not isinstance(col, str):
-            raise ValueError('Dataframe contains invalid column name: {0!r}. '
-                             'Column names must be strings'.format(col))
+            raise ValueError(
+                "Dataframe contains invalid column name: {0!r}. "
+                "Column names must be strings".format(col)
+            )
 
     if isinstance(df.index, pd.MultiIndex):
-        raise ValueError('Hierarchical indices not supported')
+        raise ValueError("Hierarchical indices not supported")
     if isinstance(df.columns, pd.MultiIndex):
-        raise ValueError('Hierarchical indices not supported')
+        raise ValueError("Hierarchical indices not supported")
 
     def to_list_if_array(val):
         if isinstance(val, np.ndarray):
@@ -198,7 +280,7 @@ def sanitize_dataframe(df):
             return val
 
     for col_name, dtype in df.dtypes.iteritems():
-        if str(dtype) == 'category':
+        if str(dtype) == "category":
             # XXXX: work around bug in to_json for categorical types
             # https://github.com/pydata/pandas/issues/10778
             col = df[col_name].astype(object)
@@ -208,7 +290,7 @@ def sanitize_dataframe(df):
             # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype) == 'bool':
+        elif str(dtype) == "bool":
             # convert numpy bools to objects; np.bool is not JSON serializable
             df[col_name] = df[col_name].astype(object)
         elif str(dtype) == "boolean":
@@ -216,23 +298,27 @@ def sanitize_dataframe(df):
             # https://pandas.io/docs/user_guide/boolean.html
             col = df[col_name].astype(object)
             df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype).startswith('datetime'):
+        elif str(dtype).startswith("datetime"):
             # Convert datetimes to strings. This needs to be a full ISO string
             # with time, which is why we cannot use ``col.astype(str)``.
             # This is because Javascript parses date-only times in UTC, but
             # parses full ISO-8601 dates as local time, and dates in Vega and
             # Vega-Lite are displayed in local time by default.
             # (see https://github.com/altair-viz/altair/issues/1027)
-            df[col_name] = df[col_name].apply(lambda x: x.isoformat()).replace('NaT', '')
-        elif str(dtype).startswith('timedelta'):
-            raise ValueError('Field "{col_name}" has type "{dtype}" which is '
-                             'not supported by Altair. Please convert to '
-                             'either a timestamp or a numerical value.'
-                             ''.format(col_name=col_name, dtype=dtype))
-        elif str(dtype).startswith('geometry'):
+            df[col_name] = (
+                df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
+            )
+        elif str(dtype).startswith("timedelta"):
+            raise ValueError(
+                'Field "{col_name}" has type "{dtype}" which is '
+                "not supported by Altair. Please convert to "
+                "either a timestamp or a numerical value."
+                "".format(col_name=col_name, dtype=dtype)
+            )
+        elif str(dtype).startswith("geometry"):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
             # otherwise it will give an error on np.issubdtype(dtype, np.integer)
-            continue                            
+            continue
         elif str(dtype) in {
             "Int8",
             "Int16",
@@ -263,9 +349,14 @@ def sanitize_dataframe(df):
     return df
 
 
-def parse_shorthand(shorthand, data=None, parse_aggregates=True,
-                    parse_window_ops=False,
-                    parse_timeunits=True, parse_types=True):
+def parse_shorthand(
+    shorthand,
+    data=None,
+    parse_aggregates=True,
+    parse_window_ops=False,
+    parse_timeunits=True,
+    parse_types=True,
+):
     """General tool to parse shorthand values
 
     These are of the form:
@@ -345,61 +436,66 @@ def parse_shorthand(shorthand, data=None, parse_aggregates=True,
 
     valid_typecodes = list(TYPECODE_MAP) + list(INV_TYPECODE_MAP)
 
-    units = dict(field='(?P<field>.*)',
-                 type='(?P<type>{})'.format('|'.join(valid_typecodes)),
-                 agg_count='(?P<aggregate>count)',
-                 op_count='(?P<op>count)',
-                 aggregate='(?P<aggregate>{})'.format('|'.join(AGGREGATES)),
-                 window_op='(?P<op>{})'.format('|'.join(AGGREGATES + WINDOW_AGGREGATES)),
-                 timeUnit='(?P<timeUnit>{})'.format('|'.join(TIMEUNITS)))
+    units = dict(
+        field="(?P<field>.*)",
+        type="(?P<type>{})".format("|".join(valid_typecodes)),
+        agg_count="(?P<aggregate>count)",
+        op_count="(?P<op>count)",
+        aggregate="(?P<aggregate>{})".format("|".join(AGGREGATES)),
+        window_op="(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
+        timeUnit="(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+    )
 
     patterns = []
 
     if parse_aggregates:
-        patterns.extend([r'{agg_count}\(\)'])
-        patterns.extend([r'{aggregate}\({field}\)'])
+        patterns.extend([r"{agg_count}\(\)"])
+        patterns.extend([r"{aggregate}\({field}\)"])
     if parse_window_ops:
-        patterns.extend([r'{op_count}\(\)'])
-        patterns.extend([r'{window_op}\({field}\)'])
+        patterns.extend([r"{op_count}\(\)"])
+        patterns.extend([r"{window_op}\({field}\)"])
     if parse_timeunits:
-        patterns.extend([r'{timeUnit}\({field}\)'])
+        patterns.extend([r"{timeUnit}\({field}\)"])
 
-    patterns.extend([r'{field}'])
+    patterns.extend([r"{field}"])
 
     if parse_types:
-        patterns = list(itertools.chain(*((p + ':{type}', p) for p in patterns)))
+        patterns = list(itertools.chain(*((p + ":{type}", p) for p in patterns)))
 
-    regexps = (re.compile(r'\A' + p.format(**units) + r'\Z', re.DOTALL)
-               for p in patterns)
+    regexps = (
+        re.compile(r"\A" + p.format(**units) + r"\Z", re.DOTALL) for p in patterns
+    )
 
     # find matches depending on valid fields passed
     if isinstance(shorthand, dict):
         attrs = shorthand
     else:
-        attrs = next(exp.match(shorthand).groupdict() for exp in regexps
-                     if exp.match(shorthand))
+        attrs = next(
+            exp.match(shorthand).groupdict() for exp in regexps if exp.match(shorthand)
+        )
 
     # Handle short form of the type expression
-    if 'type' in attrs:
-        attrs['type'] = INV_TYPECODE_MAP.get(attrs['type'], attrs['type'])
+    if "type" in attrs:
+        attrs["type"] = INV_TYPECODE_MAP.get(attrs["type"], attrs["type"])
 
     # counts are quantitative by default
-    if attrs == {'aggregate': 'count'}:
-        attrs['type'] = 'quantitative'
+    if attrs == {"aggregate": "count"}:
+        attrs["type"] = "quantitative"
 
     # times are temporal by default
-    if 'timeUnit' in attrs and 'type' not in attrs:
-        attrs['type'] = 'temporal'
+    if "timeUnit" in attrs and "type" not in attrs:
+        attrs["type"] = "temporal"
 
     # if data is specified and type is not, infer type from data
-    if isinstance(data, pd.DataFrame) and 'type' not in attrs:
-        if 'field' in attrs and attrs['field'] in data.columns:
-            attrs['type'] = infer_vegalite_type(data[attrs['field']])
+    if isinstance(data, pd.DataFrame) and "type" not in attrs:
+        if "field" in attrs and attrs["field"] in data.columns:
+            attrs["type"] = infer_vegalite_type(data[attrs["field"]])
     return attrs
 
 
 def use_signature(Obj):
     """Apply call signature and documentation of Obj to the decorated method"""
+
     def decorate(f):
         # call-signature of f is exposed via __wrapped__.
         # we want it to mimic Obj.__init__
@@ -410,9 +506,9 @@ def use_signature(Obj):
         if Obj.__doc__:
             doclines = Obj.__doc__.splitlines()
             if f.__doc__:
-                doc = f.__doc__ + '\n'.join(doclines[1:])
+                doc = f.__doc__ + "\n".join(doclines[1:])
             else:
-                doc = '\n'.join(doclines)
+                doc = "\n".join(doclines)
             try:
                 f.__doc__ = doc
             except AttributeError:
@@ -420,6 +516,7 @@ def use_signature(Obj):
                 pass
 
         return f
+
     return decorate
 
 
@@ -496,6 +593,7 @@ def display_traceback(in_ipython=True):
 
     if in_ipython:
         from IPython.core.getipython import get_ipython
+
         ip = get_ipython()
     else:
         ip = None
@@ -527,15 +625,16 @@ def infer_encoding_types(args, kwargs, channels):
     # Construct a dictionary of channel type to encoding name
     # TODO: cache this somehow?
     channel_objs = (getattr(channels, name) for name in dir(channels))
-    channel_objs = (c for c in channel_objs
-                    if isinstance(c, type) and issubclass(c, SchemaBase))
+    channel_objs = (
+        c for c in channel_objs if isinstance(c, type) and issubclass(c, SchemaBase)
+    )
     channel_to_name = {c: c._encoding_name for c in channel_objs}
     name_to_channel = {}
     for chan, name in channel_to_name.items():
         chans = name_to_channel.setdefault(name, {})
-        key = 'value' if chan.__name__.endswith('Value') else 'field'
-        chans[key] = chan                       
-    
+        key = "value" if chan.__name__.endswith("Value") else "field"
+        chans[key] = chan
+
     # First use the mapping to convert args to kwargs based on their types.
     for arg in args:
         if isinstance(arg, (list, tuple)) and len(arg) > 0:
@@ -545,27 +644,26 @@ def infer_encoding_types(args, kwargs, channels):
 
         encoding = channel_to_name.get(type_, None)
         if encoding is None:
-            raise NotImplementedError("positional of type {}"
-                                        "".format(type_))
+            raise NotImplementedError("positional of type {}" "".format(type_))
         if encoding in kwargs:
             raise ValueError("encoding {} specified twice.".format(encoding))
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
         try:
-            condition = obj['condition']
+            condition = obj["condition"]
         except (KeyError, TypeError):
             pass
         else:
             if condition is not Undefined:
                 obj = obj.copy()
-                obj['condition'] = _wrap_in_channel_class(condition, encoding)
+                obj["condition"] = _wrap_in_channel_class(condition, encoding)
 
         if isinstance(obj, SchemaBase):
             return obj
 
         if isinstance(obj, str):
-            obj = {'shorthand': obj}
+            obj = {"shorthand": obj}
 
         if isinstance(obj, (list, tuple)):
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
@@ -573,9 +671,9 @@ def infer_encoding_types(args, kwargs, channels):
         if encoding not in name_to_channel:
             warnings.warn("Unrecognized encoding channel '{}'".format(encoding))
             return obj
-        
+
         classes = name_to_channel[encoding]
-        cls = classes['value'] if 'value' in obj else classes['field']
+        cls = classes["value"] if "value" in obj else classes["field"]
 
         try:
             # Don't force validation here; some objects won't be valid until
@@ -585,5 +683,7 @@ def infer_encoding_types(args, kwargs, channels):
             # our attempts at finding the correct class have failed
             return obj
 
-    return {encoding: _wrap_in_channel_class(obj, encoding)
-            for encoding, obj in kwargs.items()}
+    return {
+        encoding: _wrap_in_channel_class(obj, encoding)
+        for encoding, obj in kwargs.items()
+    }

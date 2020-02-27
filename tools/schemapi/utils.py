@@ -10,11 +10,11 @@ import urllib
 import jsonschema
 
 
-EXCLUDE_KEYS = ('definitions', 'title', 'description', '$schema', 'id')
+EXCLUDE_KEYS = ("definitions", "title", "description", "$schema", "id")
 
 
 def load_metaschema():
-    schema = pkgutil.get_data('schemapi', 'jsonschema-draft04.json')
+    schema = pkgutil.get_data("schemapi", "jsonschema-draft04.json")
     schema = schema.decode()
     return json.loads(schema)
 
@@ -22,13 +22,15 @@ def load_metaschema():
 def resolve_references(schema, root=None):
     """Resolve References within a JSON schema"""
     resolver = jsonschema.RefResolver.from_schema(root or schema)
-    while '$ref' in schema:
-        with resolver.resolving(schema['$ref']) as resolved:
+    while "$ref" in schema:
+        with resolver.resolving(schema["$ref"]) as resolved:
             schema = resolved
     return schema
 
 
-def get_valid_identifier(prop, replacement_character='', allow_unicode=False, url_decode=True):
+def get_valid_identifier(
+    prop, replacement_character="", allow_unicode=False, url_decode=True
+):
     """Given a string property, generate a valid Python identifier
 
     Parameters
@@ -65,20 +67,20 @@ def get_valid_identifier(prop, replacement_character='', allow_unicode=False, ur
 
     # First substitute-out all non-valid characters.
     flags = re.UNICODE if allow_unicode else re.ASCII
-    valid = re.sub(r'\W', replacement_character, prop, flags=flags)
+    valid = re.sub(r"\W", replacement_character, prop, flags=flags)
 
     # If nothing is left, use just an underscore
     if not valid:
-        valid = '_'
+        valid = "_"
 
     # first character must be a non-digit. Prefix with an underscore
     # if needed
-    if re.match(r'^[\d\W]', valid):
-        valid = '_' + valid
+    if re.match(r"^[\d\W]", valid):
+        valid = "_" + valid
 
     # if the result is a reserved keyword, then add an underscore at the end
     if keyword.iskeyword(valid):
-        valid += '_'
+        valid += "_"
     return valid
 
 
@@ -119,8 +121,8 @@ class SchemaProperties(object):
 
     def __getitem__(self, attr):
         dct = self._properties[attr]
-        if 'definitions' in self._schema and 'definitions' not in dct:
-            dct = dict(definitions=self._schema['definitions'], **dct)
+        if "definitions" in self._schema and "definitions" not in dct:
+            dct = dict(definitions=self._schema["definitions"], **dct)
         return SchemaInfo(dct, self._rootschema)
 
     def __iter__(self):
@@ -140,8 +142,8 @@ class SchemaInfo(object):
     """A wrapper for inspecting a JSON schema"""
 
     def __init__(self, schema, rootschema=None, validate=False):
-        if hasattr(schema, '_schema'):
-            if hasattr(schema, '_rootschema'):
+        if hasattr(schema, "_schema"):
+            if hasattr(schema, "_rootschema"):
                 schema, rootschema = schema._schema, schema._rootschema
             else:
                 schema, rootschema = schema._schema, schema._schema
@@ -162,22 +164,22 @@ class SchemaInfo(object):
         keys = []
         for key in sorted(self.schema.keys()):
             val = self.schema[key]
-            rval = repr(val).replace('\n', '')
+            rval = repr(val).replace("\n", "")
             if len(rval) > 30:
-                rval = rval[:30] + '...'
-            if key == 'definitions':
+                rval = rval[:30] + "..."
+            if key == "definitions":
                 rval = "{...}"
-            elif key == 'properties':
-                rval = '{\n    ' + '\n    '.join(sorted(map(repr, val))) + '\n  }'
+            elif key == "properties":
+                rval = "{\n    " + "\n    ".join(sorted(map(repr, val))) + "\n  }"
             keys.append('"{}": {}'.format(key, rval))
-        return "SchemaInfo({\n  " + '\n  '.join(keys) + "\n})"
+        return "SchemaInfo({\n  " + "\n  ".join(keys) + "\n})"
 
     @property
     def title(self):
         if self.is_reference():
             return get_valid_identifier(self.refname)
         else:
-            return ''
+            return ""
 
     @property
     def short_description(self):
@@ -189,151 +191,163 @@ class SchemaInfo(object):
 
     @property
     def medium_description(self):
-        _simple_types = {'string': 'string',
-                         'number': 'float',
-                         'integer': 'integer',
-                         'object': 'mapping',
-                         'boolean': 'boolean',
-                         'array': 'list',
-                         'null': 'None'}
+        _simple_types = {
+            "string": "string",
+            "number": "float",
+            "integer": "integer",
+            "object": "mapping",
+            "boolean": "boolean",
+            "array": "list",
+            "null": "None",
+        }
         if self.is_list():
-            return '[{0}]'.format(', '.join(self.child(s).short_description
-                                            for s in self.schema))
+            return "[{0}]".format(
+                ", ".join(self.child(s).short_description for s in self.schema)
+            )
         elif self.is_empty():
-            return 'Any'
+            return "Any"
         elif self.is_enum():
-            return 'enum({})'.format(', '.join(map(repr, self.enum)))
+            return "enum({})".format(", ".join(map(repr, self.enum)))
         elif self.is_anyOf():
-            return 'anyOf({})'.format(', '.join(s.short_description
-                                                for s in self.anyOf))
+            return "anyOf({})".format(
+                ", ".join(s.short_description for s in self.anyOf)
+            )
         elif self.is_oneOf():
-            return 'oneOf({})'.format(', '.join(s.short_description
-                                                for s in self.oneOf))
+            return "oneOf({})".format(
+                ", ".join(s.short_description for s in self.oneOf)
+            )
         elif self.is_allOf():
-            return 'allOf({})'.format(', '.join(s.short_description
-                                                for s in self.allOf))
+            return "allOf({})".format(
+                ", ".join(s.short_description for s in self.allOf)
+            )
         elif self.is_not():
-            return 'not {}'.format(self.not_.short_description)
+            return "not {}".format(self.not_.short_description)
         elif isinstance(self.type, list):
             options = []
             subschema = SchemaInfo(dict(**self.schema))
             for typ_ in self.type:
-                subschema.schema['type'] = typ_
+                subschema.schema["type"] = typ_
                 options.append(subschema.short_description)
-            return "anyOf({})".format(', '.join(options))
+            return "anyOf({})".format(", ".join(options))
         elif self.is_object():
-            return "Mapping(required=[{}])".format(', '.join(self.required))
+            return "Mapping(required=[{}])".format(", ".join(self.required))
         elif self.is_array():
             return "List({})".format(self.child(self.items).short_description)
         elif self.type in _simple_types:
             return _simple_types[self.type]
         elif not self.type:
             import warnings
-            warnings.warn("no short_description for schema\n{}"
-                          "".format(self.schema))
-            return 'any'
+
+            warnings.warn("no short_description for schema\n{}" "".format(self.schema))
+            return "any"
 
     @property
     def long_description(self):
         # TODO
-        return 'Long description including arguments and their types'
+        return "Long description including arguments and their types"
 
     @property
     def properties(self):
-        return SchemaProperties(self.schema.get('properties', {}),
-                                self.schema, self.rootschema)
+        return SchemaProperties(
+            self.schema.get("properties", {}), self.schema, self.rootschema
+        )
 
     @property
     def definitions(self):
-        return SchemaProperties(self.schema.get('definitions', {}),
-                                self.schema, self.rootschema)
+        return SchemaProperties(
+            self.schema.get("definitions", {}), self.schema, self.rootschema
+        )
 
     @property
     def required(self):
-        return self.schema.get('required', [])
+        return self.schema.get("required", [])
 
     @property
     def patternProperties(self):
-        return self.schema.get('patternProperties', {})
+        return self.schema.get("patternProperties", {})
 
     @property
     def additionalProperties(self):
-        return self.schema.get('additionalProperties', True)
+        return self.schema.get("additionalProperties", True)
 
     @property
     def type(self):
-        return self.schema.get('type', None)
+        return self.schema.get("type", None)
 
     @property
     def anyOf(self):
-        return [self.child(s) for s in self.schema.get('anyOf', [])]
+        return [self.child(s) for s in self.schema.get("anyOf", [])]
 
     @property
     def oneOf(self):
-        return [self.child(s) for s in self.schema.get('oneOf', [])]
+        return [self.child(s) for s in self.schema.get("oneOf", [])]
 
     @property
     def allOf(self):
-        return [self.child(s) for s in self.schema.get('allOf', [])]
+        return [self.child(s) for s in self.schema.get("allOf", [])]
 
     @property
     def not_(self):
-        return self.child(self.schema.get('not', {}))
+        return self.child(self.schema.get("not", {}))
 
     @property
     def items(self):
-        return self.schema.get('items', {})
+        return self.schema.get("items", {})
 
     @property
     def enum(self):
-        return self.schema.get('enum', [])
+        return self.schema.get("enum", [])
 
     @property
     def refname(self):
-        return self.raw_schema.get('$ref', '#/').split('/')[-1]
+        return self.raw_schema.get("$ref", "#/").split("/")[-1]
 
     @property
     def ref(self):
-        return self.raw_schema.get('$ref', None)
+        return self.raw_schema.get("$ref", None)
 
     @property
     def description(self):
-        return self.raw_schema.get('description',
-                                   self.schema.get('description', ''))
+        return self.raw_schema.get("description", self.schema.get("description", ""))
 
     def is_list(self):
         return isinstance(self.schema, list)
 
     def is_reference(self):
-        return '$ref' in self.raw_schema
+        return "$ref" in self.raw_schema
 
     def is_enum(self):
-        return 'enum' in self.schema
+        return "enum" in self.schema
 
     def is_empty(self):
         return not (set(self.schema.keys()) - set(EXCLUDE_KEYS))
 
     def is_compound(self):
-        return any(key in self.schema for key in ['anyOf', 'allOf', 'oneOf'])
+        return any(key in self.schema for key in ["anyOf", "allOf", "oneOf"])
 
     def is_anyOf(self):
-        return 'anyOf' in self.schema
+        return "anyOf" in self.schema
 
     def is_allOf(self):
-        return 'allOf' in self.schema
+        return "allOf" in self.schema
 
     def is_oneOf(self):
-        return 'oneOf' in self.schema
+        return "oneOf" in self.schema
 
     def is_not(self):
-        return 'not' in self.schema
+        return "not" in self.schema
 
     def is_object(self):
-        if self.type == 'object':
+        if self.type == "object":
             return True
         elif self.type is not None:
             return False
-        elif self.properties or self.required or self.patternProperties or self.additionalProperties:
+        elif (
+            self.properties
+            or self.required
+            or self.patternProperties
+            or self.additionalProperties
+        ):
             return True
         else:
             raise ValueError("Unclear whether schema.is_object() is True")
@@ -342,21 +356,21 @@ class SchemaInfo(object):
         return not self.is_object()
 
     def is_array(self):
-        return (self.type == 'array')
+        return self.type == "array"
 
     def schema_type(self):
         if self.is_empty():
-            return 'empty'
+            return "empty"
         elif self.is_compound():
-            for key in ['anyOf', 'oneOf', 'allOf']:
+            for key in ["anyOf", "oneOf", "allOf"]:
                 if key in self.schema:
                     return key
         elif self.is_object():
-            return 'object'
+            return "object"
         elif self.is_array():
-            return 'array'
+            return "array"
         elif self.is_value():
-            return 'value'
+            return "value"
         else:
             raise ValueError("Unknown type with keys {}".format(self.schema))
 
@@ -373,11 +387,13 @@ class SchemaInfo(object):
 
 def indent_arglist(args, indent_level, width=100, lstrip=True):
     """Indent an argument list for use in generated code"""
-    wrapper = textwrap.TextWrapper(width=width,
-                                   initial_indent=indent_level * ' ',
-                                   subsequent_indent=indent_level * ' ',
-                                   break_long_words=False)
-    wrapped = '\n'.join(wrapper.wrap(', '.join(args)))
+    wrapper = textwrap.TextWrapper(
+        width=width,
+        initial_indent=indent_level * " ",
+        subsequent_indent=indent_level * " ",
+        break_long_words=False,
+    )
+    wrapped = "\n".join(wrapper.wrap(", ".join(args)))
     if lstrip:
         wrapped = wrapped.lstrip()
     return wrapped
@@ -392,32 +408,36 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
         if stripped:
             leading_space = len(line) - len(stripped)
             indent = indent_level + leading_space
-            wrapper = textwrap.TextWrapper(width=width - indent,
-                                           initial_indent=indent * ' ',
-                                           subsequent_indent=indent * ' ',
-                                           break_long_words=False,
-                                           break_on_hyphens=False,
-                                           drop_whitespace=True)
-            list_wrapper = textwrap.TextWrapper(width=width - indent,
-                                                initial_indent=indent * ' ' + '* ',
-                                                subsequent_indent=indent * ' ' + '  ',
-                                                break_long_words=False,
-                                                break_on_hyphens=False,
-                                                drop_whitespace=True)
+            wrapper = textwrap.TextWrapper(
+                width=width - indent,
+                initial_indent=indent * " ",
+                subsequent_indent=indent * " ",
+                break_long_words=False,
+                break_on_hyphens=False,
+                drop_whitespace=True,
+            )
+            list_wrapper = textwrap.TextWrapper(
+                width=width - indent,
+                initial_indent=indent * " " + "* ",
+                subsequent_indent=indent * " " + "  ",
+                break_long_words=False,
+                break_on_hyphens=False,
+                drop_whitespace=True,
+            )
             for line in stripped.split("\n"):
-                if line == '':
-                    final_lines.append('')
-                elif line.startswith('* '):
+                if line == "":
+                    final_lines.append("")
+                elif line.startswith("* "):
                     final_lines.extend(list_wrapper.wrap(line[2:]))
                 else:
                     final_lines.extend(wrapper.wrap(line.lstrip()))
 
         # If this is the last line, put in an indent
         elif i + 1 == len(lines):
-            final_lines.append(indent_level * ' ')
+            final_lines.append(indent_level * " ")
         # If it's not the last line, this is a blank line that should not indent.
         else:
-            final_lines.append('')
+            final_lines.append("")
     # Remove any trailing whitespaces on the right side
     stripped_lines = []
     for i, line in enumerate(final_lines):
@@ -426,7 +446,7 @@ def indent_docstring(lines, indent_level, width=100, lstrip=True):
         else:
             stripped_lines.append(line.rstrip())
     # Join it all together
-    wrapped = '\n'.join(stripped_lines)
+    wrapped = "\n".join(stripped_lines)
     if lstrip:
         wrapped = wrapped.lstrip()
     return wrapped

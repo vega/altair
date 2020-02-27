@@ -135,13 +135,13 @@ FUNCTION_LISTING = {
     "eventItem": "a zero-argument function that returns the current scenegraph item that is the subject of the event.",
     "eventX": "returns the x-coordinate for the current event. If no arguments are provided, the top-level coordinate space of the visualization is used. If a group name is provided, the coordinate-space of the matching ancestor group item is used.",
     "eventY": "returns the y-coordinate for the current event. If no arguments are provided, the top-level coordinate space of the visualization is used. If a group name is provided, the coordinate-space of the matching ancestor group item is used.",
-    "iscale": "applies an inverse scale transform to a specified value; by default, looks for the scale at the top-level of the specification, but an optional signal can also be supplied corresponding to the group which contains the scale (i.e., `iscale(\"x\", val, group)`). *Note:* This function is only legal within signal stream handlers and mark [production rules](https://github.com/vega/vega/wiki/Marks#production-rules). Invoking this function elsewhere (e.g., with filter or formula transforms) will result in an error.",
+    "iscale": 'applies an inverse scale transform to a specified value; by default, looks for the scale at the top-level of the specification, but an optional signal can also be supplied corresponding to the group which contains the scale (i.e., `iscale("x", val, group)`). *Note:* This function is only legal within signal stream handlers and mark [production rules](https://github.com/vega/vega/wiki/Marks#production-rules). Invoking this function elsewhere (e.g., with filter or formula transforms) will result in an error.',
     "open": "opens a hyperlink (alias to `window.open`). This function is only valid when running in the browser. It should not be invoked within a server-side (e.g., node.js) environment.",
 }
 
 
 # This maps vega expression function names to the Python name
-NAME_MAP = {'if': 'if_'}
+NAME_MAP = {"if": "if_"}
 
 
 class ExprFunc(object):

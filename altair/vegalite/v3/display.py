@@ -8,9 +8,10 @@ from ..display import RendererRegistry
 from ..display import HTMLRenderer
 
 from .schema import SCHEMA_VERSION
-VEGALITE_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGA_VERSION = '5'
-VEGAEMBED_VERSION = '5'
+
+VEGALITE_VERSION = SCHEMA_VERSION.lstrip("v")
+VEGA_VERSION = "5"
+VEGAEMBED_VERSION = "5"
 
 
 # ==============================================================================
@@ -19,12 +20,12 @@ VEGAEMBED_VERSION = '5'
 
 
 # The MIME type for Vega-Lite 3.x releases.
-VEGALITE_MIME_TYPE = 'application/vnd.vegalite.v3+json'  # type: str
+VEGALITE_MIME_TYPE = "application/vnd.vegalite.v3+json"  # type: str
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = 'altair.vegalite.v3.renderer'  # type: str
+ENTRY_POINT_GROUP = "altair.vegalite.v3.renderer"  # type: str
 
 # The display message when rendering fails
 DEFAULT_DISPLAY = """\
@@ -41,8 +42,7 @@ here = os.path.dirname(os.path.realpath(__file__))
 
 
 def default_renderer(spec, **metadata):
-    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY,
-                                 **metadata)
+    return default_renderer_base(spec, VEGALITE_MIME_TYPE, DEFAULT_DISPLAY, **metadata)
 
 
 def json_renderer(spec, **metadata):
@@ -50,64 +50,83 @@ def json_renderer(spec, **metadata):
 
 
 def png_renderer(spec, **metadata):
-    return spec_to_mimebundle(spec, format='png',
-                              mode='vega-lite',
-                              vega_version=VEGA_VERSION,
-                              vegaembed_version=VEGAEMBED_VERSION,
-                              vegalite_version=VEGALITE_VERSION,
-                              **metadata)
+    return spec_to_mimebundle(
+        spec,
+        format="png",
+        mode="vega-lite",
+        vega_version=VEGA_VERSION,
+        vegaembed_version=VEGAEMBED_VERSION,
+        vegalite_version=VEGALITE_VERSION,
+        **metadata,
+    )
 
 
 def svg_renderer(spec, **metadata):
-    return spec_to_mimebundle(spec, format='svg',
-                              mode='vega-lite',
-                              vega_version=VEGA_VERSION,
-                              vegaembed_version=VEGAEMBED_VERSION,
-                              vegalite_version=VEGALITE_VERSION,
-                              **metadata)
+    return spec_to_mimebundle(
+        spec,
+        format="svg",
+        mode="vega-lite",
+        vega_version=VEGA_VERSION,
+        vegaembed_version=VEGAEMBED_VERSION,
+        vegalite_version=VEGALITE_VERSION,
+        **metadata,
+    )
 
-colab_renderer = HTMLRenderer(mode='vega-lite',
-                              fullhtml=True, requirejs=False,
-                              output_div='altair-viz',
-                              vega_version=VEGA_VERSION,
-                              vegaembed_version=VEGAEMBED_VERSION,
-                              vegalite_version=VEGALITE_VERSION)
 
-zeppelin_renderer = HTMLRenderer(mode='vega-lite',
-                                fullhtml=True, requirejs=False,
-                                vega_version=VEGA_VERSION,
-                                vegaembed_version=VEGAEMBED_VERSION,
-                                vegalite_version=VEGALITE_VERSION)
+colab_renderer = HTMLRenderer(
+    mode="vega-lite",
+    fullhtml=True,
+    requirejs=False,
+    output_div="altair-viz",
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+    vegalite_version=VEGALITE_VERSION,
+)
 
-kaggle_renderer = HTMLRenderer(mode='vega-lite',
-                               fullhtml=False, requirejs=True,
-                               vega_version=VEGA_VERSION,
-                               vegaembed_version=VEGAEMBED_VERSION,
-                               vegalite_version=VEGALITE_VERSION)
+zeppelin_renderer = HTMLRenderer(
+    mode="vega-lite",
+    fullhtml=True,
+    requirejs=False,
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+    vegalite_version=VEGALITE_VERSION,
+)
 
-html_renderer = HTMLRenderer(mode='vega-lite', template='universal',
-                             vega_version=VEGA_VERSION,
-                             vegaembed_version=VEGAEMBED_VERSION,
-                             vegalite_version=VEGALITE_VERSION)
+kaggle_renderer = HTMLRenderer(
+    mode="vega-lite",
+    fullhtml=False,
+    requirejs=True,
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+    vegalite_version=VEGALITE_VERSION,
+)
 
-renderers.register('default', default_renderer)
-renderers.register('html', html_renderer)
-renderers.register('jupyterlab', default_renderer)
-renderers.register('nteract', default_renderer)
-renderers.register('colab', colab_renderer)
-renderers.register('kaggle', kaggle_renderer)
-renderers.register('json', json_renderer)
-renderers.register('png', png_renderer)
-renderers.register('svg', svg_renderer)
-renderers.register('zeppelin', zeppelin_renderer)
-renderers.enable('default')
+html_renderer = HTMLRenderer(
+    mode="vega-lite",
+    template="universal",
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+    vegalite_version=VEGALITE_VERSION,
+)
+
+renderers.register("default", default_renderer)
+renderers.register("html", html_renderer)
+renderers.register("jupyterlab", default_renderer)
+renderers.register("nteract", default_renderer)
+renderers.register("colab", colab_renderer)
+renderers.register("kaggle", kaggle_renderer)
+renderers.register("json", json_renderer)
+renderers.register("png", png_renderer)
+renderers.register("svg", svg_renderer)
+renderers.register("zeppelin", zeppelin_renderer)
+renderers.enable("default")
 
 
 class VegaLite(Displayable):
     """An IPython/Jupyter display class for rendering VegaLite 3."""
 
     renderers = renderers
-    schema_path = (__name__, 'schema/vega-lite-schema.json')
+    schema_path = (__name__, "schema/vega-lite-schema.json")
 
 
 def vegalite(spec, validate=True):

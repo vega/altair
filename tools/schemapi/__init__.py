@@ -6,9 +6,4 @@ from .decorator import schemaclass
 from .utils import SchemaInfo
 
 
-__all__ = (
-    "SchemaBase",
-    "Undefined",
-    "schemaclass",
-    "SchemaInfo"
-)
+__all__ = ("SchemaBase", "Undefined", "schemaclass", "SchemaInfo")

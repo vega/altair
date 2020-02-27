@@ -8,9 +8,9 @@ from ..display import RendererType
 from ..display import HTMLRenderer
 
 from .schema import SCHEMA_VERSION
-VEGA_VERSION = SCHEMA_VERSION.lstrip('v')
-VEGAEMBED_VERSION = '3'
 
+VEGA_VERSION = SCHEMA_VERSION.lstrip("v")
+VEGAEMBED_VERSION = "3"
 
 
 # ==============================================================================
@@ -19,12 +19,12 @@ VEGAEMBED_VERSION = '3'
 
 
 # The MIME type for Vega 5 releases.
-VEGA_MIME_TYPE = 'application/vnd.vega.v5+json'  # type: str
+VEGA_MIME_TYPE = "application/vnd.vega.v5+json"  # type: str
 
 # The entry point group that can be used by other packages to declare other
 # renderers that will be auto-detected. Explicit registration is also
 # allowed by the PluginRegistery API.
-ENTRY_POINT_GROUP = 'altair.vega.v5.renderer'  # type: str
+ENTRY_POINT_GROUP = "altair.vega.v5.renderer"  # type: str
 
 # The display message when rendering fails
 DEFAULT_DISPLAY = """\
@@ -49,39 +49,48 @@ def json_renderer(spec):
     return json_renderer_base(spec, DEFAULT_DISPLAY)
 
 
-colab_renderer = HTMLRenderer(mode='vega',
-                              fullhtml=True, requirejs=False,
-                              output_div='altair-viz',
-                              vega_version=VEGA_VERSION,
-                              vegaembed_version=VEGAEMBED_VERSION)
+colab_renderer = HTMLRenderer(
+    mode="vega",
+    fullhtml=True,
+    requirejs=False,
+    output_div="altair-viz",
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+)
 
 
-kaggle_renderer = HTMLRenderer(mode='vega',
-                               fullhtml=False, requirejs=True,
-                               vega_version=VEGA_VERSION,
-                               vegaembed_version=VEGAEMBED_VERSION)
+kaggle_renderer = HTMLRenderer(
+    mode="vega",
+    fullhtml=False,
+    requirejs=True,
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+)
 
 
-html_renderer = HTMLRenderer(mode='vega', template='universal',
-                             vega_version=VEGA_VERSION,
-                             vegaembed_version=VEGAEMBED_VERSION)
+html_renderer = HTMLRenderer(
+    mode="vega",
+    template="universal",
+    vega_version=VEGA_VERSION,
+    vegaembed_version=VEGAEMBED_VERSION,
+)
 
 
-renderers.register('default', default_renderer)
-renderers.register('html', html_renderer)
-renderers.register('jupyterlab', default_renderer)
-renderers.register('nteract', default_renderer)
-renderers.register('colab', colab_renderer)
-renderers.register('kaggle', kaggle_renderer)
-renderers.register('json', json_renderer)
-renderers.enable('default')
+renderers.register("default", default_renderer)
+renderers.register("html", html_renderer)
+renderers.register("jupyterlab", default_renderer)
+renderers.register("nteract", default_renderer)
+renderers.register("colab", colab_renderer)
+renderers.register("kaggle", kaggle_renderer)
+renderers.register("json", json_renderer)
+renderers.enable("default")
 
 
 class Vega(Displayable):
     """An IPython/Jupyter display class for rendering Vega 5."""
 
     renderers = renderers
-    schema_path = (__name__, 'schema/vega-schema.json')
+    schema_path = (__name__, "schema/vega-schema.json")
 
 
 def vega(spec, validate=True):

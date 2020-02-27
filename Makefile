@@ -4,6 +4,7 @@ install:
 	python setup.py install
 
 test :
+	black .
 	python -m pytest --pyargs --doctest-modules altair
 
 test-coverage:

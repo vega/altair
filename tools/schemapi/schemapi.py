@@ -55,9 +55,12 @@ def _todict(obj, validate, context):
     elif isinstance(obj, (list, tuple, np.ndarray)):
         return [_todict(v, validate, context) for v in obj]
     elif isinstance(obj, dict):
-        return {k: _todict(v, validate, context) for k, v in obj.items()
-                if v is not Undefined}
-    elif hasattr(obj, 'to_dict'):
+        return {
+            k: _todict(v, validate, context)
+            for k, v in obj.items()
+            if v is not Undefined
+        }
+    elif hasattr(obj, "to_dict"):
         return obj.to_dict()
     elif isinstance(obj, np.number):
         return float(obj)
@@ -70,14 +73,15 @@ def _todict(obj, validate, context):
 def _resolve_references(schema, root=None):
     """Resolve schema references."""
     resolver = jsonschema.RefResolver.from_schema(root or schema)
-    while '$ref' in schema:
-        with resolver.resolving(schema['$ref']) as resolved:
+    while "$ref" in schema:
+        with resolver.resolving(schema["$ref"]) as resolved:
             schema = resolved
     return schema
 
 
 class SchemaValidationError(jsonschema.ValidationError):
     """A wrapper for jsonschema.ValidationError with friendlier traceback"""
+
     def __init__(self, obj, err):
         super(SchemaValidationError, self).__init__(**self._get_contents(err))
         self.obj = obj
@@ -100,29 +104,37 @@ class SchemaValidationError(jsonschema.ValidationError):
 
     def __str__(self):
         cls = self.obj.__class__
-        schema_path = ['{}.{}'.format(cls.__module__, cls.__name__)]
+        schema_path = ["{}.{}".format(cls.__module__, cls.__name__)]
         schema_path.extend(self.schema_path)
-        schema_path = '->'.join(str(val) for val in schema_path[:-1]
-                                if val not in ('properties',
-                                               'additionalProperties',
-                                               'patternProperties'))
+        schema_path = "->".join(
+            str(val)
+            for val in schema_path[:-1]
+            if val not in ("properties", "additionalProperties", "patternProperties")
+        )
         return """Invalid specification
 
         {}, validating {!r}
 
         {}
-        """.format(schema_path, self.validator, self.message)
+        """.format(
+            schema_path, self.validator, self.message
+        )
 
 
 class UndefinedType(object):
     """A singleton object for marking undefined attributes"""
+
     __instance = None
+
     def __new__(cls, *args, **kwargs):
         if not isinstance(cls.__instance, cls):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
+
     def __repr__(self):
-        return 'Undefined'
+        return "Undefined"
+
+
 Undefined = UndefinedType()
 
 
@@ -132,6 +144,7 @@ class SchemaBase(object):
     Each derived class should set the _schema class attribute (and optionally
     the _rootschema class attribute) which is used for validation.
     """
+
     _schema = None
     _rootschema = None
     _class_is_valid_at_instantiation = True
@@ -142,9 +155,11 @@ class SchemaBase(object):
         # - a single arg with no kwds, for, e.g. {'type': 'string'}
         # - zero args with zero or more kwds for {'type': 'object'}
         if self._schema is None:
-            raise ValueError("Cannot instantiate object of type {}: "
-                             "_schema class attribute is not defined."
-                             "".format(self.__class__))
+            raise ValueError(
+                "Cannot instantiate object of type {}: "
+                "_schema class attribute is not defined."
+                "".format(self.__class__)
+            )
 
         if kwds:
             assert len(args) == 0
@@ -152,8 +167,8 @@ class SchemaBase(object):
             assert len(args) in [0, 1]
 
         # use object.__setattr__ because we override setattr below.
-        object.__setattr__(self, '_args', args)
-        object.__setattr__(self, '_kwds', kwds)
+        object.__setattr__(self, "_args", args)
+        object.__setattr__(self, "_kwds", kwds)
 
         if DEBUG_MODE and self._class_is_valid_at_instantiation:
             self.to_dict(validate=True)
@@ -172,6 +187,7 @@ class SchemaBase(object):
             A list of keys for which the contents should not be copied, but
             only stored by reference.
         """
+
         def _shallow_copy(obj):
             if isinstance(obj, SchemaBase):
                 return obj.copy(deep=False)
@@ -185,19 +201,22 @@ class SchemaBase(object):
         def _deep_copy(obj, ignore=()):
             if isinstance(obj, SchemaBase):
                 args = tuple(_deep_copy(arg) for arg in obj._args)
-                kwds = {k: (_deep_copy(v, ignore=ignore)
-                            if k not in ignore else v)
-                        for k, v in obj._kwds.items()}
+                kwds = {
+                    k: (_deep_copy(v, ignore=ignore) if k not in ignore else v)
+                    for k, v in obj._kwds.items()
+                }
                 with debug_mode(False):
                     return obj.__class__(*args, **kwds)
             elif isinstance(obj, list):
                 return [_deep_copy(v, ignore=ignore) for v in obj]
             elif isinstance(obj, dict):
-                return {k: (_deep_copy(v, ignore=ignore)
-                            if k not in ignore else v)
-                        for k, v in obj.items()}
+                return {
+                    k: (_deep_copy(v, ignore=ignore) if k not in ignore else v)
+                    for k, v in obj.items()
+                }
             else:
                 return obj
+
         try:
             deep = list(deep)
         except TypeError:
@@ -224,7 +243,7 @@ class SchemaBase(object):
 
     def __getattr__(self, attr):
         # reminder: getattr is called after the normal lookups
-        if attr == '_kwds': 
+        if attr == "_kwds":
             raise AttributeError()
         if attr in self._kwds:
             return self._kwds[attr]
@@ -235,7 +254,7 @@ class SchemaBase(object):
                 _getattr = super(SchemaBase, self).__getattribute__
             return _getattr(attr)
 
-    def __setattr__(self, item , val):
+    def __setattr__(self, item, val):
         self._kwds[item] = val
 
     def __getitem__(self, item):
@@ -246,19 +265,24 @@ class SchemaBase(object):
 
     def __repr__(self):
         if self._kwds:
-            args = ("{}: {!r}".format(key, val)
-                    for key, val in sorted(self._kwds.items())
-                    if val is not Undefined)
-            args = '\n' + ',\n'.join(args)
-            return "{0}({{{1}\n}})".format(self.__class__.__name__,
-                                            args.replace('\n', '\n  '))
+            args = (
+                "{}: {!r}".format(key, val)
+                for key, val in sorted(self._kwds.items())
+                if val is not Undefined
+            )
+            args = "\n" + ",\n".join(args)
+            return "{0}({{{1}\n}})".format(
+                self.__class__.__name__, args.replace("\n", "\n  ")
+            )
         else:
             return "{}({!r})".format(self.__class__.__name__, self._args[0])
 
     def __eq__(self, other):
-        return (type(self) is type(other)
-                and self._args == other._args
-                and self._kwds == other._kwds)
+        return (
+            type(self) is type(other)
+            and self._args == other._args
+            and self._kwds == other._kwds
+        )
 
     def to_dict(self, validate=True, ignore=None, context=None):
         """Return a dictionary representation of the object
@@ -291,17 +315,21 @@ class SchemaBase(object):
             context = {}
         if ignore is None:
             ignore = []
-        sub_validate = 'deep' if validate == 'deep' else False
+        sub_validate = "deep" if validate == "deep" else False
 
         if self._args and not self._kwds:
             result = _todict(self._args[0], validate=sub_validate, context=context)
         elif not self._args:
-            result = _todict({k: v for k, v in self._kwds.items()
-                              if k not in ignore},
-                              validate=sub_validate, context=context)
+            result = _todict(
+                {k: v for k, v in self._kwds.items() if k not in ignore},
+                validate=sub_validate,
+                context=context,
+            )
         else:
-            raise ValueError("{} instance has both a value and properties : "
-                             "cannot serialize to dict".format(self.__class__))
+            raise ValueError(
+                "{} instance has both a value and properties : "
+                "cannot serialize to dict".format(self.__class__)
+            )
         if validate:
             try:
                 self.validate(result)
@@ -309,8 +337,9 @@ class SchemaBase(object):
                 raise SchemaValidationError(self, err)
         return result
 
-    def to_json(self, validate=True, ignore=[], context={},
-                indent=2, sort_keys=True, **kwargs):
+    def to_json(
+        self, validate=True, ignore=[], context={}, indent=2, sort_keys=True, **kwargs
+    ):
         """Emit the JSON representation for this object as a string.
 
         Parameters
@@ -415,7 +444,7 @@ class SchemaBase(object):
         """Resolve references in the context of this object's schema or root schema."""
         return _resolve_references(
             schema=(schema or cls._schema),
-            root=(cls._rootschema or cls._schema or schema)
+            root=(cls._rootschema or cls._schema or schema),
         )
 
     @classmethod
@@ -425,7 +454,7 @@ class SchemaBase(object):
         rootschema
         """
         value = _todict(value, validate=False, context={})
-        props = cls.resolve_references(schema or cls._schema).get('properties', {})
+        props = cls.resolve_references(schema or cls._schema).get("properties", {})
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
         return jsonschema.validate(value, props.get(name, {}), resolver=resolver)
 
@@ -440,7 +469,8 @@ class _FromDict(object):
     that maps schemas to their wrapper classes. The candidate classes are
     specified in the ``class_list`` argument to the constructor.
     """
-    _hash_exclude_keys = ('definitions', 'title', 'description', '$schema', 'id')
+
+    _hash_exclude_keys = ("definitions", "title", "description", "$schema", "id")
 
     def __init__(self, class_list):
         # Create a mapping of a schema hash to a list of matching classes
@@ -464,12 +494,16 @@ class _FromDict(object):
         to be slightly faster in several benchmarks.
         """
         if cls._hash_exclude_keys and isinstance(schema, dict):
-            schema = {key: val for key, val in schema.items()
-                      if key not in cls._hash_exclude_keys}
+            schema = {
+                key: val
+                for key, val in schema.items()
+                if key not in cls._hash_exclude_keys
+            }
         if use_json:
             s = json.dumps(schema, sort_keys=True)
             return hash(s)
         else:
+
             def _freeze(val):
                 if isinstance(val, dict):
                     return frozenset((k, _freeze(v)) for k, v in val.items())
@@ -479,6 +513,7 @@ class _FromDict(object):
                     return tuple(map(_freeze, val))
                 else:
                     return val
+
             return hash(_freeze(schema))
 
     def from_dict(self, dct, cls=None, schema=None, rootschema=None):
@@ -504,8 +539,8 @@ class _FromDict(object):
             cls = matches[0] if matches else _passthrough
         schema = _resolve_references(schema, rootschema)
 
-        if 'anyOf' in schema or 'oneOf' in schema:
-            schemas = schema.get('anyOf', []) + schema.get('oneOf', [])
+        if "anyOf" in schema or "oneOf" in schema:
+            schemas = schema.get("anyOf", []) + schema.get("oneOf", [])
             for possible_schema in schemas:
                 resolver = jsonschema.RefResolver.from_schema(rootschema)
                 try:
@@ -513,30 +548,26 @@ class _FromDict(object):
                 except jsonschema.ValidationError:
                     continue
                 else:
-                    return self.from_dict(dct,
-                        schema=possible_schema,
-                        rootschema=rootschema,
+                    return self.from_dict(
+                        dct, schema=possible_schema, rootschema=rootschema,
                     )
 
         if isinstance(dct, dict):
             # TODO: handle schemas for additionalProperties/patternProperties
-            props = schema.get('properties', {})
+            props = schema.get("properties", {})
             kwds = {}
             for key, val in dct.items():
                 if key in props:
-                    val = self.from_dict(val,
-                        schema=props[key],
-                        rootschema=rootschema
-                    )
+                    val = self.from_dict(val, schema=props[key], rootschema=rootschema)
                 kwds[key] = val
             return cls(**kwds)
 
         elif isinstance(dct, list):
-            item_schema = schema.get('items', {})
-            dct = [self.from_dict(val,
-                       schema=item_schema,
-                       rootschema=rootschema
-                   ) for val in dct]
+            item_schema = schema.get("items", {})
+            dct = [
+                self.from_dict(val, schema=item_schema, rootschema=rootschema)
+                for val in dct
+            ]
             return cls(dct)
         else:
             return cls(dct)

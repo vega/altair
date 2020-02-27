@@ -12,51 +12,54 @@ def test_infer_vegalite_type():
     def _check(arr, typ):
         assert infer_vegalite_type(arr) == typ
 
-    _check(np.arange(5, dtype=float), 'quantitative')
-    _check(np.arange(5, dtype=int), 'quantitative')
-    _check(np.zeros(5, dtype=bool), 'nominal')
-    _check(pd.date_range('2012', '2013'), 'temporal')
-    _check(pd.timedelta_range(365, periods=12), 'temporal')
+    _check(np.arange(5, dtype=float), "quantitative")
+    _check(np.arange(5, dtype=int), "quantitative")
+    _check(np.zeros(5, dtype=bool), "nominal")
+    _check(pd.date_range("2012", "2013"), "temporal")
+    _check(pd.timedelta_range(365, periods=12), "temporal")
 
     nulled = pd.Series(np.random.randint(10, size=10))
     nulled[0] = None
-    _check(nulled, 'quantitative')
-    _check(['a', 'b', 'c'], 'nominal')
+    _check(nulled, "quantitative")
+    _check(["a", "b", "c"], "nominal")
 
-    if hasattr(pytest, 'warns'):  # added in pytest 2.8
+    if hasattr(pytest, "warns"):  # added in pytest 2.8
         with pytest.warns(UserWarning):
-            _check([], 'nominal')
+            _check([], "nominal")
     else:
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore")
-            _check([], 'nominal')
+            _check([], "nominal")
 
 
 def test_sanitize_dataframe():
     # create a dataframe with various types
-    df = pd.DataFrame({'s': list('abcde'),
-                       'f': np.arange(5, dtype=float),
-                       'i': np.arange(5, dtype=int),
-                       'b': np.array([True, False, True, True, False]),
-                       'd': pd.date_range('2012-01-01', periods=5, freq='H'),
-                       'c': pd.Series(list('ababc'), dtype='category'),
-                       'c2': pd.Series([1, 'A', 2.5, 'B', None],
-                                       dtype='category'),
-                       'o': pd.Series([np.array(i) for i in range(5)]),
-                       'p': pd.date_range('2012-01-01', periods=5, freq='H').tz_localize('UTC')})
+    df = pd.DataFrame(
+        {
+            "s": list("abcde"),
+            "f": np.arange(5, dtype=float),
+            "i": np.arange(5, dtype=int),
+            "b": np.array([True, False, True, True, False]),
+            "d": pd.date_range("2012-01-01", periods=5, freq="H"),
+            "c": pd.Series(list("ababc"), dtype="category"),
+            "c2": pd.Series([1, "A", 2.5, "B", None], dtype="category"),
+            "o": pd.Series([np.array(i) for i in range(5)]),
+            "p": pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"),
+        }
+    )
 
     # add some nulls
-    df.iloc[0, df.columns.get_loc('s')] = None
-    df.iloc[0, df.columns.get_loc('f')] = np.nan
-    df.iloc[0, df.columns.get_loc('d')] = pd.NaT
-    df.iloc[0, df.columns.get_loc('o')] = np.array(np.nan)
+    df.iloc[0, df.columns.get_loc("s")] = None
+    df.iloc[0, df.columns.get_loc("f")] = np.nan
+    df.iloc[0, df.columns.get_loc("d")] = pd.NaT
+    df.iloc[0, df.columns.get_loc("o")] = np.array(np.nan)
 
     # JSON serialize. This will fail on non-sanitized dataframes
-    print(df[['s', 'c2']])
+    print(df[["s", "c2"]])
     df_clean = sanitize_dataframe(df)
-    print(df_clean[['s', 'c2']])
-    print(df_clean[['s', 'c2']].to_dict())
-    s = json.dumps(df_clean.to_dict(orient='records'))
+    print(df_clean[["s", "c2"]])
+    print(df_clean[["s", "c2"]].to_dict())
+    s = json.dumps(df_clean.to_dict(orient="records"))
     print(s)
 
     # Re-construct pandas dataframe
@@ -67,16 +70,16 @@ def test_sanitize_dataframe():
 
     # Re-apply original types
     for col in df:
-        if str(df[col].dtype).startswith('datetime'):
+        if str(df[col].dtype).startswith("datetime"):
             # astype(datetime) introduces time-zone issues:
             # to_datetime() does not.
             utc = isinstance(df[col].dtype, pd.core.dtypes.dtypes.DatetimeTZDtype)
-            df2[col] = pd.to_datetime(df2[col], utc = utc)
+            df2[col] = pd.to_datetime(df2[col], utc=utc)
         else:
             df2[col] = df2[col].astype(df[col].dtype)
 
     # pandas doesn't properly recognize np.array(np.nan), so change it here
-    df.iloc[0, df.columns.get_loc('o')] = np.nan
+    df.iloc[0, df.columns.get_loc("o")] = np.nan
     assert df.equals(df2)
 
 
@@ -88,30 +91,30 @@ def test_sanitize_dataframe_colnames():
     assert [isinstance(col, str) for col in df.columns]
 
     # Test that non-string columns result in an error
-    df.columns = [4, 'foo', 'bar']
+    df.columns = [4, "foo", "bar"]
     with pytest.raises(ValueError) as err:
         sanitize_dataframe(df)
-    assert str(err.value).startswith('Dataframe contains invalid column name: 4.')
+    assert str(err.value).startswith("Dataframe contains invalid column name: 4.")
 
 
 def test_sanitize_dataframe_timedelta():
-    df = pd.DataFrame({'r': pd.timedelta_range(start='1 day', periods=4)})
+    df = pd.DataFrame({"r": pd.timedelta_range(start="1 day", periods=4)})
     with pytest.raises(ValueError) as err:
         sanitize_dataframe(df)
     assert str(err.value).startswith('Field "r" has type "timedelta')
 
 
 def test_sanitize_dataframe_infs():
-    df = pd.DataFrame({'x': [0, 1, 2, np.inf, -np.inf, np.nan]})
+    df = pd.DataFrame({"x": [0, 1, 2, np.inf, -np.inf, np.nan]})
     df_clean = sanitize_dataframe(df)
     assert list(df_clean.dtypes) == [object]
-    assert list(df_clean['x']) == [0, 1, 2, None, None, None]
+    assert list(df_clean["x"]) == [0, 1, 2, None, None, None]
 
 
 @pytest.mark.skipif(
     not hasattr(pd, "Int64Dtype"),
-    reason="Nullable integers not supported in pandas v{}".format(pd.__version__)
-    )
+    reason="Nullable integers not supported in pandas v{}".format(pd.__version__),
+)
 def test_sanitize_nullable_integers():
 
     df = pd.DataFrame(
@@ -128,9 +131,7 @@ def test_sanitize_nullable_integers():
     df_clean = sanitize_dataframe(df)
     assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
 
-    result_python = {
-        col_name: list(col) for col_name, col in df_clean.iteritems()
-    }
+    result_python = {col_name: list(col) for col_name, col in df_clean.iteritems()}
     assert result_python == {
         "int_np": [1, 2, 3, 4, 5],
         "int64": [1, 2, 3, None, 5],
@@ -143,8 +144,8 @@ def test_sanitize_nullable_integers():
 
 @pytest.mark.skipif(
     not hasattr(pd, "StringDtype"),
-    reason="dedicated String dtype not supported in pandas v{}".format(pd.__version__)
-    )
+    reason="dedicated String dtype not supported in pandas v{}".format(pd.__version__),
+)
 def test_sanitize_string_dtype():
     df = pd.DataFrame(
         {
@@ -158,9 +159,7 @@ def test_sanitize_string_dtype():
     df_clean = sanitize_dataframe(df)
     assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
 
-    result_python = {
-        col_name: list(col) for col_name, col in df_clean.iteritems()
-    }
+    result_python = {col_name: list(col) for col_name, col in df_clean.iteritems()}
     assert result_python == {
         "string_object": ["a", "b", "c", "d"],
         "string_string": ["a", "b", "c", "d"],
@@ -171,8 +170,8 @@ def test_sanitize_string_dtype():
 
 @pytest.mark.skipif(
     not hasattr(pd, "BooleanDtype"),
-    reason="Nullable boolean dtype not supported in pandas v{}".format(pd.__version__)
-    )
+    reason="Nullable boolean dtype not supported in pandas v{}".format(pd.__version__),
+)
 def test_sanitize_boolean_dtype():
     df = pd.DataFrame(
         {
@@ -185,11 +184,9 @@ def test_sanitize_boolean_dtype():
     df_clean = sanitize_dataframe(df)
     assert {col.dtype.name for _, col in df_clean.iteritems()} == {"object"}
 
-    result_python = {
-        col_name: list(col) for col_name, col in df_clean.iteritems()
-    }
+    result_python = {col_name: list(col) for col_name, col in df_clean.iteritems()}
     assert result_python == {
-            "bool_none": [True, False, None],
-            "none": [None, None, None],
-            "bool": [True, False, True],
+        "bool_none": [True, False, None],
+        "none": [None, None, None],
+        "bool": [True, False, True],
     }

@@ -20,14 +20,16 @@ You must interrupt the kernel to cancel this command.
 """
 
 
-
 # Mock server used for testing
+
 
 class MockRequest(object):
     def makefile(self, *args, **kwargs):
         return IO(b"GET /")
+
     def sendall(self, response):
         pass
+
 
 class MockServer(object):
     def __init__(self, ip_port, Handler):
@@ -47,7 +49,7 @@ def generate_handler(html, files=None):
     class MyHandler(server.BaseHTTPRequestHandler):
         def do_GET(self):
             """Respond to a GET request."""
-            if self.path == '/':
+            if self.path == "/":
                 self.send_response(200)
                 self.send_header("Content-type", "text/html")
                 self.end_headers()
@@ -66,8 +68,9 @@ def generate_handler(html, files=None):
 
 def find_open_port(ip, port, n=50):
     """Find an open port near the specified port"""
-    ports = itertools.chain((port + i for i in range(n)),
-                            (port + random.randint(-2 * n, 2 * n)))
+    ports = itertools.chain(
+        (port + i for i in range(n)), (port + random.randint(-2 * n, 2 * n))
+    )
 
     for port in ports:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -78,8 +81,16 @@ def find_open_port(ip, port, n=50):
     raise ValueError("no open ports found")
 
 
-def serve(html, ip='127.0.0.1', port=8888, n_retries=50, files=None,
-          jupyter_warning=True, open_browser=True, http_server=None):
+def serve(
+    html,
+    ip="127.0.0.1",
+    port=8888,
+    n_retries=50,
+    files=None,
+    jupyter_warning=True,
+    open_browser=True,
+    http_server=None,
+):
     """Start a server serving the given HTML, and (optionally) open a browser
 
     Parameters
@@ -124,7 +135,7 @@ def serve(html, ip='127.0.0.1', port=8888, n_retries=50, files=None,
 
     if open_browser:
         # Use a thread to open a web browser pointing to the server
-        b = lambda: webbrowser.open('http://{}:{}'.format(ip, port))
+        b = lambda: webbrowser.open("http://{}:{}".format(ip, port))
         threading.Thread(target=b).start()
 
     try:
