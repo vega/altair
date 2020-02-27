@@ -15,6 +15,7 @@ from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
 
+
 # ------------------------------------------------------------------------
 # Data Utilities
 def _dataset_name(values):
@@ -665,7 +666,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         reflectX : boolean
 
-        reflectY : boolean        
+        reflectY : boolean
 
         rotate : List(float)
             Sets the projection’s three-axis rotation to the specified angles, which must be a
@@ -675,14 +676,14 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
             **Default value:** `[0, 0, 0]`
         scale : float
-            Sets the projection's scale (zoom) value, overriding automatic fitting.            
+            Sets the projection's scale (zoom) value, overriding automatic fitting.
 
         spacing : float
 
         tilt : float
 
         translate : List(float)
-            Sets the projection's translation (pan) value, overriding automatic fitting.        
+            Sets the projection's translation (pan) value, overriding automatic fitting.
 
         """
         projection = core.Projection(

@@ -39,6 +39,7 @@ def version(path):
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
+
 # From https://github.com/jupyterlab/jupyterlab/blob/master/setupbase.py, BSD licensed
 def find_packages(top=HERE):
     """

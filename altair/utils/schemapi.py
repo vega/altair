@@ -96,7 +96,7 @@ class SchemaValidationError(jsonschema.ValidationError):
         try:
             # works in jsonschema 2.3 or later
             contents = err._contents()
-        except:
+        except AttributeError:
             try:
                 # works in Python >=3.4
                 spec = inspect.getfullargspec(err.__init__)

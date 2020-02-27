@@ -14,19 +14,19 @@ import m2r
 
 # import schemapi from here
 sys.path.insert(0, abspath(dirname(__file__)))
-from schemapi import codegen
-from schemapi.codegen import CodeSnippet
+from schemapi import codegen  # noqa: E402
+from schemapi.codegen import CodeSnippet  # noqa: E402
 from schemapi.utils import (
     get_valid_identifier,
     SchemaInfo,
     indent_arglist,
     resolve_references,
-)
-import generate_api_docs
+)  # noqa: E402
+import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
 SCHEMA_VERSION = {
-    "vega": {"v5": "v5.9.0",},
+    "vega": {"v5": "v5.9.0"},
     "vega-lite": {"v3": "v3.4.0", "v4": "v4.0.0"},
 }
 
@@ -250,7 +250,7 @@ def toposort(graph):
     graph : dict of lists
         Mapping of node labels to list of child node labels.
         This is assumed to represent a graph with no cycles.
-        
+
     Returns
     -------
     order : list

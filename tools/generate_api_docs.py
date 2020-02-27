@@ -9,7 +9,7 @@ import types
 # Import Altair from head
 ROOT_DIR = abspath(join(dirname(__file__), ".."))
 sys.path.insert(0, ROOT_DIR)
-import altair as alt
+import altair as alt  # noqa: E402
 
 API_FILENAME = join(ROOT_DIR, "doc", "user_guide", "API.rst")
 

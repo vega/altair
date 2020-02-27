@@ -124,7 +124,7 @@ def serve(
     if jupyter_warning:
         try:
             __IPYTHON__  # noqa
-        except:
+        except NameError:
             pass
         else:
             print(JUPYTER_WARNING)
@@ -135,7 +135,9 @@ def serve(
 
     if open_browser:
         # Use a thread to open a web browser pointing to the server
-        b = lambda: webbrowser.open("http://{}:{}".format(ip, port))
+        def b():
+            return webbrowser.open("http://{}:{}".format(ip, port))
+
         threading.Thread(target=b).start()
 
     try:

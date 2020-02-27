@@ -67,7 +67,8 @@ def basic_chart():
 
 
 def test_chart_data_types():
-    Chart = lambda data: alt.Chart(data).mark_point().encode(x="x:Q", y="y:Q")
+    def Chart(data):
+        return alt.Chart(data).mark_point().encode(x="x:Q", y="y:Q")
 
     # Url Data
     data = "/path/to/my/data.csv"
@@ -165,7 +166,7 @@ def test_chart_infer_types():
     ],
 )
 def test_multiple_encodings(args, kwargs):
-    df = pd.DataFrame({"value": [1, 2, 3], "name": ["A", "B", "C"],})
+    df = pd.DataFrame({"value": [1, 2, 3], "name": ["A", "B", "C"]})
     encoding_dct = [
         {"field": "value", "type": "quantitative"},
         {"field": "name", "type": "nominal"},
