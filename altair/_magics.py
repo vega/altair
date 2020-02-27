@@ -24,8 +24,8 @@ except ImportError:
 
 
 RENDERERS = {
-    "vega": {"5": vega_v5.Vega,},
-    "vega-lite": {"3": vegalite_v3.VegaLite, "4": vegalite_v4.VegaLite,},
+    "vega": {"5": vega_v5.Vega},
+    "vega-lite": {"3": vegalite_v3.VegaLite, "4": vegalite_v4.VegaLite},
 }
 
 

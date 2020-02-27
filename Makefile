@@ -5,6 +5,7 @@ install:
 
 test :
 	black .
+	flake8 .
 	python -m pytest --pyargs --doctest-modules altair
 
 test-coverage:

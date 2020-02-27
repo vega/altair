@@ -191,7 +191,7 @@ def infer_vegalite_type(data):
 def merge_props_geom(feat):
     """
     Merge properties with geometry
-    * Overwrites 'type' and 'geometry' entries if existing    
+    * Overwrites 'type' and 'geometry' entries if existing
     """
 
     geom = {k: feat[k] for k in ("type", "geometry")}
@@ -208,7 +208,7 @@ def merge_props_geom(feat):
 
 def sanitize_geo_interface(geo):
     """Santize a geo_interface to prepare it for serialization.
-    
+
     * Make a copy
     * Convert type array or _Array to list
     * Convert tuples to lists (using json.loads/dumps)
@@ -239,7 +239,7 @@ def sanitize_geo_interface(geo):
     return geo
 
 
-def sanitize_dataframe(df):
+def sanitize_dataframe(df):  # noqa: C901
     """Sanitize a DataFrame to prepare it for serialization.
 
     * Make a copy

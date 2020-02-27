@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: lint
+    name: black-flake8
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.8
@@ -16,3 +16,8 @@ jobs:
       run: |
         pip install black
         black --check .
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-complexity=10 --statistics

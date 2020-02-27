@@ -6,7 +6,8 @@ if sys.version_info > (3, 8):
     Module = ast.Module
 else:
     # Mock the Python >= 3.8 API
-    Module = lambda nodelist, type_ignores: ast.Module(nodelist)
+    def Module(nodelist, type_ignores):
+        return ast.Module(nodelist)
 
 
 class _CatchDisplay(object):
