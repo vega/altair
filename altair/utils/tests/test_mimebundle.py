@@ -156,8 +156,7 @@ def vega_spec():
     }
 
 
-# @require_altair_saver
-@pytest.mark.skip(reason="flaky")
+@require_altair_saver
 def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
