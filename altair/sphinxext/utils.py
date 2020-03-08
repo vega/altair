@@ -67,24 +67,16 @@ def _parse_source_file(filename):
     https://github.com/sphinx-gallery/sphinx-gallery/
     """
 
-    # can't use codecs.open(filename, 'r', 'utf-8') here b/c ast doesn't
-    # work with unicode strings in Python2.7 "SyntaxError: encoding
-    # declaration in Unicode string" In python 2.7 the string can't be
-    # encoded and have information about its encoding. That is particularly
-    # problematic since source files include in their header information
-    # about the file encoding.
-    # Minimal example to fail: ast.parse(u'# -*- coding: utf-8 -*-')
-
-    with open(filename, "rb") as fid:
+    with open(filename, "r", encoding="utf-8") as fid:
         content = fid.read()
     # change from Windows format to UNIX for uniformity
-    content = content.replace(b"\r\n", b"\n")
+    content = content.replace("\r\n", "\n")
 
     try:
         node = ast.parse(content)
-        return node, content.decode("utf-8")
     except SyntaxError:
-        return None, content.decode("utf-8")
+        node = None
+    return node, content
 
 
 def get_docstring_and_rest(filename):
