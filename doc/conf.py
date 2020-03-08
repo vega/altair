@@ -1,5 +1,4 @@
 # !/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 # altair documentation build configuration file, created by
 # sphinx-quickstart on Wed Sep  7 12:52:48 2016.

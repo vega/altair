@@ -31,7 +31,7 @@ def infer_dtype(value):
     """
     if not hasattr(infer_dtype, "_supports_skipna"):
         try:
-            _ = _infer_dtype([1], skipna=False)
+            _infer_dtype([1], skipna=False)
         except TypeError:
             # pandas < 0.21.0 don't support skipna keyword
             infer_dtype._supports_skipna = False

@@ -183,5 +183,5 @@ This can be done with the ``scale_factor`` argument, which defaults to 1.0::
     chart.save('chart.png', scale_factor=2.0)
 
 
-.. _altair_saver http://github.com/altair-viz/altair_saver/
+.. _altair_saver: http://github.com/altair-viz/altair_saver/
 .. _vegaEmbed: https://github.com/vega/vega-embed
