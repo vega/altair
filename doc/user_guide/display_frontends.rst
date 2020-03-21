@@ -46,11 +46,12 @@ see :ref:`renderer-api`.
 
 Displaying in JupyterLab
 ------------------------
-JupyterLab 1.0 and later will work with Altair's default ``html`` renderer with
-a live web connection.
+JupyterLab 1.0 and later will work with Altair's default renderer with
+a live web connection: no render enable step is required.
 
-For offline rendering in JupyterLab, use::
+Optionally, for offline rendering in JupyterLab, you can use the mimetype renderer::
 
+    # Optional in JupyterLab: requires an up-to-date vega labextension.
     alt.renderers.enable('mimetype')
 
 and ensure you have the proper version of the vega labextension installed; for
@@ -58,24 +59,27 @@ Altair 4 this can be installed with:
 
 .. code-block:: bash
 
-    $ jupyter labextension install @jupyterlab/vega6-extension
+    $ jupyter labextension install @jupyterlab/vega5-extension
 
-In JupyterLab version 2.0 or newer, this extension is installed by default.
+In JupyterLab version 2.0 or newer, this extension is installed by default, though the
+version available in the jupyterlab release often takes a few months to catch up with
+new Altair releases.
 
 
 .. _display-notebook:
 
 Displaying in the Jupyter Notebook
 ----------------------------------
-The classic Jupyter Notebook will work with Altair's default ``html`` renderer
-with a live web connection.
+The classic Jupyter Notebook will work with Altair's default renderer with
+a live web connection: no render enable step is required.
 
-For offline rendering in Jupyter Notebook, use::
+Optionally, for offline rendering in Jupyter Notebook, you can use the notebook renderer::
 
+    # Optional in Jupyter Notebook: requires an up-to-date vega nbextension.
     alt.renderers.enable('notebook')
     
-which is provided by the `ipyvega`_ extension.
-This can be installed and enabled either using pip:
+This renderer is provided by the `ipyvega`_ notebook extension. which can be
+installed and enabled either using pip:
 
 .. code-block:: bash
 
