@@ -21,4 +21,7 @@ jobs:
     - name: Build docs
       run: |
         cd doc && make html
+    - name: Run doctest
+      run: |
+        cd doc && make doctest
         
