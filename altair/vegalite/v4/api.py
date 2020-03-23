@@ -5,10 +5,11 @@ import io
 import json
 import jsonschema
 import pandas as pd
+from toolz.curried import pipe as _pipe
 
 from .schema import core, channels, mixins, Undefined, SCHEMA_URL
 
-from .data import data_transformers, pipe
+from .data import data_transformers
 from ... import utils, expr
 from .display import renderers, VEGALITE_VERSION, VEGAEMBED_VERSION, VEGA_VERSION
 from .theme import themes
@@ -80,7 +81,7 @@ def _prepare_data(data, context=None):
 
     # convert dataframes  or objects with __geo_interface__ to dict
     if isinstance(data, pd.DataFrame) or hasattr(data, "__geo_interface__"):
-        data = pipe(data, data_transformers.get())
+        data = _pipe(data, data_transformers.get())
 
     # convert string input to a URLData
     if isinstance(data, str):
