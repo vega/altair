@@ -2,13 +2,15 @@ import json
 import os
 import random
 import hashlib
+import warnings
 
 import pandas as pd
-from toolz.curried import curry, pipe  # noqa
+from toolz import curried
 from typing import Callable
 
 from .core import sanitize_dataframe
 from .core import sanitize_geo_interface
+from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
 
@@ -55,7 +57,7 @@ class MaxRowsError(Exception):
     pass
 
 
-@curry
+@curried.curry
 def limit_rows(data, max_rows=5000):
     """Raise MaxRowsError if the data model has more than max_rows.
 
@@ -84,7 +86,7 @@ def limit_rows(data, max_rows=5000):
     return data
 
 
-@curry
+@curried.curry
 def sample(data, n=None, frac=None):
     """Reduce the size of the data model by sampling without replacement."""
     check_data_type(data)
@@ -98,7 +100,7 @@ def sample(data, n=None, frac=None):
             return {"values": values}
 
 
-@curry
+@curried.curry
 def to_json(
     data,
     prefix="altair-data",
@@ -117,7 +119,7 @@ def to_json(
     return {"url": os.path.join(urlpath, filename), "format": {"type": "json"}}
 
 
-@curry
+@curried.curry
 def to_csv(
     data,
     prefix="altair-data",
@@ -134,7 +136,7 @@ def to_csv(
     return {"url": os.path.join(urlpath, filename), "format": {"type": "csv"}}
 
 
-@curry
+@curried.curry
 def to_values(data):
     """Replace a DataFrame by a data model with values."""
     check_data_type(data)
@@ -213,3 +215,30 @@ def _data_to_csv_string(data):
         raise NotImplementedError(
             "to_csv only works with data expressed as " "a DataFrame or as a dict"
         )
+
+
+def pipe(data, *funcs):
+    """
+    Pipe a value through a sequence of functions
+
+    Deprecated: use toolz.curried.pipe() instead.
+    """
+    warnings.warn(
+        "alt.pipe() is deprecated, and will be removed in a future release. "
+        "Use toolz.curried.pipe() instead.",
+        AltairDeprecationWarning,
+    )
+    return curried.pipe(data, *funcs)
+
+
+def curry(*args, **kwargs):
+    """ Curry a callable function
+
+    Deprecated: use toolz.curried.curry() instead.
+    """
+    warnings.warn(
+        "alt.curry() is deprecated, and will be removed in a future release. "
+        "Use toolz.curried.curry() instead.",
+        AltairDeprecationWarning,
+    )
+    return curried.curry(*args, **kwargs)

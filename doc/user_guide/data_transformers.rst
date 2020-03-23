@@ -125,7 +125,8 @@ Piping
 
 Multiple data transformers can be piped together using ``pipe``::
 
-    from altair import pipe, limit_rows, to_values
+    from altair import limit_rows, to_values
+    from toolz.curried import pipe
     pipe(data, limit_rows(10000), to_values)
 
 Managing data transformers
@@ -182,11 +183,12 @@ custom data transformer that stores all JSON files in separate directory.::
 
     import os
     import altair as alt
+    from toolz.curried import pipe
 
 
     def json_dir(data, data_dir='altairdata'):
         os.makedirs(data_dir, exist_ok=True)
-        return alt.pipe(data, alt.to_json(filename=data_dir + '/{prefix}-{hash}.{extension}') )
+        return pipe(data, alt.to_json(filename=data_dir + '/{prefix}-{hash}.{extension}') )
 
 
     alt.data_transformers.register('json_dir', json_dir)

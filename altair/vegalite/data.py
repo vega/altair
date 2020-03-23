@@ -1,8 +1,10 @@
-from toolz.curried import curry, pipe
+from toolz import curried
 from ..utils.core import sanitize_dataframe
 from ..utils.data import (
     MaxRowsError,
+    curry,
     limit_rows,
+    pipe,
     sample,
     to_csv,
     to_json,
@@ -12,9 +14,9 @@ from ..utils.data import (
 from ..utils.data import DataTransformerRegistry as _DataTransformerRegistry
 
 
-@curry
+@curried.curry
 def default_data_transformer(data, max_rows=5000):
-    return pipe(data, limit_rows(max_rows=max_rows), to_values)
+    return curried.pipe(data, limit_rows(max_rows=max_rows), to_values)
 
 
 class DataTransformerRegistry(_DataTransformerRegistry):
