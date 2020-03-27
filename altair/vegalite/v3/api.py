@@ -1400,7 +1400,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
     # Display-related methods
 
-    def _repr_mimebundle_(self, include, exclude):
+    def _repr_mimebundle_(self, include=None, exclude=None):
         """Return a MIME bundle for display in Jupyter frontends."""
         # Catch errors explicitly to get around issues in Jupyter frontend
         # see https://github.com/ipython/ipython/issues/11038

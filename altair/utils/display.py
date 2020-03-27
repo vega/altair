@@ -128,7 +128,7 @@ class Displayable(object):
         schema_dict = json.loads(pkgutil.get_data(*self.schema_path).decode("utf-8"))
         validate(self.spec, schema_dict)
 
-    def _repr_mimebundle_(self, include, exclude):
+    def _repr_mimebundle_(self, include=None, exclude=None):
         """Return a MIME bundle for display in Jupyter frontends."""
         if self.renderers is not None:
             return self.renderers.get()(self.spec)
