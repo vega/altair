@@ -6,6 +6,29 @@ Altair Change Log
 Version 4.1.0 (unreleased)
 --------------------------
 - Minimum Python version is now 3.6
+- Update Vega-Lite to version 4.8.1; many new features and bug fixes from Vega-Lite
+  versions 4.1 through 4.8; see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
+
+Enhancements
+~~~~~~~~~~~~
+- ``strokeDash`` encoding can now be used to control line styles
+- ``chart.save()`` now relies on `altair_saver <http://github.com/altair-viz/altair_saver>`_
+  for more flexibility (#1943).
+- New ``chart.show()`` method replaces ``chart.serve()``, and relies on
+  `altair_viewer <http://github.com/altair-viz/altair_viewer>`_ to allow offline
+  viewing of charts (#1988).
+
+Bug Fixes
+~~~~~~~~~
+- Support Python 3.8 (#1958)
+- Support multiple views in JupyterLab (#1986)
+- Support numpy types within specifications (#1914)
+- Support pandas nullable ints and string types (#1924)
+
+Maintenance
+~~~~~~~~~~~
+- Altair now uses `black <https://github.com/psf/black>`_ and
+  `flake8 <https://gitlab.com/pycqa/flake8>`_ for maintaining code quality & consistency.
 
 Version 4.0.1 (released Jan 14, 2020)
 -------------------------------------
