@@ -118,8 +118,7 @@ class Color(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnull`,
-    List(:class:`ConditionalValueDefGradientstringnull`))
+    condition : :class:`ValueConditionGradientstringnull`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -203,7 +202,7 @@ class Color(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -281,7 +280,7 @@ class Color(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class ColorValue(ValueChannelMixin, core.ColorGradientValueDefWithCondition):
+class ColorValue(ValueChannelMixin, core.ColorGradientValueWithCondition):
     """ColorValue schema wrapper
 
     Mapping(required=[])
@@ -290,8 +289,7 @@ class ColorValue(ValueChannelMixin, core.ColorGradientValueDefWithCondition):
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldDef`,
-    :class:`ConditionalValueDefGradientstringnull`,
-    List(:class:`ConditionalValueDefGradientstringnull`))
+    :class:`ValueConditionGradientstringnull`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(:class:`Gradient`, string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -414,7 +412,7 @@ class Column(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -549,7 +547,7 @@ class Detail(FieldChannelMixin, core.FieldDefWithoutScale):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -773,7 +771,7 @@ class Facet(FieldChannelMixin, core.FacetEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -893,8 +891,7 @@ class Fill(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnull`,
-    List(:class:`ConditionalValueDefGradientstringnull`))
+    condition : :class:`ValueConditionGradientstringnull`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -978,7 +975,7 @@ class Fill(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -1056,7 +1053,7 @@ class Fill(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class FillValue(ValueChannelMixin, core.ColorGradientValueDefWithCondition):
+class FillValue(ValueChannelMixin, core.ColorGradientValueWithCondition):
     """FillValue schema wrapper
 
     Mapping(required=[])
@@ -1065,8 +1062,7 @@ class FillValue(ValueChannelMixin, core.ColorGradientValueDefWithCondition):
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldDef`,
-    :class:`ConditionalValueDefGradientstringnull`,
-    List(:class:`ConditionalValueDefGradientstringnull`))
+    :class:`ValueConditionGradientstringnull`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(:class:`Gradient`, string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -1120,8 +1116,7 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : :class:`ValueConditionnumber`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1205,7 +1200,7 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -1283,7 +1278,7 @@ class FillOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
                                           sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class FillOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+class FillOpacityValue(ValueChannelMixin, core.NumericValueWithCondition):
     """FillOpacityValue schema wrapper
 
     Mapping(required=[])
@@ -1291,8 +1286,7 @@ class FillOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionnumber`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -1346,8 +1340,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstring`,
-    List(:class:`ConditionalValueDefstring`))
+    condition : :class:`ValueConditionstring`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -1371,9 +1364,9 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    format : string
-        The text formatting pattern for labels of guides (axes, legends, headers) and text
-        marks.
+    format : anyOf(string, Mapping(required=[]))
+        When used with the default ``"number"`` and ``"time"`` format type, the text
+        formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
@@ -1384,13 +1377,19 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
         for more examples.
 
+        When used with a `custom "formatType"
+        <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ that takes
+        ``datum.value`` and format parameter as input), this property represents the format
+        parameter.
+
         **Default value:**  Derived from `numberFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : enum('number', 'time')
-        The format type for labels ( ``"number"`` or ``"time"`` ).
+    formatType : string
+        The format type for labels ( ``"number"`` or ``"time"`` or a `registered custom
+        format type <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ ).
 
         **Default value:**
 
@@ -1404,7 +1403,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -1483,7 +1482,7 @@ class Href(FieldChannelMixin, core.StringFieldDefWithCondition):
                                    title=title, type=type, **kwds)
 
 
-class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
+class HrefValue(ValueChannelMixin, core.StringValueWithCondition):
     """HrefValue schema wrapper
 
     Mapping(required=[])
@@ -1491,8 +1490,7 @@ class HrefValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionstringnull`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -1563,7 +1561,7 @@ class Key(FieldChannelMixin, core.FieldDefWithoutScale):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -1695,7 +1693,7 @@ class Latitude(FieldChannelMixin, core.LatLongFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -1851,7 +1849,7 @@ class Latitude2(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -1969,7 +1967,7 @@ class Longitude(FieldChannelMixin, core.LatLongFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -2125,7 +2123,7 @@ class Longitude2(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -2227,8 +2225,7 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : :class:`ValueConditionnumber`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2312,7 +2309,7 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -2390,7 +2387,7 @@ class Opacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
                                       sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class OpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+class OpacityValue(ValueChannelMixin, core.NumericValueWithCondition):
     """OpacityValue schema wrapper
 
     Mapping(required=[])
@@ -2398,8 +2395,7 @@ class OpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionnumber`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -2471,7 +2467,7 @@ class Order(FieldChannelMixin, core.OrderFieldDef):
         2) ``field`` is not required if ``aggregate`` is ``count``.
     sort : :class:`SortOrder`
         The sort order. One of ``"ascending"`` (default) or ``"descending"``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -2678,7 +2674,7 @@ class Row(FieldChannelMixin, core.RowColumnEncodingFieldDef):
         **Default value** : Depends on ``"spacing"`` property of `the view composition
         configuration <https://vega.github.io/vega-lite/docs/config.html#view-config>`__ (
         ``20`` by default)
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -2796,8 +2792,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : :class:`ValueConditionstringnull`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -2881,7 +2876,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -2959,7 +2954,7 @@ class Shape(FieldChannelMixin, core.ShapeFieldDefWithCondition):
                                     sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class ShapeValue(ValueChannelMixin, core.ShapeValueDefWithCondition):
+class ShapeValue(ValueChannelMixin, core.ShapeValueWithCondition):
     """ShapeValue schema wrapper
 
     Mapping(required=[])
@@ -2968,7 +2963,7 @@ class ShapeValue(ValueChannelMixin, core.ShapeValueDefWithCondition):
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldDefTypeForShape`,
-    :class:`ConditionalStringValueDef`, List(:class:`ConditionalStringValueDef`))
+    :class:`ValueConditionstringnull`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -3022,8 +3017,7 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : :class:`ValueConditionnumber`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3107,7 +3101,7 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -3185,7 +3179,7 @@ class Size(FieldChannelMixin, core.NumericFieldDefWithCondition):
                                    sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class SizeValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+class SizeValue(ValueChannelMixin, core.NumericValueWithCondition):
     """SizeValue schema wrapper
 
     Mapping(required=[])
@@ -3193,8 +3187,7 @@ class SizeValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionnumber`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -3248,8 +3241,7 @@ class Stroke(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefGradientstringnull`,
-    List(:class:`ConditionalValueDefGradientstringnull`))
+    condition : :class:`ValueConditionGradientstringnull`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3333,7 +3325,7 @@ class Stroke(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -3411,7 +3403,7 @@ class Stroke(FieldChannelMixin, core.ColorGradientFieldDefWithCondition):
                                      sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class StrokeValue(ValueChannelMixin, core.ColorGradientValueDefWithCondition):
+class StrokeValue(ValueChannelMixin, core.ColorGradientValueWithCondition):
     """StrokeValue schema wrapper
 
     Mapping(required=[])
@@ -3420,8 +3412,7 @@ class StrokeValue(ValueChannelMixin, core.ColorGradientValueDefWithCondition):
     ----------
 
     condition : anyOf(:class:`ConditionalMarkPropFieldDef`,
-    :class:`ConditionalValueDefGradientstringnull`,
-    List(:class:`ConditionalValueDefGradientstringnull`))
+    :class:`ValueConditionGradientstringnull`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(:class:`Gradient`, string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -3435,8 +3426,8 @@ class StrokeValue(ValueChannelMixin, core.ColorGradientValueDefWithCondition):
         super(StrokeValue, self).__init__(value=value, condition=condition, **kwds)
 
 
-class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
-    """StrokeOpacity schema wrapper
+class StrokeDash(FieldChannelMixin, core.NumericArrayFieldDefWithCondition):
+    """StrokeDash schema wrapper
 
     Mapping(required=[shorthand])
     A FieldDef with Condition :raw-html:`<ValueDef>`
@@ -3475,8 +3466,7 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : :class:`ValueConditionnumber`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3560,7 +3550,231 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
+        Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
+        field.
+        or `a temporal field that gets casted as ordinal
+        <https://vega.github.io/vega-lite/docs/type.html#cast>`__.
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `timeUnit <https://vega.github.io/vega-lite/docs/timeunit.html>`__
+        documentation.
+    title : anyOf(:class:`Text`, None)
+        A title for the field. If ``null``, the title will be removed.
+
+        **Default value:**  derived from the field's name and transformation function (
+        ``aggregate``, ``bin`` and ``timeUnit`` ). If the field has an aggregate function,
+        the function is displayed as part of the title (e.g., ``"Sum of Profit"`` ). If the
+        field is binned or has a time unit applied, the applied function is shown in
+        parentheses (e.g., ``"Profit (binned)"``, ``"Transaction Date (year-month)"`` ).
+        Otherwise, the title is simply the field name.
+
+        **Notes** :
+
+        1) You can customize the default field title format by providing the `fieldTitle
+        <https://vega.github.io/vega-lite/docs/config.html#top-level-config>`__ property in
+        the `config <https://vega.github.io/vega-lite/docs/config.html>`__ or `fieldTitle
+        function via the compile function's options
+        <https://vega.github.io/vega-lite/docs/compile.html#field-title>`__.
+
+        2) If both field definition's ``title`` and axis, header, or legend ``title`` are
+        defined, axis/header/legend title will be used.
+    type : :class:`StandardType`
+        The encoded field's type of measurement ( ``"quantitative"``, ``"temporal"``,
+        ``"ordinal"``, or ``"nominal"`` ).
+        It can also be a ``"geojson"`` type for encoding `'geoshape'
+        <https://vega.github.io/vega-lite/docs/geoshape.html>`__.
+
+        **Note:**
+
+
+        * Data values for a temporal field can be either a date-time string (e.g.,
+          ``"2015-03-07 12:32:17"``, ``"17:01"``, ``"2015-03-16"``. ``"2015"`` ) or a
+          timestamp number (e.g., ``1552199579097`` ).
+        * Data ``type`` describes the semantics of the data rather than the primitive data
+          types (number, string, etc.). The same primitive data type can have different
+          types of measurement. For example, numeric data can represent quantitative,
+          ordinal, or nominal data.
+        * When using with `bin <https://vega.github.io/vega-lite/docs/bin.html>`__, the
+          ``type`` property can be either ``"quantitative"`` (for using a linear bin scale)
+          or `"ordinal" (for using an ordinal bin scale)
+          <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `timeUnit
+          <https://vega.github.io/vega-lite/docs/timeunit.html>`__, the ``type`` property
+          can be either ``"temporal"`` (for using a temporal scale) or `"ordinal" (for using
+          an ordinal scale) <https://vega.github.io/vega-lite/docs/type.html#cast-bin>`__.
+        * When using with `aggregate
+          <https://vega.github.io/vega-lite/docs/aggregate.html>`__, the ``type`` property
+          refers to the post-aggregation data type. For example, we can calculate count
+          ``distinct`` of a categorical field ``"cat"`` using ``{"aggregate": "distinct",
+          "field": "cat", "type": "quantitative"}``. The ``"type"`` of the aggregate output
+          is ``"quantitative"``.
+        * Secondary channels (e.g., ``x2``, ``y2``, ``xError``, ``yError`` ) do not have
+          ``type`` as they have exactly the same type as their primary channels (e.g.,
+          ``x``, ``y`` ).
+
+        **See also:** `type <https://vega.github.io/vega-lite/docs/type.html>`__
+        documentation.
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "strokeDash"
+
+    def __init__(self, shorthand=Undefined, aggregate=Undefined, bin=Undefined, condition=Undefined,
+                 field=Undefined, legend=Undefined, scale=Undefined, sort=Undefined, timeUnit=Undefined,
+                 title=Undefined, type=Undefined, **kwds):
+        super(StrokeDash, self).__init__(shorthand=shorthand, aggregate=aggregate, bin=bin,
+                                         condition=condition, field=field, legend=legend, scale=scale,
+                                         sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
+
+
+class StrokeDashValue(ValueChannelMixin, core.NumericArrayValueDefWithCondition):
+    """StrokeDashValue schema wrapper
+
+    Mapping(required=[])
+
+    Attributes
+    ----------
+
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionnumber`)
+        A field definition or one or more value definition(s) with a selection predicate.
+    value : List(float)
+        A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
+        definition <https://vega.github.io/vega-lite/docs/types.html#gradient>`__ for color,
+        values between ``0`` to ``1`` for opacity).
+    """
+    _class_is_valid_at_instantiation = False
+    _encoding_name = "strokeDash"
+
+    def __init__(self, value, condition=Undefined, **kwds):
+        super(StrokeDashValue, self).__init__(value=value, condition=condition, **kwds)
+
+
+class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
+    """StrokeOpacity schema wrapper
+
+    Mapping(required=[shorthand])
+    A FieldDef with Condition :raw-html:`<ValueDef>`
+
+    Attributes
+    ----------
+
+    shorthand : string
+        shorthand for field, aggregate, and type
+    aggregate : :class:`Aggregate`
+        Aggregation function for the field
+        (e.g., ``"mean"``, ``"sum"``, ``"median"``, ``"min"``, ``"max"``, ``"count"`` ).
+
+        **Default value:** ``undefined`` (None)
+
+        **See also:** `aggregate <https://vega.github.io/vega-lite/docs/aggregate.html>`__
+        documentation.
+    bin : anyOf(boolean, :class:`BinParams`, None)
+        A flag for binning a ``quantitative`` field, `an object defining binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html#params>`__, or indicating that the
+        data for ``x`` or ``y`` channel are binned before they are imported into Vega-Lite (
+        ``"binned"`` ).
+
+
+        If ``true``, default `binning parameters
+        <https://vega.github.io/vega-lite/docs/bin.html>`__ will be applied.
+
+        If ``"binned"``, this indicates that the data for the ``x`` (or ``y`` ) channel are
+        already binned. You can map the bin-start field to ``x`` (or ``y`` ) and the bin-end
+        field to ``x2`` (or ``y2`` ). The scale and axis will be formatted similar to
+        binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also
+        set the axis's `tickMinStep
+        <https://vega.github.io/vega-lite/docs/axis.html#ticks>`__ property.
+
+        **Default value:** ``false``
+
+        **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
+        documentation.
+    condition : :class:`ValueConditionnumber`
+        One or more value definition(s) with `a selection or a test predicate
+        <https://vega.github.io/vega-lite/docs/condition.html>`__.
+
+        **Note:** A field definition's ``condition`` property can only contain `conditional
+        value definitions <https://vega.github.io/vega-lite/docs/condition.html#value>`__
+        since Vega-Lite only allows at most one encoded field per encoding channel.
+    field : :class:`Field`
+        **Required.** A string defining the name of the field from which to pull a data
+        value
+        or an object defining iterated values from the `repeat
+        <https://vega.github.io/vega-lite/docs/repeat.html>`__ operator.
+
+        **See also:** `field <https://vega.github.io/vega-lite/docs/field.html>`__
+        documentation.
+
+        **Notes:**
+        1)  Dots ( ``.`` ) and brackets ( ``[`` and ``]`` ) can be used to access nested
+        objects (e.g., ``"field": "foo.bar"`` and ``"field": "foo['bar']"`` ).
+        If field names contain dots or brackets but are not nested, you can use ``\\`` to
+        escape dots and brackets (e.g., ``"a\\.b"`` and ``"a\\[0\\]"`` ).
+        See more details about escaping in the `field documentation
+        <https://vega.github.io/vega-lite/docs/field.html>`__.
+        2) ``field`` is not required if ``aggregate`` is ``count``.
+    legend : anyOf(:class:`Legend`, None)
+        An object defining properties of the legend.
+        If ``null``, the legend for the encoding channel will be removed.
+
+        **Default value:** If undefined, default `legend properties
+        <https://vega.github.io/vega-lite/docs/legend.html>`__ are applied.
+
+        **See also:** `legend <https://vega.github.io/vega-lite/docs/legend.html>`__
+        documentation.
+    scale : anyOf(:class:`Scale`, None)
+        An object defining properties of the channel's scale, which is the function that
+        transforms values in the data domain (numbers, dates, strings, etc) to visual values
+        (pixels, colors, sizes) of the encoding channels.
+
+        If ``null``, the scale will be `disabled and the data value will be directly encoded
+        <https://vega.github.io/vega-lite/docs/scale.html#disable>`__.
+
+        **Default value:** If undefined, default `scale properties
+        <https://vega.github.io/vega-lite/docs/scale.html>`__ are applied.
+
+        **See also:** `scale <https://vega.github.io/vega-lite/docs/scale.html>`__
+        documentation.
+    sort : :class:`Sort`
+        Sort order for the encoded field.
+
+        For continuous fields (quantitative or temporal), ``sort`` can be either
+        ``"ascending"`` or ``"descending"``.
+
+        For discrete fields, ``sort`` can be one of the following:
+
+
+        * ``"ascending"`` or ``"descending"`` -- for sorting by the values' natural order in
+          JavaScript.
+        * `A string indicating an encoding channel name to sort by
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__ (e.g.,
+          ``"x"`` or ``"y"`` ) with an optional minus prefix for descending sort (e.g.,
+          ``"-x"`` to sort by x-field, descending). This channel string is short-form of `a
+          sort-by-encoding definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-by-encoding>`__. For
+          example, ``"sort": "-x"`` is equivalent to ``"sort": {"encoding": "x", "order":
+          "descending"}``.
+        * `A sort field definition
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-field>`__ for sorting by
+          another field.
+        * `An array specifying the field values in preferred order
+          <https://vega.github.io/vega-lite/docs/sort.html#sort-array>`__. In this case, the
+          sort order will obey the values in the array, followed by any unspecified values
+          in their original order. For discrete time field, values in the sort array can be
+          `date-time definition objects <types#datetime>`__. In addition, for time units
+          ``"month"`` and ``"day"``, the values can be the month or day names (case
+          insensitive) or their 3-letter initials (e.g., ``"Mon"``, ``"Tue"`` ).
+        * ``null`` indicating no sort.
+
+        **Default value:** ``"ascending"``
+
+        **Note:** ``null`` and sorting by another channel is not supported for ``row`` and
+        ``column``.
+
+        **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
+        documentation.
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -3639,7 +3853,7 @@ class StrokeOpacity(FieldChannelMixin, core.NumericFieldDefWithCondition):
                                             type=type, **kwds)
 
 
-class StrokeOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+class StrokeOpacityValue(ValueChannelMixin, core.NumericValueWithCondition):
     """StrokeOpacityValue schema wrapper
 
     Mapping(required=[])
@@ -3647,8 +3861,7 @@ class StrokeOpacityValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionnumber`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -3702,8 +3915,7 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : :class:`ValueConditionnumber`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3787,7 +3999,7 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
 
         **See also:** `sort <https://vega.github.io/vega-lite/docs/sort.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -3865,7 +4077,7 @@ class StrokeWidth(FieldChannelMixin, core.NumericFieldDefWithCondition):
                                           sort=sort, timeUnit=timeUnit, title=title, type=type, **kwds)
 
 
-class StrokeWidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
+class StrokeWidthValue(ValueChannelMixin, core.NumericValueWithCondition):
     """StrokeWidthValue schema wrapper
 
     Mapping(required=[])
@@ -3873,8 +4085,7 @@ class StrokeWidthValue(ValueChannelMixin, core.NumericValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalNumberValueDef`,
-    List(:class:`ConditionalNumberValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionnumber`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : float
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -3928,7 +4139,7 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefText`, List(:class:`ConditionalValueDefText`))
+    condition : :class:`ValueConditionText`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -3952,9 +4163,9 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    format : string
-        The text formatting pattern for labels of guides (axes, legends, headers) and text
-        marks.
+    format : anyOf(string, Mapping(required=[]))
+        When used with the default ``"number"`` and ``"time"`` format type, the text
+        formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
@@ -3965,13 +4176,19 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
         for more examples.
 
+        When used with a `custom "formatType"
+        <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ that takes
+        ``datum.value`` and format parameter as input), this property represents the format
+        parameter.
+
         **Default value:**  Derived from `numberFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : enum('number', 'time')
-        The format type for labels ( ``"number"`` or ``"time"`` ).
+    formatType : string
+        The format type for labels ( ``"number"`` or ``"time"`` or a `registered custom
+        format type <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ ).
 
         **Default value:**
 
@@ -3985,7 +4202,7 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -4064,7 +4281,7 @@ class Text(FieldChannelMixin, core.TextFieldDefWithCondition):
                                    title=title, type=type, **kwds)
 
 
-class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
+class TextValue(ValueChannelMixin, core.TextValueWithCondition):
     """TextValue schema wrapper
 
     Mapping(required=[])
@@ -4072,8 +4289,7 @@ class TextValue(ValueChannelMixin, core.TextValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalStringFieldDef`, :class:`ConditionalValueDefText`,
-    List(:class:`ConditionalValueDefText`))
+    condition : anyOf(:class:`ConditionalStringFieldDef`, :class:`ValueConditionText`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : :class:`Text`
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -4127,8 +4343,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstring`,
-    List(:class:`ConditionalValueDefstring`))
+    condition : :class:`ValueConditionstring`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -4152,9 +4367,9 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    format : string
-        The text formatting pattern for labels of guides (axes, legends, headers) and text
-        marks.
+    format : anyOf(string, Mapping(required=[]))
+        When used with the default ``"number"`` and ``"time"`` format type, the text
+        formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
@@ -4165,13 +4380,19 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
         for more examples.
 
+        When used with a `custom "formatType"
+        <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ that takes
+        ``datum.value`` and format parameter as input), this property represents the format
+        parameter.
+
         **Default value:**  Derived from `numberFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : enum('number', 'time')
-        The format type for labels ( ``"number"`` or ``"time"`` ).
+    formatType : string
+        The format type for labels ( ``"number"`` or ``"time"`` or a `registered custom
+        format type <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ ).
 
         **Default value:**
 
@@ -4185,7 +4406,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -4264,7 +4485,7 @@ class Tooltip(FieldChannelMixin, core.StringFieldDefWithCondition):
                                       title=title, type=type, **kwds)
 
 
-class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
+class TooltipValue(ValueChannelMixin, core.StringValueWithCondition):
     """TooltipValue schema wrapper
 
     Mapping(required=[])
@@ -4272,8 +4493,7 @@ class TooltipValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionstringnull`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -4327,8 +4547,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **See also:** `bin <https://vega.github.io/vega-lite/docs/bin.html>`__
         documentation.
-    condition : anyOf(:class:`ConditionalValueDefstring`,
-    List(:class:`ConditionalValueDefstring`))
+    condition : :class:`ValueConditionstring`
         One or more value definition(s) with `a selection or a test predicate
         <https://vega.github.io/vega-lite/docs/condition.html>`__.
 
@@ -4352,9 +4571,9 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    format : string
-        The text formatting pattern for labels of guides (axes, legends, headers) and text
-        marks.
+    format : anyOf(string, Mapping(required=[]))
+        When used with the default ``"number"`` and ``"time"`` format type, the text
+        formatting pattern for labels of guides (axes, legends, headers) and text marks.
 
 
         * If the format type is ``"number"`` (e.g., for quantitative fields), this is D3's
@@ -4365,13 +4584,19 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
         See the `format documentation <https://vega.github.io/vega-lite/docs/format.html>`__
         for more examples.
 
+        When used with a `custom "formatType"
+        <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ that takes
+        ``datum.value`` and format parameter as input), this property represents the format
+        parameter.
+
         **Default value:**  Derived from `numberFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for number
         format and from `timeFormat
         <https://vega.github.io/vega-lite/docs/config.html#format>`__ config for time
         format.
-    formatType : enum('number', 'time')
-        The format type for labels ( ``"number"`` or ``"time"`` ).
+    formatType : string
+        The format type for labels ( ``"number"`` or ``"time"`` or a `registered custom
+        format type <https://vega.github.io/vega-lite/usage/compile.html#format-type>`__ ).
 
         **Default value:**
 
@@ -4385,7 +4610,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
 
         **Note:** The label text and value can be assessed via the ``label`` and ``value``
         properties of the axis's backing ``datum`` object.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -4464,7 +4689,7 @@ class Url(FieldChannelMixin, core.StringFieldDefWithCondition):
                                   title=title, type=type, **kwds)
 
 
-class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
+class UrlValue(ValueChannelMixin, core.StringValueWithCondition):
     """UrlValue schema wrapper
 
     Mapping(required=[])
@@ -4472,8 +4697,7 @@ class UrlValue(ValueChannelMixin, core.StringValueDefWithCondition):
     Attributes
     ----------
 
-    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ConditionalStringValueDef`,
-    List(:class:`ConditionalStringValueDef`))
+    condition : anyOf(:class:`ConditionalMarkPropFieldDef`, :class:`ValueConditionstringnull`)
         A field definition or one or more value definition(s) with a selection predicate.
     value : anyOf(string, None)
         A constant value in visual domain (e.g., ``"red"`` / ``"#0099ff"`` / `gradient
@@ -4653,7 +4877,7 @@ class X(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -4811,7 +5035,7 @@ class X2(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -4931,7 +5155,7 @@ class XError(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -5051,7 +5275,7 @@ class XError2(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -5279,7 +5503,7 @@ class Y(FieldChannelMixin, core.PositionFieldDef):
 
         **See also:** `stack <https://vega.github.io/vega-lite/docs/stack.html>`__
         documentation.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -5437,7 +5661,7 @@ class Y2(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -5557,7 +5781,7 @@ class YError(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal
@@ -5677,7 +5901,7 @@ class YError2(FieldChannelMixin, core.SecondaryFieldDef):
         See more details about escaping in the `field documentation
         <https://vega.github.io/vega-lite/docs/field.html>`__.
         2) ``field`` is not required if ``aggregate`` is ``count``.
-    timeUnit : :class:`TimeUnit`
+    timeUnit : anyOf(:class:`TimeUnit`, :class:`TimeUnitParams`)
         Time unit (e.g., ``year``, ``yearmonth``, ``month``, ``hours`` ) for a temporal
         field.
         or `a temporal field that gets casted as ordinal

@@ -53,10 +53,10 @@ longitude   :class:`Longitude`   Longitude for geo charts           :ref:`galler
 latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
 longitude2  :class:`Longitude2`  Second longitude value for ranges  N/A
 latitude2   :class:`Latitude2`   Second latitude value for ranges   N/A
-xerror      :class:`XError`      The x-axis error value             N/A
-yerror      :class:`YError`      The y-axis error value             N/A
-xerror2     :class:`XError2`     The second x-axis error value      N/A
-yerror2     :class:`YError2`     The second y-axis error value      N/A
+xError      :class:`XError`      The x-axis error value             N/A
+yError      :class:`YError`      The y-axis error value             N/A
+xError2     :class:`XError2`     The second x-axis error value      N/A
+yError2     :class:`YError2`     The second y-axis error value      N/A
 ==========  ===================  =================================  ===================================
 
 Mark Property Channels:
@@ -71,8 +71,9 @@ opacity        :class:`Opacity`        The opacity of the mark         :ref:`gal
 shape          :class:`Shape`          The shape of the mark           N/A
 size           :class:`Size`           The size of the mark            :ref:`gallery_table_bubble_plot_github`
 stroke         :class:`Stroke`         The stroke of the mark          N/A
-strokeopacity  :class:`StrokeOpacity`  The opacity of the line         N/A
-strokewidth    :class:`StrokeWidth`    The width of the line           N/A
+strokeDash     :class:`StrokeDash`     The stroke dash style           :ref:`gallery_multi_series_line`
+strokeOpacity  :class:`StrokeOpacity`  The opacity of the line         N/A
+strokeWidth    :class:`StrokeWidth`    The width of the line           N/A
 =============  ======================  ==============================  =========================================
 
 Text and Tooltip Channels:
@@ -111,12 +112,13 @@ order    :class:`Order`    Sets the order of the marks    :ref:`gallery_connecte
 
 Facet Channels:
 
-=======  ================  ============================  ============================================
-Channel  Altair Class      Description                   Example
-=======  ================  ============================  ============================================
-column   :class:`Column`   The column of a faceted plot  :ref:`gallery_trellis_scatter_plot`
-row      :class:`Row`      The row of a faceted plot     :ref:`gallery_beckers_barley_trellis_plot`
-=======  ================  ============================  ============================================
+=======  ================  ===============================================  =============================================
+Channel  Altair Class      Description                                      Example
+=======  ================  ===============================================  =============================================
+column   :class:`Column`   The column of a faceted plot                     :ref:`gallery_trellis_scatter_plot`
+row      :class:`Row`      The row of a faceted plot                        :ref:`gallery_beckers_barley_trellis_plot`
+facet    :class:`Facet`    The row and/or column of a general faceted plot  :ref:`gallery_us_population_over_time_facet`
+=======  ================  ===============================================  =============================================
 
 .. _encoding-data-types:
 

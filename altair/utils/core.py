@@ -54,7 +54,7 @@ TYPECODE_MAP = {
 INV_TYPECODE_MAP = {v: k for k, v in TYPECODE_MAP.items()}
 
 
-# aggregates from vega-lite version 2.4.3
+# aggregates from vega-lite version 4.6.0
 AGGREGATES = [
     "argmax",
     "argmin",
@@ -66,6 +66,7 @@ AGGREGATES = [
     "median",
     "min",
     "missing",
+    "product",
     "q1",
     "q3",
     "ci0",
@@ -80,7 +81,7 @@ AGGREGATES = [
     "variancep",
 ]
 
-# window aggregates from vega-lite version 2.5.2
+# window aggregates from vega-lite version 4.6.0
 WINDOW_AGGREGATES = [
     "row_number",
     "rank",
@@ -95,7 +96,7 @@ WINDOW_AGGREGATES = [
     "nth_value",
 ]
 
-# timeUnits from vega-lite version 3.0.0
+# timeUnits from vega-lite version 4.6.0
 TIMEUNITS = [
     "utcyear",
     "utcquarter",

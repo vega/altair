@@ -9,8 +9,9 @@ class MarkMethodMixin(object):
     """A mixin class that defines mark methods"""
 
     def mark_area(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -20,19 +21,20 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                  text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                  timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                  x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                  y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                  **kwds):
         """Set the chart's mark to 'area'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -41,7 +43,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -55,8 +57,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_bar(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                 binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                 cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                 binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                 cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                 cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                  cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                  dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                  fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -66,19 +69,20 @@ class MarkMethodMixin(object):
                  orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                  stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                  strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                 text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                 timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                 x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                 y2Offset=Undefined, yOffset=Undefined, **kwds):
+                 strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                 style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                 tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                 xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                 **kwds):
         """Set the chart's mark to 'bar'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -87,7 +91,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -101,8 +105,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_line(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -112,19 +117,20 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                  text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                  timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                  x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                  y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                  **kwds):
         """Set the chart's mark to 'line'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -133,7 +139,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -147,8 +153,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_image(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                   binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -158,19 +165,20 @@ class MarkMethodMixin(object):
                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                   text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                   timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                   x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                   y2Offset=Undefined, yOffset=Undefined, **kwds):
+                   strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                   tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                   xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                   **kwds):
         """Set the chart's mark to 'image'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -179,7 +187,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -193,8 +201,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_trail(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                   binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -204,19 +213,20 @@ class MarkMethodMixin(object):
                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                   text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                   timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                   x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                   y2Offset=Undefined, yOffset=Undefined, **kwds):
+                   strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                   tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                   xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                   **kwds):
         """Set the chart's mark to 'trail'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -225,7 +235,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -239,8 +249,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_point(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                   binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                   cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                   binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                   cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                   cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                    cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                    dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                    fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -250,19 +261,20 @@ class MarkMethodMixin(object):
                    orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                    stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                    strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                   strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                   text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                   timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                   x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                   y2Offset=Undefined, yOffset=Undefined, **kwds):
+                   strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                   style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                   thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                   tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                   xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                   **kwds):
         """Set the chart's mark to 'point'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -271,7 +283,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -285,8 +297,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_text(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -296,19 +309,20 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                  text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                  timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                  x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                  y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                  **kwds):
         """Set the chart's mark to 'text'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -317,7 +331,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -331,8 +345,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_tick(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -342,19 +357,20 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                  text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                  timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                  x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                  y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                  **kwds):
         """Set the chart's mark to 'tick'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -363,7 +379,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -377,8 +393,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_rect(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -388,19 +405,20 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                  text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                  timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                  x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                  y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                  **kwds):
         """Set the chart's mark to 'rect'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -409,7 +427,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -423,8 +441,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_rule(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                  binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                  cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                  binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                  cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                  cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                   cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                   dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                   fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -434,19 +453,20 @@ class MarkMethodMixin(object):
                   orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined, size=Undefined,
                   stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                   strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                  strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                  text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                  timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                  x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                  y2Offset=Undefined, yOffset=Undefined, **kwds):
+                  strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                  style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                  thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                  tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                  xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                  **kwds):
         """Set the chart's mark to 'rule'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -455,7 +475,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -469,8 +489,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_circle(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                    binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                    binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                     cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                     dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                     fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -480,19 +501,20 @@ class MarkMethodMixin(object):
                     orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
                     size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                    strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                    text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                    timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                    x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds):
+                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                    thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                    tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                    xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                    **kwds):
         """Set the chart's mark to 'circle'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -501,7 +523,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -515,8 +537,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_square(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                    binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                    cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                    binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                    cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                    cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                     cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                     dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                     fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -526,19 +549,20 @@ class MarkMethodMixin(object):
                     orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
                     size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                     strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                    strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined, tension=Undefined,
-                    text=Undefined, theta=Undefined, thickness=Undefined, timeUnitBand=Undefined,
-                    timeUnitBandPosition=Undefined, tooltip=Undefined, width=Undefined, x=Undefined,
-                    x2=Undefined, x2Offset=Undefined, xOffset=Undefined, y=Undefined, y2=Undefined,
-                    y2Offset=Undefined, yOffset=Undefined, **kwds):
+                    strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                    style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                    thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                    tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                    xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined,
+                    **kwds):
         """Set the chart's mark to 'square'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -547,7 +571,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -561,8 +585,9 @@ class MarkMethodMixin(object):
         return copy
 
     def mark_geoshape(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                      binSpacing=Undefined, clip=Undefined, color=Undefined, cornerRadius=Undefined,
-                      cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                      binSpacing=Undefined, blend=Undefined, clip=Undefined, color=Undefined,
+                      cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
+                      cornerRadiusBottomRight=Undefined, cornerRadiusEnd=Undefined,
                       cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
                       dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined, fill=Undefined,
                       fillOpacity=Undefined, filled=Undefined, font=Undefined, fontSize=Undefined,
@@ -572,19 +597,20 @@ class MarkMethodMixin(object):
                       orient=Undefined, point=Undefined, radius=Undefined, shape=Undefined,
                       size=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
                       strokeDashOffset=Undefined, strokeJoin=Undefined, strokeMiterLimit=Undefined,
-                      strokeOpacity=Undefined, strokeWidth=Undefined, style=Undefined,
-                      tension=Undefined, text=Undefined, theta=Undefined, thickness=Undefined,
-                      timeUnitBand=Undefined, timeUnitBandPosition=Undefined, tooltip=Undefined,
-                      width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined, xOffset=Undefined,
-                      y=Undefined, y2=Undefined, y2Offset=Undefined, yOffset=Undefined, **kwds):
+                      strokeOffset=Undefined, strokeOpacity=Undefined, strokeWidth=Undefined,
+                      style=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                      thickness=Undefined, timeUnitBand=Undefined, timeUnitBandPosition=Undefined,
+                      tooltip=Undefined, width=Undefined, x=Undefined, x2=Undefined, x2Offset=Undefined,
+                      xOffset=Undefined, y=Undefined, y2=Undefined, y2Offset=Undefined,
+                      yOffset=Undefined, **kwds):
         """Set the chart's mark to 'geoshape'
     
         For information on additional arguments, see :class:`MarkDef`
         """
         kwds = dict(align=align, angle=angle, aspect=aspect, baseline=baseline, binSpacing=binSpacing,
-                    clip=clip, color=color, cornerRadius=cornerRadius,
+                    blend=blend, clip=clip, color=color, cornerRadius=cornerRadius,
                     cornerRadiusBottomLeft=cornerRadiusBottomLeft,
-                    cornerRadiusBottomRight=cornerRadiusBottomRight,
+                    cornerRadiusBottomRight=cornerRadiusBottomRight, cornerRadiusEnd=cornerRadiusEnd,
                     cornerRadiusTopLeft=cornerRadiusTopLeft, cornerRadiusTopRight=cornerRadiusTopRight,
                     cursor=cursor, dir=dir, dx=dx, dy=dy, ellipsis=ellipsis, fill=fill,
                     fillOpacity=fillOpacity, filled=filled, font=font, fontSize=fontSize,
@@ -593,7 +619,7 @@ class MarkMethodMixin(object):
                     lineBreak=lineBreak, lineHeight=lineHeight, opacity=opacity, order=order,
                     orient=orient, point=point, radius=radius, shape=shape, size=size, stroke=stroke,
                     strokeCap=strokeCap, strokeDash=strokeDash, strokeDashOffset=strokeDashOffset,
-                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit,
+                    strokeJoin=strokeJoin, strokeMiterLimit=strokeMiterLimit, strokeOffset=strokeOffset,
                     strokeOpacity=strokeOpacity, strokeWidth=strokeWidth, style=style, tension=tension,
                     text=text, theta=theta, thickness=thickness, timeUnitBand=timeUnitBand,
                     timeUnitBandPosition=timeUnitBandPosition, tooltip=tooltip, width=width, x=x, x2=x2,
@@ -696,6 +722,14 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
+    def configure_axisDiscrete(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisDiscrete"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
     def configure_axisLeft(self, *args, **kwargs):
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
@@ -704,11 +738,35 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
+    def configure_axisPoint(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisPoint"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisQuantitative(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisQuantitative"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
     def configure_axisRight(self, *args, **kwargs):
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["axisRight"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisTemporal(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisTemporal"] = core.AxisConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.AxisConfig)
@@ -728,6 +786,46 @@ class ConfigMethodMixin(object):
         return copy
 
     @use_signature(core.AxisConfig)
+    def configure_axisXBand(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisXBand"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisXDiscrete(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisXDiscrete"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisXPoint(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisXPoint"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisXQuantitative(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisXQuantitative"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisXTemporal(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisXTemporal"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
     def configure_axisY(self, *args, **kwargs):
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
@@ -735,12 +833,52 @@ class ConfigMethodMixin(object):
         copy.config["axisY"] = core.AxisConfig(*args, **kwargs)
         return copy
 
-    @use_signature(core.RectConfig)
+    @use_signature(core.AxisConfig)
+    def configure_axisYBand(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisYBand"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisYDiscrete(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisYDiscrete"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisYPoint(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisYPoint"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisYQuantitative(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisYQuantitative"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.AxisConfig)
+    def configure_axisYTemporal(self, *args, **kwargs):
+        copy = self.copy(deep=['config'])
+        if copy.config is Undefined:
+            copy.config = core.Config()
+        copy.config["axisYTemporal"] = core.AxisConfig(*args, **kwargs)
+        return copy
+
+    @use_signature(core.BarConfig)
     def configure_bar(self, *args, **kwargs):
         copy = self.copy(deep=['config'])
         if copy.config is Undefined:
             copy.config = core.Config()
-        copy.config["bar"] = core.RectConfig(*args, **kwargs)
+        copy.config["bar"] = core.BarConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.BoxPlotConfig)
@@ -893,14 +1031,6 @@ class ConfigMethodMixin(object):
         if copy.config is Undefined:
             copy.config = core.Config()
         copy.config["rect"] = core.RectConfig(*args, **kwargs)
-        return copy
-
-    @use_signature(core.CompositionConfig)
-    def configure_repeat(self, *args, **kwargs):
-        copy = self.copy(deep=['config'])
-        if copy.config is Undefined:
-            copy.config = core.Config()
-        copy.config["repeat"] = core.CompositionConfig(*args, **kwargs)
         return copy
 
     @use_signature(core.MarkConfig)
