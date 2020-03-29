@@ -13,5 +13,6 @@ source = data.stocks()
 alt.Chart(source).mark_line().encode(
     x='date',
     y='price',
-    color='symbol'
+    color='symbol',
+    strokeDash='symbol',
 )
