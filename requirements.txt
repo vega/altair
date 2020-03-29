@@ -2,5 +2,5 @@ entrypoints
 jinja2
 jsonschema
 numpy
-pandas
+pandas>=0.18
 toolz
