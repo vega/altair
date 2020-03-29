@@ -280,7 +280,7 @@ def condition(predicate, if_true, if_false, **kwargs):
 
     Parameters
     ----------
-    predicate: Selection, LogicalOperandPredicate, expr.Expression, dict, or string
+    predicate: Selection, PredicateComposition, expr.Expression, dict, or string
         the selection predicate or test predicate for the condition.
         if a string is passed, it will be treated as a test operand.
     if_true:
@@ -295,11 +295,11 @@ def condition(predicate, if_true, if_false, **kwargs):
     spec: dict or VegaLiteSchema
         the spec that describes the condition
     """
-    test_predicates = (str, expr.Expression, core.LogicalOperandPredicate)
+    test_predicates = (str, expr.Expression, core.PredicateComposition)
 
     if isinstance(predicate, Selection):
         condition = {"selection": predicate.name}
-    elif isinstance(predicate, core.SelectionOperand):
+    elif isinstance(predicate, core.SelectionComposition):
         condition = {"selection": predicate}
     elif isinstance(predicate, test_predicates):
         condition = {"test": predicate}
@@ -1083,7 +1083,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
 
         Parameters
         ----------
-        filter : a filter expression or :class:`LogicalOperandPredicate`
+        filter : a filter expression or :class:`PredicateComposition`
             The `filter` property must be one of the predicate definitions:
             (1) a string or alt.expr expression
             (2) a range predicate
@@ -1103,7 +1103,7 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
         """
         if isinstance(filter, Selection):
             filter = {"selection": filter.name}
-        elif isinstance(filter, core.SelectionOperand):
+        elif isinstance(filter, core.SelectionComposition):
             filter = {"selection": filter}
         return self._add_transform(core.FilterTransform(filter=filter, **kwargs))
 
@@ -2138,8 +2138,8 @@ def repeat(repeater="repeat"):
     return core.RepeatRef(repeat=repeater)
 
 
-@utils.use_signature(core.TopLevelConcatSpec)
-class ConcatChart(TopLevelMixin, core.TopLevelConcatSpec):
+@utils.use_signature(core.TopLevelNormalizedConcatSpecGenericSpec)
+class ConcatChart(TopLevelMixin, core.TopLevelNormalizedConcatSpecGenericSpec):
     """A chart with horizontally-concatenated facets"""
 
     def __init__(self, data=Undefined, concat=(), columns=Undefined, **kwargs):
@@ -2176,8 +2176,8 @@ def concat(*charts, **kwargs):
     return ConcatChart(concat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelHConcatSpec)
-class HConcatChart(TopLevelMixin, core.TopLevelHConcatSpec):
+@utils.use_signature(core.TopLevelNormalizedHConcatSpecGenericSpec)
+class HConcatChart(TopLevelMixin, core.TopLevelNormalizedHConcatSpecGenericSpec):
     """A chart with horizontally-concatenated facets"""
 
     def __init__(self, data=Undefined, hconcat=(), **kwargs):
@@ -2212,8 +2212,8 @@ def hconcat(*charts, **kwargs):
     return HConcatChart(hconcat=charts, **kwargs)
 
 
-@utils.use_signature(core.TopLevelVConcatSpec)
-class VConcatChart(TopLevelMixin, core.TopLevelVConcatSpec):
+@utils.use_signature(core.TopLevelNormalizedVConcatSpecGenericSpec)
+class VConcatChart(TopLevelMixin, core.TopLevelNormalizedVConcatSpecGenericSpec):
     """A chart with vertically-concatenated facets"""
 
     def __init__(self, data=Undefined, vconcat=(), **kwargs):

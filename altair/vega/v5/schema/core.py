@@ -40,7 +40,8 @@ class Root(VegaSchema):
 class autosize(VegaSchema):
     """autosize schema wrapper
 
-    oneOf(enum('pad', 'fit', 'fit-x', 'fit-y', 'none'), Mapping(required=[type]))
+    oneOf(enum('pad', 'fit', 'fit-x', 'fit-y', 'none'), Mapping(required=[type]),
+    :class:`signal`)
     """
     _schema = {'$ref': '#/defs/autosize'}
 
@@ -98,7 +99,8 @@ class axis(VegaSchema):
 
     labelAngle : oneOf(float, :class:`numberValue`)
 
-    labelBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic'), :class:`baselineValue`)
+    labelBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic', 'line-top',
+    'line-bottom'), :class:`baselineValue`)
 
     labelBound : oneOf(boolean, float, :class:`signal`)
 
@@ -119,6 +121,10 @@ class axis(VegaSchema):
     900), :class:`fontWeightValue`)
 
     labelLimit : oneOf(float, :class:`numberValue`)
+
+    labelLineHeight : oneOf(float, :class:`numberValue`)
+
+    labelOffset : oneOf(float, :class:`numberValue`)
 
     labelOpacity : oneOf(float, :class:`numberValue`)
 
@@ -172,7 +178,8 @@ class axis(VegaSchema):
 
     titleAngle : oneOf(float, :class:`numberValue`)
 
-    titleBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic'), :class:`baselineValue`)
+    titleBaseline : oneOf(enum('top', 'middle', 'bottom', 'alphabetic', 'line-top',
+    'line-bottom'), :class:`baselineValue`)
 
     titleColor : oneOf(None, string, :class:`colorValue`)
 
@@ -216,19 +223,19 @@ class axis(VegaSchema):
                  labelBaseline=Undefined, labelBound=Undefined, labelColor=Undefined,
                  labelFlush=Undefined, labelFlushOffset=Undefined, labelFont=Undefined,
                  labelFontSize=Undefined, labelFontStyle=Undefined, labelFontWeight=Undefined,
-                 labelLimit=Undefined, labelOpacity=Undefined, labelOverlap=Undefined,
-                 labelPadding=Undefined, labelSeparation=Undefined, labels=Undefined,
-                 maxExtent=Undefined, minExtent=Undefined, offset=Undefined, position=Undefined,
-                 tickBand=Undefined, tickColor=Undefined, tickCount=Undefined, tickDash=Undefined,
-                 tickDashOffset=Undefined, tickExtra=Undefined, tickMinStep=Undefined,
-                 tickOffset=Undefined, tickOpacity=Undefined, tickRound=Undefined, tickSize=Undefined,
-                 tickWidth=Undefined, ticks=Undefined, title=Undefined, titleAlign=Undefined,
-                 titleAnchor=Undefined, titleAngle=Undefined, titleBaseline=Undefined,
-                 titleColor=Undefined, titleFont=Undefined, titleFontSize=Undefined,
-                 titleFontStyle=Undefined, titleFontWeight=Undefined, titleLimit=Undefined,
-                 titleLineHeight=Undefined, titleOpacity=Undefined, titlePadding=Undefined,
-                 titleX=Undefined, titleY=Undefined, translate=Undefined, values=Undefined,
-                 zindex=Undefined, **kwds):
+                 labelLimit=Undefined, labelLineHeight=Undefined, labelOffset=Undefined,
+                 labelOpacity=Undefined, labelOverlap=Undefined, labelPadding=Undefined,
+                 labelSeparation=Undefined, labels=Undefined, maxExtent=Undefined, minExtent=Undefined,
+                 offset=Undefined, position=Undefined, tickBand=Undefined, tickColor=Undefined,
+                 tickCount=Undefined, tickDash=Undefined, tickDashOffset=Undefined, tickExtra=Undefined,
+                 tickMinStep=Undefined, tickOffset=Undefined, tickOpacity=Undefined,
+                 tickRound=Undefined, tickSize=Undefined, tickWidth=Undefined, ticks=Undefined,
+                 title=Undefined, titleAlign=Undefined, titleAnchor=Undefined, titleAngle=Undefined,
+                 titleBaseline=Undefined, titleColor=Undefined, titleFont=Undefined,
+                 titleFontSize=Undefined, titleFontStyle=Undefined, titleFontWeight=Undefined,
+                 titleLimit=Undefined, titleLineHeight=Undefined, titleOpacity=Undefined,
+                 titlePadding=Undefined, titleX=Undefined, titleY=Undefined, translate=Undefined,
+                 values=Undefined, zindex=Undefined, **kwds):
         super(axis, self).__init__(orient=orient, scale=scale, bandPosition=bandPosition, domain=domain,
                                    domainColor=domainColor, domainDash=domainDash,
                                    domainDashOffset=domainDashOffset, domainOpacity=domainOpacity,
@@ -242,6 +249,7 @@ class axis(VegaSchema):
                                    labelFlushOffset=labelFlushOffset, labelFont=labelFont,
                                    labelFontSize=labelFontSize, labelFontStyle=labelFontStyle,
                                    labelFontWeight=labelFontWeight, labelLimit=labelLimit,
+                                   labelLineHeight=labelLineHeight, labelOffset=labelOffset,
                                    labelOpacity=labelOpacity, labelOverlap=labelOverlap,
                                    labelPadding=labelPadding, labelSeparation=labelSeparation,
                                    labels=labels, maxExtent=maxExtent, minExtent=minExtent,
@@ -264,12 +272,12 @@ class axis(VegaSchema):
 class background(VegaSchema):
     """background schema wrapper
 
-    string
+    oneOf(string, :class:`signal`)
     """
     _schema = {'$ref': '#/defs/background'}
 
-    def __init__(self, *args):
-        super(background, self).__init__(*args)
+    def __init__(self, *args, **kwds):
+        super(background, self).__init__(*args, **kwds)
 
 
 class bind(VegaSchema):
@@ -328,6 +336,8 @@ class encodeEntry(VegaSchema):
     aspect : :class:`booleanValue`
 
     baseline : :class:`baselineValue`
+
+    blend : :class:`blendValue`
 
     clip : :class:`booleanValue`
 
@@ -453,24 +463,24 @@ class encodeEntry(VegaSchema):
     _schema = {'$ref': '#/defs/encodeEntry'}
 
     def __init__(self, align=Undefined, angle=Undefined, aspect=Undefined, baseline=Undefined,
-                 clip=Undefined, cornerRadius=Undefined, cornerRadiusBottomLeft=Undefined,
-                 cornerRadiusBottomRight=Undefined, cornerRadiusTopLeft=Undefined,
-                 cornerRadiusTopRight=Undefined, cursor=Undefined, defined=Undefined, dir=Undefined,
-                 dx=Undefined, dy=Undefined, ellipsis=Undefined, endAngle=Undefined, fill=Undefined,
-                 fillOpacity=Undefined, font=Undefined, fontSize=Undefined, fontStyle=Undefined,
-                 fontWeight=Undefined, height=Undefined, innerRadius=Undefined, interpolate=Undefined,
-                 limit=Undefined, lineBreak=Undefined, lineHeight=Undefined, opacity=Undefined,
-                 orient=Undefined, outerRadius=Undefined, padAngle=Undefined, path=Undefined,
-                 radius=Undefined, scaleX=Undefined, scaleY=Undefined, shape=Undefined, size=Undefined,
-                 smooth=Undefined, startAngle=Undefined, stroke=Undefined, strokeCap=Undefined,
-                 strokeDash=Undefined, strokeDashOffset=Undefined, strokeForeground=Undefined,
-                 strokeJoin=Undefined, strokeMiterLimit=Undefined, strokeOffset=Undefined,
-                 strokeOpacity=Undefined, strokeWidth=Undefined, tension=Undefined, text=Undefined,
-                 theta=Undefined, tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined,
-                 x2=Undefined, xc=Undefined, y=Undefined, y2=Undefined, yc=Undefined, zindex=Undefined,
-                 **kwds):
+                 blend=Undefined, clip=Undefined, cornerRadius=Undefined,
+                 cornerRadiusBottomLeft=Undefined, cornerRadiusBottomRight=Undefined,
+                 cornerRadiusTopLeft=Undefined, cornerRadiusTopRight=Undefined, cursor=Undefined,
+                 defined=Undefined, dir=Undefined, dx=Undefined, dy=Undefined, ellipsis=Undefined,
+                 endAngle=Undefined, fill=Undefined, fillOpacity=Undefined, font=Undefined,
+                 fontSize=Undefined, fontStyle=Undefined, fontWeight=Undefined, height=Undefined,
+                 innerRadius=Undefined, interpolate=Undefined, limit=Undefined, lineBreak=Undefined,
+                 lineHeight=Undefined, opacity=Undefined, orient=Undefined, outerRadius=Undefined,
+                 padAngle=Undefined, path=Undefined, radius=Undefined, scaleX=Undefined,
+                 scaleY=Undefined, shape=Undefined, size=Undefined, smooth=Undefined,
+                 startAngle=Undefined, stroke=Undefined, strokeCap=Undefined, strokeDash=Undefined,
+                 strokeDashOffset=Undefined, strokeForeground=Undefined, strokeJoin=Undefined,
+                 strokeMiterLimit=Undefined, strokeOffset=Undefined, strokeOpacity=Undefined,
+                 strokeWidth=Undefined, tension=Undefined, text=Undefined, theta=Undefined,
+                 tooltip=Undefined, url=Undefined, width=Undefined, x=Undefined, x2=Undefined,
+                 xc=Undefined, y=Undefined, y2=Undefined, yc=Undefined, zindex=Undefined, **kwds):
         super(encodeEntry, self).__init__(align=align, angle=angle, aspect=aspect, baseline=baseline,
-                                          clip=clip, cornerRadius=cornerRadius,
+                                          blend=blend, clip=clip, cornerRadius=cornerRadius,
                                           cornerRadiusBottomLeft=cornerRadiusBottomLeft,
                                           cornerRadiusBottomRight=cornerRadiusBottomRight,
                                           cornerRadiusTopLeft=cornerRadiusTopLeft,
@@ -726,7 +736,7 @@ class onMarkTrigger(VegaSchema):
 class padding(VegaSchema):
     """padding schema wrapper
 
-    oneOf(float, Mapping(required=[]))
+    oneOf(float, Mapping(required=[]), :class:`signal`)
     """
     _schema = {'$ref': '#/defs/padding'}
 
@@ -1764,9 +1774,9 @@ class aggregateTransform(VegaSchema):
     key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum',
-    'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0',
-    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)),
-    :class:`signal`)
+    'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr',
+    'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'),
+    :class:`signal`)), :class:`signal`)
 
     signal : string
 
@@ -2153,9 +2163,9 @@ class joinaggregateTransform(VegaSchema):
     key : oneOf(:class:`scaleField`, :class:`paramField`, :class:`expr`)
 
     ops : oneOf(List(anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum',
-    'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0',
-    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)),
-    :class:`signal`)
+    'product', 'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr',
+    'distinct', 'ci0', 'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'),
+    :class:`signal`)), :class:`signal`)
 
     signal : string
 
@@ -2273,9 +2283,9 @@ class pivotTransform(VegaSchema):
 
     limit : anyOf(float, :class:`signal`)
 
-    op : anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'mean',
-    'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1',
-    'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)
+    op : anyOf(enum('values', 'count', '__count__', 'missing', 'valid', 'sum', 'product',
+    'mean', 'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0',
+    'ci1', 'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)
 
     signal : string
 
@@ -2406,7 +2416,11 @@ class timeunitTransform(VegaSchema):
 
     type : enum('timeunit')
 
+    extent : oneOf(List(anyOf(float, :class:`signal`)), :class:`signal`)
+
     interval : anyOf(boolean, :class:`signal`)
+
+    maxbins : anyOf(float, :class:`signal`)
 
     signal : string
 
@@ -2421,11 +2435,12 @@ class timeunitTransform(VegaSchema):
     """
     _schema = {'$ref': '#/defs/timeunitTransform'}
 
-    def __init__(self, field=Undefined, type=Undefined, interval=Undefined, signal=Undefined,
-                 step=Undefined, timezone=Undefined, units=Undefined, **kwds):
-        super(timeunitTransform, self).__init__(field=field, type=type, interval=interval,
-                                                signal=signal, step=step, timezone=timezone,
-                                                units=units, **kwds)
+    def __init__(self, field=Undefined, type=Undefined, extent=Undefined, interval=Undefined,
+                 maxbins=Undefined, signal=Undefined, step=Undefined, timezone=Undefined,
+                 units=Undefined, **kwds):
+        super(timeunitTransform, self).__init__(field=field, type=type, extent=extent,
+                                                interval=interval, maxbins=maxbins, signal=signal,
+                                                step=step, timezone=timezone, units=units, **kwds)
 
 
 class windowTransform(VegaSchema):
@@ -2450,9 +2465,9 @@ class windowTransform(VegaSchema):
 
     ops : oneOf(List(anyOf(enum('row_number', 'rank', 'dense_rank', 'percent_rank', 'cume_dist',
     'ntile', 'lag', 'lead', 'first_value', 'last_value', 'nth_value', 'prev_value',
-    'next_value', 'values', 'count', '__count__', 'missing', 'valid', 'sum', 'mean', 'average',
-    'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1', 'median',
-    'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)), :class:`signal`)
+    'next_value', 'values', 'count', '__count__', 'missing', 'valid', 'sum', 'product', 'mean',
+    'average', 'variance', 'variancep', 'stdev', 'stdevp', 'stderr', 'distinct', 'ci0', 'ci1',
+    'median', 'q1', 'q3', 'argmin', 'argmax', 'min', 'max'), :class:`signal`)), :class:`signal`)
 
     params : oneOf(List(anyOf(float, :class:`signal`, None)), :class:`signal`)
 
@@ -2723,6 +2738,23 @@ class anyValue(VegaSchema):
 
     def __init__(self, *args, **kwds):
         super(anyValue, self).__init__(*args, **kwds)
+
+
+class blendValue(VegaSchema):
+    """blendValue schema wrapper
+
+    oneOf(List(allOf(:class:`rule`, allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))), allOf(:class:`stringModifiers`, anyOf(oneOf(:class:`signal`,
+    Mapping(required=[value]), Mapping(required=[field]), Mapping(required=[range])),
+    Mapping(required=[scale, value]), Mapping(required=[scale, band]),
+    Mapping(required=[offset]))))
+    """
+    _schema = {'$ref': '#/refs/blendValue'}
+
+    def __init__(self, *args, **kwds):
+        super(blendValue, self).__init__(*args, **kwds)
 
 
 class numberValue(VegaSchema):

@@ -869,9 +869,9 @@ def test_resolve(chart_type):
     }
 
 
-# TODO: test vconcat, hconcat, concat when schema allows them.
+# TODO: test vconcat, hconcat, concat, facet_encoding when schema allows them.
 # This is blocked by https://github.com/vega/vega-lite/issues/5261
-@pytest.mark.parametrize("chart_type", ["chart", "layer", "facet_encoding"])
+@pytest.mark.parametrize("chart_type", ["chart", "layer"])
 @pytest.mark.parametrize("facet_arg", [None, "facet", "row", "column"])
 def test_facet(chart_type, facet_arg):
     chart = _make_chart_type(chart_type)
