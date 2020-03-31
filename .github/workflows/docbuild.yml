@@ -18,7 +18,6 @@ jobs:
         pip install .[dev]
         pip install altair_saver
         pip install -r doc/requirements.txt
-        pip install git+git://github.com/altair-viz/altair_viewer.git
     - name: Build docs
       run: |
         cd doc && make html
