@@ -4,15 +4,12 @@ import altair as alt
 from ..mimebundle import spec_to_mimebundle
 
 
-def require_altair_saver(func):
+@pytest.fixture
+def require_altair_saver():
     try:
         import altair_saver  # noqa: F401
     except ImportError:
-        return pytest.mark.skip("altair_saver not importable; cannot run saver tests")(
-            func
-        )
-    else:
-        return func
+        pytest.skip("altair_saver not importable; cannot run saver tests")
 
 
 @pytest.fixture
@@ -156,8 +153,7 @@ def vega_spec():
     }
 
 
-@require_altair_saver
-def test_vegalite_to_vega_mimebundle(vegalite_spec, vega_spec):
+def test_vegalite_to_vega_mimebundle(require_altair_saver, vegalite_spec, vega_spec):
     bundle = spec_to_mimebundle(
         spec=vegalite_spec,
         format="vega",
