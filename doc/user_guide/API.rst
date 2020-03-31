@@ -112,7 +112,6 @@ API Functions
    graticule
    hconcat
    layer
-   pipe
    repeat
    selection
    selection_interval
@@ -174,7 +173,7 @@ Low-Level Schema Wrappers
    CompositeMark
    CompositeMarkDef
    CompositionConfig
-   ConcatSpec
+   ConcatSpecGenericSpec
    ConditionalAxisColor
    ConditionalAxisLabelAlign
    ConditionalAxisLabelBaseline
@@ -244,6 +243,7 @@ Low-Level Schema Wrappers
    Element
    Encoding
    EncodingSortField
+   EncodingSortFieldFieldName
    ErrorBand
    ErrorBandConfig
    ErrorBandDef
@@ -256,7 +256,9 @@ Low-Level Schema Wrappers
    Expr
    FacetEncodingFieldDef
    FacetFieldDef
+   FacetFieldDefFieldName
    FacetMapping
+   FacetMappingFieldName
    FacetSpec
    FacetedEncoding
    FacetedUnitSpec
@@ -289,7 +291,7 @@ Low-Level Schema Wrappers
    GradientStop
    GraticuleGenerator
    GraticuleParams
-   HConcatSpec
+   HConcatSpecGenericSpec
    Header
    HeaderConfig
    HexColor
@@ -338,6 +340,11 @@ Low-Level Schema Wrappers
    MultiTimeUnit
    NamedData
    NonArgAggregateOp
+   NormalizedConcatSpecGenericSpec
+   NormalizedFacetSpec
+   NormalizedHConcatSpecGenericSpec
+   NormalizedSpec
+   NormalizedVConcatSpecGenericSpec
    NumberValueDef
    NumericArrayFieldDefWithCondition
    NumericArrayValueDefWithCondition
@@ -449,14 +456,14 @@ Low-Level Schema Wrappers
    TitleOrient
    TitleParams
    TooltipContent
-   TopLevelConcatSpec
    TopLevelFacetSpec
-   TopLevelHConcatSpec
    TopLevelLayerSpec
+   TopLevelNormalizedConcatSpecGenericSpec
+   TopLevelNormalizedHConcatSpecGenericSpec
+   TopLevelNormalizedVConcatSpecGenericSpec
    TopLevelRepeatSpec
    TopLevelSpec
    TopLevelUnitSpec
-   TopLevelVConcatSpec
    TopoDataFormat
    Transform
    TypeForShape
@@ -466,7 +473,7 @@ Low-Level Schema Wrappers
    UrlData
    UtcMultiTimeUnit
    UtcSingleTimeUnit
-   VConcatSpec
+   VConcatSpecGenericSpec
    Value
    ValueConditionGradientstringnull
    ValueConditionText
