@@ -25,7 +25,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install .[dev]
         pip install altair_saver
-        pip install git+git://github.com/altair-viz/altair_viewer.git
     - name: Test with pytest
       run: |
         pytest --doctest-modules altair
