@@ -5,7 +5,10 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Documentation Build
+    strategy:
+      matrix:
+        build-type: [ 'html', 'doctest' ]
+    name: ${{ matrix.build-type }}
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.8
@@ -18,10 +21,8 @@ jobs:
         pip install .[dev]
         pip install altair_saver
         pip install -r doc/requirements.txt
-    - name: Build docs
+    - name: Run docbuild
       run: |
-        cd doc && make html
-    - name: Run doctest
-      run: |
-        cd doc && make doctest
+        cd doc && make ${{ matrix.build-type }}
+
         
