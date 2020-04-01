@@ -3,6 +3,18 @@
 Altair Change Log
 =================
 
+Version 4.2.0 (unreleased)
+--------------------------
+
+Enhancements
+~~~~~~~~~~~~
+
+Bug Fixes
+~~~~~~~~~
+
+Backward-Incompatible Changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Version 4.1.0 (released April 1, 2020)
 --------------------------------------
 - Minimum Python version is now 3.6
