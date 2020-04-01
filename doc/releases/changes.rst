@@ -3,15 +3,16 @@
 Altair Change Log
 =================
 
-Version 4.1.0 (unreleased)
---------------------------
+Version 4.1.0 (released April 1, 2020)
+--------------------------------------
 - Minimum Python version is now 3.6
 - Update Vega-Lite to version 4.8.1; many new features and bug fixes from Vega-Lite
   versions 4.1 through 4.8; see `Vega-Lite Release Notes <https://github.com/vega/vega-lite/releases>`_.
 
 Enhancements
 ~~~~~~~~~~~~
-- ``strokeDash`` encoding can now be used to control line styles
+- ``strokeDash`` encoding can now be used to control line styles (Example:
+  `Multi Series Line Chart <https://altair-viz.github.io/gallery/multi_series_line.html>`_)
 - ``chart.save()`` now relies on `altair_saver <http://github.com/altair-viz/altair_saver>`_
   for more flexibility (#1943).
 - New ``chart.show()`` method replaces ``chart.serve()``, and relies on
