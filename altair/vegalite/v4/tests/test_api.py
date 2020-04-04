@@ -241,20 +241,28 @@ def test_selection_expression():
     assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
 
 
-@pytest.mark.parametrize("format", ["html", "json", "png", "svg"])
+@pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf"])
 def test_save(format, basic_chart):
-    if format == "png":
+    if format in ["pdf", "png"]:
         out = io.BytesIO()
         mode = "rb"
     else:
         out = io.StringIO()
         mode = "r"
 
-    if format in ["svg", "png"] and not altair_saver:
-        with pytest.raises(ValueError) as err:
-            basic_chart.save(out, format=format)
-        assert "github.com/altair-viz/altair_saver" in str(err.value)
-        return
+    if format in ["svg", "png", "pdf"]:
+        if not altair_saver:
+            with pytest.raises(ValueError) as err:
+                basic_chart.save(out, format=format)
+            assert "github.com/altair-viz/altair_saver" in str(err.value)
+            return
+        elif format not in altair_saver.available_formats():
+            with pytest.raises(ValueError) as err:
+                basic_chart.save(out, format=format)
+            assert f"No enabled saver found that supports format='{format}'" in str(
+                err.value
+            )
+            return
 
     basic_chart.save(out, format=format)
     out.seek(0)
@@ -271,7 +279,7 @@ def test_save(format, basic_chart):
     try:
         basic_chart.save(filename)
         with open(filename, mode) as f:
-            assert f.read() == content
+            assert f.read()[:1000] == content[:1000]
     finally:
         os.remove(filename)
 
