@@ -73,7 +73,7 @@ def save(
             format = fp.split(".")[-1]
         else:
             raise ValueError(
-                "must specify file format: " "['png', 'svg', 'html', 'json']"
+                "must specify file format: " "['png', 'svg', 'pdf', 'html', 'json']"
             )
 
     spec = chart.to_dict()
@@ -108,7 +108,7 @@ def save(
             **kwargs,
         )
         write_file_or_filename(fp, mimebundle["text/html"], mode="w")
-    elif format in ["png", "svg"]:
+    elif format in ["png", "svg", "pdf"]:
         mimebundle = spec_to_mimebundle(
             spec=spec,
             format=format,
@@ -122,6 +122,8 @@ def save(
         )
         if format == "png":
             write_file_or_filename(fp, mimebundle["image/png"], mode="wb")
+        elif format == "pdf":
+            write_file_or_filename(fp, mimebundle["application/pdf"], mode="wb")
         else:
             write_file_or_filename(fp, mimebundle["image/svg+xml"], mode="w")
     else:

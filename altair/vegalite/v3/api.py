@@ -455,7 +455,8 @@ class TopLevelMixin(mixins.ConfigMethodMixin):
     ):
         """Save a chart to file in a variety of formats
 
-        Supported formats are json, html, png, svg
+        Supported formats are json, html, png, svg, pdf; the last three require
+        the altair_saver package to be installed.
 
         Parameters
         ----------
