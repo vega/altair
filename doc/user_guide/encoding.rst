@@ -125,7 +125,7 @@ facet    :class:`Facet`    The row and/or column of a general faceted plot  :ref
 Encoding Data Types
 ~~~~~~~~~~~~~~~~~~~
 The details of any mapping depend on the *type* of the data. Altair recognizes
-four main data types:
+five main data types:
 
 ============  ==============  ================================================
 Data Type     Shorthand Code  Description
