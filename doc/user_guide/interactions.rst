@@ -425,10 +425,7 @@ Bindings and input elements can also be used to filter data on the client side. 
 
     input_dropdown = alt.binding_select(options=['Europe','Japan','USA'])
     selection = alt.selection_single(fields=['Origin'], bind=input_dropdown, name='Country of ')
-    color = alt.condition(selection,
-                        alt.Color('Origin:N', legend=None),
-                        alt.value('lightgray'))
-
+    
     alt.Chart(cars).mark_point().encode(
         x='Horsepower:Q',
         y='Miles_per_Gallon:Q',
