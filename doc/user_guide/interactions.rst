@@ -308,7 +308,7 @@ used to determine which points are part of the selection.
 
 For example, here we create a small chart that acts as an interactive legend,
 by targeting the Origin field using ``fields=['Origin']``. Clicking on points
-in the upper-left plot (the legend) will propagate a selection for all points
+in the upper-right plot (the legend) will propagate a selection for all points
 with a matching ``Origin``.
 
 .. altair-plot::
@@ -375,8 +375,8 @@ Binding: Adding Data Driven Inputs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 With an understanding of the selection types and conditions, you can now add data-driven input elements to the charts using the ``bind`` option. As specified by `Vega-lite binding <https://vega.github.io/vega-lite/docs/bind.html#input-element-binding>`_, selections can be bound two-ways:
 
-1. Single selections can be bound directly to an input elements. *For example, a radio button.*
-2. Interval selections which can be bound to scale. *for example, zooming in on a map.*
+1. Single selections can be bound directly to an input element, *for example, a radio button.*
+2. Interval selections which can be bound to scale, *for example, zooming in on a map.*
 
 Input Element Binding
 ^^^^^^^^^^^^^^^^^^^^^
