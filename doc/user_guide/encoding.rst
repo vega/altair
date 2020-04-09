@@ -226,21 +226,6 @@ that contains integers specifying a year:
         base.encode(x='year:O').properties(title='year=ordinal')
     )
 
-In altair, quantitative scales always start at zero unless otherwise
-specified, while ordinal scales are limited to the values within the data.
-
-Overriding the behavior of including zero in the axis, we see that even then
-the precise appearance of the marks representing the data are affected by
-the data type:
-
-.. altair-plot::
-
-    base.encode(
-        alt.X('year:Q',
-            scale=alt.Scale(zero=False)
-        )
-    )
-
 Because quantitative values do not have an inherent width, the bars do not
 fill the entire space between the values.
 This view also makes clear the missing year of data that was not immediately
