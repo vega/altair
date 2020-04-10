@@ -158,7 +158,7 @@ and performance may suffer.
 Passing Data by URL
 ~~~~~~~~~~~~~~~~~~~
 A better solution when working with large datasets is to not embed the data
-in the notebook, but rather store it separately pass it to the chart by URL.
+in the notebook, but rather store it separately and pass it to the chart by URL.
 This not only addresses the issue of large notebooks, but also leads to better
 interactivity performance with large datasets.
 
