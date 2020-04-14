@@ -10,7 +10,7 @@ from vega_datasets import data
 source = data.wheat()
 
 alt.Chart(source).mark_line().transform_window(
-    # Sort the data chronologically in this case
+    # Sort the data chronologically
     sort=[{'field': 'year'}],
     # Include all previous records before the current record and none after
     frame=[None, 0],
