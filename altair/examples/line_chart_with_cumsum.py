@@ -20,4 +20,4 @@ alt.Chart(source).mark_line().transform_window(
     x='year:O',
     # Plot the calculated field created by the transformation
     y='cumulative_wheat:Q'
-)
+).properties(width=600)
