@@ -13,6 +13,7 @@ alt.Chart(source).mark_line().transform_window(
     # Sort the data chronologically
     sort=[{'field': 'year'}],
     # Include all previous records before the current record and none after
+    # (This is the default value so you could skip it and it would still work.)
     frame=[None, 0],
     # What to add up as you go
     cumulative_wheat='sum(wheat)'
