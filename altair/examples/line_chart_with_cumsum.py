@@ -14,7 +14,7 @@ alt.Chart(source).mark_line().transform_window(
     sort=[{'field': 'year'}],
     # Include all previous records before the current record and none after
     frame=[None, 0],
-    # What we want to add up
+    # What to add up as you go
     cumulative_wheat='sum(wheat)',
 ).encode(
     x='year:O',
