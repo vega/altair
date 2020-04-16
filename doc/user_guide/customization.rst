@@ -123,10 +123,10 @@ just before the chart is rendered.
 
 Adjusting Axis Limits
 ---------------------
-The default axis limit used by Altair is dependent on the type of the data
-(see, for example, :ref:`type-axis-scale`). To fine-tune the axis limits
-beyond these defaults, you can use the :class:`Scale` property of the axis
-encodings. For example, consider the following plot:
+The default axis limit used by Altair is dependent on the type of the data.
+To fine-tune the axis limits beyond these defaults, you can use the
+:class:`Scale` property of the axis encodings. For example, consider the
+following plot:
 
 .. altair-plot::
 
