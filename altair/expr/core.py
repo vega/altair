@@ -134,6 +134,10 @@ class Expression(SchemaBase):
     def __invert__(self):
         return UnaryExpression("!", self)
 
+    # item access
+    def __getitem__(self, val):
+        return GetItemExpression(self, val)
+
 
 class UnaryExpression(Expression):
     def __init__(self, op, val):
@@ -184,4 +188,4 @@ class GetItemExpression(Expression):
         super(GetItemExpression, self).__init__(group=group, name=name)
 
     def __repr__(self):
-        return "{}['{}']".format(self.group, self.name)
+        return "{}[{!r}]".format(self.group, self.name)
