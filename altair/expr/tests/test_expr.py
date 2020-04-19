@@ -94,3 +94,8 @@ def test_copy():
 def test_datum_getattr():
     x = datum["foo"]
     assert repr(x) == "datum['foo']"
+
+
+def test_expression_getitem():
+    x = datum.foo[0]
+    assert repr(x) == "datum.foo[0]"
