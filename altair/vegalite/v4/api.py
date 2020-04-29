@@ -169,10 +169,14 @@ class Selection(object):
         return "Selection({0!r}, {1})".format(self.name, self.selection)
 
     def ref(self):
-        return {"selection": self.name}
+        return self.to_dict()
 
     def to_dict(self):
-        return {"selection": self.name}
+        return {
+            "selection": self.name.to_dict()
+            if hasattr(self.name, "to_dict")
+            else self.name
+        }
 
     def __invert__(self):
         return Selection(core.SelectionNot(**{"not": self.name}), self.selection)
