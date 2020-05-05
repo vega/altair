@@ -2,7 +2,7 @@
 Brushing Scatter Plot to show data on a table
 ---------------------------------------------
 A scatter plot of the cars dataset, with data tables for horsepower, MPG, and origin. 
-The tables update toreflect the selection on the scatter plot.
+The tables update to reflect the selection on the scatter plot.
 """
 # category: scatter plots
 
