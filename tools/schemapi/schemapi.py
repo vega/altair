@@ -162,9 +162,11 @@ class SchemaBase(object):
             )
 
         if kwds:
-            assert len(args) == 0
+            if len(args) != 0:
+                raise AssertionError
         else:
-            assert len(args) in [0, 1]
+            if len(args) not in [0, 1]:
+                raise AssertionError
 
         # use object.__setattr__ because we override setattr below.
         object.__setattr__(self, "_args", args)

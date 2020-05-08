@@ -164,9 +164,11 @@ class SchemaBase(object):
             )
 
         if kwds:
-            assert len(args) == 0
+            if len(args) != 0:
+                raise AssertionError
         else:
-            assert len(args) in [0, 1]
+            if len(args) not in [0, 1]:
+                raise AssertionError
 
         # use object.__setattr__ because we override setattr below.
         object.__setattr__(self, "_args", args)
@@ -340,7 +342,7 @@ class SchemaBase(object):
         return result
 
     def to_json(
-        self, validate=True, ignore=[], context={}, indent=2, sort_keys=True, **kwargs
+        self, validate=True, ignore=None, context=None, indent=2, sort_keys=True, **kwargs
     ):
         """Emit the JSON representation for this object as a string.
 
@@ -369,6 +371,10 @@ class SchemaBase(object):
         spec : string
             The JSON specification of the chart object.
         """
+        if ignore is None:
+            ignore = []
+        if context is None:
+            context = {}
         dct = self.to_dict(validate=validate, ignore=ignore, context=context)
         return json.dumps(dct, indent=indent, sort_keys=sort_keys, **kwargs)
 
