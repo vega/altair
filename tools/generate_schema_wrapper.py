@@ -16,12 +16,12 @@ import m2r
 sys.path.insert(0, abspath(dirname(__file__)))
 from schemapi import codegen  # noqa: E402
 from schemapi.codegen import CodeSnippet  # noqa: E402
-from schemapi.utils import (
+from schemapi.utils import (  # noqa: E402
     get_valid_identifier,
     SchemaInfo,
     indent_arglist,
     resolve_references,
-)  # noqa: E402
+)
 import generate_api_docs  # noqa: E402
 
 # Map of version name to github branch name.
