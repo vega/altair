@@ -183,8 +183,8 @@ def infer_vegalite_type(data):
         return "temporal"
     else:
         warnings.warn(
-            "I don't know how to infer vegalite type from '{}'.  "
-            "Defaulting to nominal.".format(typ)
+            f"I don't know how to infer vegalite type from '{typ}'.  "
+            "Defaulting to nominal."
         )
         return "nominal"
 
@@ -265,8 +265,8 @@ def sanitize_dataframe(df):  # noqa: C901
     for col in df.columns:
         if not isinstance(col, str):
             raise ValueError(
-                "Dataframe contains invalid column name: {0!r}. "
-                "Column names must be strings".format(col)
+                f"DataFrame contains invalid column name: {repr(col)}. "
+                "Column names must be strings"
             )
 
     if isinstance(df.index, pd.MultiIndex):
@@ -311,10 +311,9 @@ def sanitize_dataframe(df):  # noqa: C901
             )
         elif str(dtype).startswith("timedelta"):
             raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
+                f'Field "{col_name}" has type "{dtype}" which is '
                 "not supported by Altair. Please convert to "
                 "either a timestamp or a numerical value."
-                "".format(col_name=col_name, dtype=dtype)
             )
         elif str(dtype).startswith("geometry"):
             # geopandas >=0.6.1 uses the dtype geometry. Continue here
@@ -439,12 +438,12 @@ def parse_shorthand(
 
     units = dict(
         field="(?P<field>.*)",
-        type="(?P<type>{})".format("|".join(valid_typecodes)),
+        type=f"(?P<type>{'|'.join(valid_typecodes)})",
         agg_count="(?P<aggregate>count)",
         op_count="(?P<op>count)",
-        aggregate="(?P<aggregate>{})".format("|".join(AGGREGATES)),
-        window_op="(?P<op>{})".format("|".join(AGGREGATES + WINDOW_AGGREGATES)),
-        timeUnit="(?P<timeUnit>{})".format("|".join(TIMEUNITS)),
+        aggregate=f"(?P<aggregate>{'|'.join(AGGREGATES)})",
+        window_op=f"(?P<op>{'|'.join(AGGREGATES + WINDOW_AGGREGATES)})",
+        timeUnit=f"(?P<timeUnit>{'|'.join(TIMEUNITS)})",
     )
 
     patterns = []
@@ -645,9 +644,9 @@ def infer_encoding_types(args, kwargs, channels):
 
         encoding = channel_to_name.get(type_, None)
         if encoding is None:
-            raise NotImplementedError("positional of type {}" "".format(type_))
+            raise NotImplementedError(f"positional of type {type_}")
         if encoding in kwargs:
-            raise ValueError("encoding {} specified twice.".format(encoding))
+            raise ValueError(f"encoding {encoding} specified twice.")
         kwargs[encoding] = arg
 
     def _wrap_in_channel_class(obj, encoding):
@@ -670,7 +669,7 @@ def infer_encoding_types(args, kwargs, channels):
             return [_wrap_in_channel_class(subobj, encoding) for subobj in obj]
 
         if encoding not in name_to_channel:
-            warnings.warn("Unrecognized encoding channel '{}'".format(encoding))
+            warnings.warn(f"Unrecognized encoding channel '{encoding}'")
             return obj
 
         classes = name_to_channel[encoding]

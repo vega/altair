@@ -144,7 +144,7 @@ class UnaryExpression(Expression):
         super(UnaryExpression, self).__init__(op=op, val=val)
 
     def __repr__(self):
-        return "({op}{val})".format(op=self.op, val=_js_repr(self.val))
+        return f"({self.op}{_js_repr(self.val)})"
 
 
 class BinaryExpression(Expression):
@@ -152,9 +152,7 @@ class BinaryExpression(Expression):
         super(BinaryExpression, self).__init__(op=op, lhs=lhs, rhs=rhs)
 
     def __repr__(self):
-        return "({lhs} {op} {rhs})".format(
-            op=self.op, lhs=_js_repr(self.lhs), rhs=_js_repr(self.rhs)
-        )
+        return f"({_js_repr(self.lhs)} {self.op} {_js_repr(self.rhs)})"
 
 
 class FunctionExpression(Expression):
@@ -163,12 +161,12 @@ class FunctionExpression(Expression):
 
     def __repr__(self):
         args = ",".join(_js_repr(arg) for arg in self.args)
-        return "{name}({args})".format(name=self.name, args=args)
+        return f"{self.name}({args})"
 
 
 class ConstExpression(Expression):
     def __init__(self, name, doc):
-        self.__doc__ = """{}: {}""".format(name, doc)
+        self.__doc__ = f"""{name}: {doc}"""
         super(ConstExpression, self).__init__(name=name, doc=doc)
 
     def __repr__(self):
@@ -180,7 +178,7 @@ class GetAttrExpression(Expression):
         super(GetAttrExpression, self).__init__(group=group, name=name)
 
     def __repr__(self):
-        return "{}.{}".format(self.group, self.name)
+        return f"{self.group}.{self.name}"
 
 
 class GetItemExpression(Expression):
@@ -188,4 +186,4 @@ class GetItemExpression(Expression):
         super(GetItemExpression, self).__init__(group=group, name=name)
 
     def __repr__(self):
-        return "{}[{!r}]".format(self.group, self.name)
+        return f"{self.group}[{repr(self.name)}]"

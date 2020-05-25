@@ -94,7 +94,7 @@ def test_sanitize_dataframe_colnames():
     df.columns = [4, "foo", "bar"]
     with pytest.raises(ValueError) as err:
         sanitize_dataframe(df)
-    assert str(err.value).startswith("Dataframe contains invalid column name: 4.")
+    assert str(err.value).startswith("DataFrame contains invalid column name: 4.")
 
 
 def test_sanitize_dataframe_timedelta():
