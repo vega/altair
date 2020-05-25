@@ -16,7 +16,7 @@ https://groups.google.com/forum/#!forum/altair-viz. If you are working on
 Altair, you can talk to other developers in the `#altair` channel of the [Vega
 slack](https://bit.ly/join-vega-slack).
 
-## How To Contribute Code to Alatir
+## How To Contribute Code to Altair
 
 ### Setting Up Your Environment
 
