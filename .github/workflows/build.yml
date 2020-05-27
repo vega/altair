@@ -18,8 +18,20 @@ jobs:
     - name: Set Up Chromedriver
       run: |
         sudo apt-get update
+        sudo apt-get unzip
         sudo apt-get --only-upgrade install google-chrome-stable
-        sudo apt-get -yqq install chromium-chromedriver
+
+        CHROME_VERSION=$(google-chrome --product-version)
+        CHROME_VERSION=${CHROME_VERSION%.*}
+        LATEST_CHROMEDRIVER_VERSION=$(curl "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+
+        wget "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
+        unzip chromedriver_linux64.zip
+        rm chromedriver_linux64.zip
+
+        CHROMEDRIVER_BIN="/usr/bin/chromedriver"
+        sudo mv chromedriver $CHROMEDRIVER_BIN
+        sudo chmod +x $CHROMEDRIVER_BIN
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
