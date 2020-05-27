@@ -25,7 +25,7 @@ dataset:
    )
 
 The density can also be computed on a per-group basis, by specifying the ``groupby``
-argument. Here we split the above denity computation across movie genres:
+argument. Here we split the above density computation across movie genres:
 
 .. altair-plot::
 
