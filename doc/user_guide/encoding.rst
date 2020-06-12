@@ -47,12 +47,12 @@ Channel     Altair Class         Description                        Example
 ==========  ===================  =================================  ===================================
 x           :class:`X`           The x-axis value                   :ref:`gallery_scatter_tooltips`
 y           :class:`Y`           The y-axis value                   :ref:`gallery_scatter_tooltips`
-x2          :class:`X2`          Second x value for ranges          :ref:`gallery_errorbars_with_ci`
-y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_line_with_ci`
+x2          :class:`X2`          Second x value for ranges          :ref:`gallery_gantt_chart`
+y2          :class:`Y2`          Second y value for ranges          :ref:`gallery_candlestick_chart`
 longitude   :class:`Longitude`   Longitude for geo charts           :ref:`gallery_airports`
 latitude    :class:`Latitude`    Latitude for geo charts            :ref:`gallery_airports`
-longitude2  :class:`Longitude2`  Second longitude value for ranges  N/A
-latitude2   :class:`Latitude2`   Second latitude value for ranges   N/A
+longitude2  :class:`Longitude2`  Second longitude value for ranges  :ref:`gallery_airport_connections`
+latitude2   :class:`Latitude2`   Second latitude value for ranges   :ref:`gallery_airport_connections`
 xError      :class:`XError`      The x-axis error value             N/A
 yError      :class:`YError`      The y-axis error value             N/A
 xError2     :class:`XError2`     The second x-axis error value      N/A
@@ -65,10 +65,10 @@ Mark Property Channels:
 Channel        Altair Class            Description                     Example
 =============  ======================  ==============================  =========================================
 color          :class:`Color`          The color of the mark           :ref:`gallery_simple_heatmap`
-fill           :class:`Fill`           The fill for the mark           N/A
+fill           :class:`Fill`           The fill for the mark           :ref:`gallery_ridgeline_plot`
 fillopacity    :class:`FillOpacity`    The opacity of the mark's fill  N/A
 opacity        :class:`Opacity`        The opacity of the mark         :ref:`gallery_horizon_graph`
-shape          :class:`Shape`          The shape of the mark           N/A
+shape          :class:`Shape`          The shape of the mark           :ref:`gallery_us_incomebrackets_by_state_facet`
 size           :class:`Size`           The size of the mark            :ref:`gallery_table_bubble_plot_github`
 stroke         :class:`Stroke`         The stroke of the mark          N/A
 strokeDash     :class:`StrokeDash`     The stroke dash style           :ref:`gallery_multi_series_line`
@@ -91,7 +91,7 @@ Hyperlink Channel:
 =======  ================  ========================  =========================================
 Channel  Altair Class      Description               Example
 =======  ================  ========================  =========================================
-href     :class:`Href`     Hyperlink for  points     N/A
+href     :class:`Href`     Hyperlink for  points     :ref:`gallery_scatter_href`
 =======  ================  ========================  =========================================
 
 Level of Detail Channel:
