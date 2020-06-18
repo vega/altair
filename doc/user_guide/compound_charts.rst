@@ -82,8 +82,8 @@ heat-map:
     source = data.movies.url
 
     heatmap = alt.Chart(source).mark_rect().encode(
-        alt.X('IMDB_Rating:Q', bin=True),
-        alt.Y('Rotten_Tomatoes_Rating:Q', bin=True),
+        alt.X('IMDB Rating:Q', bin=True),
+        alt.Y('Rotten Tomatoes Rating:Q', bin=True),
         alt.Color('count()', scale=alt.Scale(scheme='greenblue'))
     )
 
@@ -91,8 +91,8 @@ heat-map:
         color='black',
         size=5,
     ).encode(
-        x='IMDB_Rating:Q',
-        y='Rotten_Tomatoes_Rating:Q',
+        x='IMDB Rating:Q',
+        y='Rotten Tomatoes Rating:Q',
     )
 
     heatmap + points
