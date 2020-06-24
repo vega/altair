@@ -240,118 +240,22 @@ def sanitize_geo_interface(geo):
     return geo
 
 
-def sanitize_dataframe(df):  # noqa: C901
-    """Sanitize a DataFrame to prepare it for serialization.
-
+def sanitize_series(s):
+    """
     * Make a copy
-    * Convert RangeIndex columns to strings
-    * Raise ValueError if column names are not strings
-    * Raise ValueError if it has a hierarchical index.
-    * Convert categoricals to strings.
+    * Raise ValueError if name is not a string
+    * Raise ValueError if it has a hierarchical index
+
+    * Convert categoricals to strings
     * Convert np.bool_ dtypes to Python bool objects
     * Convert np.int dtypes to Python int objects
-    * Convert floats to objects and replace NaNs/infs with None.
+    * Convert floats to objects and replace NaNs/infs with None
     * Convert DateTime dtypes into appropriate string representations
     * Convert Nullable integers to objects and replace NaN with None
     * Convert Nullable boolean to objects and replace NaN with None
-    * convert dedicated string column to objects and replace NaN with None
+    * Convert dedicated string column to objects and replace NaN with None
     * Raise a ValueError for TimeDelta dtypes
     """
-    df = df.copy()
-
-    if isinstance(df.columns, pd.RangeIndex):
-        df.columns = df.columns.astype(str)
-
-    for col in df.columns:
-        if not isinstance(col, str):
-            raise ValueError(
-                "Dataframe contains invalid column name: {0!r}. "
-                "Column names must be strings".format(col)
-            )
-
-    if isinstance(df.index, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
-    if isinstance(df.columns, pd.MultiIndex):
-        raise ValueError("Hierarchical indices not supported")
-
-    def to_list_if_array(val):
-        if isinstance(val, np.ndarray):
-            return val.tolist()
-        else:
-            return val
-
-    for col_name, dtype in df.dtypes.iteritems():
-        if str(dtype) == "category":
-            # XXXX: work around bug in to_json for categorical types
-            # https://github.com/pydata/pandas/issues/10778
-            col = df[col_name].astype(object)
-            df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype) == "string":
-            # dedicated string datatype (since 1.0)
-            # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
-            col = df[col_name].astype(object)
-            df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype) == "bool":
-            # convert numpy bools to objects; np.bool is not JSON serializable
-            df[col_name] = df[col_name].astype(object)
-        elif str(dtype) == "boolean":
-            # dedicated boolean datatype (since 1.0)
-            # https://pandas.io/docs/user_guide/boolean.html
-            col = df[col_name].astype(object)
-            df[col_name] = col.where(col.notnull(), None)
-        elif str(dtype).startswith("datetime"):
-            # Convert datetimes to strings. This needs to be a full ISO string
-            # with time, which is why we cannot use ``col.astype(str)``.
-            # This is because Javascript parses date-only times in UTC, but
-            # parses full ISO-8601 dates as local time, and dates in Vega and
-            # Vega-Lite are displayed in local time by default.
-            # (see https://github.com/altair-viz/altair/issues/1027)
-            df[col_name] = (
-                df[col_name].apply(lambda x: x.isoformat()).replace("NaT", "")
-            )
-        elif str(dtype).startswith("timedelta"):
-            raise ValueError(
-                'Field "{col_name}" has type "{dtype}" which is '
-                "not supported by Altair. Please convert to "
-                "either a timestamp or a numerical value."
-                "".format(col_name=col_name, dtype=dtype)
-            )
-        elif str(dtype).startswith("geometry"):
-            # geopandas >=0.6.1 uses the dtype geometry. Continue here
-            # otherwise it will give an error on np.issubdtype(dtype, np.integer)
-            continue
-        elif str(dtype) in {
-            "Int8",
-            "Int16",
-            "Int32",
-            "Int64",
-            "UInt8",
-            "UInt16",
-            "UInt32",
-            "UInt64",
-        }:  # nullable integer datatypes (since 24.0)
-            # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
-            col = df[col_name].astype(object)
-            df[col_name] = col.where(col.notnull(), None)
-        elif np.issubdtype(dtype, np.integer):
-            # convert integers to objects; np.int is not JSON serializable
-            df[col_name] = df[col_name].astype(object)
-        elif np.issubdtype(dtype, np.floating):
-            # For floats, convert to Python float: np.float is not JSON serializable
-            # Also convert NaN/inf values to null, as they are not JSON serializable
-            col = df[col_name]
-            bad_values = col.isnull() | np.isinf(col)
-            df[col_name] = col.astype(object).where(~bad_values, None)
-        elif dtype == object:
-            # Convert numpy arrays saved as objects to lists
-            # Arrays are not JSON serializable
-            col = df[col_name].apply(to_list_if_array, convert_dtype=False)
-            df[col_name] = col.where(col.notnull(), None)
-    return df
-
-
-def sanitize_series(s):
-    """Stub to sanitize series if necessary."""
     s = s.copy()
     if not isinstance(s.name, str):
         raise ValueError(
@@ -375,19 +279,19 @@ def sanitize_series(s):
         # https://github.com/pydata/pandas/issues/10778
         s = s.astype(object)
         s = s.where(s.notnull(), None)
-#     elif str(dtype) == "string":
-#         # dedicated string datatype (since 1.0)
-#         # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
-#         s = s.astype(object)
-#         s = s.where(s.notnull(), None)
-#     elif str(dtype) == "bool":
-#         # convert numpy bools to objects; np.bool is not JSON serializable
-#         s = s.astype(object)
-#     elif str(dtype) == "boolean":
-#         # dedicated boolean datatype (since 1.0)
-#         # https://pandas.io/docs/user_guide/boolean.html
-#         s = s.astype(object)
-#         s = s.where(s.notnull(), None)
+    elif str(dtype) == "string":
+        # dedicated string datatype (since 1.0)
+        # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
+        s = s.astype(object)
+        s = s.where(s.notnull(), None)
+    elif str(dtype) == "bool":
+        # convert numpy bools to objects; np.bool is not JSON serializable
+        s = s.astype(object)
+    elif str(dtype) == "boolean":
+        # dedicated boolean datatype (since 1.0)
+        # https://pandas.io/docs/user_guide/boolean.html
+        s = s.astype(object)
+        s = s.where(s.notnull(), None)
     elif str(dtype).startswith("datetime"):
         # Convert datetimes to strings. This needs to be a full ISO string
         # with time, which is why we cannot use ``col.astype(str)``.
@@ -407,22 +311,22 @@ def sanitize_series(s):
         # geopandas >=0.6.1 uses the dtype geometry. Continue here
         # otherwise it will give an error on np.issubdtype(dtype, np.integer)
         pass
-#     elif str(dtype) in {
-#         "Int8",
-#         "Int16",
-#         "Int32",
-#         "Int64",
-#         "UInt8",
-#         "UInt16",
-#         "UInt32",
-#         "UInt64",
-#     }:  # nullable integer datatypes (since 24.0)
-#         # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
-#         s = s.astype(object)
-#         s = s.where(s.notnull(), None)
-#     elif np.issubdtype(dtype, np.integer):
-#         # convert integers to objects; np.int is not JSON serializable
-#         s = s.astype(object)
+    elif str(dtype) in {
+        "Int8",
+        "Int16",
+        "Int32",
+        "Int64",
+        "UInt8",
+        "UInt16",
+        "UInt32",
+        "UInt64",
+    }:  # nullable integer datatypes (since 24.0)
+        # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
+        s = s.astype(object)
+        s = s.where(s.notnull(), None)
+    elif np.issubdtype(dtype, np.integer):
+        # convert integers to objects; np.int is not JSON serializable
+        s = s.astype(object)
     elif np.issubdtype(dtype, np.floating):
         # For floats, convert to Python float: np.float is not JSON serializable
         # Also convert NaN/inf values to null, as they are not JSON serializable
@@ -434,6 +338,48 @@ def sanitize_series(s):
         s = s.apply(to_list_if_array, convert_dtype=False)
         s = s.where(s.notnull(), None)
     return s
+
+
+def sanitize_dataframe(df):  # noqa: C901
+    """Sanitize a DataFrame to prepare it for serialization.
+
+    * Make a copy
+    * Convert RangeIndex columns to strings
+    * Raise ValueError if column names are not strings
+    * Raise ValueError if it has a hierarchical index.
+    * Sanitize each column using sanitize_series
+    * Raise a ValueError for TimeDelta dtypes
+    """
+    df = df.copy()
+
+    if isinstance(df.columns, pd.RangeIndex):
+        df.columns = df.columns.astype(str)
+
+    for col in df.columns:
+        if not isinstance(col, str):
+            raise ValueError(
+                "Dataframe contains invalid column name: {0!r}. "
+                "Column names must be strings".format(col)
+            )
+
+    if isinstance(df.index, pd.MultiIndex):
+        raise ValueError("Hierarchical indices not supported")
+    if isinstance(df.columns, pd.MultiIndex):
+        raise ValueError("Hierarchical indices not supported")
+
+    for col_name, col in df.items():
+        # Error message required here to make a difference
+        if str(col.dtype).startswith("timedelta"):
+            raise ValueError(
+                'Field "{col_name}" has type "{dtype}" which is '
+                "not supported by Altair. Please convert to "
+                "either a timestamp or a numerical value."
+                "".format(col_name=col_name, dtype=col.dtype)
+            )
+
+        df[col_name] = sanitize_series(col)
+
+    return df
 
 
 def parse_shorthand(
