@@ -10,6 +10,7 @@ from typing import Callable
 
 from .core import sanitize_dataframe
 from .core import sanitize_geo_interface
+from .core import sanitize_series
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
@@ -69,7 +70,7 @@ def limit_rows(data, max_rows=5000):
             values = data.__geo_interface__["features"]
         else:
             values = data.__geo_interface__
-    elif isinstance(data, pd.DataFrame):
+    elif isinstance(data, (pd.DataFrame, pd.Series)):
         values = data
     elif isinstance(data, dict):
         if "values" in data:
@@ -148,6 +149,9 @@ def to_values(data):
     elif isinstance(data, pd.DataFrame):
         data = sanitize_dataframe(data)
         return {"values": data.to_dict(orient="records")}
+    elif isinstance(data, pd.Series):
+        data = sanitize_series(data)
+        return {"values": [{data.name: v} for v in data]}
     elif isinstance(data, dict):
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")
@@ -156,11 +160,11 @@ def to_values(data):
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame)) and not hasattr(
+    if not isinstance(data, (dict, pd.DataFrame, pd.Series)) and not hasattr(
         data, "__geo_interface__"
     ):
         raise TypeError(
-            "Expected dict, DataFrame or a __geo_interface__ attribute, got: {}".format(
+            "Expected dict, DataFrame, Series, or a __geo_interface__ attribute, got: {}".format(
                 type(data)
             )
         )

@@ -350,6 +350,11 @@ def sanitize_dataframe(df):  # noqa: C901
     return df
 
 
+def sanitize_series(s):
+    """Stub to sanitize series if necessary."""
+    return s
+
+
 def parse_shorthand(
     shorthand,
     data=None,
