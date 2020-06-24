@@ -352,6 +352,87 @@ def sanitize_dataframe(df):  # noqa: C901
 
 def sanitize_series(s):
     """Stub to sanitize series if necessary."""
+    s = s.copy()
+    if not isinstance(s.name, str):
+        raise ValueError(
+                "Series has invalid name: {0!r}. "
+                "Series names must be strings.".format(s.name)
+            )
+    
+    if isinstance(s.index, pd.MultiIndex):
+        raise ValueError("Hierarchical indices not supported.")
+
+
+    def to_list_if_array(val):
+        if isinstance(val, np.ndarray):
+            return val.tolist()
+        else:
+            return val
+
+    dtype = s.dtype
+    if str(dtype) == "category":
+        # XXXX: work around bug in to_json for categorical types
+        # https://github.com/pydata/pandas/issues/10778
+        s = s.astype(object)
+        s = s.where(s.notnull(), None)
+#     elif str(dtype) == "string":
+#         # dedicated string datatype (since 1.0)
+#         # https://pandas.pydata.org/pandas-docs/version/1.0.0/whatsnew/v1.0.0.html#dedicated-string-data-type
+#         s = s.astype(object)
+#         s = s.where(s.notnull(), None)
+#     elif str(dtype) == "bool":
+#         # convert numpy bools to objects; np.bool is not JSON serializable
+#         s = s.astype(object)
+#     elif str(dtype) == "boolean":
+#         # dedicated boolean datatype (since 1.0)
+#         # https://pandas.io/docs/user_guide/boolean.html
+#         s = s.astype(object)
+#         s = s.where(s.notnull(), None)
+    elif str(dtype).startswith("datetime"):
+        # Convert datetimes to strings. This needs to be a full ISO string
+        # with time, which is why we cannot use ``col.astype(str)``.
+        # This is because Javascript parses date-only times in UTC, but
+        # parses full ISO-8601 dates as local time, and dates in Vega and
+        # Vega-Lite are displayed in local time by default.
+        # (see https://github.com/altair-viz/altair/issues/1027)
+        s = s.apply(lambda x: x.isoformat()).replace("NaT", "")
+    elif str(dtype).startswith("timedelta"):
+        raise ValueError(
+            'Series "{name}" has type "{dtype}" which is '
+            "not supported by Altair. Please convert to "
+            "either a timestamp or a numerical value."
+            "".format(name=s.name, dtype=dtype)
+        )
+    elif str(dtype).startswith("geometry"):
+        # geopandas >=0.6.1 uses the dtype geometry. Continue here
+        # otherwise it will give an error on np.issubdtype(dtype, np.integer)
+        pass
+#     elif str(dtype) in {
+#         "Int8",
+#         "Int16",
+#         "Int32",
+#         "Int64",
+#         "UInt8",
+#         "UInt16",
+#         "UInt32",
+#         "UInt64",
+#     }:  # nullable integer datatypes (since 24.0)
+#         # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
+#         s = s.astype(object)
+#         s = s.where(s.notnull(), None)
+#     elif np.issubdtype(dtype, np.integer):
+#         # convert integers to objects; np.int is not JSON serializable
+#         s = s.astype(object)
+    elif np.issubdtype(dtype, np.floating):
+        # For floats, convert to Python float: np.float is not JSON serializable
+        # Also convert NaN/inf values to null, as they are not JSON serializable
+        bad_values = s.isnull() | np.isinf(s)
+        s = s.astype(object).where(~bad_values, None)
+    elif dtype == object:
+        # Convert numpy arrays saved as objects to lists
+        # Arrays are not JSON serializable
+        s = s.apply(to_list_if_array, convert_dtype=False)
+        s = s.where(s.notnull(), None)
     return s
 
 
