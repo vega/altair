@@ -31,6 +31,7 @@ def test_infer_vegalite_type():
             warnings.filterwarnings("ignore")
             _check([], "nominal")
 
+
 def test_sanitize_series():
     # Function to check per series
     def check(s, fix_nan=None):
@@ -38,7 +39,7 @@ def test_sanitize_series():
         print(s)
         s_clean = sanitize_series(s)
         print(s_clean)
-        print(s.to_dict()) 
+        print(s.to_dict())
         _s = json.dumps([{s_clean.name: v} for v in s_clean])
         print(_s)
 
@@ -53,7 +54,7 @@ def test_sanitize_series():
             s2 = pd.to_datetime(s2, utc=utc)
         else:
             s2 = s2.astype(s.dtype)
-            
+
         # pandas doesn't properly recognize np.array(np.nan), so change here if present
         if fix_nan is not None:
             s.iloc[fix_nan] = np.nan
@@ -70,12 +71,14 @@ def test_sanitize_series():
 
     b = pd.Series(np.array([True, False, True, True, False]), name="b")
     check(b)
-    
+
     d = pd.Series(pd.date_range("2012-01-01", periods=5, freq="H"), name="d")
     d.iloc[0] = pd.NaT
     check(d)
 
     c = pd.Series(list("ababc"), dtype="category", name="c")
+    check(c)
+
     c2 = pd.Series([1, "A", 2.5, "B", None], dtype="category", name="c2")
     check(c2)
 
@@ -83,7 +86,9 @@ def test_sanitize_series():
     o.iloc[0] = np.array(np.nan)
     check(o, fix_nan=0)
 
-    p = pd.Series(pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"), name="p")
+    p = pd.Series(
+        pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"), name="p"
+    )
     check(p)
 
 
@@ -107,7 +112,6 @@ def test_sanitize_series_timedelta():
 
 
 def test_sanitize_series_infs():
-    df = pd.DataFrame({"x": [0, 1, 2, np.inf, -np.inf, np.nan]})
     s = pd.Series([0, 1, 2, np.inf, -np.inf, np.nan], name="x")
     s_clean = sanitize_series(s)
     assert s_clean.dtype == object

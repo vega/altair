@@ -259,13 +259,12 @@ def sanitize_series(s):
     s = s.copy()
     if not isinstance(s.name, str):
         raise ValueError(
-                "Series has invalid name: {0!r}. "
-                "Series names must be strings.".format(s.name)
-            )
-    
+            "Series has invalid name: {0!r}. "
+            "Series names must be strings.".format(s.name)
+        )
+
     if isinstance(s.index, pd.MultiIndex):
         raise ValueError("Hierarchical indices not supported.")
-
 
     def to_list_if_array(val):
         if isinstance(val, np.ndarray):
