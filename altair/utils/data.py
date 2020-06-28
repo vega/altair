@@ -76,6 +76,8 @@ def limit_rows(data, max_rows=5000):
             values = data["values"]
         else:
             return data
+    elif isinstance(data, list):
+        values = max(data, key=len)
     if max_rows is not None and len(values) > max_rows:
         raise MaxRowsError(
             "The number of rows in your dataset is greater "
@@ -151,15 +153,21 @@ def to_values(data):
     elif isinstance(data, pd.Series):
         data = sanitize_dataframe(data.reset_index())
         return {"values": data.to_dict(orient="records")}
-    elif isinstance(data, dict):
-        if "values" not in data:
-            raise KeyError("values expected in data dict, but not present.")
+    elif isinstance(data, dict) and "values" in data:
         return data
+    elif isinstance(data, dict):
+        data = pd.DataFrame(data)
+        data = sanitize_dataframe(data)
+        return {"values": data.to_dict(orient="records")}
+    elif isinstance(data, list):
+        data = pd.DataFrame(data, columns=[f"x{i}" for i in range(len(data))])
+        data = sanitize_dataframe(data)
+        return {"values": data.to_dict(orient="records")}
 
 
 def check_data_type(data):
     """Raise if the data is not a dict or DataFrame."""
-    if not isinstance(data, (dict, pd.DataFrame, pd.Series)) and not hasattr(
+    if not isinstance(data, (dict, pd.DataFrame, pd.Series, list)) and not hasattr(
         data, "__geo_interface__"
     ):
         raise TypeError(

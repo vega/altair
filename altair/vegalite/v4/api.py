@@ -80,7 +80,7 @@ def _prepare_data(data, context=None):
         return data
 
     # convert dataframes  or objects with __geo_interface__ to dict
-    if isinstance(data, (pd.DataFrame, pd.Series)) or hasattr(
+    if isinstance(data, (pd.DataFrame, pd.Series, dict, list)) or hasattr(
         data, "__geo_interface__"
     ):
         data = _pipe(data, data_transformers.get())
