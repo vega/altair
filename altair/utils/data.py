@@ -10,7 +10,6 @@ from typing import Callable
 
 from .core import sanitize_dataframe
 from .core import sanitize_geo_interface
-from .core import sanitize_series
 from .deprecation import AltairDeprecationWarning
 from .plugin_registry import PluginRegistry
 
@@ -150,8 +149,8 @@ def to_values(data):
         data = sanitize_dataframe(data)
         return {"values": data.to_dict(orient="records")}
     elif isinstance(data, pd.Series):
-        data = sanitize_series(data)
-        return {"values": [{data.name: v} for v in data]}
+        data = sanitize_dataframe(data.reset_index())
+        return {"values": data.to_dict(orient="records")}
     elif isinstance(data, dict):
         if "values" not in data:
             raise KeyError("values expected in data dict, but not present.")

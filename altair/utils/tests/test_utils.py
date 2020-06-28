@@ -5,7 +5,7 @@ import json
 import numpy as np
 import pandas as pd
 
-from .. import infer_vegalite_type, sanitize_dataframe, sanitize_series
+from .. import infer_vegalite_type, sanitize_dataframe
 
 
 def test_infer_vegalite_type():
@@ -30,92 +30,6 @@ def test_infer_vegalite_type():
         with warnings.catch_warnings():
             warnings.filterwarnings("ignore")
             _check([], "nominal")
-
-
-def test_sanitize_series():
-    # Function to check per series
-    def check(s, fix_nan=None):
-        # JSON serialize. This ought to fail on non-sanitized series
-        print(s)
-        s_clean = sanitize_series(s)
-        print(s_clean)
-        print(s.to_dict())
-        _s = json.dumps([{s_clean.name: v} for v in s_clean])
-        print(_s)
-
-        # Reconstruct series
-        s2 = pd.read_json(_s).iloc[:, 0]
-
-        # Re-apply original types
-        if str(s.dtype).startswith("datetime"):
-            # astype(datetime) introduces time-zone issues:
-            # to_datetime() does not.
-            utc = isinstance(s.dtype, pd.core.dtypes.dtypes.DatetimeTZDtype)
-            s2 = pd.to_datetime(s2, utc=utc)
-        else:
-            s2 = s2.astype(s.dtype)
-
-        # pandas doesn't properly recognize np.array(np.nan), so change here if present
-        if fix_nan is not None:
-            s.iloc[fix_nan] = np.nan
-
-        assert s.equals(s2)
-
-    s = pd.Series(list("abcde"), name="s")
-    s.iloc[0] = None
-    check(s)
-
-    f = pd.Series(np.arange(5, dtype=float), name="f")
-    f.iloc[0] = np.nan
-    check(f)
-
-    b = pd.Series(np.array([True, False, True, True, False]), name="b")
-    check(b)
-
-    d = pd.Series(pd.date_range("2012-01-01", periods=5, freq="H"), name="d")
-    d.iloc[0] = pd.NaT
-    check(d)
-
-    c = pd.Series(list("ababc"), dtype="category", name="c")
-    check(c)
-
-    c2 = pd.Series([1, "A", 2.5, "B", None], dtype="category", name="c2")
-    check(c2)
-
-    o = pd.Series([np.array(i) for i in range(5)], name="o")
-    o.iloc[0] = np.array(np.nan)
-    check(o, fix_nan=0)
-
-    p = pd.Series(
-        pd.date_range("2012-01-01", periods=5, freq="H").tz_localize("UTC"), name="p"
-    )
-    check(p)
-
-
-def test_sanitize_series_names():
-    s = pd.Series(np.arange(12), name="s")
-    s = sanitize_series(s)
-    assert isinstance(s.name, str)
-
-    # Test that non-string name result in an error
-    s.name = 4
-    with pytest.raises(ValueError) as err:
-        sanitize_series(s)
-    assert str(err.value).startswith("Series has invalid name: 4.")
-
-
-def test_sanitize_series_timedelta():
-    s = pd.Series(pd.timedelta_range(start="1 day", periods=4), name="s")
-    with pytest.raises(ValueError) as err:
-        sanitize_series(s)
-    assert str(err.value).startswith('Series "s" has type "timedelta')
-
-
-def test_sanitize_series_infs():
-    s = pd.Series([0, 1, 2, np.inf, -np.inf, np.nan], name="x")
-    s_clean = sanitize_series(s)
-    assert s_clean.dtype == object
-    assert s_clean.to_list() == [0, 1, 2, None, None, None]
 
 
 def test_sanitize_dataframe():
