@@ -294,20 +294,20 @@ concatenation:
     import altair as alt
     from altair.expr import datum
     from vega_datasets import data
-    iris = data.iris.url
+    penguins = data.penguins.url
 
-    base = alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    base = alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('Body Mass (g):Q', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         width=160,
         height=160
     )
 
     chart = alt.hconcat()
-    for species in ['setosa', 'versicolor', 'virginica']:
-        chart |= base.transform_filter(datum.species == species)
+    for species in ['Adelie', 'Chinstrap', 'Gentoo']:
+        chart |= base.transform_filter(datum.Species == species)
     chart
 
 As with the manual approach to :ref:`repeat-chart`, this is straightforward,
@@ -317,15 +317,15 @@ Using ``alt.facet`` it becomes a bit cleaner:
 
 .. altair-plot::
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('Body Mass (g):Q', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         width=180,
         height=180
     ).facet(
-        column='species:N'
+        column='Species:N'
     )
 
 For simple charts like this, there is also a ``column`` encoding channel that
@@ -333,11 +333,11 @@ can give the same results:
 
 .. altair-plot::
 
-    alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N',
-        column='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('Body Mass (g):Q', scale=alt.Scale(zero=False)),
+        color='Species:N',
+        column='Species:N'
     ).properties(
         width=180,
         height=180
@@ -351,10 +351,10 @@ layered chart with a hover selection:
 
     hover = alt.selection_single(on='mouseover', nearest=True, empty='none')
 
-    base = alt.Chart(iris).encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color=alt.condition(hover, 'species:N', alt.value('lightgray'))
+    base = alt.Chart(penguins).encode(
+        x=alt.X('Flipper Length (mm):Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('Body Mass (g):Q', scale=alt.Scale(zero=False)),
+        color=alt.condition(hover, 'Species:N', alt.value('lightgray'))
     ).properties(
         width=180,
         height=180,
@@ -365,12 +365,12 @@ layered chart with a hover selection:
     )
 
     text = base.mark_text(dy=-5).encode(
-        text = 'species:N',
+        text = 'Species:N',
         opacity = alt.condition(hover, alt.value(1), alt.value(0))
     )
 
     alt.layer(points, text).facet(
-        'species:N',
+        'Species:N',
     )
 
 Though each of the above examples have faceted the data across columns,
