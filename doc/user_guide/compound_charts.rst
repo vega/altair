@@ -124,21 +124,21 @@ distribution of its points:
     import altair as alt
     from vega_datasets import data
 
-    iris = data.iris.url
+    penguins = data.penguins.url
 
-    chart1 = alt.Chart(iris).mark_point().encode(
-        x='petalLength:Q',
-        y='petalWidth:Q',
-        color='species:N'
+    chart1 = alt.Chart(penguins).mark_point().encode(
+        x=alt.X('Flipper Length (mm):Q', scale=alt.Scale(zero=False)),
+        y=alt.Y('Body Mass (g):Q', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         height=300,
         width=300
     )
 
-    chart2 = alt.Chart(iris).mark_bar().encode(
+    chart2 = alt.Chart(penguins).mark_bar().encode(
         x='count()',
-        y=alt.Y('petalWidth:Q', bin=alt.Bin(maxbins=30)),
-        color='species:N'
+        y=alt.Y('Body Mass (g):Q', bin=alt.Bin(maxbins=30)),
+        color='Species:N'
     ).properties(
         height=300,
         width=100
