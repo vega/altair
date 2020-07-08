@@ -224,20 +224,23 @@ showing how ``repeat`` can be used to build the chart more efficiently:
     import altair as alt
     from vega_datasets import data
 
-    iris = data.iris.url
+    penguins = data.penguins.url
 
     base = alt.Chart().mark_point().encode(
-        color='species:N'
+        color='Species:N'
     ).properties(
         width=200,
         height=200
     ).interactive()
 
-    chart = alt.vconcat(data=iris)
-    for y_encoding in ['petalLength:Q', 'petalWidth:Q']:
+    chart = alt.vconcat(data=penguins)
+    for y_encoding in ['Flipper Length (mm):Q', 'Body Mass (g):Q']:
         row = alt.hconcat()
-        for x_encoding in ['sepalLength:Q', 'sepalWidth:Q']:
-            row |= base.encode(x=x_encoding, y=y_encoding)
+        for x_encoding in ['Beak Length (mm):Q', 'Beak Depth (mm):Q']:
+            row |= base.encode(
+                       x=alt.X(x_encoding, scale=alt.Scale(zero=False)),
+                       y=alt.Y(y_encoding, scale=alt.Scale(zero=False)),
+                   )
         chart &= row
     chart
 
@@ -252,18 +255,18 @@ method, makes this type of chart a bit easier to produce:
 
     import altair as alt
     from vega_datasets import data
-    iris = data.iris.url
+    penguins = data.penguins.url
 
-    alt.Chart(iris).mark_point().encode(
-        alt.X(alt.repeat("column"), type='quantitative'),
-        alt.Y(alt.repeat("row"), type='quantitative'),
-        color='species:N'
+    alt.Chart(penguins).mark_point().encode(
+        alt.X(alt.repeat("column"), type='quantitative', scale=alt.Scale(zero=False)),
+        alt.Y(alt.repeat("row"), type='quantitative', scale=alt.Scale(zero=False)),
+        color='Species:N'
     ).properties(
         width=200,
         height=200
     ).repeat(
-        row=['petalLength', 'petalWidth'],
-        column=['sepalLength', 'sepalWidth']
+        row=['Flipper Length (mm)', 'Body Mass (g)'],
+        column=['Beak Length (mm)', 'Beak Depth (mm)']
     ).interactive()
 
 The :meth:`Chart.repeat` method is the key here: it lets you specify a set of
