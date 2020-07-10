@@ -59,3 +59,11 @@ Starborn is a Python visualization library based on Vega and Altair that aims to
 .. List of links.
 .. _starborn: https://github.com/PythonCharmers/starborn
 .. _Seaborn: https://seaborn.pydata.org/index.html
+
+gif_
+----
+
+gif is the extension for Altair and matplotlib animations. The library provides a simple, high-level decorator interface to create frames in a regular for-loop that can be stitched together on save. See the `docs <https://github.com/maxhumber/gif>`__.
+
+.. List of links.
+.. _gif: https://github.com/maxhumber/gif
