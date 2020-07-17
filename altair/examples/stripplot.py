@@ -16,10 +16,10 @@ stripplot =  alt.Chart(source, width=40).mark_circle(size=8).encode(
         axis=alt.Axis(values=[0], ticks=True, grid=False, labels=False),
         scale=alt.Scale(),
     ),
-    y=alt.Y('IMDB_Rating:Q'),
-    color=alt.Color('Major_Genre:N', legend=None),
+    y=alt.Y('IMDB Rating:Q'),
+    color=alt.Color('Major Genre:N', legend=None),
     column=alt.Column(
-        'Major_Genre:N',
+        'Major Genre:N',
         header=alt.Header(
             labelAngle=-90,
             titleOrient='top',

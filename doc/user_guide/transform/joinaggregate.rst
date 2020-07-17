@@ -52,15 +52,15 @@ standard deviation, which requires calculations on the joined data:
    from vega_datasets import data
 
    alt.Chart(data.movies.url).transform_filter(
-       'datum.IMDB_Rating != null  && datum.Rotten_Tomatoes_Rating != null'
+       "datum['IMDB Rating'] != null  && datum['Rotten Tomatoes Rating'] != null"
    ).transform_joinaggregate(
-       IMDB_mean='mean(IMDB_Rating)',
-       IMDB_std='stdev(IMDB_Rating)',
-       RT_mean='mean(Rotten_Tomatoes_Rating)',
-       RT_std='stdev(Rotten_Tomatoes_Rating)'
+       IMDB_mean='mean(IMDB Rating)',
+       IMDB_std='stdev(IMDB Rating)',
+       RT_mean='mean(Rotten Tomatoes Rating)',
+       RT_std='stdev(Rotten Tomatoes Rating)'
    ).transform_calculate(
-       IMDB_Deviation="(datum.IMDB_Rating - datum.IMDB_mean) / datum.IMDB_std",
-       Rotten_Tomatoes_Deviation="(datum.Rotten_Tomatoes_Rating - datum.RT_mean) / datum.RT_std"
+       IMDB_Deviation="(datum['IMDB Rating'] - datum.IMDB_mean) / datum.IMDB_std",
+       Rotten_Tomatoes_Deviation="(datum['Rotten Tomatoes Rating'] - datum.RT_mean) / datum.RT_std"
    ).mark_point().encode(
        x='IMDB_Deviation:Q',
        y="Rotten_Tomatoes_Deviation:Q"

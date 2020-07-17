@@ -16,12 +16,12 @@ alt.Chart(
     source,
 ).mark_bar().encode(
     x=alt.X('Title:N', sort='-y'),
-    y=alt.Y('IMDB_Rating:Q'),
-    color=alt.Color('IMDB_Rating:Q')
+    y=alt.Y('IMDB Rating:Q'),
+    color=alt.Color('IMDB Rating:Q')
     
 ).transform_window(
-    rank='rank(IMDB_Rating)',
-    sort=[alt.SortField('IMDB_Rating', order='descending')]
+    rank='rank(IMDB Rating)',
+    sort=[alt.SortField('IMDB Rating', order='descending')]
 ).transform_filter(
     (alt.datum.rank < 10)
 )

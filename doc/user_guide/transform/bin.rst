@@ -18,7 +18,7 @@ An common application of a bin transform is when creating a histogram:
     movies = data.movies.url
 
     alt.Chart(movies).mark_bar().encode(
-        alt.X("IMDB_Rating:Q", bin=True),
+        alt.X("IMDB Rating:Q", bin=True),
         y='count()',
     )
 
@@ -59,7 +59,7 @@ Here is the above histogram created using a top-level bin transform:
         x='binned_rating:O',
         y='count()',
     ).transform_bin(
-        'binned_rating', field='IMDB_Rating'
+        'binned_rating', field='IMDB Rating'
     )
 
 And here is the transformed color scale using a top-level bin transform:

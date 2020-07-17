@@ -16,11 +16,11 @@ For example, consider the following cumulative frequency distribution:
     from vega_datasets import data
 
     alt.Chart(data.movies.url).transform_window(
-        sort=[{'field': 'IMDB_Rating'}],
+        sort=[{'field': 'IMDB Rating'}],
         frame=[None, 0],
         cumulative_count='count(*)',
     ).mark_area().encode(
-        x='IMDB_Rating:Q',
+        x='IMDB Rating:Q',
         y='cumulative_count:Q',
     )
 

@@ -14,8 +14,8 @@ source = data.movies.url
 
 alt.Chart(source).transform_window(
     cumulative_count="count()",
-    sort=[{"field": "IMDB_Rating"}],
+    sort=[{"field": "IMDB Rating"}],
 ).mark_area().encode(
-    x="IMDB_Rating:Q",
+    x="IMDB Rating:Q",
     y="cumulative_count:Q"
 )
