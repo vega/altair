@@ -250,29 +250,29 @@ If you use Altair in academic work, please consider citing http://joss.theoj.org
 
 ```bib
 @article{VanderPlas2018,
-  doi = {10.21105/joss.01057},
-  url = {https://doi.org/10.21105/joss.01057},
-  year = {2018},
-  publisher = {The Open Journal},
-  volume = {3},
-  number = {32},
-  pages = {1057},
-  author = {Jacob VanderPlas and Brian Granger and Jeffrey Heer and Dominik Moritz and Kanit Wongsuphasawat and Arvind Satyanarayan and Eitan Lees and Ilia Timofeev and Ben Welsh and Scott Sievert},
-  title = {Altair: Interactive Statistical Visualizations for Python},
-  journal = {Journal of Open Source Software}
+    doi = {10.21105/joss.01057},
+    url = {https://doi.org/10.21105/joss.01057},
+    year = {2018},
+    publisher = {The Open Journal},
+    volume = {3},
+    number = {32},
+    pages = {1057},
+    author = {Jacob VanderPlas and Brian Granger and Jeffrey Heer and Dominik Moritz and Kanit Wongsuphasawat and Arvind Satyanarayan and Eitan Lees and Ilia Timofeev and Ben Welsh and Scott Sievert},
+    title = {Altair: Interactive Statistical Visualizations for Python},
+    journal = {Journal of Open Source Software}
 }
 ```
 Please additionally consider citing the [vega-lite](http://vega.github.io/vega-lite/) project, which Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
 ```bib
 @article{Satyanarayan2017,
-author={Satyanarayan, Arvind and Moritz, Dominik and Wongsuphasawat, Kanit and Heer, Jeffrey},
-title={Vega-Lite: A Grammar of Interactive Graphics},
-journal={IEEE transactions on visualization and computer graphics},
-year={2017},
-volume={23},
-number={1},
-pages={341-350},
-publisher={IEEE}
+    author={Satyanarayan, Arvind and Moritz, Dominik and Wongsuphasawat, Kanit and Heer, Jeffrey},
+    title={Vega-Lite: A Grammar of Interactive Graphics},
+    journal={IEEE transactions on visualization and computer graphics},
+    year={2017},
+    volume={23},
+    number={1},
+    pages={341-350},
+    publisher={IEEE}
 } 
 ```
 
