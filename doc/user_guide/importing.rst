@@ -22,8 +22,8 @@ and then proceed to use the Altair version 1 API.
 
 .. note::
 
-  We strongly recommend all users transition to Vega-Lite 2.x and Vega 3.x.
-  These versions support many new features, are more stable, and Altair 2.0
+  We strongly recommend all users transition to Vega-Lite 4.x and Vega 5.x.
+  These versions support many new features, are more stable, and Altair 4
   works best with them.
 
 Because Altair has focused primarily on the vega-lite API, the vega wrappers are
