@@ -232,7 +232,7 @@ def pipe(data, *funcs):
 
 
 def curry(*args, **kwargs):
-    """ Curry a callable function
+    """Curry a callable function
 
     Deprecated: use toolz.curried.curry() instead.
     """
