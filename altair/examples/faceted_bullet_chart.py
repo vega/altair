@@ -29,7 +29,7 @@ base = alt.Chart(source)
 chart = base.mark_bar(
 ).encode(
     x=alt.X('ranges[2]:Q', scale=alt.Scale(nice=False)),
-    color=alt.value('#eee'),
+    color=alt.value('#eee')
 )
 
 chart += base.mark_bar(
@@ -62,14 +62,14 @@ chart += base.mark_bar(
 chart += base.mark_tick(
 ).encode(
     x='markers[0]:Q',
-    color=alt.value('black'),
+    color=alt.value('black')
 )
 
 chart.facet(
     row=alt.Row('title:N', title=None,
-                header=alt.Header(labelAngle=0, title=None))
+                header=alt.Header(labelAngle=0, labelAlign='left', title=None))
 ).resolve_scale(
-    x='independent',
+    x='independent'
 ).configure_facet(
     spacing=10
 ).configure_axis(
