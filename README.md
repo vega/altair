@@ -75,7 +75,7 @@ points & bars
 ![Altair Visualization Gif](https://raw.githubusercontent.com/altair-viz/altair/master/images/cars_scatter_bar.gif)
 
 
-## Getting your Questions Answered
+## Getting your Questions Answered(FAQ)
 
 If you have a question that is not addressed in the documentation, there are several ways to ask:
 
