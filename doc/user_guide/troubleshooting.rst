@@ -197,7 +197,7 @@ If you are using JupyterLab (not Jupyter notebook) and see the following output:
 
     <VegaLite 4 object>
 
-This means that you have enabled the ``mimebundle`` renderer, but that your JupyterLab
+This means that you have enabled the ``mimetype`` renderer, but that your JupyterLab
 frontend does not support the VegaLite 4 mimetype.
 
 The easiest solution is to use the default renderer::
@@ -334,7 +334,7 @@ If you are using Jupyter Notebook (not JupyterLab) and see the following output:
 
     <VegaLite 4 object>
 
-This means that you have enabled the ``mimebundle`` renderer.
+This means that you have enabled the ``mimetype`` renderer.
 
 The easiest solution is to use the default renderer::
 
