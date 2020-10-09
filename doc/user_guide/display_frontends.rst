@@ -32,11 +32,13 @@ Some of the built-in renderers are:
   as well as Jupyter ecosystem tools like nbviewer_ and nbconvert_ HTML output.
   It requires a web connection in order to load relevant Javascript libraries.
 
-``alt.renderers.enable('mimebundle')``
+``alt.renderers.enable('mimetype')``
   *(default prior to Altair 4.0):* Output a vega-lite specific mimetype that can be
-  interpreted by appropriate frontend extensions to display charts.
-  It works with newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does
-  not work with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
+  interpreted by appropriate frontend extensions to display charts. This also outputs
+  a PNG representation of the plot, which is useful to view plots offline or on
+  platforms that don't support rendering vegaspecs, such as GitHub. It works with
+  newer versions of JupyterLab_, nteract_, and `VSCode-Python`_, but does not work
+  with the `Jupyter Notebook`_, or with tools like nbviewer_ and nbconvert_.
 
 Other renderers can be installed by third-party packages via Python's entrypoints_ system;
 see :ref:`renderer-api`.
@@ -143,7 +145,7 @@ Examples are:
 - The `VSCode-Python`_ extension, which supports native Altair and Vega-Lite
   chart display as of November 2019.
 - The Hydrogen_ project, which is built on nteract_ and renders Altair charts
-  via the ``mimebundle`` renderer.
+  via the ``mimetype`` renderer.
 
 Altair Viewer
 ~~~~~~~~~~~~~
@@ -247,7 +249,8 @@ a given one. To return the registered renderers as a Python list::
 
     >>> import altair as alt
     >>> alt.renderers.names()
-    ['html', 'mimebundle', 'json', ...]
+    ['colab', 'default', 'html', 'json', 'jupyterlab', 'kaggle', 'mimetype',
+    'nteract', 'png', 'svg', 'zeppelin']
 
 To enable the JSON renderer, which results in a collapsible JSON tree view
 in JupyterLab/nteract::
