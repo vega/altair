@@ -12,5 +12,5 @@ source = data.movies.url
 alt.Chart(source).mark_rect().encode(
     alt.X('IMDB_Rating:Q', bin=alt.Bin(maxbins=60)),
     alt.Y('Rotten_Tomatoes_Rating:Q', bin=alt.Bin(maxbins=40)),
-    alt.Color('count(IMDB_Rating):Q', scale=alt.Scale(scheme='greenblue'))
+    alt.Color('count():Q', scale=alt.Scale(scheme='greenblue'))
 )
