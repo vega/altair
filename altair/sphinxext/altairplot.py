@@ -304,9 +304,9 @@ def depart_altair_plot(self, node):
 
 
 def builder_inited(app):
-    app.add_javascript(app.config.altairplot_vega_js_url)
-    app.add_javascript(app.config.altairplot_vegalite_js_url)
-    app.add_javascript(app.config.altairplot_vegaembed_js_url)
+    app.add_js_file(app.config.altairplot_vega_js_url)
+    app.add_js_file(app.config.altairplot_vegalite_js_url)
+    app.add_js_file(app.config.altairplot_vegaembed_js_url)
 
 
 def setup(app):
@@ -324,7 +324,7 @@ def setup(app):
 
     app.add_directive("altair-plot", AltairPlotDirective)
 
-    app.add_stylesheet("altair-plot.css")
+    app.add_css_file("altair-plot.css")
 
     app.add_node(
         altair_plot,
