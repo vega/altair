@@ -35,7 +35,7 @@ labels = alt.Chart(centroids).mark_text().encode(
 
 line_scale = alt.Scale(domain=["Bakerloo", "Central", "Circle", "District", "DLR",
                                "Hammersmith & City", "Jubilee", "Metropolitan", "Northern",
-                               "Piccadilly", "Victoria", "Waterloo & City" ],
+                               "Piccadilly", "Victoria", "Waterloo & City"],
                        range=["rgb(137,78,36)", "rgb(220,36,30)", "rgb(255,206,0)",
                               "rgb(1,114,41)", "rgb(0,175,173)", "rgb(215,153,175)",
                               "rgb(106,114,120)", "rgb(114,17,84)", "rgb(0,0,0)",
@@ -50,8 +50,9 @@ lines = alt.Chart(tubelines).mark_geoshape(
         legend=alt.Legend(
             title=None,
             orient='bottom-right',
-            offset=0
-        )
+            offset=0,
+        ),
+        scale=line_scale
     )
 )
 
