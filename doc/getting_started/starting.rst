@@ -254,7 +254,7 @@ chart using the :meth:`Chart.save` method:
 
 The basic HTML template produces output that looks like this, where the JSON
 specification for your plot produced by :meth:`Chart.to_json` should be stored
-in the ``vlSpec`` Javascript variable:
+in the ``spec`` Javascript variable:
 
 .. code-block:: html
 
