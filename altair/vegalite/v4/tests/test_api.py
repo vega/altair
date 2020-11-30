@@ -4,6 +4,7 @@ import io
 import json
 import operator
 import os
+import pathlib
 import tempfile
 
 import jsonschema
@@ -284,12 +285,14 @@ def test_save(format, basic_chart):
     fid, filename = tempfile.mkstemp(suffix="." + format)
     os.close(fid)
 
-    try:
-        basic_chart.save(filename)
-        with open(filename, mode) as f:
-            assert f.read()[:1000] == content[:1000]
-    finally:
-        os.remove(filename)
+    # test both string filenames and pathlib.Paths
+    for fp in [filename, pathlib.Path(filename)]:
+        try:
+            basic_chart.save(fp)
+            with open(fp, mode) as f:
+                assert f.read()[:1000] == content[:1000]
+        finally:
+            os.remove(fp)
 
 
 def test_facet_basic():
