@@ -1,11 +1,13 @@
 import json
+import pathlib
 
 from .mimebundle import spec_to_mimebundle
 
 
 def write_file_or_filename(fp, content, mode="w"):
-    """Write content to fp, whether fp is a string or a file-like object"""
-    if isinstance(fp, str):
+    """Write content to fp, whether fp is a string, a pathlib Path or a
+    file-like object"""
+    if isinstance(fp, str) or isinstance(fp, pathlib.PurePath):
         with open(fp, mode) as f:
             f.write(content)
     else:
@@ -34,8 +36,8 @@ def save(
     ----------
     chart : alt.Chart
         the chart instance to save
-    fp : string filename or file-like object
-        file in which to write the chart.
+    fp : string filename, pathlib.Path or file-like object
+        file to which to write the chart.
     format : string (optional)
         the format to write: one of ['json', 'html', 'png', 'svg'].
         If not specified, the format will be determined from the filename.
@@ -71,6 +73,8 @@ def save(
     if format is None:
         if isinstance(fp, str):
             format = fp.split(".")[-1]
+        elif isinstance(fp, pathlib.PurePath):
+            format = fp.suffix.lstrip(".")
         else:
             raise ValueError(
                 "must specify file format: " "['png', 'svg', 'pdf', 'html', 'json']"
