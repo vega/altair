@@ -146,7 +146,7 @@ Users can adjust this threshold using the ``extent`` property of the mark.
   )
 
 
-The outliers can be ignored completely using ``extent='max-min'``
+The outliers can be ignored completely using ``extent='min-max'``
 
 
 .. altair-plot::
