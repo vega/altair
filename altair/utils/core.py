@@ -329,6 +329,8 @@ def sanitize_dataframe(df):  # noqa: C901
             "UInt16",
             "UInt32",
             "UInt64",
+            "Float32",
+            "Float64"
         }:  # nullable integer datatypes (since 24.0)
             # https://pandas.pydata.org/pandas-docs/version/0.25/whatsnew/v0.24.0.html#optional-integer-na-support
             col = df[col_name].astype(object)
