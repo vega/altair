@@ -249,6 +249,9 @@ def test_selection_expression():
     assert isinstance(selection["value"], alt.expr.Expression)
     assert selection["value"].to_dict() == "{0}['value']".format(selection.name)
 
+    with pytest.raises(AttributeError):
+        selection.__magic__
+
 
 @pytest.mark.parametrize("format", ["html", "json", "png", "svg", "pdf"])
 def test_save(format, basic_chart):
