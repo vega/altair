@@ -194,6 +194,8 @@ class Selection(object):
         return Selection(core.SelectionOr(**{"or": [self.name, other]}), self.selection)
 
     def __getattr__(self, field_name):
+        if field_name.startswith("__") and field_name.endswith("__"):
+            raise AttributeError(field_name)
         return expr.core.GetAttrExpression(self.name, field_name)
 
     def __getitem__(self, field_name):

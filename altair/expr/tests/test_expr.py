@@ -1,5 +1,7 @@
 import operator
 
+import pytest
+
 from ... import expr
 from .. import datum
 
@@ -94,6 +96,9 @@ def test_copy():
 def test_datum_getattr():
     x = datum["foo"]
     assert repr(x) == "datum['foo']"
+
+    with pytest.raises(AttributeError):
+        datum.__magic__
 
 
 def test_expression_getitem():

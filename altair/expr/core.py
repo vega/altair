@@ -8,6 +8,8 @@ class DatumType(object):
         return "datum"
 
     def __getattr__(self, attr):
+        if attr.startswith("__") and attr.endswith("__"):
+            raise AttributeError(attr)
         return GetAttrExpression("datum", attr)
 
     def __getitem__(self, attr):
