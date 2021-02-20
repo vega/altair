@@ -15,7 +15,7 @@ y = np.random.normal(10, 0.5, size=len(x))
 yerr = 0.2
 
 # set up data frame
-source = pd.DataFrame({"x":x, "y":y, "yerr":yerr})
+source = pd.DataFrame({"x": x, "y": y, "yerr": yerr})
 
 # the base chart
 base = alt.Chart(source).transform_calculate(
@@ -30,7 +30,7 @@ points = base.mark_point(
     color='black'
 ).encode(
     x=alt.X('x', scale=alt.Scale(domain=(0, 6))),
-    y=alt.Y('y', scale=alt.Scale(domain=(10, 11)))
+    y=alt.Y('y', scale=alt.Scale(zero=False))
 )
 
 # generate the error bars
