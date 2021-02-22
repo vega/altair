@@ -31,5 +31,7 @@ handled automatically. Building on this declarative plotting idea, a surprising 
 of simple to sophisticated plots and visualizations can be created using a relatively
 concise grammar.
 
+This documentation serves as the main reference for learning about Altair, and additional learning material and tutorials can be found in the :ref:`learning-resources` section.
+
 .. _Vega: http://vega.github.io/vega
 .. _Vega-Lite: http://vega.github.io/vega-lite
