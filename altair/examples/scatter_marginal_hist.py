@@ -16,7 +16,7 @@ base = alt.Chart(source)
 xscale = alt.Scale(domain=(4.0, 8.0))
 yscale = alt.Scale(domain=(1.9, 4.55))
 
-area_args = {'opacity': .3, 'binSpacing': 0}
+bar_args = {'opacity': .3, 'binSpacing': 0}
 
 points = base.mark_circle().encode(
     alt.X('sepalLength', scale=xscale),
