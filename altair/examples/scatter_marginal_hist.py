@@ -24,7 +24,7 @@ points = base.mark_circle().encode(
     color='species',
 )
 
-top_hist = base.mark_bar(**area_args).encode(
+top_hist = base.mark_bar(**bar_args).encode(
     alt.X('sepalLength:Q',
           # when using bins, the axis scale is set through
           # the bin extent, so we do not specify the scale here
@@ -37,7 +37,7 @@ top_hist = base.mark_bar(**area_args).encode(
     alt.Color('species:N'),
 ).properties(height=60)
 
-right_hist = base.mark_bar(**area_args).encode(
+right_hist = base.mark_bar(**bar_args).encode(
     alt.Y('sepalWidth:Q',
           bin=alt.Bin(maxbins=20, extent=yscale.domain),
           stack=None,
