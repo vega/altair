@@ -172,7 +172,7 @@ selection. This can be accomplished using the various logical operand classes:
 These are not yet part of the Altair interface
 (see `Issue 695 <https://github.com/altair-viz/altair/issues/695>`_)
 but can be constructed explicitly; for example, here we plot US population
-distributions for all data *except* the years 1950-1960,
+distributions for all data *except* the years 1900-1950,
 by applying a ``LogicalNotPredicate`` schema to a ``FieldRangePredicate``:
 
 .. altair-plot::
