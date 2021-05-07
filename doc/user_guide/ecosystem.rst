@@ -10,7 +10,7 @@ We hope to make it easier to find these packages and learning resources by listi
 Learning Resources
 ------------------
 
-This is a list of a resources that complements this documentation and can help you learn more about how to use Altair.
+This is a list of a resources that complements the official documentation and can help you learn more about how to use Altair.
 
 `Visualization Curriculum`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,12 +36,33 @@ Altair tutorial given at PyCon 2018 by the Altair authors.
 .. List of links.
 .. _`Pycon tutorial`: https://altair-viz.github.io/altair-tutorial
 
+`Data Visualization Course`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This course covers how to create common statistical visualizations, tell stories with data, create geographical visualizations, and bring plots to life by adding interactive elements. Created at the University of British Columbia and can either be audited or taken as part of the `Key Capabilities for Data Science`_ certificate program.
+
+.. List of links.
+.. _`Data Visualization Course`: https://viz-learn.mds.ubc.ca
+.. _`Key Capabilities for Data Science`: https://extendedlearning.ubc.ca/programs/key-capabilities-data-science
+
+`Brief Introduction Videos`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Calmcode provides a few videos that give a brief overview of the Altair library.
+
+.. List of links.
+.. _`Brief Introduction Videos`: https://calmcode.io/altair/introduction.html
+
+
 .. _altair-ecosystem:
 
 Altair Ecosystem
 ----------------
 
-This is a list of projects related to or built on top of Altair.
+This is a list of projects directs related to Altair. There are many other packages that can be used in tandem with Altair, e.g. `dashboard packages which you can read more about in the answers to this StackOverflow question`_.
+
+.. List of links.
+.. _`dashboard packages which you can read more about in the answers to this StackOverflow question`: https://stackoverflow.com/questions/49833866/making-dashboards-using-altair
 
 Vega-Lite_
 ~~~~~~~~~~
@@ -109,6 +130,14 @@ nx_altair is a library for drawing NetworkX_ graphs using Altair. It offers a si
 .. List of links.
 .. _nx_altair: https://github.com/Zsailer/nx_altair
 .. _NetworkX: https://networkx.github.io/
+
+`Altair Ally`_
+~~~~~~~~~~~~~~
+
+Altair Ally is a companion package to Altair, which provides a few shortcuts to create common plots for exploratory data analysis, particularly those involving visualization of an entire dataframe.
+
+.. List of links.
+.. _`Altair Ally`: https://joelostblom.github.io/altair_ally
 
 gif_
 ~~~~
