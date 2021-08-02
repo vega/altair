@@ -27,6 +27,7 @@ rule        :meth:`~Chart.mark_rule`      A vertical or horizontal line spanning
 square      :meth:`~Chart.mark_square`    A scatter plot with filled squares.                  N/A
 text        :meth:`~Chart.mark_text`      A scatter plot with points represented by text.      :ref:`gallery_bar_chart_with_labels`
 tick        :meth:`~Chart.mark_tick`      A vertical or horizontal tick mark.                  :ref:`gallery_strip_plot`
+trail       :meth:`~Chart.mark_trail`     A line with variable widths.                         :ref:`gallery_trail_marker`
 ==========  ============================  ===================================================  ====================================
 
 In addition, Altair provides the following compound marks:
