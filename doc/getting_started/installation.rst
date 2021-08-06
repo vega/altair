@@ -4,7 +4,7 @@
 
 Installation
 ============
-Altair can be installed, along with the example datastes in vega_datasets_, using::
+Altair can be installed, along with the example datasets in vega_datasets_, using::
 
     $ pip install altair vega_datasets
 
