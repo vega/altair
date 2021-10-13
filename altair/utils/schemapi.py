@@ -150,6 +150,7 @@ class SchemaBase(object):
     _schema = None
     _rootschema = None
     _class_is_valid_at_instantiation = True
+    _validator = jsonschema.Draft7Validator
 
     def __init__(self, *args, **kwds):
         # Two valid options for initialization, which should be handled by
@@ -439,7 +440,9 @@ class SchemaBase(object):
         if schema is None:
             schema = cls._schema
         resolver = jsonschema.RefResolver.from_schema(cls._rootschema or cls._schema)
-        return jsonschema.validate(instance, schema, resolver=resolver)
+        return jsonschema.validate(
+            instance, schema, cls=cls._validator, resolver=resolver
+        )
 
     @classmethod
     def resolve_references(cls, schema=None):
