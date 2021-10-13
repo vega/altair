@@ -303,7 +303,7 @@ def main(app):
 
 def setup(app):
     app.connect("builder-inited", main)
-    app.add_stylesheet("altair-gallery.css")
+    app.add_css_file("altair-gallery.css")
     app.add_config_value("altair_gallery_dir", "gallery", "env")
     app.add_config_value("altair_gallery_ref", "example-gallery", "env")
     app.add_config_value("altair_gallery_title", "Example Gallery", "env")

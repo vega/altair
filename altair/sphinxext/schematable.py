@@ -37,7 +37,7 @@ def type_description(schema):
 
 
 def prepare_table_header(titles, widths):
-    """Build docutil empty table """
+    """Build docutil empty table"""
     ncols = len(titles)
     assert len(widths) == ncols
 
@@ -60,7 +60,7 @@ reCode = re.compile(r"`([^`]+)`")
 
 
 def add_class_def(node, classDef):
-    """Add reference on classDef to node """
+    """Add reference on classDef to node"""
 
     ref = addnodes.pending_xref(
         reftarget=classDef,
@@ -79,7 +79,7 @@ def add_class_def(node, classDef):
 
 
 def add_text(node, text):
-    """Add text with inline code to node """
+    """Add text with inline code to node"""
     is_text = True
     for part in reCode.split(text):
         if part:

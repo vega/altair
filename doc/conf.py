@@ -163,8 +163,8 @@ html_static_path = ["_static", "_images"]
 # and
 # https://github.com/rtfd/sphinx_rtd_theme/issues/117
 def setup(app):
-    app.add_stylesheet("theme_overrides.css")
-    app.add_stylesheet("custom.css")
+    app.add_css_file("theme_overrides.css")
+    app.add_css_file("custom.css")
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
