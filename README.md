@@ -1,26 +1,26 @@
 # Altair <a href="https://altair-viz.github.io/"><img align="right" src="https://altair-viz.github.io/_static/altair-logo-light.png" height="50"></img></a>
 
-[![build status](http://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
+[![build status](https://img.shields.io/travis/altair-viz/altair/master.svg?style=flat)](https://travis-ci.org/altair-viz/altair)
 [![github actions](https://github.com/altair-viz/altair/workflows/build/badge.svg)](https://github.com/altair-viz/altair/actions?query=workflow%3Abuild)
 [![code style black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
+[![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/altair)](https://pypi.org/project/altair)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/altair-viz/altair_notebooks/master?urlpath=lab/tree/notebooks/Index.ipynb)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
 
-[http://altair-viz.github.io](http://altair-viz.github.io)
+[https://altair-viz.github.io](https://altair-viz.github.io)
 
 **Altair** is a declarative statistical visualization library for Python. With Altair, you can spend more time understanding your data and its meaning. Altair's
 API is simple, friendly and consistent and built on top of the powerful
 [Vega-Lite](https://github.com/vega/vega-lite) JSON specification. This elegant
 simplicity produces beautiful and effective visualizations with a minimal amount of code. *Altair is developed by [Jake Vanderplas](https://github.com/jakevdp) and [Brian
 Granger](https://github.com/ellisonbg) in close collaboration with the [UW
-Interactive Data Lab](http://idl.cs.washington.edu/).*
+Interactive Data Lab](https://idl.cs.washington.edu/).*
 
 ## Altair Documentation
 
-See [Altair's Documentation Site](http://altair-viz.github.io),
-as well as Altair's [Tutorial Notebooks](http://github.com/altair-viz/altair_notebooks).
+See [Altair's Documentation Site](https://altair-viz.github.io),
+as well as Altair's [Tutorial Notebooks](https://github.com/altair-viz/altair_notebooks).
 
 ## Example
 
@@ -91,7 +91,7 @@ Altair provides a Python API for building statistical visualizations in a declar
 manner. By statistical visualization we mean:
 
 * The **data source** is a `DataFrame` that consists of columns of different data types (quantitative, ordinal, nominal and date/time).
-* The `DataFrame` is in a [tidy format](http://vita.had.co.nz/papers/tidy-data.pdf)
+* The `DataFrame` is in a [tidy format](https://vita.had.co.nz/papers/tidy-data.pdf)
   where the rows correspond to samples and the columns correspond to the observed variables.
 * The data is mapped to the **visual properties** (position, color, size, shape,
   faceting, etc.) using the group-by data transformation.
@@ -114,7 +114,7 @@ Vega-Lite JSON data can be rendered in the following user-interfaces:
   specification.
 * Auto-generate Altair Python code from a Vega-Lite JSON spec.
 * Display visualizations in the live Jupyter Notebook, JupyterLab, nteract, on GitHub and
-  [nbviewer](http://nbviewer.jupyter.org/).
+  [nbviewer](https://nbviewer.jupyter.org/).
 * Export visualizations to PNG/SVG images, stand-alone HTML pages and the
 [Online Vega-Lite Editor](https://vega.github.io/editor/#/).
 * Serialize visualizations as JSON files.
@@ -141,7 +141,7 @@ interactive tutorial and examples:
 https://github.com/altair-viz/altair_notebooks
 
 To launch a live notebook server with those notebook using [binder](https://mybinder.org/) or
-[Colab](http://colab.research.google.com), click on one of the following badges:
+[Colab](https://colab.research.google.com), click on one of the following badges:
 
 [![Binder](https://beta.mybinder.org/badge.svg)](https://beta.mybinder.org/v2/gh/altair-viz/altair_notebooks/master)
 [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/altair-viz/altair_notebooks/blob/master/notebooks/Index.ipynb)
@@ -150,15 +150,15 @@ To launch a live notebook server with those notebook using [binder](https://mybi
 
 Many excellent plotting libraries exist in Python, including the main ones:
 
-* [Matplotlib](http://matplotlib.org/)
-* [Bokeh](http://bokeh.pydata.org/en/latest/)
-* [Seaborn](http://stanford.edu/~mwaskom/software/seaborn/#)
-* [Lightning](http://lightning-viz.org/)
+* [Matplotlib](https://matplotlib.org/)
+* [Bokeh](https://bokeh.pydata.org/en/latest/)
+* [Seaborn](https://seaborn.pydata.org/)
+* [Lightning](https://github.com/lightning-viz/lightning)
 * [Plotly](https://plot.ly/)
-* [Pandas built-in plotting](http://pandas.pydata.org/pandas-docs/stable/visualization.html)
-* [HoloViews](http://holoviews.org)
-* [VisPy](http://vispy.org/)
-* [pygg](http://www.github.com/sirrice/pygg)
+* [Pandas built-in plotting](https://pandas.pydata.org/pandas-docs/stable/visualization.html)
+* [HoloViews](https://holoviews.org)
+* [VisPy](https://vispy.org/)
+* [pygg](https://www.github.com/sirrice/pygg)
 
 Each library does a particular set of things well.
 
@@ -182,8 +182,8 @@ columns, a scatterplot is almost certainly a good starting point. If you add
 a categorical column to that, you probably want to encode that column using
 colors or facets. If inferring the visualization proves difficult at times, a
 simple user interface can construct a visualization without any coding.
-[Tableau](http://www.tableau.com/) and the [Interactive Data
-Lab's](http://idl.cs.washington.edu/)
+[Tableau](https://www.tableau.com/) and the [Interactive Data
+Lab's](https://idl.cs.washington.edu/)
 [Polestar](https://github.com/vega/polestar) and
 [Voyager](https://github.com/vega/voyager) are excellent examples of such UIs.
 
@@ -212,7 +212,7 @@ visualization.
 
 Altair requires the following dependencies:
 
-* [pandas](http://pandas.pydata.org/)
+* [pandas](https://pandas.pydata.org/)
 * [traitlets](https://github.com/ipython/traitlets)
 * [IPython](https://github.com/ipython/ipython)
 
@@ -230,7 +230,7 @@ pip install git+https://github.com/altair-viz/altair
 
 ## Testing
 
-To run the test suite you must have [py.test](http://pytest.org/latest/) installed.
+To run the test suite you must have [py.test](https://pytest.org/latest/) installed.
 To run the tests, use
 
 ```
@@ -244,9 +244,9 @@ See [`CONTRIBUTING.md`](https://github.com/altair-viz/altair/blob/master/CONTRIB
 
 ## Citing Altair
 
-[![JOSS Paper](http://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](http://joss.theoj.org/papers/10.21105/joss.01057)
+[![JOSS Paper](https://joss.theoj.org/papers/10.21105/joss.01057/status.svg)](https://joss.theoj.org/papers/10.21105/joss.01057)
 
-If you use Altair in academic work, please consider citing http://joss.theoj.org/papers/10.21105/joss.01057 as
+If you use Altair in academic work, please consider citing https://joss.theoj.org/papers/10.21105/joss.01057 as
 
 ```bib
 @article{VanderPlas2018,
@@ -262,7 +262,7 @@ If you use Altair in academic work, please consider citing http://joss.theoj.org
     journal = {Journal of Open Source Software}
 }
 ```
-Please additionally consider citing the [vega-lite](http://vega.github.io/vega-lite/) project, which Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
+Please additionally consider citing the [vega-lite](https://vega.github.io/vega-lite/) project, which Altair is based on: https://dl.acm.org/doi/10.1109/TVCG.2016.2599030
 ```bib
 @article{Satyanarayan2017,
     author={Satyanarayan, Arvind and Moritz, Dominik and Wongsuphasawat, Kanit and Heer, Jeffrey},
