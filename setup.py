@@ -69,7 +69,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=get_install_requirements("requirements.txt"),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     extras_require={"dev": get_install_requirements("requirements_dev.txt")},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -77,8 +77,8 @@ setup(
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: BSD License",
         "Natural Language :: English",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
 )
