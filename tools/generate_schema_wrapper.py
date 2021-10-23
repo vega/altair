@@ -168,10 +168,6 @@ class DatumChannelMixin(object):
         if datum is not Undefined:
             if isinstance(datum, core.SchemaBase):
                 pass
-            elif 'field' in datum and 'type' not in datum:
-                kwds = parse_shorthand(datum['field'], context.get('data', None))
-                copy = self.copy(deep=['datum'])
-                copy.datum.update(kwds)
         return super(DatumChannelMixin, copy).to_dict(validate=validate,
                                                       ignore=ignore,
                                                       context=context)  

@@ -36,10 +36,10 @@ Encoding Channels
 
    Angle
    AngleDatum
-   AngleDatumValue
+   AngleValue
    Color
    ColorDatum
-   ColorDatumValue
+   ColorValue
    Column
    Description
    DescriptionValue
@@ -47,64 +47,64 @@ Encoding Channels
    Facet
    Fill
    FillDatum
-   FillDatumValue
    FillOpacity
    FillOpacityDatum
-   FillOpacityDatumValue
+   FillOpacityValue
+   FillValue
    Href
    HrefValue
    Key
    Latitude
    Latitude2
    Latitude2Datum
-   Latitude2DatumValue
+   Latitude2Value
    LatitudeDatum
-   LatitudeDatumValue
+   LatitudeValue
    Longitude
    Longitude2
    Longitude2Datum
-   Longitude2DatumValue
+   Longitude2Value
    LongitudeDatum
-   LongitudeDatumValue
+   LongitudeValue
    Opacity
    OpacityDatum
-   OpacityDatumValue
+   OpacityValue
    Order
    OrderValue
    Radius
    Radius2
    Radius2Datum
-   Radius2DatumValue
+   Radius2Value
    RadiusDatum
-   RadiusDatumValue
+   RadiusValue
    Row
    Shape
    ShapeDatum
-   ShapeDatumValue
+   ShapeValue
    Size
    SizeDatum
-   SizeDatumValue
+   SizeValue
    Stroke
    StrokeDash
    StrokeDashDatum
-   StrokeDashDatumValue
+   StrokeDashValue
    StrokeDatum
-   StrokeDatumValue
    StrokeOpacity
    StrokeOpacityDatum
-   StrokeOpacityDatumValue
+   StrokeOpacityValue
+   StrokeValue
    StrokeWidth
    StrokeWidthDatum
-   StrokeWidthDatumValue
+   StrokeWidthValue
    Text
    TextDatum
-   TextDatumValue
+   TextValue
    Theta
    Theta2
    Theta2Datum
-   Theta2DatumValue
+   Theta2Value
    ThetaDatum
-   ThetaDatumValue
+   ThetaValue
    Tooltip
    TooltipValue
    Url
@@ -112,23 +112,23 @@ Encoding Channels
    X
    X2
    X2Datum
-   X2DatumValue
+   X2Value
    XDatum
-   XDatumValue
    XError
    XError2
    XError2Value
    XErrorValue
+   XValue
    Y
    Y2
    Y2Datum
-   Y2DatumValue
+   Y2Value
    YDatum
-   YDatumValue
    YError
    YError2
    YError2Value
    YErrorValue
+   YValue
 
 API Functions
 -------------
